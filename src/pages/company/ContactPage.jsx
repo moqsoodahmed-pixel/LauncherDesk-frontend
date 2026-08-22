@@ -19,7 +19,7 @@ function ContactForm() {
   }
 
   return (
-    <form id="contact-form" className="form reveal-up" onSubmit={handleSubmit}>
+    <form id="contact-form" className="form reveal-up" style={{minWidth:0}} onSubmit={handleSubmit}>
       <h3 style={{fontSize:22,textAlign:'center',marginBottom:22}}>Talk to an Expert</h3>
       {submitted ? (
         <p style={{marginTop:16,textAlign:'center',color:'var(--success)',fontFamily:'var(--font)',fontWeight:600,fontSize:14}}>

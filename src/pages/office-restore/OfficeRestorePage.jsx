@@ -94,6 +94,15 @@ const orStyles = `
   .or-flow{grid-template-columns:1fr 1fr;gap:28px}
   .or-flow::before{display:none}
   .or-summary{position:static}
+  .or-hero h1{font-size:clamp(28px,5vw,48px)}
+  .or-hero p{font-size:16px}
+}
+@media(max-width:768px){
+  .or-hero{padding:48px 0 40px}
+  .or-hero-visual-inner{padding:20px}
+  .or-stat-row{border-radius:10px}
+  .or-form-card{padding:22px}
+  .or-summary{padding:20px}
 }
 @media(max-width:600px){
   .or-cat-grid{grid-template-columns:1fr}
@@ -101,6 +110,15 @@ const orStyles = `
   .or-check-grid{grid-template-columns:1fr}
   .or-contact-grid{grid-template-columns:1fr}
   .or-flow{grid-template-columns:1fr}
+  .or-cat-vis{height:140px}
+  .or-hero-badges{gap:12px}
+  .or-badge{font-size:12px}
+  .or-trust-pills{gap:6px}
+}
+@media(max-width:400px){
+  .or-select-grid{grid-template-columns:1fr 1fr}
+  .or-stat-row{grid-template-columns:1fr 1fr}
+  .or-step-num{width:44px;height:44px;font-size:16px}
 }
 `
 
