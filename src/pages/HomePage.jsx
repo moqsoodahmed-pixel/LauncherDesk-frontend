@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 
-/* ── Homepage-specific inline styles (from index.html <style> block) ── */
 const homepageStyles = `
+/* ── Lifecycle accordion ── */
 .lc2-section{background:var(--bg-warm);padding:88px 0}
 .lc2-inner{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:start;max-width:1200px;margin:0 auto;padding:0 28px}
 .lc2-left{position:sticky;top:92px}
 .lc2-left .eyebrow{margin-bottom:14px;display:block}
-.lc2-heading{font-size:clamp(30px,3.4vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1.08;margin-bottom:18px}
+.lc2-heading{font-size:clamp(26px,3.4vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1.08;margin-bottom:18px}
 .lc2-desc{font-size:16px;color:var(--text-2);line-height:1.7;max-width:360px;margin-bottom:28px}
 .lc2-list{display:flex;flex-direction:column}
 .lc2-item{border-top:1px solid var(--line);overflow:hidden}
@@ -15,7 +15,7 @@ const homepageStyles = `
 .lc2-trigger:hover{background:rgba(4,125,204,.04)}
 .lc2-trigger:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .lc2-num{font-family:var(--font);font-weight:800;font-size:14px;color:var(--blue-dark);opacity:.45;transition:opacity .25s,color .25s;line-height:1}
-.lc2-name{font-family:var(--font);font-weight:700;font-size:21px;color:var(--navy);transition:color .25s;line-height:1}
+.lc2-name{font-family:var(--font);font-weight:700;font-size:clamp(17px,2vw,21px);color:var(--navy);transition:color .25s;line-height:1}
 .lc2-chevron{width:20px;height:20px;stroke:var(--text-3);fill:none;stroke-width:2;transition:transform .28s cubic-bezier(.2,.7,.3,1),stroke .2s;flex:none}
 .lc2-item.lc2-open .lc2-trigger{background:rgba(4,125,204,.04)}
 .lc2-item.lc2-open .lc2-num{opacity:1;color:var(--blue)}
@@ -30,7 +30,14 @@ const homepageStyles = `
 .lc2-chip:hover{border-color:var(--blue);color:var(--blue-dark);background:rgba(4,125,204,.06);transform:translateY(-1px);box-shadow:0 4px 12px rgba(4,125,204,.15)}
 .lc2-prog{height:2px;background:transparent;position:relative;margin:0 4px}
 .lc2-prog-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue-dark),var(--blue-bright));border-radius:2px;transition:width linear}
-@media(max-width:900px){.lc2-inner{grid-template-columns:1fr;gap:36px}.lc2-left{position:static}.lc2-heading{font-size:clamp(26px,5vw,36px)}}
+
+/* ── Hero section ── */
+.hp-hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:52px;align-items:center}
+.hp-trust-row{display:flex;gap:22px;margin-top:28px;flex-wrap:wrap}
+.hp-trust-item{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--text-2)}
+.hp-trust-item svg{width:17px;height:17px;stroke:var(--blue)}
+
+/* ── Connected Services ── */
 .sv-section{padding:88px 0;background:var(--bg);overflow:hidden;position:relative}
 .sv-inner{max-width:1200px;margin:0 auto;padding:0 28px}
 .sv-head{text-align:center;margin-bottom:52px}
@@ -52,90 +59,54 @@ const homepageStyles = `
 @keyframes svDash{to{stroke-dashoffset:-44}}
 @keyframes svGlowPulse{0%{opacity:0;stroke-dashoffset:0}30%{opacity:.55}70%{opacity:.4}100%{opacity:0;stroke-dashoffset:-220}}
 .sv-canvas{position:relative;width:100%;height:520px}
-@media(max-width:900px){.sv-canvas{height:680px}.sv-center{width:120px;height:120px}.sv-center-brand{font-size:12px}}
-@media(max-width:560px){.sv-canvas{height:900px}.sv-node{font-size:12px;padding:7px 12px}}
-@media(prefers-reduced-motion:reduce){.sv-thread,.sv-thread-glow,.sv-center::before,.sv-center::after{animation:none!important}.lc2-prog-bar{transition:none!important}}
-.stat-n{font-family:var(--font);font-weight:800;font-size:clamp(32px,3.6vw,48px);letter-spacing:-.03em;color:var(--navy)}
+
+/* ── Stats ── */
+.stat-n{font-family:var(--font);font-weight:800;font-size:clamp(28px,3.6vw,48px);letter-spacing:-.03em;color:var(--navy)}
 .stat-l{font-size:14px;color:var(--text-2);margin-top:2px}
 .stat-pending{font-size:11.5px;color:var(--blue-dark);margin-top:4px;opacity:.7;font-family:var(--font);font-weight:600}
+
+/* ── Responsive ── */
+@media(max-width:960px){
+  .hp-hero-grid{grid-template-columns:1fr;gap:32px}
+  .sv-canvas{height:680px}
+  .sv-center{width:120px;height:120px}
+  .sv-center-brand{font-size:12px}
+  .lc2-section{padding:60px 0}
+  .lc2-inner{gap:36px}
+}
+@media(max-width:900px){
+  .lc2-inner{grid-template-columns:1fr;gap:36px}
+  .lc2-left{position:static}
+}
+@media(max-width:640px){
+  .lc2-section{padding:48px 0}
+  .sv-canvas{height:900px}
+  .sv-node{font-size:12px;padding:7px 12px}
+  .hp-trust-row{gap:14px}
+  .hp-trust-item{font-size:12.5px}
+}
+@media(max-width:480px){
+  .sv-canvas{height:1040px}
+  .sv-center{width:100px;height:100px}
+  .sv-center-brand{font-size:11px}
+  .lc2-body-inner{padding:0 4px 18px 44px}
+  .lc2-trigger{grid-template-columns:36px 1fr 24px;gap:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  .sv-thread,.sv-thread-glow,.sv-center::before,.sv-center::after{animation:none!important}
+  .lc2-prog-bar{transition:none!important}
+}
 `
 
-/* ── Lifecycle accordion stages ── */
 const STAGES = [
-  {
-    num: '01', name: 'Start',
-    desc: 'Choose the right structure from day one — it shapes liability, funding and how you operate for years.',
-    chips: [
-      { label: 'Private Limited', href: '/services/private-limited-company-registration' },
-      { label: 'LLP', href: '/services/llp-registration' },
-      { label: 'OPC', href: '/services/opc-registration' },
-      { label: 'Partnership', href: '/services/partnership-registration' },
-      { label: 'Section 8 / NGO', href: '/services' },
-      { label: 'Dubai Setup', href: '/services' },
-    ]
-  },
-  {
-    num: '02', name: 'Structure',
-    desc: 'All the registrations, licences and certifications that make your business legally operational.',
-    chips: [
-      { label: 'GST Registration', href: '/services/gst-registration' },
-      { label: 'MSME / Udyam', href: '/services/msme-registration' },
-      { label: 'FSSAI', href: '/services/fssai-registration' },
-      { label: 'IEC', href: '/services' },
-      { label: 'Trade Licence', href: '/services' },
-      { label: 'ISO Certification', href: '/services' },
-    ]
-  },
-  {
-    num: '03', name: 'Protect',
-    desc: 'Secure your brand, IP and legal agreements before competitors or disputes appear.',
-    chips: [
-      { label: 'Trademark', href: '/services/trademark-registration' },
-      { label: 'Copyright', href: '/services' },
-      { label: 'Patent', href: '/services' },
-      { label: 'Trademark Objection', href: '/services' },
-      { label: 'IP Management', href: '/services' },
-    ]
-  },
-  {
-    num: '04', name: 'Manage',
-    desc: 'Books, payroll and filings handled proactively — so a missed deadline never becomes a penalty.',
-    chips: [
-      { label: 'Accounting', href: '/services/accounting' },
-      { label: 'Payroll', href: '/services/payroll' },
-      { label: 'ROC Filing', href: '/services/roc-compliance' },
-      { label: 'GST Returns', href: '/services/gst-registration' },
-      { label: 'Income Tax', href: '/services/accounting' },
-      { label: 'Virtual CFO', href: '/services/accounting' },
-    ]
-  },
-  {
-    num: '05', name: 'Grow',
-    desc: 'Website, CRM, marketing and automation systems that attract and retain customers at scale.',
-    chips: [
-      { label: 'Website Development', href: '/services' },
-      { label: 'Digital Marketing', href: '/services/digital-marketing' },
-      { label: 'SEO', href: '/services/digital-marketing' },
-      { label: 'WhatsApp Marketing', href: '/services/digital-marketing' },
-      { label: 'Lead Generation', href: '/services/digital-marketing' },
-      { label: 'CRM Setup', href: '/services/digital-marketing' },
-    ]
-  },
-  {
-    num: '06', name: 'Scale',
-    desc: 'Automation, IT infrastructure and international expansion to take your business to the next level.',
-    chips: [
-      { label: 'Business Automation', href: '/services/business-automation' },
-      { label: 'IT Solutions', href: '/services/business-automation' },
-      { label: 'Funding Readiness', href: '/solutions/advisory' },
-      { label: 'Advisory', href: '/solutions/advisory' },
-      { label: 'Overseas Setup', href: '/services' },
-      { label: 'Global Payroll', href: '/services' },
-    ]
-  },
+  { num: '01', name: 'Start', desc: 'Choose the right structure from day one — it shapes liability, funding and how you operate for years.', chips: [{ label: 'Private Limited', href: '/services/private-limited-company-registration' },{ label: 'LLP', href: '/services/llp-registration' },{ label: 'OPC', href: '/services/opc-registration' },{ label: 'Partnership', href: '/services/partnership-registration' },{ label: 'Section 8 / NGO', href: '/services' },{ label: 'Dubai Setup', href: '/services' }] },
+  { num: '02', name: 'Structure', desc: 'All the registrations, licences and certifications that make your business legally operational.', chips: [{ label: 'GST Registration', href: '/services/gst-registration' },{ label: 'MSME / Udyam', href: '/services/msme-registration' },{ label: 'FSSAI', href: '/services/fssai-registration' },{ label: 'IEC', href: '/services' },{ label: 'Trade Licence', href: '/services' },{ label: 'ISO Certification', href: '/services' }] },
+  { num: '03', name: 'Protect', desc: 'Secure your brand, IP and legal agreements before competitors or disputes appear.', chips: [{ label: 'Trademark', href: '/services/trademark-registration' },{ label: 'Copyright', href: '/services' },{ label: 'Patent', href: '/services' },{ label: 'Trademark Objection', href: '/services' },{ label: 'IP Management', href: '/services' }] },
+  { num: '04', name: 'Manage', desc: 'Books, payroll and filings handled proactively — so a missed deadline never becomes a penalty.', chips: [{ label: 'Accounting', href: '/services/accounting' },{ label: 'Payroll', href: '/services/payroll' },{ label: 'ROC Filing', href: '/services/roc-compliance' },{ label: 'GST Returns', href: '/services/gst-registration' },{ label: 'Income Tax', href: '/services/accounting' },{ label: 'Virtual CFO', href: '/services/accounting' }] },
+  { num: '05', name: 'Grow', desc: 'Website, CRM, marketing and automation systems that attract and retain customers at scale.', chips: [{ label: 'Website Development', href: '/services' },{ label: 'Digital Marketing', href: '/services/digital-marketing' },{ label: 'SEO', href: '/services/digital-marketing' },{ label: 'WhatsApp Marketing', href: '/services/digital-marketing' },{ label: 'Lead Generation', href: '/services/digital-marketing' },{ label: 'CRM Setup', href: '/services/digital-marketing' }] },
+  { num: '06', name: 'Scale', desc: 'Automation, IT infrastructure and international expansion to take your business to the next level.', chips: [{ label: 'Business Automation', href: '/services/business-automation' },{ label: 'IT Solutions', href: '/services/business-automation' },{ label: 'Funding Readiness', href: '/solutions/advisory' },{ label: 'Advisory', href: '/solutions/advisory' },{ label: 'Overseas Setup', href: '/services' },{ label: 'Global Payroll', href: '/services' }] },
 ]
 
-/* ── Connected services nodes ── */
 const SV_NODES = [
   { href: '/services/private-limited-company-registration', label: 'Business Registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14' },
   { href: '/services/gst-registration', label: 'GST & Compliance', icon: 'M9 11l3 3L22 4' },
@@ -147,9 +118,6 @@ const SV_NODES = [
   { href: '/office-restore', label: 'Office Setup', icon: 'M3 21h18M5 21V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14M9 21v-4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4' },
 ]
 
-
-
-/* ── Lifecycle Accordion (React-controlled) ── */
 function LifecycleAccordion() {
   const STAGE_MS = 3200
   const RESUME_MS = 7000
@@ -159,19 +127,14 @@ function LifecycleAccordion() {
     const lcSection = document.getElementById('lcSection')
     if (!items.length || !lcSection) return
 
-    let activeIdx = 0
-    let timer = null
-    let resumeT = null
-    let paused = false
+    let activeIdx = 0, timer = null, resumeT = null, paused = false
     const reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches
 
     function startProg(idx, bar) {
       if (!bar) return
-      bar.style.transition = 'none'
-      bar.style.width = '0%'
+      bar.style.transition = 'none'; bar.style.width = '0%'
       void bar.offsetWidth
-      bar.style.transition = `width ${STAGE_MS}ms linear`
-      bar.style.width = '100%'
+      bar.style.transition = `width ${STAGE_MS}ms linear`; bar.style.width = '100%'
     }
     function stopProg(idx, bar) {
       if (bar) { bar.style.transition = 'none'; bar.style.width = '0%' }
@@ -183,15 +146,12 @@ function LifecycleAccordion() {
         const body = item.querySelector('.lc2-body')
         const prog = item.querySelector('.lc2-prog-bar')
         if (i === idx) {
-          item.classList.add('lc2-open')
-          btn.setAttribute('aria-expanded', 'true')
+          item.classList.add('lc2-open'); btn.setAttribute('aria-expanded', 'true')
           body.style.maxHeight = body.scrollHeight + 'px'
           if (!reduced) startProg(i, prog)
         } else {
-          item.classList.remove('lc2-open')
-          btn.setAttribute('aria-expanded', 'false')
-          body.style.maxHeight = '0'
-          stopProg(i, prog)
+          item.classList.remove('lc2-open'); btn.setAttribute('aria-expanded', 'false')
+          body.style.maxHeight = '0'; stopProg(i, prog)
         }
       })
       activeIdx = idx
@@ -200,31 +160,23 @@ function LifecycleAccordion() {
     function scheduleNext() {
       clearTimeout(timer)
       if (paused || reduced) return
-      timer = setTimeout(() => {
-        const next = (activeIdx + 1) % items.length
-        openItem(next)
-        scheduleNext()
-      }, STAGE_MS)
+      timer = setTimeout(() => { const next = (activeIdx + 1) % items.length; openItem(next); scheduleNext() }, STAGE_MS)
     }
 
     items.forEach((item, i) => {
       const btn = item.querySelector('.lc2-trigger')
       btn.addEventListener('click', () => {
-        paused = true
-        clearTimeout(timer)
-        clearTimeout(resumeT)
+        paused = true; clearTimeout(timer); clearTimeout(resumeT)
         openItem(i)
         resumeT = setTimeout(() => { paused = false; scheduleNext() }, RESUME_MS)
       })
     })
 
     openItem(0)
-
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { scheduleNext(); obs.unobserve(e.target) } })
     }, { threshold: 0.2 })
     obs.observe(lcSection)
-
     return () => { clearTimeout(timer); clearTimeout(resumeT); obs.disconnect() }
   }, [])
 
@@ -264,7 +216,6 @@ function LifecycleAccordion() {
   )
 }
 
-/* ── Connected Services Visualization ── */
 function ConnectedServices() {
   useEffect(() => {
     const canvas = document.getElementById('svCanvas')
@@ -320,19 +271,16 @@ function ConnectedServices() {
         const dist = Math.sqrt(dx * dx + dy * dy)
         const perpX = -dy / dist * dist * 0.25
         const perpY = dx / dist * dist * 0.25
-        const cpx = (cx + px) / 2 + perpX
-        const cpy = (cy + py) / 2 + perpY
+        const cpx = (cx + px) / 2 + perpX, cpy = (cy + py) / 2 + perpY
         const d = `M${cx},${cy} Q${cpx},${cpy} ${px},${py}`
 
         const thread = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-        thread.setAttribute('d', d)
-        thread.setAttribute('class', 'sv-thread')
+        thread.setAttribute('d', d); thread.setAttribute('class', 'sv-thread')
         thread.style.animationDelay = (i * 0.28) + 's'
         svgEl.appendChild(thread)
 
         const glow = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-        glow.setAttribute('d', d)
-        glow.setAttribute('class', 'sv-thread-glow')
+        glow.setAttribute('d', d); glow.setAttribute('class', 'sv-thread-glow')
         glow.setAttribute('pathLength', '220')
         glow.style.animationDelay = (i * 0.35 + 0.6) + 's'
         glow.style.animationDuration = (2.4 + i * 0.18) + 's'
@@ -352,7 +300,7 @@ function ConnectedServices() {
       <div className="sv-inner">
         <div className="sv-head sec-head center reveal-up">
           <span className="eyebrow">One platform. Every service.</span>
-          <h2 style={{ fontSize: 'clamp(26px,3.2vw,40px)', marginTop: 10 }}>LauncherDesk connects your entire business.</h2>
+          <h2 style={{ fontSize: 'clamp(22px,3.2vw,40px)', marginTop: 10 }}>LauncherDesk connects your entire business.</h2>
           <p style={{ marginTop: 12, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>Every service, every category — accessible from a single accountable partner.</p>
         </div>
         <div className="sv-canvas reveal-up" id="svCanvas">
@@ -375,12 +323,10 @@ function ConnectedServices() {
   )
 }
 
-/* ── Stats Section ── */
 const LD_STATS = { businesses: '500+', services: '2,000+', cities: '25+', years: '8+' }
 const STAT_LABELS = { businesses: 'Businesses served', services: 'Services delivered', cities: 'Cities covered', years: 'Years of experience' }
 
 function StatsSection() {
-  const hasStats = !!LD_STATS
   return (
     <section className="section section-2" id="statsSection">
       <div className="wrap">
@@ -388,29 +334,18 @@ function StatsSection() {
           <span className="eyebrow">Proof, not promises</span>
           <h2>Built on real numbers.</h2>
         </div>
-        <div className="proof reveal-up" style={{ marginTop: 34 }} id="statsGrid">
-          {hasStats
-            ? Object.entries(LD_STATS).map(([k, v]) => (
-                <div key={k}>
-                  <div className="stat-n">{v}</div>
-                  <div className="stat-l">{STAT_LABELS[k]}</div>
-                </div>
-              ))
-            : Object.keys(STAT_LABELS).map(k => (
-                <div key={k}>
-                  <div className="stat-n" style={{ fontSize: 28, color: 'var(--text-3)', opacity: 0.35 }}>—</div>
-                  <div className="stat-l">{STAT_LABELS[k]}</div>
-                  <div className="stat-pending">Coming soon</div>
-                </div>
-              ))
-          }
+        <div className="proof reveal-up" style={{ marginTop: 34 }}>
+          {Object.entries(LD_STATS).map(([k, v]) => (
+            <div key={k}>
+              <div className="stat-n">{v}</div>
+              <div className="stat-l">{STAT_LABELS[k]}</div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   )
 }
-
-
 
 export default function HomePage() {
   return (
@@ -419,56 +354,58 @@ export default function HomePage() {
 
       {/* HERO */}
       <header className="page-hero">
-        <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '1.02fr .98fr', gap: 52, alignItems: 'center' }}>
-          <div className="reveal-up in">
-            <span className="eyebrow">One desk · Every stage</span>
-            <h1>Everything your business needs. <span className="grad-text">From first idea to full-scale growth.</span></h1>
-            <p className="lead">Start, structure, comply, protect and grow — with one accountable partner instead of five vendors. Tell us what you're building and we'll show you exactly what comes next.</p>
-            <div className="hero-cta">
-              <a href="/services#finder" className="btn btn-primary">Get Started <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-              <a href="/company/contact" className="btn btn-soft">Talk to an Expert</a>
-              <a href="/services" className="btn btn-quiet">Explore Services →</a>
-            </div>
-            <div style={{ display: 'flex', gap: 22, marginTop: 28, flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13.5, color: 'var(--text-2)' }}>
-                <svg style={{ width: 17, height: 17, stroke: 'var(--blue)' }} viewBox="0 0 24 24" fill="none" strokeWidth="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                Transparent, unbundled pricing
+        <div className="wrap">
+          <div className="hp-hero-grid">
+            <div className="reveal-up in">
+              <span className="eyebrow">One desk · Every stage</span>
+              <h1>Everything your business needs. <span className="grad-text">From first idea to full-scale growth.</span></h1>
+              <p className="lead">Start, structure, comply, protect and grow — with one accountable partner instead of five vendors. Tell us what you're building and we'll show you exactly what comes next.</p>
+              <div className="hero-cta">
+                <a href="/services#finder" className="btn btn-primary">Get Started <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                <a href="/company/contact" className="btn btn-soft">Talk to an Expert</a>
+                <a href="/services" className="btn btn-quiet">Explore Services →</a>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13.5, color: 'var(--text-2)' }}>
-                <svg style={{ width: 17, height: 17, stroke: 'var(--blue)' }} viewBox="0 0 24 24" fill="none" strokeWidth="2.2"><path d="M20 6 9 17l-5-5"/></svg>
-                Support that continues after you pay
+              <div className="hp-trust-row">
+                <div className="hp-trust-item">
+                  <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  Transparent, unbundled pricing
+                </div>
+                <div className="hp-trust-item">
+                  <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.2"><path d="M20 6 9 17l-5-5"/></svg>
+                  Support that continues after you pay
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Command Center Card */}
-          <div className="cc reveal-up in">
-            <div className="float float-1">
-              <span className="fi fi-green"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><path d="M20 6 9 17l-5-5"/></svg></span>
-              <span><b>GST Filing</b><small>Completed</small></span>
-            </div>
-            <div className="float float-2">
-              <span className="fi fi-amber"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-              <span><b>Trademark</b><small>In progress</small></span>
-            </div>
-            <div className="cc-panel">
-              <div className="cc-head">
-                <span className="t">
-                  <svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-                  Business Command Center
-                </span>
-                <span className="cc-live"><span className="pd"></span> Live</span>
+            {/* Command Center */}
+            <div className="cc reveal-up in">
+              <div className="float float-1">
+                <span className="fi fi-green"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span><b>GST Filing</b><small>Completed</small></span>
               </div>
-              <div className="cc-health">
-                <div className="lbl">Business health</div>
-                <div className="num" data-count="98">0<span>%</span></div>
-                <div className="cc-bar"><i data-fill="98"></i></div>
+              <div className="float float-2">
+                <span className="fi fi-amber"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+                <span><b>Trademark</b><small>In progress</small></span>
               </div>
-              <div className="cc-metrics">
-                <div className="cc-metric"><div className="k">Compliance</div><div className="v ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Up to date</div></div>
-                <div className="cc-metric"><div className="k">Tasks</div><div className="v pr"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 3 due</div></div>
-                <div className="cc-metric"><div className="k">Services</div><div className="v inf"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> 6 active</div></div>
-                <div className="cc-metric"><div className="k">Advisor</div><div className="v ok"><svg viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Available</div></div>
+              <div className="cc-panel">
+                <div className="cc-head">
+                  <span className="t">
+                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+                    Business Command Center
+                  </span>
+                  <span className="cc-live"><span className="pd"></span> Live</span>
+                </div>
+                <div className="cc-health">
+                  <div className="lbl">Business health</div>
+                  <div className="num" data-count="98">0<span>%</span></div>
+                  <div className="cc-bar"><i data-fill="98"></i></div>
+                </div>
+                <div className="cc-metrics">
+                  <div className="cc-metric"><div className="k">Compliance</div><div className="v ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Up to date</div></div>
+                  <div className="cc-metric"><div className="k">Tasks</div><div className="v pr"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 3 due</div></div>
+                  <div className="cc-metric"><div className="k">Services</div><div className="v inf"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> 6 active</div></div>
+                  <div className="cc-metric"><div className="k">Advisor</div><div className="v ok"><svg viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Available</div></div>
+                </div>
               </div>
             </div>
           </div>
@@ -479,14 +416,11 @@ export default function HomePage() {
       <section className="section-sm">
         <div className="wrap sec-head center reveal-up">
           <span className="eyebrow">What LauncherDesk does</span>
-          <h2 style={{ fontSize: 'clamp(24px,3vw,36px)' }}>We replace the scramble of managing a CA, a lawyer, a registration agent and an agency — with one team and one dashboard.</h2>
+          <h2 style={{ fontSize: 'clamp(20px,3vw,36px)' }}>We replace the scramble of managing a CA, a lawyer, a registration agent and an agency — with one team and one dashboard.</h2>
         </div>
       </section>
 
-      {/* LIFECYCLE ACCORDION */}
       <LifecycleAccordion />
-
-      {/* CONNECTED SERVICES */}
       <ConnectedServices />
 
       {/* WHERE TO START */}
@@ -595,7 +529,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* STATS */}
       <StatsSection />
 
       {/* FINAL CTA */}
@@ -611,7 +544,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
     </>
   )
 }

@@ -143,7 +143,7 @@ export default function ServicesIndex() {
               id="svcSearch"
               type="text"
               placeholder="Search services — e.g. GST, trademark, payroll…"
-              style={{ width: '100%', border: '1px solid var(--line)', borderRadius: 12, padding: '15px 18px', fontFamily: 'var(--font-body)', fontSize: 15, background: '#fff', boxShadow: 'var(--sh-sm)', outline: 'none' }}
+              style={{ width: '100%', border: '1px solid var(--line)', borderRadius: 12, padding: '13px 16px', fontFamily: 'var(--font-body)', fontSize: 15, background: '#fff', boxShadow: 'var(--sh-sm)', outline: 'none' }}
             />
           </div>
         </div>
