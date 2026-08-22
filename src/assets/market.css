@@ -1,0 +1,136 @@
+/* ============================================================
+   LauncherDesk Marketplace — styles
+   Loaded only on /market/ pages, on top of launcherdesk.css
+   ============================================================ */
+
+/* ---------- monogram tile ---------- */
+.mk-tile{width:52px;height:52px;border-radius:14px;flex:none;display:grid;place-items:center;
+  font-family:var(--font);font-weight:700;font-size:19px;color:#fff;letter-spacing:-.02em;
+  background:linear-gradient(140deg,var(--c),color-mix(in srgb,var(--c) 62%,#000));
+  box-shadow:0 8px 20px -8px color-mix(in srgb,var(--c) 70%,transparent)}
+.mk-tile.lg{width:76px;height:76px;border-radius:20px;font-size:27px}
+
+/* ---------- star rating ---------- */
+.mk-stars{position:relative;display:inline-block;line-height:0;white-space:nowrap;height:15px}
+.mk-stars .s-bg,.mk-stars .s-fg{display:inline-flex}
+.mk-stars svg{width:15px;height:15px;fill:currentColor;stroke:none}
+.mk-stars .s-bg{color:#dde5ec}
+.mk-stars .s-fg{position:absolute;left:0;top:0;overflow:hidden;color:#F5A623}
+.mk-rate{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--text-2)}
+.mk-rate b{font-family:var(--font);font-weight:700;color:var(--navy);font-size:13.5px}
+.mk-rev{color:var(--text-3);font-size:12.5px}
+.mk-price{font-family:var(--font);font-weight:700;font-size:13px;color:var(--blue-dark);white-space:nowrap}
+
+/* ---------- badges & chips ---------- */
+.mk-badge{font-family:var(--font);font-weight:700;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;
+  padding:5px 10px;border-radius:99px;background:rgba(4,125,204,.1);color:var(--blue-dark)}
+.mk-cat-chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--font);font-weight:600;
+  font-size:11.5px;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em}
+.mk-ci{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;flex:none}
+.mk-chk{width:17px;height:17px;stroke:var(--success);fill:none;stroke-width:2.6;flex:none;margin-top:2px}
+
+/* ---------- grids ---------- */
+.mk-cardgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.mk-catgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+
+/* ---------- product card ---------- */
+.mk-card{background:#fff;border-radius:18px;border:1px solid var(--line);padding:22px;display:flex;flex-direction:column;
+  box-shadow:var(--sh-sm);transition:transform .2s,box-shadow .2s,border-color .2s}
+.mk-card:hover{transform:translateY(-4px);box-shadow:var(--sh);border-color:rgba(4,125,204,.25)}
+.mk-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.mk-card h3{font-size:19px;margin:10px 0 2px}
+.mk-tag{font-size:13.5px;color:var(--blue-dark);font-weight:600;font-family:var(--font)}
+.mk-desc{font-size:13.5px;color:var(--text-2);margin-top:9px;line-height:1.55;flex:1}
+.mk-card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-2)}
+.mk-explore{margin-top:14px;display:inline-flex;align-items:center;gap:6px;font-family:var(--font);font-weight:700;
+  font-size:13.5px;color:var(--blue-dark)}
+.mk-card:hover .mk-explore{gap:9px}
+
+/* ---------- category card ---------- */
+.mk-catcard{background:#fff;border-radius:18px;border:1px solid var(--line);padding:24px;display:flex;gap:18px;
+  box-shadow:var(--sh-sm);transition:transform .2s,box-shadow .2s,border-color .2s}
+.mk-catcard:hover{transform:translateY(-4px);box-shadow:var(--sh);border-color:rgba(4,125,204,.25)}
+.mk-catic{width:54px;height:54px;flex:none;border-radius:14px;display:grid;place-items:center;background:var(--grad);box-shadow:var(--sh-blue)}
+.mk-catic svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:2}
+.mk-cattag{font-family:var(--font);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.mk-catbody h3{font-size:20px;margin:6px 0}
+.mk-catbody p{font-size:14px;color:var(--text-2);line-height:1.55}
+.mk-catlink{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-family:var(--font);font-weight:700;font-size:13.5px;color:var(--blue-dark)}
+
+/* ---------- index hero band ---------- */
+.mk-hero{padding:64px 0 40px;position:relative;overflow:hidden}
+.mk-hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(900px 420px at 80% -10%,rgba(36,154,226,.16),transparent 60%)}
+.mk-hero h1{font-size:clamp(34px,4.6vw,60px);font-weight:800;letter-spacing:-.03em;max-width:760px;margin-top:14px}
+.mk-hero .lead{font-size:19px;color:var(--text-2);margin-top:18px;max-width:600px}
+.mk-hero-stats{display:flex;gap:34px;margin-top:30px;flex-wrap:wrap}
+.mk-hero-stats .n{font-family:var(--font);font-weight:800;font-size:30px;color:var(--navy);letter-spacing:-.02em}
+.mk-hero-stats .l{font-size:13px;color:var(--text-2)}
+
+/* ---------- category page ---------- */
+.mk-cat-head{display:flex;gap:22px;align-items:flex-start}
+.mk-cathero-ic{width:64px;height:64px;flex:none;border-radius:18px;display:grid;place-items:center;background:var(--grad);box-shadow:var(--sh-blue)}
+.mk-cathero-ic svg{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:2}
+.mk-chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:6px}
+.mk-chip{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:99px;background:#fff;border:1px solid var(--line);
+  font-family:var(--font);font-weight:600;font-size:13.5px;color:var(--navy);transition:.15s;white-space:nowrap}
+.mk-chip:hover{border-color:rgba(4,125,204,.4);color:var(--blue-dark)}
+.mk-chip.on{background:var(--grad);color:#fff;border-color:transparent}
+.mk-chip.on svg{stroke:#fff}
+.mk-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:26px 0 22px;flex-wrap:wrap}
+.mk-search{position:relative;flex:1;min-width:220px;max-width:380px}
+.mk-search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;stroke:var(--text-3);fill:none;stroke-width:2}
+.mk-search input{width:100%;height:46px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 14px 0 40px;
+  font-family:var(--font-body);font-size:14.5px;color:var(--navy);outline:none;transition:.15s}
+.mk-search input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(4,125,204,.12)}
+.mk-tool-right{display:flex;align-items:center;gap:12px}
+.mk-result{font-size:13.5px;color:var(--text-2)}
+.mk-sort{height:46px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 14px;font-family:var(--font);font-weight:600;
+  font-size:14px;color:var(--navy);cursor:pointer;outline:none}
+.mk-empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--text-2);background:#fff;border-radius:16px;border:1px dashed var(--line)}
+
+/* ---------- product page ---------- */
+.mk-p-grid{display:grid;grid-template-columns:1fr 340px;gap:38px;align-items:start;padding-top:12px}
+.mk-p-head{display:flex;gap:20px;align-items:flex-start;margin-bottom:24px}
+.mk-p-head h1{font-size:clamp(28px,3.6vw,40px);font-weight:800;letter-spacing:-.02em;margin:8px 0 4px}
+.mk-p-tag{font-size:16px;color:var(--blue-dark);font-weight:600;font-family:var(--font)}
+.mk-p-meta{display:flex;align-items:center;gap:14px;margin-top:12px;flex-wrap:wrap}
+.mk-gallery{margin:8px 0 30px}
+.mk-shot-main{border-radius:16px;overflow:hidden;box-shadow:var(--sh);background:#fff}
+.mk-shot{display:block;width:100%;height:auto}
+.mk-thumbs{display:flex;gap:12px;margin-top:14px}
+.mk-thumb{flex:1;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;cursor:pointer;padding:0;transition:.15s;line-height:0}
+.mk-thumb:hover{border-color:rgba(4,125,204,.4)}
+.mk-thumb.on{border-color:var(--blue);box-shadow:0 0 0 3px rgba(4,125,204,.12)}
+.mk-p-section{margin-top:30px}
+.mk-p-section h2{font-size:22px;margin-bottom:12px}
+.mk-p-section p{color:var(--text-2);font-size:15.5px;line-height:1.7}
+.mk-feats{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px 22px}
+.mk-feats li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--navy);font-weight:500}
+
+/* buy box */
+.mk-p-side{position:sticky;top:92px}
+.mk-buybox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--sh-sm)}
+.mk-price-lg{font-family:var(--font);font-weight:800;font-size:24px;color:var(--navy);letter-spacing:-.02em;margin-bottom:16px}
+.mk-trust{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--text-2);line-height:1.5;
+  margin:16px 0;padding:12px;background:var(--bg);border-radius:12px}
+.mk-trust svg{stroke:var(--blue-dark);width:16px;height:16px;fill:none;stroke-width:2;flex:none;margin-top:1px}
+.mk-spec{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-top:1px solid var(--line-2);font-size:13.5px}
+.mk-spec span{color:var(--text-2)}
+.mk-spec b{font-family:var(--font);font-weight:700;color:var(--navy)}
+
+/* ---------- responsive ---------- */
+@media(max-width:900px){
+  .mk-cardgrid{grid-template-columns:1fr 1fr}
+  .mk-catgrid{grid-template-columns:1fr}
+  .mk-p-grid{grid-template-columns:1fr;gap:26px}
+  .mk-p-side{position:static}
+  .mk-buybox{max-width:420px}
+}
+@media(max-width:560px){
+  .mk-cardgrid{grid-template-columns:1fr}
+  .mk-feats{grid-template-columns:1fr}
+  .mk-cat-head{gap:16px}
+  .mk-toolbar{flex-direction:column;align-items:stretch}
+  .mk-search{max-width:none}
+  .mk-p-head{flex-direction:column;gap:14px}
+}
