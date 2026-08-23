@@ -39,17 +39,17 @@ export default function AiPage() {
       {/* Dark hero — no page-hero class, uses section-dark like the original */}
       <section className="section-dark" style={{padding:'52px 0 80px'}}>
         <div className="wrap">
-          <nav className="crumb reveal-up in" style={{color:'#a9c6dd'}}>
-            <a href="/" style={{color:'#a9c6dd'}}>Home</a>
-            <svg viewBox="0 0 24 24" style={{stroke:'#7fb4dc'}}><path d={CHEV}/></svg>
+          <nav className="crumb reveal-up in" style={{color:'#9ab5d4'}}>
+            <a href="/" style={{color:'#9ab5d4'}}>Home</a>
+            <svg viewBox="0 0 24 24" style={{stroke:'#6da8e0'}}><path d={CHEV}/></svg>
             <span className="cur" style={{color:'#fff'}}>LauncherDesk AI</span>
           </nav>
 
           <div className="ai-hero" style={{marginTop:22}}>
             <div className="reveal-up in">
-              <span className="eyebrow" style={{color:'#7fb4dc'}}>LauncherDesk AI</span>
+              <span className="eyebrow" style={{color:'#6da8e0'}}>LauncherDesk AI</span>
               <h1 style={{color:'#fff',fontSize:'clamp(34px,4.4vw,56px)',marginTop:14}}>Smart guidance for your business.</h1>
-              <p style={{color:'#a9c6dd',fontSize:18,marginTop:18,maxWidth:520}}>LauncherDesk brings expert guidance and AI assistance together. Ask anything about starting, managing and growing your business — a qualified LauncherDesk professional reviews and acts on your specific situation.</p>
+              <p style={{color:'#9ab5d4',fontSize:18,marginTop:18,maxWidth:520}}>LauncherDesk brings expert guidance and AI assistance together. Ask anything about starting, managing and growing your business — a qualified LauncherDesk professional reviews and acts on your specific situation.</p>
               <div className="hero-cta" style={{marginTop:26}}>
                 <button className="btn btn-light" data-open-ai="true">
                   Ask a question{' '}
@@ -80,7 +80,7 @@ export default function AiPage() {
                   <div><span className="sn">04</span> Trademark your store name</div>
                   <div><span className="sn">05</span> Current account &amp; payment gateway</div>
                 </div>
-                <div style={{marginTop:12,fontSize:12,color:'#8fb2ce'}}>General information — a LauncherDesk professional will confirm the specifics for your case.</div>
+                <div style={{marginTop:12,fontSize:12,color:'#7494b8'}}>General information — a LauncherDesk professional will confirm the specifics for your case.</div>
               </div>
             </div>
           </div>

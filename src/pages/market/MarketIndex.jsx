@@ -65,7 +65,7 @@ export default function MarketIndex() {
           <div className="card reveal-up" style={{ background: 'var(--navy)', color: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24, flexWrap: 'wrap', padding: '34px 38px' }}>
             <div>
               <h3 style={{ color: '#fff', fontSize: 24 }}>Not sure which tool fits?</h3>
-              <p style={{ color: '#a9c6dd', marginTop: 8, maxWidth: 520 }}>Tell us how you work and we'll recommend the right stack — then set it up, migrate your data and train your team.</p>
+              <p style={{ color: '#9ab5d4', marginTop: 8, maxWidth: 520 }}>Tell us how you work and we'll recommend the right stack — then set it up, migrate your data and train your team.</p>
             </div>
             <a className="btn btn-light" href="/company/contact">Talk to an Expert</a>
           </div>

@@ -23,18 +23,18 @@ function RoadmapSummary({ roadmap }) {
   const priClass = { hi: 'hi', mid: 'mid', low: 'low' }
   return (
     <div style={{
-      background: 'linear-gradient(160deg,#0d2340,#084C97)',
+      background: 'linear-gradient(160deg,#080F1E,#0F52C0)',
       borderRadius: 16,
       padding: '24px 26px',
       marginBottom: 24,
       color: '#fff',
     }}>
-      <div style={{ fontSize: 11, fontFamily: 'var(--font)', fontWeight: 800, letterSpacing: '.16em', textTransform: 'uppercase', color: '#7fb4dc', marginBottom: 6 }}>
+      <div style={{ fontSize: 11, fontFamily: 'var(--font)', fontWeight: 800, letterSpacing: '.16em', textTransform: 'uppercase', color: '#6da8e0', marginBottom: 6 }}>
         Your LauncherDesk Roadmap
       </div>
       <h3 style={{ color: '#fff', fontSize: 18, marginBottom: 4 }}>Here's what your business needs next</h3>
       {roadmap.answers && (
-        <div style={{ fontSize: 13, color: '#a9c6dd', marginBottom: 14, lineHeight: 1.6 }}>
+        <div style={{ fontSize: 13, color: '#9ab5d4', marginBottom: 14, lineHeight: 1.6 }}>
           {roadmap.answers.type && <span><b>What you're building:</b> {roadmap.answers.type} &nbsp;·&nbsp; </span>}
           {roadmap.answers.state && <span><b>State:</b> {roadmap.answers.state} &nbsp;·&nbsp; </span>}
           {roadmap.answers.founders && <span><b>Founders:</b> {roadmap.answers.founders} &nbsp;·&nbsp; </span>}
@@ -48,18 +48,18 @@ function RoadmapSummary({ roadmap }) {
               fontSize: 10.5, fontFamily: 'var(--font)', fontWeight: 700, letterSpacing: '.05em', textTransform: 'uppercase',
               padding: '4px 9px', borderRadius: 7, flex: 'none', marginTop: 2,
               background: item[2] === 'hi' ? '#fdeaea' : item[2] === 'mid' ? '#fff4e0' : 'rgba(255,255,255,.12)',
-              color: item[2] === 'hi' ? '#c0392b' : item[2] === 'mid' ? '#b7791f' : '#a9c6dd',
+              color: item[2] === 'hi' ? '#c0392b' : item[2] === 'mid' ? '#b7791f' : '#9ab5d4',
             }}>
               {priLabel[item[2]] || item[2]}
             </span>
             <div>
               <b style={{ fontFamily: 'var(--font)', fontSize: 14.5, color: '#fff', display: 'block' }}>{item[0]}</b>
-              <p style={{ fontSize: 13, color: '#a9c6dd', marginTop: 2 }}>{item[1]}</p>
+              <p style={{ fontSize: 13, color: '#9ab5d4', marginTop: 2 }}>{item[1]}</p>
             </div>
           </div>
         ))}
       </div>
-      <p style={{ fontSize: 11.5, color: '#7fb4dc', marginTop: 14, lineHeight: 1.5 }}>
+      <p style={{ fontSize: 11.5, color: '#6da8e0', marginTop: 14, lineHeight: 1.5 }}>
         General guidance based on your answers. A qualified LauncherDesk professional confirms specifics before anything is filed.
       </p>
     </div>

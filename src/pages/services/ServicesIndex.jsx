@@ -128,7 +128,7 @@ function ServiceFinder() {
         <p>Personalised to your business type, location, size and stage.</p>
         <div className="finder-prog">
           <div className="bar">
-            <i style={{ display: 'block', height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg,#249AE2,#7fe0a8)', transition: 'width .4s' }}></i>
+            <i style={{ display: 'block', height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg,#3B8FEF,#7fe0a8)', transition: 'width .4s' }}></i>
           </div>
           <div className="step-lbl">{done ? 'Your roadmap is ready' : `Step ${step + 1} of ${total}`}</div>
         </div>

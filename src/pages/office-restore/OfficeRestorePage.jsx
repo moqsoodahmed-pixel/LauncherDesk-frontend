@@ -6,27 +6,27 @@ const CHECK = 'M9 11l3 3L22 4'
 const SEND = 'M22 2 11 13M22 2l-7 20-4-9-9-4z'
 
 const orStyles = `
-.or-hero{padding:64px 0 56px;position:relative;overflow:hidden;background:linear-gradient(160deg,#0b1f36 0%,#102A43 60%,#1F3C5C 100%)}
-.or-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 500px at 80% -10%,rgba(36,154,226,.28),transparent 60%),radial-gradient(400px 300px at 10% 100%,rgba(8,76,151,.22),transparent 60%);pointer-events:none}
+.or-hero{padding:64px 0 56px;position:relative;overflow:hidden;background:linear-gradient(160deg,#080F1E 0%,#0D1F3C 60%,#162B52 100%)}
+.or-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 500px at 80% -10%,rgba(59,143,239,.28),transparent 60%),radial-gradient(400px 300px at 10% 100%,rgba(15,82,192,.22),transparent 60%);pointer-events:none}
 .or-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;position:relative}
-.or-eyebrow{font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#7fb4dc;margin-bottom:14px}
+.or-eyebrow{font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#6da8e0;margin-bottom:14px}
 .or-hero h1{font-size:clamp(36px,4.8vw,62px);font-weight:800;letter-spacing:-.03em;line-height:1.04;color:#fff;margin-bottom:20px}
-.or-hero h1 span{background:linear-gradient(118deg,#7ecef4,#249AE2);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.or-hero p{font-size:17px;color:#a9c6dd;line-height:1.7;max-width:500px;margin-bottom:32px}
+.or-hero h1 span{background:linear-gradient(118deg,#7ecef4,#3B8FEF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.or-hero p{font-size:17px;color:#9ab5d4;line-height:1.7;max-width:500px;margin-bottom:32px}
 .or-hero-badges{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px}
-.or-badge{display:flex;align-items:center;gap:9px;font-size:13px;color:#7fb4dc}
-.or-badge svg{width:16px;height:16px;stroke:#249AE2;fill:none;stroke-width:2;flex:none}
+.or-badge{display:flex;align-items:center;gap:9px;font-size:13px;color:#6da8e0}
+.or-badge svg{width:16px;height:16px;stroke:#3B8FEF;fill:none;stroke-width:2;flex:none}
 .or-hero-visual-inner{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;box-shadow:0 40px 80px -20px rgba(0,0,0,.4)}
 .or-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,.08);border-radius:12px;overflow:hidden;margin-bottom:20px}
-.or-stat{background:#0f2a43;padding:16px;text-align:center}
+.or-stat{background:#0A1A30;padding:16px;text-align:center}
 .or-stat .n{font-family:var(--font);font-weight:800;font-size:26px;color:#fff;letter-spacing:-.02em}
-.or-stat .l{font-size:11px;color:#6fa5c8;margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
+.or-stat .l{font-size:11px;color:#5e7fa0;margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
 .or-mini-items{display:flex;flex-direction:column;gap:8px}
 .or-mini-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border-radius:10px;padding:10px 14px}
 .or-mini-ic{width:32px;height:32px;border-radius:8px;background:rgba(36,154,226,.2);display:grid;place-items:center;flex:none}
-.or-mini-ic svg{width:16px;height:16px;stroke:#7ecef4;fill:none;stroke-width:2}
-.or-mini-txt b{font-family:var(--font);font-size:13.5px;color:#e8f4fd;display:block;font-weight:600}
-.or-mini-txt span{font-size:11.5px;color:#6fa5c8}
+.or-mini-ic svg{width:16px;height:16px;stroke:#6da8e0;fill:none;stroke-width:2}
+.or-mini-txt b{font-family:var(--font);font-size:13.5px;color:#e4eef9;display:block;font-weight:600}
+.or-mini-txt span{font-size:11.5px;color:#5e7fa0}
 .or-cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .or-cat{background:#fff;border-radius:18px;border:1px solid var(--line);overflow:hidden;transition:transform .2s,box-shadow .2s}
 .or-cat:hover{transform:translateY(-4px);box-shadow:var(--sh)}
@@ -65,20 +65,20 @@ const orStyles = `
 .or-wa-consent label{font-size:13px;color:var(--text-2);line-height:1.5;cursor:pointer}
 .or-submit{width:100%;margin-top:22px}
 .or-submit-disc{text-align:center;font-size:12px;color:var(--text-3);margin-top:10px}
-.or-summary{background:linear-gradient(165deg,#102A43,#0b1f36);border-radius:20px;padding:28px;position:sticky;top:90px;color:#fff}
+.or-summary{background:linear-gradient(165deg,#0D1F3C,#080F1E);border-radius:20px;padding:28px;position:sticky;top:90px;color:#fff}
 .or-summary h4{font-size:17px;color:#fff;margin-bottom:6px}
-.or-summary .sub{font-size:13px;color:#89a6c2;margin-bottom:24px}
+.or-summary .sub{font-size:13px;color:#7494b8;margin-bottom:24px}
 .or-sum-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.07)}
 .or-sum-row:last-of-type{border-bottom:0}
-.or-sum-row .k{font-size:13px;color:#7fb4dc}
+.or-sum-row .k{font-size:13px;color:#6da8e0}
 .or-sum-row .v{font-family:var(--font);font-weight:700;font-size:14px;color:#fff}
-.or-sum-row .v.dim{color:#4a7a9b;font-weight:500;font-size:13px}
-.or-quote-box{background:rgba(36,154,226,.12);border:1px solid rgba(36,154,226,.25);border-radius:14px;padding:18px;margin-top:20px}
-.or-quote-box .ql{font-size:12px;color:#7ecef4;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:4px}
-.or-quote-box .qv{font-family:var(--font);font-weight:800;font-size:22px;color:#249AE2}
-.or-quote-box .qd{font-size:11.5px;color:#6fa5c8;margin-top:8px;line-height:1.5}
+.or-sum-row .v.dim{color:#3d618a;font-weight:500;font-size:13px}
+.or-quote-box{background:rgba(29,111,224,.12);border:1px solid rgba(29,111,224,.25);border-radius:14px;padding:18px;margin-top:20px}
+.or-quote-box .ql{font-size:12px;color:#6da8e0;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:4px}
+.or-quote-box .qv{font-family:var(--font);font-weight:800;font-size:22px;color:#3B8FEF}
+.or-quote-box .qd{font-size:11.5px;color:#5e7fa0;margin-top:8px;line-height:1.5}
 .or-trust-pills{display:flex;gap:7px;margin-top:18px;flex-wrap:wrap}
-.or-trust-pill{font-family:var(--font);font-size:11px;font-weight:600;padding:5px 10px;border-radius:99px;background:rgba(255,255,255,.07);color:#89a6c2}
+.or-trust-pill{font-family:var(--font);font-size:11px;font-weight:600;padding:5px 10px;border-radius:99px;background:rgba(255,255,255,.07);color:#7494b8}
 .or-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
 .or-flow::before{content:"";position:absolute;top:28px;left:calc(12.5%);right:calc(12.5%);height:2px;background:linear-gradient(90deg,var(--blue),var(--blue-bright));opacity:.3;z-index:0}
 .or-step{text-align:center;padding:0 16px;position:relative;z-index:1}
@@ -129,12 +129,12 @@ const DELIVERABLES = ['Floor Mats / Carpet Tiles','Mobile Drawer Pedestals','Cup
 const STATES = ['Andhra Pradesh','Assam','Bihar','Chhattisgarh','Delhi','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Odisha','Punjab','Rajasthan','Tamil Nadu','Telangana','Uttar Pradesh','Uttarakhand','West Bengal','Other']
 
 const CATS = [
-  { label:'Flooring', bg:'linear-gradient(135deg,#1a3a5c,#2d6a8a)', title:'Premium Floor Mats & Carpet Tiles', desc:'Ergonomic, dust-resistant carpet tiling and specialised floor mats customised to fit your office corridors and open work spaces perfectly.', specs:['Dust-resistant fabric','High durability, anti-slip','Multiple colour schemes'] },
-  { label:'Seating', bg:'linear-gradient(135deg,#0d2340,#173a5e)', title:'Ergonomic Office Chairs', desc:'Premium high-back and mid-back mesh office chairs featuring adjustable lumbar support and pneumatics for maximum sitting comfort.', specs:['Ergonomic mesh back','Adjustable height & tilt','3D adjustable armrests'] },
-  { label:'Workstations', bg:'linear-gradient(135deg,#1F3C5C,#084C97)', title:'Workstations & Conference Tables', desc:'Linear and cluster desk workstations designed for productivity. Includes colourful acrylic dividers, internal cable management, and durable surfaces.', specs:['Durable pre-lam board','Powder-coated metal frames','Built-in raceways for cables'] },
-  { label:'Storage', bg:'linear-gradient(135deg,#102A43,#1a3a5c)', title:'Mobile Drawer Pedestals', desc:'Compact mobile pedestal units on smooth wheels. Perfect for secure storage of official documents and employee personal items.', specs:['Central locking system','Three-drawer design','Mobile caster wheels'] },
-  { label:'Cabinets', bg:'linear-gradient(135deg,#0b1f36,#173a5e)', title:'Office Cupboards & Storage Cabinets', desc:'Spacious wooden and metal storage cupboards designed for archiving corporate files, storing supplies and maintaining clean office organisation.', specs:['Heavy-gauge metal or premium ply','Adjustable shelf heights','Multi-point secure lock'] },
-  { label:'Partitions', bg:'linear-gradient(135deg,#1a3a5c,#249AE2)', title:'Office Partitions & Dividers', desc:'Modular partition systems with glass, fabric or acrylic infill panels. Ideal for creating private cabins, team bays, or collaborative zones.', specs:['Modular, reconfigurable','Glass / fabric / acrylic infill','Floor-to-ceiling options'] },
+  { label:'Flooring', bg:'linear-gradient(135deg,#162B52,#1D4E8A)', title:'Premium Floor Mats & Carpet Tiles', desc:'Ergonomic, dust-resistant carpet tiling and specialised floor mats customised to fit your office corridors and open work spaces perfectly.', specs:['Dust-resistant fabric','High durability, anti-slip','Multiple colour schemes'] },
+  { label:'Seating', bg:'linear-gradient(135deg,#080F1E,#162B52)', title:'Ergonomic Office Chairs', desc:'Premium high-back and mid-back mesh office chairs featuring adjustable lumbar support and pneumatics for maximum sitting comfort.', specs:['Ergonomic mesh back','Adjustable height & tilt','3D adjustable armrests'] },
+  { label:'Workstations', bg:'linear-gradient(135deg,#1D3664,#0F52C0)', title:'Workstations & Conference Tables', desc:'Linear and cluster desk workstations designed for productivity. Includes colourful acrylic dividers, internal cable management, and durable surfaces.', specs:['Durable pre-lam board','Powder-coated metal frames','Built-in raceways for cables'] },
+  { label:'Storage', bg:'linear-gradient(135deg,#0D1F3C,#162B52)', title:'Mobile Drawer Pedestals', desc:'Compact mobile pedestal units on smooth wheels. Perfect for secure storage of official documents and employee personal items.', specs:['Central locking system','Three-drawer design','Mobile caster wheels'] },
+  { label:'Cabinets', bg:'linear-gradient(135deg,#080F1E,#162B52)', title:'Office Cupboards & Storage Cabinets', desc:'Spacious wooden and metal storage cupboards designed for archiving corporate files, storing supplies and maintaining clean office organisation.', specs:['Heavy-gauge metal or premium ply','Adjustable shelf heights','Multi-point secure lock'] },
+  { label:'Partitions', bg:'linear-gradient(135deg,#162B52,#3B8FEF)', title:'Office Partitions & Dividers', desc:'Modular partition systems with glass, fabric or acrylic infill panels. Ideal for creating private cabins, team bays, or collaborative zones.', specs:['Modular, reconfigurable','Glass / fabric / acrylic infill','Floor-to-ceiling options'] },
 ]
 
 const FAQS = [
@@ -215,9 +215,9 @@ export default function OfficeRestorePage() {
       <section className="or-hero">
         <div className="wrap">
           <nav className="crumb reveal-up in" style={{ marginBottom: 28 }}>
-            <a href="/" style={{ color: '#6fa5c8' }}>Home</a>
-            <svg viewBox="0 0 24 24" style={{ stroke: '#4a6b82' }}><path d={CHEV}/></svg>
-            <span className="cur" style={{ color: '#a9c6dd' }}>Office Setup</span>
+            <a href="/" style={{ color: '#5e7fa0' }}>Home</a>
+            <svg viewBox="0 0 24 24" style={{ stroke: '#3d618a' }}><path d={CHEV}/></svg>
+            <span className="cur" style={{ color: '#9ab5d4' }}>Office Setup</span>
           </nav>
           <div className="or-hero-grid">
             <div className="reveal-up in">
@@ -404,9 +404,9 @@ export default function OfficeRestorePage() {
       <section className="section section-dark">
         <div className="wrap">
           <div className="sec-head center reveal-up" style={{ marginBottom: 52 }}>
-            <span className="eyebrow" style={{ color: '#7ecef4' }}>Process</span>
+            <span className="eyebrow" style={{ color: '#6da8e0' }}>Process</span>
             <h2 style={{ color: '#fff', fontSize: 'clamp(26px,3.2vw,40px)', marginTop: 10 }}>End-to-End Workflow</h2>
-            <p style={{ color: '#a9c6dd' }}>How LauncherDesk manages your corporate furniture procurement and layout execution.</p>
+            <p style={{ color: '#9ab5d4' }}>How LauncherDesk manages your corporate furniture procurement and layout execution.</p>
           </div>
           <div className="or-flow">
             {[

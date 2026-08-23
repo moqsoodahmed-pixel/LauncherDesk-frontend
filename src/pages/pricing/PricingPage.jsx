@@ -118,9 +118,9 @@ export default function PricingPage() {
         <div className="wrap">
           <div className="card reveal-up" style={{background:'var(--navy)',color:'#fff',display:'flex',justifyContent:'space-between',alignItems:'center',gap:24,flexWrap:'wrap',padding:'34px 38px'}}>
             <div>
-              <div style={{fontSize:11,fontFamily:'var(--font)',fontWeight:800,letterSpacing:'.14em',textTransform:'uppercase',color:'#7fb4dc',marginBottom:8}}>CUSTOM REQUIREMENT</div>
+              <div style={{fontSize:11,fontFamily:'var(--font)',fontWeight:800,letterSpacing:'.14em',textTransform:'uppercase',color:'#6da8e0',marginBottom:8}}>CUSTOM REQUIREMENT</div>
               <h3 style={{color:'#fff',fontSize:22,marginBottom:8}}>Need something specific?</h3>
-              <p style={{color:'#a9c6dd',maxWidth:520}}>Need a specific service not in the plans above? Or a combination of services tailored to your business? Tell us what you need — we'll put together the right recommendation and a clear quote.</p>
+              <p style={{color:'#9ab5d4',maxWidth:520}}>Need a specific service not in the plans above? Or a combination of services tailored to your business? Tell us what you need — we'll put together the right recommendation and a clear quote.</p>
             </div>
             <a className="btn btn-light" style={{flexShrink:0}} href="/company/contact">Get a Custom Quote</a>
           </div>

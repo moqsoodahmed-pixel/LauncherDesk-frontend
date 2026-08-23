@@ -37,9 +37,9 @@ const homepageStyles = `
 .sv-head{text-align:center;margin-bottom:52px}
 .sv-nodes{position:absolute;inset:0;pointer-events:none}
 .sv-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-.sv-center{position:relative;z-index:3;width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,#0b1f36,#1F3C5C);border:2px solid rgba(36,154,226,.35);box-shadow:0 0 0 12px rgba(4,125,204,.07),0 0 0 26px rgba(4,125,204,.04),0 20px 50px rgba(8,76,151,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex:none}
+.sv-center{position:relative;z-index:3;width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,#080F1E,#1D3664);border:2px solid rgba(59,143,239,.35);box-shadow:0 0 0 12px rgba(29,111,224,.07),0 0 0 26px rgba(29,111,224,.04),0 20px 50px rgba(15,82,192,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex:none}
 .sv-center-brand{font-family:var(--font);font-weight:800;font-size:15px;color:#fff;letter-spacing:-.01em;line-height:1.2}
-.sv-center-sub{font-size:10px;color:#7ecef4;margin-top:3px;font-family:var(--font);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.sv-center-sub{font-size:10px;color:#6da8e0;margin-top:3px;font-family:var(--font);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
 .sv-center::before,.sv-center::after{content:"";position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(36,154,226,.18);animation:svPulse 3.2s ease-in-out infinite}
 .sv-center::after{inset:-30px;animation-delay:1.6s}
 @keyframes svPulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.15;transform:scale(1.04)}}
@@ -238,7 +238,7 @@ function ConnectedServices() {
       nodes.forEach((node, i) => { node.style.left = positions[i].x + 'px'; node.style.top = positions[i].y + 'px' })
       svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`); svgEl.innerHTML = ''
       const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs')
-      defs.innerHTML = '<linearGradient id="svGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#084C97"/><stop offset="100%" stop-color="#249AE2"/></linearGradient>'
+      defs.innerHTML = '<linearGradient id="svGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#0F52C0"/><stop offset="100%" stop-color="#3B8FEF"/></linearGradient>'
       svgEl.appendChild(defs)
       nodes.forEach((node, i) => {
         const px = positions[i].x, py = positions[i].y, dx = px - cx, dy = py - cy, dist = Math.sqrt(dx*dx+dy*dy)
