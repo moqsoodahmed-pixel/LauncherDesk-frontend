@@ -3,8 +3,8 @@
 export const SERVICES = {
   'private-limited-company-registration': {
     title: 'Private Limited Company Registration',
-    metaTitle: 'Private Limited Company Registration — LauncherDesk',
-    metaDesc: 'Register a Private Limited Company in India with LauncherDesk. Overview, eligibility, documents, process, timeline, transparent pricing and Pvt Ltd vs LLP comparison.',
+    metaTitle: 'Private Limited Company Registration in India | LauncherDesk',
+    metaDesc: 'Register your Private Limited Company in 7–10 working days. Includes DSC, DIN, MOA & AOA, PAN, TAN and incorporation certificate. One point of contact.',
     eyebrow: 'Start your business',
     crumbCategory: 'Start your business',
     lead: "The standard structure for startups that want limited liability, credibility and the ability to raise investment. We handle the entire MCA process end to end.",
@@ -101,8 +101,8 @@ export const SERVICES = {
 
   'gst-registration': {
     title: 'GST Registration & Return Filing',
-    metaTitle: 'GST Registration & Filing — LauncherDesk',
-    metaDesc: 'Register for GST and stay compliant with ongoing return filing. Eligibility, documents, process, timelines and transparent pricing from LauncherDesk.',
+    metaTitle: 'GST Registration in India | Get Your GSTIN | LauncherDesk',
+    metaDesc: 'Apply for GST registration in India and get your GSTIN. Required for businesses with turnover above the threshold or selling goods and services inter-state.',
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "Register for GST and keep monthly, quarterly and annual returns filed on time — so a missed deadline never becomes a penalty or a blocked input credit.",
@@ -150,8 +150,8 @@ export const SERVICES = {
 
   'llp-registration': {
     title: 'LLP Registration',
-    metaTitle: 'LLP Registration — LauncherDesk',
-    metaDesc: 'Register a Limited Liability Partnership in India — the structure built for partner-run firms that want limited liability without heavy compliance.',
+    metaTitle: 'LLP Registration in India | Limited Liability Partnership | LauncherDesk',
+    metaDesc: 'Register a Limited Liability Partnership (LLP) in India with LauncherDesk. Includes LLP agreement, DPIN, incorporation filing and certificate. One point of contact.',
     eyebrow: 'Start your business',
     crumbCategory: 'Start your business',
     lead: "A partner-owned structure that combines limited liability with lower compliance than a Private Limited Company. Popular with professional and services firms.",
@@ -193,8 +193,8 @@ export const SERVICES = {
 
   'opc-registration': {
     title: 'OPC Registration',
-    metaTitle: 'OPC Registration — LauncherDesk',
-    metaDesc: 'Register a One Person Company — the right-sized structure for a solo founder who wants limited liability without bringing in a co-founder.',
+    metaTitle: 'One Person Company Registration in India | OPC | LauncherDesk',
+    metaDesc: 'Register a One Person Company (OPC) in India. Full corporate status for solo founders. Includes all documentation, filing and incorporation certificate.',
     eyebrow: 'Start your business',
     crumbCategory: 'Start your business',
     lead: "Built for solo founders. An OPC gives you the limited liability and credibility of a company structure without needing a second shareholder.",
@@ -277,8 +277,8 @@ export const SERVICES = {
 
   'msme-registration': {
     title: 'MSME / Udyam Registration',
-    metaTitle: 'MSME / Udyam Registration — LauncherDesk',
-    metaDesc: 'Register your business under Udyam (MSME) to unlock government benefits, subsidies and easier access to credit.',
+    metaTitle: 'MSME Udyam Registration in India | LauncherDesk',
+    metaDesc: 'Register your business as an MSME on the Udyam portal. Access government benefits, priority lending, subsidies and tender preferences.',
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "A quick registration that unlocks collateral-free loans, subsidies, delayed-payment protection and priority in government tenders.",
@@ -360,8 +360,8 @@ export const SERVICES = {
 
   'trademark-registration': {
     title: 'Trademark Registration',
-    metaTitle: 'Trademark Registration — LauncherDesk',
-    metaDesc: "Protect your brand name and logo with LauncherDesk's trademark registration service — search, filing, classes, timelines and transparent pricing.",
+    metaTitle: 'Trademark Registration in India | Protect Your Brand | LauncherDesk',
+    metaDesc: 'Register your trademark in India and protect your brand name, logo and identity. Application filing, class guidance and TM certificate support by LauncherDesk.',
     eyebrow: 'Protect & grow',
     crumbCategory: 'Legal & IP',
     lead: "Your brand name is one of your most valuable assets — and one of the easiest to lose if you don't register it. We search, file and track your trademark through to registration.",
@@ -404,8 +404,8 @@ export const SERVICES = {
 
   'roc-compliance': {
     title: 'ROC & Annual Compliance',
-    metaTitle: 'ROC & Annual Compliance — LauncherDesk',
-    metaDesc: 'Stay penalty-free with proactive ROC annual filing, board resolutions and statutory compliance for your Private Limited Company or LLP.',
+    metaTitle: 'ROC Annual Compliance for Private Limited Companies & LLPs India | LauncherDesk',
+    metaDesc: 'Stay compliant with MCA ROC filings. Annual returns, financial statement filing, board resolutions and statutory compliance for Pvt Ltd and LLP companies.',
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "Every registered company and LLP has mandatory annual filings — miss them and penalties compound daily. We track deadlines and file on your behalf.",
@@ -446,8 +446,8 @@ export const SERVICES = {
 
   'accounting': {
     title: 'Accounting & Bookkeeping',
-    metaTitle: 'Accounting & Bookkeeping — LauncherDesk',
-    metaDesc: 'Outsourced accounting and bookkeeping — accurate books, financial statements and tax-ready records, handled monthly.',
+    metaTitle: 'Accounting & Bookkeeping Services for Businesses India | LauncherDesk',
+    metaDesc: 'Professional accounting and bookkeeping for startups and small businesses in India. Monthly accounts, financial statements, bank reconciliation and reporting.',
     eyebrow: 'Manage your business',
     crumbCategory: 'Manage your business',
     lead: "Clean, up-to-date books aren't optional — they're what your GST returns, ROC filings and investor conversations all depend on.",
@@ -488,8 +488,8 @@ export const SERVICES = {
 
   'payroll': {
     title: 'Payroll Management',
-    metaTitle: 'Payroll Management — LauncherDesk',
-    metaDesc: 'Salary processing, TDS, PF and ESI compliance handled monthly — accurate payroll without an in-house HR/finance team.',
+    metaTitle: 'Payroll Management Services India | Salary Processing & PF/ESI | LauncherDesk',
+    metaDesc: 'Managed payroll processing for businesses in India. Salary calculation, payslips, PF, ESI, PT and TDS on salary — handled monthly by LauncherDesk.',
     eyebrow: 'Manage your business',
     crumbCategory: 'Manage your business',
     lead: "From your first hire onward, payroll compliance gets complex fast. We handle salary processing and the statutory filings that come with it.",
@@ -530,8 +530,8 @@ export const SERVICES = {
 
   'business-automation': {
     title: 'Business Automation',
-    metaTitle: 'Business Automation — LauncherDesk',
-    metaDesc: 'Website, CRM and workflow automation that removes manual busywork as your business scales.',
+    metaTitle: 'Business Process Automation for SMEs | LauncherDesk India',
+    metaDesc: 'Automate repetitive business tasks — CRM workflows, email automation, reporting, WhatsApp notifications and internal process automation for SMEs.',
     eyebrow: 'Protect & grow',
     crumbCategory: 'Protect & grow',
     lead: "As you grow, manual processes start costing more than they save. We set up the systems — website, CRM and automation — that scale with you.",
@@ -572,8 +572,8 @@ export const SERVICES = {
 
   'digital-marketing': {
     title: 'Digital Marketing & Branding',
-    metaTitle: 'Digital Marketing & Branding — LauncherDesk',
-    metaDesc: 'Website, branding and demand generation to help your business get found and grow — built alongside your legal and compliance foundation.',
+    metaTitle: 'SEO & Digital Marketing for Startups India | LauncherDesk',
+    metaDesc: 'SEO, content marketing and performance marketing for startups and SMEs in India. Organic growth, keyword strategy, on-page SEO and lead generation.',
     eyebrow: 'Protect & grow',
     crumbCategory: 'Protect & grow',
     lead: "Registration and compliance get you legally ready. Digital marketing gets you actually found — website, branding, and demand generation that fits your stage.",

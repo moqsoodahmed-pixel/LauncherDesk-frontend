@@ -136,8 +136,8 @@ export default function ServicesIndex() {
             <span className="cur">Services</span>
           </nav>
           <span className="eyebrow reveal-up in" style={{ marginTop: 16, display: 'block' }}>Service catalog</span>
-          <h1 className="reveal-up in">Business services, organized around what you need.</h1>
-          <p className="lead reveal-up in">Not a wall of links. Search for a service, browse by stage, or answer a few questions and let us build the roadmap.</p>
+          <h1 className="reveal-up in">Business solutions for every stage.</h1>
+          <p className="lead reveal-up in">Whether you're registering your first company or scaling your tenth — find, arrange and coordinate the services your business needs, at every stage.</p>
           <div className="reveal-up in" style={{ marginTop: 24, maxWidth: 520, position: 'relative' }}>
             <input
               id="svcSearch"
@@ -153,8 +153,8 @@ export default function ServicesIndex() {
       <section className="section-sm">
         <div className="wrap">
           <div className="sec-head reveal-up">
-            <span className="eyebrow">By category</span>
-            <h2 style={{ fontSize: 'clamp(26px,3vw,38px)' }}>Six areas, one partner</h2>
+            <span className="eyebrow">Organised by stage</span>
+            <h2 style={{ fontSize: 'clamp(26px,3vw,38px)' }}>START · BUILD · MANAGE · GROW · EXPAND</h2>
           </div>
           <div className="grid-3" id="svcList" style={{ marginTop: 32 }}>
             {CATEGORIES.map(cat => (
@@ -223,8 +223,8 @@ export default function ServicesIndex() {
       <section className="section">
         <div className="wrap">
           <div className="final reveal-up">
-            <h2>Prefer to talk it through?</h2>
-            <p>A LauncherDesk expert can review your situation and recommend the right services.</p>
+            <h2>Not sure where to start?</h2>
+            <p>Tell us about your business. We'll understand your requirement and guide you on the right starting point — no obligation.</p>
             <div className="row">
               <a href="/company/contact" className="btn btn-light">Talk to an Expert</a>
               <button className="btn btn-ghost-d" data-open-ai="true">Ask LauncherDesk AI</button>

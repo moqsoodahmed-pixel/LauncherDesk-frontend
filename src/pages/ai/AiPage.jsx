@@ -48,8 +48,8 @@ export default function AiPage() {
           <div className="ai-hero" style={{marginTop:22}}>
             <div className="reveal-up in">
               <span className="eyebrow" style={{color:'#7fb4dc'}}>LauncherDesk AI</span>
-              <h1 style={{color:'#fff',fontSize:'clamp(34px,4.4vw,56px)',marginTop:14}}>Your business questions, answered.</h1>
-              <p style={{color:'#a9c6dd',fontSize:18,marginTop:18,maxWidth:520}}>Ask anything about starting, managing and growing your business — in plain language. LauncherDesk AI maps your situation to a real roadmap and hands you to a qualified expert the moment judgment is needed.</p>
+              <h1 style={{color:'#fff',fontSize:'clamp(34px,4.4vw,56px)',marginTop:14}}>Smart guidance for your business.</h1>
+              <p style={{color:'#a9c6dd',fontSize:18,marginTop:18,maxWidth:520}}>LauncherDesk brings expert guidance and AI assistance together. Ask anything about starting, managing and growing your business — a qualified LauncherDesk professional reviews and acts on your specific situation.</p>
               <div className="hero-cta" style={{marginTop:26}}>
                 <button className="btn btn-light" data-open-ai="true">
                   Ask a question{' '}

@@ -13,6 +13,7 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="wrap">
         <div className="foot-cols">
+          {/* Col 1 — Brand + description */}
           <div>
             <Link className="brand" to="/">
               <span className="mk">
@@ -22,39 +23,71 @@ export default function Footer() {
               </span>
               <span className="txt">Launcher<b>Desk</b></span>
             </Link>
-            <p className="foot-desc">One desk for your whole business — from first registration to funding.</p>
+            <p style={{marginTop:10,fontSize:12.5,color:'#7fb4dc',fontWeight:700,letterSpacing:'.04em',textTransform:'uppercase'}}>Your Business HQ.</p>
+            <p style={{marginTop:2,fontSize:12.5,color:'#6b90aa',fontWeight:600,marginBottom:12}}>Launch. Manage. Grow.</p>
+            <p className="foot-desc">LauncherDesk helps founders and businesses access, coordinate and manage the services they need — from company registration and compliance to technology, finance, marketing and growth.</p>
           </div>
+
+          {/* Col 2 — START */}
           <div>
-            <h5>Registrations</h5>
-            <Fl href="/services/private-limited-company-registration">Company Registration</Fl>
+            <h5>START</h5>
+            <Fl href="/services/private-limited-company-registration">Private Limited Company Registration</Fl>
             <Fl href="/services/llp-registration">LLP Registration</Fl>
+            <Fl href="/services/opc-registration">One Person Company Registration</Fl>
             <Fl href="/services/gst-registration">GST Registration</Fl>
-            <Fl href="/services/trademark-registration">Trademark &amp; IP</Fl>
+            <Fl href="/services">Startup India / DPIIT</Fl>
+            <Fl href="/services/trademark-registration">Trademark Registration</Fl>
           </div>
+
+          {/* Col 3 — BUILD & MANAGE */}
           <div>
-            <h5>IT Services</h5>
+            <h5>BUILD &amp; MANAGE</h5>
             <Fl href="/services">Website Development</Fl>
-            <Fl href="/services">Mobile Solutions</Fl>
-            <Fl href="/services/digital-marketing">Marketing &amp; Sales</Fl>
+            <Fl href="/services">Branding &amp; Logo Design</Fl>
+            <Fl href="/services/accounting">Accounting &amp; Bookkeeping</Fl>
+            <Fl href="/services/gst-registration">GST Filing &amp; Returns</Fl>
+            <Fl href="/services/payroll">Payroll Management</Fl>
+            <Fl href="/services/roc-compliance">ROC / Annual Compliance</Fl>
           </div>
+
+          {/* Col 4 — GROW & EXPAND */}
           <div>
-            <h5>Marketing &amp; Sales</h5>
-            <Fl href="/services/digital-marketing">Branding &amp; Creative</Fl>
-            <Fl href="/services/digital-marketing">Digital Marketing</Fl>
-            <Fl href="/services/digital-marketing">WhatsApp &amp; Engagement</Fl>
-            <Fl href="/services/digital-marketing">CRM &amp; Automation</Fl>
+            <h5>GROW &amp; EXPAND</h5>
+            <Fl href="/services/digital-marketing">SEO &amp; Performance Marketing</Fl>
+            <Fl href="/services/digital-marketing">Social Media Management</Fl>
+            <Fl href="/services/digital-marketing">WhatsApp Business API</Fl>
+            <Fl href="/services">UAE Business Setup</Fl>
+            <Fl href="/services">Fundraising Documentation</Fl>
+            <Fl href="/services">Business Consulting</Fl>
           </div>
+
+          {/* Col 5 — Company + Contact */}
           <div>
             <h5>Company</h5>
             <Fl href="/company/about">About Us</Fl>
             <Fl href="/company/contact">Contact Us</Fl>
-            <Fl href="/office-restore">Office Setup</Fl>
-            <Fl href="/company/careers">Careers</Fl>
+            <Fl href="/pricing">Pricing</Fl>
+            <Fl href="/resources">Resources / Blog</Fl>
+            <Fl href="/resources/faq">FAQ</Fl>
+            <div style={{marginTop:18}}>
+              <h5>Contact</h5>
+              <div style={{display:'flex',flexDirection:'column',gap:6,marginTop:8}}>
+                <a href="tel:+918458845859" className="fl">+91 84588 45859</a>
+                <a href="mailto:contact@launcherdesk.com" className="fl">contact@launcherdesk.com</a>
+                <span style={{fontSize:13,color:'#6b90aa',lineHeight:1.55}}>4th Block, Koramangala,<br/>Bengaluru – 560095</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="foot-bottom">
-          <span>© {year} LauncherDesk. A private business-services &amp; facilitation platform — not a government body, and not a substitute for qualified professional advice where required.</span>
-          <span>Made in India</span>
+
+        <div className="foot-bottom" style={{flexDirection:'column',alignItems:'flex-start',gap:12}}>
+          <p style={{fontSize:11.5,color:'#4a7090',lineHeight:1.7,maxWidth:900}}>
+            LauncherDesk is a business services facilitation platform operated by DutyLaunch Solutions Private Limited. LauncherDesk facilitates access to business services and may coordinate with relevant professionals, partners and service providers. Where a service requires a licensed professional, statutory filing or government approval, the relevant professional or authority remains responsible for the applicable filing, decision or approval. Timelines and outcomes may vary based on the relevant authority, professional and customer documentation. LauncherDesk does not act as a regulatory authority and does not guarantee registrations, approvals or outcomes.
+          </p>
+          <div style={{display:'flex',justifyContent:'space-between',width:'100%',flexWrap:'wrap',gap:10}}>
+            <span>© {year} LauncherDesk · DutyLaunch Solutions Private Limited · All rights reserved.</span>
+            <span style={{color:'#4a7090'}}>Made in India 🇮🇳</span>
+          </div>
         </div>
       </div>
     </footer>
