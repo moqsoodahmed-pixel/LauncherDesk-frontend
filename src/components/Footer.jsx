@@ -62,7 +62,7 @@ export default function Footer() {
             <div style={{marginTop:18}}>
               <h5>Contact</h5>
               <div style={{display:'flex',flexDirection:'column',gap:6,marginTop:8}}>
-                <a href="tel:+918458845859" className="fl">+91 84588 45859</a>
+                <a href="tel:+918548854859" className="fl">+91 85488 54859</a>
                 <a href="mailto:contact@launcherdesk.com" className="fl">contact@launcherdesk.com</a>
                 <span style={{fontSize:13,color:'#6b90aa',lineHeight:1.55}}>4th Block, Koramangala,<br/>Bengaluru – 560095</span>
               </div>
