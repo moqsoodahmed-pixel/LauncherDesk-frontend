@@ -284,9 +284,9 @@ function ConnectedServices() {
 
 // DOCX stats: "200+ Businesses Supported · 15+ Solution Categories · 1 Named Point of Contact · Bengaluru-based Team"
 const LD_STATS = [
-  { n: '200+', l: 'Businesses Supported' },
-  { n: '15+',  l: 'Solution Categories' },
-  { n: '1',    l: 'Named Point of Contact' },
+  { n: '20+', l: 'Businesses Launched' },
+  { n: '15+', l: 'Service Categories' },
+  { n: '1',   l: 'Point of Contact' },
   { n: 'BLR',  l: 'Bengaluru-based Team' },
 ]
 
@@ -296,7 +296,7 @@ function StatsSection() {
       <div className="wrap">
         <div className="sec-head center reveal-up">
           <span className="eyebrow">Trusted by founders across India</span>
-          <h2>Built for every stage of business.</h2>
+          <h2>Trusted by businesses across India.</h2>
         </div>
         <div className="proof reveal-up" style={{ marginTop: 34 }}>
           {LD_STATS.map(s => (
@@ -322,18 +322,18 @@ function DifferenceSection() {
       <div className="wrap">
         <div className="sec-head reveal-up">
           <span className="eyebrow">The LauncherDesk difference</span>
-          <h2>One team. One outcome.</h2>
-          <p>Running a business shouldn't mean repeating yourself to five different vendors. We coordinate everything through one accountable team.</p>
+          <h2>One desk beats five vendors.</h2>
+          <p>The usual way means five vendors, five invoices, five logins — and nobody actually owns the outcome. LauncherDesk changes that.</p>
         </div>
         <div className="diff-grid reveal-up">
           <div className="diff-col neg">
             <h4>❌ Without LauncherDesk</h4>
             {[
-              '5+ different vendors, 5+ different conversations',
-              'Multiple invoices, logins and follow-ups',
-              'Nobody owns the outcome — it falls through the cracks',
-              'You explain your business from scratch every time',
-              'Deadlines missed because nobody is watching',
+              'Five vendors, five invoices, five logins',
+              'Nobody actually owns the outcome',
+              'You repeat your story to every consultant',
+              'Deadlines slip through the cracks',
+              'Multiple coordination headaches — every time',
             ].map(t => (
               <div key={t} className="diff-item">
                 <svg className="diff-ic" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" strokeWidth="2" width="16" height="16"><path d="M18 6 6 18M6 6l12 12"/></svg>
@@ -344,7 +344,7 @@ function DifferenceSection() {
           <div className="diff-col pos">
             <h4>✅ With LauncherDesk</h4>
             {[
-              'One named point of contact for everything',
+              'One point of contact for everything',
               'We coordinate across all services and professionals',
               'You tell us once — we handle the rest',
               'Proactive updates so nothing is missed',
@@ -367,17 +367,17 @@ function DifferenceSection() {
 
 function HowItWorksSection() {
   const steps = [
-    { n: '01', title: 'Tell us what you need.', body: 'One conversation with your named contact — no call centres, no runaround.' },
-    { n: '02', title: 'We design a clear plan.', body: 'Honest timelines, upfront pricing, and a straightforward scope — before you commit.' },
-    { n: '03', title: 'We handle everything.', body: 'Filing, follow-up, coordination across every service — done for you.' },
-    { n: '04', title: 'You stay informed and supported.', body: 'Updates throughout the process. Ongoing support as your business grows.' },
+    { n: '01', title: 'Tell us what you need.', body: 'One conversation with a single point of contact — no call centres, no runaround.' },
+    { n: '02', title: 'Get a clear plan & quote.', body: 'Honest timelines and upfront pricing, so you always know what happens next.' },
+    { n: '03', title: 'We handle the paperwork.', body: 'Filings, follow-ups and coordination across every service — done for you.' },
+    { n: '04', title: 'Stay supported as you grow.', body: 'Ongoing compliance and support so nothing slips through the cracks.' },
   ]
   return (
     <section className="section">
       <div className="wrap">
         <div className="sec-head center reveal-up">
           <span className="eyebrow">Simple from day one</span>
-          <h2>How LauncherDesk works</h2>
+          <h2>One conversation. We take it from there.</h2>
         </div>
         <div className="steps3 reveal-up" style={{ marginTop: 36, gridTemplateColumns: 'repeat(4,1fr)', alignItems: 'stretch' }}>
           {steps.map(s => (
@@ -439,20 +439,20 @@ export default function HomePage() {
           <div className="hp-hero-grid">
             <div className="reveal-up in">
               <span className="eyebrow">For Startups · Small Businesses · Growing Companies</span>
-              <h1>Your Business HQ. <span className="grad-text">Launch. Manage. Grow.</span></h1>
-              <p className="lead">Starting and running a business means dealing with registration, compliance, tax, technology, marketing — and a different vendor for each one. LauncherDesk brings it all together. One platform. One team. Everything your business needs, coordinated for you.</p>
+              <h1>Register your company in days — <span className="grad-text">then run it all from one desk.</span></h1>
+              <p className="lead">From Private Limited, LLP and OPC registration to GST, compliance, IT and finance — LauncherDesk gets your business incorporated and keeps it running, with a complete 360° solution through a single point of contact.</p>
               <div className="hero-cta">
-                <a href="/company/contact" className="btn btn-primary">Get Started <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-                <a href="/solutions" className="btn btn-soft">Explore Solutions</a>
+                <a href="/company/contact" className="btn btn-primary">Chat on WhatsApp <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                <a href="/services" className="btn btn-soft">Explore Services</a>
               </div>
               <div className="hp-trust-row">
                 <div className="hp-trust-item">
                   <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                  Clear scope and pricing upfront
+                  20+ businesses launched · 15+ service categories
                 </div>
                 <div className="hp-trust-item">
                   <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.2"><path d="M20 6 9 17l-5-5"/></svg>
-                  One named point of contact
+                  One point of contact
                 </div>
               </div>
             </div>
@@ -496,44 +496,44 @@ export default function HomePage() {
       <section className="section-sm">
         <div className="wrap">
           <div className="sec-head center reveal-up">
-            <span className="eyebrow">Find your starting point</span>
-            <h2>Every business is at a different stage. We help at all of them.</h2>
+            <span className="eyebrow">Register your business</span>
+            <h2>Incorporation is just the start. We run the whole business.</h2>
           </div>
           <div className="grid-3" style={{ marginTop: 36 }}>
             <a className="card reveal-up" href="/services/private-limited-company-registration">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 21h18M6 21V7l6-4 6 4v14M10 9h4M10 13h4"/></svg></div>
-              <h3>START — Set up your business</h3>
-              <p>Company registration, GST, Startup India, Trademark and all licences from day one.</p>
+              <h3>Company Registration</h3>
+              <p>Private Limited, LLP and OPC options. Private Limited is India's most popular structure for funded, high-growth startups.</p>
               <span className="arrow">Explore START →</span>
             </a>
-            <a className="card reveal-up" href="/services">
+            <a className="card reveal-up" href="/services/website-development">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 3h20v14H2zM8 21h8M12 17v4"/></svg></div>
-              <h3>BUILD — Create your foundation</h3>
-              <p>Website, branding, business email, software development and automation.</p>
+              <h3>Licences & Certifications</h3>
+              <p>GST, MSME, FSSAI, Startup India, ISO and all the registrations your business needs.</p>
               <span className="arrow">Explore BUILD →</span>
             </a>
             <a className="card reveal-up" href="/services/accounting">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-              <h3>MANAGE — Keep running smoothly</h3>
-              <p>Accounting, GST returns, ROC compliance, payroll and legal support.</p>
+              <h3>Finance & Accounts</h3>
+              <p>Accounting, bookkeeping, GST returns, payroll and annual compliance — handled monthly.</p>
               <span className="arrow">Explore MANAGE →</span>
             </a>
             <a className="card reveal-up" href="/services/digital-marketing">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg></div>
-              <h3>GROW — Reach more customers</h3>
-              <p>SEO, social media, WhatsApp Business API, CRM setup and Google Ads.</p>
+              <h3>Tax & Compliance</h3>
+              <p>ROC filing, income tax, GST compliance — tracked and filed before deadlines become penalties.</p>
               <span className="arrow">Explore GROW →</span>
             </a>
-            <a className="card reveal-up" href="/services">
+            <a className="card reveal-up" href="/services/uae-business-setup">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM2 12h20"/></svg></div>
-              <h3>EXPAND — Go further</h3>
-              <p>International company setup, UAE, fundraising documentation and consulting.</p>
+              <h3>IT & Technology</h3>
+              <p>Website, e-commerce, mobile apps, CRM, automation and custom software.</p>
               <span className="arrow">Explore EXPAND →</span>
             </a>
             <a className="card reveal-up" href="/company/contact">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-              <h3>Not sure where to start?</h3>
-              <p>Tell us about your business. We'll point you to the right starting point — no obligation.</p>
+              <h3>Sales & Marketing</h3>
+              <p>SEO, social media, Google Ads, WhatsApp API, branding and demand generation.</p>
               <span className="arrow">Talk to us →</span>
             </a>
           </div>
@@ -562,8 +562,8 @@ export default function HomePage() {
       <section className="section">
         <div className="wrap">
           <div className="final reveal-up">
-            <h2>Ready to get your business sorted?</h2>
-            <p>One conversation is all it takes. Tell us what you need and we'll handle the rest — honestly, and on time.</p>
+            <h2>Ready to get everything under one roof?</h2>
+            <p>One chat is all it takes. Tell us what you need and we'll handle the rest — honestly, and on time.</p>
             <div className="row">
               <a href="https://wa.me/918458845859?text=Hi%20LauncherDesk%2C%20I'd%20like%20to%20get%20help%20with%20my%20business.%20Where%20do%20I%20start%3F" className="btn btn-light">Chat on WhatsApp</a>
               <a href="tel:+918458845859" className="btn btn-ghost-d">Call Us — +91 84588 45859</a>

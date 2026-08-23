@@ -105,20 +105,8 @@ export default function ProductPage() {
               <div className="mk-price-lg">{p.price}</div>
               <a
                 className="btn btn-primary"
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ width: '100%', justifyContent: 'center' }}
-              >
-                Visit website{' '}
-                <svg className="ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d={MI.ext}/>
-                </svg>
-              </a>
-              <a
-                className="btn btn-soft"
                 href="/company/contact"
-                style={{ width: '100%', justifyContent: 'center', marginTop: 10 }}
+                style={{ width: '100%', justifyContent: 'center' }}
               >
                 Get it set up by LauncherDesk
               </a>

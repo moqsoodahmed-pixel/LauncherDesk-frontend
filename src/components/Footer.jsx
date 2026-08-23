@@ -23,8 +23,7 @@ export default function Footer() {
               </span>
               <span className="txt">Launcher<b>Desk</b></span>
             </Link>
-            <p style={{marginTop:10,fontSize:12.5,color:'#7fb4dc',fontWeight:700,letterSpacing:'.04em',textTransform:'uppercase'}}>Your Business HQ.</p>
-            <p style={{marginTop:2,fontSize:12.5,color:'#6b90aa',fontWeight:600,marginBottom:12}}>Launch. Manage. Grow.</p>
+            <p style={{marginTop:10,fontSize:13,color:'#7fb4dc',fontWeight:700,letterSpacing:'.04em'}}>Your Business HQ. Launch. Manage. Grow.</p>
             <p className="foot-desc">LauncherDesk helps founders and businesses access, coordinate and manage the services they need — from company registration and compliance to technology, finance, marketing and growth.</p>
           </div>
 
@@ -35,15 +34,15 @@ export default function Footer() {
             <Fl href="/services/llp-registration">LLP Registration</Fl>
             <Fl href="/services/opc-registration">One Person Company Registration</Fl>
             <Fl href="/services/gst-registration">GST Registration</Fl>
-            <Fl href="/services">Startup India / DPIIT</Fl>
+            <Fl href="/services/startup-india-dpiit">Startup India / DPIIT</Fl>
             <Fl href="/services/trademark-registration">Trademark Registration</Fl>
           </div>
 
           {/* Col 3 — BUILD & MANAGE */}
           <div>
             <h5>BUILD &amp; MANAGE</h5>
-            <Fl href="/services">Website Development</Fl>
-            <Fl href="/services">Branding &amp; Logo Design</Fl>
+            <Fl href="/services/website-development">Website Development</Fl>
+            <Fl href="/services/branding-logo-design">Branding &amp; Logo Design</Fl>
             <Fl href="/services/accounting">Accounting &amp; Bookkeeping</Fl>
             <Fl href="/services/gst-registration">GST Filing &amp; Returns</Fl>
             <Fl href="/services/payroll">Payroll Management</Fl>
@@ -56,9 +55,9 @@ export default function Footer() {
             <Fl href="/services/digital-marketing">SEO &amp; Performance Marketing</Fl>
             <Fl href="/services/digital-marketing">Social Media Management</Fl>
             <Fl href="/services/digital-marketing">WhatsApp Business API</Fl>
-            <Fl href="/services">UAE Business Setup</Fl>
-            <Fl href="/services">Fundraising Documentation</Fl>
-            <Fl href="/services">Business Consulting</Fl>
+            <Fl href="/services/uae-business-setup">UAE Business Setup</Fl>
+            <Fl href="/services/fundraising-documentation">Fundraising Documentation</Fl>
+            <Fl href="/services/business-consulting">Business Consulting</Fl>
           </div>
 
           {/* Col 5 — Company + Contact */}

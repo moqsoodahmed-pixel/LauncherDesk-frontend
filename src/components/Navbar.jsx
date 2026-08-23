@@ -54,9 +54,9 @@ function MegaRegistrations() {
             <div className="mp-panel-head">Certifications</div>
             <div className="mp-svc-grid">
               {/* PAN/TAN Application removed per requirement #6 */}
-              <SvcLink href="/services" title="Start-up India Registration" desc="DPIIT recognition &amp; benefits" />
+              <SvcLink href="/services/startup-india-dpiit" title="Start-up India Registration" desc="DPIIT recognition &amp; benefits" />
               <SvcLink href="/services/msme-registration" title="MSME Udyam Registration" desc="Credit access &amp; government benefits" />
-              <SvcLink href="/services" title="ISO Certification" desc="International quality standards" />
+              <SvcLink href="/services/iso-certification" title="ISO Certification" desc="International quality standards" />
               <SvcLink href="/services/gst-registration" title="GST Registration" desc="Goods &amp; Services Tax number" />
             </div>
           </div>
@@ -64,10 +64,10 @@ function MegaRegistrations() {
             <div className="mp-panel-head">IPR &amp; Trademark</div>
             <div className="mp-svc-grid">
               <SvcLink href="/services/trademark-registration" title="Trademark Registration" desc="Protect your brand name &amp; logo" />
-              <SvcLink href="/services" title="Trademark Objection" desc="Respond to objection notices" />
-              <SvcLink href="/services" title="Patent Registration" desc="Protect your invention" />
-              <SvcLink href="/services" title="Copyright Registration" desc="Protect creative works" />
-              <SvcLink href="/services" title="IP &amp; Trademark Management" desc="Ongoing IP portfolio management" />
+              <SvcLink href="/services/trademark-registration" title="Trademark Objection" desc="Respond to objection notices" />
+              <SvcLink href="/services/trademark-registration" title="Patent Registration" desc="Protect your invention" />
+              <SvcLink href="/services/trademark-registration" title="Copyright Registration" desc="Protect creative works" />
+              <SvcLink href="/services/trademark-registration" title="IP &amp; Trademark Management" desc="Ongoing IP portfolio management" />
             </div>
           </div>
         </div>
@@ -102,17 +102,17 @@ function MegaIT() {
           <div className="mp-panel mp-panel--active" data-mp-panel="web">
             <div className="mp-panel-head">Website Development</div>
             <div className="mp-svc-grid">
-              <SvcLink href="/services/business-automation" title="Static Website Development" desc="Fast, lightweight brochure sites" />
-              <SvcLink href="/services/business-automation" title="Dynamic Website Development" desc="CMS-powered, updatable sites" />
-              <SvcLink href="/services/business-automation" title="E-commerce Website Development" desc="Online store with payment &amp; catalogue" />
-              <SvcLink href="/services/business-automation" title="CRM Website or Portal Development" desc="Customer portals &amp; dashboards" />
+              <SvcLink href="/services/website-development" title="Static Website Development" desc="Fast, lightweight brochure sites" />
+              <SvcLink href="/services/website-development" title="Dynamic Website Development" desc="CMS-powered, updatable sites" />
+              <SvcLink href="/services/ecommerce-website" title="E-commerce Website Development" desc="Online store with payment &amp; catalogue" />
+              <SvcLink href="/services/crm-setup-lead-management" title="CRM Website or Portal Development" desc="Customer portals &amp; dashboards" />
             </div>
           </div>
           <div className="mp-panel" data-mp-panel="mob">
             <div className="mp-panel-head">Mobile Solutions</div>
             <div className="mp-svc-grid">
-              <SvcLink href="/services/business-automation" title="Mobile Application Development" desc="iOS &amp; Android native or hybrid apps" />
-              <SvcLink href="/services/business-automation" title="Custom Software Development" desc="Bespoke systems &amp; platforms" />
+              <SvcLink href="/services/mobile-app-development" title="Mobile Application Development" desc="iOS &amp; Android native or hybrid apps" />
+              <SvcLink href="/services/software-saas-development" title="Custom Software Development" desc="Bespoke systems &amp; platforms" />
             </div>
           </div>
           <div className="mp-panel" data-mp-panel="mkt">

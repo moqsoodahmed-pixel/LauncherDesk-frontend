@@ -14,6 +14,7 @@ const CATEGORIES = [
 ]
 
 const ALL_SERVICES = [
+  // START
   { href: '/services/private-limited-company-registration', title: 'Private Limited Company', desc: 'The startup standard for limited liability and fundraising.' },
   { href: '/services/llp-registration', title: 'LLP Registration', desc: 'Partner-owned firm with lower compliance overhead.' },
   { href: '/services/opc-registration', title: 'OPC Registration', desc: 'Right-sized structure for a solo founder.' },
@@ -22,11 +23,33 @@ const ALL_SERVICES = [
   { href: '/services/msme-registration', title: 'MSME / Udyam', desc: 'Unlock government benefits and easier credit.' },
   { href: '/services/fssai-registration', title: 'FSSAI Registration', desc: 'Mandatory licence for any food business.' },
   { href: '/services/trademark-registration', title: 'Trademark Registration', desc: 'Protect your brand name and logo.' },
-  { href: '/services/roc-compliance', title: 'ROC Compliance', desc: 'Annual filings that keep you penalty-free.' },
-  { href: '/services/accounting', title: 'Accounting', desc: 'Bookkeeping and financial statements, done right.' },
-  { href: '/services/payroll', title: 'Payroll', desc: 'Salary processing, TDS, PF/ESI compliance.' },
-  { href: '/services/business-automation', title: 'Business Automation', desc: 'Systems and workflows that scale with you.' },
-  { href: '/services/digital-marketing', title: 'Digital Marketing', desc: 'Website, branding and demand generation.' },
+  { href: '/services/startup-india-dpiit', title: 'Startup India / DPIIT', desc: 'Tax benefits and government scheme access.' },
+  { href: '/services/iso-certification', title: 'ISO Certification', desc: 'Quality and security certifications for your business.' },
+  // BUILD
+  { href: '/services/website-development', title: 'Website Development', desc: 'Mobile-first professional websites for businesses.' },
+  { href: '/services/ecommerce-website', title: 'E-Commerce Website', desc: 'Online store with payment gateway and catalogue.' },
+  { href: '/services/branding-logo-design', title: 'Branding & Logo Design', desc: 'Logo, colour palette, typography and brand guide.' },
+  { href: '/services/business-email-hosting', title: 'Business Email & Hosting', desc: 'Professional email and reliable website hosting.' },
+  { href: '/services/software-saas-development', title: 'Software & SaaS Development', desc: 'Custom software, web apps and SaaS products.' },
+  { href: '/services/mobile-app-development', title: 'Mobile App Development', desc: 'iOS and Android applications for your business.' },
+  { href: '/services/business-automation', title: 'Business Automation', desc: 'CRM, workflows and automation that scale with you.' },
+  // MANAGE
+  { href: '/services/accounting', title: 'Accounting & Bookkeeping', desc: 'Monthly bookkeeping and financial statements.' },
+  { href: '/services/gst-registration', title: 'GST Filing & Returns', desc: 'GSTR-1, GSTR-3B, annual returns — filed on time.' },
+  { href: '/services/income-tax-filing', title: 'Income Tax Filing', desc: 'CA-reviewed ITR for companies and LLPs.' },
+  { href: '/services/roc-compliance', title: 'ROC / Annual Compliance', desc: 'Annual filings that keep you penalty-free.' },
+  { href: '/services/payroll', title: 'Payroll Management', desc: 'Salary processing, TDS, PF/ESI compliance.' },
+  { href: '/services/legal-document-support', title: 'Legal Document Support', desc: 'Agreements, NDAs and contracts for your business.' },
+  // GROW
+  { href: '/services/digital-marketing', title: 'SEO & Performance Marketing', desc: 'Organic growth, keyword strategy and content.' },
+  { href: '/services/social-media-management', title: 'Social Media Management', desc: 'Instagram, LinkedIn, Facebook content and posting.' },
+  { href: '/services/whatsapp-business-api', title: 'WhatsApp Business API', desc: 'Bulk messaging, automation and CRM integration.' },
+  { href: '/services/crm-setup-lead-management', title: 'CRM Setup & Lead Management', desc: 'Pipeline management so no lead falls through.' },
+  { href: '/services/google-ads-paid-marketing', title: 'Google Ads & Paid Marketing', desc: 'Managed campaigns that generate real leads.' },
+  // EXPAND
+  { href: '/services/uae-business-setup', title: 'UAE Business Setup', desc: 'Free zone or mainland company in the UAE.' },
+  { href: '/services/fundraising-documentation', title: 'Fundraising Documentation', desc: 'Pitch deck, projections and investor data room.' },
+  { href: '/services/business-consulting', title: 'Business Consulting', desc: 'Strategic review and actionable growth plan.' },
 ]
 
 // Change 2: removed Retail/Shop & Food/Restaurant; step 2 = text input for state

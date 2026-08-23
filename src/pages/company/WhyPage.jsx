@@ -1,15 +1,11 @@
 const CHEV = 'm9 18 6-6-6-6'
 
 const STEPS = [
-  { title: 'One named point of contact', body: "No more coordinating between a CA, a lawyer, a registration agent and an agency. One team owns the outcome, end to end. You'll know exactly who to reach." },
-  { title: 'End-to-end support', body: "We don't disappear after incorporation — compliance, protection and growth are part of the same relationship. We stay on as long as your business needs us." },
-  { title: 'Transparent process', body: 'Professional fees, government fees and taxes are always shown separately. No bundled numbers, no surprise add-ons. You know exactly what you\'re paying for before you commit.' },
-  { title: 'We ask the right questions', body: 'Your contact takes the time to understand your business, your stage and your specific requirement. We recommend the right solution — not just the obvious one.' },
-  { title: 'Clear scope and pricing before you commit', body: 'Before anything starts, you know exactly what is included, what it will cost and how long it will take. Honest scope, upfront. No hidden charges, no vague timelines.' },
-  { title: 'Proactive compliance', body: 'We track deadlines ahead of time instead of reacting once a penalty has already started accruing. Nothing gets missed because we own the calendar.' },
-  { title: 'Business guidance, not just filing', body: "We tell you what you actually need for your stage and business type — not a generic package. If something isn't right for you, we'll tell you that too." },
-  { title: 'Technology-backed', body: "A growing technology platform backs the human team — compliance calendar, document vault and service tracking are coming soon, so your business management keeps getting simpler." },
-  { title: 'One relationship that grows with your business', body: "We're built for businesses that grow with us over years — from first registration to funding and beyond. The same team, the same point of contact, the same accountability." },
+  { title: 'Complete 360° Business Solutions', body: 'From registration and compliance to IT, HR, finance and operations — we provide everything your business needs through one integrated platform. No more managing multiple vendors or consultants.' },
+  { title: 'One Point of Contact', body: 'Experience seamless coordination across all services through a single point of contact. Whether you need company registration, payroll processing or website development — we handle it all.' },
+  { title: 'Integrated Platform Approach', body: 'All our services work together seamlessly, ensuring faster execution, consistent quality and better outcomes. Our integrated approach eliminates communication gaps and keeps everything aligned with your business goals.' },
+  { title: 'Proven Track Record', body: 'With over 1,700 clients served and 4,400+ projects delivered across all service categories, we have built a solid reputation for comprehensive, high-quality execution that grows with your business.' },
+  { title: 'Scalable & Growth-Focused', body: 'Our solutions are designed to grow with you — from startup to scale-up. We provide the right support at every stage, ensuring your business has everything it needs to succeed, now and in the future.' },
 ]
 
 export default function WhyPage() {
@@ -23,8 +19,8 @@ export default function WhyPage() {
             <span className="cur">Why LauncherDesk</span>
           </nav>
           <span className="eyebrow reveal-up in" style={{marginTop:16,display:'block'}}>Why founders switch</span>
-          <h1 className="reveal-up in">One team. One outcome. No finger-pointing.</h1>
-          <p className="lead reveal-up in">Every founder eventually hits the same wall — a scattered stack of vendors who don't talk to each other. Here's specifically what changes when you switch to LauncherDesk.</p>
+          <h1 className="reveal-up in">Why choose <span className="grad-text">LauncherDesk?</span></h1>
+          <p className="lead reveal-up in">One desk for your entire business — registration, compliance, IT, finance, legal and marketing — through a single integrated platform and one point of contact.</p>
         </div>
       </header>
 

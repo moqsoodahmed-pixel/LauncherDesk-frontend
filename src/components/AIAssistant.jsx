@@ -295,30 +295,30 @@ export default function AIAssistant() {
               <a href="/services/opc-registration">One Person Company Registration</a>
             </DraSubSection>
             <DraSubSection label="Certifications">
-              <a href="/services">Start-up India Registration</a>
+              <a href="/services/startup-india-dpiit">Start-up India Registration</a>
               <a href="/services/msme-registration">MSME Udyam Registration</a>
-              <a href="/services">ISO Certification</a>
+              <a href="/services/iso-certification">ISO Certification</a>
               <a href="/services/gst-registration">GST Registration</a>
               <a href="/services">PAN / TAN Application</a>
             </DraSubSection>
             <DraSubSection label="IPR &amp; Trademark">
               <a href="/services/trademark-registration">Trademark Registration</a>
-              <a href="/services">Trademark Objection</a>
-              <a href="/services">Patent Registration</a>
-              <a href="/services">Copyright Registration</a>
-              <a href="/services">IP &amp; Trademark Management</a>
+              <a href="/services/trademark-registration">Trademark Objection</a>
+              <a href="/services/trademark-registration">Patent Registration</a>
+              <a href="/services/trademark-registration">Copyright Registration</a>
+              <a href="/services/trademark-registration">IP &amp; Trademark Management</a>
             </DraSubSection>
           </DraSection>
           <DraSection label="IT Services">
             <DraSubSection label="Website Development">
-              <a href="/services">Static Website Development</a>
-              <a href="/services">Dynamic Website Development</a>
-              <a href="/services">E-commerce Website Development</a>
-              <a href="/services">CRM Website / Portal Development</a>
+              <a href="/services/website-development">Static Website Development</a>
+              <a href="/services/website-development">Dynamic Website Development</a>
+              <a href="/services/ecommerce-website">E-commerce Website Development</a>
+              <a href="/services/crm-setup-lead-management">CRM Website / Portal Development</a>
             </DraSubSection>
             <DraSubSection label="Mobile Solutions">
-              <a href="/services">Mobile Application Development</a>
-              <a href="/services">Custom Software Development</a>
+              <a href="/services/mobile-app-development">Mobile Application Development</a>
+              <a href="/services/software-saas-development">Custom Software Development</a>
             </DraSubSection>
             <DraSubSection label="Digital Marketing">
               <a href="/services/digital-marketing">SEO &amp; Search Marketing</a>
