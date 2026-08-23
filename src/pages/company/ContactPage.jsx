@@ -133,10 +133,10 @@ function ContactForm({ roadmap }) {
         <h3 style={{ fontSize: 22, marginBottom: 12 }}>Thank you for filling in!</h3>
         <p style={{ color: 'var(--text-2)', maxWidth: 380, margin: '0 auto 8px' }}>Our expert will contact you soon.</p>
         <p style={{ color: 'var(--text-3)', maxWidth: 380, margin: '0 auto 24px', fontSize: 13.5 }}>
-          For faster response, WhatsApp us at +91 84588 45859.
+          For faster response, WhatsApp us at +91 85488 54859.
         </p>
         <a
-          href="https://wa.me/918458845859?text=Hi%20LauncherDesk%2C%20I%20just%20submitted%20an%20enquiry%20and%20wanted%20to%20follow%20up."
+          href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I%20just%20submitted%20an%20enquiry%20and%20wanted%20to%20follow%20up."
           className="btn btn-wa"
           style={{ display: 'inline-flex', margin: '0 auto' }}
         >
@@ -227,7 +227,7 @@ export default function ContactPage() {
                 </span>
                 <div>
                   <b>WhatsApp (fastest response)</b>
-                  <span><a href="https://wa.me/918458845859?text=Hi%20LauncherDesk%2C%20I'd%20like%20to%20get%20help%20with%20my%20business." style={{ color: 'var(--blue-dark)', fontWeight: 700 }}>+91 84588 45859</a></span>
+                  <span><a href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I'd%20like%20to%20get%20help%20with%20my%20business." style={{ color: 'var(--blue-dark)', fontWeight: 700 }}>+91 85488 54859</a></span>
                   <span style={{ fontSize: 13, color: 'var(--text-3)', display: 'block', marginTop: 2 }}>We usually respond within minutes during business hours.</span>
                 </div>
               </div>
@@ -237,7 +237,7 @@ export default function ContactPage() {
                 </span>
                 <div>
                   <b>Phone</b>
-                  <span><a href="tel:+918458845859" style={{ color: 'var(--text-2)' }}>+91 84588 45859</a></span>
+                  <span><a href="tel:+918548854859" style={{ color: 'var(--text-2)' }}>+91 85488 54859</a></span>
                   <span style={{ fontSize: 13, color: 'var(--text-3)', display: 'block', marginTop: 2 }}>Speak directly with a member of our team.</span>
                 </div>
               </div>

@@ -97,7 +97,7 @@ export default function AboutPage() {
               </div>
               <div style={{display:'flex',gap:12,alignItems:'center',fontSize:14.5,color:'var(--text-2)'}}>
                 <strong style={{color:'var(--navy)',minWidth:60}}>Phone:</strong>
-                <a href="tel:+918458845859" style={{color:'var(--text-2)'}}>+91 84588 45859</a>
+                <a href="tel:+918548854859" style={{color:'var(--text-2)'}}>+91 85488 54859</a>
               </div>
               <div style={{display:'flex',gap:12,alignItems:'center',fontSize:14.5,color:'var(--text-2)'}}>
                 <strong style={{color:'var(--navy)',minWidth:60}}>Email:</strong>

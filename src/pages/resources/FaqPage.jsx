@@ -74,7 +74,7 @@ const FAQS = [
   {
     section: 'Getting Started',
     q: 'How do I get started?',
-    a: 'The easiest way is to WhatsApp us at +91 84588 45859 or fill in the contact form on our Contact page. Tell us what you need — we\'ll understand your requirement and guide you on the next step. No obligation.',
+    a: 'The easiest way is to WhatsApp us at +91 85488 54859 or fill in the contact form on our Contact page. Tell us what you need — we\'ll understand your requirement and guide you on the next step. No obligation.',
   },
   {
     section: 'Getting Started',
@@ -130,7 +130,7 @@ export default function FaqPage() {
               <h3 style={{fontSize:18,marginBottom:6}}>Still have a question?</h3>
               <p style={{color:'var(--text-2)',fontSize:14.5}}>A real person will answer — not a bot.</p>
             </div>
-            <a href="https://wa.me/918458845859?text=Hi%20LauncherDesk%2C%20I%20have%20a%20question%20about%20your%20services." className="btn btn-primary">
+            <a href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I%20have%20a%20question%20about%20your%20services." className="btn btn-primary">
               Chat with us on WhatsApp
             </a>
           </div>
