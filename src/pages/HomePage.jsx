@@ -151,12 +151,9 @@ const STAGES = [
 const SV_NODES = [
   { href: '/services/private-limited-company-registration', label: 'Company Registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14' },
   { href: '/services/gst-registration', label: 'GST & Compliance', icon: 'M9 11l3 3L22 4' },
-  { href: '/services/accounting', label: 'Accounting & Tax', icon: 'M3 3v18h18M7 14l4-4 3 3 5-6' },
   { href: '/services/trademark-registration', label: 'Trademark & IP', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
   { href: '/services', label: 'Website Development', icon: 'M2 3h20v14H2zM8 21h8M12 17v4' },
   { href: '/services/digital-marketing', label: 'Marketing & SEO', icon: 'M23 6l-9.5 9.5-5-5L1 18' },
-  { href: '/services', label: 'UAE Business Setup', icon: 'M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM2 12h20' },
-  { href: '/services', label: 'Fundraising Support', icon: 'M3 3v18h18M7 14l4-4 3 3 5-6' },
 ]
 
 function LifecycleAccordion() {
@@ -382,13 +379,13 @@ function HowItWorksSection() {
           <span className="eyebrow">Simple from day one</span>
           <h2>How LauncherDesk works</h2>
         </div>
-        <div className="steps3 reveal-up" style={{ marginTop: 36, gridTemplateColumns: 'repeat(4,1fr)' }}>
+        <div className="steps3 reveal-up" style={{ marginTop: 36, gridTemplateColumns: 'repeat(4,1fr)', alignItems: 'stretch' }}>
           {steps.map(s => (
-            <div key={s.n} className="hstep" style={{ paddingTop: 36 }}>
+            <div key={s.n} className="hstep" style={{ paddingTop: 36, display: 'flex', flexDirection: 'column', height: '100%' }}>
               <div style={{ fontFamily: 'var(--font)', fontWeight: 800, fontSize: 15, color: 'var(--blue)', position: 'absolute', top: 0, left: 0 }}>{s.n}</div>
               <h3 style={{ fontSize: 18 }}>{s.title}</h3>
-              <p>{s.body}</p>
-              <div className="ln"></div>
+              <p style={{ flex: 1 }}>{s.body}</p>
+              <div className="ln" style={{ marginTop: 'auto' }}></div>
             </div>
           ))}
         </div>
