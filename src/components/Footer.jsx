@@ -23,7 +23,7 @@ export default function Footer() {
               </span>
               <span className="txt">Launcher<b>Desk</b></span>
             </Link>
-            <p style={{marginTop:10,fontSize:13,color:'#7fb4dc',fontWeight:700,letterSpacing:'.04em'}}>Your Business HQ. Launch. Manage. Grow.</p>
+            <p style={{marginTop:10,fontSize:13,color:'#6da8e0',fontWeight:700,letterSpacing:'.04em'}}>Your Business HQ. Launch. Manage. Grow.</p>
             <p className="foot-desc">LauncherDesk helps founders and businesses access, coordinate and manage the services they need — from company registration and compliance to technology, finance, marketing and growth.</p>
           </div>
 
@@ -64,19 +64,19 @@ export default function Footer() {
               <div style={{display:'flex',flexDirection:'column',gap:6,marginTop:8}}>
                 <a href="tel:+918548854859" className="fl">+91 85488 54859</a>
                 <a href="mailto:contact@launcherdesk.com" className="fl">contact@launcherdesk.com</a>
-                <span style={{fontSize:13,color:'#6b90aa',lineHeight:1.55}}>4th Block, Koramangala,<br/>Bengaluru – 560095</span>
+                <span style={{fontSize:13,color:'#5e7fa0',lineHeight:1.55}}>4th Block, Koramangala,<br/>Bengaluru – 560095</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="foot-bottom" style={{flexDirection:'column',alignItems:'flex-start',gap:12}}>
-          <p style={{fontSize:11.5,color:'#4a7090',lineHeight:1.7,maxWidth:900}}>
+          <p style={{fontSize:11.5,color:'#3d618a',lineHeight:1.7,maxWidth:900}}>
             LauncherDesk is a business services facilitation platform operated by DutyLaunch Solutions Private Limited. LauncherDesk facilitates access to business services and may coordinate with relevant professionals, partners and service providers. Where a service requires a licensed professional, statutory filing or government approval, the relevant professional or authority remains responsible for the applicable filing, decision or approval. Timelines and outcomes may vary based on the relevant authority, professional and customer documentation. LauncherDesk does not act as a regulatory authority and does not guarantee registrations, approvals or outcomes.
           </p>
           <div style={{display:'flex',justifyContent:'space-between',width:'100%',flexWrap:'wrap',gap:10}}>
             <span>© {year} LauncherDesk · DutyLaunch Solutions Private Limited · All rights reserved.</span>
-            <span style={{color:'#4a7090'}}>Made in India 🇮🇳</span>
+            <span style={{color:'#3d618a'}}>Made in India 🇮🇳</span>
           </div>
         </div>
       </div>
