@@ -322,7 +322,7 @@ img{max-width:100%;display:block}
 /* how it works */
 .steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:s}
 .hstep{position:relative;padding-top:26px}
-.hstep::before{counter-increment:s;content:"0" counter(s);font-family:var(--font);font-weight:800;font-size:15px;color:var(--blue);position:absolute;top:0;left:0}
+.hstep::before{counter-increment:s;content:"0" counter(s);font-family:var(--font);font-weight:800;font-size:15px;color:var(--blue);position:absolute;top:22px;left:24px}
 .hstep h3{font-size:clamp(17px,2vw,20px)}.hstep p{color:var(--text-2);font-size:14.5px;margin-top:8px}
 .hstep .ln{height:2px;background:linear-gradient(90deg,var(--blue-bright),transparent);margin-top:16px;border-radius:2px}
 

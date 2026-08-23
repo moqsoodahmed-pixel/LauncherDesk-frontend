@@ -382,7 +382,6 @@ function HowItWorksSection() {
         <div className="steps3 reveal-up" style={{ marginTop: 44, gridTemplateColumns: 'repeat(4,1fr)', alignItems: 'stretch', gap: 20 }}>
           {steps.map(s => (
             <div key={s.n} className="hstep" style={{ paddingTop: 52, paddingBottom: 28, paddingLeft: 24, paddingRight: 24, display: 'flex', flexDirection: 'column', height: '100%', background: '#fff', borderRadius: 16, boxShadow: 'var(--sh-sm)', border: '1px solid var(--line)' }}>
-              <div style={{ fontFamily: 'var(--font)', fontWeight: 800, fontSize: 15, color: 'var(--blue)', position: 'absolute', top: 22, left: 24 }}>{s.n}</div>
               <h3 style={{ fontSize: 17, lineHeight: 1.3, marginBottom: 10 }}>{s.title}</h3>
               <p style={{ flex: 1, fontSize: 14, lineHeight: 1.65, color: 'var(--text-2)', margin: 0 }}>{s.body}</p>
               <div className="ln" style={{ marginTop: 24 }}></div>
