@@ -37,7 +37,7 @@ export const SOLUTIONS = {
       { href: '/services/digital-marketing', icon: 'M3 3v18h18M7 14l4-4 3 3 5-6', title: 'Digital Marketing & Branding', desc: 'Website, brand identity and demand generation.' },
       { href: '/services/trademark-registration', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', title: 'Trademark Registration', desc: "Protect the brand you're building growth around." },
       { href: '/services/business-automation', icon: 'M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', title: 'Business Automation', desc: 'CRM and workflows to support a growing customer base.' },
-      { href: '/solutions/advisory', icon: 'M3 21h18M5 21V10M9 21V10M15 21V10M19 21V10M3 10l9-7 9 7z', title: 'Business Advisory', desc: 'Strategic guidance as you plan the next stage.' },
+      { href: '/services/business-consulting', icon: 'M3 21h18M5 21V10M9 21V10M15 21V10M19 21V10M3 10l9-7 9 7z', title: 'Business Advisory', desc: 'Strategic guidance as you plan the next stage.' },
     ],
   },
   'automation': {

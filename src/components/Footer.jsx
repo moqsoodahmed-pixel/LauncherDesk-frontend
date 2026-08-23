@@ -33,9 +33,6 @@ export default function Footer() {
             <Fl href="/services/private-limited-company-registration">Private Limited Company Registration</Fl>
             <Fl href="/services/llp-registration">LLP Registration</Fl>
             <Fl href="/services/opc-registration">One Person Company Registration</Fl>
-            <Fl href="/services/gst-registration">GST Registration</Fl>
-            <Fl href="/services/startup-india-dpiit">Startup India / DPIIT</Fl>
-            <Fl href="/services/trademark-registration">Trademark Registration</Fl>
           </div>
 
           {/* Col 3 — BUILD & MANAGE */}
@@ -44,20 +41,14 @@ export default function Footer() {
             <Fl href="/services/website-development">Website Development</Fl>
             <Fl href="/services/branding-logo-design">Branding &amp; Logo Design</Fl>
             <Fl href="/services/accounting">Accounting &amp; Bookkeeping</Fl>
-            <Fl href="/services/gst-registration">GST Filing &amp; Returns</Fl>
-            <Fl href="/services/payroll">Payroll Management</Fl>
-            <Fl href="/services/roc-compliance">ROC / Annual Compliance</Fl>
           </div>
 
           {/* Col 4 — GROW & EXPAND */}
           <div>
             <h5>GROW &amp; EXPAND</h5>
             <Fl href="/services/digital-marketing">SEO &amp; Performance Marketing</Fl>
-            <Fl href="/services/digital-marketing">Social Media Management</Fl>
-            <Fl href="/services/digital-marketing">WhatsApp Business API</Fl>
-            <Fl href="/services/uae-business-setup">UAE Business Setup</Fl>
-            <Fl href="/services/fundraising-documentation">Fundraising Documentation</Fl>
-            <Fl href="/services/business-consulting">Business Consulting</Fl>
+            <Fl href="/services/social-media-management">Social Media Management</Fl>
+            <Fl href="/services/whatsapp-business-api">WhatsApp Business API</Fl>
           </div>
 
           {/* Col 5 — Company + Contact */}

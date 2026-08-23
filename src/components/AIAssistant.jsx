@@ -322,7 +322,7 @@ export default function AIAssistant() {
             </DraSubSection>
             <DraSubSection label="Digital Marketing">
               <a href="/services/digital-marketing">SEO &amp; Search Marketing</a>
-              <a href="/services/digital-marketing">Social Media Marketing</a>
+              <a href="/services/social-media-management">Social Media Marketing</a>
               <a href="/services/digital-marketing">Performance Marketing</a>
             </DraSubSection>
           </DraSection>
