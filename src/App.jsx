@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 // Services
@@ -30,6 +30,17 @@ import OfficeRestorePage from './pages/office-restore/OfficeRestorePage'
 import MarketIndex from './pages/market/MarketIndex'
 import CategoryPage from './pages/market/CategoryPage'
 import ProductPage from './pages/market/ProductPage'
+// Admin
+import { AdminAuthProvider } from './context/AdminAuthContext'
+import AdminLogin        from './pages/admin/AdminLogin'
+import AdminLayout       from './pages/admin/AdminLayout'
+import AdminDashboard    from './pages/admin/pages/AdminDashboard'
+import AdminContacts     from './pages/admin/pages/AdminContacts'
+import AdminLeads        from './pages/admin/pages/AdminLeads'
+import AdminQuotes       from './pages/admin/pages/AdminQuotes'
+import AdminApplications from './pages/admin/pages/AdminApplications'
+import AdminOffice       from './pages/admin/pages/AdminOffice'
+import AdminSettings     from './pages/admin/pages/AdminSettings'
 
 function NotFound() {
   return (
@@ -43,44 +54,51 @@ function NotFound() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          {/* Home */}
-          <Route path="/" element={<HomePage />} />
-          {/* Services */}
-          <Route path="/services" element={<ServicesIndex />} />
-          <Route path="/services/:slug" element={<ServiceDetailPage />} />
-          {/* Solutions */}
-          <Route path="/solutions" element={<SolutionsIndex />} />
-          <Route path="/solutions/:slug" element={<SolutionDetailPage />} />
-          {/* Business Types */}
-          <Route path="/business-types" element={<BusinessTypesIndex />} />
-          <Route path="/business-types/:slug" element={<BusinessTypeDetailPage />} />
-          {/* Company */}
-          <Route path="/company/about" element={<AboutPage />} />
-          <Route path="/company/careers" element={<CareersPage />} />
-          <Route path="/company/contact" element={<ContactPage />} />
-          <Route path="/company/why-launcherdesk" element={<WhyPage />} />
-          {/* Resources */}
-          <Route path="/resources" element={<ResourcesIndex />} />
-          <Route path="/resources/blog" element={<BlogPage />} />
-          <Route path="/resources/guides" element={<GuidesPage />} />
-          <Route path="/resources/tools" element={<ToolsPage />} />
-          <Route path="/resources/faq" element={<FaqPage />} />
-          {/* Pricing & AI */}
-          <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/ai" element={<AiPage />} />
-          {/* Office Setup */}
-          <Route path="/office-restore" element={<OfficeRestorePage />} />
-          {/* Marketplace */}
-          <Route path="/market" element={<MarketIndex />} />
-          <Route path="/market/category" element={<CategoryPage />} />
-          <Route path="/market/product" element={<ProductPage />} />
-          {/* 404 */}
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AdminAuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* ── Public website ── */}
+          <Route element={<Layout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/services" element={<ServicesIndex />} />
+            <Route path="/services/:slug" element={<ServiceDetailPage />} />
+            <Route path="/solutions" element={<SolutionsIndex />} />
+            <Route path="/solutions/:slug" element={<SolutionDetailPage />} />
+            <Route path="/business-types" element={<BusinessTypesIndex />} />
+            <Route path="/business-types/:slug" element={<BusinessTypeDetailPage />} />
+            <Route path="/company/about" element={<AboutPage />} />
+            <Route path="/company/careers" element={<CareersPage />} />
+            <Route path="/company/contact" element={<ContactPage />} />
+            <Route path="/company/why-launcherdesk" element={<WhyPage />} />
+            <Route path="/resources" element={<ResourcesIndex />} />
+            <Route path="/resources/blog" element={<BlogPage />} />
+            <Route path="/resources/guides" element={<GuidesPage />} />
+            <Route path="/resources/tools" element={<ToolsPage />} />
+            <Route path="/resources/faq" element={<FaqPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/ai" element={<AiPage />} />
+            <Route path="/office-restore" element={<OfficeRestorePage />} />
+            <Route path="/market" element={<MarketIndex />} />
+            <Route path="/market/category" element={<CategoryPage />} />
+            <Route path="/market/product" element={<ProductPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+
+          {/* ── Admin panel at /admin ── */}
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="dashboard"    element={<AdminDashboard />} />
+            <Route path="contacts"     element={<AdminContacts />} />
+            <Route path="leads"        element={<AdminLeads />} />
+            <Route path="quotes"       element={<AdminQuotes />} />
+            <Route path="applications" element={<AdminApplications />} />
+            <Route path="office"       element={<AdminOffice />} />
+            <Route path="settings"     element={<AdminSettings />} />
+            {/* redirect /admin/anything-else → dashboard */}
+            <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AdminAuthProvider>
   )
 }
