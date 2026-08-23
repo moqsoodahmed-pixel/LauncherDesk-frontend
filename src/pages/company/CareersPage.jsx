@@ -12,7 +12,7 @@ export default function CareersPage() {
           </nav>
           <span className="eyebrow reveal-up in" style={{marginTop:16,display:'block'}}>Join us</span>
           <h1 className="reveal-up in">Help founders get this right.</h1>
-          <p className="lead reveal-up in">We're a small team building the one-desk experience founders keep wishing existed. If that sounds interesting, we'd like to hear from you — even without a specific role open.</p>
+          <p className="lead reveal-up in">We're a Bengaluru-based team building the one-desk experience founders keep wishing existed. If that sounds interesting, we'd like to hear from you — even without a specific role open.</p>
         </div>
       </header>
 
@@ -29,11 +29,11 @@ export default function CareersPage() {
             </div>
             <div className="card reveal-up">
               <h3>Professional network</h3>
-              <p>CAs, company secretaries, lawyers and consultants — we're always open to expanding our partner network.</p>
+              <p>CAs, company secretaries, lawyers and consultants — we're always open to expanding our partner network. If you serve founders and want to work with a coordinated team, get in touch.</p>
             </div>
             <div className="card reveal-up">
               <h3>Internships</h3>
-              <p>Occasional internship opportunities across operations, content and technology.</p>
+              <p>Occasional internship opportunities across operations, content and technology. Based in Koramangala, Bengaluru.</p>
             </div>
           </div>
         </div>
@@ -46,6 +46,7 @@ export default function CareersPage() {
             <p>Send us a message and mention what you're interested in — team role, professional network, or internship.</p>
             <div className="row">
               <a href="/company/contact" className="btn btn-light">Get in touch</a>
+              <a href="mailto:contact@launcherdesk.com" className="btn btn-ghost-d">Email us directly</a>
             </div>
           </div>
         </div>

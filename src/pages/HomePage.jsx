@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 
 const homepageStyles = `
-/* ── Lifecycle accordion ── */
 .lc2-section{background:var(--bg-warm);padding:88px 0}
 .lc2-inner{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:start;max-width:1200px;margin:0 auto;padding:0 28px}
 .lc2-left{position:sticky;top:92px}
@@ -13,7 +12,6 @@ const homepageStyles = `
 .lc2-item:last-child{border-bottom:1px solid var(--line)}
 .lc2-trigger{width:100%;background:none;border:0;cursor:pointer;display:grid;grid-template-columns:44px 1fr 28px;align-items:center;gap:12px;padding:20px 4px;text-align:left;transition:background .15s;border-radius:0}
 .lc2-trigger:hover{background:rgba(4,125,204,.04)}
-.lc2-trigger:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .lc2-num{font-family:var(--font);font-weight:800;font-size:14px;color:var(--blue-dark);opacity:.45;transition:opacity .25s,color .25s;line-height:1}
 .lc2-name{font-family:var(--font);font-weight:700;font-size:clamp(17px,2vw,21px);color:var(--navy);transition:color .25s;line-height:1}
 .lc2-chevron{width:20px;height:20px;stroke:var(--text-3);fill:none;stroke-width:2;transition:transform .28s cubic-bezier(.2,.7,.3,1),stroke .2s;flex:none}
@@ -30,18 +28,14 @@ const homepageStyles = `
 .lc2-chip:hover{border-color:var(--blue);color:var(--blue-dark);background:rgba(4,125,204,.06);transform:translateY(-1px);box-shadow:0 4px 12px rgba(4,125,204,.15)}
 .lc2-prog{height:2px;background:transparent;position:relative;margin:0 4px}
 .lc2-prog-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue-dark),var(--blue-bright));border-radius:2px;transition:width linear}
-
-/* ── Hero section ── */
 .hp-hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:52px;align-items:center}
 .hp-trust-row{display:flex;gap:22px;margin-top:28px;flex-wrap:wrap}
 .hp-trust-item{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--text-2)}
 .hp-trust-item svg{width:17px;height:17px;stroke:var(--blue)}
-
-/* ── Connected Services ── */
 .sv-section{padding:88px 0;background:var(--bg);overflow:hidden;position:relative}
 .sv-inner{max-width:1200px;margin:0 auto;padding:0 28px}
 .sv-head{text-align:center;margin-bottom:52px}
-.sv-wrap{position:relative;display:flex;justify-content:center;align-items:center}
+.sv-nodes{position:absolute;inset:0;pointer-events:none}
 .sv-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .sv-center{position:relative;z-index:3;width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,#0b1f36,#1F3C5C);border:2px solid rgba(36,154,226,.35);box-shadow:0 0 0 12px rgba(4,125,204,.07),0 0 0 26px rgba(4,125,204,.04),0 20px 50px rgba(8,76,151,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex:none}
 .sv-center-brand{font-family:var(--font);font-weight:800;font-size:15px;color:#fff;letter-spacing:-.01em;line-height:1.2}
@@ -49,7 +43,6 @@ const homepageStyles = `
 .sv-center::before,.sv-center::after{content:"";position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(36,154,226,.18);animation:svPulse 3.2s ease-in-out infinite}
 .sv-center::after{inset:-30px;animation-delay:1.6s}
 @keyframes svPulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.15;transform:scale(1.04)}}
-.sv-nodes{position:absolute;inset:0;pointer-events:none}
 .sv-node{position:absolute;transform:translate(-50%,-50%);pointer-events:auto;display:flex;align-items:center;gap:8px;font-family:var(--font);font-weight:600;font-size:13px;color:var(--navy);background:#fff;border:1.5px solid var(--line);border-radius:99px;padding:9px 16px;box-shadow:var(--sh-sm);cursor:pointer;text-decoration:none;transition:border-color .18s,box-shadow .18s,transform .18s,background .18s,color .18s;white-space:nowrap;z-index:3}
 .sv-node svg{width:15px;height:15px;stroke:var(--blue-dark);fill:none;stroke-width:2;flex:none;transition:stroke .18s}
 .sv-node:hover{border-color:var(--blue);color:var(--blue-dark);box-shadow:0 6px 20px rgba(4,125,204,.2);transform:translate(-50%,-50%) translateY(-3px);background:rgba(4,125,204,.04)}
@@ -59,123 +52,135 @@ const homepageStyles = `
 @keyframes svDash{to{stroke-dashoffset:-44}}
 @keyframes svGlowPulse{0%{opacity:0;stroke-dashoffset:0}30%{opacity:.55}70%{opacity:.4}100%{opacity:0;stroke-dashoffset:-220}}
 .sv-canvas{position:relative;width:100%;height:520px}
-
-/* ── Stats ── */
 .stat-n{font-family:var(--font);font-weight:800;font-size:clamp(28px,3.6vw,48px);letter-spacing:-.03em;color:var(--navy)}
 .stat-l{font-size:14px;color:var(--text-2);margin-top:2px}
-.stat-pending{font-size:11.5px;color:var(--blue-dark);margin-top:4px;opacity:.7;font-family:var(--font);font-weight:600}
-
-/* ── Responsive ── */
-@media(max-width:960px){
-  .hp-hero-grid{grid-template-columns:1fr;gap:32px}
-  .sv-canvas{height:680px}
-  .sv-center{width:120px;height:120px}
-  .sv-center-brand{font-size:12px}
-  .lc2-section{padding:60px 0}
-  .lc2-inner{gap:36px}
-}
-@media(max-width:900px){
-  .lc2-inner{grid-template-columns:1fr;gap:36px}
-  .lc2-left{position:static}
-}
-@media(max-width:640px){
-  .lc2-section{padding:48px 0}
-  .sv-canvas{height:900px}
-  .sv-node{font-size:12px;padding:7px 12px}
-  .hp-trust-row{gap:14px}
-  .hp-trust-item{font-size:12.5px}
-}
-@media(max-width:480px){
-  .sv-canvas{height:1040px}
-  .sv-center{width:100px;height:100px}
-  .sv-center-brand{font-size:11px}
-  .lc2-body-inner{padding:0 4px 18px 44px}
-  .lc2-trigger{grid-template-columns:36px 1fr 24px;gap:8px}
-}
-@media(prefers-reduced-motion:reduce){
-  .sv-thread,.sv-thread-glow,.sv-center::before,.sv-center::after{animation:none!important}
-  .lc2-prog-bar{transition:none!important}
-}
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:32px}
+.diff-col{background:#fff;border-radius:16px;padding:26px;box-shadow:var(--sh-sm)}
+.diff-col.neg{border-top:3px solid #e53e3e}.diff-col.pos{border-top:3px solid var(--success)}
+.diff-col h4{font-size:16px;margin-bottom:14px}
+.diff-col.neg h4{color:#c0392b}.diff-col.pos h4{color:var(--success)}
+.diff-item{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--text-2);margin-bottom:10px}
+.diff-item:last-child{margin-bottom:0}
+.diff-ic{flex:none;margin-top:2px}
+.roadmap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.roadmap-card{background:#fff;border-radius:14px;padding:20px;box-shadow:var(--sh-sm);position:relative}
+.roadmap-badge{display:inline-block;font-size:11px;font-family:var(--font);font-weight:700;padding:3px 9px;border-radius:99px;margin-bottom:10px}
+.roadmap-badge.soon{background:rgba(4,125,204,.1);color:var(--blue-dark)}
+.roadmap-badge.dev{background:rgba(183,121,31,.12);color:var(--warn)}
+.roadmap-badge.future{background:var(--bg-2);color:var(--text-3)}
+@media(max-width:960px){.hp-hero-grid{grid-template-columns:1fr;gap:32px}.sv-canvas{height:680px}.sv-center{width:120px;height:120px}.sv-center-brand{font-size:12px}.lc2-section{padding:60px 0}.lc2-inner{gap:36px}.diff-grid{grid-template-columns:1fr}.roadmap-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.lc2-inner{grid-template-columns:1fr;gap:36px}.lc2-left{position:static}}
+@media(max-width:640px){.lc2-section{padding:48px 0}.sv-canvas{height:900px}.sv-node{font-size:12px;padding:7px 12px}.hp-trust-row{gap:14px}.roadmap-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.sv-canvas{height:1040px}.sv-center{width:100px;height:100px}.sv-center-brand{font-size:11px}.lc2-body-inner{padding:0 4px 18px 44px}.lc2-trigger{grid-template-columns:36px 1fr 24px;gap:8px}}
+@media(prefers-reduced-motion:reduce){.sv-thread,.sv-thread-glow,.sv-center::before,.sv-center::after{animation:none!important}.lc2-prog-bar{transition:none!important}}
 `
 
+// DOCX lifecycle stages: IDEA → START → BUILD → MANAGE → GROW → EXPAND
 const STAGES = [
-  { num: '01', name: 'Start', desc: 'Choose the right structure from day one — it shapes liability, funding and how you operate for years.', chips: [{ label: 'Private Limited', href: '/services/private-limited-company-registration' },{ label: 'LLP', href: '/services/llp-registration' },{ label: 'OPC', href: '/services/opc-registration' },{ label: 'Partnership', href: '/services/partnership-registration' },{ label: 'Section 8 / NGO', href: '/services' },{ label: 'Dubai Setup', href: '/services' }] },
-  { num: '02', name: 'Structure', desc: 'All the registrations, licences and certifications that make your business legally operational.', chips: [{ label: 'GST Registration', href: '/services/gst-registration' },{ label: 'MSME / Udyam', href: '/services/msme-registration' },{ label: 'FSSAI', href: '/services/fssai-registration' },{ label: 'IEC', href: '/services' },{ label: 'Trade Licence', href: '/services' },{ label: 'ISO Certification', href: '/services' }] },
-  { num: '03', name: 'Protect', desc: 'Secure your brand, IP and legal agreements before competitors or disputes appear.', chips: [{ label: 'Trademark', href: '/services/trademark-registration' },{ label: 'Copyright', href: '/services' },{ label: 'Patent', href: '/services' },{ label: 'Trademark Objection', href: '/services' },{ label: 'IP Management', href: '/services' }] },
-  { num: '04', name: 'Manage', desc: 'Books, payroll and filings handled proactively — so a missed deadline never becomes a penalty.', chips: [{ label: 'Accounting', href: '/services/accounting' },{ label: 'Payroll', href: '/services/payroll' },{ label: 'ROC Filing', href: '/services/roc-compliance' },{ label: 'GST Returns', href: '/services/gst-registration' },{ label: 'Income Tax', href: '/services/accounting' },{ label: 'Virtual CFO', href: '/services/accounting' }] },
-  { num: '05', name: 'Grow', desc: 'Website, CRM, marketing and automation systems that attract and retain customers at scale.', chips: [{ label: 'Website Development', href: '/services' },{ label: 'Digital Marketing', href: '/services/digital-marketing' },{ label: 'SEO', href: '/services/digital-marketing' },{ label: 'WhatsApp Marketing', href: '/services/digital-marketing' },{ label: 'Lead Generation', href: '/services/digital-marketing' },{ label: 'CRM Setup', href: '/services/digital-marketing' }] },
-  { num: '06', name: 'Scale', desc: 'Automation, IT infrastructure and international expansion to take your business to the next level.', chips: [{ label: 'Business Automation', href: '/services/business-automation' },{ label: 'IT Solutions', href: '/services/business-automation' },{ label: 'Funding Readiness', href: '/solutions/advisory' },{ label: 'Advisory', href: '/solutions/advisory' },{ label: 'Overseas Setup', href: '/services' },{ label: 'Global Payroll', href: '/services' }] },
+  {
+    num: '01', name: 'IDEA',
+    desc: 'You have a business concept. We help you validate the right structure before you commit.',
+    chips: [
+      { label: 'Pvt Ltd vs LLP comparison', href: '/services' },
+      { label: 'Business type finder', href: '/business-types' },
+      { label: 'Talk to an expert', href: '/company/contact' },
+    ]
+  },
+  {
+    num: '02', name: 'START',
+    desc: 'Register your company, get GST, protect your brand. Get it right from day one.',
+    chips: [
+      { label: 'Private Limited Company', href: '/services/private-limited-company-registration' },
+      { label: 'LLP Registration', href: '/services/llp-registration' },
+      { label: 'OPC Registration', href: '/services/opc-registration' },
+      { label: 'GST Registration', href: '/services/gst-registration' },
+      { label: 'Startup India / DPIIT', href: '/services' },
+      { label: 'MSME / Udyam', href: '/services/msme-registration' },
+      { label: 'Trademark Registration', href: '/services/trademark-registration' },
+      { label: 'ISO Certification', href: '/services' },
+    ]
+  },
+  {
+    num: '03', name: 'BUILD',
+    desc: 'Create your website, technology and brand identity. Build the digital foundation.',
+    chips: [
+      { label: 'Website Development', href: '/services' },
+      { label: 'E-Commerce Website', href: '/services' },
+      { label: 'Branding & Logo Design', href: '/services' },
+      { label: 'Business Email & Hosting', href: '/services' },
+      { label: 'Software & SaaS Development', href: '/services' },
+      { label: 'Business Automation', href: '/services/business-automation' },
+    ]
+  },
+  {
+    num: '04', name: 'MANAGE',
+    desc: 'Stay compliant, handle accounting, payroll and legal needs. Keep your business running smoothly.',
+    chips: [
+      { label: 'Accounting & Bookkeeping', href: '/services/accounting' },
+      { label: 'GST Filing & Returns', href: '/services/gst-registration' },
+      { label: 'Income Tax Filing', href: '/services/accounting' },
+      { label: 'ROC / Annual Compliance', href: '/services/roc-compliance' },
+      { label: 'Payroll Management', href: '/services/payroll' },
+      { label: 'Legal Document Support', href: '/services' },
+    ]
+  },
+  {
+    num: '05', name: 'GROW',
+    desc: 'Reach customers through marketing, SEO and automation. Grow your revenue.',
+    chips: [
+      { label: 'SEO & Performance Marketing', href: '/services/digital-marketing' },
+      { label: 'Social Media Management', href: '/services/digital-marketing' },
+      { label: 'WhatsApp Business API', href: '/services/digital-marketing' },
+      { label: 'CRM & Lead Management', href: '/services/digital-marketing' },
+      { label: 'Google Ads', href: '/services/digital-marketing' },
+    ]
+  },
+  {
+    num: '06', name: 'EXPAND',
+    desc: 'Raise funding, go international and scale strategically. Take your business to the next stage.',
+    chips: [
+      { label: 'International Company Setup', href: '/services' },
+      { label: 'UAE Business Setup', href: '/services' },
+      { label: 'Fundraising Documentation', href: '/services' },
+      { label: 'Business Consulting', href: '/services' },
+      { label: 'Strategic Growth Support', href: '/services' },
+    ]
+  },
 ]
 
 const SV_NODES = [
-  { href: '/services/private-limited-company-registration', label: 'Business Registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14' },
+  { href: '/services/private-limited-company-registration', label: 'Company Registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14' },
   { href: '/services/gst-registration', label: 'GST & Compliance', icon: 'M9 11l3 3L22 4' },
   { href: '/services/accounting', label: 'Accounting & Tax', icon: 'M3 3v18h18M7 14l4-4 3 3 5-6' },
   { href: '/services/trademark-registration', label: 'Trademark & IP', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
-  { href: '/services', label: 'IT Services', icon: 'M2 3h20v14H2zM8 21h8M12 17v4' },
-  { href: '/services', label: 'Website Development', icon: 'M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z' },
-  { href: '/services/digital-marketing', label: 'Marketing & Growth', icon: 'M23 6l-9.5 9.5-5-5L1 18' },
-  { href: '/office-restore', label: 'Office Setup', icon: 'M3 21h18M5 21V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14M9 21v-4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4' },
+  { href: '/services', label: 'Website Development', icon: 'M2 3h20v14H2zM8 21h8M12 17v4' },
+  { href: '/services/digital-marketing', label: 'Marketing & SEO', icon: 'M23 6l-9.5 9.5-5-5L1 18' },
+  { href: '/services', label: 'UAE Business Setup', icon: 'M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM2 12h20' },
+  { href: '/services', label: 'Fundraising Support', icon: 'M3 3v18h18M7 14l4-4 3 3 5-6' },
 ]
 
 function LifecycleAccordion() {
-  const STAGE_MS = 3200
-  const RESUME_MS = 7000
-
+  const STAGE_MS = 3200, RESUME_MS = 7000
   useEffect(() => {
     const items = document.querySelectorAll('.lc2-item')
     const lcSection = document.getElementById('lcSection')
     if (!items.length || !lcSection) return
-
     let activeIdx = 0, timer = null, resumeT = null, paused = false
     const reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches
-
-    function startProg(idx, bar) {
-      if (!bar) return
-      bar.style.transition = 'none'; bar.style.width = '0%'
-      void bar.offsetWidth
-      bar.style.transition = `width ${STAGE_MS}ms linear`; bar.style.width = '100%'
-    }
-    function stopProg(idx, bar) {
-      if (bar) { bar.style.transition = 'none'; bar.style.width = '0%' }
-    }
-
+    function startProg(idx, bar) { if (!bar) return; bar.style.transition = 'none'; bar.style.width = '0%'; void bar.offsetWidth; bar.style.transition = `width ${STAGE_MS}ms linear`; bar.style.width = '100%' }
+    function stopProg(idx, bar) { if (bar) { bar.style.transition = 'none'; bar.style.width = '0%' } }
     function openItem(idx) {
       items.forEach((item, i) => {
-        const btn = item.querySelector('.lc2-trigger')
-        const body = item.querySelector('.lc2-body')
-        const prog = item.querySelector('.lc2-prog-bar')
-        if (i === idx) {
-          item.classList.add('lc2-open'); btn.setAttribute('aria-expanded', 'true')
-          body.style.maxHeight = body.scrollHeight + 'px'
-          if (!reduced) startProg(i, prog)
-        } else {
-          item.classList.remove('lc2-open'); btn.setAttribute('aria-expanded', 'false')
-          body.style.maxHeight = '0'; stopProg(i, prog)
-        }
+        const btn = item.querySelector('.lc2-trigger'), body = item.querySelector('.lc2-body'), prog = item.querySelector('.lc2-prog-bar')
+        if (i === idx) { item.classList.add('lc2-open'); btn.setAttribute('aria-expanded','true'); body.style.maxHeight = body.scrollHeight + 'px'; if (!reduced) startProg(i, prog) }
+        else { item.classList.remove('lc2-open'); btn.setAttribute('aria-expanded','false'); body.style.maxHeight = '0'; stopProg(i, prog) }
       })
       activeIdx = idx
     }
-
-    function scheduleNext() {
-      clearTimeout(timer)
-      if (paused || reduced) return
-      timer = setTimeout(() => { const next = (activeIdx + 1) % items.length; openItem(next); scheduleNext() }, STAGE_MS)
-    }
-
-    items.forEach((item, i) => {
-      const btn = item.querySelector('.lc2-trigger')
-      btn.addEventListener('click', () => {
-        paused = true; clearTimeout(timer); clearTimeout(resumeT)
-        openItem(i)
-        resumeT = setTimeout(() => { paused = false; scheduleNext() }, RESUME_MS)
-      })
-    })
-
+    function scheduleNext() { clearTimeout(timer); if (paused || reduced) return; timer = setTimeout(() => { openItem((activeIdx + 1) % items.length); scheduleNext() }, STAGE_MS) }
+    items.forEach((item, i) => { const btn = item.querySelector('.lc2-trigger'); btn.addEventListener('click', () => { paused = true; clearTimeout(timer); clearTimeout(resumeT); openItem(i); resumeT = setTimeout(() => { paused = false; scheduleNext() }, RESUME_MS) }) })
     openItem(0)
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { scheduleNext(); obs.unobserve(e.target) } })
-    }, { threshold: 0.2 })
+    const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { scheduleNext(); obs.unobserve(e.target) } }) }, { threshold: 0.2 })
     obs.observe(lcSection)
     return () => { clearTimeout(timer); clearTimeout(resumeT); obs.disconnect() }
   }, [])
@@ -184,11 +189,11 @@ function LifecycleAccordion() {
     <section className="lc2-section" id="lcSection">
       <div className="lc2-inner">
         <div className="lc2-left reveal-up">
-          <span className="eyebrow">The whole lifecycle</span>
-          <h2 className="lc2-heading">One partner. Every stage of business.</h2>
-          <p className="lc2-desc">From first idea to full-scale expansion — one team, one dashboard, one point of contact.</p>
-          <a href="/services" className="btn btn-primary">
-            Browse all services <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <span className="eyebrow">Your whole business journey</span>
+          <h2 className="lc2-heading">One platform. Every stage.</h2>
+          <p className="lc2-desc">Most businesses need support across every stage. LauncherDesk is built for all of them — from first idea to international expansion.</p>
+          <a href="/company/contact" className="btn btn-primary">
+            Find my starting point <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
         <div className="lc2-list reveal-up" id="lcList" role="list">
@@ -218,78 +223,35 @@ function LifecycleAccordion() {
 
 function ConnectedServices() {
   useEffect(() => {
-    const canvas = document.getElementById('svCanvas')
-    const svgEl = document.getElementById('svSvg')
-    const nodesEl = document.getElementById('svNodes')
+    const canvas = document.getElementById('svCanvas'), svgEl = document.getElementById('svSvg'), nodesEl = document.getElementById('svNodes')
     if (!canvas || !svgEl || !nodesEl) return
-
-    const nodes = nodesEl.querySelectorAll('.sv-node')
-    const N = nodes.length
-
+    const nodes = nodesEl.querySelectorAll('.sv-node'), N = nodes.length
     function placeNodes() {
-      const W = canvas.offsetWidth || 800
-      const H = canvas.offsetHeight || 520
-      const cx = W / 2, cy = H / 2
-      let rx = Math.min(W * 0.42, 320)
-      let ry = Math.min(H * 0.40, 200)
-      const isMobile = W < 580
-      const isTablet = W < 900
-      const positions = []
-
+      const W = canvas.offsetWidth || 800, H = canvas.offsetHeight || 520, cx = W/2, cy = H/2
+      let rx = Math.min(W * 0.42, 320), ry = Math.min(H * 0.40, 200)
+      const isMobile = W < 580, isTablet = W < 900, positions = []
       if (isMobile) {
-        const cols = 2, nodeW = 148, nodeH = 42, gapX = 10, gapY = 12
-        const rows = Math.ceil(N / cols)
-        const totalH = rows * (nodeH + gapY) - gapY
-        const startY = cy - totalH / 2 + 90
-        for (let i = 0; i < N; i++) {
-          const col = i % cols, row = Math.floor(i / cols)
-          positions.push({ x: cx + (col - 0.5) * (nodeW + gapX), y: startY + row * (nodeH + gapY) })
-        }
+        const cols = 2, nodeW = 148, nodeH = 42, gapX = 10, gapY = 12, rows = Math.ceil(N / cols), totalH = rows * (nodeH + gapY) - gapY, startY = cy - totalH / 2 + 90
+        for (let i = 0; i < N; i++) { const col = i % cols, row = Math.floor(i / cols); positions.push({ x: cx + (col - 0.5) * (nodeW + gapX), y: startY + row * (nodeH + gapY) }) }
         canvas.style.height = (startY + totalH + 60) + 'px'
       } else {
         if (isTablet) { rx = W * 0.38; ry = H * 0.38 }
-        for (let i = 0; i < N; i++) {
-          const a = (i / N) * 2 * Math.PI - Math.PI / 2
-          positions.push({ x: cx + rx * Math.cos(a), y: cy + ry * Math.sin(a) })
-        }
+        for (let i = 0; i < N; i++) { const a = (i / N) * 2 * Math.PI - Math.PI / 2; positions.push({ x: cx + rx * Math.cos(a), y: cy + ry * Math.sin(a) }) }
       }
-
-      nodes.forEach((node, i) => {
-        node.style.left = positions[i].x + 'px'
-        node.style.top = positions[i].y + 'px'
-      })
-
-      svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`)
-      svgEl.innerHTML = ''
+      nodes.forEach((node, i) => { node.style.left = positions[i].x + 'px'; node.style.top = positions[i].y + 'px' })
+      svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`); svgEl.innerHTML = ''
       const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs')
       defs.innerHTML = '<linearGradient id="svGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#084C97"/><stop offset="100%" stop-color="#249AE2"/></linearGradient>'
       svgEl.appendChild(defs)
-
       nodes.forEach((node, i) => {
-        const px = positions[i].x, py = positions[i].y
-        const dx = px - cx, dy = py - cy
-        const dist = Math.sqrt(dx * dx + dy * dy)
-        const perpX = -dy / dist * dist * 0.25
-        const perpY = dx / dist * dist * 0.25
-        const cpx = (cx + px) / 2 + perpX, cpy = (cy + py) / 2 + perpY
+        const px = positions[i].x, py = positions[i].y, dx = px - cx, dy = py - cy, dist = Math.sqrt(dx*dx+dy*dy)
+        const perpX = -dy/dist*dist*0.25, perpY = dx/dist*dist*0.25, cpx = (cx+px)/2+perpX, cpy = (cy+py)/2+perpY
         const d = `M${cx},${cy} Q${cpx},${cpy} ${px},${py}`
-
-        const thread = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-        thread.setAttribute('d', d); thread.setAttribute('class', 'sv-thread')
-        thread.style.animationDelay = (i * 0.28) + 's'
-        svgEl.appendChild(thread)
-
-        const glow = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-        glow.setAttribute('d', d); glow.setAttribute('class', 'sv-thread-glow')
-        glow.setAttribute('pathLength', '220')
-        glow.style.animationDelay = (i * 0.35 + 0.6) + 's'
-        glow.style.animationDuration = (2.4 + i * 0.18) + 's'
-        svgEl.appendChild(glow)
+        const thread = document.createElementNS('http://www.w3.org/2000/svg', 'path'); thread.setAttribute('d',d); thread.setAttribute('class','sv-thread'); thread.style.animationDelay = (i*0.28)+'s'; svgEl.appendChild(thread)
+        const glow = document.createElementNS('http://www.w3.org/2000/svg', 'path'); glow.setAttribute('d',d); glow.setAttribute('class','sv-thread-glow'); glow.setAttribute('pathLength','220'); glow.style.animationDelay = (i*0.35+0.6)+'s'; glow.style.animationDuration = (2.4+i*0.18)+'s'; svgEl.appendChild(glow)
       })
     }
-
-    placeNodes()
-    let resizeT
+    placeNodes(); let resizeT
     const onResize = () => { clearTimeout(resizeT); resizeT = setTimeout(placeNodes, 120) }
     window.addEventListener('resize', onResize)
     return () => { window.removeEventListener('resize', onResize); clearTimeout(resizeT) }
@@ -300,18 +262,18 @@ function ConnectedServices() {
       <div className="sv-inner">
         <div className="sv-head sec-head center reveal-up">
           <span className="eyebrow">One platform. Every service.</span>
-          <h2 style={{ fontSize: 'clamp(22px,3.2vw,40px)', marginTop: 10 }}>LauncherDesk connects your entire business.</h2>
-          <p style={{ marginTop: 12, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>Every service, every category — accessible from a single accountable partner.</p>
+          <h2 style={{ fontSize: 'clamp(22px,3.2vw,40px)', marginTop: 10 }}>Everything your business needs, coordinated for you.</h2>
+          <p style={{ marginTop: 12, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>One team. One platform. Every service — from registration and compliance to technology, marketing and international expansion.</p>
         </div>
         <div className="sv-canvas reveal-up" id="svCanvas">
           <svg className="sv-svg" id="svSvg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
-          <div className="sv-center" id="svCenter" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}>
+          <div className="sv-center" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}>
             <div className="sv-center-brand">LauncherDesk</div>
-            <div className="sv-center-sub">Business Platform</div>
+            <div className="sv-center-sub">Business HQ</div>
           </div>
           <div className="sv-nodes" id="svNodes">
             {SV_NODES.map((n, i) => (
-              <a key={i} className="sv-node" href={n.href} data-sv-idx={i}>
+              <a key={i} className="sv-node" href={n.href}>
                 <svg viewBox="0 0 24 24"><path d={n.icon}/></svg>
                 {n.label}
               </a>
@@ -323,22 +285,144 @@ function ConnectedServices() {
   )
 }
 
-const LD_STATS = { businesses: '500+', services: '2,000+', cities: '25+', years: '8+' }
-const STAT_LABELS = { businesses: 'Businesses served', services: 'Services delivered', cities: 'Cities covered', years: 'Years of experience' }
+// DOCX stats: "200+ Businesses Supported · 15+ Solution Categories · 1 Named Point of Contact · Bengaluru-based Team"
+const LD_STATS = [
+  { n: '200+', l: 'Businesses Supported' },
+  { n: '15+',  l: 'Solution Categories' },
+  { n: '1',    l: 'Named Point of Contact' },
+  { n: 'BLR',  l: 'Bengaluru-based Team' },
+]
 
 function StatsSection() {
   return (
-    <section className="section section-2" id="statsSection">
+    <section className="section section-2">
       <div className="wrap">
-        <div className="sec-head reveal-up">
-          <span className="eyebrow">Proof, not promises</span>
-          <h2>Built on real numbers.</h2>
+        <div className="sec-head center reveal-up">
+          <span className="eyebrow">Trusted by founders across India</span>
+          <h2>Built for every stage of business.</h2>
         </div>
         <div className="proof reveal-up" style={{ marginTop: 34 }}>
-          {Object.entries(LD_STATS).map(([k, v]) => (
-            <div key={k}>
-              <div className="stat-n">{v}</div>
-              <div className="stat-l">{STAT_LABELS[k]}</div>
+          {LD_STATS.map(s => (
+            <div key={s.n}>
+              <div className="stat-n">{s.n}</div>
+              <div className="stat-l">{s.l}</div>
+            </div>
+          ))}
+        </div>
+        <div className="center reveal-up" style={{ marginTop: 28, display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
+          {['MSME Registered', 'Startup India Recognised', 'ISO 9001:2015 Certified'].map(b => (
+            <span key={b} style={{ fontSize: 12.5, fontFamily: 'var(--font)', fontWeight: 700, padding: '6px 14px', borderRadius: 99, background: 'rgba(4,125,204,.08)', color: 'var(--blue-dark)', letterSpacing: '.03em' }}>{b}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function DifferenceSection() {
+  return (
+    <section className="section section-warm">
+      <div className="wrap">
+        <div className="sec-head reveal-up">
+          <span className="eyebrow">The LauncherDesk difference</span>
+          <h2>One team. One outcome.</h2>
+          <p>Running a business shouldn't mean repeating yourself to five different vendors. We coordinate everything through one accountable team.</p>
+        </div>
+        <div className="diff-grid reveal-up">
+          <div className="diff-col neg">
+            <h4>❌ Without LauncherDesk</h4>
+            {[
+              '5+ different vendors, 5+ different conversations',
+              'Multiple invoices, logins and follow-ups',
+              'Nobody owns the outcome — it falls through the cracks',
+              'You explain your business from scratch every time',
+              'Deadlines missed because nobody is watching',
+            ].map(t => (
+              <div key={t} className="diff-item">
+                <svg className="diff-ic" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" strokeWidth="2" width="16" height="16"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                <span>{t}</span>
+              </div>
+            ))}
+          </div>
+          <div className="diff-col pos">
+            <h4>✅ With LauncherDesk</h4>
+            {[
+              'One named point of contact for everything',
+              'We coordinate across all services and professionals',
+              'You tell us once — we handle the rest',
+              'Proactive updates so nothing is missed',
+              'One relationship that grows with your business',
+            ].map(t => (
+              <div key={t} className="diff-item">
+                <svg className="diff-ic" viewBox="0 0 24 24" fill="none" stroke="var(--success)" strokeWidth="2" width="16" height="16"><path d="M20 6 9 17l-5-5"/></svg>
+                <span>{t}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="center" style={{ marginTop: 28 }}>
+          <a href="/company/contact" className="btn btn-primary">Talk to LauncherDesk</a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function HowItWorksSection() {
+  const steps = [
+    { n: '01', title: 'Tell us what you need.', body: 'One conversation with your named contact — no call centres, no runaround.' },
+    { n: '02', title: 'We design a clear plan.', body: 'Honest timelines, upfront pricing, and a straightforward scope — before you commit.' },
+    { n: '03', title: 'We handle everything.', body: 'Filing, follow-up, coordination across every service — done for you.' },
+    { n: '04', title: 'You stay informed and supported.', body: 'Updates throughout the process. Ongoing support as your business grows.' },
+  ]
+  return (
+    <section className="section">
+      <div className="wrap">
+        <div className="sec-head center reveal-up">
+          <span className="eyebrow">Simple from day one</span>
+          <h2>How LauncherDesk works</h2>
+        </div>
+        <div className="steps3 reveal-up" style={{ marginTop: 36, gridTemplateColumns: 'repeat(4,1fr)' }}>
+          {steps.map(s => (
+            <div key={s.n} className="hstep" style={{ paddingTop: 36 }}>
+              <div style={{ fontFamily: 'var(--font)', fontWeight: 800, fontSize: 15, color: 'var(--blue)', position: 'absolute', top: 0, left: 0 }}>{s.n}</div>
+              <h3 style={{ fontSize: 18 }}>{s.title}</h3>
+              <p>{s.body}</p>
+              <div className="ln"></div>
+            </div>
+          ))}
+        </div>
+        <div className="center" style={{ marginTop: 32 }}>
+          <a href="/company/contact" className="btn btn-primary">Get Started</a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function PlatformRoadmapSection() {
+  const features = [
+    { label: 'Coming Soon', cls: 'soon', title: 'Business Dashboard', desc: 'See the full status of your business in one place.' },
+    { label: 'Coming Soon', cls: 'soon', title: 'Compliance Calendar', desc: 'Stay ahead of GST, ROC, tax and renewal deadlines.' },
+    { label: 'Coming Soon', cls: 'soon', title: 'Document Vault', desc: 'Store and access important business documents securely.' },
+    { label: 'In Development', cls: 'dev', title: 'Service Tracking', desc: 'Know the real-time status of every request.' },
+    { label: 'Future', cls: 'future', title: 'Business Marketplace', desc: 'Discover CRM, accounting, HRMS and marketing tools.' },
+    { label: 'Future', cls: 'future', title: 'AI Business Assistant', desc: 'Get proactive guidance on what your business needs next.' },
+  ]
+  return (
+    <section className="section section-2">
+      <div className="wrap">
+        <div className="sec-head reveal-up">
+          <span className="eyebrow">We're building something bigger</span>
+          <h2>LauncherDesk is evolving.</h2>
+          <p>From a coordinated service team into a full technology platform for Indian businesses. One desk. A smarter business experience.</p>
+        </div>
+        <div className="roadmap-grid reveal-up">
+          {features.map(f => (
+            <div key={f.title} className="roadmap-card">
+              <span className={`roadmap-badge ${f.cls}`}>{f.label}</span>
+              <h3 style={{ fontSize: 16, marginBottom: 6 }}>{f.title}</h3>
+              <p style={{ fontSize: 13.5, color: 'var(--text-2)' }}>{f.desc}</p>
             </div>
           ))}
         </div>
@@ -352,36 +436,35 @@ export default function HomePage() {
     <>
       <style>{homepageStyles}</style>
 
-      {/* HERO */}
+      {/* HERO — DOCX H1: "Your Business HQ." Subheadline: "Launch. Manage. Grow. — from one desk." */}
       <header className="page-hero">
         <div className="wrap">
           <div className="hp-hero-grid">
             <div className="reveal-up in">
-              <span className="eyebrow">One desk · Every stage</span>
-              <h1>Everything your business needs. <span className="grad-text">From first idea to full-scale growth.</span></h1>
-              <p className="lead">Start, structure, comply, protect and grow — with one accountable partner instead of five vendors. Tell us what you're building and we'll show you exactly what comes next.</p>
+              <span className="eyebrow">For Startups · Small Businesses · Growing Companies</span>
+              <h1>Your Business HQ. <span className="grad-text">Launch. Manage. Grow.</span></h1>
+              <p className="lead">Starting and running a business means dealing with registration, compliance, tax, technology, marketing — and a different vendor for each one. LauncherDesk brings it all together. One platform. One team. Everything your business needs, coordinated for you.</p>
               <div className="hero-cta">
-                <a href="/services#finder" className="btn btn-primary">Get Started <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-                <a href="/company/contact" className="btn btn-soft">Talk to an Expert</a>
-                <a href="/services" className="btn btn-quiet">Explore Services →</a>
+                <a href="/company/contact" className="btn btn-primary">Get Started <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                <a href="/solutions" className="btn btn-soft">Explore Solutions</a>
               </div>
               <div className="hp-trust-row">
                 <div className="hp-trust-item">
                   <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                  Transparent, unbundled pricing
+                  Clear scope and pricing upfront
                 </div>
                 <div className="hp-trust-item">
                   <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.2"><path d="M20 6 9 17l-5-5"/></svg>
-                  Support that continues after you pay
+                  One named point of contact
                 </div>
               </div>
             </div>
 
-            {/* Command Center */}
+            {/* Command Center visual */}
             <div className="cc reveal-up in">
               <div className="float float-1">
                 <span className="fi fi-green"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><path d="M20 6 9 17l-5-5"/></svg></span>
-                <span><b>GST Filing</b><small>Completed</small></span>
+                <span><b>GST Filing</b><small>Completed on time</small></span>
               </div>
               <div className="float float-2">
                 <span className="fi fi-amber"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
@@ -391,18 +474,18 @@ export default function HomePage() {
                 <div className="cc-head">
                   <span className="t">
                     <svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-                    Business Command Center
+                    Business HQ — Overview
                   </span>
-                  <span className="cc-live"><span className="pd"></span> Live</span>
+                  <span className="cc-live"><span className="pd"></span> Active</span>
                 </div>
                 <div className="cc-health">
-                  <div className="lbl">Business health</div>
+                  <div className="lbl">Business compliance health</div>
                   <div className="num" data-count="98">0<span>%</span></div>
                   <div className="cc-bar"><i data-fill="98"></i></div>
                 </div>
                 <div className="cc-metrics">
                   <div className="cc-metric"><div className="k">Compliance</div><div className="v ok"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Up to date</div></div>
-                  <div className="cc-metric"><div className="k">Tasks</div><div className="v pr"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 3 due</div></div>
+                  <div className="cc-metric"><div className="k">Filings</div><div className="v pr"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 3 due soon</div></div>
                   <div className="cc-metric"><div className="k">Services</div><div className="v inf"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> 6 active</div></div>
                   <div className="cc-metric"><div className="k">Advisor</div><div className="v ok"><svg viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Available</div></div>
                 </div>
@@ -412,134 +495,82 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* WHAT WE DO */}
+      {/* SOLUTIONS OVERVIEW */}
       <section className="section-sm">
-        <div className="wrap sec-head center reveal-up">
-          <span className="eyebrow">What LauncherDesk does</span>
-          <h2 style={{ fontSize: 'clamp(20px,3vw,36px)' }}>We replace the scramble of managing a CA, a lawyer, a registration agent and an agency — with one team and one dashboard.</h2>
-        </div>
-      </section>
-
-      <LifecycleAccordion />
-      <ConnectedServices />
-
-      {/* WHERE TO START */}
-      <section className="section">
         <div className="wrap">
-          <div className="sec-head reveal-up"><span className="eyebrow">Where to start</span><h2>Pick the area you need help with.</h2></div>
-          <div className="grid-3 svc-cats" style={{ marginTop: 36 }}>
+          <div className="sec-head center reveal-up">
+            <span className="eyebrow">Find your starting point</span>
+            <h2>Every business is at a different stage. We help at all of them.</h2>
+          </div>
+          <div className="grid-3" style={{ marginTop: 36 }}>
             <a className="card reveal-up" href="/services/private-limited-company-registration">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 21h18M6 21V7l6-4 6 4v14M10 9h4M10 13h4"/></svg></div>
-              <h3>Start your business</h3>
-              <p>Incorporate the right entity, structured for how you'll actually operate.</p>
-              <span className="arrow">Explore →</span>
+              <h3>START — Set up your business</h3>
+              <p>Company registration, GST, Startup India, Trademark and all licences from day one.</p>
+              <span className="arrow">Explore START →</span>
             </a>
-            <a className="card reveal-up" href="/services/gst-registration">
+            <a className="card reveal-up" href="/services">
+              <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 3h20v14H2zM8 21h8M12 17v4"/></svg></div>
+              <h3>BUILD — Create your foundation</h3>
+              <p>Website, branding, business email, software development and automation.</p>
+              <span className="arrow">Explore BUILD →</span>
+            </a>
+            <a className="card reveal-up" href="/services/accounting">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-              <h3>Registrations &amp; compliance</h3>
-              <p>GST, licences, ROC and tax filings handled proactively — no penalties.</p>
-              <span className="arrow">Explore →</span>
+              <h3>MANAGE — Keep running smoothly</h3>
+              <p>Accounting, GST returns, ROC compliance, payroll and legal support.</p>
+              <span className="arrow">Explore MANAGE →</span>
             </a>
-            <a className="card reveal-up" href="/services/trademark-registration">
-              <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-              <h3>Protect &amp; grow</h3>
-              <p>Trademark and IP, plus the website, CRM and marketing to scale.</p>
-              <span className="arrow">Explore →</span>
+            <a className="card reveal-up" href="/services/digital-marketing">
+              <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg></div>
+              <h3>GROW — Reach more customers</h3>
+              <p>SEO, social media, WhatsApp Business API, CRM setup and Google Ads.</p>
+              <span className="arrow">Explore GROW →</span>
+            </a>
+            <a className="card reveal-up" href="/services">
+              <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM2 12h20"/></svg></div>
+              <h3>EXPAND — Go further</h3>
+              <p>International company setup, UAE, fundraising documentation and consulting.</p>
+              <span className="arrow">Explore EXPAND →</span>
+            </a>
+            <a className="card reveal-up" href="/company/contact">
+              <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+              <h3>Not sure where to start?</h3>
+              <p>Tell us about your business. We'll point you to the right starting point — no obligation.</p>
+              <span className="arrow">Talk to us →</span>
             </a>
           </div>
         </div>
       </section>
 
-      {/* DASHBOARD */}
-      <section className="section section-dark">
-        <div className="wrap">
-          <div className="sec-head reveal-up">
-            <span className="eyebrow" style={{ color: '#7fb4dc' }}>The product behind the service</span>
-            <h2>One business. One operating view.</h2>
-            <p>Every registration, deadline, document and advisor conversation in a single place.</p>
-          </div>
-          <div className="dash reveal-up">
-            <div className="dash-top"><span className="dots"><i></i><i></i><i></i></span> app.launcherdesk.com / overview</div>
-            <div className="dash-body">
-              <div className="dash-cell">
-                <div className="k">Business overview</div>
-                <div className="dash-list">
-                  <div className="row"><b>Incorporation</b><span className="tag g">Complete</span></div>
-                  <div className="row"><b>GST</b><span className="tag g">Active</span></div>
-                  <div className="row"><b>Trademark</b><span className="tag a">In progress</span></div>
-                  <div className="row"><b>Annual compliance</b><span className="tag b">3 tasks</span></div>
-                </div>
-              </div>
-              <div className="dash-cell">
-                <div className="k">Documents secured</div>
-                <div className="big" data-count="24">0</div>
-                <div className="v inf" style={{ marginTop: 12 }}>
-                  <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  Encrypted vault
-                </div>
-              </div>
-              <div className="dash-cell">
-                <div className="k">Next deadline</div>
-                <div className="v pr" style={{ marginTop: 8 }}>
-                  <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                  GST — 12 days
-                </div>
-                <div className="k" style={{ marginTop: 20 }}>AI manager</div>
-                <div className="v inf" style={{ marginTop: 8 }}>
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10z"/></svg>
-                  Online
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="center" style={{ marginTop: 30, position: 'relative' }}>
-            <a href="/ai" className="btn btn-light">See how LauncherDesk AI works →</a>
-          </div>
-        </div>
-      </section>
+      {/* LIFECYCLE ACCORDION */}
+      <LifecycleAccordion />
 
-      {/* WHY SWITCH */}
-      <section className="section">
-        <div className="wrap">
-          <div className="sec-head reveal-up">
-            <span className="eyebrow">Why founders switch</span>
-            <h2>Stop managing five different vendors.</h2>
-            <p>One team, one dashboard, one point of contact — and we stay on long after the paperwork is filed.</p>
-          </div>
-          <div className="grid-3" style={{ marginTop: 34 }}>
-            <div className="value reveal-up">
-              <div className="ci"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-              <h3>One accountable partner</h3>
-              <p>Every stage of your business under one roof — no finger-pointing between vendors.</p>
-            </div>
-            <div className="value reveal-up">
-              <div className="ci"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-              <h3>Transparent pricing</h3>
-              <p>Professional fee, government fee and taxes shown separately. No surprises.</p>
-            </div>
-            <div className="value reveal-up">
-              <div className="ci"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
-              <h3>Proactive compliance</h3>
-              <p>We watch the deadlines so a missed filing never becomes a penalty.</p>
-            </div>
-          </div>
-          <div className="center" style={{ marginTop: 28 }}>
-            <a href="/company/why-launcherdesk" className="btn btn-quiet">Why LauncherDesk →</a>
-          </div>
-        </div>
-      </section>
+      {/* DIFFERENCE */}
+      <DifferenceSection />
 
+      {/* HOW IT WORKS */}
+      <HowItWorksSection />
+
+      {/* CONNECTED SERVICES VISUAL */}
+      <ConnectedServices />
+
+      {/* STATS / TRUST */}
       <StatsSection />
+
+      {/* PLATFORM ROADMAP */}
+      <PlatformRoadmapSection />
 
       {/* FINAL CTA */}
       <section className="section">
         <div className="wrap">
           <div className="final reveal-up">
-            <h2>Tell us about your business.</h2>
-            <p>We'll tell you exactly what you need — and take it off your plate.</p>
+            <h2>Ready to get your business sorted?</h2>
+            <p>One conversation is all it takes. Tell us what you need and we'll handle the rest — honestly, and on time.</p>
             <div className="row">
-              <a href="/services#finder" className="btn btn-light">Get Started</a>
-              <a href="/company/contact" className="btn btn-ghost-d">Talk to an Expert</a>
+              <a href="https://wa.me/918458845859?text=Hi%20LauncherDesk%2C%20I'd%20like%20to%20get%20help%20with%20my%20business.%20Where%20do%20I%20start%3F" className="btn btn-light">Chat on WhatsApp</a>
+              <a href="tel:+918458845859" className="btn btn-ghost-d">Call Us — +91 84588 45859</a>
+              <a href="/company/contact" className="btn btn-ghost-d">Get Started Online</a>
             </div>
           </div>
         </div>

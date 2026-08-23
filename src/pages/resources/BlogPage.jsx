@@ -1,12 +1,17 @@
 const CHEV = 'm9 18 6-6-6-6'
 
+// DOCX Section H: Starter Article Briefs
 const ARTICLES = [
-  { cat: 'Registration', title: 'Private Limited vs LLP: which should you choose?' },
-  { cat: 'Compliance',   title: 'The annual compliance calendar every founder should know' },
-  { cat: 'GST',          title: 'Do you actually need GST registration right now?' },
-  { cat: 'Trademark',    title: 'Why founders wait too long to trademark their brand' },
-  { cat: 'E-commerce',   title: "The e-commerce founder's registration checklist" },
-  { cat: 'Funding',      title: 'What investors actually check in your compliance record' },
+  { cat: 'Registration', title: 'How to Register a Private Limited Company in India — Step by Step', href: '/resources/blog' },
+  { cat: 'Registration', title: 'LLP vs Private Limited Company — Which Is Right for Your Business?', href: '/resources/blog' },
+  { cat: 'GST & Compliance', title: 'GST Compliance Checklist for Startups in India', href: '/resources/blog' },
+  { cat: 'Registration', title: 'What Do You Need to Do in the First 90 Days After Registering Your Company?', href: '/resources/blog' },
+  { cat: 'Startup India', title: 'What Is DPIIT Startup Recognition and Should Your Startup Apply?', href: '/resources/blog' },
+  { cat: 'Trademark', title: 'Trademark Registration in India — What Founders Need to Know', href: '/resources/blog' },
+  { cat: 'Compliance', title: "The Founder's Guide to Managing GST, ROC and Income Tax Compliance", href: '/resources/blog' },
+  { cat: 'International', title: 'Setting Up a Business in the UAE from India — What You Need to Know', href: '/resources/blog' },
+  { cat: 'MSME', title: 'How to Register Your Business as an MSME in India', href: '/resources/blog' },
+  { cat: 'Marketing', title: 'WhatsApp Business API vs WhatsApp Business App — Which Does Your Business Need?', href: '/resources/blog' },
 ]
 
 export default function BlogPage() {
@@ -21,7 +26,7 @@ export default function BlogPage() {
           </nav>
           <span className="eyebrow reveal-up in" style={{marginTop:16,display:'block'}}>Resources / Blog</span>
           <h1 className="reveal-up in">The LauncherDesk Blog</h1>
-          <p className="lead reveal-up in">Practical, no-fluff articles on registration, compliance and growth — written as we publish them, not backfilled with filler.</p>
+          <p className="lead reveal-up in">Practical, no-fluff articles on registration, compliance and growth — written for first-time founders in plain English.</p>
         </div>
       </header>
 
@@ -29,14 +34,14 @@ export default function BlogPage() {
         <div className="wrap">
           <div className="art-grid">
             {ARTICLES.map((a, i) => (
-              <div key={i} className="art reveal-up">
-                <div className="thumb"></div>
+              <a key={i} className="art reveal-up" href={a.href} style={{textDecoration:'none'}}>
+                <div className="thumb" style={{background:'linear-gradient(135deg,#102A43,#047DCC)'}}></div>
                 <div className="body">
                   <span className="cat">{a.cat}</span>
                   <h3>{a.title}</h3>
-                  <div className="meta">By LauncherDesk Team · <span className="soon">Coming soon</span></div>
+                  <div className="meta">LauncherDesk Team · <span className="soon">Coming soon</span></div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
