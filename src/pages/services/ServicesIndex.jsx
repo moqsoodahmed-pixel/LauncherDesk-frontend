@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const ARROW = 'M5 12h14M13 6l6 6-6 6'
 const WA = 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z'
@@ -29,27 +29,171 @@ const ALL_SERVICES = [
   { href: '/services/digital-marketing', title: 'Digital Marketing', desc: 'Website, branding and demand generation.' },
 ]
 
+// Change 2: removed Retail/Shop & Food/Restaurant; step 2 = text input for state
 const FINDER_STEPS = [
-  { q: "What are you building?", k: "type", opts: ["Services / Consulting","E-commerce / Online","Retail / Shop","Food & Restaurant","Technology / SaaS","Something else"] },
-  { q: "Where will you operate from?", k: "state", opts: ["Karnataka","Maharashtra","Delhi NCR","Tamil Nadu","Another state"] },
-  { q: "How many founders?", k: "founders", opts: ["Just me","2–3 founders","4 or more"] },
-  { q: "Expected annual turnover?", k: "turnover", opts: ["Under ₹20 lakh","₹20 lakh – ₹1 crore","Over ₹1 crore","Not sure yet"] },
-  { q: "Do you plan to hire employees?", k: "hire", opts: ["Yes, soon","Maybe later","No"] },
-  { q: "What do you already have?", k: "have", opts: ["Nothing yet","A registered company","GST already","Just an idea"] },
+  { q: "What are you building?", k: "type", inputType: 'select', opts: ["Services / Consulting", "E-commerce / Online", "Technology / SaaS", "Something else"] },
+  { q: "Where will you operate from?", k: "state", inputType: 'text', placeholder: "Type your state (e.g. Karnataka, Maharashtra…)" },
+  { q: "How many founders?", k: "founders", inputType: 'select', opts: ["Just me", "2–3 founders", "4 or more"] },
+  { q: "Expected annual turnover?", k: "turnover", inputType: 'select', opts: ["Under ₹20 lakh", "₹20 lakh – ₹1 crore", "Over ₹1 crore", "Not sure yet"] },
+  { q: "Do you plan to hire employees?", k: "hire", inputType: 'select', opts: ["Yes, soon", "Maybe later", "No"] },
+  { q: "What do you already have?", k: "have", inputType: 'select', opts: ["Nothing yet", "A registered company", "GST already", "Just an idea"] },
 ]
 
 function buildRoadmap(ans) {
   const p = []
   const solo = ans.founders === 'Just me'
-  if (ans.have !== 'A registered company') p.push(solo ? ['OPC or Proprietorship','Right-sized structure for a single founder starting out.','hi'] : ['Private Limited Company','Best structure for multiple founders and future funding.','hi'])
-  if (ans.have !== 'GST already' && (ans.type === 'E-commerce / Online' || ans.turnover === 'Over ₹1 crore' || ans.turnover === '₹20 lakh – ₹1 crore' || ans.state === 'Another state')) p.push(['GST Registration','Required for online sales, inter-state trade, or your turnover band.','hi'])
-  if (ans.type === 'Food & Restaurant') p.push(['FSSAI Licence','Mandatory for any food business.','hi'])
-  p.push(['MSME / Udyam Registration','Quick to file and unlocks benefits and easier credit.','mid'])
-  p.push(['Trademark',(ans.type === 'E-commerce / Online' || ans.type === 'Technology / SaaS') ? "Protect your brand early — it's an asset investors look for." : 'Protect your brand name before you build on it.',(ans.type === 'E-commerce / Online' || ans.type === 'Technology / SaaS') ? 'mid' : 'low'])
-  if (ans.hire === 'Yes, soon') p.push(['Payroll & PF/ESI setup','Get employment compliance right from your first hire.','mid'])
-  p.push(['Accounting & annual compliance',"Keep books clean and never miss an ROC or tax deadline.",'mid'])
-  if (ans.type === 'Technology / SaaS' || ans.type === 'E-commerce / Online') p.push(['Website & growth stack','Get online with a site, CRM and marketing foundation.','low'])
+  if (ans.have !== 'A registered company') p.push(solo ? ['OPC or Proprietorship', 'Right-sized structure for a single founder starting out.', 'hi'] : ['Private Limited Company', 'Best structure for multiple founders and future funding.', 'hi'])
+  if (ans.have !== 'GST already' && (ans.type === 'E-commerce / Online' || ans.turnover === 'Over ₹1 crore' || ans.turnover === '₹20 lakh – ₹1 crore' || (ans.state && ans.state.toLowerCase() !== 'karnataka'))) p.push(['GST Registration', 'Required for online sales, inter-state trade, or your turnover band.', 'hi'])
+  p.push(['MSME / Udyam Registration', 'Quick to file and unlocks benefits and easier credit.', 'mid'])
+  p.push(['Trademark', (ans.type === 'E-commerce / Online' || ans.type === 'Technology / SaaS') ? "Protect your brand early — it's an asset investors look for." : 'Protect your brand name before you build on it.', (ans.type === 'E-commerce / Online' || ans.type === 'Technology / SaaS') ? 'mid' : 'low'])
+  if (ans.hire === 'Yes, soon') p.push(['Payroll & PF/ESI setup', 'Get employment compliance right from your first hire.', 'mid'])
+  p.push(['Accounting & annual compliance', "Keep books clean and never miss an ROC or tax deadline.", 'mid'])
+  if (ans.type === 'Technology / SaaS' || ans.type === 'E-commerce / Online') p.push(['Website & growth stack', 'Get online with a site, CRM and marketing foundation.', 'low'])
   return p
+}
+
+// ── React-controlled finder (avoids innerHTML hacks) ──
+function ServiceFinder() {
+  const [step, setStep] = useState(0)
+  const [ans, setAns] = useState({})
+  const [stateInput, setStateInput] = useState('')
+  const [done, setDone] = useState(false)
+  const [plan, setPlan] = useState([])
+
+  const total = FINDER_STEPS.length
+  const progress = done ? 100 : (step / total * 100 + 8)
+  const cur = FINDER_STEPS[step]
+
+  function advance(newAns) {
+    const nextStep = step + 1
+    if (nextStep >= total) {
+      setPlan(buildRoadmap(newAns))
+      setDone(true)
+    } else {
+      setStep(nextStep)
+    }
+  }
+
+  function handleSelect(value) {
+    const newAns = { ...ans, [cur.k]: value }
+    setAns(newAns)
+    advance(newAns)
+  }
+
+  function handleTextNext() {
+    if (!stateInput.trim()) return
+    const newAns = { ...ans, [cur.k]: stateInput.trim() }
+    setAns(newAns)
+    advance(newAns)
+  }
+
+  function handleBack() {
+    if (done) { setDone(false); setStep(total - 1); return }
+    if (step > 0) setStep(step - 1)
+  }
+
+  function handleStartOver() {
+    setStep(0); setAns({}); setStateInput(''); setDone(false); setPlan([])
+  }
+
+  return (
+    <div className="finder reveal-up" style={{ marginTop: 34 }}>
+      {/* Left side */}
+      <div className="finder-side">
+        <span className="eyebrow">Tell us what you're building</span>
+        <h2>We'll tell you what comes next.</h2>
+        <p>Personalised to your business type, location, size and stage.</p>
+        <div className="finder-prog">
+          <div className="bar">
+            <i style={{ display: 'block', height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg,#249AE2,#7fe0a8)', transition: 'width .4s' }}></i>
+          </div>
+          <div className="step-lbl">{done ? 'Your roadmap is ready' : `Step ${step + 1} of ${total}`}</div>
+        </div>
+      </div>
+
+      {/* Right main */}
+      <div className="finder-main">
+        {done ? (
+          <div className="rm">
+            <span className="eyebrow">Your LauncherDesk roadmap</span>
+            <h3 style={{ marginTop: 8 }}>Here's what your business needs next</h3>
+            {plan.map((p, idx) => (
+              <div key={idx} className="rm-item">
+                <span className={`rm-pri ${p[2]}`}>{p[2] === 'hi' ? 'Now' : p[2] === 'mid' ? 'Soon' : 'Later'}</span>
+                <div><b>{p[0]}</b><p>{p[1]}</p></div>
+              </div>
+            ))}
+            <div style={{ display: 'flex', gap: 10, marginTop: 20, flexWrap: 'wrap' }}>
+              <button
+                className="btn btn-primary btn-sm"
+                onClick={() => {
+                  try {
+                    sessionStorage.setItem('ld_finder_roadmap', JSON.stringify({ plan, answers: ans }))
+                  } catch(e) {}
+                  window.location.href = '/company/contact'
+                }}
+              >
+                Get this plan actioned
+              </button>
+              <a href="https://wa.me/918458845859" className="btn btn-wa btn-sm" style={{ justifyContent: 'center' }}>
+                <svg className="ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={WA}/></svg> WhatsApp
+              </a>
+              <button className="finder-back" onClick={handleStartOver}>Start over</button>
+            </div>
+            <div className="rm-disc">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={SHIELD}/></svg>
+              General guidance based on your answers. A qualified LauncherDesk professional confirms specifics before anything is filed.
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className="finder-q">{cur.q}</div>
+            {cur.inputType === 'text' ? (
+              /* Change 2: free-text input for state */
+              <div style={{ marginTop: 20 }}>
+                <input
+                  type="text"
+                  value={stateInput}
+                  onChange={e => setStateInput(e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Enter' && stateInput.trim()) handleTextNext() }}
+                  placeholder={cur.placeholder}
+                  autoFocus
+                  style={{ width: '100%', border: '1.5px solid var(--line)', borderRadius: 12, padding: '14px 18px', fontFamily: 'var(--font-body)', fontSize: 15, color: 'var(--text)', outline: 'none', background: 'var(--bg)', transition: '.15s' }}
+                />
+                <div className="finder-nav" style={{ marginTop: 16 }}>
+                  {step > 0 ? <button className="finder-back" onClick={handleBack}>← Back</button> : <span></span>}
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={handleTextNext}
+                    disabled={!stateInput.trim()}
+                    style={{ opacity: stateInput.trim() ? 1 : 0.5, cursor: stateInput.trim() ? 'pointer' : 'not-allowed' }}
+                  >
+                    Next →
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* Select options */
+              <div>
+                <div className="finder-opts">
+                  {cur.opts.map(o => (
+                    <button key={o} className="opt" onClick={() => handleSelect(o)}>
+                      {o}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6 9 17l-5-5"/></svg>
+                    </button>
+                  ))}
+                </div>
+                <div className="finder-nav">
+                  {step > 0 ? <button className="finder-back" onClick={handleBack}>← Back</button> : <span></span>}
+                  <span className="mut" style={{ fontSize: 13 }}>Free · no signup</span>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  )
 }
 
 export default function ServicesIndex() {
@@ -71,58 +215,6 @@ export default function ServicesIndex() {
     }
     s.addEventListener('input', handler)
     return () => s.removeEventListener('input', handler)
-  }, [])
-
-  /* Finder */
-  useEffect(() => {
-    const main = document.getElementById('finderMain')
-    const bar = document.getElementById('finderBar')
-    const lbl = document.getElementById('finderStepLbl')
-    if (!main) return
-
-    let ans = {}, i = 0
-
-    function chev() {
-      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
-    }
-
-    function render() {
-      if (i >= FINDER_STEPS.length) return result()
-      const s = FINDER_STEPS[i]
-      bar.style.width = (i / FINDER_STEPS.length * 100 + 8) + '%'
-      lbl.textContent = `Step ${i + 1} of ${FINDER_STEPS.length}`
-      let h = `<div class="finder-q reveal-up in">${s.q}</div><div class="finder-opts">`
-      s.opts.forEach(o => { h += `<button class="opt" data-v="${o}">${o}${chev()}</button>` })
-      h += `</div><div class="finder-nav">${i > 0 ? '<button class="finder-back">← Back</button>' : '<span></span>'}<span class="mut" style="font-size:13px">Free · no signup</span></div>`
-      main.innerHTML = h
-      main.querySelectorAll('.opt').forEach(b => { b.addEventListener('click', () => { ans[s.k] = b.dataset.v; i++; render() }) })
-      const bk = main.querySelector('.finder-back')
-      if (bk) bk.addEventListener('click', () => { i--; render() })
-    }
-
-    function result() {
-      bar.style.width = '100%'
-      lbl.textContent = 'Your roadmap is ready'
-      const plan = buildRoadmap(ans)
-      let h = `<div class="rm reveal-up in"><span class="eyebrow">Your LauncherDesk roadmap</span><h3 style="margin-top:8px">Here's what your business needs next</h3>`
-      plan.forEach(p => { h += `<div class="rm-item"><span class="rm-pri ${p[2]}">${p[2] === 'hi' ? 'Now' : p[2] === 'mid' ? 'Soon' : 'Later'}</span><div><b>${p[0]}</b><p>${p[1]}</p></div></div>` })
-      h += `<div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
-        <a href="/company/contact" class="btn btn-primary btn-sm">Get this plan actioned</a>
-        <a href="/company/contact" class="btn btn-wa btn-sm" style="justify-content:center">
-          <svg class="ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="${WA}"/></svg> WhatsApp
-        </a>
-        <button class="finder-back" id="rs">Start over</button>
-      </div>
-      <div class="rm-disc">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="${SHIELD}"/></svg>
-        General guidance based on your answers. A qualified LauncherDesk professional confirms specifics before anything is filed.
-      </div></div>`
-      main.innerHTML = h
-      const rs = main.querySelector('#rs')
-      if (rs) rs.addEventListener('click', () => { ans = {}; i = 0; render() })
-    }
-
-    render()
   }, [])
 
   return (
@@ -196,7 +288,7 @@ export default function ServicesIndex() {
         </div>
       </section>
 
-      {/* Service Finder */}
+      {/* Service Finder — fully React-controlled */}
       <section className="section section-warm" id="finder">
         <div className="wrap">
           <div className="sec-head reveal-up">
@@ -204,18 +296,7 @@ export default function ServicesIndex() {
             <h2>Not sure what you need?</h2>
             <p>Answer six quick questions and we'll build your prioritised roadmap — free, before you talk to anyone.</p>
           </div>
-          <div className="finder reveal-up" style={{ marginTop: 34 }}>
-            <div className="finder-side">
-              <span className="eyebrow">Tell us what you're building</span>
-              <h2>We'll tell you what comes next.</h2>
-              <p>Personalised to your business type, location, size and stage.</p>
-              <div className="finder-prog">
-                <div className="bar"><i id="finderBar"></i></div>
-                <div className="step-lbl" id="finderStepLbl">Step 1 of 6</div>
-              </div>
-            </div>
-            <div className="finder-main" id="finderMain"></div>
-          </div>
+          <ServiceFinder />
         </div>
       </section>
 

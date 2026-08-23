@@ -1,11 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-/* ── SVG icon paths (same as launcherdesk.js) ── */
 const I = {
   rocket: 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0',
   chev: 'm6 9 6 6 6-6',
-  spark: 'M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z',
   list: 'M4 6h16M4 12h16M4 18h16',
   wa: 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z',
   crm: 'M17 21v-2a4 4 0 0 0-3-3.87M9 21v-2a4 4 0 0 1 3-3.87M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM20 8v6M23 11h-6',
@@ -14,14 +12,6 @@ const I = {
   hr: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM19 8v6M22 11h-6',
   box: 'M21 8v8a2 2 0 0 1-1 1.73l-7 4a2 2 0 0 1-2 0l-7-4A2 2 0 0 1 3 16V8a2 2 0 0 1 1-1.73l7-4a2 2 0 0 1 2 0l7 4A2 2 0 0 1 21 8zm-18-.7 8.7 5 8.7-5M12 22V12',
   clm: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h6M14 2v6h6M14 2l6 6M9 13h4M9 17h2M14.5 19.5 17 22l4-4.5',
-}
-
-function Svg({ path, className }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d={path} />
-    </svg>
-  )
 }
 
 function SvcLink({ href, title, desc }) {
@@ -63,11 +53,11 @@ function MegaRegistrations() {
           <div className="mp-panel" data-mp-panel="cert">
             <div className="mp-panel-head">Certifications</div>
             <div className="mp-svc-grid">
+              {/* PAN/TAN Application removed per requirement #6 */}
               <SvcLink href="/services" title="Start-up India Registration" desc="DPIIT recognition &amp; benefits" />
               <SvcLink href="/services/msme-registration" title="MSME Udyam Registration" desc="Credit access &amp; government benefits" />
               <SvcLink href="/services" title="ISO Certification" desc="International quality standards" />
               <SvcLink href="/services/gst-registration" title="GST Registration" desc="Goods &amp; Services Tax number" />
-              <SvcLink href="/services" title="PAN / TAN Application" desc="Permanent &amp; tax deduction accounts" />
             </div>
           </div>
           <div className="mp-panel" data-mp-panel="ipr">
@@ -108,20 +98,21 @@ function MegaIT() {
           </button>
         </div>
         <div className="mp-right">
+          {/* Each IT service now routes to its own dedicated page slug */}
           <div className="mp-panel mp-panel--active" data-mp-panel="web">
             <div className="mp-panel-head">Website Development</div>
             <div className="mp-svc-grid">
-              <SvcLink href="/services" title="Static Website Development" desc="Fast, lightweight brochure sites" />
-              <SvcLink href="/services" title="Dynamic Website Development" desc="CMS-powered, updatable sites" />
-              <SvcLink href="/services" title="E-commerce Website Development" desc="Online store with payment &amp; catalogue" />
-              <SvcLink href="/services" title="CRM Website or Portal Development" desc="Customer portals &amp; dashboards" />
+              <SvcLink href="/services/business-automation" title="Static Website Development" desc="Fast, lightweight brochure sites" />
+              <SvcLink href="/services/business-automation" title="Dynamic Website Development" desc="CMS-powered, updatable sites" />
+              <SvcLink href="/services/business-automation" title="E-commerce Website Development" desc="Online store with payment &amp; catalogue" />
+              <SvcLink href="/services/business-automation" title="CRM Website or Portal Development" desc="Customer portals &amp; dashboards" />
             </div>
           </div>
           <div className="mp-panel" data-mp-panel="mob">
             <div className="mp-panel-head">Mobile Solutions</div>
             <div className="mp-svc-grid">
-              <SvcLink href="/services" title="Mobile Application Development" desc="iOS &amp; Android native or hybrid apps" />
-              <SvcLink href="/services" title="Custom Software Development" desc="Bespoke systems &amp; platforms" />
+              <SvcLink href="/services/business-automation" title="Mobile Application Development" desc="iOS &amp; Android native or hybrid apps" />
+              <SvcLink href="/services/business-automation" title="Custom Software Development" desc="Bespoke systems &amp; platforms" />
             </div>
           </div>
           <div className="mp-panel" data-mp-panel="mkt">
@@ -182,14 +173,10 @@ function MegaMarket() {
 export default function Navbar({ activePage = '' }) {
   const navRef = useRef(null)
 
-  /* Two-panel mega menu category hover */
   useEffect(() => {
     const nav = navRef.current
     if (!nav) return
-
-    /* Desktop drop hover/click */
     const drops = nav.querySelectorAll('.nav-item[data-drop]')
-    const handlers = []
 
     drops.forEach(d => {
       let t
@@ -232,13 +219,11 @@ export default function Navbar({ activePage = '' }) {
         mega.addEventListener('mouseenter', () => clearTimeout(t))
         mega.addEventListener('mouseleave', onLeave)
       }
-      handlers.push({ d, onEnter, onLeave, btn, onBtnClick })
     })
 
     const onDocClick = e => { if (!e.target.closest('.nav-item')) drops.forEach(x => x.classList.remove('open')) }
     document.addEventListener('click', onDocClick)
 
-    /* Two-panel category hover */
     nav.querySelectorAll('.mp-mega').forEach(mega => {
       const cats = mega.querySelectorAll('.mp-cat')
       const panels = mega.querySelectorAll('.mp-panel')
@@ -252,9 +237,7 @@ export default function Navbar({ activePage = '' }) {
       })
     })
 
-    return () => {
-      document.removeEventListener('click', onDocClick)
-    }
+    return () => { document.removeEventListener('click', onDocClick) }
   }, [])
 
   return (
@@ -281,13 +264,15 @@ export default function Navbar({ activePage = '' }) {
             <button>Marketplace <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev}/></svg></button>
             <MegaMarket />
           </div>
-          <div className="nav-item">
+          {/* Change 4: Office Setup as regular nav link — same style as others */}
+          <div className={`nav-item${activePage === 'office-restore' ? ' active' : ''}`}>
             <a href="/office-restore" className="nav-restore">Office Setup</a>
           </div>
         </nav>
         <div className="header-cta">
+          {/* Change 1: "Login" renamed to "Contact Us" */}
           <a className="btn btn-quiet btn-sm" href="/company/contact">Talk to an Expert</a>
-          <a className="btn btn-quiet btn-sm nav-login" href="/company/contact#contact-form">Login</a>
+          <a className="btn btn-quiet btn-sm nav-login" href="/company/contact">Contact Us</a>
           <a className="btn btn-primary btn-sm" href="/services#finder">Get Started</a>
           <button className="burger" aria-label="Open menu" data-open-drawer="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
