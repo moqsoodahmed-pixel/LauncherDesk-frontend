@@ -81,7 +81,7 @@ const STAGES = [
     num: '01', name: 'IDEA',
     desc: 'You have a business concept. We help you validate the right structure before you commit.',
     chips: [
-      { label: 'Pvt Ltd vs LLP comparison', href: '/services' },
+      { label: 'Pvt Ltd vs LLP comparison', href: '/business-types' },
       { label: 'Business type finder', href: '/business-types' },
       { label: 'Talk to an expert', href: '/company/contact' },
     ]
@@ -94,21 +94,21 @@ const STAGES = [
       { label: 'LLP Registration', href: '/services/llp-registration' },
       { label: 'OPC Registration', href: '/services/opc-registration' },
       { label: 'GST Registration', href: '/services/gst-registration' },
-      { label: 'Startup India / DPIIT', href: '/services' },
+      { label: 'Startup India / DPIIT', href: '/services/startup-india-dpiit' },
       { label: 'MSME / Udyam', href: '/services/msme-registration' },
       { label: 'Trademark Registration', href: '/services/trademark-registration' },
-      { label: 'ISO Certification', href: '/services' },
+      { label: 'ISO Certification', href: '/services/iso-certification' },
     ]
   },
   {
     num: '03', name: 'BUILD',
     desc: 'Create your website, technology and brand identity. Build the digital foundation.',
     chips: [
-      { label: 'Website Development', href: '/services' },
-      { label: 'E-Commerce Website', href: '/services' },
-      { label: 'Branding & Logo Design', href: '/services' },
-      { label: 'Business Email & Hosting', href: '/services' },
-      { label: 'Software & SaaS Development', href: '/services' },
+      { label: 'Website Development', href: '/services/website-development' },
+      { label: 'E-Commerce Website', href: '/services/ecommerce-website' },
+      { label: 'Branding & Logo Design', href: '/services/branding-logo-design' },
+      { label: 'Business Email & Hosting', href: '/services/business-email-hosting' },
+      { label: 'Software & SaaS Development', href: '/services/software-saas-development' },
       { label: 'Business Automation', href: '/services/business-automation' },
     ]
   },
@@ -118,10 +118,10 @@ const STAGES = [
     chips: [
       { label: 'Accounting & Bookkeeping', href: '/services/accounting' },
       { label: 'GST Filing & Returns', href: '/services/gst-registration' },
-      { label: 'Income Tax Filing', href: '/services/accounting' },
+      { label: 'Income Tax Filing', href: '/services/income-tax-filing' },
       { label: 'ROC / Annual Compliance', href: '/services/roc-compliance' },
       { label: 'Payroll Management', href: '/services/payroll' },
-      { label: 'Legal Document Support', href: '/services' },
+      { label: 'Legal Document Support', href: '/services/legal-document-support' },
     ]
   },
   {
@@ -129,21 +129,21 @@ const STAGES = [
     desc: 'Reach customers through marketing, SEO and automation. Grow your revenue.',
     chips: [
       { label: 'SEO & Performance Marketing', href: '/services/digital-marketing' },
-      { label: 'Social Media Management', href: '/services/digital-marketing' },
-      { label: 'WhatsApp Business API', href: '/services/digital-marketing' },
-      { label: 'CRM & Lead Management', href: '/services/digital-marketing' },
-      { label: 'Google Ads', href: '/services/digital-marketing' },
+      { label: 'Social Media Management', href: '/services/social-media-management' },
+      { label: 'WhatsApp Business API', href: '/services/whatsapp-business-api' },
+      { label: 'CRM & Lead Management', href: '/services/crm-setup-lead-management' },
+      { label: 'Google Ads', href: '/services/google-ads-paid-marketing' },
     ]
   },
   {
     num: '06', name: 'EXPAND',
     desc: 'Raise funding, go international and scale strategically. Take your business to the next stage.',
     chips: [
-      { label: 'International Company Setup', href: '/services' },
-      { label: 'UAE Business Setup', href: '/services' },
-      { label: 'Fundraising Documentation', href: '/services' },
-      { label: 'Business Consulting', href: '/services' },
-      { label: 'Strategic Growth Support', href: '/services' },
+      { label: 'International Company Setup', href: '/services/uae-business-setup' },
+      { label: 'UAE Business Setup', href: '/services/uae-business-setup' },
+      { label: 'Fundraising Documentation', href: '/services/fundraising-documentation' },
+      { label: 'Business Consulting', href: '/services/business-consulting' },
+      { label: 'Strategic Growth Support', href: '/services/business-consulting' },
     ]
   },
 ]
@@ -152,7 +152,7 @@ const SV_NODES = [
   { href: '/services/private-limited-company-registration', label: 'Company Registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14' },
   { href: '/services/gst-registration', label: 'GST & Compliance', icon: 'M9 11l3 3L22 4' },
   { href: '/services/trademark-registration', label: 'Trademark & IP', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
-  { href: '/services', label: 'Website Development', icon: 'M2 3h20v14H2zM8 21h8M12 17v4' },
+  { href: '/services/website-development', label: 'Website Development', icon: 'M2 3h20v14H2zM8 21h8M12 17v4' },
   { href: '/services/digital-marketing', label: 'Marketing & SEO', icon: 'M23 6l-9.5 9.5-5-5L1 18' },
 ]
 
