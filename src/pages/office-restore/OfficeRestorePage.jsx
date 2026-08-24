@@ -129,12 +129,9 @@ const DELIVERABLES = ['Floor Mats / Carpet Tiles','Mobile Drawer Pedestals','Cup
 const STATES = ['Andhra Pradesh','Assam','Bihar','Chhattisgarh','Delhi','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Odisha','Punjab','Rajasthan','Tamil Nadu','Telangana','Uttar Pradesh','Uttarakhand','West Bengal','Other']
 
 const CATS = [
-  { label:'Flooring', bg:'linear-gradient(135deg,#162B52,#1D4E8A)', title:'Premium Floor Mats & Carpet Tiles', desc:'Ergonomic, dust-resistant carpet tiling and specialised floor mats customised to fit your office corridors and open work spaces perfectly.', specs:['Dust-resistant fabric','High durability, anti-slip','Multiple colour schemes'] },
-  { label:'Seating', bg:'linear-gradient(135deg,#080F1E,#162B52)', title:'Ergonomic Office Chairs', desc:'Premium high-back and mid-back mesh office chairs featuring adjustable lumbar support and pneumatics for maximum sitting comfort.', specs:['Ergonomic mesh back','Adjustable height & tilt','3D adjustable armrests'] },
-  { label:'Workstations', bg:'linear-gradient(135deg,#1D3664,#0F52C0)', title:'Workstations & Conference Tables', desc:'Linear and cluster desk workstations designed for productivity. Includes colourful acrylic dividers, internal cable management, and durable surfaces.', specs:['Durable pre-lam board','Powder-coated metal frames','Built-in raceways for cables'] },
-  { label:'Storage', bg:'linear-gradient(135deg,#0D1F3C,#162B52)', title:'Mobile Drawer Pedestals', desc:'Compact mobile pedestal units on smooth wheels. Perfect for secure storage of official documents and employee personal items.', specs:['Central locking system','Three-drawer design','Mobile caster wheels'] },
-  { label:'Cabinets', bg:'linear-gradient(135deg,#080F1E,#162B52)', title:'Office Cupboards & Storage Cabinets', desc:'Spacious wooden and metal storage cupboards designed for archiving corporate files, storing supplies and maintaining clean office organisation.', specs:['Heavy-gauge metal or premium ply','Adjustable shelf heights','Multi-point secure lock'] },
-  { label:'Partitions', bg:'linear-gradient(135deg,#162B52,#3B8FEF)', title:'Office Partitions & Dividers', desc:'Modular partition systems with glass, fabric or acrylic infill panels. Ideal for creating private cabins, team bays, or collaborative zones.', specs:['Modular, reconfigurable','Glass / fabric / acrylic infill','Floor-to-ceiling options'] },
+  { label:'Seating', img: null, imgKey:'chair', title:'Ergonomic High-Back Office Chair', desc:'Premium high-back mesh office chair with adjustable headrest, lumbar support and pneumatic height adjustment. Designed for all-day comfort in professional work environments.', specs:['Ergonomic mesh back & headrest','Adjustable height & tilt mechanism','3D adjustable armrests','5-star caster base'] },
+  { label:'Workstations', img: null, imgKey:'normal', title:'Standard Office Workstation Table', desc:'Clean, minimal white office table with a durable pre-laminated board surface and powder-coated metal frame. Ideal for individual workstations and compact office setups.', specs:['Durable pre-lam white board top','Powder-coated metal frame','Modular, easy to configure','Available in multiple sizes'] },
+  { label:'Height-Adjust', img: null, imgKey:'electric', title:'Electric Height-Adjustable Standing Desk', desc:'Motorised sit-stand desk with a digital control panel. Effortlessly adjusts from sitting to standing height to promote better posture and wellbeing throughout the workday.', specs:['Electric motor with digital control','Memory presets for height positions','Wide white surface top','Anti-collision safety system'] },
 ]
 
 const FAQS = [
@@ -271,14 +268,19 @@ export default function OfficeRestorePage() {
         <div className="wrap">
           <div className="sec-head center reveal-up" style={{ marginBottom: 36 }}>
             <span className="eyebrow">Product Catalogue</span>
-            <h2 style={{ fontSize: 'clamp(26px,3.2vw,40px)', marginTop: 10 }}>Furniture &amp; workspace we manufacture &amp; set up</h2>
-            <p>High-grade office installations matching corporate quality guidelines.</p>
+            <h2 style={{ fontSize: 'clamp(26px,3.2vw,40px)', marginTop: 10 }}>Our furniture range — manufactured &amp; installed</h2>
+            <p>Three core products, custom-built and delivered to your office.</p>
           </div>
-          <div className="or-cat-grid">
-            {CATS.map(cat => (
-              <div key={cat.title} className="or-cat reveal-up">
-                <div className="or-cat-vis" style={{ background: cat.bg }}>
-                  <span className="or-cat-label">{cat.label}</span>
+          <div className="or-cat-grid" style={{ gridTemplateColumns: 'repeat(3,1fr)' }}>
+            {CATS.map(cat => {
+              const imgSrc = cat.imgKey==='chair'?imgChair:cat.imgKey==='normal'?imgNormalTable:imgElectricTable
+              return (
+              <div key={cat.title} className="or-cat reveal-up" style={{ overflow:'hidden', background:'#fff', border:'1.5px solid var(--line)' }}>
+                <div style={{ width:'100%', height:220, overflow:'hidden', background:'#f8fafc', position:'relative' }}>
+                  <img src={imgSrc} alt={cat.title} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block', transition:'transform .35s' }}
+                    onMouseEnter={e=>e.target.style.transform='scale(1.04)'}
+                    onMouseLeave={e=>e.target.style.transform='scale(1)'} />
+                  <span style={{ position:'absolute', top:12, left:12, background:'var(--blue)', color:'#fff', fontSize:11, fontWeight:700, padding:'3px 10px', borderRadius:99, letterSpacing:'.04em' }}>{cat.label}</span>
                 </div>
                 <div className="or-cat-body">
                   <h3>{cat.title}</h3>
@@ -293,7 +295,7 @@ export default function OfficeRestorePage() {
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
       </section>
