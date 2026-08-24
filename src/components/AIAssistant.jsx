@@ -270,14 +270,23 @@ export default function AIAssistant() {
       </div>
 
       <div className="mobile-bar">
-        <a href="/services#finder" className="btn btn-primary">Get Started</a>
-        <button className="btn btn-soft" onClick={openAI}>
-          <svg className="ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={SPARK}/></svg>
-          AI
+        <a href="/services#finder" className="mb-btn mb-btn--primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16,flex:'none'}}>
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+          Get Started
+        </a>
+        <button className="mb-btn mb-btn--ai" onClick={openAI}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16,flex:'none'}}>
+            <path d={SPARK}/>
+          </svg>
+          Ask AI
         </button>
-        <a href="/company/contact" className="btn btn-wa">
-          <svg className="ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={WA}/></svg>
-          Chat
+        <a href="/company/contact" className="mb-btn mb-btn--wa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16,flex:'none'}}>
+            <path d={WA}/>
+          </svg>
+          WhatsApp
         </a>
       </div>
 
@@ -335,7 +344,6 @@ export default function AIAssistant() {
           <a className="d-link" href="/office-restore">Office Setup</a>
         </nav>
         <div className="d-cta-row">
-          <a className="btn btn-soft" href="/company/contact#contact-form">Login</a>
           <a className="btn btn-soft" href="/company/contact">Talk to an Expert</a>
         </div>
         <a className="btn btn-primary" href="/services#finder">Get Started</a>

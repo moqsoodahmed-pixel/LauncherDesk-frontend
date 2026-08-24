@@ -122,7 +122,7 @@ const S = `
 }
 .hp-svc-cat:hover { border-color:var(--blue);box-shadow:0 8px 32px rgba(29,111,224,.1); }
 .hp-svc-cat-head {
-  display:flex;align-items:center;gap:16px;padding:20px 24px;cursor:pointer;
+  display:flex;align-items:center;gap:12px;padding:18px 20px;cursor:pointer;
   transition:background .15s;
 }
 .hp-svc-cat-head:hover { background:#FAFBFF; }
@@ -135,6 +135,7 @@ const S = `
 .hp-svc-cat-count {
   font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;
   background:var(--bg-2);color:var(--blue);margin-right:8px;
+  white-space:nowrap;flex:none;
 }
 .hp-svc-cat-chev {
   width:20px;height:20px;stroke:var(--text-3);fill:none;stroke-width:2;
