@@ -80,7 +80,7 @@ export default function Footer() {
                 {href:'https://www.facebook.com/share/181iGTzpPf/',label:'Facebook',
                  path:'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'},
                 {href:'https://www.linkedin.com/in/launcher-desk-9251923a3?utm_source=share_via&utm_content=profile&utm_medium=member_android',label:'LinkedIn',
-                 path:'16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z|M2 9h4v12H2z|M4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'},
+                 path:'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z|M2 9h4v12H2z|M4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'},
               ].map(s=>(
                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
                   style={{width:40,height:40,borderRadius:10,background:'rgba(255,255,255,.07)',border:'1px solid rgba(255,255,255,.1)',display:'grid',placeItems:'center',transition:'background .15s,transform .15s',textDecoration:'none'}}
