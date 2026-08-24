@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import logoImg from '../assets/launcherdesk-logo-transparent.png'
 
 const ROCKET = 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0'
 
@@ -15,13 +16,8 @@ export default function Footer() {
         <div className="foot-cols">
           {/* Col 1 — Brand + description */}
           <div>
-            <Link className="brand" to="/">
-              <span className="mk">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d={ROCKET} />
-                </svg>
-              </span>
-              <span className="txt">Launcher<b>Desk</b></span>
+            <Link to="/" style={{display:'inline-flex',textDecoration:'none'}}>
+              <img src={logoImg} alt="LauncherDesk" style={{height:42,width:'auto',display:'block'}} />
             </Link>
             <p style={{marginTop:10,fontSize:13,color:'#6da8e0',fontWeight:700,letterSpacing:'.04em'}}>Your Business HQ. Launch. Manage. Grow.</p>
             <p className="foot-desc">LauncherDesk helps founders and businesses access, coordinate and manage the services they need — from company registration and compliance to technology, finance, marketing and growth.</p>

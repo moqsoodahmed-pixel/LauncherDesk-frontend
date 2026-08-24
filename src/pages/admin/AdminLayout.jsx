@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Outlet, useNavigate, useLocation, NavLink } from 'react-router-dom'
+import logoImg from '../../assets/launcherdesk-logo-transparent.png'
 import { useAdminAuth } from '../../context/AdminAuthContext'
 
 /* ── tiny icon helper ─────────────────────────────────── */
@@ -45,13 +46,11 @@ export default function AdminLayout() {
       <aside style={{ ...S.sidebar, width: collapsed ? 72 : 260 }}>
         {/* Brand */}
         <div style={S.brand}>
-          <div style={S.logoBox}>
-            <svg viewBox="0 0 24 24" width={20} height={20} fill="none" stroke="#fff" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-            </svg>
-          </div>
-          {!collapsed && <span style={S.brandName}>Launcher<span style={{color:'#7C9FFF'}}>Desk</span></span>}
-          <button onClick={() => setCollapsed(c => !c)} style={S.collapseBtn}>
+          {collapsed
+            ? <img src={logoImg} alt="LauncherDesk" style={{height:32,width:'auto',display:'block',objectFit:'contain'}} />
+            : <img src={logoImg} alt="LauncherDesk" style={{height:30,width:'auto',maxWidth:160,display:'block',objectFit:'contain'}} />
+          }
+          <button onClick={() => setCollapsed(c => !c)} style={{...S.collapseBtn,marginLeft:'auto'}}>
             <Ic d={collapsed ? 'M9 18l6-6-6-6' : 'M15 18l-6-6 6-6'} size={14} />
           </button>
         </div>

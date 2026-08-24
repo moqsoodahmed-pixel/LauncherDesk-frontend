@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
+import logoImg from '../assets/launcherdesk-logo-transparent.png'
 
 const SPARK  = 'M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z'
 const ROCKET = 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0'
@@ -277,11 +278,8 @@ export default function AIAssistant() {
 
       <aside className={`drawer${drawerOpen ? ' open' : ''}`} id="drawer">
         <div className="d-top">
-          <a className="brand" href="/">
-            <span className="mk">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={ROCKET}/></svg>
-            </span>
-            <span className="txt" style={{fontSize:17}}>Launcher<b>Desk</b></span>
+          <a href="/" style={{display:'flex',alignItems:'center',textDecoration:'none'}}>
+            <img src={logoImg} alt="LauncherDesk" style={{height:34,width:'auto',display:'block'}} />
           </a>
           <button className="x" onClick={closeDrawer}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12"/></svg>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAdminAuth } from '../../context/AdminAuthContext'
+import logoImg from '../../assets/launcherdesk-logo-transparent.png'
 
 export default function AdminLogin() {
   const { login, error, loading } = useAdminAuth()
@@ -20,12 +21,7 @@ export default function AdminLogin() {
       {/* Left brand panel */}
       <div style={styles.left}>
         <div style={styles.leftInner}>
-          <div style={styles.logo}>
-            <svg viewBox="0 0 24 24" width={28} height={28} fill="none" stroke="#fff" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-            </svg>
-          </div>
-          <h1 style={styles.brand}>Launcher<span style={{color:'#7C9FFF'}}>Desk</span></h1>
+          <img src={logoImg} alt="LauncherDesk" style={{height:52,width:'auto',display:'block',marginBottom:8}} />
           <p style={styles.brandSub}>Admin Control Panel</p>
 
           <div style={styles.featureList}>
@@ -49,11 +45,7 @@ export default function AdminLogin() {
       <div style={styles.right}>
         <div style={styles.card}>
           <div style={{textAlign:'center',marginBottom:32}}>
-            <div style={{...styles.logo,margin:'0 auto 16px',background:'linear-gradient(135deg,#3B5BDB,#7C9FFF)'}}>
-              <svg viewBox="0 0 24 24" width={22} height={22} fill="none" stroke="#fff" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-              </svg>
-            </div>
+            <img src={logoImg} alt="LauncherDesk" style={{height:44,width:'auto',display:'block',margin:'0 auto 16px'}} />
             <h2 style={{fontSize:24,fontWeight:800,color:'#1C2434',letterSpacing:'-.02em'}}>Sign in to Admin</h2>
             <p style={{fontSize:13.5,color:'#64748B',marginTop:6}}>LauncherDesk Admin Dashboard</p>
           </div>
