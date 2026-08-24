@@ -68,8 +68,8 @@ img{max-width:100%;display:block}
 .site-header{position:sticky;top:0;z-index:60;background:rgba(245,248,255,.94);
   backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px);
   border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(255,255,255,.7) inset}
-.header-in{max-width:1380px;margin:0 auto;padding:0 20px;height:68px;display:flex;align-items:center;gap:6px}
-.brand{display:flex;align-items:center;gap:10px;flex:none;margin-right:8px}
+.header-in{max-width:1380px;margin:0 auto;padding:0 32px;height:72px;display:flex;align-items:center;gap:0}
+.brand{display:flex;align-items:center;gap:10px;flex:none;margin-right:36px}
 .brand .mk{width:34px;height:34px;border-radius:9px;background:var(--grad);display:grid;place-items:center;box-shadow:var(--sh-blue)}
 .brand .mk svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
 .brand .txt{font-family:var(--font);font-weight:800;font-size:18.5px;color:var(--navy);letter-spacing:-.02em;white-space:nowrap}
@@ -97,7 +97,7 @@ img{max-width:100%;display:block}
 }
 .nav-restore:hover{background:rgba(16,42,67,.05);color:var(--blue-dark);}
 
-.header-cta{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
+.header-cta{margin-left:auto;display:flex;align-items:center;gap:10px;flex:none;padding-left:20px}
 .nav-login{border:1px solid var(--line)}
 .nav-login:hover{border-color:rgba(4,125,204,.35);color:var(--blue-dark)}
 .d-cta-row{display:flex;gap:10px}
