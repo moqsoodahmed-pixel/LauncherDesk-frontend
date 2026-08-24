@@ -24,9 +24,9 @@ export default function CategoryPage() {
     let list = inCat(cat.slug)
     const q = query.toLowerCase().trim()
     if (q) list = list.filter(p => (p.name + ' ' + p.tagline + ' ' + p.desc).toLowerCase().includes(q))
-    if (sort === 'rating')  list = [...list].sort((a, b) => b.rating  - a.rating)
-    if (sort === 'reviews') list = [...list].sort((a, b) => b.reviews - a.reviews)
-    if (sort === 'az')      list = [...list].sort((a, b) => a.name.localeCompare(b.name))
+    if (sort === 'rating')  list = [...list].sort((a, b) => (a.soon - b.soon) || (b.rating  - a.rating))
+    if (sort === 'reviews') list = [...list].sort((a, b) => (a.soon - b.soon) || (b.reviews - a.reviews))
+    if (sort === 'az')      list = [...list].sort((a, b) => (a.soon - b.soon) || a.name.localeCompare(b.name))
     return list
   }, [cat.slug, query, sort])
 

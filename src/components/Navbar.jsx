@@ -176,8 +176,8 @@ function MegaMarket() {
       <div className="mn-col">
         <div className="mn-col-h">Software categories</div>
         {cats.map(c => (
-          <a key={c.slug} className={`mn-li mn-li-ic${c.soon ? ' mn-li--soon' : ''}`} href={c.soon ? undefined : `/market/category?cat=${c.slug}`}
-            style={c.soon ? {cursor:'default',pointerEvents:'none'} : {}}>
+          <a key={c.slug} className={`mn-li mn-li-ic${c.soon ? ' mn-li--soon' : ''}`}
+            href={`/market/category?cat=${c.slug}`}>
             <span className="mn-ic">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d={c.icon} />
