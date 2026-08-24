@@ -303,7 +303,33 @@ const S = `
 }
 .hp-res-link svg { width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5; }
 
-/* ── FAQ ── */
+/* ── MARQUEE ── */
+.hp-marquee-wrap {
+  background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:14px 0;overflow:hidden;position:relative;
+}
+.hp-marquee-wrap::before,.hp-marquee-wrap::after {
+  content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;
+}
+.hp-marquee-wrap::before{left:0;background:linear-gradient(to right,#fff,transparent)}
+.hp-marquee-wrap::after{right:0;background:linear-gradient(to left,#fff,transparent)}
+.hp-marquee-track {
+  display:flex;gap:0;width:max-content;
+  animation:marquee-scroll 30s linear infinite;
+}
+.hp-marquee-wrap:hover .hp-marquee-track { animation-play-state:paused }
+@keyframes marquee-scroll {
+  from { transform:translateX(0) }
+  to   { transform:translateX(-50%) }
+}
+.hp-marquee-item {
+  display:inline-flex;align-items:center;gap:10px;
+  padding:0 28px;white-space:nowrap;
+  font-size:13.5px;font-weight:600;color:var(--navy);
+}
+.hp-marquee-dot {
+  width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;opacity:.5;
+}
 .hp-faq { padding:96px 0;background:#fff; }
 .hp-faq-inner { max-width:800px;margin:0 auto;padding:0 28px; }
 .hp-faq-list  { display:flex;flex-direction:column;margin-top:52px; }
@@ -318,6 +344,8 @@ const S = `
 .hp-faq-icon  { width:24px;height:24px;border-radius:6px;background:var(--bg-2);display:grid;place-items:center;flex:none; }
 .hp-faq-icon svg { width:14px;height:14px;stroke:var(--blue);fill:none;stroke-width:2.5;transition:transform .25s; }
 .hp-faq-item.open .hp-faq-icon svg { transform:rotate(45deg); }
+.hp-faq-item:hover .hp-faq-a { max-height:320px; }
+.hp-faq-item:hover .hp-faq-icon svg { transform:rotate(45deg); }
 .hp-faq-a     { max-height:0;overflow:hidden;transition:max-height .32s cubic-bezier(.2,.7,.3,1); }
 .hp-faq-a-inner { padding:0 0 20px;font-size:14.5px;color:var(--text-2);line-height:1.72; }
 
@@ -697,6 +725,30 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ SERVICES MARQUEE ════════════════════════════════ */}
+      {(() => {
+        const items = [
+          'Private Limited Registration','GST Registration','Trademark Filing','LLP Registration',
+          'Website Development','MSME / Udyam','ROC Compliance','Accounting & Bookkeeping',
+          'ISO Certification','Digital Marketing','Payroll Management','E-Stamp Services',
+          'Income Tax Filing','Brand Identity Design','WhatsApp Business API','Startup India',
+          'One Person Company','Social Media Management','Mobile App Development','OPC Registration',
+        ]
+        const all = [...items, ...items]
+        return (
+          <div className="hp-marquee-wrap">
+            <div className="hp-marquee-track">
+              {all.map((s, i) => (
+                <span key={i} className="hp-marquee-item">
+                  <span className="hp-marquee-dot"/>
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        )
+      })()}
+
       {/* ═══ SERVICES ═══════════════════════════════════════ */}
       <section className="hp-services">
         <div className="hp-section-head">
@@ -756,7 +808,7 @@ export default function HomePage() {
         <div className="hp-why-grid">
           <div className="hp-why-left">
             <div className="hp-section-eyebrow" style={{textAlign:'left',display:'block',marginBottom:14}}>Why LauncherDesk</div>
-            <h2>One desk beats five vendors.</h2>
+            <h2>One desk beats multiple vendors.</h2>
             <p>Most founders waste months juggling CAs, lawyers, web agencies and consultants — each one solving only their piece. LauncherDesk coordinates the whole picture.</p>
             <div className="hp-why-features">
               {WHY_FEATURES.map(f=>(
@@ -930,23 +982,24 @@ export default function HomePage() {
             <p>Answers to the questions founders ask us every day.</p>
           </div>
           <div className="hp-faq-list">
-            {FAQS.map((f,i)=>(
-              <div key={i} className={`hp-faq-item${openFaq===i?' open':''}`}>
-                <div className="hp-faq-q" onClick={()=>setOpenFaq(openFaq===i?null:i)}>
+            {FAQS.slice(0, 4).map((f, i) => (
+              <div key={i} className="hp-faq-item">
+                <div className="hp-faq-q">
                   <div className="hp-faq-q-text">{f.q}</div>
                   <div className="hp-faq-icon">
                     <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
                   </div>
                 </div>
-                <div className="hp-faq-a" style={{maxHeight: openFaq===i ? '320px':'0'}}>
+                <div className="hp-faq-a">
                   <div className="hp-faq-a-inner">{f.a}</div>
                 </div>
               </div>
             ))}
           </div>
           <div style={{textAlign:'center',marginTop:36}}>
-            <Link to="/resources/faq" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 24px',height:44,borderRadius:9,border:'1.5px solid var(--line)',color:'var(--text-2)',fontWeight:600,fontSize:14,textDecoration:'none'}}>
-              See all FAQs
+            <Link to="/resources/faq" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 28px',height:48,borderRadius:10,background:'var(--blue)',color:'#fff',fontWeight:700,fontSize:14.5,textDecoration:'none',boxShadow:'0 6px 20px rgba(29,111,224,.3)'}}>
+              View more
+              <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
           </div>
         </div>
