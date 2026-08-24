@@ -19,7 +19,7 @@ export default function AdminLogin() {
   return (
     <div style={styles.bg}>
       {/* Left brand panel */}
-      <div style={styles.left}>
+      <div className="admin-login-left" style={styles.left}>
         <div style={styles.leftInner}>
           <img src={logoImg} alt="LauncherDesk" style={{height:52,width:'auto',display:'block',marginBottom:8}} />
           <p style={styles.brandSub}>Admin Control Panel</p>
@@ -42,8 +42,8 @@ export default function AdminLogin() {
       </div>
 
       {/* Right login form */}
-      <div style={styles.right}>
-        <div style={styles.card}>
+      <div className="admin-login-right" style={styles.right}>
+        <div className="admin-login-card" style={styles.card}>
           <div style={{textAlign:'center',marginBottom:32}}>
             <img src={logoImg} alt="LauncherDesk" style={{height:44,width:'auto',display:'block',margin:'0 auto 16px'}} />
             <h2 style={{fontSize:24,fontWeight:800,color:'#1C2434',letterSpacing:'-.02em'}}>Sign in to Admin</h2>
@@ -135,16 +135,25 @@ export default function AdminLogin() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+        @media(max-width:768px){
+          .admin-login-left { display: none !important; }
+          .admin-login-right { padding: 24px 16px !important; }
+          .admin-login-card { padding: 28px 20px !important; }
+        }
+        @media(max-width:480px){
+          .admin-login-right { padding: 16px 12px !important; }
+          .admin-login-card { padding: 24px 16px !important; border-radius: 12px !important; }
+        }
       `}</style>
     </div>
   )
 }
 
 const styles = {
-  bg: { display:'flex',minHeight:'100vh',fontFamily:"'Inter',system-ui,sans-serif" },
+  bg: { display:'flex',minHeight:'100vh',fontFamily:"'Inter',system-ui,sans-serif",flexWrap:'wrap' },
   left: { flex:'0 0 440px',background:'linear-gradient(160deg,#080F1E 0%,#0D1F3C 50%,#162B52 100%)',display:'flex',alignItems:'center',padding:'48px',position:'relative',overflow:'hidden' },
   leftInner: { position:'relative',zIndex:1 },
-  right: { flex:1,display:'flex',alignItems:'center',justifyContent:'center',padding:'32px',background:'#F1F5F9' },
+  right: { flex:1,display:'flex',alignItems:'center',justifyContent:'center',padding:'32px 20px',background:'#F1F5F9',minWidth:'min(100vw,320px)' },
   card: { background:'#fff',borderRadius:16,padding:'40px 36px',width:'100%',maxWidth:420,boxShadow:'0 4px 24px rgba(0,0,0,.08)',border:'1px solid #E2E8F0' },
   logo: { width:52,height:52,borderRadius:14,background:'rgba(255,255,255,.1)',display:'grid',placeItems:'center' },
   brand: { fontSize:30,fontWeight:800,color:'#fff',letterSpacing:'-.03em',marginTop:16 },

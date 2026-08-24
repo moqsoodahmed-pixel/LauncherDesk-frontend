@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Outlet, useNavigate, useLocation, NavLink } from 'react-router-dom'
 import logoImg from '../../assets/launcherdesk-logo-transparent.png'
 import { useAdminAuth } from '../../context/AdminAuthContext'
@@ -31,6 +31,21 @@ export default function AdminLayout() {
   const navigate  = useNavigate()
   const location  = useLocation()
   const [collapsed, setCollapsed] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const onResize = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      if (!mobile) setMobileOpen(false)
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  // Close mobile drawer on navigation
+  useEffect(() => { setMobileOpen(false) }, [location.pathname])
 
   useEffect(() => {
     if (!isLoggedIn) navigate('/admin', { replace: true })
@@ -40,75 +55,120 @@ export default function AdminLayout() {
 
   const handleLogout = () => { logout(); navigate('/admin', { replace: true }) }
 
-  return (
-    <div style={S.shell}>
-      {/* ── SIDEBAR ── */}
-      <aside style={{ ...S.sidebar, width: collapsed ? 72 : 260 }}>
-        {/* Brand */}
-        <div style={S.brand}>
-          {collapsed
-            ? <img src={logoImg} alt="LauncherDesk" style={{height:32,width:'auto',display:'block',objectFit:'contain'}} />
-            : <img src={logoImg} alt="LauncherDesk" style={{height:30,width:'auto',maxWidth:160,display:'block',objectFit:'contain'}} />
-          }
+  const sidebarContent = (isMobileDrawer = false) => (
+    <>
+      {/* Brand */}
+      <div style={S.brand}>
+        <img src={logoImg} alt="LauncherDesk" style={{height:30,width:'auto',maxWidth:collapsed&&!isMobileDrawer?40:160,display:'block',objectFit:'contain',transition:'max-width .22s'}} />
+        {!isMobileDrawer && (
           <button onClick={() => setCollapsed(c => !c)} style={{...S.collapseBtn,marginLeft:'auto'}}>
             <Ic d={collapsed ? 'M9 18l6-6-6-6' : 'M15 18l-6-6 6-6'} size={14} />
           </button>
-        </div>
+        )}
+        {isMobileDrawer && (
+          <button onClick={() => setMobileOpen(false)} style={{...S.collapseBtn,marginLeft:'auto'}}>
+            <Ic d="M18 6L6 18|M6 6l12 12" size={15} />
+          </button>
+        )}
+      </div>
 
-        {/* Nav */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '10px 8px' }}>
-          {!collapsed && <div style={S.section}>MENU</div>}
-          {NAV.map(n => {
-            const active = location.pathname === n.path || location.pathname.startsWith(n.path + '/')
-            return (
-              <NavLink key={n.path} to={n.path} style={{ textDecoration:'none' }}>
-                <div style={{ ...S.navItem, ...(active ? S.navActive : {}), justifyContent: collapsed ? 'center' : 'flex-start' }} title={n.label}>
-                  <Ic d={n.icon} size={17} />
-                  {!collapsed && <span style={{ fontSize: 13.5, fontWeight: 500 }}>{n.label}</span>}
-                </div>
-              </NavLink>
-            )
-          })}
-
-          {!collapsed && <div style={{ ...S.section, marginTop: 16 }}>ACCOUNT</div>}
-          <div style={S.divider} />
-          {BOTTOM_NAV.map(n => (
+      {/* Nav */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '10px 8px' }}>
+        {(!collapsed || isMobileDrawer) && <div style={S.section}>MENU</div>}
+        {NAV.map(n => {
+          const active = location.pathname === n.path || location.pathname.startsWith(n.path + '/')
+          return (
             <NavLink key={n.path} to={n.path} style={{ textDecoration:'none' }}>
-              <div style={{ ...S.navItem, justifyContent: collapsed ? 'center' : 'flex-start' }} title={n.label}>
+              <div style={{ ...S.navItem, ...(active ? S.navActive : {}), justifyContent: (collapsed&&!isMobileDrawer) ? 'center' : 'flex-start' }} title={n.label}>
                 <Ic d={n.icon} size={17} />
-                {!collapsed && <span style={{ fontSize: 13.5, fontWeight: 500 }}>{n.label}</span>}
+                {(!collapsed || isMobileDrawer) && <span style={{ fontSize: 13.5, fontWeight: 500 }}>{n.label}</span>}
               </div>
             </NavLink>
-          ))}
-          <button onClick={handleLogout} style={{ ...S.navItem, ...S.logoutBtn, justifyContent: collapsed ? 'center' : 'flex-start', width: '100%', border: 0, cursor: 'pointer', fontFamily: 'inherit' }} title="Logout">
-            <Ic d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4|M16 17l5-5-5-5|M21 12H9" size={17} />
-            {!collapsed && <span style={{ fontSize: 13.5, fontWeight: 500 }}>Logout</span>}
-          </button>
-        </div>
+          )
+        })}
 
-        {/* User chip */}
-        {!collapsed && (
-          <div style={S.userChip}>
-            <div style={S.avatar}>{user?.name?.[0] || 'A'}</div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.name || 'Admin'}</div>
-              <div style={{ fontSize: 11, color: '#6da8e0', marginTop: 1 }}>Super Admin</div>
+        {(!collapsed || isMobileDrawer) && <div style={{ ...S.section, marginTop: 16 }}>ACCOUNT</div>}
+        <div style={S.divider} />
+        {BOTTOM_NAV.map(n => (
+          <NavLink key={n.path} to={n.path} style={{ textDecoration:'none' }}>
+            <div style={{ ...S.navItem, justifyContent: (collapsed&&!isMobileDrawer) ? 'center' : 'flex-start' }} title={n.label}>
+              <Ic d={n.icon} size={17} />
+              {(!collapsed || isMobileDrawer) && <span style={{ fontSize: 13.5, fontWeight: 500 }}>{n.label}</span>}
             </div>
+          </NavLink>
+        ))}
+        <button onClick={handleLogout} style={{ ...S.navItem, ...S.logoutBtn, justifyContent: (collapsed&&!isMobileDrawer) ? 'center' : 'flex-start', width: '100%', border: 0, cursor: 'pointer', fontFamily: 'inherit' }} title="Logout">
+          <Ic d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4|M16 17l5-5-5-5|M21 12H9" size={17} />
+          {(!collapsed || isMobileDrawer) && <span style={{ fontSize: 13.5, fontWeight: 500 }}>Logout</span>}
+        </button>
+      </div>
+
+      {/* User chip */}
+      {(!collapsed || isMobileDrawer) && (
+        <div style={S.userChip}>
+          <div style={S.avatar}>{user?.name?.[0] || 'A'}</div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.name || 'Admin'}</div>
+            <div style={{ fontSize: 11, color: '#6da8e0', marginTop: 1 }}>Super Admin</div>
           </div>
-        )}
-      </aside>
+        </div>
+      )}
+    </>
+  )
+
+  return (
+    <div style={S.shell}>
+      {/* ── DESKTOP SIDEBAR ── */}
+      {!isMobile && (
+        <aside style={{ ...S.sidebar, width: collapsed ? 72 : 260 }}>
+          {sidebarContent(false)}
+        </aside>
+      )}
+
+      {/* ── MOBILE DRAWER OVERLAY ── */}
+      {isMobile && (
+        <>
+          {/* Scrim */}
+          <div
+            onClick={() => setMobileOpen(false)}
+            style={{
+              position:'fixed',inset:0,background:'rgba(11,31,54,.5)',zIndex:200,
+              opacity: mobileOpen ? 1 : 0,
+              visibility: mobileOpen ? 'visible' : 'hidden',
+              transition:'opacity .25s,visibility .25s',
+            }}
+          />
+          {/* Drawer */}
+          <aside style={{
+            ...S.sidebar, width: 260, position:'fixed', top:0, left:0, bottom:0, zIndex:210,
+            transform: mobileOpen ? 'translateX(0)' : 'translateX(-100%)',
+            transition:'transform .28s cubic-bezier(.2,.7,.3,1)',
+            boxShadow: mobileOpen ? '4px 0 24px rgba(0,0,0,.25)' : 'none',
+          }}>
+            {sidebarContent(true)}
+          </aside>
+        </>
+      )}
 
       {/* ── MAIN ── */}
       <div style={S.main}>
         {/* Topbar */}
         <header style={S.topbar}>
+          {/* Hamburger — mobile only */}
+          {isMobile && (
+            <button onClick={() => setMobileOpen(true)} style={{...S.iconBtn, marginRight:8}}>
+              <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="#64748B" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+              </svg>
+            </button>
+          )}
           <div style={S.searchWrap}>
             <svg style={S.searchIcon} viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="#94A3B8" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
             </svg>
             <input style={S.searchInput} placeholder="Search contacts, leads, quotes…" />
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <a href="/" target="_blank" rel="noopener noreferrer" style={S.iconBtn} title="View website">
               <svg viewBox="0 0 24 24" width={17} height={17} fill="none" stroke="#64748B" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
@@ -120,18 +180,20 @@ export default function AdminLayout() {
               </svg>
               <div style={{ position:'absolute',top:7,right:7,width:8,height:8,borderRadius:'50%',background:'#EF4444',border:'2px solid #fff' }} />
             </button>
-            <div style={S.userPill}>
+            <div style={{ ...S.userPill, ...(isMobile ? {padding:'4px 6px 4px 4px'} : {}) }}>
               <div style={S.avatar}>{user?.name?.[0] || 'A'}</div>
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#1C2434' }}>{user?.name || 'Admin'}</div>
-                <div style={{ fontSize: 11, color: '#94A3B8' }}>Super Admin</div>
-              </div>
+              {!isMobile && (
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#1C2434' }}>{user?.name || 'Admin'}</div>
+                  <div style={{ fontSize: 11, color: '#94A3B8' }}>Super Admin</div>
+                </div>
+              )}
             </div>
           </div>
         </header>
 
         {/* Page content */}
-        <main style={S.content}>
+        <main style={{ ...S.content, padding: isMobile ? '16px' : '24px' }}>
           <Outlet />
         </main>
       </div>
@@ -143,6 +205,9 @@ export default function AdminLayout() {
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 4px; }
         .admin-main::-webkit-scrollbar-thumb { background: #CBD5E1; }
+        @media(max-width:767px){
+          table { display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; width:100%; }
+        }
       `}</style>
     </div>
   )
