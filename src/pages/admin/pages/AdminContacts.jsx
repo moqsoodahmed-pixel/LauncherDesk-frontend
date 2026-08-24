@@ -68,7 +68,7 @@ export default function AdminContacts() {
       />
 
       {/* Summary strip */}
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:12, marginBottom:20 }}>
+      <div className="adm-summary-grid" style={{ display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:12, marginBottom:20 }}>
         {STATUSES.slice(1).map(s=>(
           <div key={s} onClick={()=>{setStatus(s);setPage(1)}}
             style={{ background: status===s?'#EEF2FF':'#fff', border: status===s?'1.5px solid #3B5BDB':'1px solid #E2E8F0', borderRadius:9, padding:'12px 16px', cursor:'pointer', transition:'all .13s' }}>
@@ -155,7 +155,7 @@ export default function AdminContacts() {
                 <p style={{ fontSize:13.5, color:'#1C2434', lineHeight:1.6 }}>{selected.message}</p>
               </div>
             )}
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
+            <div className="adm-two-col" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
               <div>
                 <label style={{ fontSize:12.5, fontWeight:600, color:'#374151', display:'block', marginBottom:6 }}>Update Status</label>
                 <select value={editStatus} onChange={e=>setEditStatus(e.target.value)}

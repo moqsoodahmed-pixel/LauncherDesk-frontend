@@ -124,7 +124,7 @@ export default function AdminQuotes() {
                 <p style={{ fontSize:13.5,color:'#1C2434',lineHeight:1.6 }}>{selected.additionalInfo}</p>
               </div>
             )}
-            <div style={{ display:'grid',gridTemplateColumns:'1fr 1fr',gap:12 }}>
+            <div className="adm-two-col" style={{ display:'grid',gridTemplateColumns:'1fr 1fr',gap:12 }}>
               <div>
                 <label style={{ fontSize:12.5,fontWeight:600,color:'#374151',display:'block',marginBottom:6 }}>Update Status</label>
                 <select value={editStatus} onChange={e=>setEditStatus(e.target.value)}

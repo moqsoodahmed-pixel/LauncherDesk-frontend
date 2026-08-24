@@ -1,5 +1,43 @@
 /* ── Shared admin UI primitives used across all admin pages ── */
 
+/* Mobile-responsive admin styles — injected globally */
+const ADMIN_MOBILE_CSS = `
+  @media(max-width:767px){
+    .adm-stat-grid{grid-template-columns:repeat(2,1fr)!important}
+    .adm-charts-row{grid-template-columns:1fr!important}
+    .adm-two-col{grid-template-columns:1fr!important}
+    .adm-three-col{grid-template-columns:1fr!important}
+    .adm-four-col{grid-template-columns:repeat(2,1fr)!important}
+    .adm-summary-grid{grid-template-columns:repeat(2,1fr)!important}
+    .adm-table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .adm-table-scroll table{min-width:600px}
+    .adm-toolbar{flex-direction:column!important}
+    .adm-toolbar>*{width:100%!important}
+    .adm-page-header{flex-direction:column!important;align-items:flex-start!important}
+    .adm-page-actions{flex-wrap:wrap;gap:8px!important}
+    .adm-card-head{flex-wrap:wrap;gap:8px}
+    .adm-info-grid{grid-template-columns:1fr!important}
+    .adm-modal{max-width:100%!important;margin:0!important;border-radius:0!important;max-height:100dvh!important}
+    .adm-modal-bg{padding:0!important;align-items:flex-end!important}
+    .adm-form-grid{grid-template-columns:1fr!important}
+  }
+  @media(max-width:480px){
+    .adm-stat-grid{grid-template-columns:1fr!important}
+    .adm-four-col{grid-template-columns:1fr!important}
+    .adm-summary-grid{grid-template-columns:1fr!important}
+    .adm-btn span.btn-label{display:none}
+  }
+`
+
+// Inject once
+if (typeof document !== 'undefined' && !document.getElementById('adm-mobile-css')) {
+  const el = document.createElement('style')
+  el.id = 'adm-mobile-css'
+  el.textContent = ADMIN_MOBILE_CSS
+  document.head.appendChild(el)
+}
+
+
 export function Ic({ d, size = 16, sw = 2, style = {} }) {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor"
@@ -118,7 +156,7 @@ export function Btn({ children, onClick, variant='primary', size='md', disabled=
 
 export function Table({ head, children, empty='No records found.' }) {
   return (
-    <div style={{ overflowX:'auto' }}>
+    <div style={{ overflowX:'auto', WebkitOverflowScrolling:'touch' }} className="adm-table-scroll">
       <table style={{ width:'100%', borderCollapse:'collapse' }}>
         <thead>
           <tr>
@@ -181,8 +219,8 @@ export function Modal({ open, onClose, title, children, footer, width=560 }) {
   if (!open) return null
   return (
     <div onClick={e=>{if(e.target===e.currentTarget)onClose()}}
-      style={{ position:'fixed', inset:0, background:'rgba(15,23,42,.45)', backdropFilter:'blur(3px)', zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center', padding:20 }}>
-      <div style={{ background:'#fff', borderRadius:14, width:'100%', maxWidth:width, boxShadow:'0 24px 64px rgba(0,0,0,.18)', maxHeight:'90vh', overflow:'auto', display:'flex', flexDirection:'column' }}>
+      className="adm-modal-bg" style={{ position:'fixed', inset:0, background:'rgba(15,23,42,.45)', backdropFilter:'blur(3px)', zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center', padding:20 }}>
+      <div className="adm-modal" style={{ background:'#fff', borderRadius:14, width:'100%', maxWidth:width, boxShadow:'0 24px 64px rgba(0,0,0,.18)', maxHeight:'90vh', overflow:'auto', display:'flex', flexDirection:'column' }}>
         <div style={{ padding:'18px 22px', borderBottom:'1px solid #E2E8F0', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
           <div style={{ fontSize:17, fontWeight:700, color:'#1C2434' }}>{title}</div>
           <button onClick={onClose} style={{ width:32, height:32, borderRadius:8, background:'#F1F5F9', border:0, cursor:'pointer', display:'grid', placeItems:'center' }}>

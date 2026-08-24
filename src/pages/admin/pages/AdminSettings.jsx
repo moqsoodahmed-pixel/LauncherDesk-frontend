@@ -7,7 +7,7 @@ export default function AdminSettings() {
     <div>
       <PageHeader title="Settings" sub="Admin account and system configuration"/>
 
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:20 }}>
+      <div className="adm-two-col" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:20 }}>
         <Card>
           <CardHead title="Admin Profile"/>
           <div style={{ padding:'20px 24px', display:'flex', flexDirection:'column', gap:14 }}>
@@ -51,7 +51,7 @@ export default function AdminSettings() {
         <Card style={{ gridColumn:'1/-1' }}>
           <CardHead title="Available Admin Endpoints"/>
           <div style={{ padding:'16px 24px' }}>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12 }}>
+            <div className="adm-three-col" style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12 }}>
               {[
                 ['GET  /api/contact',      'All contact enquiries'],
                 ['PATCH /api/contact/:id', 'Update contact status/notes'],
