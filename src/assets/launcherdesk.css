@@ -180,7 +180,8 @@ img{max-width:100%;display:block}
 .d-sec-body{max-height:0;overflow:hidden;transition:max-height .3s cubic-bezier(.2,.7,.3,1);padding-left:10px}
 .d-sec-body a{display:block;font-size:14px;color:var(--text-2);padding:9px 8px;border-radius:8px;transition:background .12s,color .12s}
 .d-sec-body a:hover{background:var(--bg);color:var(--blue-dark)}
-.drawer .btn{width:calc(100% - 24px);justify-content:center;margin:10px 12px 0}
+.drawer .btn{width:calc(100% - 24px);justify-content:center;margin:10px 12px 0;height:48px;border-radius:12px}
+.drawer .btn:last-child{margin-bottom:24px}
 .d-subsec{border-bottom:1px solid var(--line-2)}
 .d-subsec:last-child{border-bottom:0}
 .d-subsec-btn{width:100%;background:none;border:0;text-align:left;padding:9px 8px;font-family:var(--font);font-weight:600;font-size:13.5px;color:var(--blue-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center}

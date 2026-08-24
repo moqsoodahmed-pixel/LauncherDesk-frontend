@@ -342,7 +342,7 @@ export default function AIAssistant() {
           <a className="d-link" href="/market">Marketplace</a>
           <a className="d-link" href="/office-restore">Office Setup</a>
         </nav>
-        <a className="btn btn-primary" style={{margin:'0 12px 16px',display:'block',textAlign:'center'}} href="/services#finder">Get Started</a>
+        <a className="btn btn-primary" href="/services#finder">Get Started</a>
       </aside>
     </>
   )
