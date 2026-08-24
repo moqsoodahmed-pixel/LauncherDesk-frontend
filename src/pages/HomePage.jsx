@@ -47,6 +47,20 @@ const homepageStyles = `
 .sv-node svg{width:15px;height:15px;stroke:var(--blue-dark);fill:none;stroke-width:2;flex:none;transition:stroke .18s}
 .sv-node:hover{border-color:var(--blue);color:var(--blue-dark);box-shadow:0 6px 20px rgba(4,125,204,.2);transform:translate(-50%,-50%) translateY(-3px);background:rgba(4,125,204,.04)}
 .sv-node:hover svg{stroke:var(--blue)}
+.sv-tooltip{
+  position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);
+  background:#0D1F3C;color:#E8F0FE;font-size:12.5px;font-weight:400;line-height:1.5;
+  padding:10px 14px;border-radius:10px;white-space:normal;text-align:center;
+  width:220px;pointer-events:none;
+  opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;
+  box-shadow:0 8px 24px rgba(13,31,60,.3);z-index:20;
+  font-family:var(--font-body);
+}
+.sv-tooltip::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:#0D1F3C;
+}
+.sv-node:hover .sv-tooltip{opacity:1;visibility:visible}
 .sv-thread{stroke:var(--blue);fill:none;stroke-width:1.5;stroke-dasharray:5 6;opacity:.22;animation:svDash 2.2s linear infinite}
 .sv-thread-glow{stroke:var(--blue-bright);fill:none;stroke-width:2.5;opacity:0;stroke-dasharray:20 200;stroke-dashoffset:0;animation:svGlowPulse 2.8s ease-in-out infinite}
 @keyframes svDash{to{stroke-dashoffset:-44}}
@@ -149,11 +163,11 @@ const STAGES = [
 ]
 
 const SV_NODES = [
-  { href: '/services/private-limited-company-registration', label: 'Company Registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14' },
-  { href: '/services/gst-registration', label: 'GST & Compliance', icon: 'M9 11l3 3L22 4' },
-  { href: '/services/trademark-registration', label: 'Trademark & IP', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
-  { href: '/services/website-development', label: 'Website Development', icon: 'M2 3h20v14H2zM8 21h8M12 17v4' },
-  { href: '/services/digital-marketing', label: 'Marketing & SEO', icon: 'M23 6l-9.5 9.5-5-5L1 18' },
+  { href: '/services/private-limited-company-registration', label: 'Company Registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14', desc: 'Register a Private Limited Company, LLP or OPC. We handle DSC, name approval, SPICe+ filing and your Certificate of Incorporation — end to end.' },
+  { href: '/services/gst-registration', label: 'GST & Compliance', icon: 'M9 11l3 3L22 4', desc: 'GST registration, monthly/quarterly return filing, ROC annual compliance and income tax filing — all tracked proactively so you never miss a deadline.' },
+  { href: '/services/trademark-registration', label: 'Trademark & IP', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', desc: 'Protect your brand name, logo and tagline. We search, file and track your trademark across the right classes — through to the registration certificate.' },
+  { href: '/services/website-development', label: 'Website Development', icon: 'M2 3h20v14H2zM8 21h8M12 17v4', desc: 'Mobile-first business websites, e-commerce stores, CRM portals and SaaS products — built for conversion, not just aesthetics.' },
+  { href: '/services/digital-marketing', label: 'Marketing & SEO', icon: 'M23 6l-9.5 9.5-5-5L1 18', desc: 'SEO, Google Ads, social media management and branding — demand generation campaigns scoped to where your business actually is.' },
 ]
 
 function LifecycleAccordion() {
@@ -273,6 +287,7 @@ function ConnectedServices() {
               <a key={i} className="sv-node" href={n.href}>
                 <svg viewBox="0 0 24 24"><path d={n.icon}/></svg>
                 {n.label}
+                <span className="sv-tooltip">{n.desc}</span>
               </a>
             ))}
           </div>
