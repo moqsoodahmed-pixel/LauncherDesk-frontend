@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import { Link, useLocation } from 'react-router-dom'
 
 const I = {
@@ -243,13 +244,8 @@ export default function Navbar({ activePage = '' }) {
   return (
     <header className="site-header" ref={navRef}>
       <div className="header-in">
-        <Link className="brand" to="/">
-          <span className="mk">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d={I.rocket} />
-            </svg>
-          </span>
-          <span className="txt">Launcher<b>Desk</b></span>
+        <Link to="/" style={{display:'flex',alignItems:'center',textDecoration:'none',flexShrink:0}}>
+          <img src={logoImg} alt="LauncherDesk" style={{height:38,width:'auto',display:'block'}} />
         </Link>
         <nav className="main-nav" id="mainNav">
           <div className={`nav-item${activePage === 'registrations' ? ' active' : ''} nav-item--reg`} data-drop="true">
