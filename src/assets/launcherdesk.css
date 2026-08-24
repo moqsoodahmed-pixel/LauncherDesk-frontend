@@ -30,7 +30,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:96px}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);max-width:100vw;
   -webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
 h1,h2,h3,h4,h5{font-family:var(--font);color:var(--navy);line-height:1.08;letter-spacing:-.02em;font-weight:700}
 a{color:inherit;text-decoration:none}
@@ -331,7 +331,7 @@ img{max-width:100%;display:block}
 .rm-disc svg{width:15px;height:15px;stroke:var(--blue);fill:none;stroke-width:2;flex:none;margin-top:1px}
 
 /* how it works */
-.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:s}
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:s;width:100%}
 .hstep{position:relative;padding-top:26px}
 .hstep::before{counter-increment:s;content:"0" counter(s);font-family:var(--font);font-weight:800;font-size:15px;color:var(--blue);position:absolute;top:22px;left:24px}
 .hstep h3{font-size:clamp(17px,2vw,20px)}.hstep p{color:var(--text-2);font-size:14.5px;margin-top:8px}
@@ -586,6 +586,13 @@ img{max-width:100%;display:block}
    ============================================================ */
 @media(max-width:768px){
   .wrap,.wrap-tight{padding:0 16px}
+  /* prevent any horizontal overflow */
+  * { max-width: 100%; }
+  img, svg { max-width: 100%; }
+  .steps3 { grid-template-columns: 1fr 1fr; }
+  .or-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .or-hero-badges { flex-direction: column; gap: 12px; }
+
   .header-in{padding:0 16px;height:60px}
   .brand .txt{font-size:17px}
   .page-hero{padding:38px 0 32px}
@@ -620,6 +627,7 @@ img{max-width:100%;display:block}
    ============================================================ */
 @media(max-width:640px){
   .grid-3,.type-grid,.related,.steps3,.value-grid,.art-grid{grid-template-columns:1fr}
+  .or-cat-grid{grid-template-columns:1fr!important}
   .grid-2{grid-template-columns:1fr}
   .finder{grid-template-columns:1fr}
   .finder-side{padding:24px 20px}
@@ -771,4 +779,142 @@ img{max-width:100%;display:block}
   .lc-track,.lc-arc-hi,.lc-node,.lc-node-dot,.lc-panel-in,.lc-mob-panel{transition:none!important;animation:none!important}
   .lc-node{opacity:1}
   .lc-panel-in{animation:none}
+}
+
+/* ============================================================
+   COMPREHENSIVE MOBILE FIXES — All Pages
+   ============================================================ */
+
+/* Global overflow prevention */
+html, body { overflow-x: hidden; max-width: 100vw; }
+* { box-sizing: border-box; }
+img, video, svg { max-width: 100%; }
+.wrap, .wrap-tight { overflow: hidden; }
+
+/* ── Orbit / Services Hub — mobile pill layout ── */
+@media(max-width:640px) {
+  /* Replace absolute-positioned orbit with flex pill row */
+  #svCanvas { height: auto !important; min-height: unset !important; }
+  #svNodes {
+    position: static !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    justify-content: center !important;
+    padding: 20px 0 !important;
+    pointer-events: auto !important;
+  }
+  .sv-node {
+    position: static !important;
+    transform: none !important;
+    top: auto !important; left: auto !important;
+    font-size: 12.5px !important;
+    padding: 8px 14px !important;
+  }
+  .sv-node .sv-tooltip { display: none !important; }
+  .sv-center { display: none !important; }
+  .sv-canvas > svg { display: none !important; }
+}
+
+/* ── How it works cards — horizontal scroll fix ── */
+@media(max-width:640px) {
+  .steps3 { grid-template-columns: 1fr !important; gap: 14px !important; overflow: visible !important; }
+  .steps3 > * { width: 100% !important; }
+}
+@media(max-width:768px) {
+  .steps3 { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+}
+
+/* ── 360 degree section diff-grid ── */
+@media(max-width:640px) {
+  .diff-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .diff-col { width: 100% !important; }
+}
+
+/* ── Hero section ── */
+@media(max-width:640px) {
+  .hp-hero-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .hero-cta { flex-direction: column !important; }
+  .hero-cta .btn { width: 100% !important; justify-content: center !important; }
+}
+
+/* ── Roadmap grid ── */
+@media(max-width:480px) {
+  .roadmap-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── Office restore mobile ── */
+@media(max-width:768px) {
+  .or-hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .or-summary { position: static !important; }
+}
+@media(max-width:640px) {
+  .or-cat-grid { grid-template-columns: 1fr !important; }
+  .or-planner-wrap { grid-template-columns: 1fr !important; }
+}
+
+/* ── Service / Solution pages ── */
+@media(max-width:640px) {
+  .svc-layout { grid-template-columns: 1fr !important; }
+  .proof { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ── Section headings ── */
+@media(max-width:480px) {
+  .sec-head h2 { font-size: clamp(22px, 6vw, 32px) !important; }
+  h1 { font-size: clamp(26px, 7vw, 48px) !important; }
+}
+
+/* ── Business type / company pages ── */
+@media(max-width:640px) {
+  .type-grid { grid-template-columns: 1fr !important; }
+  .value-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── Contact page ── */
+@media(max-width:640px) {
+  .contact-grid { grid-template-columns: 1fr !important; }
+  .finder { grid-template-columns: 1fr !important; }
+  .finder-side, .finder-main { border-radius: 0 !important; }
+}
+
+/* ── Pricing page ── */
+@media(max-width:640px) {
+  .price-grid { grid-template-columns: 1fr !important; }
+  .pricebox { padding: 16px 14px !important; }
+}
+
+/* ── Footer ── */
+@media(max-width:480px) {
+  .foot-cols { grid-template-columns: 1fr !important; }
+  .foot-bottom { flex-direction: column !important; gap: 8px !important; }
+}
+
+/* ── Resources / Blog ── */
+@media(max-width:640px) {
+  .art-grid { grid-template-columns: 1fr !important; }
+  .related { grid-template-columns: 1fr !important; }
+}
+
+/* ── Navbar ── */
+@media(max-width:640px) {
+  .header-cta { gap: 6px !important; }
+  .header-cta .btn { padding: 0 10px !important; font-size: 13px !important; height: 36px !important; }
+}
+
+/* ── Prevent text overflow ── */
+@media(max-width:640px) {
+  p, li, td, th { overflow-wrap: break-word; word-wrap: break-word; }
+}
+
+/* ── Tables always scrollable ── */
+@media(max-width:768px) {
+  .tbl-wrap, [class*="table"] { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+}
+
+/* ── Lifecycle mobile ── */
+@media(max-width:640px) {
+  .lc-inner { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .lc-svg-wrap { display: none !important; }
+  .lc-panel { max-width: 100% !important; }
 }
