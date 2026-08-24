@@ -36,6 +36,10 @@
 .mk-card{background:#fff;border-radius:18px;border:1px solid var(--line);padding:22px;display:flex;flex-direction:column;
   box-shadow:var(--sh-sm);transition:transform .2s,box-shadow .2s,border-color .2s}
 .mk-card:hover{transform:translateY(-4px);box-shadow:var(--sh);border-color:rgba(4,125,204,.25)}
+.mk-card--soon{opacity:.65;cursor:default}
+.mk-card--soon:hover{transform:none;box-shadow:var(--sh-sm);border-color:var(--line)}
+.mk-badge--soon{background:rgba(109,109,111,.12);color:var(--grey);text-transform:uppercase;font-size:10.5px;font-weight:700;padding:5px 10px;border-radius:99px;font-family:var(--font);letter-spacing:.04em}
+.mk-price--soon{color:var(--grey);font-weight:600;font-size:12.5px}
 .mk-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
 .mk-card h3{font-size:clamp(16px,2vw,19px);margin:10px 0 2px}
 .mk-tag{font-size:13.5px;color:var(--blue-dark);font-weight:600;font-family:var(--font)}

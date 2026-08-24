@@ -206,6 +206,30 @@ export function ProductCard({ p }) {
   const iconPath = cat ? MI[cat.icon] : MI.spark
   const firstSentence = p.desc.split('. ')[0] + '.'
 
+  if (p.soon) {
+    return (
+      <div className="mk-card mk-card--soon reveal-up">
+        <div className="mk-card-top">
+          <Tile p={p} />
+          <span className="mk-badge mk-badge--soon">Adding Soon</span>
+        </div>
+        <div className="mk-cat-chip">
+          <svg className="mk-ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d={iconPath}/>
+          </svg>
+          {cat ? cat.name : ''}
+        </div>
+        <h3>{p.name}</h3>
+        <p className="mk-tag">{p.tagline}</p>
+        <p className="mk-desc">{firstSentence}</p>
+        <div className="mk-card-foot">
+          <RateLine p={p} />
+          <span className="mk-price mk-price--soon">Adding Soon</span>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <a className="mk-card reveal-up" href={`/market/product?id=${p.id}`}>
       <div className="mk-card-top">
