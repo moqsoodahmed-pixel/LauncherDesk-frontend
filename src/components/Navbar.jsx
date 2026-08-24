@@ -285,10 +285,12 @@ export default function Navbar({ activePage = '' }) {
             <a href="/office-restore" className="nav-restore">Office Setup</a>
           </div>
           <div className={`nav-item${activePage === 'estamp' ? ' active' : ''}`}>
-            <a href="/estamp" className="nav-restore nav-estamp">E-Stamp</a>
+            <a href="/estamp" className="nav-restore">E-Stamp</a>
           </div>
         </nav>
         <div className="header-cta">
+          {/* Change 1: "Login" renamed to "Contact Us" */}
+          <a className="btn btn-quiet btn-sm" href="/company/contact">Talk to an Expert</a>
           <a className="btn btn-primary btn-sm" href="/services#finder">Get Started</a>
           <button className="burger" aria-label="Open menu" data-open-drawer="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

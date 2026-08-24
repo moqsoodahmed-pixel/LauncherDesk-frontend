@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import logoImg from '../assets/launcherdesk-logo-transparent.png'
+import msmeImg from '../assets/msme-logo.png'
 
 const ROCKET = 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0'
 
@@ -109,9 +110,12 @@ export default function Footer() {
           <p style={{fontSize:11.5,color:'#3d618a',lineHeight:1.7,maxWidth:900}}>
             LauncherDesk is a business services facilitation platform operated by DutyLaunch Solutions Private Limited. LauncherDesk facilitates access to business services and may coordinate with relevant professionals, partners and service providers. Where a service requires a licensed professional, statutory filing or government approval, the relevant professional or authority remains responsible for the applicable filing, decision or approval. Timelines and outcomes may vary based on the relevant authority, professional and customer documentation. LauncherDesk does not act as a regulatory authority and does not guarantee registrations, approvals or outcomes.
           </p>
-          <div style={{display:'flex',justifyContent:'space-between',width:'100%',flexWrap:'wrap',gap:10}}>
+          <div style={{display:'flex',justifyContent:'space-between',width:'100%',flexWrap:'wrap',gap:10,alignItems:'center'}}>
             <span>© {year} LauncherDesk · DutyLaunch Solutions Private Limited · All rights reserved.</span>
-            <span style={{color:'#3d618a'}}>Made in India 🇮🇳</span>
+            <div style={{display:'flex',alignItems:'center',gap:16}}>
+              <img src={msmeImg} alt="MSME – Micro, Small &amp; Medium Enterprises" style={{height:44,width:'auto',display:'block',filter:'brightness(1.1)'}} />
+              <span style={{color:'#3d618a'}}>Made in India 🇮🇳</span>
+            </div>
           </div>
         </div>
       </div>
