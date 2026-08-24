@@ -66,6 +66,45 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Social connections */}
+        <div style={{borderTop:'1px solid rgba(255,255,255,.07)',paddingTop:28,marginBottom:28,display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:20}}>
+          <div>
+            <div style={{fontSize:12,fontWeight:700,letterSpacing:'.12em',textTransform:'uppercase',color:'#6da8e0',marginBottom:14}}>Connect with us</div>
+            <div style={{display:'flex',gap:10}}>
+              {[
+                {href:'https://www.instagram.com/launcherdesk?igsh=MWxleG1ubm9kNW4xbw==',label:'Instagram',
+                 path:'M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z|M17.5 6.5h.01|M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z'},
+                {href:'https://x.com/LauncherDesk',label:'X (Twitter)',
+                 path:'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.736l7.73-8.835L1.254 2.25H8.08l4.259 5.631zM17.11 20.89h1.833L7.05 4.126H5.099z'},
+                {href:'https://www.facebook.com/share/181iGTzpPf/',label:'Facebook',
+                 path:'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'},
+                {href:'https://www.linkedin.com/in/launcher-desk-9251923a3?utm_source=share_via&utm_content=profile&utm_medium=member_android',label:'LinkedIn',
+                 path:'16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z|M2 9h4v12H2z|M4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'},
+              ].map(s=>(
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
+                  style={{width:40,height:40,borderRadius:10,background:'rgba(255,255,255,.07)',border:'1px solid rgba(255,255,255,.1)',display:'grid',placeItems:'center',transition:'background .15s,transform .15s',textDecoration:'none'}}
+                  onMouseEnter={e=>{e.currentTarget.style.background='rgba(29,111,224,.25)';e.currentTarget.style.transform='translateY(-2px)'}}
+                  onMouseLeave={e=>{e.currentTarget.style.background='rgba(255,255,255,.07)';e.currentTarget.style.transform='none'}}
+                >
+                  <svg viewBox="0 0 24 24" width={17} height={17} fill="none" stroke="#9ab5d4" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    {s.path.split('|').map((p,i)=><path key={i} d={p}/>)}
+                  </svg>
+                </a>
+              ))}
+            </div>
+          </div>
+          <div style={{display:'flex',gap:10,flexWrap:'wrap'}}>
+            {[
+              {l:'WhatsApp',h:'https://wa.me/918458845859',bg:'rgba(37,211,102,.15)',c:'#25D366',border:'rgba(37,211,102,.3)'},
+              {l:'Email us',h:'mailto:contact@launcherdesk.com',bg:'rgba(29,111,224,.15)',c:'#7ecef4',border:'rgba(29,111,224,.3)'},
+            ].map(b=>(
+              <a key={b.l} href={b.h} target="_blank" rel="noopener noreferrer"
+                style={{display:'inline-flex',alignItems:'center',gap:8,padding:'8px 16px',borderRadius:8,background:b.bg,border:`1px solid ${b.border}`,color:b.c,fontSize:13,fontWeight:600,textDecoration:'none'}}>
+                {b.l}
+              </a>
+            ))}
+          </div>
+        </div>
         <div className="foot-bottom" style={{flexDirection:'column',alignItems:'flex-start',gap:12}}>
           <p style={{fontSize:11.5,color:'#3d618a',lineHeight:1.7,maxWidth:900}}>
             LauncherDesk is a business services facilitation platform operated by DutyLaunch Solutions Private Limited. LauncherDesk facilitates access to business services and may coordinate with relevant professionals, partners and service providers. Where a service requires a licensed professional, statutory filing or government approval, the relevant professional or authority remains responsible for the applicable filing, decision or approval. Timelines and outcomes may vary based on the relevant authority, professional and customer documentation. LauncherDesk does not act as a regulatory authority and does not guarantee registrations, approvals or outcomes.

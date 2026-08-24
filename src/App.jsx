@@ -26,6 +26,7 @@ import PricingPage from './pages/pricing/PricingPage'
 import AiPage from './pages/ai/AiPage'
 // Office Restore
 import OfficeRestorePage from './pages/office-restore/OfficeRestorePage'
+import EStampPage from './pages/estamp/EStampPage'
 // Marketplace
 import MarketIndex from './pages/market/MarketIndex'
 import CategoryPage from './pages/market/CategoryPage'
@@ -78,6 +79,7 @@ export default function App() {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/ai" element={<AiPage />} />
             <Route path="/office-restore" element={<OfficeRestorePage />} />
+            <Route path="/estamp" element={<EStampPage />} />
             <Route path="/market" element={<MarketIndex />} />
             <Route path="/market/category" element={<CategoryPage />} />
             <Route path="/market/product" element={<ProductPage />} />

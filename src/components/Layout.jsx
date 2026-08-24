@@ -14,6 +14,7 @@ function getActivePage(pathname) {
   if (pathname.startsWith('/company')) return 'company'
   if (pathname.startsWith('/resources')) return 'resources'
   if (pathname.startsWith('/office-restore')) return 'office-restore'
+  if (pathname.startsWith('/estamp')) return 'estamp'
   if (pathname.startsWith('/pricing')) return 'pricing'
   if (pathname.startsWith('/ai')) return 'ai'
   return ''

@@ -97,6 +97,10 @@ function MegaIT() {
             <span className="mp-cat-label">Marketing &amp; Sales</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6"/></svg>
           </button>
+          <button className="mp-cat" data-mp-cat="s30">
+            <span className="mp-cat-label">Digital Marketing</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
         </div>
         <div className="mp-right">
           {/* Each IT service now routes to its own dedicated page slug */}
@@ -134,8 +138,24 @@ function MegaIT() {
           </div>
         </div>
       </div>
+          <div className="mp-panel" data-mp-panel="s30">
+            <div className="mp-panel-head">Digital Marketing — <span style={{color:'var(--blue)',fontWeight:700}}>in collab with TheSuper30</span></div>
+            <div className="mp-grp-grid">
+              {[
+                ['AI-Powered SEO', ['AI Search Optimization','LLM Visibility & Citations','Technical SEO Audits','Content Strategy & Creation','Local & International SEO']],
+                ['Lead Generation', ['Google Ads Management','Meta & Instagram Ads','LinkedIn B2B Campaigns','YouTube Advertising','Remarketing & Retargeting']],
+                ['Social Media', ['Social Media Strategy','Content Calendar & Posting','Community Management','Ad Creative Design','Reels & Short-Form Video']],
+                ['Design & Branding', ['Brand Identity Design','Logo & Visual Identity','Marketing Collaterals','Packaging Design','Social Media Design']],
+              ].map(([group, items]) => (
+                <div key={group} className="mp-grp">
+                  <div className="mp-grp-h">{group}</div>
+                  {items.map(item => <SvcLink key={item} href="https://www.thesuper30.ai/" title={item} />)}
+                </div>
+              ))}
+            </div>
+          </div>
       <div className="mp-foot-wrap">
-        <div className="mp-footer"><a href="/services">View all IT services →</a></div>
+        <div className="mp-footer"><a href="/services">View all IT services →</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://www.thesuper30.ai/" target="_blank" rel="noopener noreferrer">Visit TheSuper30 →</a></div>
       </div>
     </div>
   )
@@ -263,6 +283,9 @@ export default function Navbar({ activePage = '' }) {
           {/* Change 4: Office Setup as regular nav link — same style as others */}
           <div className={`nav-item${activePage === 'office-restore' ? ' active' : ''}`}>
             <a href="/office-restore" className="nav-restore">Office Setup</a>
+          </div>
+          <div className={`nav-item${activePage === 'estamp' ? ' active' : ''}`}>
+            <a href="/estamp" className="nav-restore nav-estamp">E-Stamp</a>
           </div>
         </nav>
         <div className="header-cta">

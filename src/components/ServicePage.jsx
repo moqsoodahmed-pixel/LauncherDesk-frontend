@@ -1,14 +1,15 @@
-import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import msmeLogo from '../assets/msme-logo.png'
 
-const CHEV = 'm9 18 6-6-6-6'
+const CHEV  = 'm9 18 6-6-6-6'
 const ARROW = 'M5 12h14M13 6l6 6-6 6'
 const CHECK = 'M20 6 9 17l-5-5'
-const PLUS = 'M12 5v14M5 12h14'
+const PLUS  = 'M12 5v14M5 12h14'
+const MINUS = 'M5 12h14'
 
-/* ── Shared primitives ── */
+/* ── Primitives ── */
 function ChevSvg() {
-  return <svg viewBox="0 0 24 24"><path d={CHEV}/></svg>
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:14,height:14}}><path d={CHEV}/></svg>
 }
 
 function CheckLi({ children }) {
@@ -20,40 +21,39 @@ function CheckLi({ children }) {
   )
 }
 
-/* ── TOC with scrollspy ── */
+/* ── TOC ── */
 function Toc({ items }) {
   useEffect(() => {
     const links = document.querySelectorAll('.toc a')
     if (!links.length) return
-    const secs = Array.from(links)
-      .map(a => document.querySelector(a.getAttribute('href')))
-      .filter(Boolean)
-    const spy = new IntersectionObserver(entries => {
+    const secs = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean)
+    const io = new IntersectionObserver(entries => {
       entries.forEach(en => {
         if (en.isIntersecting) {
-          links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id))
+          links.forEach(l => l.classList.remove('active'))
+          const a = document.querySelector(`.toc a[href="#${en.target.id}"]`)
+          if (a) a.classList.add('active')
         }
       })
-    }, { rootMargin: '-30% 0px -60% 0px' })
-    secs.forEach(s => spy.observe(s))
-    return () => spy.disconnect()
-  }, [])
+    }, { rootMargin: '-20% 0px -70% 0px' })
+    secs.forEach(s => io.observe(s))
+    return () => io.disconnect()
+  }, [items])
 
   return (
     <aside className="toc">
       <h5>On this page</h5>
-      {items.map((item, i) => (
-        <a key={item.href} href={item.href} className={i === 0 ? 'active' : ''}>{item.label}</a>
+      {items.map(item => (
+        <a key={item.href} href={item.href}>{item.label}</a>
       ))}
     </aside>
   )
 }
 
-/* ── Section renderers ── */
+/* ── Section content ── */
 function SectionContent({ id, data }) {
   if (!data) return null
 
-  /* Raw HTML section (overview, classes) */
   if (data.content) {
     return (
       <section id={id}>
@@ -63,7 +63,6 @@ function SectionContent({ id, data }) {
     )
   }
 
-  /* List section */
   if (data.items) {
     return (
       <section id={id}>
@@ -76,7 +75,6 @@ function SectionContent({ id, data }) {
     )
   }
 
-  /* Timeline section */
   if (data.steps) {
     return (
       <section id={id}>
@@ -93,7 +91,6 @@ function SectionContent({ id, data }) {
     )
   }
 
-  /* Compare table (raw HTML) */
   if (data.tableHtml) {
     return (
       <section id={id}>
@@ -103,7 +100,6 @@ function SectionContent({ id, data }) {
     )
   }
 
-  /* Pricing section */
   if (data.rows) {
     return (
       <section id={id}>
@@ -124,52 +120,68 @@ function SectionContent({ id, data }) {
     )
   }
 
-  /* FAQ section */
-  if (data.items && !data.content) return null // handled above
   return null
 }
 
+/* ── FAQ section — fully self-contained with React state ── */
 function FaqSection({ data }) {
+  const [openIdx, setOpenIdx] = React.useState(null)
   if (!data) return null
+
   return (
     <section id="faq">
       <h2>{data.heading}</h2>
-      <div className="faq" style={{ maxWidth: 'none' }}>
-        {data.items.map((item, i) => (
-          <div key={i} className="faq-i">
-            <button className="faq-q">
-              {item.q}
-              <svg viewBox="0 0 24 24" fill="none"><path d={PLUS}/></svg>
-            </button>
-            <div className="faq-a">
-              <p dangerouslySetInnerHTML={{ __html: item.a }} />
+      <div className="faq-list">
+        {data.items.map((item, i) => {
+          const isOpen = openIdx === i
+          return (
+            <div key={i} className="faq-item">
+              <button
+                className="faq-q"
+                onClick={() => setOpenIdx(isOpen ? null : i)}
+                style={{
+                  width:'100%', display:'flex', alignItems:'center',
+                  justifyContent:'space-between', gap:16, padding:'18px 0',
+                  background:'none', border:'none', borderBottom:'1px solid var(--line)',
+                  cursor:'pointer', textAlign:'left', fontFamily:'inherit',
+                }}
+              >
+                <span style={{fontSize:16, fontWeight:600, color:'var(--navy)', lineHeight:1.4}}>{item.q}</span>
+                <svg
+                  viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"
+                  strokeLinecap="round" strokeLinejoin="round"
+                  style={{width:20, height:20, flexShrink:0, transition:'transform .25s', transform: isOpen ? 'rotate(45deg)' : 'none'}}
+                >
+                  <path d={PLUS}/>
+                </svg>
+              </button>
+              <div style={{
+                maxHeight: isOpen ? '400px' : '0',
+                overflow:'hidden',
+                transition:'max-height .3s cubic-bezier(.2,.7,.3,1)',
+              }}>
+                <p style={{padding:'14px 0 20px', color:'var(--text-2)', fontSize:15, lineHeight:1.7}}>{item.a}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </section>
   )
 }
 
-/* ── Related services strip ── */
+/* ── Related services ── */
 function RelatedServices({ items }) {
   return (
-    <section className="section section-warm">
+    <section className="section-sm">
       <div className="wrap">
-        <div className="sec-head reveal-up">
-          <span className="eyebrow">Keep going</span>
-          <h2 style={{ fontSize: 'clamp(24px,3vw,34px)' }}>Related services</h2>
-        </div>
+        <h2 style={{ fontSize: 'clamp(24px,3vw,34px)' }}>Related services</h2>
         <div className="related reveal-up" style={{ marginTop: 26 }}>
           {items.map(item => (
-            <a key={item.href} href={item.href}>
-              <b>
-                {item.label}
-                <svg style={{ width: 18, height: 18, stroke: 'var(--blue)' }} viewBox="0 0 24 24" fill="none" strokeWidth="2">
-                  <path d={ARROW}/>
-                </svg>
-              </b>
-              <span>{item.note}</span>
+            <a key={item.href} href={item.href} className="card">
+              <h3 style={{fontSize:17, marginBottom:8}}>{item.label}</h3>
+              <p style={{fontSize:14, color:'var(--text-2)', marginBottom:12}}>{item.note}</p>
+              <span className="arrow" style={{color:'var(--blue)', fontWeight:600, fontSize:14}}>Learn more →</span>
             </a>
           ))}
         </div>
@@ -178,7 +190,7 @@ function RelatedServices({ items }) {
   )
 }
 
-/* ── Aside cards ── */
+/* ── Aside ── */
 function ServiceAside({ priceCard, helpCard }) {
   return (
     <aside className="svc-aside">
@@ -198,51 +210,38 @@ function ServiceAside({ priceCard, helpCard }) {
   )
 }
 
-/* ── Main exported template ── */
+/* ── Main ── */
 export default function ServicePage({ svc }) {
-  const { title, eyebrow, crumbCategory, lead, toc, sections, related, priceCard, helpCard } = svc
-
-  /* Ensure FAQ accordion works after mount */
-  useEffect(() => {
-    const qs = document.querySelectorAll('.faq-q')
-    const handlers = []
-    qs.forEach(q => {
-      const handler = () => {
-        const a = q.nextElementSibling
-        const open = q.classList.contains('open')
-        q.classList.toggle('open', !open)
-        if (a) a.style.maxHeight = open ? null : a.scrollHeight + 'px'
-      }
-      q.addEventListener('click', handler)
-      handlers.push({ q, handler })
-    })
-    return () => handlers.forEach(({ q, handler }) => q.removeEventListener('click', handler))
-  }, [title])
-
-  /* Section render order follows toc */
+  const { title, eyebrow, crumbCategory, lead, toc, sections, related, priceCard, helpCard, heroBadge } = svc
   const sectionOrder = toc.map(t => t.href.replace('#', ''))
 
   return (
     <>
-      {/* Page Hero */}
+      {/* Hero */}
       <header className="page-hero">
         <div className="wrap">
           <nav className="crumb reveal-up in">
-            <a href="/">Home</a>
-            <ChevSvg />
-            <a href="/services">Services</a>
-            <ChevSvg />
-            <span>{crumbCategory}</span>
-            <ChevSvg />
+            <a href="/">Home</a><ChevSvg />
+            <a href="/services">Services</a><ChevSvg />
+            <span>{crumbCategory}</span><ChevSvg />
             <span className="cur">{title}</span>
           </nav>
-          <span className="eyebrow reveal-up in" style={{ marginTop: 16, display: 'block' }}>{eyebrow}</span>
+          {heroBadge === 'msme' && (
+            <div className="reveal-up in" style={{ marginTop: 16, marginBottom: 8 }}>
+              <img
+                src={msmeLogo}
+                alt="MSME — Micro Small & Medium Enterprises"
+                style={{ height: 72, width: 'auto', display: 'block', objectFit: 'contain' }}
+              />
+            </div>
+          )}
+          <span className="eyebrow reveal-up in" style={{ marginTop: heroBadge ? 10 : 16, display: 'block' }}>{eyebrow}</span>
           <h1 className="reveal-up in">{title}</h1>
           <p className="lead reveal-up in">{lead}</p>
           <div className="hero-cta reveal-up in">
             <a href="/company/contact" className="btn btn-primary">
               Get Started{' '}
-              <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d={ARROW}/>
               </svg>
             </a>
@@ -251,12 +250,17 @@ export default function ServicePage({ svc }) {
         </div>
       </header>
 
-      {/* Body */}
-      <section className="section-sm">
-        <div className="wrap">
-          <div className="svc-layout">
-            <Toc items={toc} />
+      {/* 3-col sticky layout */}
+      <section className="section-sm" style={{overflow:"visible"}}>
+        <div className="wrap" style={{overflow:"visible"}}>
+          <div className="svc-layout" style={{overflow:"visible"}}>
 
+            {/* LEFT — sticky TOC */}
+            <div className="svc-toc-col">
+              <Toc items={toc} />
+            </div>
+
+            {/* MIDDLE — scrollable content */}
             <div className="svc-body">
               {sectionOrder.map(id => {
                 if (id === 'faq') return <FaqSection key="faq" data={sections.faq} />
@@ -264,13 +268,16 @@ export default function ServicePage({ svc }) {
               })}
             </div>
 
-            <ServiceAside priceCard={priceCard} helpCard={helpCard} />
+            {/* RIGHT — sticky aside */}
+            <div className="svc-aside-col">
+              <ServiceAside priceCard={priceCard} helpCard={helpCard} />
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* Related */}
-      {related && <RelatedServices items={related} />}
+      {related && related.length > 0 && <RelatedServices items={related} />}
     </>
   )
 }
