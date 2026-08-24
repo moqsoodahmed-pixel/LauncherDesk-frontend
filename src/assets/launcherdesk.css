@@ -153,6 +153,9 @@ img{max-width:100%;display:block}
 .mn-col-h{font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--blue-dark);padding:6px 8px 4px;opacity:.75}
 .mn-li{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:8px;font-size:13.5px;color:var(--navy);font-weight:500;transition:background .12s,color .12s;white-space:nowrap}
 .mn-li:hover{background:var(--bg);color:var(--blue-dark)}
+.mn-li--soon{opacity:.55}
+.mn-li--soon:hover{background:none;color:var(--navy)}
+.mn-soon-badge{margin-left:auto;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:rgba(29,111,224,.1);color:var(--blue-dark);letter-spacing:.04em;flex:none}
 .mn-li .mn-ic{width:28px;height:28px;border-radius:8px;background:rgba(4,125,204,.08);display:grid;place-items:center;flex:none}
 .mn-li .mn-ic svg{width:14px;height:14px;stroke:var(--blue-dark);fill:none;stroke-width:2}
 .mn-li .mn-tx b{font-family:var(--font);font-size:13.5px;color:var(--navy);font-weight:600;display:block;line-height:1.2}
