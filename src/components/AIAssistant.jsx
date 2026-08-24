@@ -193,7 +193,7 @@ export default function AIAssistant() {
 
   return (
     <>
-      <button className="fab" onClick={openAI}>
+      <button className="fab" onClick={openAI} aria-label="Ask AI">
         <span className="d">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d={SPARK} />
