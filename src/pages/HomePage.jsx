@@ -343,10 +343,9 @@ const S = `
 .hp-faq-q-text { font-size:16.5px;font-weight:700;color:var(--navy);line-height:1.4;flex:1; }
 .hp-faq-icon  { width:24px;height:24px;border-radius:6px;background:var(--bg-2);display:grid;place-items:center;flex:none; }
 .hp-faq-icon svg { width:14px;height:14px;stroke:var(--blue);fill:none;stroke-width:2.5;transition:transform .25s; }
-.hp-faq-item.open .hp-faq-icon svg { transform:rotate(45deg); }
 .hp-faq-item:hover .hp-faq-a { max-height:320px; }
 .hp-faq-item:hover .hp-faq-icon svg { transform:rotate(45deg); }
-.hp-faq-a     { max-height:0;overflow:hidden;transition:max-height .32s cubic-bezier(.2,.7,.3,1); }
+.hp-faq-a     { max-height:0;overflow:hidden;transition:max-height .55s cubic-bezier(.2,.7,.3,1); }
 .hp-faq-a-inner { padding:0 0 20px;font-size:14.5px;color:var(--text-2);line-height:1.72; }
 
 /* ── FINAL CTA ── */
@@ -637,9 +636,6 @@ export default function HomePage() {
 
   // Service category accordion
   const [openCat, setOpenCat] = useState(0)
-
-  // FAQ accordion
-  const [openFaq, setOpenFaq] = useState(null)
 
   return (
     <>

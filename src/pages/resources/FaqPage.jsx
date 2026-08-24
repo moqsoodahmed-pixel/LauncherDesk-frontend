@@ -1,5 +1,43 @@
+import React from 'react'
+
 const CHEV = 'm9 18 6-6-6-6'
 const PLUS = 'M12 5v14M5 12h14'
+
+function FaqGroup({ section, faqs }) {
+  const [showAll, setShowAll] = React.useState(false)
+  const visible = showAll ? faqs : faqs.slice(0, 4)
+  const hasMore = faqs.length > 4
+  return (
+    <div style={{marginBottom:44}}>
+      <h2 style={{fontSize:20,fontWeight:700,color:'var(--blue-dark)',marginBottom:4,letterSpacing:'-.01em'}}>{section}</h2>
+      <div className="faq" style={{maxWidth:'none',marginTop:0}}>
+        {visible.map((item, i) => (
+          <div key={i} className="faq-i">
+            <div className="faq-q">
+              {item.q}
+              <svg viewBox="0 0 24 24" fill="none"><path d={PLUS}/></svg>
+            </div>
+            <div className="faq-a"><p>{item.a}</p></div>
+          </div>
+        ))}
+      </div>
+      {hasMore && !showAll && (
+        <div style={{marginTop:16}}>
+          <button onClick={() => setShowAll(true)} style={{
+            display:'inline-flex', alignItems:'center', gap:8,
+            padding:'0 20px', height:40, borderRadius:8,
+            background:'var(--blue)', color:'#fff', fontWeight:700,
+            fontSize:13.5, border:'none', cursor:'pointer',
+            boxShadow:'0 4px 14px rgba(29,111,224,.25)',
+          }}>
+            View more
+            <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
 
 const FAQS = [
   // About LauncherDesk
@@ -109,20 +147,7 @@ export default function FaqPage() {
       <section className="section-sm">
         <div className="wrap">
           {Object.entries(grouped).map(([section, faqs]) => (
-            <div key={section} style={{marginBottom:44}}>
-              <h2 style={{fontSize:20,fontWeight:700,color:'var(--blue-dark)',marginBottom:4,letterSpacing:'-.01em'}}>{section}</h2>
-              <div className="faq" style={{maxWidth:'none',marginTop:0}}>
-                {faqs.map((item, i) => (
-                  <div key={i} className="faq-i">
-                    <button className="faq-q">
-                      {item.q}
-                      <svg viewBox="0 0 24 24" fill="none"><path d={PLUS}/></svg>
-                    </button>
-                    <div className="faq-a"><p>{item.a}</p></div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <FaqGroup key={section} section={section} faqs={faqs} />
           ))}
 
           <div style={{marginTop:40,background:'var(--bg-warm)',borderRadius:16,padding:'28px 32px',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:16}}>

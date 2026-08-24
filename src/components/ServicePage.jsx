@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import msmeLogo from '../assets/msme-logo.png'
 
 const CHEV  = 'm9 18 6-6-6-6'
 const ARROW = 'M5 12h14M13 6l6 6-6 6'
@@ -123,49 +122,54 @@ function SectionContent({ id, data }) {
   return null
 }
 
-/* ── FAQ section — fully self-contained with React state ── */
+/* ── FAQ section — pure CSS hover ── */
 function FaqSection({ data }) {
-  const [openIdx, setOpenIdx] = React.useState(null)
+  const [showAll, setShowAll] = React.useState(false)
   if (!data) return null
+  const items = showAll ? data.items : data.items.slice(0, 4)
+  const hasMore = data.items.length > 4
 
   return (
     <section id="faq">
       <h2>{data.heading}</h2>
       <div className="faq-list">
-        {data.items.map((item, i) => {
-          const isOpen = openIdx === i
-          return (
-            <div key={i} className="faq-item">
-              <button
-                className="faq-q"
-                onClick={() => setOpenIdx(isOpen ? null : i)}
-                style={{
-                  width:'100%', display:'flex', alignItems:'center',
-                  justifyContent:'space-between', gap:16, padding:'18px 0',
-                  background:'none', border:'none', borderBottom:'1px solid var(--line)',
-                  cursor:'pointer', textAlign:'left', fontFamily:'inherit',
-                }}
+        {items.map((item, i) => (
+          <div key={i} className="faq-item">
+            <div className="faq-q" style={{
+              width:'100%', display:'flex', alignItems:'center',
+              justifyContent:'space-between', gap:16, padding:'18px 0',
+              borderBottom:'1px solid var(--line)', cursor:'default',
+            }}>
+              <span style={{fontSize:16, fontWeight:600, color:'var(--navy)', lineHeight:1.4}}>{item.q}</span>
+              <svg
+                viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"
+                strokeLinecap="round" strokeLinejoin="round"
+                className="faq-plus-icon"
+                style={{width:20, height:20, flexShrink:0, transition:'transform .25s'}}
               >
-                <span style={{fontSize:16, fontWeight:600, color:'var(--navy)', lineHeight:1.4}}>{item.q}</span>
-                <svg
-                  viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"
-                  strokeLinecap="round" strokeLinejoin="round"
-                  style={{width:20, height:20, flexShrink:0, transition:'transform .25s', transform: isOpen ? 'rotate(45deg)' : 'none'}}
-                >
-                  <path d={PLUS}/>
-                </svg>
-              </button>
-              <div style={{
-                maxHeight: isOpen ? '400px' : '0',
-                overflow:'hidden',
-                transition:'max-height .3s cubic-bezier(.2,.7,.3,1)',
-              }}>
-                <p style={{padding:'14px 0 20px', color:'var(--text-2)', fontSize:15, lineHeight:1.7}}>{item.a}</p>
-              </div>
+                <path d={PLUS}/>
+              </svg>
             </div>
-          )
-        })}
+            <div className="faq-hover-a">
+              <p style={{padding:'14px 0 20px', color:'var(--text-2)', fontSize:15, lineHeight:1.7}}>{item.a}</p>
+            </div>
+          </div>
+        ))}
       </div>
+      {hasMore && !showAll && (
+        <div style={{textAlign:'center', marginTop:24}}>
+          <button onClick={() => setShowAll(true)} style={{
+            display:'inline-flex', alignItems:'center', gap:8,
+            padding:'0 24px', height:44, borderRadius:9,
+            background:'var(--blue)', color:'#fff', fontWeight:700,
+            fontSize:14, border:'none', cursor:'pointer',
+            boxShadow:'0 4px 14px rgba(29,111,224,.3)',
+          }}>
+            View more
+            <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      )}
     </section>
   )
 }
@@ -212,7 +216,7 @@ function ServiceAside({ priceCard, helpCard }) {
 
 /* ── Main ── */
 export default function ServicePage({ svc }) {
-  const { title, eyebrow, crumbCategory, lead, toc, sections, related, priceCard, helpCard, heroBadge } = svc
+  const { title, eyebrow, crumbCategory, lead, toc, sections, related, priceCard, helpCard } = svc
   const sectionOrder = toc.map(t => t.href.replace('#', ''))
 
   return (
@@ -226,16 +230,7 @@ export default function ServicePage({ svc }) {
             <span>{crumbCategory}</span><ChevSvg />
             <span className="cur">{title}</span>
           </nav>
-          {heroBadge === 'msme' && (
-            <div className="reveal-up in" style={{ marginTop: 16, marginBottom: 8 }}>
-              <img
-                src={msmeLogo}
-                alt="MSME — Micro Small & Medium Enterprises"
-                style={{ height: 72, width: 'auto', display: 'block', objectFit: 'contain' }}
-              />
-            </div>
-          )}
-          <span className="eyebrow reveal-up in" style={{ marginTop: heroBadge ? 10 : 16, display: 'block' }}>{eyebrow}</span>
+          <span className="eyebrow reveal-up in" style={{ marginTop: 16, display: 'block' }}>{eyebrow}</span>
           <h1 className="reveal-up in">{title}</h1>
           <p className="lead reveal-up in">{lead}</p>
           <div className="hero-cta reveal-up in">
