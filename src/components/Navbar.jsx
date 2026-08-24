@@ -244,8 +244,8 @@ export default function Navbar({ activePage = '' }) {
   return (
     <header className="site-header" ref={navRef}>
       <div className="header-in">
-        <Link to="/" style={{display:'flex',alignItems:'center',textDecoration:'none',flexShrink:0}}>
-          <img src={logoImg} alt="LauncherDesk" style={{height:38,width:'auto',display:'block'}} />
+        <Link to="/" style={{display:'flex',alignItems:'center',textDecoration:'none',flexShrink:0,marginRight:36}}>
+          <img src={logoImg} alt="LauncherDesk" style={{height:40,width:'auto',display:'block'}} />
         </Link>
         <nav className="main-nav" id="mainNav">
           <div className={`nav-item${activePage === 'registrations' ? ' active' : ''} nav-item--reg`} data-drop="true">
