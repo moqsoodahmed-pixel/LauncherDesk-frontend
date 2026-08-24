@@ -136,8 +136,6 @@ function MegaIT() {
               ))}
             </div>
           </div>
-        </div>
-      </div>
           <div className="mp-panel" data-mp-panel="s30">
             <div className="mp-panel-head">Digital Marketing — <span style={{color:'var(--blue)',fontWeight:700}}>in collab with TheSuper30</span></div>
             <div className="mp-grp-grid">
@@ -154,6 +152,8 @@ function MegaIT() {
               ))}
             </div>
           </div>
+        </div>
+      </div>
       <div className="mp-foot-wrap">
         <div className="mp-footer"><a href="/services">View all IT services →</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://www.thesuper30.ai/" target="_blank" rel="noopener noreferrer">Visit TheSuper30 →</a></div>
       </div>
