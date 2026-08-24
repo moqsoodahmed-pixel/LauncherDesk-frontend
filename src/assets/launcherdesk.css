@@ -197,14 +197,26 @@ img{max-width:100%;display:block}
    FOOTER
    ============================================================ */
 .site-footer{background:#080F1E;color:#9ab5d4;padding:66px 0 32px;margin-top:0}
-.foot-cols{display:grid;grid-template-columns:2fr 1fr 1.4fr;gap:40px}
+.foot-cols{display:grid;grid-template-columns:1.8fr 1fr 1fr 1.4fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.07)}
+.foot-brand{}
 .site-footer .brand .txt{color:#fff}
 .site-footer .brand .txt b{color:#6da8e0}
-.foot-desc{font-size:14px;margin-top:15px;max-width:250px;color:#7494b8}
-.site-footer h5{color:#fff;font-size:12px;text-transform:uppercase;letter-spacing:.11em;margin-bottom:14px}
-.site-footer a.fl{display:block;color:#8aaece;font-size:14px;padding:5px 0;transition:color .15s}
+.foot-desc{font-size:13.5px;margin-top:12px;color:#7494b8;line-height:1.7}
+.site-footer h5{color:#fff;font-size:11px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:16px;margin-top:0}
+.site-footer a.fl{display:block;color:#8aaece;font-size:13.5px;padding:5px 0;transition:color .15s;text-decoration:none}
 .site-footer a.fl:hover{color:#fff}
-.foot-bottom{border-top:1px solid rgba(255,255,255,.08);margin-top:42px;padding-top:20px;font-size:12.5px;color:#5e7fa0;line-height:1.6;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* social row */
+.foot-social-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:28px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.foot-social-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6da8e0}
+.foot-social-btn{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:grid;place-items:center;transition:background .15s,transform .15s;text-decoration:none}
+.foot-cta-btn{display:inline-flex;align-items:center;padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;transition:opacity .15s}
+.foot-cta-btn:hover{opacity:.85}
+.foot-cta-wa{background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.3);color:#25D366}
+.foot-cta-email{background:rgba(29,111,224,.15);border:1px solid rgba(29,111,224,.3);color:#7ecef4}
+
+/* bottom bar */
+.foot-bottom{margin-top:28px;font-size:12.5px;color:#5e7fa0;line-height:1.6}
 
 /* ============================================================
    SHARED SECTIONS
@@ -575,7 +587,7 @@ img{max-width:100%;display:block}
   .main-nav{display:none}
   .header-cta .btn-quiet{display:none}
   .burger{display:flex}
-  .foot-cols{grid-template-columns:1fr 1fr 1fr;gap:22px}
+  .foot-cols{grid-template-columns:1fr 1fr;gap:32px}
 }
 
 /* ============================================================
@@ -589,7 +601,7 @@ img{max-width:100%;display:block}
   .svc-aside{position:static;flex-direction:row;flex-wrap:wrap}
   .svc-aside>*{flex:1;min-width:240px}
   .proof{grid-template-columns:1fr 1fr;gap:22px}
-  .foot-cols{grid-template-columns:1.4fr 1fr 1fr;gap:20px}
+  .foot-cols{grid-template-columns:1fr 1fr;gap:28px}
   .dash-body{grid-template-columns:1fr 1fr}
   .contact-grid{gap:28px}
   .finder{grid-template-columns:1fr}
@@ -638,8 +650,7 @@ img{max-width:100%;display:block}
   /* proof */
   .proof{grid-template-columns:repeat(4,1fr)}
   /* footer at 960 */
-  .foot-cols{grid-template-columns:1fr 1fr;gap:22px}
-  /* service aside row */
+  .foot-cols{grid-template-columns:1fr 1fr;gap:22px}  /* service aside row */
   .svc-aside{flex-direction:column}
 }
 
