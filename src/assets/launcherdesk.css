@@ -515,6 +515,9 @@ img{max-width:100%;display:block}
 @media(max-width:1280px){
   .wrap,.wrap-tight{padding:0 24px}
   .header-in{padding:0 18px}
+  .svc-layout{grid-template-columns:200px 1fr 240px;gap:32px}
+  .lifecycle{gap:36px}
+  .lc-inner{gap:36px}
 }
 
 /* ============================================================
@@ -536,6 +539,11 @@ img{max-width:100%;display:block}
   .svc-aside{position:static;flex-direction:row;flex-wrap:wrap}
   .svc-aside>*{flex:1;min-width:240px}
   .proof{grid-template-columns:1fr 1fr;gap:22px}
+  .foot-cols{grid-template-columns:1.4fr 1fr 1fr;gap:20px}
+  .dash-body{grid-template-columns:1fr 1fr}
+  .contact-grid{gap:28px}
+  .finder{grid-template-columns:1fr}
+  .finder-side{padding:28px 28px 24px}
 }
 
 /* ============================================================
@@ -561,6 +569,16 @@ img{max-width:100%;display:block}
   body{padding-bottom:66px}
   .field-2{grid-template-columns:1fr}
   .hero-cta .btn-quiet{display:none}
+  /* table responsive */
+  .tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* pricing box */
+  .pricebox{padding:16px}
+  /* proof */
+  .proof{grid-template-columns:repeat(4,1fr)}
+  /* footer at 960 */
+  .foot-cols{grid-template-columns:1fr 1fr;gap:22px}
+  /* service aside row */
+  .svc-aside{flex-direction:row}
 }
 
 /* ============================================================
@@ -578,6 +596,23 @@ img{max-width:100%;display:block}
   .final{border-radius:18px}
   .journey-step{grid-template-columns:44px 1fr;gap:14px}
   .journey-step .jn{font-size:18px}
+  /* service page stacks */
+  .svc-aside{flex-direction:column}
+  .svc-aside>*{min-width:unset;width:100%}
+  /* cards */
+  .card{padding:20px}
+  /* contact grid */
+  .contact-grid{gap:24px}
+  /* finder stacks */
+  .finder-side,.finder-main{padding:22px}
+  /* form */
+  .form{padding:22px 18px}
+  /* help/price card full width */
+  .help-card,.price-card{width:100%}
+  /* table horizontal scroll */
+  .tbl thead th:not(:first-child):not(:last-child){display:none}
+  /* art grid */
+  .art-grid{grid-template-columns:1fr 1fr}
 }
 
 /* ============================================================
@@ -590,10 +625,23 @@ img{max-width:100%;display:block}
   .finder-side{padding:24px 20px}
   .finder-main{padding:20px}
   .svc-aside{flex-direction:column}
-  .svc-aside>*{min-width:unset}
+  .svc-aside>*{min-width:unset;width:100%}
   .page-hero .hero-cta{gap:10px}
   .page-hero .hero-cta .btn-quiet{display:none}
   .proof{grid-template-columns:1fr 1fr;gap:18px}
+  /* footer compact */
+  .foot-cols{grid-template-columns:1fr 1fr;gap:18px}
+  /* contact info rows */
+  .contact-info .ci-row{flex-direction:column;gap:8px}
+  /* fab label hide on small */
+  .fab span{display:none}
+  .fab{padding:0 14px;width:50px;border-radius:50%}
+  /* section */
+  .section{padding:48px 0}
+  .section-sm{padding:36px 0}
+  /* table */
+  .tbl{font-size:13px}
+  .tbl th,.tbl td{padding:10px 12px}
 }
 
 /* ============================================================
@@ -608,13 +656,29 @@ img{max-width:100%;display:block}
   .grid-3.svc-cats{grid-template-columns:1fr}
   .cc-metrics{grid-template-columns:1fr 1fr}
   .float-1,.float-2{display:none}
-  .hero-cta{flex-direction:column;align-items:flex-start}
+  .hero-cta{flex-direction:column;align-items:stretch}
   .hero-cta .btn{width:100%;justify-content:center}
   .contact-grid{grid-template-columns:1fr}
   .value-grid{grid-template-columns:1fr}
   .journey-step{grid-template-columns:36px 1fr;gap:10px}
   .d-cta-row{flex-direction:column}
   .d-cta-row .btn{width:calc(100% - 24px)}
+  /* mobile bar stacks CTA */
+  .mobile-bar{flex-direction:column;gap:7px;padding:10px}
+  .mobile-bar .btn{height:42px}
+  /* assistant panel */
+  .assistant{left:8px;right:8px}
+  /* fab circle only */
+  .fab{width:50px;height:50px;padding:0;border-radius:50%;justify-content:center}
+  /* form fields */
+  .form{padding:18px 14px}
+  .field-2{grid-template-columns:1fr}
+  /* mp mega hides on tiny - drawer takes over */
+  .mp-mega,.mn-market{width:min(360px,96vw)}
+  /* type tile */
+  .type-tile{padding:20px}
+  /* card */
+  .card{padding:18px}
 }
 
 /* ============================================================

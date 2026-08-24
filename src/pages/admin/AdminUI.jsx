@@ -140,12 +140,12 @@ export function Td({ children, style = {} }) {
 }
 
 export function Toolbar({ children }) {
-  return <div style={{ display:'flex', gap:10, marginBottom:16, flexWrap:'wrap' }}>{children}</div>
+  return <div style={{ display:'flex', gap:10, marginBottom:16, flexWrap:'wrap', alignItems:'center' }}>{children}</div>
 }
 
 export function SearchInput({ value, onChange, placeholder='Search…' }) {
   return (
-    <div style={{ position:'relative', flex:1, minWidth:220 }}>
+    <div style={{ position:'relative', flex:1, minWidth:'min(220px,100%)' }}>
       <svg style={{ position:'absolute', left:11, top:'50%', transform:'translateY(-50%)' }} viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="#94A3B8" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
         <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
       </svg>
@@ -167,12 +167,12 @@ export function FilterSelect({ value, onChange, options }) {
 
 export function PageHeader({ title, sub, actions }) {
   return (
-    <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:22, gap:16 }}>
-      <div>
+    <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:22, gap:12, flexWrap:'wrap' }}>
+      <div style={{ minWidth:0 }}>
         <h1 style={{ fontSize:22, fontWeight:800, color:'#1C2434', letterSpacing:'-.02em' }}>{title}</h1>
         {sub && <p style={{ fontSize:13, color:'#64748B', marginTop:3 }}>{sub}</p>}
       </div>
-      {actions && <div style={{ display:'flex', gap:10, alignItems:'center', flexShrink:0 }}>{actions}</div>}
+      {actions && <div style={{ display:'flex', gap:8, alignItems:'center', flexWrap:'wrap' }}>{actions}</div>}
     </div>
   )
 }
@@ -198,14 +198,16 @@ export function Modal({ open, onClose, title, children, footer, width=560 }) {
 
 export function InfoGrid({ rows }) {
   return (
-    <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
-      {rows.map(([l, v]) => (
-        <div key={l} style={{ background:'#F8FAFC', borderRadius:8, padding:'10px 14px' }}>
-          <div style={{ fontSize:11, fontWeight:600, color:'#94A3B8', textTransform:'uppercase', letterSpacing:'.06em', marginBottom:3 }}>{l}</div>
-          <div style={{ fontSize:13.5, fontWeight:600, color:'#1C2434', wordBreak:'break-word' }}>{v || '—'}</div>
-        </div>
-      ))}
-    </div>
+    <>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))', gap:10 }}>
+        {rows.map(([l, v]) => (
+          <div key={l} style={{ background:'#F8FAFC', borderRadius:8, padding:'10px 14px' }}>
+            <div style={{ fontSize:11, fontWeight:600, color:'#94A3B8', textTransform:'uppercase', letterSpacing:'.06em', marginBottom:3 }}>{l}</div>
+            <div style={{ fontSize:13.5, fontWeight:600, color:'#1C2434', wordBreak:'break-word' }}>{v || '—'}</div>
+          </div>
+        ))}
+      </div>
+    </>
   )
 }
 

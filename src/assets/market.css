@@ -145,3 +145,20 @@
   .mk-chip{font-size:12.5px;padding:7px 12px}
   .mk-buybox{padding:18px}
 }
+/* ── extra responsive improvements ── */
+@media(max-width:480px){
+  .mk-p-head h1{font-size:22px}
+  .mk-price-lg{font-size:20px}
+  .mk-hero h1{font-size:26px}
+  .mk-hero-stats{gap:20px}
+  .mk-hero-stats .n{font-size:22px}
+  .mk-cat-head{gap:10px}
+  .mk-cathero-ic{width:48px;height:48px;border-radius:14px}
+  .mk-card{padding:16px}
+  .mk-catcard{padding:16px}
+  .mk-feats{grid-template-columns:1fr}
+}
+@media(max-width:360px){
+  .mk-chip{font-size:11.5px;padding:6px 10px}
+  .mk-card h3{font-size:15px}
+}
