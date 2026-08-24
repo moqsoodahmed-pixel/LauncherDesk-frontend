@@ -75,3 +75,9 @@ export const PRODUCTS = [
 export function catBy(slug)  { return CATS.find(c => c.slug === slug) }
 export function prodBy(id)   { return PRODUCTS.find(p => p.id === id) }
 export function inCat(slug)  { return PRODUCTS.filter(p => p.cat === slug) }
+export function nfmt(n)      { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') }
+export function initials(name) {
+  const w = name.replace(/[^A-Za-z0-9 ]/g, ' ').trim().split(/\s+/)
+  return w.length >= 2 ? (w[0][0] + w[1][0]).toUpperCase() : name.replace(/[^A-Za-z0-9]/g, '').slice(0, 2).toUpperCase()
+}
+export const FEATURED_BADGES = ['Popular', 'Loved', 'Best value']
