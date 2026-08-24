@@ -279,6 +279,7 @@ export const SERVICES = {
     title: 'MSME / Udyam Registration',
     metaTitle: 'MSME / Udyam Registration — LauncherDesk',
     metaDesc: 'Register your business under Udyam (MSME) to unlock government benefits, subsidies and easier access to credit.',
+    heroBadge: 'msme',
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "A quick registration that unlocks collateral-free loans, subsidies, delayed-payment protection and priority in government tenders.",
