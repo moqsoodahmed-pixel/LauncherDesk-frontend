@@ -248,7 +248,6 @@ export default function AIAssistant() {
             <svg className="ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={WA}/></svg>
             WhatsApp
           </a>
-          <a className="btn btn-soft btn-sm" style={{flex:1,justifyContent:'center'}} href="/company/contact">Talk to Expert</a>
         </div>
 
         <form className="as-input" id="asForm" onSubmit={handleSubmit}>
@@ -343,10 +342,7 @@ export default function AIAssistant() {
           <a className="d-link" href="/market">Marketplace</a>
           <a className="d-link" href="/office-restore">Office Setup</a>
         </nav>
-        <div className="d-cta-row">
-          <a className="btn btn-soft" href="/company/contact">Talk to an Expert</a>
-        </div>
-        <a className="btn btn-primary" href="/services#finder">Get Started</a>
+        <a className="btn btn-primary" style={{margin:'0 12px 16px',display:'block',textAlign:'center'}} href="/services#finder">Get Started</a>
       </aside>
     </>
   )
