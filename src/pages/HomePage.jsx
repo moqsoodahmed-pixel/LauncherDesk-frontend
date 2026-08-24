@@ -82,10 +82,17 @@ const homepageStyles = `
 .roadmap-badge.soon{background:rgba(4,125,204,.1);color:var(--blue-dark)}
 .roadmap-badge.dev{background:rgba(183,121,31,.12);color:var(--warn)}
 .roadmap-badge.future{background:var(--bg-2);color:var(--text-3)}
-@media(max-width:960px){.hp-hero-grid{grid-template-columns:1fr;gap:32px}.sv-canvas{height:680px}.sv-center{width:120px;height:120px}.sv-center-brand{font-size:12px}.lc2-section{padding:60px 0}.lc2-inner{gap:36px}.diff-grid{grid-template-columns:1fr}.roadmap-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:960px){.hp-hero-grid{grid-template-columns:1fr;gap:32px}.sv-canvas{height:600px}.sv-center{width:120px;height:120px}.sv-center-brand{font-size:12px}.lc2-section{padding:60px 0}.lc2-inner{gap:36px}.diff-grid{grid-template-columns:1fr}.roadmap-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:900px){.lc2-inner{grid-template-columns:1fr;gap:36px}.lc2-left{position:static}}
-@media(max-width:640px){.lc2-section{padding:48px 0}.sv-canvas{height:900px}.sv-node{font-size:12px;padding:7px 12px}.hp-trust-row{gap:14px}.roadmap-grid{grid-template-columns:1fr}}
-@media(max-width:480px){.sv-canvas{height:1040px}.sv-center{width:100px;height:100px}.sv-center-brand{font-size:11px}.lc2-body-inner{padding:0 4px 18px 44px}.lc2-trigger{grid-template-columns:36px 1fr 24px;gap:8px}}
+@media(max-width:768px){.hp-hero-grid{gap:24px}.diff-grid{grid-template-columns:1fr}.roadmap-grid{grid-template-columns:1fr 1fr}.sv-canvas{height:500px}}
+@media(max-width:640px){.lc2-section{padding:48px 0}.hp-trust-row{gap:14px}.roadmap-grid{grid-template-columns:1fr}
+  .sv-canvas{position:static!important;height:auto!important;min-height:unset!important;padding:20px 0}
+  .sv-nodes{position:static!important;display:flex!important;flex-wrap:wrap!important;gap:10px!important;justify-content:center!important;padding:16px 0!important}
+  .sv-node{position:static!important;transform:none!important;top:auto!important;left:auto!important;font-size:12.5px!important;padding:8px 14px!important}
+  .sv-center{display:none!important}
+  .sv-tooltip{display:none!important}
+}
+@media(max-width:480px){.sv-canvas{height:auto}.sv-center{width:100px;height:100px}.sv-center-brand{font-size:11px}.lc2-body-inner{padding:0 4px 18px 44px}.lc2-trigger{grid-template-columns:36px 1fr 24px;gap:8px}.diff-grid{grid-template-columns:1fr}.roadmap-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.sv-thread,.sv-thread-glow,.sv-center::before,.sv-center::after{animation:none!important}.lc2-prog-bar{transition:none!important}}
 `
 
@@ -197,8 +204,8 @@ function LifecycleAccordion() {
   }, [])
 
   return (
-    <section className="lc2-section" id="lcSection">
-      <div className="lc2-inner">
+    <section className="lc2-section" id="lcSection" style={{overflowX:"hidden"}}>
+      <div className="lc2-inner" style={{overflowX:"hidden"}}>
         <div className="lc2-left reveal-up">
           <span className="eyebrow">Your whole business journey</span>
           <h2 className="lc2-heading">One platform. Every stage.</h2>
@@ -276,7 +283,7 @@ function ConnectedServices() {
           <h2 style={{ fontSize: 'clamp(22px,3.2vw,40px)', marginTop: 10 }}>Everything your business needs, coordinated for you.</h2>
           <p style={{ marginTop: 12, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>One team. One platform. Every service — from registration and compliance to technology, marketing and international expansion.</p>
         </div>
-        <div className="sv-canvas reveal-up" id="svCanvas">
+        <div className="sv-canvas reveal-up" id="svCanvas" style={{position:'relative',overflow:'hidden'}}>
           <svg className="sv-svg" id="svSvg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
           <div className="sv-center" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}>
             <div className="sv-center-brand">LauncherDesk</div>
