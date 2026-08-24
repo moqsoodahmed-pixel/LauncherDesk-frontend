@@ -72,7 +72,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Stat cards */}
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:16, marginBottom:20 }}>
+      <div className="adm-stat-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:16, marginBottom:20 }}>
         <StatCard label="Total Contacts"     value={stats?.contacts ?? '—'} dir="up"   change="+12.4%"  icon="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" iconBg="#EEF2FF" iconColor="#3B5BDB" />
         <StatCard label="Active Leads"       value={stats?.leads    ?? '—'} dir="up"   change="+8.1%"   icon="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2|M23 21v-2a4 4 0 0 0-3-3.87|M16 3.13a4 4 0 0 1 0 7.75"  iconBg="#F0FDF4" iconColor="#10B981" />
         <StatCard label="Quote Requests"     value={stats?.quotes   ?? '—'} dir="up"   change="+18.2%"  icon="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6|M16 13H8|M16 17H8|M10 9H8"  iconBg="#FFFBEB" iconColor="#F59E0B" />
@@ -80,7 +80,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Charts row */}
-      <div style={{ display:'grid', gridTemplateColumns:'1.6fr 1fr', gap:16, marginBottom:20 }}>
+      <div className="adm-charts-row" style={{ display:'grid', gridTemplateColumns:'1.6fr 1fr', gap:16, marginBottom:20 }}>
         <Card>
           <CardHead title="Monthly Lead Volume" sub="Enquiries received per month — FY 2026" />
           <div style={{ padding:'16px 20px' }}>
@@ -127,7 +127,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent rows */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
+      <div className="adm-two-col" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
         {/* Recent contacts */}
         <Card>
           <CardHead title="Recent Contacts" sub="Latest enquiries from the website" />

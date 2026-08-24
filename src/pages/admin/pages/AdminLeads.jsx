@@ -59,7 +59,7 @@ export default function AdminLeads() {
         actions={<Btn variant="outline" onClick={load}><Ic d="M4 4v5h.582m15.356 2A8.001 8.001 0 0 0 4.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 0 1-15.357-2m15.357 2H15" size={14}/>Refresh</Btn>}
       />
 
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:12, marginBottom:20 }}>
+      <div className="adm-summary-grid" style={{ display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:12, marginBottom:20 }}>
         {STATUSES.slice(1).map(s=>(
           <div key={s} onClick={()=>{setStatus(s);setPage(1)}}
             style={{ background:status===s?'#EEF2FF':'#fff', border:status===s?'1.5px solid #3B5BDB':'1px solid #E2E8F0', borderRadius:9, padding:'12px 16px', cursor:'pointer', transition:'all .13s' }}>
