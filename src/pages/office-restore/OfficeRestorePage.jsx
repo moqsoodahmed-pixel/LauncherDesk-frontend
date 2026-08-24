@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react'
 
+const imgChair        = '/product-ergonomic-chair.jpg'
+const imgNormalTable  = '/product-normal-table.jpg'
+const imgElectricTable = '/product-electric-table.jpg'
+
 const CHEV = 'm9 18 6-6-6-6'
 const ARROW = 'M5 12h14M13 6l6 6-6 6'
 const CHECK = 'M9 11l3 3L22 4'
