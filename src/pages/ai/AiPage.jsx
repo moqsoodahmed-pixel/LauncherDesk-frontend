@@ -11,9 +11,14 @@ const CARDS = [
 ]
 
 const PROMPTS = [
-  { q: 'I want to start a business — where do I begin?',            title: '"Where do I begin?"',              desc: 'Get a starting point based on your business type and stage.' },
-  { q: 'Which structure is right for me — Pvt Ltd, LLP or OPC?',   title: '"Which structure is right for me?"', desc: 'Compare Pvt Ltd, LLP and OPC for your specific situation.' },
-  { q: 'Do I need GST registration right now?',                     title: '"Do I need GST right now?"',        desc: 'Find out based on your turnover, channel and location.' },
+  { q: 'I want to start a business — where do I begin?',                    title: '"Where do I begin?"',                    desc: 'Get a personalised starting point based on your business type and stage.' },
+  { q: 'Which structure is right for me — Pvt Ltd, LLP or OPC?',           title: '"Which structure is right for me?"',      desc: 'Compare Private Limited, LLP and OPC for your specific situation.' },
+  { q: 'Do I need GST registration right now?',                             title: '"Do I need GST right now?"',              desc: 'Find out based on your turnover, sales channel and state.' },
+  { q: 'How do I protect my brand name with a trademark?',                  title: '"How do I trademark my brand?"',          desc: 'Learn about trademark classes, timelines and what to file.' },
+  { q: 'What is MSME Udyam registration and should I get it?',              title: '"Should I get MSME registration?"',       desc: 'Understand the benefits — loans, subsidies, payment protection.' },
+  { q: 'My company needs a website — what are my options?',                 title: '"I need a website for my business"',      desc: 'Explore business websites, e-commerce stores and CRM portals.' },
+  { q: 'What annual compliance does a Private Limited Company need?',       title: '"What compliance do I need?"',            desc: 'Understand ROC filing, GST returns and ITR obligations.' },
+  { q: 'I am opening a restaurant — what registrations do I need?',        title: '"Restaurant registrations needed?"',      desc: 'FSSAI, GST, entity setup and more for food businesses.' },
 ]
 
 export default function AiPage() {

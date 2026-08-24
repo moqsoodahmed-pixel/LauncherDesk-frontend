@@ -6,7 +6,14 @@ const ROCKET = 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a
 const WA     = 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z'
 
 const API_BASE = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5001'
-const CHIPS    = ['Start a business', 'Which structure is right for me?', 'Do I need GST?', 'Register a trademark']
+const CHIPS = [
+  'Which company structure is right for me?',
+  'How do I register a Private Limited Company?',
+  'Do I need GST registration?',
+  'How do I register a trademark for my brand?',
+  'What is MSME / Udyam registration?',
+  'I need a website for my business',
+]
 
 function getOrCreateUserId() {
   let id = sessionStorage.getItem('ld_vf_user')
