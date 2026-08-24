@@ -197,7 +197,7 @@ img{max-width:100%;display:block}
    FOOTER
    ============================================================ */
 .site-footer{background:#080F1E;color:#9ab5d4;padding:66px 0 32px;margin-top:0}
-.foot-cols{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr 1fr;gap:28px}
+.foot-cols{display:grid;grid-template-columns:2fr 1fr 1.4fr;gap:40px}
 .site-footer .brand .txt{color:#fff}
 .site-footer .brand .txt b{color:#6da8e0}
 .foot-desc{font-size:14px;margin-top:15px;max-width:250px;color:#7494b8}

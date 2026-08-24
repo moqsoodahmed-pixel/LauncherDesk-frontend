@@ -207,7 +207,7 @@ export default function EStampPage() {
           </h1>
           <p>Get legally valid e-stamped documents for property, business and personal needs — handled end to end by LauncherDesk. No government portal visits required.</p>
           <div className="es-hero-cta">
-            <a href="#get-stamp" className="es-btn-primary">
+            <a href="https://doqfy.in/stamping" target="_blank" rel="noopener noreferrer" className="es-btn-primary">
               <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M9 12h6m-6 4h6M12 2v4M4.22 4.22l2.83 2.83"/></svg>
               Get Your E-Stamp
             </a>

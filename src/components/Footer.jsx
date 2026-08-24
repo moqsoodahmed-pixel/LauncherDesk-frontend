@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="wrap">
         <div className="foot-cols">
           {/* Col 1 — Brand + description */}
-          <div>
+          <div style={{gridColumn:'1 / span 2'}}>
             <Link to="/" style={{display:'inline-flex',textDecoration:'none'}}>
               <img src={logoImg} alt="LauncherDesk" style={{height:42,width:'auto',display:'block'}} />
             </Link>
@@ -24,31 +24,7 @@ export default function Footer() {
             <p className="foot-desc">LauncherDesk helps founders and businesses access, coordinate and manage the services they need — from company registration and compliance to technology, finance, marketing and growth.</p>
           </div>
 
-          {/* Col 2 — START */}
-          <div>
-            <h5>START</h5>
-            <Fl href="/services/private-limited-company-registration">Private Limited Company Registration</Fl>
-            <Fl href="/services/llp-registration">LLP Registration</Fl>
-            <Fl href="/services/opc-registration">One Person Company Registration</Fl>
-          </div>
-
-          {/* Col 3 — BUILD & MANAGE */}
-          <div>
-            <h5>BUILD &amp; MANAGE</h5>
-            <Fl href="/services/website-development">Website Development</Fl>
-            <Fl href="/services/branding-logo-design">Branding &amp; Logo Design</Fl>
-            <Fl href="/services/accounting">Accounting &amp; Bookkeeping</Fl>
-          </div>
-
-          {/* Col 4 — GROW & EXPAND */}
-          <div>
-            <h5>GROW &amp; EXPAND</h5>
-            <Fl href="/services/digital-marketing">SEO &amp; Performance Marketing</Fl>
-            <Fl href="/services/social-media-management">Social Media Management</Fl>
-            <Fl href="/services/whatsapp-business-api">WhatsApp Business API</Fl>
-          </div>
-
-          {/* Col 5 — Company + Contact */}
+          {/* Col 2 — Company links */}
           <div>
             <h5>Company</h5>
             <Fl href="/company/about">About Us</Fl>
@@ -56,12 +32,21 @@ export default function Footer() {
             <Fl href="/pricing">Pricing</Fl>
             <Fl href="/resources">Resources / Blog</Fl>
             <Fl href="/resources/faq">FAQ</Fl>
-            <div style={{marginTop:18}}>
-              <h5>Contact</h5>
-              <div style={{display:'flex',flexDirection:'column',gap:6,marginTop:8}}>
-                <a href="tel:+918548854859" className="fl">+91 85488 54859</a>
-                <a href="mailto:contact@launcherdesk.com" className="fl">contact@launcherdesk.com</a>
-                <span style={{fontSize:13,color:'#5e7fa0',lineHeight:1.55}}>4th Block, Koramangala,<br/>Bengaluru – 560095</span>
+          </div>
+
+          {/* Col 3 — Contact + Addresses */}
+          <div>
+            <h5>Contact</h5>
+            <div style={{display:'flex',flexDirection:'column',gap:6,marginTop:8}}>
+              <a href="tel:+918548854859" className="fl">+91 85488 54859</a>
+              <a href="mailto:contact@launcherdesk.com" className="fl">contact@launcherdesk.com</a>
+              <div style={{marginTop:10}}>
+                <div style={{fontSize:11,fontWeight:700,letterSpacing:'.08em',textTransform:'uppercase',color:'#6da8e0',marginBottom:4}}>Registered Address</div>
+                <span style={{fontSize:13,color:'#5e7fa0',lineHeight:1.6}}>472/7, 20th L Cross Rd, 4th Block,<br/>Koramangala, Bangalore,<br/>Karnataka, India – 560095</span>
+              </div>
+              <div style={{marginTop:10}}>
+                <div style={{fontSize:11,fontWeight:700,letterSpacing:'.08em',textTransform:'uppercase',color:'#6da8e0',marginBottom:4}}>Corporate Address</div>
+                <span style={{fontSize:13,color:'#5e7fa0',lineHeight:1.6}}>#63, Office No. 224 & 225, 2nd Floor,<br/>The Plazzo Mall, Ibrahim Sahib Street,<br/>Off Commercial Street, Bangalore – 560001</span>
               </div>
             </div>
           </div>
@@ -108,7 +93,7 @@ export default function Footer() {
         </div>
         <div className="foot-bottom" style={{flexDirection:'column',alignItems:'flex-start',gap:12}}>
           <p style={{fontSize:11.5,color:'#3d618a',lineHeight:1.7,maxWidth:900}}>
-            LauncherDesk is a business services facilitation platform operated by DutyLaunch Solutions Private Limited. LauncherDesk facilitates access to business services and may coordinate with relevant professionals, partners and service providers. Where a service requires a licensed professional, statutory filing or government approval, the relevant professional or authority remains responsible for the applicable filing, decision or approval. Timelines and outcomes may vary based on the relevant authority, professional and customer documentation. LauncherDesk does not act as a regulatory authority and does not guarantee registrations, approvals or outcomes.
+            LauncherDesk is a business services facilitation platform operated by DutyLaunch Solutions Private Limited. Services may involve licensed professionals, statutory filings or government approvals. Timelines and outcomes may vary. LauncherDesk does not act as a regulatory authority and does not guarantee registrations or approvals.
           </p>
           <div style={{display:'flex',justifyContent:'space-between',width:'100%',flexWrap:'wrap',gap:10,alignItems:'center'}}>
             <span>© {year} LauncherDesk · DutyLaunch Solutions Private Limited · All rights reserved.</span>
