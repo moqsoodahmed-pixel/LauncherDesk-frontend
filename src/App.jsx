@@ -44,6 +44,7 @@ import AdminQuotes       from './pages/admin/pages/AdminQuotes'
 import AdminApplications from './pages/admin/pages/AdminApplications'
 import AdminOffice       from './pages/admin/pages/AdminOffice'
 import AdminSettings     from './pages/admin/pages/AdminSettings'
+import AdminPartners     from './pages/admin/pages/AdminPartners'
 
 function NotFound() {
   return (
