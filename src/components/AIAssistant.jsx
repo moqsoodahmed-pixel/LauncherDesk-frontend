@@ -193,6 +193,34 @@ export default function AIAssistant() {
 
   return (
     <>
+      {/* WhatsApp floating button */}
+      <a
+        href="https://wa.me/918458845859"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fab-wa"
+        aria-label="Chat on WhatsApp"
+        title="Chat on WhatsApp"
+      >
+        <svg viewBox="0 0 24 24" width={22} height={22} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </svg>
+      </a>
+
+      {/* Partner With Us button */}
+      <a
+        href="/partner-register"
+        className="fab-partner"
+        aria-label="Partner with us"
+        title="Partner with us"
+      >
+        <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        Partner With Us
+      </a>
+
+      {/* AI Chat FAB */}
       <button className="fab" onClick={openAI} aria-label="Ask AI">
         <span className="d">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

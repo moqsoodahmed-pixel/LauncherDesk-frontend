@@ -28,6 +28,7 @@ import AiPage from './pages/ai/AiPage'
 import OfficeRestorePage from './pages/office-restore/OfficeRestorePage'
 import EStampPage from './pages/estamp/EStampPage'
 import VirtualOfficePage from './pages/virtual-office/VirtualOfficePage'
+import PartnerRegister from './pages/partner/PartnerRegister'
 // Marketplace
 import MarketIndex from './pages/market/MarketIndex'
 import CategoryPage from './pages/market/CategoryPage'
@@ -82,6 +83,7 @@ export default function App() {
             <Route path="/office-restore" element={<OfficeRestorePage />} />
             <Route path="/estamp" element={<EStampPage />} />
             <Route path="/virtual-office" element={<VirtualOfficePage />} />
+            <Route path="/partner-register" element={<PartnerRegister />} />
             <Route path="/market" element={<MarketIndex />} />
             <Route path="/market/category" element={<CategoryPage />} />
             <Route path="/market/product" element={<ProductPage />} />
@@ -98,6 +100,7 @@ export default function App() {
             <Route path="applications" element={<AdminApplications />} />
             <Route path="office"       element={<AdminOffice />} />
             <Route path="settings"     element={<AdminSettings />} />
+            <Route path="partners"     element={<AdminPartners />} />
             {/* redirect /admin/anything-else → dashboard */}
             <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
           </Route>
