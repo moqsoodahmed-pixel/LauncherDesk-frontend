@@ -414,11 +414,7 @@ const WHY = [
     title: 'One Point of Contact',
     desc: 'Your address, your company registration and your GST filing — all handled through LauncherDesk.',
   },
-  {
-    icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2|M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
-    title: '10,000+ Businesses Served',
-    desc: 'A proven track record across Karnataka and all major states for GST and company registrations.',
-  },
+
   {
     icon: 'M18 20V10|M12 20V4|M6 20v-6',
     title: 'Pan-India Coverage',
@@ -635,7 +631,7 @@ export default function VirtualOfficePage() {
                   <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                   Get Your Address
                 </button>
-                <a href="https://wa.me/918458845859" target="_blank" rel="noopener noreferrer" className="vo-btn-wa">
+                <a href="https://wa.me/918548854859" target="_blank" rel="noopener noreferrer" className="vo-btn-wa">
                   <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                   WhatsApp Us
                 </a>
@@ -656,8 +652,8 @@ export default function VirtualOfficePage() {
                 <div className="vo-addr-dot"/>
                 <div className="vo-addr-label">Your Business Address</div>
               </div>
-              <div className="vo-addr-name">LauncherDesk Business Centre</div>
-              <div className="vo-addr-loc">4th Block, Koramangala, Bengaluru – 560095, Karnataka</div>
+              <div className="vo-addr-name">Prime Location</div>
+              <div className="vo-addr-loc">#63, Office No. 224 & 225, 2nd Floor, The Plazzo Mall, Ibrahim Sahib St, Off Commercial Street, Bangalore – 560001</div>
               <div className="vo-addr-chips">
                 {['GST Ready','ROC Accepted','Bank Approved','Court Valid'].map(c=>(
                   <span key={c} className="vo-addr-chip">{c}</span>
@@ -880,7 +876,7 @@ export default function VirtualOfficePage() {
               <button className="vo-btn-primary" style={{height:54,fontSize:15.5}} onClick={()=>setModal('')}>
                 Get Started — From ₹999/mo
               </button>
-              <a href="https://wa.me/918458845859" target="_blank" rel="noopener noreferrer" className="vo-btn-wa" style={{height:54}}>
+              <a href="https://wa.me/918548854859" target="_blank" rel="noopener noreferrer" className="vo-btn-wa" style={{height:54}}>
                 <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                 Chat on WhatsApp
               </a>

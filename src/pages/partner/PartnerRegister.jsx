@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePartnerAuth } from '../../context/PartnerAuthContext'
 
@@ -205,6 +205,18 @@ export default function PartnerRegister() {
   const [done,      setDone]      = useState(false)
   const [countdown, setCountdown] = useState(3)
   const [error,     setError]     = useState('')
+
+  // Close categories dropdown on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      const dd = document.getElementById('pr-cat-dropdown')
+      if (dd && dd.style.display === 'block' && !e.target.closest('.pr-field')) {
+        dd.style.display = 'none'
+      }
+    }
+    document.addEventListener('click', handler)
+    return () => document.removeEventListener('click', handler)
+  }, [])
 
   const set = (k, v) => setForm(f => ({...f, [k]:v}))
 
@@ -507,20 +519,61 @@ export default function PartnerRegister() {
                 </div>
                 <div className="pr-field full">
                   <label className="pr-label">Service Categories * <span style={{fontWeight:400,color:'#94A3B8'}}>(select all that apply)</span></label>
-                  <div className="pr-cats">
-                    {CATEGORIES.map(cat=>(
-                      <label
-                        key={cat}
-                        className={`pr-cat${form.categories.includes(cat) ? ' checked' : ''}`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={form.categories.includes(cat)}
-                          onChange={() => toggleCat(cat)}
-                        />
-                        {cat}
-                      </label>
-                    ))}
+                  <div style={{position:'relative'}}>
+                    <div
+                      className="pr-input"
+                      style={{height:'auto',minHeight:44,display:'flex',flexWrap:'wrap',gap:6,padding:'8px 14px',cursor:'pointer',alignItems:'center'}}
+                      onClick={() => {
+                        const el = document.getElementById('pr-cat-dropdown')
+                        if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block'
+                      }}
+                    >
+                      {form.categories.length === 0 && <span style={{color:'#94A3B8',fontSize:14}}>Select categories...</span>}
+                      {form.categories.map(cat => (
+                        <span key={cat} style={{
+                          display:'inline-flex',alignItems:'center',gap:4,padding:'3px 10px',
+                          borderRadius:99,background:'#EEF2FF',color:'#1D6FE0',fontSize:12,fontWeight:600,
+                          border:'1px solid rgba(29,111,224,.2)',
+                        }}>
+                          {cat}
+                          <span
+                            style={{cursor:'pointer',fontWeight:700,fontSize:14,lineHeight:1,marginLeft:2}}
+                            onClick={(e) => { e.stopPropagation(); toggleCat(cat) }}
+                          >×</span>
+                        </span>
+                      ))}
+                      <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="#94A3B8" strokeWidth={2.5} style={{marginLeft:'auto',flexShrink:0}}><path d="m6 9 6 6 6-6"/></svg>
+                    </div>
+                    <div
+                      id="pr-cat-dropdown"
+                      style={{
+                        display:'none',position:'absolute',top:'calc(100% + 4px)',left:0,right:0,
+                        background:'#fff',border:'1.5px solid #E2E8F0',borderRadius:12,
+                        boxShadow:'0 8px 30px rgba(13,31,60,.12)',zIndex:10,maxHeight:220,overflowY:'auto',
+                        padding:'6px 0',
+                      }}
+                    >
+                      {CATEGORIES.map(cat => (
+                        <label
+                          key={cat}
+                          style={{
+                            display:'flex',alignItems:'center',gap:10,padding:'9px 16px',
+                            cursor:'pointer',fontSize:13.5,fontWeight:500,color:'var(--navy)',
+                            transition:'background .1s',
+                          }}
+                          onMouseEnter={e => e.currentTarget.style.background='#F0F7FF'}
+                          onMouseLeave={e => e.currentTarget.style.background='transparent'}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={form.categories.includes(cat)}
+                            onChange={() => toggleCat(cat)}
+                            style={{accentColor:'#1D6FE0',width:16,height:16}}
+                          />
+                          {cat}
+                        </label>
+                      ))}
+                    </div>
                   </div>
                   {error && error.includes('category') && <span style={{fontSize:12.5,color:'#DC2626',marginTop:4}}>{error}</span>}
                 </div>

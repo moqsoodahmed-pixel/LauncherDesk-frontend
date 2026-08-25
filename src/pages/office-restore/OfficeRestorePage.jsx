@@ -278,7 +278,7 @@ export default function OfficeRestorePage() {
             <div className="reveal-up in">
               <div className="or-hero-visual-inner">
                 <div className="or-stat-row">
-                  <div className="or-stat"><div className="n">500+</div><div className="l">Projects</div></div>
+                  <div className="or-stat"><div className="n">15+</div><div className="l">Projects</div></div>
                   <div className="or-stat"><div className="n">20+</div><div className="l">States</div></div>
                   <div className="or-stat"><div className="n">Free</div><div className="l">Layout</div></div>
                 </div>

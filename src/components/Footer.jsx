@@ -55,6 +55,10 @@ export default function Footer() {
             <div>
               <div style={{fontSize:10.5,fontWeight:700,letterSpacing:'.1em',textTransform:'uppercase',color:'#6da8e0',marginBottom:5}}>Corporate</div>
               <span style={{fontSize:13,color:'#5e7fa0',lineHeight:1.65}}>#63, Office No. 224 & 225, 2nd Floor,<br/>The Plazzo Mall, Ibrahim Sahib St,<br/>Off Commercial Street, Bangalore – 560001</span>
+              <a href="https://maps.app.goo.gl/kxzeKkNvkZPymiGw9" target="_blank" rel="noopener noreferrer" style={{display:'inline-flex',alignItems:'center',gap:6,marginTop:8,fontSize:12.5,fontWeight:600,color:'#7ecef4',textDecoration:'none'}}>
+                <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2}><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Open on Google Maps →
+              </a>
             </div>
           </div>
         </div>
@@ -86,7 +90,7 @@ export default function Footer() {
             </div>
           </div>
           <div style={{display:'flex',gap:10,flexWrap:'wrap',alignItems:'center'}}>
-            <a href="https://wa.me/918458845859" target="_blank" rel="noopener noreferrer" className="foot-cta-btn foot-cta-wa">WhatsApp</a>
+            <a href="https://wa.me/918548854859" target="_blank" rel="noopener noreferrer" className="foot-cta-btn foot-cta-wa">WhatsApp</a>
             <a href="mailto:contact@launcherdesk.com" className="foot-cta-btn foot-cta-email">Email us</a>
           </div>
         </div>
@@ -99,7 +103,7 @@ export default function Footer() {
           <div style={{display:'flex',justifyContent:'space-between',width:'100%',flexWrap:'wrap',gap:12,alignItems:'center',marginTop:16}}>
             <span style={{fontSize:12,color:'#3d618a'}}>© {year} LauncherDesk · DutyLaunch Solutions Private Limited · All rights reserved.</span>
             <div style={{display:'flex',alignItems:'center',gap:14}}>
-              <img src={msmeImg} alt="MSME" style={{height:40,width:'auto',display:'block',filter:'brightness(1.1)'}} />
+              <img src={msmeImg} alt="MSME Registered" style={{height:56,width:'auto',display:'block',filter:'brightness(1.15) contrast(1.05)'}} />
               <span style={{fontSize:13,color:'#3d618a'}}>Made in India 🇮🇳</span>
             </div>
           </div>

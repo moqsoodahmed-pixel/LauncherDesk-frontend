@@ -235,12 +235,11 @@ export default function ServicePage({ svc }) {
           <p className="lead reveal-up in">{lead}</p>
           <div className="hero-cta reveal-up in">
             <a href="/company/contact" className="btn btn-primary">
-              Get Started{' '}
+              Talk to an Expert{' '}
               <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d={ARROW}/>
               </svg>
             </a>
-            <a href="/company/contact" className="btn btn-soft">Talk to an Expert</a>
           </div>
         </div>
       </header>
