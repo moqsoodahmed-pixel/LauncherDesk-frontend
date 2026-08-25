@@ -30,10 +30,11 @@ export default function AdminDashboard() {
   useEffect(() => {
     const load = async () => {
       try {
-        const [c, l, q] = await Promise.all([
+        const [c, l, q, adminStats] = await Promise.all([
           apiFetch('/contact?limit=5'),
           apiFetch('/leads?limit=5'),
           apiFetch('/quotes?limit=5'),
+          apiFetch('/admin/stats'),
         ])
         setContacts(c.data  || [])
         setLeads(l.data     || [])
@@ -42,6 +43,9 @@ export default function AdminDashboard() {
           contacts: c.total || 0,
           leads:    l.total || 0,
           quotes:   q.total || 0,
+          partners:       adminStats?.data?.totals?.partners      || 0,
+          partnerLeads:   adminStats?.data?.totals?.partnerLeads  || 0,
+          partnersPending: adminStats?.data?.partnersByStatus?.pending || 0,
         })
       } catch (err) {
         console.error(err)
@@ -76,8 +80,17 @@ export default function AdminDashboard() {
         <StatCard label="Total Contacts"     value={stats?.contacts ?? '—'} dir="up"   change="+12.4%"  icon="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" iconBg="#EEF2FF" iconColor="#3B5BDB" />
         <StatCard label="Active Leads"       value={stats?.leads    ?? '—'} dir="up"   change="+8.1%"   icon="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2|M23 21v-2a4 4 0 0 0-3-3.87|M16 3.13a4 4 0 0 1 0 7.75"  iconBg="#F0FDF4" iconColor="#10B981" />
         <StatCard label="Quote Requests"     value={stats?.quotes   ?? '—'} dir="up"   change="+18.2%"  icon="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6|M16 13H8|M16 17H8|M10 9H8"  iconBg="#FFFBEB" iconColor="#F59E0B" />
-        <StatCard label="Est. Pipeline"      value="₹12L+"                  dir="up"   change="+22.5%"  icon="M12 2v20|M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"                                       iconBg="#F5F3FF" iconColor="#8B5CF6" />
+        <StatCard label="Partners"           value={stats?.partners ?? '—'} dir="up"   change={stats?.partnersPending ? `${stats.partnersPending} pending` : 'Total'} icon="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2|M23 21v-2a4 4 0 0 0-3-3.87|M16 3.13a4 4 0 0 1 0 7.75" iconBg="#F5F3FF" iconColor="#8B5CF6" />
       </div>
+      {/* Partner leads sub-row */}
+      {(stats?.partnerLeads > 0) && (
+        <div style={{ background:'#EEF2FF', border:'1px solid #C7D2FE', borderRadius:10, padding:'10px 18px', marginBottom:20, display:'flex', alignItems:'center', gap:12, fontSize:13.5 }}>
+          <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="#3B5BDB" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span style={{ color:'#3B5BDB', fontWeight:700 }}>{stats.partnerLeads} marketplace leads</span>
+          <span style={{ color:'#4338CA' }}>generated through partner products so far.</span>
+          <a href="/admin/partners" style={{ marginLeft:'auto', color:'#3B5BDB', fontWeight:700, fontSize:13, textDecoration:'none' }}>View Partners →</a>
+        </div>
+      )}
 
       {/* Charts row */}
       <div className="adm-charts-row" style={{ display:'grid', gridTemplateColumns:'1.6fr 1fr', gap:16, marginBottom:20 }}>
