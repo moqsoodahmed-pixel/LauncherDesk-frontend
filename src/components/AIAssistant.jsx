@@ -193,9 +193,10 @@ export default function AIAssistant() {
 
   return (
     <>
-      {/* FAB stack: row 1 = WhatsApp + Partner, row 2 = Ask LauncherDesk */}
+      {/* ── FAB Stack: row1 = WhatsApp + Partner, row2 = Ask LauncherDesk ── */}
       <div className="fab-stack">
-        {/* Row 1: WhatsApp + Partner With Us side by side */}
+
+        {/* Row 1: WhatsApp + Partner With Us — side by side */}
         <div className="fab-row">
           <a
             href="https://wa.me/918458845859"
@@ -209,6 +210,7 @@ export default function AIAssistant() {
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
             </svg>
           </a>
+
           <a
             href="/partner-register"
             className="fab-partner"
@@ -231,6 +233,7 @@ export default function AIAssistant() {
           </span>
           Ask LauncherDesk <span className="pd"></span>
         </button>
+
       </div>
 
       <div className={`assistant${aiOpen ? ' open' : ''}`} id="assistant">
