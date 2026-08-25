@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { usePartnerAuth } from '../../context/PartnerAuthContext'
+import logoImg from '../../assets/launcherdesk-logo-transparent.png'
 
 const S = `
 .pl-wrap {
@@ -10,14 +11,8 @@ const S = `
   width:100%;max-width:440px;background:#fff;border-radius:20px;border:1.5px solid var(--line);
   padding:44px 40px;box-shadow:0 8px 40px rgba(13,31,60,.10);
 }
-.pl-logo { display:flex;align-items:center;gap:10px;margin-bottom:32px; }
-.pl-logo-mark {
-  width:40px;height:40px;border-radius:10px;
-  background:linear-gradient(135deg,#1D6FE0,#0F52C0);
-  display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px;
-}
-.pl-logo-text { font-size:16px;font-weight:800;color:var(--navy); }
-.pl-logo-text span { color:#1D6FE0; }
+.pl-logo { display:flex;align-items:center;margin-bottom:32px; }
+.pl-logo img { height:44px;width:auto;display:block; }
 .pl-title { font-size:24px;font-weight:900;color:var(--navy);margin-bottom:6px; }
 .pl-sub   { font-size:14px;color:var(--text-2);margin-bottom:28px; }
 .pl-label { font-size:12.5px;font-weight:600;color:#374151;display:block;margin-bottom:6px; }
@@ -63,8 +58,7 @@ export default function PartnerLogin() {
       <style>{S}</style>
       <div className="pl-card">
         <div className="pl-logo">
-          <div className="pl-logo-mark">L</div>
-          <div className="pl-logo-text">Launcher<span>Desk</span></div>
+          <img src={logoImg} alt="LauncherDesk" />
         </div>
 
         <div className="pl-title">Partner Login</div>

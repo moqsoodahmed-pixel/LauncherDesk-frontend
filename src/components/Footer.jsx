@@ -32,6 +32,7 @@ export default function Footer() {
             <h5>Company</h5>
             <Fl href="/company/about">About Us</Fl>
             <Fl href="/company/contact">Contact Us</Fl>
+            <Fl href="/company/careers">Careers</Fl>
             <Fl href="/pricing">Pricing</Fl>
             <Fl href="/resources">Resources / Blog</Fl>
             <Fl href="/resources/faq">FAQ</Fl>
