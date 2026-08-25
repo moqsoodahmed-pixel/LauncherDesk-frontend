@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+const API = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-production.up.railway.app/api'
+
 const S = `
 .es-hero {
   background: linear-gradient(160deg, #080F1E 0%, #0D1F3C 55%, #162B52 100%);
@@ -181,10 +183,34 @@ const STEPS = [
 export default function EStampPage() {
   const [form, setForm] = useState({ name:'', mobile:'', email:'', service:'', state:'' })
   const [submitted, setSubmitted] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [formErr, setFormErr] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
+    setSaving(true); setFormErr('')
+    try {
+      const res = await fetch(`${API}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:    form.name,
+          mobile:  form.mobile,
+          email:   form.email || undefined,
+          state:   form.state,
+          message: `E-Stamp enquiry — Document: ${form.service}`,
+          source:  'estamp-page',
+          service: `E-Stamp — ${form.service}`,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.message || 'Submission failed')
+      setSubmitted(true)
+    } catch (err) {
+      setFormErr(err.message || 'Something went wrong. Please try again.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const STATES = ['Karnataka','Maharashtra','Delhi','Tamil Nadu','Telangana','Gujarat','Rajasthan','Uttar Pradesh','West Bengal','Kerala','Andhra Pradesh','Punjab','Haryana','Madhya Pradesh','Other']
@@ -352,9 +378,10 @@ export default function EStampPage() {
                       </select>
                     </div>
                   </div>
-                  <button type="submit" className="es-submit-btn">
-                    Request E-Stamp Quote →
+                  <button type="submit" className="es-submit-btn" disabled={saving}>
+                    {saving ? 'Submitting…' : 'Request E-Stamp Quote →'}
                   </button>
+                  {formErr && <p style={{fontSize:13,color:'#FCA5A5',textAlign:'center',marginTop:8}}>{formErr}</p>}
                   <a href="https://doqfy.in/stamping" target="_blank" rel="noopener noreferrer"
                     style={{display:'block',textAlign:'center',marginTop:12,fontSize:13,color:'rgba(255,255,255,.55)',textDecoration:'underline'}}>
                     Or get it directly on Doqfy →

@@ -309,6 +309,12 @@ export default function AIAssistant() {
           </svg>
           Get Started
         </a>
+        <a href="/partner/login" className="mb-btn" style={{background:'rgba(13,31,60,.07)',color:'var(--navy)'}}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16,flex:'none'}}>
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/>
+          </svg>
+          Login
+        </a>
         <button className="mb-btn mb-btn--ai" onClick={openAI}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16,flex:'none'}}>
             <path d={SPARK}/>
