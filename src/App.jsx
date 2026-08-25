@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { PartnerAuthProvider } from './context/PartnerAuthContext'
+import PartnerLogin     from './pages/partner/PartnerLogin'
+import PartnerDashboard from './pages/partner/PartnerDashboard'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 // Services
@@ -59,6 +62,7 @@ function NotFound() {
 export default function App() {
   return (
     <AdminAuthProvider>
+    <PartnerAuthProvider>
       <BrowserRouter>
         <Routes>
           {/* ── Public website ── */}
@@ -91,6 +95,10 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
           </Route>
 
+          {/* ── Partner portal ── */}
+          <Route path="/partner/login"     element={<PartnerLogin />} />
+          <Route path="/partner/dashboard" element={<PartnerDashboard />} />
+
           {/* ── Admin panel at /admin ── */}
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
@@ -107,6 +115,7 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+    </PartnerAuthProvider>
     </AdminAuthProvider>
   )
 }
