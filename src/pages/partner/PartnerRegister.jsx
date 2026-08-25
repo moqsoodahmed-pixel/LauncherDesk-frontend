@@ -365,8 +365,8 @@ export default function PartnerRegister() {
                   <label className="pr-label">Service Categories * (select all that apply)</label>
                   <div className="pr-cats">
                     {CATEGORIES.map(cat=>(
-                      <label key={cat} className={`pr-cat${form.categories.includes(cat)?' checked':''}`} onClick={()=>toggleCat(cat)}>
-                        <input type="checkbox" readOnly checked={form.categories.includes(cat)}/>
+                      <label key={cat} className={`pr-cat${form.categories.includes(cat)?' checked':''}`}>
+                        <input type="checkbox" checked={form.categories.includes(cat)} onChange={()=>toggleCat(cat)}/>
                         {cat}
                       </label>
                     ))}
