@@ -2,21 +2,49 @@
    LauncherDesk — Shared Design System (all pages)
    ============================================================ */
 :root{
-  /* ── Backgrounds ── */
-  --bg:#F5F8FF; --bg-2:#EBF1FF; --bg-warm:#F9FAFB; --card:#FFFFFF;
+  /* ── Core page background ── */
+  --bg:#FAFBFF; --bg-2:#EEF2FF; --bg-warm:#FFF9F5; --card:#FFFFFF;
 
-  /* ── Section palette (rich alternating backgrounds) ── */
-  --sec-purple:#F3F0FF;   /* soft lavender */
-  --sec-mint:#EDFAF4;     /* fresh mint green */
-  --sec-amber:#FFFBEB;    /* warm amber/cream */
-  --sec-rose:#FFF1F2;     /* blush rose */
-  --sec-sky:#EFF8FF;      /* sky blue */
-  --sec-indigo:#EEF2FF;   /* indigo tint */
-  --sec-slate:#F8FAFC;    /* cool slate white */
-
-  /* ── Brand Blues ── */
+  /* ── Brand Blues (primary identity — unchanged) ── */
   --navy:#0D1F3C; --navy-2:#162B52; --navy-3:#1D3664;
   --blue:#1D6FE0; --blue-bright:#3B8FEF; --blue-dark:#0F52C0; --grey:#6D6D6F;
+
+  /* ── Section accent palette ── */
+  /* Warm orange — energy, action */
+  --sec-orange-bg:#FFF7F0;
+  --sec-orange-border:#FFD8B5;
+  --sec-orange-accent:#F97316;
+  --sec-orange-light:#FED7AA;
+
+  /* Emerald/teal — trust, growth */
+  --sec-teal-bg:#EDFFF8;
+  --sec-teal-border:#A7F3D0;
+  --sec-teal-accent:#059669;
+  --sec-teal-light:#D1FAE5;
+
+  /* Purple — premium, innovation */
+  --sec-purple-bg:#F5F0FF;
+  --sec-purple-border:#DDD6FE;
+  --sec-purple-accent:#7C3AED;
+  --sec-purple-light:#EDE9FE;
+
+  /* Amber/yellow — clarity, ideas */
+  --sec-amber-bg:#FFFBEB;
+  --sec-amber-border:#FDE68A;
+  --sec-amber-accent:#D97706;
+  --sec-amber-light:#FEF3C7;
+
+  /* Rose — warmth, support */
+  --sec-rose-bg:#FFF1F2;
+  --sec-rose-border:#FECDD3;
+  --sec-rose-accent:#E11D48;
+  --sec-rose-light:#FFE4E6;
+
+  /* Sky — clarity, openness */
+  --sec-sky-bg:#F0F9FF;
+  --sec-sky-border:#BAE6FD;
+  --sec-sky-accent:#0284C7;
+  --sec-sky-light:#E0F2FE;
 
   /* ── Typography ── */
   --text:#0D1F3C; --text-2:#4A5E78; --text-3:#8496AB;
@@ -237,14 +265,20 @@ img{max-width:100%;display:block}
 .section-dark::before{content:"";position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:52px 52px;-webkit-mask-image:radial-gradient(1000px 600px at 50% 0,#000,transparent 80%);mask-image:radial-gradient(1000px 600px at 50% 0,#000,transparent 80%)}
 .section-warm{background:var(--bg-warm)}
 .section-2{background:var(--bg-2)}
-/* Rich section colour classes */
-.section-purple{background:var(--sec-purple)}
-.section-mint{background:var(--sec-mint)}
-.section-amber{background:var(--sec-amber)}
-.section-rose{background:var(--sec-rose)}
-.section-sky{background:var(--sec-sky)}
-.section-indigo{background:var(--sec-indigo)}
-.section-slate{background:var(--sec-slate)}
+/* ── Rich section accent classes ── */
+.section-orange { background:var(--sec-orange-bg); }
+.section-teal   { background:var(--sec-teal-bg); }
+.section-purple { background:var(--sec-purple-bg); }
+.section-amber  { background:var(--sec-amber-bg); }
+.section-rose   { background:var(--sec-rose-bg); }
+.section-sky    { background:var(--sec-sky-bg); }
+/* Accent top border on section headings when over coloured bg */
+.section-orange .eyebrow { color:var(--sec-orange-accent); }
+.section-teal   .eyebrow { color:var(--sec-teal-accent); }
+.section-purple .eyebrow { color:var(--sec-purple-accent); }
+.section-amber  .eyebrow { color:var(--sec-amber-accent); }
+.section-rose   .eyebrow { color:var(--sec-rose-accent); }
+.section-sky    .eyebrow { color:var(--sec-sky-accent); }
 .sec-head{max-width:660px}
 .sec-head.center{margin:0 auto;text-align:center}
 .sec-head h2{font-size:clamp(26px,3.6vw,48px);font-weight:800;letter-spacing:-.03em;margin-top:14px}
