@@ -12,10 +12,10 @@ export default function CategoryPage() {
   const cat  = catBy(slug) || CATS[0]
 
   const [query, setQuery]   = useState('')
-  const [sort, setSort]     = useState('rating')
+  const [sort, setSort]     = useState('az')
 
   /* Reset search when category changes */
-  useEffect(() => { setQuery(''); setSort('rating') }, [slug])
+  useEffect(() => { setQuery(''); setSort('az') }, [slug])
 
   /* Update <title> */
   useEffect(() => { document.title = `${cat.name} Software — LauncherDesk Marketplace` }, [cat])
@@ -24,8 +24,6 @@ export default function CategoryPage() {
     let list = inCat(cat.slug)
     const q = query.toLowerCase().trim()
     if (q) list = list.filter(p => (p.name + ' ' + p.tagline + ' ' + p.desc).toLowerCase().includes(q))
-    if (sort === 'rating')  list = [...list].sort((a, b) => (a.soon - b.soon) || (b.rating  - a.rating))
-    if (sort === 'reviews') list = [...list].sort((a, b) => (a.soon - b.soon) || (b.reviews - a.reviews))
     if (sort === 'az')      list = [...list].sort((a, b) => (a.soon - b.soon) || a.name.localeCompare(b.name))
     return list
   }, [cat.slug, query, sort])
@@ -96,8 +94,7 @@ export default function CategoryPage() {
                 onChange={e => setSort(e.target.value)}
                 aria-label="Sort tools"
               >
-                <option value="rating">Top rated</option>
-                <option value="reviews">Most reviewed</option>
+                <option value="az">A–Z</option>
                 <option value="az">A–Z</option>
               </select>
             </div>
