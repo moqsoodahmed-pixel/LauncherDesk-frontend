@@ -3,7 +3,39 @@
    ============================================================ */
 :root{
   /* ── Backgrounds ── */
-  --bg:#F5F8FF; --bg-2:#EBF1FF; --bg-warm:#F9FAFB; --card:#FFFFFF;
+  --bg:#FAFBFF; --bg-2:#EEF2FF; --bg-warm:#FFF9F5; --card:#FFFFFF;
+
+  /* ── Section accent palette ── */
+  /* Warm orange */
+  --sec-orange-bg:#FFF7F0;
+  --sec-orange-border:#FFD8B5;
+  --sec-orange-accent:#F97316;
+  --sec-orange-light:#FED7AA;
+  /* Emerald teal */
+  --sec-teal-bg:#EDFFF8;
+  --sec-teal-border:#A7F3D0;
+  --sec-teal-accent:#059669;
+  --sec-teal-light:#D1FAE5;
+  /* Purple */
+  --sec-purple-bg:#F5F0FF;
+  --sec-purple-border:#DDD6FE;
+  --sec-purple-accent:#7C3AED;
+  --sec-purple-light:#EDE9FE;
+  /* Amber */
+  --sec-amber-bg:#FFFBEB;
+  --sec-amber-border:#FDE68A;
+  --sec-amber-accent:#D97706;
+  --sec-amber-light:#FEF3C7;
+  /* Rose */
+  --sec-rose-bg:#FFF1F2;
+  --sec-rose-border:#FECDD3;
+  --sec-rose-accent:#E11D48;
+  --sec-rose-light:#FFE4E6;
+  /* Sky */
+  --sec-sky-bg:#F0F9FF;
+  --sec-sky-border:#BAE6FD;
+  --sec-sky-accent:#0284C7;
+  --sec-sky-light:#E0F2FE;
 
   /* ── Brand Blues ── */
   --navy:#0D1F3C; --navy-2:#162B52; --navy-3:#1D3664;
