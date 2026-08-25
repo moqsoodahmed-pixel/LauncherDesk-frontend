@@ -27,6 +27,7 @@ import AiPage from './pages/ai/AiPage'
 // Office Restore
 import OfficeRestorePage from './pages/office-restore/OfficeRestorePage'
 import EStampPage from './pages/estamp/EStampPage'
+import VirtualOfficePage from './pages/virtual-office/VirtualOfficePage'
 // Marketplace
 import MarketIndex from './pages/market/MarketIndex'
 import CategoryPage from './pages/market/CategoryPage'
@@ -80,6 +81,7 @@ export default function App() {
             <Route path="/ai" element={<AiPage />} />
             <Route path="/office-restore" element={<OfficeRestorePage />} />
             <Route path="/estamp" element={<EStampPage />} />
+            <Route path="/virtual-office" element={<VirtualOfficePage />} />
             <Route path="/market" element={<MarketIndex />} />
             <Route path="/market/category" element={<CategoryPage />} />
             <Route path="/market/product" element={<ProductPage />} />
