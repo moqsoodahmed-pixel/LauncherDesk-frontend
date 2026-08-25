@@ -492,11 +492,40 @@ const FAQS = [
 ]
 
 /* ── FORM MODAL ── */
+const API = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-production.up.railway.app/api'
+
 function EnquiryModal({ plan, onClose }) {
   const [form, setForm] = useState({ name:'', mobile:'', email:'', city:'', plan: plan || '' })
   const [done, setDone] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [err, setErr] = useState('')
 
-  const submit = (e) => { e.preventDefault(); setDone(true) }
+  const submit = async (e) => {
+    e.preventDefault()
+    setSaving(true); setErr('')
+    try {
+      const res = await fetch(`${API}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:    form.name,
+          mobile:  form.mobile,
+          email:   form.email || undefined,
+          state:   form.city,
+          message: `Virtual Office enquiry — Plan: ${form.plan}, City: ${form.city}`,
+          source:  'virtual-office',
+          service: 'Virtual Office',
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.message || 'Submission failed')
+      setDone(true)
+    } catch (e) {
+      setErr(e.message || 'Something went wrong. Please try again.')
+    } finally {
+      setSaving(false)
+    }
+  }
   const CITIES = [
     'Bengaluru','Mumbai','Delhi','Hyderabad','Chennai','Pune','Kolkata','Ahmedabad',
     'Gurgaon','Noida','Faridabad','Ghaziabad','Chandigarh','Jaipur','Lucknow',
@@ -558,7 +587,8 @@ function EnquiryModal({ plan, onClose }) {
                   </select>
                 </div>
               </div>
-              <button type="submit" className="vo-msubmit">Get My Virtual Office →</button>
+              <button type="submit" className="vo-msubmit" disabled={saving}>{saving ? 'Submitting…' : 'Get My Virtual Office →'}</button>
+              {err && <p style={{fontSize:13,color:'#E11D48',textAlign:'center',marginTop:8}}>{err}</p>}
               <p style={{fontSize:12,color:'#94A3B8',textAlign:'center',marginTop:8}}>
                 We'll respond within 2 hours · No spam · 100% confidential
               </p>

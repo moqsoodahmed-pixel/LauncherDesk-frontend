@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+const API = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-production.up.railway.app/api'
+
 const imgChair        = '/product-ergonomic-chair.jpg'
 const imgNormalTable  = '/product-normal-table.jpg'
 const imgElectricTable = '/product-electric-table.jpg'
@@ -189,6 +191,7 @@ export default function OfficeRestorePage() {
   const [waConsent,   setWaConsent]   = useState(true)
   const [submitted,   setSubmitted]   = useState(false)
   const [error,       setError]       = useState('')
+  const [saving,      setSaving]      = useState(false)
 
   useEffect(() => { document.title = 'Office Setup — Furniture & Workspace Solutions · LauncherDesk' }, [])
 
@@ -196,7 +199,8 @@ export default function OfficeRestorePage() {
     setExtras(prev => checked ? [...prev, val] : prev.filter(e => e !== val))
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
+    if (!lookingFor)   return setError('Please select what you are looking for.')
     if (!ws)           return setError('Please select the number of workstations needed.')
     if (!ch)           return setError('Please select the number of ergonomic chairs needed.')
     if (!state)        return setError('Please select your delivery state.')
@@ -205,8 +209,37 @@ export default function OfficeRestorePage() {
     if (!email.trim()) return setError('Please enter your corporate email.')
     if (!mobile.trim())return setError('Please enter your mobile number.')
     setError('')
-    console.log('Office Restore Lead:', { lookingFor, ws, ch, state, timeline, extras, name, email, mobile, company, waConsent })
-    setSubmitted(true)
+    setSaving(true)
+    try {
+      const message = [
+        `Looking for: ${lookingFor}`,
+        `Workstations: ${ws}`,
+        `Chairs: ${ch}`,
+        `State: ${state}`,
+        `Timeline: ${timeline}`,
+        extras.length ? `Extras: ${extras.join(', ')}` : '',
+        company ? `Company: ${company}` : '',
+      ].filter(Boolean).join(' | ')
+
+      const res = await fetch(`${API}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, email, mobile, state,
+          message,
+          source:  'office-setup',
+          service: `Office Setup — ${lookingFor}`,
+          whatsappOptin: waConsent,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.message || 'Submission failed')
+      setSubmitted(true)
+    } catch (err) {
+      setError(err.message || 'Something went wrong. Please try again.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -383,9 +416,9 @@ export default function OfficeRestorePage() {
                     <label htmlFor="orWA">I agree to receive space planning updates and layout proposals on WhatsApp from LauncherDesk Office Setup.</label>
                   </div>
                   {error && <p style={{ color: 'var(--error, #e53e3e)', fontSize: 13, marginTop: 10 }}>{error}</p>}
-                  <button className="btn btn-primary or-submit" onClick={handleSubmit}>
-                    Submit Layout Request
-                    <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={SEND}/></svg>
+                  <button className="btn btn-primary or-submit" onClick={handleSubmit} disabled={saving}>
+                    {saving ? 'Submitting…' : 'Submit Layout Request'}
+                    {!saving && <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={SEND}/></svg>}
                   </button>
                   <div className="or-submit-disc">Free consultation · No payment required to submit</div>
                 </>
