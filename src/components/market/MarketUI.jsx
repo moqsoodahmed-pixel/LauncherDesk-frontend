@@ -44,11 +44,12 @@ export function Stars({ rating }) {
 }
 
 export function RateLine({ p }) {
+  if (p.rating == null) return null
   return (
     <span className="mk-rate">
       <Stars rating={p.rating} />
       <b>{p.rating.toFixed(1)}</b>
-      <span className="mk-rev">({nfmt(p.reviews)})</span>
+      {p.reviews != null && <span className="mk-rev">({nfmt(p.reviews)})</span>}
     </span>
   )
 }
