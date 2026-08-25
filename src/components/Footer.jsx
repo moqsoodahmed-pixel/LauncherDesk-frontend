@@ -55,7 +55,7 @@ export default function Footer() {
             <div>
               <div style={{fontSize:10.5,fontWeight:700,letterSpacing:'.1em',textTransform:'uppercase',color:'#6da8e0',marginBottom:5}}>Corporate</div>
               <span style={{fontSize:13,color:'#5e7fa0',lineHeight:1.65}}>#63, Office No. 224 & 225, 2nd Floor,<br/>The Plazzo Mall, Ibrahim Sahib St,<br/>Off Commercial Street, Bangalore – 560001</span>
-              <a href="https://maps.app.goo.gl/kxzeKkNvkZPymiGw9" target="_blank" rel="noopener noreferrer" style={{display:'inline-flex',alignItems:'center',gap:6,marginTop:8,fontSize:12.5,fontWeight:600,color:'#7ecef4',textDecoration:'none'}}>
+              <a href="https://maps.app.goo.gl/BCNfdV7j5PEBkYrM6" target="_blank" rel="noopener noreferrer" style={{display:'inline-flex',alignItems:'center',gap:6,marginTop:8,fontSize:12.5,fontWeight:600,color:'#7ecef4',textDecoration:'none'}}>
                 <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2}><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 Open on Google Maps →
               </a>
