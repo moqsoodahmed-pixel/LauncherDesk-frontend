@@ -284,6 +284,9 @@ export default function Navbar({ activePage = '' }) {
           <div className={`nav-item${activePage === 'office-restore' ? ' active' : ''}`}>
             <a href="/office-restore" className="nav-restore">Office Setup</a>
           </div>
+          <div className={`nav-item${activePage === 'virtual-office' ? ' active' : ''}`}>
+            <a href="/virtual-office" className="nav-restore">Virtual Office</a>
+          </div>
           <div className={`nav-item${activePage === 'estamp' ? ' active' : ''}`}>
             <a href="/estamp" className="nav-restore">E-Stamp</a>
           </div>
