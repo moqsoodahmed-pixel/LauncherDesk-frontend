@@ -56,6 +56,21 @@ export function RateLine({ p }) {
 
 /* ── Monogram tile ──────────────────────────────────────────── */
 export function Tile({ p, size }) {
+  // If product has a logoUrl, show image instead of initials
+  if (p.logoUrl) {
+    return (
+      <span
+        className={`mk-tile${size === 'lg' ? ' lg' : ''}`}
+        style={{ '--c': p.c, background: '#fff', border: '1.5px solid #E2E8F0', overflow: 'hidden', padding: 0 }}
+      >
+        <img
+          src={p.logoUrl}
+          alt={p.name}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 'inherit' }}
+        />
+      </span>
+    )
+  }
   return (
     <span
       className={`mk-tile${size === 'lg' ? ' lg' : ''}`}

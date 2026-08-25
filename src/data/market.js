@@ -13,6 +13,7 @@ export const CATS = [
 export const PRODUCTS = [
   /* ── CLM — Doqfy (LauncherDesk collab partner) ─────────── */
   { id:'doqfy', cat:'clm', soon:false, name:'Doqfy', c:'#6B21A8', tagline:'India-ready contract platform — our collab partner', price:'Custom pricing', badge:'Partner',
+    logoUrl:'/doqfy-logo.png',
     desc:'A fast-growing Indian CLM platform built for high-velocity teams. Streamline contract creation, negotiation and signing with a clean, intuitive interface and India-compliant e-sign. LauncherDesk is proud to collaborate with Doqfy.',
     features:['Drag-and-drop contract builder','Aadhaar & OTP-based e-sign','Clause and template library','Real-time collaboration & audit trail'], url:'https://www.doqfy.com/' },
 ]
