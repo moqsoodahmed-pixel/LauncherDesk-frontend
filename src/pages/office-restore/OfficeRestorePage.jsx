@@ -176,18 +176,19 @@ function FaqItem({ q, a }) {
 }
 
 export default function OfficeRestorePage() {
-  const [ws,        setWs]        = useState(null)
-  const [ch,        setCh]        = useState(null)
-  const [state,     setState]     = useState('')
-  const [timeline,  setTimeline]  = useState(null)
-  const [extras,    setExtras]    = useState([])
-  const [name,      setName]      = useState('')
-  const [email,     setEmail]     = useState('')
-  const [mobile,    setMobile]    = useState('')
-  const [company,   setCompany]   = useState('')
-  const [waConsent, setWaConsent] = useState(true)
-  const [submitted, setSubmitted] = useState(false)
-  const [error,     setError]     = useState('')
+  const [ws,          setWs]          = useState(null)
+  const [ch,          setCh]          = useState(null)
+  const [state,       setState]       = useState('')
+  const [timeline,    setTimeline]    = useState(null)
+  const [extras,      setExtras]      = useState([])
+  const [lookingFor,  setLookingFor]  = useState('')
+  const [name,        setName]        = useState('')
+  const [email,       setEmail]       = useState('')
+  const [mobile,      setMobile]      = useState('')
+  const [company,     setCompany]     = useState('')
+  const [waConsent,   setWaConsent]   = useState(true)
+  const [submitted,   setSubmitted]   = useState(false)
+  const [error,       setError]       = useState('')
 
   useEffect(() => { document.title = 'Office Setup — Furniture & Workspace Solutions · LauncherDesk' }, [])
 
@@ -204,7 +205,7 @@ export default function OfficeRestorePage() {
     if (!email.trim()) return setError('Please enter your corporate email.')
     if (!mobile.trim())return setError('Please enter your mobile number.')
     setError('')
-    console.log('Office Restore Lead:', { ws, ch, state, timeline, extras, name, email, mobile, company, waConsent })
+    console.log('Office Restore Lead:', { lookingFor, ws, ch, state, timeline, extras, name, email, mobile, company, waConsent })
     setSubmitted(true)
   }
 
@@ -327,6 +328,15 @@ export default function OfficeRestorePage() {
               ) : (
                 <>
                   <div className="or-field">
+                    <label>Looking for <span className="req">*</span></label>
+                    <select className="or-input" value={lookingFor} onChange={e => setLookingFor(e.target.value)}>
+                      <option value="">Select category</option>
+                      <option value="Office Furniture & Interior">Office Furniture &amp; Interior</option>
+                      <option value="Co-working Space">Co-working Space</option>
+                      <option value="Individual Office">Individual Office</option>
+                    </select>
+                  </div>
+                  <div className="or-field">
                     <label>Workstations Needed <span className="req">*</span></label>
                     <div className="or-select-grid">
                       {WS_OPTS.map(v => <SelBtn key={v} value={v} selected={ws === v} onClick={setWs}>{v} Seats</SelBtn>)}
@@ -386,6 +396,7 @@ export default function OfficeRestorePage() {
             <div className="or-summary">
               <h4>Workspace Configuration</h4>
               <div className="sub">Live summary based on your selections</div>
+              <div className="or-sum-row"><span className="k">Looking for</span><span className={`v${lookingFor ? '' : ' dim'}`}>{lookingFor || 'Not selected'}</span></div>
               <div className="or-sum-row"><span className="k">Workstations</span><span className="v">{ws ? `${ws} Seats` : '—'}</span></div>
               <div className="or-sum-row"><span className="k">Ergonomic Chairs</span><span className="v">{ch ? `${ch} Chairs` : '—'}</span></div>
               <div className="or-sum-row"><span className="k">Other Elements</span><span className="v">{extras.length ? extras.join(', ') : 'None selected'}</span></div>

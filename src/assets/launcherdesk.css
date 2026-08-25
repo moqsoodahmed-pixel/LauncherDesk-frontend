@@ -534,11 +534,17 @@ img{max-width:100%;display:block}
 /* ============================================================
    FLOATING AI ASSISTANT + mobile bar
    ============================================================ */
-.fab{position:fixed;right:24px;bottom:24px;z-index:80;background:linear-gradient(180deg,#162B52,#080F1E);color:#fff;border:0;border-radius:999px;height:56px;padding:0 22px 0 15px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 20px 40px -12px rgba(8,15,30,.6);font-family:var(--font);font-weight:700;font-size:14.5px;transition:transform .2s}
+/* FAB stack: fixed container bottom-right */
+.fab-stack{position:fixed;right:24px;bottom:24px;z-index:80;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
 
-/* WhatsApp FAB */
+/* Row 1: WhatsApp + Partner side by side */
+.fab-row{display:flex;align-items:center;gap:10px;}
+
+/* Main AI chat FAB */
+.fab{background:linear-gradient(180deg,#162B52,#080F1E);color:#fff;border:0;border-radius:999px;height:56px;padding:0 22px 0 15px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 20px 40px -12px rgba(8,15,30,.6);font-family:var(--font);font-weight:700;font-size:14.5px;transition:transform .2s}
+
+/* WhatsApp FAB — inline in fab-row */
 .fab-wa{
-  position:fixed;right:24px;bottom:92px;z-index:80;
   width:48px;height:48px;border-radius:50%;
   background:#25D366;color:#fff;
   display:grid;place-items:center;
@@ -548,9 +554,8 @@ img{max-width:100%;display:block}
 }
 .fab-wa:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(37,211,102,.55)}
 
-/* Partner With Us FAB */
+/* Partner With Us FAB — inline in fab-row */
 .fab-partner{
-  position:fixed;right:24px;bottom:148px;z-index:80;
   background:#fff;color:var(--navy);border:1.5px solid var(--line);
   border-radius:999px;height:44px;padding:0 16px 0 13px;
   display:flex;align-items:center;gap:9px;
@@ -663,6 +668,7 @@ img{max-width:100%;display:block}
   .section-sm{padding:44px 0}
   .mobile-bar{display:flex;flex-direction:row;position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:10px 14px;gap:8px;box-shadow:0 -2px 16px rgba(13,31,60,.08)}
   .mb-btn{flex:1;height:46px;font-size:13.5px}
+  .fab-stack{display:none}
   .fab{display:none}
   .fab-wa{display:none}
   .fab-partner{display:none}
@@ -753,8 +759,7 @@ img{max-width:100%;display:block}
   /* contact info rows */
   .contact-info .ci-row{flex-direction:column;gap:8px}
   /* fab label hide on small */
-  .fab span{display:none}
-  .fab{padding:0 14px;width:50px;border-radius:50%}
+  .fab{padding:0 18px 0 13px;}
   /* section */
   .section{padding:48px 0}
   .section-sm{padding:36px 0}
@@ -790,6 +795,7 @@ img{max-width:100%;display:block}
   /* assistant full-screen on mobile, keep edges flush */
   .assistant{left:0;right:0}
   /* fab hidden on mobile */
+  .fab-stack{display:none}
   .fab{display:none}
   .fab-wa{display:none}
   .fab-partner{display:none}
