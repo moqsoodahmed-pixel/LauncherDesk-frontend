@@ -5,6 +5,15 @@
   /* ── Backgrounds ── */
   --bg:#F5F8FF; --bg-2:#EBF1FF; --bg-warm:#F9FAFB; --card:#FFFFFF;
 
+  /* ── Section palette (rich alternating backgrounds) ── */
+  --sec-purple:#F3F0FF;   /* soft lavender */
+  --sec-mint:#EDFAF4;     /* fresh mint green */
+  --sec-amber:#FFFBEB;    /* warm amber/cream */
+  --sec-rose:#FFF1F2;     /* blush rose */
+  --sec-sky:#EFF8FF;      /* sky blue */
+  --sec-indigo:#EEF2FF;   /* indigo tint */
+  --sec-slate:#F8FAFC;    /* cool slate white */
+
   /* ── Brand Blues ── */
   --navy:#0D1F3C; --navy-2:#162B52; --navy-3:#1D3664;
   --blue:#1D6FE0; --blue-bright:#3B8FEF; --blue-dark:#0F52C0; --grey:#6D6D6F;
@@ -228,6 +237,14 @@ img{max-width:100%;display:block}
 .section-dark::before{content:"";position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:52px 52px;-webkit-mask-image:radial-gradient(1000px 600px at 50% 0,#000,transparent 80%);mask-image:radial-gradient(1000px 600px at 50% 0,#000,transparent 80%)}
 .section-warm{background:var(--bg-warm)}
 .section-2{background:var(--bg-2)}
+/* Rich section colour classes */
+.section-purple{background:var(--sec-purple)}
+.section-mint{background:var(--sec-mint)}
+.section-amber{background:var(--sec-amber)}
+.section-rose{background:var(--sec-rose)}
+.section-sky{background:var(--sec-sky)}
+.section-indigo{background:var(--sec-indigo)}
+.section-slate{background:var(--sec-slate)}
 .sec-head{max-width:660px}
 .sec-head.center{margin:0 auto;text-align:center}
 .sec-head h2{font-size:clamp(26px,3.6vw,48px);font-weight:800;letter-spacing:-.03em;margin-top:14px}
@@ -534,17 +551,11 @@ img{max-width:100%;display:block}
 /* ============================================================
    FLOATING AI ASSISTANT + mobile bar
    ============================================================ */
-/* FAB stack: fixed container bottom-right */
-.fab-stack{position:fixed;right:24px;bottom:24px;z-index:80;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+.fab{position:fixed;right:24px;bottom:24px;z-index:80;background:linear-gradient(180deg,#162B52,#080F1E);color:#fff;border:0;border-radius:999px;height:56px;padding:0 22px 0 15px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 20px 40px -12px rgba(8,15,30,.6);font-family:var(--font);font-weight:700;font-size:14.5px;transition:transform .2s}
 
-/* Row 1: WhatsApp + Partner side by side */
-.fab-row{display:flex;align-items:center;gap:10px;}
-
-/* Main AI chat FAB */
-.fab{background:linear-gradient(180deg,#162B52,#080F1E);color:#fff;border:0;border-radius:999px;height:56px;padding:0 22px 0 15px;display:flex;align-items:center;gap:11px;cursor:pointer;box-shadow:0 20px 40px -12px rgba(8,15,30,.6);font-family:var(--font);font-weight:700;font-size:14.5px;transition:transform .2s}
-
-/* WhatsApp FAB — inline in fab-row */
+/* WhatsApp FAB */
 .fab-wa{
+  position:fixed;right:24px;bottom:92px;z-index:80;
   width:48px;height:48px;border-radius:50%;
   background:#25D366;color:#fff;
   display:grid;place-items:center;
@@ -554,8 +565,9 @@ img{max-width:100%;display:block}
 }
 .fab-wa:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(37,211,102,.55)}
 
-/* Partner With Us FAB — inline in fab-row */
+/* Partner With Us FAB */
 .fab-partner{
+  position:fixed;right:24px;bottom:148px;z-index:80;
   background:#fff;color:var(--navy);border:1.5px solid var(--line);
   border-radius:999px;height:44px;padding:0 16px 0 13px;
   display:flex;align-items:center;gap:9px;
@@ -668,7 +680,6 @@ img{max-width:100%;display:block}
   .section-sm{padding:44px 0}
   .mobile-bar{display:flex;flex-direction:row;position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:10px 14px;gap:8px;box-shadow:0 -2px 16px rgba(13,31,60,.08)}
   .mb-btn{flex:1;height:46px;font-size:13.5px}
-  .fab-stack{display:none}
   .fab{display:none}
   .fab-wa{display:none}
   .fab-partner{display:none}
@@ -759,7 +770,8 @@ img{max-width:100%;display:block}
   /* contact info rows */
   .contact-info .ci-row{flex-direction:column;gap:8px}
   /* fab label hide on small */
-  .fab{padding:0 18px 0 13px;}
+  .fab span{display:none}
+  .fab{padding:0 14px;width:50px;border-radius:50%}
   /* section */
   .section{padding:48px 0}
   .section-sm{padding:36px 0}
@@ -795,7 +807,6 @@ img{max-width:100%;display:block}
   /* assistant full-screen on mobile, keep edges flush */
   .assistant{left:0;right:0}
   /* fab hidden on mobile */
-  .fab-stack{display:none}
   .fab{display:none}
   .fab-wa{display:none}
   .fab-partner{display:none}
