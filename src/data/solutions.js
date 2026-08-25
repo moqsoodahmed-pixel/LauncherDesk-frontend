@@ -83,7 +83,7 @@ export const BUSINESS_TYPES = {
       { title: 'Register the right entity', body: "Private Limited is the common choice if you'll raise funding; OPC works for solo sellers testing the waters.", href: '/services/private-limited-company-registration' },
       { title: 'GST registration', body: "Mandatory for online sellers regardless of turnover — most marketplaces won't onboard you without it.", href: '/services/gst-registration' },
       { title: 'Trademark your brand', body: 'Protect your store or product name early — e-commerce is copycat-prone.', href: '/services/trademark-registration' },
-      { title: 'Website & payment gateway', body: 'A converting storefront and a reliable payment gateway integration.', href: '/services/business-automation' },
+      { title: 'Website & payment gateway', body: 'A converting storefront and a reliable payment gateway integration.', href: '/services/ecommerce-website' },
       { title: 'Accounting & compliance', body: 'Ongoing books and GST returns as orders start flowing in.', href: '/services/accounting' },
       { title: 'Marketing', body: 'Demand generation once the foundation is in place.', href: '/services/digital-marketing' },
     ],

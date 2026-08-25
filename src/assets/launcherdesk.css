@@ -97,10 +97,13 @@ img{max-width:100%;display:block}
 /* ============================================================
    HEADER
    ============================================================ */
-.site-header{position:sticky;top:0;z-index:60;background:rgba(245,248,255,.94);
-  backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px);
-  border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(255,255,255,.7) inset}
-.header-in{max-width:1380px;margin:0 auto;padding:0 32px;height:72px;display:flex;align-items:center;gap:0}
+.site-header{position:sticky;top:0;z-index:60;background:transparent;
+  border-bottom:none;padding:10px 0}
+.header-in{max-width:1380px;margin:0 auto;padding:0 32px;height:56px;display:flex;align-items:center;gap:0;
+  background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-radius:16px;border:1px solid rgba(255,255,255,.55);
+  box-shadow:0 4px 30px rgba(13,31,60,.08),0 1px 0 rgba(255,255,255,.9) inset;
+  padding:0 24px}
 .brand{display:flex;align-items:center;gap:10px;flex:none;margin-right:36px}
 .brand .mk{width:34px;height:34px;border-radius:9px;background:var(--grad);display:grid;place-items:center;box-shadow:var(--sh-blue)}
 .brand .mk svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2}
@@ -535,12 +538,12 @@ img{max-width:100%;display:block}
 .contact-info .ci-row .ic-box svg{width:20px;height:20px;stroke:var(--blue-dark);fill:none;stroke-width:2}
 .contact-info .ci-row b{font-family:var(--font);font-size:15px;color:var(--navy);display:block}
 .contact-info .ci-row span{font-size:14px;color:var(--text-2)}
-.form{background:#fff;border-radius:20px;padding:clamp(20px,4vw,32px);box-shadow:var(--sh)}
-.field{margin-bottom:16px}
-.field label{font-family:var(--font);font-weight:600;font-size:13.5px;color:var(--navy);display:block;margin-bottom:7px}
-.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:13px 15px;font-family:var(--font-body);font-size:15px;color:var(--text);outline:none;background:var(--bg);transition:.16s}
+.form{background:#fff;border-radius:16px;padding:clamp(18px,3vw,26px);box-shadow:var(--sh)}
+.field{margin-bottom:12px}
+.field label{font-family:var(--font);font-weight:600;font-size:13px;color:var(--navy);display:block;margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 13px;font-family:var(--font-body);font-size:14px;color:var(--text);outline:none;background:var(--bg);transition:.16s}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue-bright);background:#fff;box-shadow:0 0 0 3px rgba(36,154,226,.13)}
-.field textarea{min-height:110px;resize:vertical}
+.field textarea{min-height:80px;resize:vertical}
 .field-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-check{display:flex;align-items:flex-start;gap:9px;margin-top:16px;font-size:13.5px;color:var(--text-2);line-height:1.5}
 .form-check input[type=checkbox]{width:17px;height:17px;margin-top:1px;accent-color:var(--blue-dark);flex:none;cursor:pointer}
@@ -659,7 +662,7 @@ img{max-width:100%;display:block}
    ============================================================ */
 @media(max-width:1280px){
   .wrap,.wrap-tight{padding:0 24px}
-  .header-in{padding:0 18px}
+  .header-in{padding:0 18px;border-radius:14px;margin:0 8px}
   .svc-layout{grid-template-columns:200px 1fr 240px;gap:32px}
   .lifecycle{gap:36px}
   .lc-inner{gap:36px}
@@ -753,7 +756,7 @@ img{max-width:100%;display:block}
   .or-hero-grid { grid-template-columns: 1fr; gap: 32px; }
   .or-hero-badges { flex-direction: column; gap: 12px; }
 
-  .header-in{padding:0 16px;height:60px}
+  .header-in{padding:0 16px;height:52px;border-radius:12px;margin:0 8px}
   .brand .txt{font-size:17px}
   .page-hero{padding:38px 0 32px}
   .proof{grid-template-columns:1fr 1fr}

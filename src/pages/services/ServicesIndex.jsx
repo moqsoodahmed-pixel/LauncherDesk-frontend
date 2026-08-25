@@ -224,6 +224,7 @@ export default function ServicesIndex() {
   useEffect(() => {
     const s = document.getElementById('svcSearch')
     const list = document.getElementById('svcList')
+    const allList = document.getElementById('allSvcList')
     const noRes = document.getElementById('noRes')
     if (!s) return
     const handler = () => {
@@ -234,6 +235,13 @@ export default function ServicesIndex() {
         c.style.display = m ? '' : 'none'
         if (m) shown++
       })
+      if (allList) {
+        allList.querySelectorAll('[data-allsvc]').forEach(c => {
+          const m = q === '' || c.dataset.allsvc.includes(q) || c.textContent.toLowerCase().includes(q)
+          c.style.display = m ? '' : 'none'
+          if (m) shown++
+        })
+      }
       noRes.style.display = shown ? 'none' : 'block'
     }
     s.addEventListener('input', handler)
@@ -299,9 +307,9 @@ export default function ServicesIndex() {
             <span className="eyebrow">All services</span>
             <h2 style={{ fontSize: 'clamp(24px,3vw,34px)' }}>Browse every service</h2>
           </div>
-          <div className="grid-3" style={{ marginTop: 28 }}>
+          <div className="grid-3" id="allSvcList" style={{ marginTop: 28 }}>
             {ALL_SERVICES.map(svc => (
-              <a key={svc.href} className="card reveal-up" href={svc.href}>
+              <a key={svc.href} className="card reveal-up" data-allsvc={`${svc.title.toLowerCase()} ${svc.desc.toLowerCase()}`} href={svc.href}>
                 <h3>{svc.title}</h3>
                 <p>{svc.desc}</p>
                 <span className="arrow">View →</span>

@@ -65,10 +65,10 @@ function MegaRegistrations() {
             <div className="mp-panel-head">IPR &amp; Trademark</div>
             <div className="mp-svc-grid">
               <SvcLink href="/services/trademark-registration" title="Trademark Registration" desc="Protect your brand name &amp; logo" />
-              <SvcLink href="/services/trademark-registration" title="Trademark Objection" desc="Respond to objection notices" />
-              <SvcLink href="/services/trademark-registration" title="Patent Registration" desc="Protect your invention" />
-              <SvcLink href="/services/trademark-registration" title="Copyright Registration" desc="Protect creative works" />
-              <SvcLink href="/services/trademark-registration" title="IP &amp; Trademark Management" desc="Ongoing IP portfolio management" />
+              <SvcLink href="/services/trademark-objection" title="Trademark Objection" desc="Respond to objection notices" />
+              <SvcLink href="/services/patent-registration" title="Patent Registration" desc="Protect your invention" />
+              <SvcLink href="/services/copyright-registration" title="Copyright Registration" desc="Protect creative works" />
+              <SvcLink href="/services/ip-trademark-management" title="IP &amp; Trademark Management" desc="Ongoing IP portfolio management" />
             </div>
           </div>
         </div>
@@ -107,8 +107,8 @@ function MegaIT() {
           <div className="mp-panel mp-panel--active" data-mp-panel="web">
             <div className="mp-panel-head">Website Development</div>
             <div className="mp-svc-grid">
-              <SvcLink href="/services/website-development" title="Static Website Development" desc="Fast, lightweight brochure sites" />
-              <SvcLink href="/services/website-development" title="Dynamic Website Development" desc="CMS-powered, updatable sites" />
+              <SvcLink href="/services/static-website" title="Static Website Development" desc="Fast, lightweight brochure sites" />
+              <SvcLink href="/services/dynamic-website" title="Dynamic Website Development" desc="CMS-powered, updatable sites" />
               <SvcLink href="/services/ecommerce-website" title="E-commerce Website Development" desc="Online store with payment &amp; catalogue" />
               <SvcLink href="/services/crm-setup-lead-management" title="CRM Website or Portal Development" desc="Customer portals &amp; dashboards" />
             </div>
@@ -124,14 +124,37 @@ function MegaIT() {
             <div className="mp-panel-head">Marketing &amp; Sales</div>
             <div className="mp-grp-grid">
               {[
-                ['Branding &amp; Creative', ['Brand Identity &amp; Strategy','Logo &amp; Visual Design','Marketing Creatives','Presentation &amp; Sales Deck Design']],
-                ['Digital Marketing', ['SEO &amp; Search Marketing','Social Media Marketing','Performance Marketing','Content Marketing','Influencer Marketing']],
-                ['WhatsApp &amp; Customer Engagement', ['WhatsApp Business API','WhatsApp Automation','WhatsApp Campaigns','Email Marketing','SMS Marketing']],
-                ['CRM &amp; Marketing Automation', ['CRM Setup &amp; Integration','Lead Management','Marketing Automation','Workflow Automation','Analytics &amp; Reporting']],
+                ['Branding &amp; Creative', [
+                  {name:'Brand Identity &amp; Strategy',href:'/services/branding-logo-design'},
+                  {name:'Logo &amp; Visual Design',href:'/services/branding-logo-design'},
+                  {name:'Marketing Creatives',href:'/services/branding-logo-design'},
+                  {name:'Presentation &amp; Sales Deck Design',href:'/services/branding-logo-design'},
+                ]],
+                ['Digital Marketing', [
+                  {name:'SEO &amp; Search Marketing',href:'/services/seo-marketing'},
+                  {name:'Social Media Marketing',href:'/services/social-media-management'},
+                  {name:'Performance Marketing',href:'/services/google-ads-paid-marketing'},
+                  {name:'Content Marketing',href:'/services/content-marketing'},
+                  {name:'Influencer Marketing',href:'/services/digital-marketing'},
+                ]],
+                ['WhatsApp &amp; Customer Engagement', [
+                  {name:'WhatsApp Business API',href:'/services/whatsapp-business-api'},
+                  {name:'WhatsApp Automation',href:'/services/whatsapp-business-api'},
+                  {name:'WhatsApp Campaigns',href:'/services/whatsapp-business-api'},
+                  {name:'Email Marketing',href:'/services/email-marketing'},
+                  {name:'SMS Marketing',href:'/services/digital-marketing'},
+                ]],
+                ['CRM &amp; Marketing Automation', [
+                  {name:'CRM Setup &amp; Integration',href:'/services/crm-setup-lead-management'},
+                  {name:'Lead Management',href:'/services/crm-setup-lead-management'},
+                  {name:'Marketing Automation',href:'/services/business-automation'},
+                  {name:'Workflow Automation',href:'/services/business-automation'},
+                  {name:'Analytics &amp; Reporting',href:'/services/digital-marketing'},
+                ]],
               ].map(([group, items]) => (
                 <div key={group} className="mp-grp">
                   <div className="mp-grp-h" dangerouslySetInnerHTML={{__html: group}} />
-                  {items.map(item => <SvcLink key={item} href="/services/digital-marketing" title={item} />)}
+                  {items.map(item => <SvcLink key={item.name} href={item.href} title={item.name} />)}
                 </div>
               ))}
             </div>

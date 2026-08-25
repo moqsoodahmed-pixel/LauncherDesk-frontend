@@ -157,16 +157,15 @@ export default function AIAssistant() {
   useEffect(() => { window.LDAI = { open: openAI, close: closeAI, send } })
 
   useEffect(() => {
-    const pairs = []
-    document.querySelectorAll('[data-open-ai]').forEach(b => {
-      const h = e => { e.preventDefault(); window.LDAI?.open() }
-      b.addEventListener('click', h); pairs.push({ b, h })
-    })
-    document.querySelectorAll('[data-open-drawer]').forEach(b => {
-      const h = () => openDrawer()
-      b.addEventListener('click', h); pairs.push({ b, h })
-    })
-    return () => pairs.forEach(({ b, h }) => b.removeEventListener('click', h))
+    // Use event delegation on document to catch all data-open-ai clicks
+    const handleDocClick = (e) => {
+      const aiBtn = e.target.closest('[data-open-ai]')
+      if (aiBtn) { e.preventDefault(); window.LDAI?.open(); return }
+      const drawerBtn = e.target.closest('[data-open-drawer]')
+      if (drawerBtn) { openDrawer(); return }
+    }
+    document.addEventListener('click', handleDocClick)
+    return () => document.removeEventListener('click', handleDocClick)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -199,7 +198,7 @@ export default function AIAssistant() {
         {/* Row 1: WhatsApp + Partner With Us — side by side */}
         <div className="fab-row">
           <a
-            href="https://wa.me/918458845859"
+            href="https://wa.me/918548854859"
             target="_blank"
             rel="noopener noreferrer"
             className="fab-wa"

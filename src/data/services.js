@@ -403,6 +403,209 @@ export const SERVICES = {
     ]
   },
 
+  'trademark-objection': {
+    title: 'Trademark Objection Response',
+    metaTitle: 'Trademark Objection Response — LauncherDesk',
+    metaDesc: 'Received a trademark objection? LauncherDesk helps you draft and file a strong response to protect your brand application.',
+    eyebrow: 'IPR & Trademark',
+    crumbCategory: 'IPR & Trademark',
+    lead: 'If your trademark application has been objected to by the Registrar, you need to file a well-drafted response within 30 days. We handle the entire objection response process.',
+    priceCard: { label: 'Professional fee from', price: '₹4,999', sub: '+ government fee & taxes' },
+    helpCard: { title: 'Got an objection notice?', body: 'Share the examination report with us and we will assess your case.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>A trademark objection is raised by the Examiner when they find issues with your application — such as similarity to existing marks, lack of distinctiveness or incorrect classification. You have 30 days to file a response. A well-crafted response backed by evidence significantly increases your chances of acceptance.</p><p>LauncherDesk reviews the objection, drafts a legally sound response and files it on your behalf — so your brand stays protected.</p>' },
+      who: { heading: "Who it's for", items: [
+        'Businesses that received a trademark examination report with objections',
+        'Applicants whose trademark was marked as "Objected" on the IP India portal',
+        'Brands whose marks were challenged for similarity or descriptiveness',
+      ]},
+      process: { heading: 'Step-by-step process', steps: [
+        { title: 'Review objection report', body: 'We analyse the examination report and identify the grounds of objection.' },
+        { title: 'Draft reply with evidence', body: 'Our IP team drafts a strong response citing case law, distinctiveness arguments and supporting evidence.' },
+        { title: 'File the response', body: 'The reply is filed with the Trademark Registry within the statutory deadline.' },
+        { title: 'Track outcome', body: 'We follow up and keep you updated on the status until the matter is resolved.' },
+      ]},
+      pricing: { heading: 'Transparent pricing', rows: [
+        ['Professional fee', 'From ₹4,999 — includes review, drafting and filing'],
+        ['Government fee', 'Nil for objection response'],
+        ['Taxes', 'GST shown separately'],
+      ]},
+      faq: { heading: 'Frequently asked questions', items: [
+        { q: 'What happens if I don\'t reply to the objection?', a: 'If you don\'t respond within 30 days, the Registrar may abandon your trademark application.' },
+        { q: 'What are common grounds for objection?', a: 'Similarity with existing marks, descriptive nature of the mark, incorrect classification or incomplete application details.' },
+        { q: 'Can an objected trademark still get registered?', a: 'Yes — many objected trademarks get accepted after a well-drafted response. The key is providing the right legal arguments and evidence.' },
+      ]}
+    },
+    related: [
+      { href: '/services/trademark-registration', label: 'Trademark Registration', note: 'Apply for a new trademark.' },
+      { href: '/services/ip-trademark-management', label: 'IP Management', note: 'Ongoing portfolio protection.' },
+    ]
+  },
+
+  'patent-registration': {
+    title: 'Patent Registration',
+    metaTitle: 'Patent Registration India — LauncherDesk',
+    metaDesc: 'File a patent application in India with LauncherDesk. Protect your invention with a provisional or complete patent filing.',
+    eyebrow: 'IPR & Trademark',
+    crumbCategory: 'IPR & Trademark',
+    lead: 'Protect your invention with a legally filed patent. We handle patent search, drafting, filing and prosecution — from provisional application to grant.',
+    priceCard: { label: 'Professional fee from', price: '₹15,999', sub: '+ government fee & taxes' },
+    helpCard: { title: 'Not sure if your idea is patentable?', body: 'Share your invention concept and we will assess patentability.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>A patent gives you exclusive rights to your invention for 20 years — preventing others from making, using or selling it without your permission. In India, patents are granted by the Indian Patent Office under the Patents Act, 1970.</p><p>LauncherDesk works with registered patent agents to handle the entire process — from prior art search and drafting to filing and prosecution.</p>' },
+      who: { heading: "Who it's for", items: [
+        'Inventors and innovators with a new product, process or technology',
+        'Startups building proprietary technology or algorithms',
+        'Manufacturers with unique production methods or designs',
+        'R&D teams that need IP protection before publishing or licensing',
+      ]},
+      included: { heading: "What's included", items: [
+        'Patentability assessment and prior art search',
+        'Drafting of patent specification (provisional or complete)',
+        'Filing with the Indian Patent Office',
+        'Response to examination reports and objections',
+        'Prosecution support through to grant',
+      ]},
+      process: { heading: 'Step-by-step process', steps: [
+        { title: 'Initial consultation', body: 'We understand your invention, assess patentability and recommend the right filing strategy.' },
+        { title: 'Prior art search', body: 'Search existing patents and publications to check novelty and inventive step.' },
+        { title: 'Drafting', body: 'Our patent agents draft the specification, claims and drawings.' },
+        { title: 'Filing', body: 'Application filed with the Indian Patent Office — provisional or complete.' },
+        { title: 'Examination & prosecution', body: 'We respond to examination reports and office actions on your behalf.' },
+      ]},
+      pricing: { heading: 'Transparent pricing', rows: [
+        ['Professional fee', 'From ₹15,999 — includes search, drafting and filing'],
+        ['Government fee', 'Varies by applicant type (individual, startup, company)'],
+        ['Taxes', 'GST shown separately'],
+      ]},
+      faq: { heading: 'Frequently asked questions', items: [
+        { q: 'How long does patent registration take?', a: 'The process typically takes 2–5 years from filing to grant, though a provisional application gives you protection from the filing date.' },
+        { q: 'What can be patented in India?', a: 'Any new invention involving a product or process that is novel, non-obvious and has industrial application. Software per se is not patentable, but software-driven inventions may be.' },
+        { q: 'What is the difference between provisional and complete specification?', a: 'A provisional application establishes your priority date and gives you 12 months to file the complete specification with full claims and details.' },
+      ]}
+    },
+    related: [
+      { href: '/services/trademark-registration', label: 'Trademark Registration', note: 'Protect your brand alongside your invention.' },
+      { href: '/services/copyright-registration', label: 'Copyright Registration', note: 'Protect the creative expression of your work.' },
+    ]
+  },
+
+  'copyright-registration': {
+    title: 'Copyright Registration',
+    metaTitle: 'Copyright Registration India — LauncherDesk',
+    metaDesc: 'Register your copyright in India. Protect literary, artistic, musical works, software code and creative content with LauncherDesk.',
+    eyebrow: 'IPR & Trademark',
+    crumbCategory: 'IPR & Trademark',
+    lead: 'Copyright registration gives you legal proof of ownership over your creative works — books, music, art, software, films and more. We handle the complete filing process.',
+    priceCard: { label: 'Professional fee from', price: '₹5,999', sub: '+ government fee & taxes' },
+    helpCard: { title: 'Need to protect your creative work?', body: 'Tell us what you have created and we will guide you.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>Copyright is an automatic right that comes into existence when you create an original work — but registration provides legal evidence of ownership that is essential for enforcement. In India, copyright is registered under the Copyright Act, 1957.</p><p>LauncherDesk handles the full copyright registration process including documentation, filing and follow-up with the Copyright Office.</p>' },
+      who: { heading: "Who it's for", items: [
+        'Authors, writers and content creators',
+        'Musicians, composers and filmmakers',
+        'Software developers and SaaS companies',
+        'Graphic designers, artists and photographers',
+        'Businesses that produce original marketing content or training material',
+      ]},
+      included: { heading: "What's included", items: [
+        'Review and classification of the work',
+        'Preparation of application and statement of particulars',
+        'Filing with the Copyright Office',
+        'Response to any discrepancies raised during examination',
+        'Certificate of registration on approval',
+      ]},
+      process: { heading: 'Step-by-step process', steps: [
+        { title: 'Share your work', body: 'You provide the creative work and details about authorship and ownership.' },
+        { title: 'Documentation', body: 'We prepare the copyright application and supporting documents.' },
+        { title: 'Filing', body: 'Application filed with the Copyright Office.' },
+        { title: 'Examination period', body: '30-day mandatory waiting period for objections, then examination.' },
+        { title: 'Registration', body: 'Copyright certificate issued upon approval.' },
+      ]},
+      pricing: { heading: 'Transparent pricing', rows: [
+        ['Professional fee', 'From ₹5,999 — includes documentation and filing'],
+        ['Government fee', '₹500 per work (literary/artistic) to ₹5,000 (cinematographic)'],
+        ['Taxes', 'GST shown separately'],
+      ]},
+      faq: { heading: 'Frequently asked questions', items: [
+        { q: 'Is copyright registration mandatory?', a: 'No — copyright exists automatically on creation. But registration provides legal proof of ownership which is essential if you ever need to enforce your rights.' },
+        { q: 'How long does copyright protection last?', a: 'In India, copyright lasts for the lifetime of the author plus 60 years. For anonymous works and government works, the term is 60 years from publication.' },
+        { q: 'Can I copyright my website content?', a: 'Yes — original website content, code, designs and text can all be copyrighted.' },
+      ]}
+    },
+    related: [
+      { href: '/services/trademark-registration', label: 'Trademark Registration', note: 'Protect your brand name too.' },
+      { href: '/services/patent-registration', label: 'Patent Registration', note: 'For inventions and processes.' },
+    ]
+  },
+
+  'ip-trademark-management': {
+    title: 'IP & Trademark Management',
+    metaTitle: 'IP & Trademark Portfolio Management — LauncherDesk',
+    metaDesc: 'Ongoing intellectual property management — trademark renewals, monitoring, enforcement and portfolio strategy with LauncherDesk.',
+    eyebrow: 'IPR & Trademark',
+    crumbCategory: 'IPR & Trademark',
+    lead: 'Your intellectual property needs ongoing management — renewals, monitoring for infringement, enforcement and portfolio strategy. We keep your IP assets protected and up to date.',
+    priceCard: { label: 'Professional fee from', price: 'Custom quote', sub: 'Based on portfolio size' },
+    helpCard: { title: 'Have multiple trademarks to manage?', body: 'Tell us about your portfolio and we will create a management plan.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>Filing a trademark or patent is only the beginning. IP assets need active management — timely renewals, infringement monitoring, opposition responses and strategic portfolio decisions. Missing a renewal deadline can void your protection entirely.</p><p>LauncherDesk provides ongoing IP management for businesses with one or more registered trademarks, patents or copyrights — so nothing slips through.</p>' },
+      who: { heading: "Who it's for", items: [
+        'Businesses with registered trademarks that need renewal tracking',
+        'Companies with multiple IP assets across different classes or jurisdictions',
+        'Brands experiencing infringement or counterfeit issues',
+        'Growing companies that need IP strategy alongside business growth',
+      ]},
+      included: { heading: "What's included", items: [
+        'Trademark renewal reminders and filing',
+        'IP portfolio audit and strategic review',
+        'Infringement monitoring and cease-and-desist notices',
+        'Opposition filings against conflicting marks',
+        'Annual compliance and status reporting',
+        'Advisory on new filings and international expansion',
+      ]},
+      process: { heading: 'How it works', steps: [
+        { title: 'Portfolio audit', body: 'We review all your existing IP assets — trademarks, patents, copyrights — and their current status.' },
+        { title: 'Management plan', body: 'We create a renewal calendar, monitoring plan and enforcement strategy.' },
+        { title: 'Ongoing management', body: 'Renewals filed on time, infringements flagged, and new filings recommended as your business grows.' },
+        { title: 'Quarterly review', body: 'Regular reporting on portfolio status and strategic recommendations.' },
+      ]},
+      pricing: { heading: 'Transparent pricing', rows: [
+        ['Professional fee', 'Custom quote based on portfolio size and services required'],
+        ['Government fees', 'Renewal and filing fees as applicable, shown separately'],
+        ['Taxes', 'GST shown separately'],
+      ]},
+      faq: { heading: 'Frequently asked questions', items: [
+        { q: 'When does a trademark need to be renewed?', a: 'In India, a trademark is valid for 10 years from the date of application and must be renewed before expiry. We track this and file renewal well in advance.' },
+        { q: 'What happens if someone copies my trademark?', a: 'We can issue cease-and-desist notices, file opposition proceedings and support legal enforcement action against infringers.' },
+        { q: 'Do I need this if I only have one trademark?', a: 'Even a single trademark needs renewal tracking and monitoring. Our service scales from one mark to hundreds.' },
+      ]}
+    },
+    related: [
+      { href: '/services/trademark-registration', label: 'Trademark Registration', note: 'Register a new trademark.' },
+      { href: '/services/trademark-objection', label: 'Trademark Objection', note: 'Handle objections to your application.' },
+    ]
+  },
+
   'roc-compliance': {
     title: 'ROC & Annual Compliance',
     metaTitle: 'ROC & Annual Compliance — LauncherDesk',
@@ -612,6 +815,167 @@ export const SERVICES = {
       { href: '/solutions/business-growth', label: 'Business Growth', note: 'The full growth solution.' },
     ]
   },
+
+  'seo-marketing': {
+    title: 'SEO & Search Marketing',
+    metaTitle: 'SEO & Search Marketing Services India | LauncherDesk',
+    metaDesc: 'Organic search growth, keyword strategy, on-page SEO and content optimisation for Indian businesses. Get found on Google.',
+    eyebrow: 'GROW — Marketing',
+    crumbCategory: 'GROW',
+    lead: 'Get found on Google by the people searching for exactly what you offer. We build and execute SEO strategies that drive organic traffic and qualified leads.',
+    priceCard: { label: 'Monthly retainer from', price: '₹14,999/mo', sub: '+ taxes' },
+    helpCard: { title: 'Want to rank higher on Google?', body: 'Share your website and target keywords — we will audit and recommend.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>Search Engine Optimisation (SEO) is the process of improving your website\'s visibility on Google and other search engines. When done right, it becomes the most cost-effective customer acquisition channel — bringing in qualified leads who are actively searching for what you sell.</p><p>LauncherDesk provides technical SEO, on-page optimisation, content strategy and link building tailored for Indian businesses.</p>' },
+      who: { heading: "Who it's for", items: [
+        'Businesses with a website that isn\'t generating enough organic traffic',
+        'Companies in competitive markets that need to outrank competitors',
+        'E-commerce stores that want organic product visibility',
+        'Service businesses targeting local search (e.g. "CA firm in Bangalore")',
+      ]},
+      included: { heading: "What's included", items: [
+        'Technical SEO audit and fixes (speed, structure, crawlability)',
+        'Keyword research and strategy',
+        'On-page SEO (meta tags, headings, internal linking, schema)',
+        'Content optimisation and blog strategy',
+        'Google Business Profile optimisation (for local SEO)',
+        'Monthly performance reports and keyword tracking',
+      ]},
+      process: { heading: 'Step-by-step process', steps: [
+        { title: 'SEO audit', body: 'We audit your website for technical issues, content gaps and competitive positioning.' },
+        { title: 'Keyword strategy', body: 'Research and prioritise keywords based on volume, intent and competition.' },
+        { title: 'On-page optimisation', body: 'Implement technical fixes, meta tags, content improvements and schema markup.' },
+        { title: 'Content execution', body: 'Publish optimised content targeting your priority keywords.' },
+        { title: 'Monthly reporting', body: 'Track rankings, traffic and leads with transparent monthly reports.' },
+      ]},
+      pricing: { heading: 'Transparent pricing', rows: [
+        ['Monthly retainer', 'From ₹14,999/month — includes audit, strategy and ongoing optimisation'],
+        ['Setup', 'One-time audit and setup included in the first month'],
+        ['Taxes', 'GST shown separately'],
+      ]},
+      faq: { heading: 'Frequently asked questions', items: [
+        { q: 'How long does SEO take to show results?', a: 'Typically 3–6 months for meaningful organic traffic improvements. Some quick wins (technical fixes, Google Business Profile) show results within weeks.' },
+        { q: 'Do you guarantee first page rankings?', a: 'No legitimate SEO provider can guarantee specific rankings. We focus on sustainable organic growth through best practices.' },
+        { q: 'Can you do SEO for a new website?', a: 'Yes — in fact, starting SEO from the beginning is ideal. We can build your website with SEO in mind from day one.' },
+      ]}
+    },
+    related: [
+      { href: '/services/content-marketing', label: 'Content Marketing', note: 'Fuel your SEO with strategic content.' },
+      { href: '/services/google-ads-paid-marketing', label: 'Google Ads', note: 'Combine organic with paid for faster results.' },
+      { href: '/services/website-development', label: 'Website Development', note: 'Need a website to optimise?' },
+    ]
+  },
+
+  'content-marketing': {
+    title: 'Content Marketing',
+    metaTitle: 'Content Marketing Services India | LauncherDesk',
+    metaDesc: 'Strategic content marketing for Indian businesses. Blog posts, articles, whitepapers and thought leadership content that drives traffic and builds authority.',
+    eyebrow: 'GROW — Marketing',
+    crumbCategory: 'GROW',
+    lead: 'Build authority, drive organic traffic and generate leads with a strategic content marketing plan — blog posts, articles, case studies and thought leadership executed consistently.',
+    priceCard: { label: 'Monthly retainer from', price: '₹12,999/mo', sub: '+ taxes' },
+    helpCard: { title: 'Need a content strategy?', body: 'Tell us about your business and target audience — we will propose a plan.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>Content marketing is the practice of creating and distributing valuable, relevant content to attract and retain your target audience. It builds brand authority, improves SEO and generates leads over time — at a fraction of the cost of paid advertising.</p><p>LauncherDesk creates content strategies and executes them consistently — from keyword-driven blog posts to industry thought leadership.</p>' },
+      who: { heading: "Who it's for", items: [
+        'B2B companies that need to build thought leadership',
+        'Startups that want to educate their market',
+        'E-commerce brands that need product-focused content',
+        'Service businesses that want to rank for industry keywords',
+      ]},
+      included: { heading: "What's included", items: [
+        'Content strategy and editorial calendar',
+        'Keyword-driven blog posts (4–8 per month)',
+        'Article and long-form content creation',
+        'Content optimisation for SEO',
+        'Distribution guidance (social, email, syndication)',
+        'Monthly performance reporting',
+      ]},
+      process: { heading: 'Step-by-step process', steps: [
+        { title: 'Strategy session', body: 'We understand your audience, goals and competitive landscape.' },
+        { title: 'Content calendar', body: 'Monthly editorial plan with topics, keywords and publishing schedule.' },
+        { title: 'Creation', body: 'Our writers produce SEO-optimised, industry-relevant content.' },
+        { title: 'Publishing & distribution', body: 'Content published on your platforms and distributed across channels.' },
+      ]},
+      pricing: { heading: 'Transparent pricing', rows: [
+        ['Monthly retainer', 'From ₹12,999/month — includes strategy and content creation'],
+        ['Taxes', 'GST shown separately'],
+      ]},
+      faq: { heading: 'Frequently asked questions', items: [
+        { q: 'Do you write the content or do we?', a: 'We write all content. You review and approve before publishing.' },
+        { q: 'What types of content do you create?', a: 'Blog posts, articles, case studies, whitepapers, social media content and email newsletters.' },
+        { q: 'How do you ensure content quality?', a: 'Every piece is researched, SEO-optimised and reviewed by editors before delivery.' },
+      ]}
+    },
+    related: [
+      { href: '/services/seo-marketing', label: 'SEO & Search Marketing', note: 'Content + SEO work best together.' },
+      { href: '/services/social-media-management', label: 'Social Media', note: 'Distribute your content on social platforms.' },
+    ]
+  },
+
+  'email-marketing': {
+    title: 'Email Marketing',
+    metaTitle: 'Email Marketing Services India | LauncherDesk',
+    metaDesc: 'Email marketing setup, automation and campaigns for Indian businesses. Newsletter design, drip campaigns and engagement tracking.',
+    eyebrow: 'GROW — Marketing',
+    crumbCategory: 'GROW',
+    lead: 'Reach your audience directly in their inbox. We set up email marketing systems, design templates, create drip campaigns and help you nurture leads at scale.',
+    priceCard: { label: 'Monthly retainer from', price: '₹7,999/mo', sub: '+ tool costs & taxes' },
+    helpCard: { title: 'Want to start email marketing?', body: 'Tell us your audience size and goals — we will recommend the right setup.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>Email marketing remains one of the highest-ROI channels for businesses. It lets you communicate directly with leads and customers — promoting offers, sharing content, nurturing relationships and driving repeat purchases.</p><p>LauncherDesk handles the full stack: platform setup, template design, list management, automation flows and campaign execution.</p>' },
+      who: { heading: "Who it's for", items: [
+        'E-commerce businesses that need to drive repeat purchases',
+        'B2B companies nurturing leads through long sales cycles',
+        'Service businesses communicating with existing clients',
+        'Startups building and engaging a subscriber base',
+      ]},
+      included: { heading: "What's included", items: [
+        'Email platform setup (Mailchimp, Sendinblue or similar)',
+        'Template design matching your brand',
+        'Automated drip campaigns and welcome sequences',
+        'Newsletter design and sending',
+        'List segmentation and management',
+        'Open rate, click rate and conversion tracking',
+      ]},
+      process: { heading: 'Step-by-step process', steps: [
+        { title: 'Platform setup', body: 'We set up your email marketing platform and configure DNS for deliverability.' },
+        { title: 'Template design', body: 'Branded email templates for campaigns and automated flows.' },
+        { title: 'Automation setup', body: 'Welcome sequences, abandoned cart flows and lead nurturing campaigns.' },
+        { title: 'Ongoing execution', body: 'Regular campaigns designed, written and sent on schedule.' },
+      ]},
+      pricing: { heading: 'Transparent pricing', rows: [
+        ['Monthly retainer', 'From ₹7,999/month — includes design, setup and campaign management'],
+        ['Tool costs', 'Email platform subscription billed separately (varies by list size)'],
+        ['Taxes', 'GST shown separately'],
+      ]},
+      faq: { heading: 'Frequently asked questions', items: [
+        { q: 'Which email platform do you use?', a: 'We work with Mailchimp, Sendinblue, ConvertKit and others. We recommend the best fit based on your audience size and needs.' },
+        { q: 'Can you help grow my email list?', a: 'Yes — we can set up opt-in forms, lead magnets and integrations with your website and social channels.' },
+        { q: 'How do you avoid spam filters?', a: 'Proper DNS configuration (SPF, DKIM, DMARC), clean list management and best practices in content and sending patterns.' },
+      ]}
+    },
+    related: [
+      { href: '/services/whatsapp-business-api', label: 'WhatsApp Business API', note: 'Combine email with WhatsApp outreach.' },
+      { href: '/services/crm-setup-lead-management', label: 'CRM Setup', note: 'Feed email leads into your pipeline.' },
+    ]
+  },
+
   'website-development': {
     title: 'Website Development',
     metaTitle: 'Website Development for Startups & Businesses | LauncherDesk',
@@ -638,12 +1002,24 @@ export const SERVICES = {
         'Small businesses with an outdated or non-existent website',
         'Founders who want a website without managing a separate design agency',
       ]},
-      types: { heading: 'Types of websites', content: `<ul>
-        <li><b>Business / Company website</b> — for professionals, consultants and service businesses. Clean, fast, credibility-building.</li>
-        <li><b>Startup / Product website</b> — for tech, SaaS or product-based startups. Built to capture leads and communicate value.</li>
-        <li><b>E-commerce website</b> — for businesses selling products online. Includes product catalogue, cart and payment integration.</li>
-        <li><b>CRM / Customer portal</b> — for businesses needing login-based dashboards or client portals.</li>
-      </ul>` },
+      types: { heading: 'Types of websites', content: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0">
+        <div style="padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--bg)">
+          <b style="font-size:15px;color:var(--navy);display:block;margin-bottom:6px">Business / Company Website</b>
+          <p style="font-size:14px;color:var(--text-2);line-height:1.6;margin:0">For professionals, consultants and service businesses. Clean, fast, credibility-building.</p>
+        </div>
+        <div style="padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--bg)">
+          <b style="font-size:15px;color:var(--navy);display:block;margin-bottom:6px">Startup / Product Website</b>
+          <p style="font-size:14px;color:var(--text-2);line-height:1.6;margin:0">For tech, SaaS or product-based startups. Built to capture leads and communicate value.</p>
+        </div>
+        <div style="padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--bg)">
+          <b style="font-size:15px;color:var(--navy);display:block;margin-bottom:6px">E-commerce Website</b>
+          <p style="font-size:14px;color:var(--text-2);line-height:1.6;margin:0">For businesses selling products online. Includes product catalogue, cart and payment integration.</p>
+        </div>
+        <div style="padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--bg)">
+          <b style="font-size:15px;color:var(--navy);display:block;margin-bottom:6px">CRM / Customer Portal</b>
+          <p style="font-size:14px;color:var(--text-2);line-height:1.6;margin:0">For businesses needing login-based dashboards or client portals.</p>
+        </div>
+      </div>` },
       included: { heading: "What's included", items: [
         'Requirement discussion and content structure planning',
         'Design — clean, modern, brand-consistent',
@@ -677,6 +1053,118 @@ export const SERVICES = {
       { href: '/services/branding-logo-design', label: 'Branding & Logo Design', note: 'Build a brand identity alongside your website.' },
       { href: '/services/digital-marketing', label: 'Digital Marketing', note: 'Drive traffic to your new website.' },
       { href: '/services/business-automation', label: 'Business Automation', note: 'Add CRM and workflows to your website.' },
+    ]
+  },
+
+  'static-website': {
+    title: 'Static Website Development',
+    metaTitle: 'Static Website Development India | LauncherDesk',
+    metaDesc: 'Fast, lightweight static websites for businesses. Brochure sites, landing pages and portfolio websites. Mobile-first, SEO-ready.',
+    eyebrow: 'BUILD — Technology',
+    crumbCategory: 'BUILD',
+    lead: 'A clean, fast, lightweight website that presents your business professionally — perfect for service businesses, consultants and professionals who need a credible online presence without complexity.',
+    priceCard: { label: 'Professional fee from', price: '₹9,999', sub: '+ taxes, shown separately' },
+    helpCard: { title: 'Not sure if static is right for you?', body: 'Static sites work best when your content doesn\'t change frequently.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>A static website is a fixed-content site that loads extremely fast and costs very little to host. It doesn\'t require a database or CMS — every page is pre-built and served directly to the visitor. This makes it ideal for businesses that need a professional online presence without frequent content updates.</p><p>LauncherDesk builds static websites that are mobile-first, SEO-optimised and designed for conversion — not just aesthetics.</p>' },
+      who: { heading: "Who it's for", items: [
+        'Consultants, freelancers and professionals who need a credibility-building website',
+        'Service businesses with a fixed set of offerings',
+        'New businesses that need an online presence quickly',
+        'Companies that need a simple landing page or brochure site',
+      ]},
+      included: { heading: "What's included", items: [
+        'Up to 5–7 pages (Home, About, Services, Contact, etc.)',
+        'Mobile-first responsive design',
+        'Contact form with WhatsApp integration',
+        'Basic SEO setup (meta tags, sitemap, schema)',
+        'Fast hosting guidance (no server maintenance needed)',
+        'SSL certificate setup',
+        '1 round of revisions',
+      ]},
+      process: { heading: 'Step-by-step process', steps: [
+        { title: 'Requirement discussion', body: 'We understand your business, audience and what you want the site to achieve.' },
+        { title: 'Content planning', body: 'Page structure and content hierarchy planned for conversion.' },
+        { title: 'Design & development', body: 'Clean, modern design built with performance in mind.' },
+        { title: 'Review & launch', body: 'You review, we revise, then deploy to your domain.' },
+      ]},
+      pricing: { heading: 'Transparent pricing', rows: [
+        ['Professional fee', 'From ₹9,999 for a standard 5-page static site'],
+        ['Hosting', 'Near-zero cost — static sites can be hosted free or very cheaply'],
+        ['Taxes', 'GST shown separately'],
+      ]},
+      faq: { heading: 'Frequently asked questions', items: [
+        { q: 'What is the difference between static and dynamic?', a: 'Static websites have fixed content that you can\'t update yourself without code changes. Dynamic websites have a CMS (like WordPress) that lets you update content, add blog posts and manage pages without touching code.' },
+        { q: 'Can I add a blog later?', a: 'Yes — you can upgrade to a dynamic site later. Starting static keeps costs low while you establish your business.' },
+        { q: 'How fast will it load?', a: 'Very fast. Static sites load in under 1 second because there\'s no database or server-side processing.' },
+      ]}
+    },
+    related: [
+      { href: '/services/dynamic-website', label: 'Dynamic Website', note: 'Need a CMS to update content yourself?' },
+      { href: '/services/branding-logo-design', label: 'Branding & Logo Design', note: 'Build your brand identity first.' },
+      { href: '/services/digital-marketing', label: 'Digital Marketing', note: 'Drive traffic to your new site.' },
+    ]
+  },
+
+  'dynamic-website': {
+    title: 'Dynamic Website Development',
+    metaTitle: 'Dynamic Website Development India | LauncherDesk',
+    metaDesc: 'CMS-powered dynamic websites for businesses. WordPress, custom CMS, blog-ready and self-manageable. Built by LauncherDesk.',
+    eyebrow: 'BUILD — Technology',
+    crumbCategory: 'BUILD',
+    lead: 'A CMS-powered website you can update yourself — add blog posts, edit pages, upload images and manage content without touching code. Built for businesses that need ongoing content flexibility.',
+    priceCard: { label: 'Professional fee from', price: '₹19,999', sub: '+ taxes, shown separately' },
+    helpCard: { title: 'Need ongoing content updates?', body: 'Dynamic is the right choice if you blog, add case studies or update offerings regularly.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>A dynamic website is powered by a Content Management System (CMS) like WordPress or a custom-built admin panel. This means you can log in, edit text, add new pages, publish blog posts and upload images — all without developer help.</p><p>LauncherDesk builds dynamic websites that are fast, mobile-first, SEO-friendly and easy for you to manage. We set up the CMS, design the front end, and train you to use it.</p>' },
+      who: { heading: "Who it's for", items: [
+        'Businesses that publish blogs, news or case studies regularly',
+        'Companies with growing service catalogues or portfolios',
+        'Teams that need to update content without waiting for a developer',
+        'Businesses planning content marketing or SEO campaigns',
+      ]},
+      included: { heading: "What's included", items: [
+        'Custom WordPress or CMS-based website',
+        'Admin panel for self-managing content, pages and media',
+        'Blog / news section setup',
+        'Mobile-first responsive design',
+        'Contact forms, WhatsApp integration, social links',
+        'SEO setup (meta tags, sitemap, schema, speed optimisation)',
+        'CMS training session for your team',
+        '1 round of revisions',
+      ]},
+      process: { heading: 'Step-by-step process', steps: [
+        { title: 'Requirement discussion', body: 'We plan the content structure, page types and CMS features you need.' },
+        { title: 'Design mockups', body: 'You approve the design before any development begins.' },
+        { title: 'Development', body: 'Full CMS build with admin panel, responsive design and SEO.' },
+        { title: 'Content upload & training', body: 'We upload initial content and train your team to manage the site.' },
+        { title: 'Launch', body: 'Deployed to your domain with hosting configured.' },
+      ]},
+      pricing: { heading: 'Transparent pricing', rows: [
+        ['Professional fee', 'From ₹19,999 — includes design, development, CMS setup and training'],
+        ['Hosting', 'Hosting required — we recommend and set up appropriate hosting'],
+        ['Taxes', 'GST shown separately'],
+      ]},
+      faq: { heading: 'Frequently asked questions', items: [
+        { q: 'Will I be able to update the website myself?', a: 'Yes — that is the core advantage of a dynamic site. We set up a user-friendly CMS and train you to use it.' },
+        { q: 'Which CMS do you use?', a: 'Mostly WordPress for its flexibility and ecosystem. For specific needs, we can use custom-built admin panels.' },
+        { q: 'Is WordPress secure?', a: 'Yes, when properly maintained. We set up security plugins, backups and update protocols.' },
+      ]}
+    },
+    related: [
+      { href: '/services/static-website', label: 'Static Website', note: 'Don\'t need a CMS? Go lightweight.' },
+      { href: '/services/ecommerce-website', label: 'E-Commerce Website', note: 'Need to sell products online?' },
+      { href: '/services/seo-marketing', label: 'SEO & Search Marketing', note: 'Get found on Google.' },
     ]
   },
 

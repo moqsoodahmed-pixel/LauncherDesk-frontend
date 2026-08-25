@@ -663,7 +663,7 @@ export default function HomePage() {
                 LauncherDesk handles everything through a single point of contact.
               </p>
               <div className="hp-cta-row">
-                <a href="https://wa.me/918458845859" className="hp-btn-primary" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/918548854859" className="hp-btn-primary" target="_blank" rel="noopener noreferrer">
                   <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
                   </svg>
@@ -1012,7 +1012,7 @@ export default function HomePage() {
             <h2>Ready to get everything under one roof?</h2>
             <p>One chat is all it takes. Tell us what your business needs and we'll handle the rest — honestly, and on time.</p>
             <div className="hp-cta-btns">
-              <a href="https://wa.me/918458845859" className="hp-cta-btn-wa" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/918548854859" className="hp-cta-btn-wa" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
                 </svg>
