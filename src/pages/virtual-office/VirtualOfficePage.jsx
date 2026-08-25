@@ -350,46 +350,46 @@ const PLANS = [
 
 const LOCATIONS = [
   {
-    area: 'Koramangala',
+    area: 'Bengaluru – Koramangala',
     name: 'LauncherDesk Koramangala HQ',
     addr: '4th Block, Koramangala, Bengaluru – 560095',
     tags: ['Prime Location', 'Metro Nearby', 'GST Ready'],
     price: 'From ₹999/mo',
   },
   {
-    area: 'Indiranagar',
-    name: 'Indiranagar Business Centre',
-    addr: '100 Feet Road, Indiranagar, Bengaluru – 560038',
-    tags: ['IT Hub', 'Startup Belt', 'GST Ready'],
-    price: 'From ₹1,299/mo',
-  },
-  {
-    area: 'MG Road / CBD',
-    name: 'MG Road Central Business District',
-    addr: 'MG Road, Bengaluru Central – 560001',
-    tags: ['CBD Address', 'Premium', 'Bank Friendly'],
-    price: 'From ₹1,799/mo',
-  },
-  {
-    area: 'Whitefield',
-    name: 'Whitefield Tech Park Address',
-    addr: 'EPIP Zone, Whitefield, Bengaluru – 560066',
-    tags: ['IT Corridor', 'Enterprise Ready'],
+    area: 'Mumbai – BKC',
+    name: 'Bandra Kurla Complex Business Address',
+    addr: 'G Block, Bandra Kurla Complex, Mumbai – 400051',
+    tags: ['Financial Hub', 'Premium', 'GST Ready'],
     price: 'From ₹1,499/mo',
   },
   {
-    area: 'HSR Layout',
-    name: 'HSR Layout Business Address',
-    addr: 'Sector 7, HSR Layout, Bengaluru – 560102',
-    tags: ['Startup Hub', 'GST Ready'],
-    price: 'From ₹1,199/mo',
+    area: 'Delhi – Connaught Place',
+    name: 'Connaught Place Central Address',
+    addr: 'Connaught Place, New Delhi – 110001',
+    tags: ['CBD Address', 'Bank Friendly', 'GST Ready'],
+    price: 'From ₹1,299/mo',
   },
   {
-    area: 'Electronic City',
-    name: 'Electronic City IT Address',
-    addr: 'Phase 1, Electronic City, Bengaluru – 560100',
-    tags: ['IT Park', 'Affordable'],
+    area: 'Hyderabad – HITEC City',
+    name: 'HITEC City IT Business Address',
+    addr: 'HITEC City, Madhapur, Hyderabad – 500081',
+    tags: ['IT Hub', 'Startup Belt', 'GST Ready'],
     price: 'From ₹999/mo',
+  },
+  {
+    area: 'Chennai – Anna Salai',
+    name: 'Anna Salai Business Centre',
+    addr: 'Anna Salai, Chennai – 600002',
+    tags: ['CBD Address', 'Enterprise Ready', 'GST Ready'],
+    price: 'From ₹999/mo',
+  },
+  {
+    area: 'Pune – Hinjewadi',
+    name: 'Hinjewadi IT Park Address',
+    addr: 'Hinjewadi Phase 1, Pune – 411057',
+    tags: ['IT Corridor', 'Affordable', 'GST Ready'],
+    price: 'From ₹899/mo',
   },
 ]
 
@@ -438,7 +438,7 @@ const WHY = [
 
 const STEPS = [
   { num: '01', title: 'Choose Your Plan', desc: 'Select the plan that matches your need — mail, GST or company registration.' },
-  { num: '02', title: 'Pick a Location', desc: 'Choose from our premium Bengaluru addresses or any city across India.' },
+  { num: '02', title: 'Pick a Location', desc: 'Choose from our verified premium addresses across major cities in India.' },
   { num: '03', title: 'Submit KYC Online', desc: 'Complete KYC and sign your agreement digitally — no office visit required.' },
   { num: '04', title: 'Get Documents', desc: 'Receive your rent agreement, NOC and electricity bill within 1 business day.' },
   { num: '05', title: 'Use Your Address', desc: 'Start using your address for GST, company registration or business correspondence.' },
@@ -471,7 +471,7 @@ const FAQS = [
   },
   {
     q: 'How long does it take to get the documents?',
-    a: 'Once KYC is verified and the agreement is signed digitally, you receive your rent agreement, NOC and electricity bill within 1 business day. Our document turnaround is among the fastest in Bengaluru.',
+    a: 'Once KYC is verified and the agreement is signed digitally, you receive your rent agreement, NOC and electricity bill within 1 business day. Our document turnaround is among the fastest across India.',
   },
   {
     q: 'Is the address legally valid?',
@@ -591,14 +591,14 @@ export default function VirtualOfficePage() {
             <div>
               <div className="vo-eyebrow">
                 <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Virtual Office · Bengaluru & Pan India
+                Virtual Office · Pan India
               </div>
               <h1>
                 A premium business address.<br/>
                 <span>Without the office rent.</span>
               </h1>
               <p className="vo-hero-desc">
-                Get a real, registered business address at a prime Bengaluru location — for GST registration, company incorporation or professional correspondence. 100% online. Documents in 24 hours.
+                Get a real, registered business address at a prime location across India — for GST registration, company incorporation or professional correspondence. 100% online. Documents in 24 hours.
               </p>
               <div className="vo-cta-row">
                 <button className="vo-btn-primary" onClick={()=>setModal('')}>
@@ -636,7 +636,7 @@ export default function VirtualOfficePage() {
               <div className="vo-addr-stats">
                 <div className="vo-addr-stat"><div className="n">24hr</div><div className="l">Doc Delivery</div></div>
                 <div className="vo-addr-stat"><div className="n">100%</div><div className="l">GST Acceptance</div></div>
-                <div className="vo-addr-stat"><div className="n">6+</div><div className="l">BLR Locations</div></div>
+                <div className="vo-addr-stat"><div className="n">6+</div><div className="l">Pan India</div></div>
                 <div className="vo-addr-stat"><div className="n">₹999</div><div className="l">Starting/mo</div></div>
               </div>
             </div>
@@ -692,7 +692,7 @@ export default function VirtualOfficePage() {
       <section className="vo-locs">
         <div className="vo-inner">
           <span className="vo-sec-label">Our Locations</span>
-          <h2 className="vo-sec-h2">Prime addresses across Bengaluru.</h2>
+          <h2 className="vo-sec-h2">Prime addresses across India.</h2>
           <p className="vo-sec-p" style={{marginBottom:0}}>All our addresses are in verified commercial buildings accepted by GST authorities, MCA, banks and courts.</p>
           <div className="vo-locs-grid">
             {LOCATIONS.map(l=>(
