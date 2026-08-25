@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { usePartnerAuth } from '../../context/PartnerAuthContext'
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
@@ -57,21 +59,46 @@ const S = `
 .pr-input  {
   height:44px;border:1.5px solid #E2E8F0;border-radius:9px;padding:0 14px;
   font-size:14px;color:var(--navy);outline:none;font-family:inherit;
-  transition:border-color .15s;background:#F8FAFC;
+  transition:border-color .15s;background:#F8FAFC;width:100%;box-sizing:border-box;
 }
 .pr-input:focus { border-color:#1D6FE0;background:#fff;box-shadow:0 0 0 3px rgba(29,111,224,.1); }
+.pr-input.error { border-color:#DC2626; }
 .pr-select {
   height:44px;border:1.5px solid #E2E8F0;border-radius:9px;padding:0 14px;
   font-size:14px;color:var(--navy);outline:none;font-family:inherit;
-  transition:border-color .15s;background:#F8FAFC;cursor:pointer;
+  transition:border-color .15s;background:#F8FAFC;cursor:pointer;width:100%;box-sizing:border-box;
 }
 .pr-select:focus { border-color:#1D6FE0;background:#fff; }
 .pr-textarea {
   border:1.5px solid #E2E8F0;border-radius:9px;padding:12px 14px;
   font-size:14px;color:var(--navy);outline:none;font-family:inherit;
-  transition:border-color .15s;background:#F8FAFC;resize:vertical;min-height:90px;width:100%;
+  transition:border-color .15s;background:#F8FAFC;resize:vertical;min-height:90px;width:100%;box-sizing:border-box;
 }
 .pr-textarea:focus { border-color:#1D6FE0;background:#fff;box-shadow:0 0 0 3px rgba(29,111,224,.1); }
+
+/* Password field wrapper */
+.pr-pw-wrap { position:relative; }
+.pr-pw-wrap .pr-input { padding-right:44px; }
+.pr-pw-eye {
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:none;border:0;cursor:pointer;display:flex;align-items:center;
+  color:#94A3B8;padding:0;
+}
+.pr-pw-eye:hover { color:#1D6FE0; }
+.pr-pw-hint { font-size:11.5px;color:#94A3B8;margin-top:4px; }
+.pr-pw-hint.ok  { color:#059669; }
+.pr-pw-hint.bad { color:#DC2626; }
+
+/* Password strength bar */
+.pr-pw-bar { height:4px;border-radius:2px;background:#E2E8F0;margin-top:6px;overflow:hidden; }
+.pr-pw-bar-fill { height:100%;border-radius:2px;transition:width .2s,background .2s; }
+
+/* Info tip */
+.pr-tip {
+  display:flex;align-items:flex-start;gap:10px;background:#EFF6FF;
+  border:1px solid #BFDBFE;border-radius:10px;padding:12px 16px;font-size:13px;color:#1E40AF;
+}
+.pr-tip svg { flex:none;margin-top:1px; }
 
 /* Cat checkboxes */
 .pr-cats { display:flex;flex-wrap:wrap;gap:8px;margin-top:4px; }
@@ -82,16 +109,7 @@ const S = `
 }
 .pr-cat input { display:none; }
 .pr-cat.checked { border-color:#1D6FE0;background:#EEF2FF;color:#1D6FE0; }
-
-/* File upload */
-.pr-upload {
-  border:2px dashed #E2E8F0;border-radius:10px;padding:24px;text-align:center;
-  cursor:pointer;transition:border-color .15s,background .15s;background:#F8FAFC;
-}
-.pr-upload:hover { border-color:#1D6FE0;background:#EEF2FF; }
-.pr-upload input { display:none; }
-.pr-upload-text { font-size:13.5px;color:var(--text-2); }
-.pr-upload-text span { color:#1D6FE0;font-weight:600; }
+.pr-cat:hover:not(.checked) { border-color:#93C5FD;background:#F0F7FF; }
 
 /* Submit */
 .pr-submit {
@@ -103,13 +121,16 @@ const S = `
 .pr-submit:disabled { opacity:.6;cursor:not-allowed;transform:none; }
 
 /* Success */
-.pr-success {
-  text-align:center;padding:48px 32px;
-}
+.pr-success { text-align:center;padding:48px 32px; }
 .pr-success-icon { font-size:56px;margin-bottom:18px; }
 .pr-success h2   { font-size:26px;font-weight:900;color:var(--navy);margin-bottom:10px; }
 .pr-success p    { font-size:15px;color:var(--text-2);line-height:1.7;max-width:480px;margin:0 auto; }
 .pr-success-cta  { margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap; }
+.pr-redirect-bar {
+  background:#EFF6FF;border:1px solid #BFDBFE;border-radius:9px;
+  padding:12px 18px;font-size:13.5px;color:#1E40AF;font-weight:600;
+  display:flex;align-items:center;gap:10px;margin-top:16px;justify-content:center;
+}
 
 /* Existing partners strip */
 .pr-partners { background:#fff;padding:56px 0; }
@@ -138,63 +159,128 @@ const S = `
 }
 `
 
+function EyeIcon({ open }) {
+  return open ? (
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+    </svg>
+  ) : (
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>
+    </svg>
+  )
+}
+
+function pwStrength(pw) {
+  if (!pw) return { score: 0, label: '', color: '#E2E8F0', width: '0%' }
+  let score = 0
+  if (pw.length >= 8)  score++
+  if (/[A-Z]/.test(pw)) score++
+  if (/[0-9]/.test(pw)) score++
+  if (/[^A-Za-z0-9]/.test(pw)) score++
+  const map = [
+    { label: '',        color: '#E2E8F0', width: '0%'   },
+    { label: 'Weak',    color: '#EF4444', width: '25%'  },
+    { label: 'Fair',    color: '#F97316', width: '50%'  },
+    { label: 'Good',    color: '#EAB308', width: '75%'  },
+    { label: 'Strong',  color: '#22C55E', width: '100%' },
+  ]
+  return { score, ...map[score] }
+}
+
 export default function PartnerRegister() {
+  const navigate = useNavigate()
+  const { loginWithToken } = usePartnerAuth()
+
   const [form, setForm] = useState({
     companyName:'', contactName:'', email:'', mobile:'', website:'',
     city:'', state:'', foundedYear:'', teamSize:'',
     categories:[], productName:'', tagline:'', description:'',
     pricing:'', integrations:'', whyPartner:'',
-    logoFile:null, logoName:'',
+    password:'', confirmPassword:'',
   })
-  const [saving,   setSaving]   = useState(false)
-  const [done,     setDone]     = useState(false)
-  const [error,    setError]    = useState('')
+  const [showPw,    setShowPw]    = useState(false)
+  const [showCpw,   setShowCpw]   = useState(false)
+  const [saving,    setSaving]    = useState(false)
+  const [done,      setDone]      = useState(false)
+  const [countdown, setCountdown] = useState(3)
+  const [error,     setError]     = useState('')
 
   const set = (k, v) => setForm(f => ({...f, [k]:v}))
 
   const toggleCat = (cat) => {
-    set('categories', form.categories.includes(cat)
-      ? form.categories.filter(c=>c!==cat)
-      : [...form.categories, cat]
-    )
-  }
-
-  const handleLogo = (e) => {
-    const file = e.target.files[0]
-    if (file) { set('logoFile', file); set('logoName', file.name) }
+    setForm(f => ({
+      ...f,
+      categories: f.categories.includes(cat)
+        ? f.categories.filter(c => c !== cat)
+        : [...f.categories, cat],
+    }))
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (form.categories.length === 0) { setError('Please select at least one service category.'); return }
-    setSaving(true); setError('')
+    setError('')
+
+    // Validations
+    if (form.categories.length === 0) {
+      setError('Please select at least one service category.')
+      return
+    }
+    if (form.password.length < 6) {
+      setError('Password must be at least 6 characters.')
+      return
+    }
+    if (form.password !== form.confirmPassword) {
+      setError('Passwords do not match.')
+      return
+    }
+
+    setSaving(true)
     try {
-      const body = {
-        companyName:  form.companyName,
-        contactName:  form.contactName,
-        email:        form.email,
-        mobile:       form.mobile,
-        website:      form.website,
-        city:         form.city,
-        state:        form.state,
-        foundedYear:  form.foundedYear,
-        teamSize:     form.teamSize,
-        categories:   form.categories,
-        productName:  form.productName,
-        tagline:      form.tagline,
-        description:  form.description,
-        pricing:      form.pricing,
-        integrations: form.integrations,
-        whyPartner:   form.whyPartner,
-      }
       const res = await fetch(`${API}/partners`, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(body),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          companyName:  form.companyName,
+          contactName:  form.contactName,
+          email:        form.email,
+          mobile:       form.mobile,
+          website:      form.website,
+          city:         form.city,
+          state:        form.state,
+          foundedYear:  form.foundedYear,
+          teamSize:     form.teamSize,
+          categories:   form.categories,
+          productName:  form.productName,
+          tagline:      form.tagline,
+          description:  form.description,
+          pricing:      form.pricing,
+          integrations: form.integrations,
+          whyPartner:   form.whyPartner,
+          password:     form.password,
+        }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Submission failed')
+
+      // Auto-login the partner with the returned token
+      if (data.token && data.partner) {
+        loginWithToken(data.token, data.partner)
+      }
+
       setDone(true)
+
+      // Countdown then redirect to dashboard
+      let n = 3
+      const timer = setInterval(() => {
+        n--
+        setCountdown(n)
+        if (n <= 0) {
+          clearInterval(timer)
+          navigate('/partner/dashboard')
+        }
+      }, 1000)
+
     } catch (err) {
       setError(err.message || 'Something went wrong. Please try again.')
     } finally {
@@ -202,8 +288,11 @@ export default function PartnerRegister() {
     }
   }
 
-  const SIZES = ['1–10','11–50','51–200','201–500','500+']
+  const SIZES  = ['1–10','11–50','51–200','201–500','500+']
   const STATES = ['Karnataka','Maharashtra','Delhi','Tamil Nadu','Telangana','Gujarat','Rajasthan','Uttar Pradesh','West Bengal','Andhra Pradesh','Kerala','Punjab','Haryana','Other']
+
+  const strength = pwStrength(form.password)
+  const pwMatch  = form.confirmPassword && form.password === form.confirmPassword
 
   return (
     <div className="pr-bg">
@@ -271,11 +360,19 @@ export default function PartnerRegister() {
                 <h2>Application received!</h2>
                 <p>
                   Thank you for applying to partner with LauncherDesk. Our team will review your application and get back to you within <strong>2–3 business days</strong>.<br/><br/>
-                  If approved, your product will be listed in the LauncherDesk Marketplace and shown to thousands of founders across India.
+                  Your account has been created — you can track your application status and leads from your partner dashboard.
                 </p>
+                <div className="pr-redirect-bar">
+                  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                  Redirecting to your dashboard in {countdown}s…
+                </div>
                 <div className="pr-success-cta">
-                  <a href="/market" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 22px',height:46,borderRadius:9,background:'var(--blue)',color:'#fff',fontWeight:700,fontSize:14,textDecoration:'none'}}>View Marketplace</a>
-                  <a href="/" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 22px',height:46,borderRadius:9,border:'1.5px solid var(--line)',color:'var(--text)',fontWeight:600,fontSize:14,textDecoration:'none'}}>Back to Home</a>
+                  <button onClick={() => navigate('/partner/dashboard')} style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 22px',height:46,borderRadius:9,background:'var(--blue)',color:'#fff',fontWeight:700,fontSize:14,border:0,cursor:'pointer',fontFamily:'inherit'}}>
+                    Go to Dashboard →
+                  </button>
+                  <a href="/market" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 22px',height:46,borderRadius:9,border:'1.5px solid var(--line)',color:'var(--text)',fontWeight:600,fontSize:14,textDecoration:'none'}}>
+                    View Marketplace
+                  </a>
                 </div>
               </div>
             </div>
@@ -337,10 +434,66 @@ export default function PartnerRegister() {
                     <input className="pr-input" required type="tel" placeholder="+91 98765 43210" value={form.mobile} onChange={e=>set('mobile',e.target.value)}/>
                   </div>
                 </div>
+                <div className="pr-field full">
+                  <label className="pr-label">Business Email *</label>
+                  <input className="pr-input" required type="email" placeholder="rahul@yourcompany.com" value={form.email} onChange={e=>set('email',e.target.value)}/>
+                </div>
+
+                {/* Account password */}
+                <div className="pr-section-head">Create Your Account Password</div>
+                <div className="pr-tip">
+                  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  <span>This password will be used to log in to your partner dashboard and track your leads after your application is approved.</span>
+                </div>
                 <div className="pr-row">
-                  <div className="pr-field full">
-                    <label className="pr-label">Business Email *</label>
-                    <input className="pr-input" required type="email" placeholder="rahul@yourcompany.com" value={form.email} onChange={e=>set('email',e.target.value)}/>
+                  <div className="pr-field">
+                    <label className="pr-label">Password *</label>
+                    <div className="pr-pw-wrap">
+                      <input
+                        className={`pr-input${form.password && form.password.length < 6 ? ' error' : ''}`}
+                        type={showPw ? 'text' : 'password'}
+                        required
+                        placeholder="Minimum 6 characters"
+                        value={form.password}
+                        onChange={e => set('password', e.target.value)}
+                        autoComplete="new-password"
+                      />
+                      <button type="button" className="pr-pw-eye" onClick={() => setShowPw(v => !v)} tabIndex={-1}>
+                        <EyeIcon open={showPw} />
+                      </button>
+                    </div>
+                    {form.password && (
+                      <>
+                        <div className="pr-pw-bar">
+                          <div className="pr-pw-bar-fill" style={{ width: strength.width, background: strength.color }} />
+                        </div>
+                        <span className={`pr-pw-hint ${strength.score >= 3 ? 'ok' : strength.score >= 2 ? '' : 'bad'}`}>
+                          {strength.label} password
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <div className="pr-field">
+                    <label className="pr-label">Confirm Password *</label>
+                    <div className="pr-pw-wrap">
+                      <input
+                        className={`pr-input${form.confirmPassword && !pwMatch ? ' error' : ''}`}
+                        type={showCpw ? 'text' : 'password'}
+                        required
+                        placeholder="Re-enter your password"
+                        value={form.confirmPassword}
+                        onChange={e => set('confirmPassword', e.target.value)}
+                        autoComplete="new-password"
+                      />
+                      <button type="button" className="pr-pw-eye" onClick={() => setShowCpw(v => !v)} tabIndex={-1}>
+                        <EyeIcon open={showCpw} />
+                      </button>
+                    </div>
+                    {form.confirmPassword && (
+                      <span className={`pr-pw-hint ${pwMatch ? 'ok' : 'bad'}`}>
+                        {pwMatch ? '✓ Passwords match' : '✗ Passwords do not match'}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -362,11 +515,18 @@ export default function PartnerRegister() {
                     value={form.description} onChange={e=>set('description',e.target.value)} rows={4}/>
                 </div>
                 <div className="pr-field full">
-                  <label className="pr-label">Service Categories * (select all that apply)</label>
+                  <label className="pr-label">Service Categories * <span style={{fontWeight:400,color:'#94A3B8'}}>(select all that apply)</span></label>
                   <div className="pr-cats">
                     {CATEGORIES.map(cat=>(
-                      <label key={cat} className={`pr-cat${form.categories.includes(cat)?' checked':''}`}>
-                        <input type="checkbox" checked={form.categories.includes(cat)} onChange={()=>toggleCat(cat)}/>
+                      <label
+                        key={cat}
+                        className={`pr-cat${form.categories.includes(cat) ? ' checked' : ''}`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={form.categories.includes(cat)}
+                          onChange={() => toggleCat(cat)}
+                        />
                         {cat}
                       </label>
                     ))}
