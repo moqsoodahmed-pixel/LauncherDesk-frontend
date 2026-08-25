@@ -194,7 +194,7 @@ export default function PartnerRegister() {
 
   const [form, setForm] = useState({
     companyName:'', contactName:'', email:'', mobile:'', website:'',
-    city:'', state:'', foundedYear:'', teamSize:'',
+    city:'', state:'', foundedYear:'',
     categories:[], productName:'', tagline:'', description:'',
     pricing:'', integrations:'', whyPartner:'',
     password:'', confirmPassword:'',
@@ -249,7 +249,6 @@ export default function PartnerRegister() {
           city:         form.city,
           state:        form.state,
           foundedYear:  form.foundedYear,
-          teamSize:     form.teamSize,
           categories:   form.categories,
           productName:  form.productName,
           tagline:      form.tagline,
@@ -288,7 +287,6 @@ export default function PartnerRegister() {
     }
   }
 
-  const SIZES  = ['1–10','11–50','51–200','201–500','500+']
   const STATES = ['Karnataka','Maharashtra','Delhi','Tamil Nadu','Telangana','Gujarat','Rajasthan','Uttar Pradesh','West Bengal','Andhra Pradesh','Kerala','Punjab','Haryana','Other']
 
   const strength = pwStrength(form.password)
@@ -412,13 +410,6 @@ export default function PartnerRegister() {
                   <div className="pr-field">
                     <label className="pr-label">Founded Year</label>
                     <input className="pr-input" placeholder="e.g. 2019" value={form.foundedYear} onChange={e=>set('foundedYear',e.target.value)}/>
-                  </div>
-                  <div className="pr-field">
-                    <label className="pr-label">Team Size</label>
-                    <select className="pr-select" value={form.teamSize} onChange={e=>set('teamSize',e.target.value)}>
-                      <option value="">Select team size</option>
-                      {SIZES.map(s=><option key={s} value={s}>{s}</option>)}
-                    </select>
                   </div>
                 </div>
 
