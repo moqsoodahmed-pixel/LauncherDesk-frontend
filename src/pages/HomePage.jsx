@@ -103,7 +103,7 @@ const S = `
 .hp-stats-divider { width:1px;background:var(--line);align-self:stretch;display:none; }
 
 /* ── SERVICES SECTION ── */
-.hp-services { padding:96px 0;background:var(--sec-purple); }
+.hp-services { padding:96px 0;background:var(--sec-orange-bg); }
 .hp-section-head { text-align:center;margin-bottom:56px; }
 .hp-section-eyebrow {
   display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;
@@ -120,21 +120,21 @@ const S = `
   transition:border-color .2s,box-shadow .2s;
   overflow:clip;
 }
-.hp-svc-cat:hover { border-color:var(--blue);box-shadow:0 8px 32px rgba(29,111,224,.1); }
+.hp-svc-cat:hover { border-color:var(--sec-orange-accent);box-shadow:0 8px 32px rgba(249,115,22,.12); }
 .hp-svc-cat-head {
   display:flex;align-items:center;gap:12px;padding:18px 20px;cursor:pointer;
   transition:background .15s;
 }
-.hp-svc-cat-head:hover { background:#F8F8FF; }
+.hp-svc-cat-head:hover { background:#FFF3E8; }
 .hp-svc-cat-icon {
-  width:44px;height:44px;border-radius:10px;background:var(--bg-2);
+  width:44px;height:44px;border-radius:10px;background:#FED7AA;
   display:grid;place-items:center;flex:none;
 }
-.hp-svc-cat-icon svg { width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2;flex:none; }
+.hp-svc-cat-icon svg { width:20px;height:20px;stroke:#C2410C;fill:none;stroke-width:2;flex:none; }
 .hp-svc-cat-name { font-size:17px;font-weight:700;color:var(--navy);flex:1; }
 .hp-svc-cat-count {
   font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;
-  background:var(--bg-2);color:var(--blue);margin-right:8px;
+  background:#FED7AA;color:#C2410C;margin-right:8px;
   white-space:nowrap;flex:none;
 }
 .hp-svc-cat-chev {
@@ -154,11 +154,11 @@ const S = `
   transition:border-color .15s,background .15s,transform .15s,box-shadow .15s;
 }
 .hp-svc-card:hover {
-  border-color:var(--blue);background:#fff;
-  box-shadow:0 4px 16px rgba(29,111,224,.15);
+  border-color:var(--sec-orange-accent);background:#FFF7F0;
+  box-shadow:0 4px 16px rgba(249,115,22,.18);
 }
-.hp-svc-card-icon { width:36px;height:36px;border-radius:8px;background:var(--bg-2);display:grid;place-items:center;flex:none; }
-.hp-svc-card-icon svg { width:17px;height:17px;stroke:var(--blue);fill:none;stroke-width:2; }
+.hp-svc-card-icon { width:36px;height:36px;border-radius:8px;background:#FED7AA;display:grid;place-items:center;flex:none; }
+.hp-svc-card-icon svg { width:17px;height:17px;stroke:#C2410C;fill:none;stroke-width:2; }
 .hp-svc-card-name { font-size:14px;font-weight:700;color:var(--navy);line-height:1.3; }
 .hp-svc-card-desc { font-size:12.5px;color:var(--text-2);line-height:1.5; }
 .hp-svc-card-arrow {
@@ -174,7 +174,7 @@ const S = `
 .hp-svc-all-btn a:hover { background:var(--blue);color:#fff; }
 
 /* ── WHY LAUNCHERDESK ── */
-.hp-why { padding:96px 0;background:var(--sec-mint); }
+.hp-why { padding:96px 0;background:var(--sec-teal-bg); }
 .hp-why-grid {
   max-width:1200px;margin:0 auto;padding:0 28px;
   display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;
@@ -187,14 +187,14 @@ const S = `
 .hp-why-features { display:flex;flex-direction:column;gap:20px; }
 .hp-why-feat {
   display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:14px;
-  border:1.5px solid var(--line);background:#fff;transition:border-color .15s,box-shadow .15s;
+  border:1.5px solid var(--sec-teal-border);background:#fff;transition:border-color .15s,box-shadow .15s;
 }
-.hp-why-feat:hover { border-color:var(--blue);box-shadow:0 6px 20px rgba(29,111,224,.1); }
+.hp-why-feat:hover { border-color:var(--sec-teal-accent);box-shadow:0 6px 20px rgba(5,150,105,.12); }
 .hp-why-feat-icon {
-  width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#EEF2FF,#DBEAFE);
+  width:44px;height:44px;border-radius:10px;background:var(--sec-teal-light);
   display:grid;place-items:center;flex:none;
 }
-.hp-why-feat-icon svg { width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2; }
+.hp-why-feat-icon svg { width:20px;height:20px;stroke:var(--sec-teal-accent);fill:none;stroke-width:2; }
 .hp-why-feat h4 { font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px; }
 .hp-why-feat p  { font-size:13.5px;color:var(--text-2);line-height:1.6; }
 /* comparison right card */
@@ -224,63 +224,65 @@ const S = `
 .hp-vs-cell svg  { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;flex:none; }
 
 /* ── BUSINESS TYPES ── */
-.hp-types { padding:96px 0;background:var(--sec-amber); }
+.hp-types { padding:96px 0;background:var(--sec-purple-bg); }
 .hp-types-grid {
   max-width:1200px;margin:0 auto;padding:0 28px;
   display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;
 }
 .hp-type-card {
   border-radius:18px;padding:28px 24px;text-decoration:none;
-  border:1.5px solid var(--line);background:#fff;
+  border:1.5px solid var(--sec-purple-border);background:#fff;
   transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden;
 }
 .hp-type-card::before {
-  content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:var(--grad);opacity:0;transition:opacity .2s;
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,#7C3AED,#A78BFA);opacity:0;transition:opacity .2s;
 }
-.hp-type-card:hover { border-color:var(--blue);box-shadow:0 12px 36px rgba(29,111,224,.14);transform:translateY(-3px); }
+.hp-type-card:hover { border-color:var(--sec-purple-accent);box-shadow:0 12px 36px rgba(124,58,237,.16);transform:translateY(-3px); }
 .hp-type-card:hover::before { opacity:1; }
 .hp-type-icon {
   width:48px;height:48px;border-radius:12px;
-  background:linear-gradient(135deg,#EEF2FF,#DBEAFE);
+  background:var(--sec-purple-light);
   display:grid;place-items:center;margin-bottom:16px;
 }
-.hp-type-icon svg { width:24px;height:24px;stroke:#1D6FE0; }
+.hp-type-icon svg { width:24px;height:24px;stroke:var(--sec-purple-accent); }
 .hp-type-name { font-size:17px;font-weight:800;color:var(--navy);margin-bottom:8px; }
 .hp-type-desc { font-size:13.5px;color:var(--text-2);line-height:1.6;margin-bottom:14px; }
 .hp-type-tags { display:flex;flex-wrap:wrap;gap:6px; }
 .hp-type-tag  {
   font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;
-  background:var(--bg-2);color:var(--blue-dark);
+  background:var(--sec-purple-light);color:var(--sec-purple-accent);
 }
-.hp-type-arrow { margin-top:16px;display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--blue); }
+.hp-type-arrow { margin-top:16px;display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--sec-purple-accent); }
 .hp-type-arrow svg { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5; }
 
 /* ── HOW IT WORKS ── */
-.hp-how { padding:96px 0;background:var(--sec-sky); }
+.hp-how { padding:96px 0;background:#0D1F3C; }
 .hp-how-steps {
   max-width:1200px;margin:0 auto;padding:0 28px;
   display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:52px;
 }
 .hp-how-step {
-  padding:28px;border-radius:18px;border:1.5px solid var(--line);
-  background:#fff;position:relative;
+  padding:28px;border-radius:18px;border:1.5px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05);position:relative;
+  transition:border-color .2s,background .2s;
 }
+.hp-how-step:hover { border-color:rgba(59,143,239,.5);background:rgba(29,111,224,.1); }
 .hp-how-num {
   font-size:clamp(42px,5vw,64px);font-weight:900;letter-spacing:-.04em;
-  color:var(--bg-2);line-height:1;margin-bottom:16px;
-  background:linear-gradient(135deg,#EBF1FF,#DBEAFE);
+  line-height:1;margin-bottom:16px;
+  background:linear-gradient(135deg,#3B8FEF,#7ecef4);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.hp-how-step h4 { font-size:16px;font-weight:800;color:var(--navy);margin-bottom:8px; }
-.hp-how-step p  { font-size:13.5px;color:var(--text-2);line-height:1.6; }
+.hp-how-step h4 { font-size:16px;font-weight:800;color:#fff;margin-bottom:8px; }
+.hp-how-step p  { font-size:13.5px;color:#9ab5d4;line-height:1.6; }
 .hp-how-connector {
   position:absolute;top:50%;right:-12px;width:24px;height:2px;
-  background:linear-gradient(90deg,var(--blue-dark),var(--blue));z-index:1;
+  background:linear-gradient(90deg,#3B8FEF,rgba(59,143,239,.3));z-index:1;
 }
 
 /* ── RESOURCES ── */
-.hp-resources { padding:96px 0;background:var(--sec-rose); }
+.hp-resources { padding:96px 0;background:var(--sec-amber-bg); }
 .hp-res-grid {
   max-width:1200px;margin:0 auto;padding:0 28px;
   display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;
@@ -290,11 +292,11 @@ const S = `
   text-decoration:none;transition:border-color .2s,box-shadow .2s,transform .2s;display:flex;flex-direction:column;
 }
 .hp-res-card:hover { border-color:var(--blue);box-shadow:0 10px 30px rgba(29,111,224,.12);transform:translateY(-3px); }
-.hp-res-card-thumb { height:7px;background:var(--grad); }
+.hp-res-card-thumb { height:7px;background:linear-gradient(90deg,#D97706,#F59E0B,#FCD34D); }
 .hp-res-card-body { padding:24px;flex:1;display:flex;flex-direction:column; }
 .hp-res-cat {
   font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--blue);margin-bottom:10px;
+  color:var(--sec-amber-accent);margin-bottom:10px;
 }
 .hp-res-title { font-size:16px;font-weight:800;color:var(--navy);margin-bottom:8px;line-height:1.3; }
 .hp-res-desc  { font-size:13.5px;color:var(--text-2);line-height:1.6;flex:1; }
@@ -330,7 +332,7 @@ const S = `
 .hp-marquee-dot {
   width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;opacity:.5;
 }
-.hp-faq { padding:96px 0;background:var(--sec-indigo); }
+.hp-faq { padding:96px 0;background:var(--sec-sky-bg); }
 .hp-faq-inner { max-width:800px;margin:0 auto;padding:0 28px; }
 .hp-faq-list  { display:flex;flex-direction:column;margin-top:52px; }
 .hp-faq-item  { border-bottom:1px solid var(--line); }
@@ -341,22 +343,24 @@ const S = `
 }
 .hp-faq-q:hover .hp-faq-q-text { color:var(--blue); }
 .hp-faq-q-text { font-size:16.5px;font-weight:700;color:var(--navy);line-height:1.4;flex:1; }
-.hp-faq-icon  { width:24px;height:24px;border-radius:6px;background:var(--bg-2);display:grid;place-items:center;flex:none; }
-.hp-faq-icon svg { width:14px;height:14px;stroke:var(--blue);fill:none;stroke-width:2.5;transition:transform .25s; }
+.hp-faq-icon  { width:24px;height:24px;border-radius:6px;background:var(--sec-sky-light);display:grid;place-items:center;flex:none; }
+.hp-faq-icon svg { width:14px;height:14px;stroke:var(--sec-sky-accent);fill:none;stroke-width:2.5;transition:transform .25s; }
 .hp-faq-item:hover .hp-faq-a { max-height:320px; }
 .hp-faq-item:hover .hp-faq-icon svg { transform:rotate(45deg); }
 .hp-faq-a     { max-height:0;overflow:hidden;transition:max-height .55s cubic-bezier(.2,.7,.3,1); }
 .hp-faq-a-inner { padding:0 0 20px;font-size:14.5px;color:var(--text-2);line-height:1.72; }
 
 /* ── FINAL CTA ── */
-.hp-cta-section { padding:96px 0;background:var(--sec-slate); }
+.hp-cta-section { padding:96px 0;background:linear-gradient(135deg,#0D1F3C 0%,#1a1060 40%,#0F52C0 100%); }
 .hp-cta-card {
   max-width:1200px;margin:0 auto;padding:0 28px;
 }
 .hp-cta-inner {
-  background:linear-gradient(160deg,#080F1E,#0F52C0 65%,#1D6FE0);
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
   border-radius:24px;padding:clamp(48px,6vw,80px);text-align:center;
-  box-shadow:0 40px 80px rgba(13,31,60,.3);position:relative;overflow:hidden;
+  box-shadow:0 40px 80px rgba(0,0,0,.3);position:relative;overflow:hidden;
+  backdrop-filter:blur(12px);
 }
 .hp-cta-inner::before {
   content:'';position:absolute;inset:0;
@@ -386,7 +390,7 @@ const S = `
 .hp-cta-btn-exp:hover { background:rgba(255,255,255,.2); }
 
 /* ── LIFECYCLE ACCORDION (reused from original) ── */
-.lc2-section{background:var(--sec-mint);padding:96px 0}
+.lc2-section{background:var(--sec-teal-bg);padding:96px 0}
 .lc2-inner{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:start;max-width:1200px;margin:0 auto;padding:0 28px}
 .lc2-left{position:sticky;top:92px}
 .lc2-left .eyebrow{margin-bottom:14px;display:block}
@@ -396,14 +400,14 @@ const S = `
 .lc2-item{border-top:1px solid var(--line);overflow:hidden}
 .lc2-item:last-child{border-bottom:1px solid var(--line)}
 .lc2-trigger{width:100%;background:none;border:0;cursor:pointer;display:grid;grid-template-columns:44px 1fr 28px;align-items:center;gap:12px;padding:20px 4px;text-align:left;transition:background .15s;border-radius:0}
-.lc2-trigger:hover{background:rgba(29,111,224,.04)}
-.lc2-num{font-family:var(--font);font-weight:800;font-size:14px;color:var(--blue-dark);opacity:.45;transition:opacity .25s,color .25s;line-height:1}
+.lc2-trigger:hover{background:rgba(5,150,105,.06)}
+.lc2-num{font-family:var(--font);font-weight:800;font-size:14px;color:var(--sec-teal-accent);opacity:.45;transition:opacity .25s,color .25s;line-height:1}
 .lc2-name{font-family:var(--font);font-weight:700;font-size:clamp(17px,2vw,21px);color:var(--navy);transition:color .25s;line-height:1}
 .lc2-chevron{width:20px;height:20px;stroke:var(--text-3);fill:none;stroke-width:2;transition:transform .28s cubic-bezier(.2,.7,.3,1),stroke .2s;flex:none}
-.lc2-item.lc2-open .lc2-trigger{background:rgba(29,111,224,.04)}
-.lc2-item.lc2-open .lc2-num{opacity:1;color:var(--blue)}
-.lc2-item.lc2-open .lc2-name{color:var(--blue-dark)}
-.lc2-item.lc2-open .lc2-chevron{transform:rotate(90deg);stroke:var(--blue)}
+.lc2-item.lc2-open .lc2-trigger{background:rgba(5,150,105,.06)}
+.lc2-item.lc2-open .lc2-num{opacity:1;color:var(--sec-teal-accent)}
+.lc2-item.lc2-open .lc2-name{color:var(--sec-teal-accent)}
+.lc2-item.lc2-open .lc2-chevron{transform:rotate(90deg);stroke:var(--sec-teal-accent)}
 .lc2-body{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(.2,.7,.3,1),opacity .3s;opacity:0}
 .lc2-item.lc2-open .lc2-body{opacity:1}
 .lc2-body-inner{padding:0 4px 22px 56px;display:flex;flex-direction:column;gap:10px}
@@ -748,7 +752,7 @@ export default function HomePage() {
       {/* ═══ SERVICES ═══════════════════════════════════════ */}
       <section className="hp-services">
         <div className="hp-section-head">
-          <div className="hp-section-eyebrow">Our Services</div>
+          <div className="hp-section-eyebrow" style={{color:'#F97316'}}>Our Services</div>
           <h2>Everything your business needs,<br/>in one place.</h2>
           <p>From the first filing to ongoing compliance, technology and growth — all coordinated through LauncherDesk.</p>
         </div>
@@ -803,7 +807,7 @@ export default function HomePage() {
       <section className="hp-why">
         <div className="hp-why-grid">
           <div className="hp-why-left">
-            <div className="hp-section-eyebrow" style={{textAlign:'left',display:'block',marginBottom:14}}>Why LauncherDesk</div>
+            <div className="hp-section-eyebrow" style={{textAlign:'left',display:'block',marginBottom:14,color:'#059669'}}>Why LauncherDesk</div>
             <h2>One desk beats multiple vendors.</h2>
             <p>Most founders waste months juggling CAs, lawyers, web agencies and consultants — each one solving only their piece. LauncherDesk coordinates the whole picture.</p>
             <div className="hp-why-features">
@@ -851,7 +855,7 @@ export default function HomePage() {
       <section className="lc2-section">
         <div className="lc2-inner">
           <div className="lc2-left">
-            <span className="eyebrow">Your business journey</span>
+            <span className="eyebrow" style={{color:'#059669'}}>Your business journey</span>
             <h2 className="lc2-heading">Incorporation is just the start.<br/>We run the whole business.</h2>
             <p className="lc2-desc">Building and scaling a company takes expertise across registrations, compliance, IT, finance, legal and marketing. LauncherDesk replaces multiple vendors with a single integrated platform.</p>
             <Link to="/services" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'10px 22px',borderRadius:9,background:'var(--blue)',color:'#fff',fontWeight:700,fontSize:14,textDecoration:'none'}}>
@@ -890,7 +894,7 @@ export default function HomePage() {
       <section className="hp-types">
         <div style={{maxWidth:1200,margin:'0 auto',padding:'0 28px'}}>
           <div className="hp-section-head">
-            <div className="hp-section-eyebrow">Business Types</div>
+            <div className="hp-section-eyebrow" style={{color:'#7C3AED'}}>Business Types</div>
             <h2>Built for your kind of business.</h2>
             <p>Every business type has a different compliance and growth journey. LauncherDesk knows the path for each one.</p>
           </div>
@@ -919,9 +923,9 @@ export default function HomePage() {
       <section className="hp-how">
         <div style={{maxWidth:1200,margin:'0 auto',padding:'0 28px'}}>
           <div className="hp-section-head">
-            <div className="hp-section-eyebrow">How it works</div>
-            <h2>One conversation.<br/>We take it from there.</h2>
-            <p>No portals to navigate, no consultants to chase. Tell us what you need and LauncherDesk handles the rest.</p>
+            <div className="hp-section-eyebrow" style={{color:'#7ecef4'}}>How it works</div>
+            <h2 style={{color:'#fff'}}>One conversation.<br/>We take it from there.</h2>
+            <p style={{color:'#9ab5d4'}}>No portals to navigate, no consultants to chase. Tell us what you need and LauncherDesk handles the rest.</p>
           </div>
           <div className="hp-how-steps">
             {HOW_STEPS.map((s,i)=>(
@@ -940,7 +944,7 @@ export default function HomePage() {
       <section className="hp-resources">
         <div style={{maxWidth:1200,margin:'0 auto',padding:'0 28px'}}>
           <div className="hp-section-head">
-            <div className="hp-section-eyebrow">Resources</div>
+            <div className="hp-section-eyebrow" style={{color:'#D97706'}}>Resources</div>
             <h2>Know more. Decide better.</h2>
             <p>Practical guides and tools for founders and business owners across India.</p>
           </div>
@@ -973,7 +977,7 @@ export default function HomePage() {
       <section className="hp-faq">
         <div className="hp-faq-inner">
           <div className="hp-section-head">
-            <div className="hp-section-eyebrow">FAQ</div>
+            <div className="hp-section-eyebrow" style={{color:'#0284C7'}}>FAQ</div>
             <h2>Frequently asked questions.</h2>
             <p>Answers to the questions founders ask us every day.</p>
           </div>
