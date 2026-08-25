@@ -103,7 +103,7 @@ const S = `
 .hp-stats-divider { width:1px;background:var(--line);align-self:stretch;display:none; }
 
 /* ── SERVICES SECTION ── */
-.hp-services { padding:96px 0;background:var(--bg); }
+.hp-services { padding:96px 0;background:var(--sec-purple); }
 .hp-section-head { text-align:center;margin-bottom:56px; }
 .hp-section-eyebrow {
   display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;
@@ -125,7 +125,7 @@ const S = `
   display:flex;align-items:center;gap:12px;padding:18px 20px;cursor:pointer;
   transition:background .15s;
 }
-.hp-svc-cat-head:hover { background:#FAFBFF; }
+.hp-svc-cat-head:hover { background:#F8F8FF; }
 .hp-svc-cat-icon {
   width:44px;height:44px;border-radius:10px;background:var(--bg-2);
   display:grid;place-items:center;flex:none;
@@ -150,7 +150,7 @@ const S = `
 }
 .hp-svc-card {
   display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:12px;
-  border:1px solid var(--line);background:#FAFBFF;text-decoration:none;
+  border:1px solid var(--line);background:#fff;text-decoration:none;
   transition:border-color .15s,background .15s,transform .15s,box-shadow .15s;
 }
 .hp-svc-card:hover {
@@ -174,7 +174,7 @@ const S = `
 .hp-svc-all-btn a:hover { background:var(--blue);color:#fff; }
 
 /* ── WHY LAUNCHERDESK ── */
-.hp-why { padding:96px 0;background:#fff; }
+.hp-why { padding:96px 0;background:var(--sec-mint); }
 .hp-why-grid {
   max-width:1200px;margin:0 auto;padding:0 28px;
   display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;
@@ -187,7 +187,7 @@ const S = `
 .hp-why-features { display:flex;flex-direction:column;gap:20px; }
 .hp-why-feat {
   display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:14px;
-  border:1.5px solid var(--line);background:#FAFBFF;transition:border-color .15s,box-shadow .15s;
+  border:1.5px solid var(--line);background:#fff;transition:border-color .15s,box-shadow .15s;
 }
 .hp-why-feat:hover { border-color:var(--blue);box-shadow:0 6px 20px rgba(29,111,224,.1); }
 .hp-why-feat-icon {
@@ -224,7 +224,7 @@ const S = `
 .hp-vs-cell svg  { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;flex:none; }
 
 /* ── BUSINESS TYPES ── */
-.hp-types { padding:96px 0;background:var(--bg); }
+.hp-types { padding:96px 0;background:var(--sec-amber); }
 .hp-types-grid {
   max-width:1200px;margin:0 auto;padding:0 28px;
   display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;
@@ -257,14 +257,14 @@ const S = `
 .hp-type-arrow svg { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5; }
 
 /* ── HOW IT WORKS ── */
-.hp-how { padding:96px 0;background:#fff; }
+.hp-how { padding:96px 0;background:var(--sec-sky); }
 .hp-how-steps {
   max-width:1200px;margin:0 auto;padding:0 28px;
   display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:52px;
 }
 .hp-how-step {
   padding:28px;border-radius:18px;border:1.5px solid var(--line);
-  background:var(--bg);position:relative;
+  background:#fff;position:relative;
 }
 .hp-how-num {
   font-size:clamp(42px,5vw,64px);font-weight:900;letter-spacing:-.04em;
@@ -280,7 +280,7 @@ const S = `
 }
 
 /* ── RESOURCES ── */
-.hp-resources { padding:96px 0;background:var(--bg); }
+.hp-resources { padding:96px 0;background:var(--sec-rose); }
 .hp-res-grid {
   max-width:1200px;margin:0 auto;padding:0 28px;
   display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;
@@ -330,7 +330,7 @@ const S = `
 .hp-marquee-dot {
   width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;opacity:.5;
 }
-.hp-faq { padding:96px 0;background:#fff; }
+.hp-faq { padding:96px 0;background:var(--sec-indigo); }
 .hp-faq-inner { max-width:800px;margin:0 auto;padding:0 28px; }
 .hp-faq-list  { display:flex;flex-direction:column;margin-top:52px; }
 .hp-faq-item  { border-bottom:1px solid var(--line); }
@@ -349,7 +349,7 @@ const S = `
 .hp-faq-a-inner { padding:0 0 20px;font-size:14.5px;color:var(--text-2);line-height:1.72; }
 
 /* ── FINAL CTA ── */
-.hp-cta-section { padding:96px 0;background:var(--bg); }
+.hp-cta-section { padding:96px 0;background:var(--sec-slate); }
 .hp-cta-card {
   max-width:1200px;margin:0 auto;padding:0 28px;
 }
@@ -386,7 +386,7 @@ const S = `
 .hp-cta-btn-exp:hover { background:rgba(255,255,255,.2); }
 
 /* ── LIFECYCLE ACCORDION (reused from original) ── */
-.lc2-section{background:#fff;padding:96px 0}
+.lc2-section{background:var(--sec-mint);padding:96px 0}
 .lc2-inner{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:start;max-width:1200px;margin:0 auto;padding:0 28px}
 .lc2-left{position:sticky;top:92px}
 .lc2-left .eyebrow{margin-bottom:14px;display:block}
