@@ -493,11 +493,18 @@ const FAQS = [
 
 /* ── FORM MODAL ── */
 function EnquiryModal({ plan, onClose }) {
-  const [form, setForm] = useState({ name:'', mobile:'', email:'', city:'Bengaluru', plan: plan || '' })
+  const [form, setForm] = useState({ name:'', mobile:'', email:'', city:'', plan: plan || '' })
   const [done, setDone] = useState(false)
 
   const submit = (e) => { e.preventDefault(); setDone(true) }
-  const CITIES = ['Bengaluru','Mumbai','Delhi','Hyderabad','Chennai','Pune','Kolkata','Ahmedabad','Gurgaon','Noida','Other']
+  const CITIES = [
+    'Bengaluru','Mumbai','Delhi','Hyderabad','Chennai','Pune','Kolkata','Ahmedabad',
+    'Gurgaon','Noida','Faridabad','Ghaziabad','Chandigarh','Jaipur','Lucknow',
+    'Indore','Bhopal','Nagpur','Vadodara','Surat','Kochi','Thiruvananthapuram',
+    'Coimbatore','Visakhapatnam','Vijayawada','Bhubaneswar','Patna','Ranchi',
+    'Guwahati','Dehradun','Mangaluru','Mysuru','Hubli','Nashik','Aurangabad',
+    'Other',
+  ]
   const PLANS  = ['Mail Address Plan','GST Registration Plan','Company Registration Plan','Not sure — help me choose']
 
   return (
@@ -546,6 +553,7 @@ function EnquiryModal({ plan, onClose }) {
                 <div className="vo-mfield">
                   <label className="vo-mlabel">City *</label>
                   <select className="vo-mselect" required value={form.city} onChange={e=>setForm({...form,city:e.target.value})}>
+                    <option value="">Select city</option>
                     {CITIES.map(c=><option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>

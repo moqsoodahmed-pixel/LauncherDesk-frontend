@@ -93,7 +93,7 @@ export default function Footer() {
         {/* ── Bottom bar ── */}
         <div className="foot-bottom">
           <p style={{fontSize:11.5,color:'#3d618a',lineHeight:1.7,maxWidth:760,margin:0}}>
-            LauncherDesk is a business services facilitation platform operated by DutyLaunch Solutions Private Limited. Services may involve licensed professionals, statutory filings or government approvals. Timelines and outcomes may vary. LauncherDesk does not act as a regulatory authority and does not guarantee registrations or approvals.
+            LauncherDesk is operated by DutyLaunch Solutions Pvt. Ltd. Services may involve licensed professionals, statutory filings, or government approvals. Timelines and outcomes may vary. LauncherDesk is not a regulatory authority and does not guarantee approvals or registrations.
           </p>
           <div style={{display:'flex',justifyContent:'space-between',width:'100%',flexWrap:'wrap',gap:12,alignItems:'center',marginTop:16}}>
             <span style={{fontSize:12,color:'#3d618a'}}>© {year} LauncherDesk · DutyLaunch Solutions Private Limited · All rights reserved.</span>
