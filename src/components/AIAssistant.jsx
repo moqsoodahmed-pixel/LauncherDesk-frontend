@@ -375,6 +375,7 @@ export default function AIAssistant() {
           </DraSection>
           <a className="d-link" href="/market">Marketplace</a>
           <a className="d-link" href="/office-restore">Office Setup</a>
+          <a className="d-link" href="/partner/login">Login</a>
         </nav>
         <a className="btn btn-primary" href="/services#finder">Get Started</a>
       </aside>
