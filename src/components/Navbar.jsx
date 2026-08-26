@@ -326,7 +326,6 @@ export default function Navbar({ activePage = '' }) {
           </div>
         </nav>
         <div className="header-cta">
-          <a className="btn btn-sm" href="/partner/login" style={{border:'1.5px solid var(--line)',color:'var(--navy)',background:'transparent',borderRadius:8,padding:'0 18px',height:38,fontSize:13.5,fontWeight:600}}>Login</a>
           <a className="btn btn-primary btn-sm" href="/services#finder" style={{borderRadius:8,padding:'0 20px',height:38,fontSize:13.5}}>Get Started</a>
           <button className="burger" aria-label="Open menu" data-open-drawer="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
