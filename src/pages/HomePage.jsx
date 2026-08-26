@@ -118,7 +118,7 @@ const S = `
 .hp-svc-cat {
   background:#fff;border:1.5px solid var(--line);border-radius:16px;
   transition:border-color .2s,box-shadow .2s;
-  overflow:clip;
+  overflow:hidden;
 }
 .hp-svc-cat:hover { border-color:var(--sec-orange-accent);box-shadow:0 8px 32px rgba(249,115,22,.12); }
 .hp-svc-cat-head {
@@ -143,7 +143,7 @@ const S = `
 }
 .hp-svc-cat.open .hp-svc-cat-chev { transform:rotate(90deg);stroke:var(--blue); }
 .hp-svc-cat-body { max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.2,.7,.3,1);border-radius:0 0 14px 14px; }
-.hp-svc-cat-body.open { max-height:600px; }
+.hp-svc-cat-body.open { max-height:2000px; }
 .hp-svc-cards {
   display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;
   padding:0 24px 24px;
