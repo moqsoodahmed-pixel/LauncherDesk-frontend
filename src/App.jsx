@@ -29,6 +29,8 @@ import PricingPage from './pages/pricing/PricingPage'
 import AiPage from './pages/ai/AiPage'
 // Office Restore
 import OfficeRestorePage from './pages/office-restore/OfficeRestorePage'
+import IndividualOfficePage from './pages/office-restore/IndividualOfficePage'
+import CoworkingOfficePage from './pages/office-restore/CoworkingOfficePage'
 import EStampPage from './pages/estamp/EStampPage'
 import VirtualOfficePage from './pages/virtual-office/VirtualOfficePage'
 import PartnerRegister from './pages/partner/PartnerRegister'
@@ -86,6 +88,8 @@ export default function App() {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/ai" element={<AiPage />} />
             <Route path="/office-restore" element={<OfficeRestorePage />} />
+            <Route path="/office-restore/individual" element={<IndividualOfficePage />} />
+            <Route path="/office-restore/coworking" element={<CoworkingOfficePage />} />
             <Route path="/estamp" element={<EStampPage />} />
             <Route path="/virtual-office" element={<VirtualOfficePage />} />
             <Route path="/partner-register" element={<PartnerRegister />} />
