@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
-import logoImg from '../assets/launcherdesk-logo-footer.png'
-import msmeImg from '../assets/msme-logo.png'
+import logoImg from '../assets/launcherdesk-logo-transparent.png'
+import msmeImg from '../assets/MSME_logo.png'
+import startupIndiaImg from '../assets/startupindia.png'
 
 const ROCKET = 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0'
 
@@ -21,7 +22,7 @@ export default function Footer() {
           {/* Col 1 — Brand */}
           <div className="foot-brand">
             <Link to="/" style={{display:'inline-flex',textDecoration:'none'}}>
-              <img src={logoImg} alt="LauncherDesk" style={{height:50,width:'auto',display:'block'}} />
+              <img src={logoImg} alt="LauncherDesk" style={{height:50,width:'auto',display:'block',filter:'brightness(0) invert(1)'}} />
             </Link>
             <p style={{marginTop:10,fontSize:12.5,color:'#6da8e0',fontWeight:700,letterSpacing:'.04em'}}>Your Business HQ. Launch. Manage. Grow.</p>
             <p className="foot-desc">LauncherDesk helps founders and businesses access, coordinate and manage the services they need — from registration and compliance to technology, finance, marketing and growth.</p>
@@ -102,9 +103,15 @@ export default function Footer() {
           </p>
           <div style={{display:'flex',justifyContent:'space-between',width:'100%',flexWrap:'wrap',gap:12,alignItems:'center',marginTop:16}}>
             <span style={{fontSize:12,color:'#3d618a'}}>© {year} LauncherDesk · DutyLaunch Solutions Private Limited · All rights reserved.</span>
-            <div style={{display:'flex',alignItems:'center',gap:14}}>
-              <img src={msmeImg} alt="MSME Registered" style={{height:56,width:'auto',display:'block',filter:'brightness(1.15) contrast(1.05)'}} />
-              <span style={{fontSize:13,color:'#3d618a'}}>Made in India 🇮🇳</span>
+            <div style={{display:'flex',alignItems:'center',gap:16}}>
+              <img src={msmeImg} alt="MSME Registered" style={{height:44,width:'auto',display:'block',filter:'brightness(0) invert(1)'}} />
+              <img src={startupIndiaImg} alt="DPIIT Startup India" style={{height:44,width:'auto',display:'block'}} />
+              <span style={{fontSize:13,fontWeight:700}}>
+                <span style={{color:'#FF9933'}}>Made </span>
+                <span style={{color:'#ffffff'}}>in </span>
+                <span style={{color:'#138808'}}>India </span>
+                <span>🇮🇳</span>
+              </span>
             </div>
           </div>
         </div>

@@ -97,18 +97,11 @@ img{max-width:100%;display:block}
 /* ============================================================
    HEADER
    ============================================================ */
-.site-header{position:sticky;top:0;left:0;right:0;z-index:60;
-  background:transparent;
-  border-bottom:none;
-  padding:12px 20px}
-.header-in{max-width:1360px;margin:0 auto;height:58px;display:flex;align-items:center;gap:0;
-  padding:0 28px;
-  background:rgba(13,31,60,0.72);
-  backdrop-filter:saturate(200%) blur(28px);-webkit-backdrop-filter:saturate(200%) blur(28px);
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.13);
-  box-shadow:0 4px 32px rgba(0,0,0,.25),0 1px 0 rgba(255,255,255,.08) inset;
-  transition:background .3s,box-shadow .3s;}
+.site-header{position:sticky;top:0;z-index:60;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  box-shadow:0 1px 8px rgba(13,31,60,.06)}
+.header-in{max-width:1380px;margin:0 auto;padding:0 32px;height:68px;display:flex;align-items:center;gap:0}
 
 .brand{display:flex;align-items:center;gap:10px;flex:none;margin-right:36px}
 /* Logo swapped via JS — no CSS filter needed */
@@ -121,31 +114,31 @@ img{max-width:100%;display:block}
 .main-nav{display:flex;align-items:center;gap:2px;flex:1}
 .nav-item{position:relative}
 .nav-item>a,.nav-item>button{
-  font-family:var(--font);font-weight:500;font-size:13.5px;color:#fff;
+  font-family:var(--font);font-weight:500;font-size:13.5px;color:var(--navy);
   padding:7px 13px;border-radius:8px;background:none;border:0;cursor:pointer;
   display:flex;align-items:center;gap:4px;
   transition:background .14s,color .14s;white-space:nowrap;line-height:1}
-.nav-item>a:hover,.nav-item>button:hover{background:rgba(255,255,255,.12);color:#fff}
-.nav-item.active>a,.nav-item.active>button{color:#fff;background:rgba(255,255,255,.12)}
-.nav-item>button svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;opacity:.6;transition:transform .18s;flex:none}
+.nav-item>a:hover,.nav-item>button:hover{background:rgba(13,31,60,.06);color:var(--blue-dark)}
+.nav-item.active>a,.nav-item.active>button{color:var(--blue-dark);background:rgba(29,111,224,.08)}
+.nav-item>button svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;opacity:.45;transition:transform .18s;flex:none}
 .nav-item.open>button svg{transform:rotate(180deg);opacity:1}
 
 /* nav-restore same as regular nav items */
 .nav-restore{
-  font-weight:500;color:#fff;
+  font-weight:500;color:var(--navy);
   background:none;border:none;
   border-radius:8px;padding:7px 13px;font-size:13.5px;
   text-decoration:none;display:inline-flex;align-items:center;
 }
-.nav-restore:hover{background:rgba(255,255,255,.12);color:#fff;}
+.nav-restore:hover{background:rgba(13,31,60,.06);color:var(--blue-dark);}
 
 .header-cta{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none;padding-left:16px}
 .nav-login{border:1px solid var(--line)}
 .nav-login:hover{border-color:rgba(4,125,204,.35);color:var(--blue-dark)}
 .d-cta-row{display:flex;gap:10px}
 .d-cta-row .btn{flex:1;justify-content:center}
-.burger{display:none;width:42px;height:42px;border-radius:10px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.15);cursor:pointer;align-items:center;justify-content:center}
-.burger svg{width:21px;height:21px;stroke:#fff;stroke-width:2;fill:none}
+.burger{display:none;width:42px;height:42px;border-radius:10px;background:rgba(13,31,60,.06);border:0;cursor:pointer;align-items:center;justify-content:center}
+.burger svg{width:21px;height:21px;stroke:var(--navy);stroke-width:2;fill:none}
 
 /* ── MEGA MENU BASE ─────────────────────────────────────── */
 .mega{
@@ -669,8 +662,7 @@ img{max-width:100%;display:block}
    ============================================================ */
 @media(max-width:1280px){
   .wrap,.wrap-tight{padding:0 24px}
-  .site-header{padding:10px 14px}
-  .header-in{padding:0 20px}
+  .header-in{padding:0 18px}
   .svc-layout{grid-template-columns:200px 1fr 240px;gap:32px}
   .lifecycle{gap:36px}
   .lc-inner{gap:36px}
@@ -764,8 +756,7 @@ img{max-width:100%;display:block}
   .or-hero-grid { grid-template-columns: 1fr; gap: 32px; }
   .or-hero-badges { flex-direction: column; gap: 12px; }
 
-  .site-header{padding:8px 12px}
-  .header-in{padding:0 16px;height:52px}
+  .header-in{padding:0 14px;height:60px}
   .brand .txt{font-size:17px}
   .page-hero{padding:38px 0 32px}
   .proof{grid-template-columns:1fr 1fr}
@@ -1094,8 +1085,3 @@ img, video, svg { max-width: 100%; }
   .lc-svg-wrap { display: none !important; }
   .lc-panel { max-width: 100% !important; }
 }
-/* ── Navbar strip fix: dark pages match hero gradient ── */
-[data-page="home"],
-[data-page="office-restore"],
-[data-page="virtual-office"],
-[data-page="estamp"]{background:linear-gradient(160deg,#080F1E 0%,#0D1F3C 55%,#162B52 100%);background-attachment:fixed}

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import logoImg from '../assets/launcherdesk-logo-footer.png'
+import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import { Link, useLocation } from 'react-router-dom'
 
 const I = {
@@ -309,12 +309,12 @@ export default function Navbar({ activePage = '' }) {
           {/* Office Setup dropdown */}
           <div className={`nav-item${activePage === 'office-restore' ? ' active' : ''}`} data-drop="true">
             <button>Office Setup <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev}/></svg></button>
-            <div className="mega" style={{minWidth:280,padding:'8px 0'}}>
+            <div className="mega" style={{minWidth:300,padding:'8px 0'}}>
               <div style={{padding:'6px 8px'}}>
                 <div style={{fontSize:10,fontWeight:700,letterSpacing:'.12em',textTransform:'uppercase',color:'var(--text-3)',padding:'4px 10px 8px'}}>Office Setup</div>
-                <SvcLink href="/office-restore" title="Office Setup Overview" desc="Full office furniture & setup services" />
-                <SvcLink href="/office-restore/individual" title="Individual Office Furniture" desc="Desks, chairs & personal workstations" />
-                <SvcLink href="/office-restore/coworking" title="Co-working Space Furniture" desc="Hot desks, pods, meeting rooms & more" />
+                <SvcLink href="/office-restore" title="Office Furniture & Setup" desc="Custom furniture manufactured & installed" />
+                <SvcLink href="/office-restore/individual" title="Private Office Space" desc="Rent a furnished private office in Bangalore" />
+                <SvcLink href="/office-restore/coworking" title="Co-working Space" desc="Hot desks, cabins & meeting rooms" />
               </div>
             </div>
           </div>
@@ -326,7 +326,7 @@ export default function Navbar({ activePage = '' }) {
           </div>
         </nav>
         <div className="header-cta">
-          <a className="btn btn-sm" href="/partner/login" style={{border:'1.5px solid rgba(255,255,255,.22)',color:'rgba(255,255,255,.88)',background:'transparent',borderRadius:8,padding:'0 18px',height:38,fontSize:13.5,fontWeight:600}}>Login</a>
+          <a className="btn btn-sm" href="/partner/login" style={{border:'1.5px solid var(--line)',color:'var(--navy)',background:'transparent',borderRadius:8,padding:'0 18px',height:38,fontSize:13.5,fontWeight:600}}>Login</a>
           <a className="btn btn-primary btn-sm" href="/services#finder" style={{borderRadius:8,padding:'0 20px',height:38,fontSize:13.5}}>Get Started</a>
           <button className="burger" aria-label="Open menu" data-open-drawer="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
