@@ -507,7 +507,7 @@ function EnquiryModal({ plan, onClose }) {
           name:    form.name,
           mobile:  form.mobile,
           email:   form.email || undefined,
-          state:   form.city,
+          state:   form.city || 'Not specified',
           message: `Virtual Office enquiry — Plan: ${form.plan}, City: ${form.city}`,
           source:  'virtual-office',
           service: 'Virtual Office',
