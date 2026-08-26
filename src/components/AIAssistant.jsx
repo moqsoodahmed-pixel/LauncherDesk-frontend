@@ -376,15 +376,12 @@ export default function AIAssistant() {
           <a className="d-link" href="/market">Marketplace</a>
           <a className="d-link" href="/office-restore">Office Setup</a>
         </nav>
-        <div style={{display:'flex',flexDirection:'column',gap:10,padding:'4px 0 8px'}}>
-          <a href="/partner/login" style={{
-            display:'block',textAlign:'center',padding:'12px',
-            borderRadius:10,border:'none',
-            color:'var(--navy)',fontWeight:600,fontSize:15,
-            textDecoration:'none',fontFamily:'var(--font)',
-            background:'#F0F4FF'
+        <div style={{display:'flex',flexDirection:'column',gap:8}}>
+          <a href="/partner/login" className="btn" style={{
+            justifyContent:'center',background:'#E8EDF8',
+            color:'var(--navy)',fontWeight:600,border:'none'
           }}>Login</a>
-          <a className="btn btn-primary" href="/services#finder" style={{textAlign:'center',borderRadius:10,padding:'12px',fontSize:15}}>Get Started →</a>
+          <a className="btn btn-primary" href="/services#finder" style={{justifyContent:'center'}}>Get Started →</a>
         </div>
       </aside>
     </>
