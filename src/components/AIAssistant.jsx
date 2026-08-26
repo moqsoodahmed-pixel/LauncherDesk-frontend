@@ -379,10 +379,10 @@ export default function AIAssistant() {
         <div style={{display:'flex',flexDirection:'column',gap:10,padding:'4px 0 8px'}}>
           <a href="/partner/login" style={{
             display:'block',textAlign:'center',padding:'12px',
-            border:'1.5px solid var(--line)',borderRadius:10,
+            borderRadius:10,border:'none',
             color:'var(--navy)',fontWeight:600,fontSize:15,
             textDecoration:'none',fontFamily:'var(--font)',
-            background:'#F8FAFF'
+            background:'#F0F4FF'
           }}>Login</a>
           <a className="btn btn-primary" href="/services#finder" style={{textAlign:'center',borderRadius:10,padding:'12px',fontSize:15}}>Get Started →</a>
         </div>
