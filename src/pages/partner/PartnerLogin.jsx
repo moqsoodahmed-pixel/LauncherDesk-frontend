@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { usePartnerAuth } from '../../context/PartnerAuthContext'
-import logoImg from '../../assets/launcherdesk-logo-footer.png'
+import logoImg from '../../assets/launcherdesk-logo-transparent.png'
 
 const S = `
 .pl-wrap {

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAdminAuth } from '../../context/AdminAuthContext'
-import logoImg from '../../assets/launcherdesk-logo-footer.png'
+import logoImg from '../../assets/launcherdesk-logo-transparent.png'
 
 export default function AdminLogin() {
   const { login, error, loading } = useAdminAuth()

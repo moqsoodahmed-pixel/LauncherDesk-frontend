@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import logoImg from '../assets/launcherdesk-logo-footer.png'
+import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import { Link } from 'react-router-dom'
 
 /* ─── Inline styles for the redesigned homepage ──────────────────────── */
