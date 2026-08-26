@@ -379,14 +379,11 @@ export default function AIAssistant() {
         <div style={{display:'flex',flexDirection:'column',gap:10,padding:'4px 0 8px'}}>
           <a href="/partner/login" style={{
             display:'block',textAlign:'center',padding:'12px',
-            border:'2px solid var(--blue-dark)',borderRadius:10,
-            color:'var(--blue-dark)',fontWeight:700,fontSize:15,
-            textDecoration:'none',transition:'all .15s',fontFamily:'var(--font)',
-            background:'transparent'
-          }}
-          onMouseEnter={e=>{e.currentTarget.style.background='var(--blue-dark)';e.currentTarget.style.color='#fff'}}
-          onMouseLeave={e=>{e.currentTarget.style.background='transparent';e.currentTarget.style.color='var(--blue-dark)'}}
-          >Login</a>
+            border:'1.5px solid var(--line)',borderRadius:10,
+            color:'var(--navy)',fontWeight:600,fontSize:15,
+            textDecoration:'none',fontFamily:'var(--font)',
+            background:'#F8FAFF'
+          }}>Login</a>
           <a className="btn btn-primary" href="/services#finder" style={{textAlign:'center',borderRadius:10,padding:'12px',fontSize:15}}>Get Started →</a>
         </div>
       </aside>
