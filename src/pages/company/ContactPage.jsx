@@ -80,7 +80,7 @@ function ContactForm({ roadmap }) {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (!name.trim() || !mobile.trim()) { setError('Name and mobile are required.'); return }
+    if (!name.trim() || !mobile.trim() || !email.trim()) { setError('Name, mobile and email are required.'); return }
     setLoading(true)
     setError('')
 
@@ -101,7 +101,7 @@ function ContactForm({ roadmap }) {
         body: JSON.stringify({
           name: name.trim(),
           mobile: mobile.trim(),
-          email: email.trim() || undefined,
+          email: email.trim(),
           state: (roadmap?.answers?.state) || 'Not specified',
           message: fullMessage,
           whatsappOptin: waConsent,
@@ -157,7 +157,7 @@ function ContactForm({ roadmap }) {
       <form onSubmit={handleSubmit}>
         <div className="field"><input type="text" required placeholder="Name*" value={name} onChange={e => setName(e.target.value)} /></div>
         <div className="field"><input type="tel" required placeholder="Mobile number*" value={mobile} onChange={e => setMobile(e.target.value)} /></div>
-        <div className="field"><input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} /></div>
+        <div className="field"><input type="email" required placeholder="Email address*" value={email} onChange={e => setEmail(e.target.value)} /></div>
         <div className="field">
           <select value={requirement} onChange={e => setRequirement(e.target.value)} defaultValue="">
             <option value="" disabled>What do you need help with?</option>

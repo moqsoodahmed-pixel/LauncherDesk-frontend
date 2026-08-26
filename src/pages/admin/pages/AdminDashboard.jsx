@@ -3,12 +3,7 @@ import { useAdminAuth } from '../../../context/AdminAuthContext'
 import { Card, CardHead, StatCard, StatusBadge, Spinner, Ic } from '../AdminUI'
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 
-const MONTHLY = [
-  {m:'Jan',v:186000,l:34},{m:'Feb',v:215000,l:41},{m:'Mar',v:198000,l:38},
-  {m:'Apr',v:278000,l:52},{m:'May',v:243000,l:46},{m:'Jun',v:312000,l:58},
-  {m:'Jul',v:289000,l:49},{m:'Aug',v:334000,l:63},{m:'Sep',v:298000,l:55},
-  {m:'Oct',v:378000,l:71},{m:'Nov',v:342000,l:66},{m:'Dec',v:410000,l:78},
-]
+// Monthly data is now fetched from /api/admin/stats (monthlyContacts)
 const PIE = [
   {name:'Contacts',  color:'#3B5BDB'},
   {name:'Quotes',    color:'#10B981'},
@@ -98,7 +93,7 @@ export default function AdminDashboard() {
           <CardHead title="Monthly Lead Volume" sub="Enquiries received per month — FY 2026" />
           <div style={{ padding:'16px 20px' }}>
             <ResponsiveContainer width="100%" height={200}>
-              <AreaChart data={MONTHLY} margin={{top:4,right:4,left:-20,bottom:0}}>
+              <AreaChart data={(stats?.monthlyContacts || []).map(m => ({ m: `${m._id.year}-${String(m._id.month).padStart(2,'0')}`, l: m.count }))} margin={{top:4,right:4,left:-20,bottom:0}}>
                 <defs>
                   <linearGradient id="aG" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%"  stopColor="#3B5BDB" stopOpacity={.18}/>
