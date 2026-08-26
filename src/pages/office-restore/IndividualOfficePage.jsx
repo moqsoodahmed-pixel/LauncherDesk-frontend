@@ -18,7 +18,7 @@ const S = `
 .io-badge{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;color:#9ab5d4}
 .io-badge svg{width:14px;height:14px;stroke:#34d399;fill:none;stroke-width:2.5;flex:none}
 
-.io-search-bar{padding:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;backdrop-filter:blur(10px);display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end;margin-top:40px}
+.io-search-bar{padding:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;backdrop-filter:blur(10px);display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;margin-top:32px}
 .io-search-field label{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6da8e0;display:block;margin-bottom:8px}
 .io-search-field select,.io-search-field input{width:100%;height:44px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-family:var(--font);font-size:14px;padding:0 14px;outline:none;transition:.15s}
 .io-search-field select:focus,.io-search-field input:focus{border-color:rgba(249,115,22,.5);background:rgba(255,255,255,.15)}
@@ -104,8 +104,32 @@ const S = `
 
 .io-cta-fin{padding:88px 0;background:var(--sec-teal-bg)}
 
-@media(max-width:900px){.io-hero-grid,.io-types-grid,.io-listings-grid,.io-why-grid,.io-proc-steps,.io-loc-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.io-types-grid,.io-listings-grid,.io-proc-steps,.io-loc-grid{grid-template-columns:1fr}.io-hero-grid,.io-why-grid{grid-template-columns:1fr}.io-search-bar{grid-template-columns:1fr}}
+@media(max-width:1024px){
+  .io-search-bar{grid-template-columns:1fr 1fr;gap:10px}
+  .io-search-btn{grid-column:1/-1;width:100%}
+  .io-hero-grid{grid-template-columns:1fr 1fr}
+  .io-types-grid,.io-listings-grid{grid-template-columns:1fr 1fr}
+  .io-why-grid{grid-template-columns:1fr 1fr}
+  .io-proc-steps{grid-template-columns:1fr 1fr}
+  .io-loc-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .io-search-bar{grid-template-columns:1fr;gap:10px}
+  .io-search-btn{width:100%}
+  .io-hero-grid{grid-template-columns:1fr}
+  .io-types-grid,.io-listings-grid{grid-template-columns:1fr}
+  .io-why-grid{grid-template-columns:1fr}
+  .io-proc-steps{grid-template-columns:1fr 1fr}
+  .io-loc-grid{grid-template-columns:1fr 1fr}
+  .io-cta-row{flex-direction:column}
+  .io-btn-primary,.io-btn-outline{justify-content:center;width:100%}
+  .io-badges{gap:8px}
+}
+@media(max-width:480px){
+  .io-proc-steps,.io-loc-grid{grid-template-columns:1fr}
+  .io-sec-h2{font-size:24px}
+  .io-inner{padding:0 16px}
+}
 `
 
 const CHECK = 'M20 6 9 17l-5-5'
@@ -192,21 +216,24 @@ export default function IndividualOfficePage() {
                 ))}
               </div>
             </div>
-            <div className="reveal-up in">
-              <div className="io-search-bar">
-                <div className="io-search-field">
-                  <label>Location</label>
-                  <select><option>Select area</option>{['Koramangala','Indiranagar','HSR Layout','MG Road','Whitefield','Electronic City','Hebbal','Marathahalli'].map(l=><option key={l}>{l}</option>)}</select>
+            <div className="reveal-up in" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+              <div style={{background:'rgba(255,255,255,.06)',border:'1px solid rgba(255,255,255,.1)',borderRadius:16,padding:28,backdropFilter:'blur(10px)',width:'100%'}}>
+                <div style={{fontSize:13,fontWeight:700,color:'#6da8e0',marginBottom:16,letterSpacing:'.06em',textTransform:'uppercase'}}>Quick Search</div>
+                <div style={{display:'flex',flexDirection:'column',gap:12}}>
+                  {[['Location',['Koramangala','Indiranagar','HSR Layout','MG Road','Whitefield','Electronic City','Hebbal','Marathahalli']],
+                    ['Office Type',['Furnished Office','Managed Office','Plug & Play','Bare Shell']],
+                    ['Team Size',['1–5 seats','6–15 seats','16–30 seats','31–50 seats','50+ seats']]
+                  ].map(([label, opts]) => (
+                    <div key={label}>
+                      <label style={{fontSize:11,fontWeight:700,letterSpacing:'.08em',textTransform:'uppercase',color:'#6da8e0',display:'block',marginBottom:6}}>{label}</label>
+                      <select style={{width:'100%',height:42,background:'rgba(255,255,255,.1)',border:'1.5px solid rgba(255,255,255,.15)',borderRadius:10,color:'#fff',fontFamily:'var(--font)',fontSize:14,padding:'0 12px',outline:'none'}}>
+                        <option style={{background:'#0D1F3C'}}>Select {label.toLowerCase()}</option>
+                        {opts.map(o=><option key={o} style={{background:'#0D1F3C'}}>{o}</option>)}
+                      </select>
+                    </div>
+                  ))}
+                  <button className="io-search-btn" style={{width:'100%',marginTop:4}} onClick={() => document.getElementById('listings')?.scrollIntoView({behavior:'smooth'})}>Search Spaces →</button>
                 </div>
-                <div className="io-search-field">
-                  <label>Office Type</label>
-                  <select><option>Any type</option>{['Furnished Office','Managed Office','Plug & Play','Bare Shell'].map(t=><option key={t}>{t}</option>)}</select>
-                </div>
-                <div className="io-search-field">
-                  <label>Team Size</label>
-                  <select><option>Any size</option>{['1–5 seats','6–15 seats','16–30 seats','31–50 seats','50+ seats'].map(s=><option key={s}>{s}</option>)}</select>
-                </div>
-                <button className="io-search-btn" onClick={() => document.getElementById('listings')?.scrollIntoView({behavior:'smooth'})}>Search</button>
               </div>
             </div>
           </div>

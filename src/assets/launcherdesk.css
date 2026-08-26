@@ -1085,3 +1085,115 @@ img, video, svg { max-width: 100%; }
   .lc-svg-wrap { display: none !important; }
   .lc-panel { max-width: 100% !important; }
 }
+
+
+/* ============================================================
+   MOBILE RESPONSIVE — Virtual Office, EStamp, Office pages
+   ============================================================ */
+
+/* Virtual Office */
+@media(max-width:1024px){
+  .vo-hero-grid{grid-template-columns:1fr 1fr;gap:40px}
+  .vo-plans-grid{grid-template-columns:1fr 1fr}
+  .vo-why-grid{grid-template-columns:1fr 1fr}
+  .vo-how-steps{grid-template-columns:1fr 1fr}
+  .vo-loc-grid{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:768px){
+  .vo-hero-grid{grid-template-columns:1fr;gap:32px}
+  .vo-plans-grid{grid-template-columns:1fr}
+  .vo-why-grid{grid-template-columns:1fr}
+  .vo-how-steps{grid-template-columns:1fr 1fr}
+  .vo-loc-grid{grid-template-columns:1fr 1fr}
+  .vo-addr-stats{grid-template-columns:1fr 1fr}
+  .vo-inner{padding:0 16px}
+  .vo-cta-row{flex-direction:column}
+  .vo-btn-primary,.vo-btn-wa{justify-content:center;width:100%}
+}
+@media(max-width:480px){
+  .vo-how-steps{grid-template-columns:1fr}
+  .vo-loc-grid{grid-template-columns:1fr 1fr}
+  .vo-hero h1{font-size:32px}
+}
+
+/* EStamp */
+@media(max-width:768px){
+  .es-hero-inner{padding:0 16px}
+  .es-what-grid{grid-template-columns:1fr!important}
+  .es-svc-grid{grid-template-columns:1fr 1fr!important}
+  .es-form-grid{grid-template-columns:1fr!important}
+  .es-form-row{grid-template-columns:1fr!important}
+  .es-steps{grid-template-columns:1fr 1fr!important}
+  .es-steps::before{display:none}
+}
+@media(max-width:480px){
+  .es-svc-grid{grid-template-columns:1fr!important}
+  .es-steps{grid-template-columns:1fr!important}
+  .es-hero h1{font-size:30px}
+}
+
+/* Office Restore */
+@media(max-width:768px){
+  .or-hero-grid{grid-template-columns:1fr;gap:32px}
+  .or-cat-grid{grid-template-columns:1fr 1fr!important}
+  .or-flow{grid-template-columns:1fr 1fr!important}
+  .or-hero h1{font-size:32px}
+}
+@media(max-width:480px){
+  .or-cat-grid{grid-template-columns:1fr!important}
+  .or-flow{grid-template-columns:1fr!important}
+}
+
+/* Individual Office search bar fix */
+@media(max-width:1024px){
+  .io-search-bar{grid-template-columns:1fr 1fr;gap:10px}
+  .io-search-btn{grid-column:1/-1;width:100%;margin-top:4px}
+}
+@media(max-width:768px){
+  .io-search-bar{grid-template-columns:1fr}
+  .io-search-btn{width:100%}
+  .io-hero-grid{grid-template-columns:1fr}
+  .io-hero-desc{max-width:100%}
+  .io-cta-row{flex-direction:column}
+  .io-btn-primary,.io-btn-outline{width:100%;justify-content:center}
+  .io-types-grid,.io-listings-grid{grid-template-columns:1fr}
+  .io-why-grid{grid-template-columns:1fr}
+  .io-proc-steps{grid-template-columns:1fr 1fr}
+  .io-loc-grid{grid-template-columns:1fr 1fr}
+  .io-inner{padding:0 16px}
+}
+@media(max-width:480px){
+  .io-proc-steps,.io-loc-grid{grid-template-columns:1fr}
+  .io-hero h1{font-size:30px}
+  .io-types,.io-listings,.io-why,.io-process,.io-locs,.io-faq-sec,.io-cta-fin{padding:56px 0}
+}
+
+/* Coworking */
+@media(max-width:768px){
+  .cw-hero-grid{grid-template-columns:1fr;gap:32px}
+  .cw-cta-row{flex-direction:column}
+  .cw-btn-primary,.cw-btn-outline{width:100%;justify-content:center}
+  .cw-seat-grid{grid-template-columns:1fr}
+  .cw-spaces-grid{grid-template-columns:1fr}
+  .cw-amen-grid{grid-template-columns:1fr 1fr}
+  .cw-process-grid{grid-template-columns:1fr 1fr}
+  .cw-loc-grid{grid-template-columns:1fr 1fr}
+  .cw-feat-grid{grid-template-columns:1fr}
+  .cw-inner{padding:0 16px}
+}
+@media(max-width:480px){
+  .cw-amen-grid,.cw-process-grid,.cw-loc-grid{grid-template-columns:1fr}
+  .cw-hero h1{font-size:30px}
+  .cw-seats,.cw-spaces,.cw-amenities,.cw-locs,.cw-faq-sec,.cw-cta-fin{padding:56px 0}
+  .cw-seat-card.popular::before{display:none}
+}
+
+/* Footer mobile */
+@media(max-width:768px){
+  .foot-social-row{flex-direction:column;gap:24px;align-items:flex-start}
+  .foot-bottom>div:first-child{flex-direction:column;gap:16px;align-items:flex-start}
+}
+@media(max-width:480px){
+  .foot-cols{grid-template-columns:1fr}
+  .foot-brand{grid-column:1}
+}
