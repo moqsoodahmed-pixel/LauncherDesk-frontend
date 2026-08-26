@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Outlet, useNavigate, useLocation, NavLink } from 'react-router-dom'
-import logoImg from '../../assets/launcherdesk-logo-transparent.png'
+import logoImg from '../../assets/launcherdesk-logo-footer.png'
 import { useAdminAuth } from '../../context/AdminAuthContext'
 
 function Ic({ d, size = 17, sw = 2 }) {

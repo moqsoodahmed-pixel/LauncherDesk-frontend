@@ -37,7 +37,7 @@ const S = `
 .es-btn-secondary:hover { background:rgba(255,255,255,.18); }
 
 /* What is E-Stamp */
-.es-what { padding:80px 0;background:#fff; }
+.es-what { padding:80px 0;background:var(--sec-purple-bg); }
 .es-inner { max-width:1100px;margin:0 auto;padding:0 28px; }
 .es-section-label { font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block; }
 .es-what h2 { font-size:clamp(28px,3.6vw,44px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:16px; }
@@ -54,7 +54,7 @@ const S = `
 .es-point p  { font-size:13px;color:var(--text-2);line-height:1.5; }
 
 /* Services grid */
-.es-services { padding:80px 0;background:var(--bg); }
+.es-services { padding:80px 0;background:var(--sec-orange-bg); }
 .es-services h2 { font-size:clamp(26px,3.4vw,42px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:8px; }
 .es-svc-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px; }
 .es-svc-card {
@@ -69,7 +69,7 @@ const S = `
 .es-svc-price { font-size:13px;font-weight:700;color:var(--blue);background:var(--bg-2);padding:4px 12px;border-radius:99px;display:inline-block; }
 
 /* How it works */
-.es-how { padding:80px 0;background:#fff; }
+.es-how { padding:80px 0;background:var(--sec-teal-bg); }
 .es-how h2 { font-size:clamp(26px,3.4vw,42px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:8px; }
 .es-steps { display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px;position:relative; }
 .es-steps::before { content:'';position:absolute;top:32px;left:48px;right:48px;height:2px;background:linear-gradient(90deg,var(--blue-dark),var(--blue));z-index:0; }
@@ -83,7 +83,7 @@ const S = `
 .es-step p  { font-size:13px;color:var(--text-2);line-height:1.5; }
 
 /* Form / CTA */
-.es-form-section { padding:80px 0;background:var(--bg); }
+.es-form-section { padding:80px 0;background:var(--sec-amber-bg); }
 .es-form-card {
   background:linear-gradient(160deg,#080F1E,#0F52C0 70%,#1D6FE0);
   border-radius:24px;padding:clamp(40px,5vw,64px);position:relative;overflow:hidden;
@@ -91,26 +91,26 @@ const S = `
 .es-form-card::before { content:'';position:absolute;inset:0;background:radial-gradient(600px 400px at 80% -20%,rgba(59,143,239,.25),transparent 60%);pointer-events:none; }
 .es-form-grid { display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative; }
 .es-form-left h2 { font-size:clamp(26px,3.4vw,42px);font-weight:900;color:#fff;letter-spacing:-.04em;margin-bottom:12px; }
-.es-form-left p  { font-size:15px;color:#9ab5d4;line-height:1.7;margin-bottom:24px; }
+.es-form-left p  { font-size:15px;color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:24px; }
 .es-contact-rows { display:flex;flex-direction:column;gap:12px; }
-.es-contact-row  { display:flex;align-items:center;gap:12px;color:#9ab5d4;font-size:14px; }
+.es-contact-row  { display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.75);font-size:14px; }
 .es-contact-row svg { width:18px;height:18px;stroke:#3B8FEF;fill:none;stroke-width:2;flex:none; }
 .es-form { display:flex;flex-direction:column;gap:14px; }
 .es-form-field { display:flex;flex-direction:column;gap:6px; }
 .es-form-label { font-size:12.5px;font-weight:600;color:rgba(255,255,255,.7); }
 .es-form-input {
   height:46px;border:1.5px solid rgba(255,255,255,.15);border-radius:10px;
-  background:rgba(255,255,255,.08);color:#fff;padding:0 16px;font-size:14px;
+  background:#fff;color:var(--navy);padding:0 16px;font-size:14px;border:1.5px solid var(--line);
   outline:none;font-family:inherit;transition:border-color .15s;
 }
 .es-form-input::placeholder { color:rgba(255,255,255,.35); }
 .es-form-input:focus { border-color:rgba(59,143,239,.6);background:rgba(255,255,255,.12); }
 .es-form-select {
   height:46px;border:1.5px solid rgba(255,255,255,.15);border-radius:10px;
-  background:rgba(255,255,255,.08);color:#fff;padding:0 16px;font-size:14px;
+  background:#fff;color:var(--navy);padding:0 16px;font-size:14px;border:1.5px solid var(--line);
   outline:none;font-family:inherit;cursor:pointer;
 }
-.es-form-select option { background:#0D1F3C;color:#fff; }
+.es-form-select option { background:#fff;color:var(--navy); }
 .es-form-row { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
 .es-submit-btn {
   height:50px;border-radius:10px;background:#fff;color:#0F52C0;

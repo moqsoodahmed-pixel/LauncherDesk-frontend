@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import logoImg from '../assets/launcherdesk-logo-transparent.png'
+import logoImg from '../assets/launcherdesk-logo-footer.png'
 import { Link, useLocation } from 'react-router-dom'
 
 const I = {
@@ -215,8 +215,7 @@ function MegaMarket() {
 }
 
 export default function Navbar({ activePage = '' }) {
-  const navRef = useRef(null)
-
+  const navRef  = useRef(null)
   useEffect(() => {
     const nav = navRef.current
     if (!nav) return
@@ -288,7 +287,11 @@ export default function Navbar({ activePage = '' }) {
     <header className="site-header" ref={navRef}>
       <div className="header-in">
         <Link to="/" style={{display:'flex',alignItems:'center',textDecoration:'none',flexShrink:0,marginRight:36}}>
-          <img src={logoImg} alt="LauncherDesk" style={{height:40,width:'auto',display:'block'}} />
+          <img
+            src={logoImg}
+            alt="LauncherDesk"
+            style={{height:40, width:'auto', display:'block'}}
+          />
         </Link>
         <nav className="main-nav" id="mainNav">
           <div className={`nav-item${activePage === 'registrations' ? ' active' : ''} nav-item--reg`} data-drop="true">
@@ -303,9 +306,17 @@ export default function Navbar({ activePage = '' }) {
             <button>Marketplace <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev}/></svg></button>
             <MegaMarket />
           </div>
-          {/* Change 4: Office Setup as regular nav link — same style as others */}
-          <div className={`nav-item${activePage === 'office-restore' ? ' active' : ''}`}>
-            <a href="/office-restore" className="nav-restore">Office Setup</a>
+          {/* Office Setup dropdown */}
+          <div className={`nav-item${activePage === 'office-restore' ? ' active' : ''}`} data-drop="true">
+            <button>Office Setup <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev}/></svg></button>
+            <div className="mega" style={{minWidth:280,padding:'8px 0'}}>
+              <div style={{padding:'6px 8px'}}>
+                <div style={{fontSize:10,fontWeight:700,letterSpacing:'.12em',textTransform:'uppercase',color:'var(--text-3)',padding:'4px 10px 8px'}}>Office Setup</div>
+                <SvcLink href="/office-restore" title="Office Setup Overview" desc="Full office furniture & setup services" />
+                <SvcLink href="/office-restore/individual" title="Individual Office Furniture" desc="Desks, chairs & personal workstations" />
+                <SvcLink href="/office-restore/coworking" title="Co-working Space Furniture" desc="Hot desks, pods, meeting rooms & more" />
+              </div>
+            </div>
           </div>
           <div className={`nav-item${activePage === 'virtual-office' ? ' active' : ''}`}>
             <a href="/virtual-office" className="nav-restore">Virtual Office</a>

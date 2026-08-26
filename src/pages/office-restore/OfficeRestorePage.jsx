@@ -302,7 +302,7 @@ export default function OfficeRestorePage() {
       </section>
 
       {/* CATALOGUE */}
-      <section className="section-sm">
+      <section className="section-sm" style={{background:"var(--sec-orange-bg)"}}>
         <div className="wrap">
           <div className="sec-head center reveal-up" style={{ marginBottom: 36 }}>
             <span className="eyebrow">Product Catalogue</span>
@@ -339,7 +339,7 @@ export default function OfficeRestorePage() {
       </section>
 
       {/* PLANNER */}
-      <section className="section section-warm" id="planner">
+      <section className="section" style={{background:"var(--sec-teal-bg)"}} id="planner">
         <div className="wrap">
           <div className="sec-head reveal-up" style={{ marginBottom: 32 }}>
             <span className="eyebrow">Workspace Planner</span>
@@ -451,12 +451,12 @@ export default function OfficeRestorePage() {
       </section>
 
       {/* WORKFLOW */}
-      <section className="section section-dark">
+      <section className="section" style={{background:"var(--sec-sky-bg)"}}>
         <div className="wrap">
           <div className="sec-head center reveal-up" style={{ marginBottom: 52 }}>
-            <span className="eyebrow" style={{ color: '#6da8e0' }}>Process</span>
-            <h2 style={{ color: '#fff', fontSize: 'clamp(26px,3.2vw,40px)', marginTop: 10 }}>End-to-End Workflow</h2>
-            <p style={{ color: '#9ab5d4' }}>How LauncherDesk manages your corporate furniture procurement and layout execution.</p>
+            <span className="eyebrow">Process</span>
+            <h2 style={{ fontSize: 'clamp(26px,3.2vw,40px)', marginTop: 10 }}>End-to-End Workflow</h2>
+            <p>How LauncherDesk manages your corporate furniture procurement and layout execution.</p>
           </div>
           <div className="or-flow">
             {[
@@ -476,7 +476,7 @@ export default function OfficeRestorePage() {
       </section>
 
       {/* FAQ */}
-      <section className="section-sm">
+      <section className="section-sm" style={{background:"var(--sec-amber-bg)"}}>
         <div className="wrap">
           <div className="sec-head center reveal-up" style={{ marginBottom: 36 }}>
             <span className="eyebrow">FAQ</span>
@@ -490,7 +490,7 @@ export default function OfficeRestorePage() {
       </section>
 
       {/* CTA */}
-      <section className="section-sm">
+      <section className="section-sm" style={{background:"var(--sec-purple-bg)"}}>
         <div className="wrap">
           <div className="final reveal-up">
             <h2>Ready to design your workspace?</h2>

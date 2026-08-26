@@ -72,7 +72,7 @@ const S = `
 .vo-addr-stat .l { font-size:11px;color:#6da8e0;margin-top:3px;text-transform:uppercase;letter-spacing:.05em; }
 
 /* ── PLANS ── */
-.vo-plans { padding:88px 0;background:#fff; }
+.vo-plans { padding:88px 0;background:var(--sec-orange-bg); }
 .vo-inner  { max-width:1160px;margin:0 auto;padding:0 28px; }
 .vo-sec-label { font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block; }
 .vo-sec-h2 { font-size:clamp(26px,3.6vw,44px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:8px; }
@@ -80,7 +80,7 @@ const S = `
 .vo-plans-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:22px; }
 
 .vo-plan-card {
-  border-radius:20px;border:1.5px solid var(--line);background:#fff;padding:28px;
+  border-radius:20px;border:1.5px solid var(--sec-orange-border);background:#fff;padding:28px;
   position:relative;transition:border-color .2s,box-shadow .2s,transform .2s;
   display:flex;flex-direction:column;
 }
@@ -119,7 +119,7 @@ const S = `
 .vo-plan-cta.outline:hover { background:var(--bg-2); }
 
 /* ── LOCATIONS ── */
-.vo-locs { padding:88px 0;background:var(--bg); }
+.vo-locs { padding:88px 0;background:var(--sec-teal-bg); }
 .vo-locs-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px; }
 .vo-loc-card {
   background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:22px;
@@ -135,7 +135,7 @@ const S = `
 .vo-loc-price span { color:var(--navy);font-size:17px; }
 
 /* ── WHY / FEATURES ── */
-.vo-why { padding:88px 0;background:#fff; }
+.vo-why { padding:88px 0;background:var(--sec-purple-bg); }
 .vo-why-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px; }
 .vo-why-card {
   padding:26px;border-radius:16px;border:1.5px solid var(--line);
@@ -148,7 +148,7 @@ const S = `
 .vo-why-desc  { font-size:13.5px;color:var(--text-2);line-height:1.6; }
 
 /* ── DOCUMENTS ── */
-.vo-docs { padding:88px 0;background:var(--bg); }
+.vo-docs { padding:88px 0;background:var(--sec-amber-bg); }
 .vo-docs-grid { display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:44px;align-items:start; }
 .vo-doc-group h3 { font-size:17px;font-weight:800;color:var(--navy);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--blue); }
 .vo-doc-list { display:flex;flex-direction:column;gap:11px; }
@@ -156,7 +156,7 @@ const S = `
 .vo-doc-item svg { width:16px;height:16px;stroke:#1D6FE0;fill:none;stroke-width:2.5;flex:none;margin-top:2px; }
 
 /* ── HOW IT WORKS ── */
-.vo-how { padding:88px 0;background:#fff; }
+.vo-how { padding:88px 0;background:var(--sec-sky-bg); }
 .vo-steps { display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:44px;position:relative; }
 .vo-steps::before { content:'';position:absolute;top:36px;left:60px;right:60px;height:2px;background:linear-gradient(90deg,var(--blue-dark),var(--blue));z-index:0; }
 .vo-step { text-align:center;position:relative;z-index:1; }
@@ -170,7 +170,7 @@ const S = `
 .vo-step p  { font-size:12.5px;color:var(--text-2);line-height:1.5; }
 
 /* ── COMPARISON ── */
-.vo-compare { padding:88px 0;background:var(--bg); }
+.vo-compare { padding:88px 0;background:var(--sec-orange-bg); }
 .vo-compare-table { margin-top:44px;border-radius:18px;overflow:hidden;border:1.5px solid var(--line); }
 .vo-ct-head { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;background:var(--navy);color:#fff; }
 .vo-ct-col  { padding:16px 20px;font-size:13px;font-weight:700; }
@@ -186,7 +186,7 @@ const S = `
 .vo-ct-cross { width:18px;height:18px;stroke:#EF4444;fill:none;stroke-width:2.5; }
 
 /* ── FAQ ── */
-.vo-faq { padding:88px 0;background:#fff; }
+.vo-faq { padding:88px 0;background:var(--sec-teal-bg); }
 .vo-faq-inner { max-width:800px;margin:0 auto;padding:0 28px; }
 .vo-faq-list { margin-top:44px; }
 .vo-faq-item { border-bottom:1px solid var(--line); }
@@ -202,7 +202,7 @@ const S = `
 .vo-faq-a-inner { padding:0 0 20px;font-size:14.5px;color:var(--text-2);line-height:1.72; }
 
 /* ── CTA FINAL ── */
-.vo-cta-section { padding:88px 0;background:var(--bg); }
+.vo-cta-section { padding:88px 0;background:var(--sec-purple-bg); }
 .vo-cta-card {
   background:linear-gradient(160deg,#080F1E,#0F52C0 65%,#1D6FE0);
   border-radius:24px;padding:clamp(48px,6vw,80px);text-align:center;
