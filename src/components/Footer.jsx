@@ -89,6 +89,18 @@ export default function Footer() {
                 </a>
               ))}
             </div>
+            {/* Made in India highlight */}
+            <div style={{marginTop:16,padding:'10px 14px',background:'rgba(255,255,255,.04)',border:'1px solid rgba(255,255,255,.07)',borderRadius:10,display:'inline-flex',alignItems:'center',gap:10}}>
+              <span style={{fontSize:18}}>🇮🇳</span>
+              <div>
+                <div style={{fontSize:12,fontWeight:700,letterSpacing:'.04em',marginBottom:2}}>
+                  <span style={{color:'#FF9933'}}>Proudly </span>
+                  <span style={{color:'#ffffff'}}>Made in </span>
+                  <span style={{color:'#138808'}}>India</span>
+                </div>
+                <div style={{fontSize:11.5,color:'#5e7fa0',lineHeight:1.5}}>Built for Indian founders, by an Indian team.<br/>Serving businesses across every state.</div>
+              </div>
+            </div>
           </div>
           <div style={{display:'flex',gap:10,flexWrap:'wrap',alignItems:'center'}}>
             <a href="https://wa.me/918548854859" target="_blank" rel="noopener noreferrer" className="foot-cta-btn foot-cta-wa">WhatsApp</a>
