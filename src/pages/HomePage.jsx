@@ -8,7 +8,7 @@ const S = `
 
 /* ── HERO ── */
 .hp-hero {
-  background: linear-gradient(160deg, #080F1E 0%, #0D1F3C 55%, #162B52 100%);
+  background: linear-gradient(160deg, #04091A 0%, #0B1A35 55%, #112447 100%);
   padding: clamp(72px,9vw,120px) 0 clamp(60px,7vw,100px);
   position: relative; overflow: hidden;
 }
@@ -46,10 +46,11 @@ const S = `
 .hp-btn-primary:hover { background:#0F52C0;transform:translateY(-2px);box-shadow:0 12px 32px rgba(15,82,192,.45); }
 .hp-btn-secondary {
   display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;
-  background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:15px;border-radius:10px;
-  border:1.5px solid rgba(255,255,255,.15);transition:background .15s;text-decoration:none;
+  background:#F97316;color:#fff;font-weight:700;font-size:15px;border-radius:10px;
+  border:none;transition:background .15s,transform .15s;text-decoration:none;
+  box-shadow:0 8px 24px rgba(249,115,22,.35);
 }
-.hp-btn-secondary:hover { background:rgba(255,255,255,.14); }
+.hp-btn-secondary:hover { background:#EA6C0A;transform:translateY(-2px); }
 .hp-trust-pills { display:flex;gap:16px;flex-wrap:wrap; }
 .hp-trust-pill  {
   display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;
@@ -739,10 +740,13 @@ export default function HomePage() {
           <div className="hp-marquee-wrap">
             <div className="hp-marquee-track">
               {all.map((s, i) => (
-                <span key={i} className="hp-marquee-item">
+                <a key={i} className="hp-marquee-item" href="/services"
+                   style={{textDecoration:'none',cursor:'pointer'}}
+                   onMouseEnter={e=>e.currentTarget.style.color='#1D6FE0'}
+                   onMouseLeave={e=>e.currentTarget.style.color=''}>
                   <span className="hp-marquee-dot"/>
                   {s}
-                </span>
+                </a>
               ))}
             </div>
           </div>
@@ -1019,10 +1023,10 @@ export default function HomePage() {
                 Chat on WhatsApp
               </a>
               <Link to="/company/contact" className="hp-cta-btn-exp">
-                Book a consultation
-                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
+                Book a consultation
               </Link>
             </div>
           </div>

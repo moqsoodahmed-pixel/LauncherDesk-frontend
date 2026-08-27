@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage'
 // Services
 import ServicesIndex from './pages/services/ServicesIndex'
 import ServiceDetailPage from './pages/services/ServiceDetailPage'
+import WhatsAppBusinessPage from './pages/services/WhatsAppBusinessPage'
 // Solutions
 import SolutionsIndex from './pages/solutions/SolutionsIndex'
 import SolutionDetailPage from './pages/solutions/SolutionDetailPage'
@@ -71,6 +72,7 @@ export default function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/services" element={<ServicesIndex />} />
+            <Route path="/services/whatsapp-business-api" element={<WhatsAppBusinessPage />} />
             <Route path="/services/:slug" element={<ServiceDetailPage />} />
             <Route path="/solutions" element={<SolutionsIndex />} />
             <Route path="/solutions/:slug" element={<SolutionDetailPage />} />
