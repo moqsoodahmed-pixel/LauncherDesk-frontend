@@ -159,10 +159,27 @@ function ContactForm({ roadmap }) {
         <div className="field"><input type="tel" required placeholder="Mobile number*" value={mobile} onChange={e => setMobile(e.target.value)} /></div>
         <div className="field"><input type="email" required placeholder="Email address*" value={email} onChange={e => setEmail(e.target.value)} /></div>
         <div className="field">
-          <select value={requirement} onChange={e => setRequirement(e.target.value)} defaultValue="">
-            <option value="" disabled>What do you need help with?</option>
-            {REQUIREMENT_OPTIONS.map(o => <option key={o}>{o}</option>)}
-          </select>
+          <label style={{fontSize:13,fontWeight:600,color:'var(--navy)',marginBottom:8,display:'block'}}>What do you need help with? <span style={{color:'#94A3B8',fontWeight:400}}>(select all that apply)</span></label>
+          <div style={{display:'flex',flexWrap:'wrap',gap:8}}>
+            {REQUIREMENT_OPTIONS.map(o => {
+              const selected = (requirement||'').split(',').map(s=>s.trim()).filter(Boolean).includes(o)
+              return (
+                <button key={o} type="button"
+                  onClick={() => {
+                    const current = (requirement||'').split(',').map(s=>s.trim()).filter(Boolean)
+                    const next = selected ? current.filter(x=>x!==o) : [...current,o]
+                    setRequirement(next.join(', '))
+                  }}
+                  style={{
+                    padding:'7px 14px',borderRadius:99,fontSize:13,fontWeight:600,cursor:'pointer',
+                    border:selected?'1.5px solid #1D6FE0':'1.5px solid var(--line)',
+                    background:selected?'#EEF2FF':'#fff',
+                    color:selected?'#1D6FE0':'var(--navy)',transition:'all .15s'
+                  }}
+                >{o}</button>
+              )
+            })}
+          </div>
         </div>
         <div className="field">
           <textarea
