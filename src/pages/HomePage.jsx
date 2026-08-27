@@ -385,10 +385,11 @@ const S = `
 .hp-cta-btn-wa:hover { background:#1faa59;transform:translateY(-2px); }
 .hp-cta-btn-exp {
   display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 28px;
-  background:rgba(255,255,255,.12);color:#fff;font-weight:600;font-size:15px;border-radius:12px;
-  border:1.5px solid rgba(255,255,255,.2);text-decoration:none;transition:background .15s;
+  background:#7C3AED;color:#fff;font-weight:700;font-size:15px;border-radius:12px;
+  border:none;text-decoration:none;transition:background .15s,transform .15s;
+  box-shadow:0 8px 24px rgba(124,58,237,.35);
 }
-.hp-cta-btn-exp:hover { background:rgba(255,255,255,.2); }
+.hp-cta-btn-exp:hover { background:#6D28D9;transform:translateY(-2px); }
 
 /* ── LIFECYCLE ACCORDION (reused from original) ── */
 .lc2-section{background:var(--sec-teal-bg);padding:96px 0}
@@ -534,7 +535,7 @@ const SVC_CATS = [
       {href:'/services/website-development',icon:'M2 3h20v14H2zM8 21h8M12 17v4',name:'Website Development',desc:'Mobile-first business websites, e-commerce stores and portals.'},
       {href:'/services/business-automation',icon:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',name:'Business Automation',desc:'CRM setup, workflow automation and operational systems.'},
       {href:'/services/digital-marketing',icon:'M23 6l-9.5 9.5-5-5L1 18',name:'Digital Marketing',desc:'SEO, Google Ads, social media and branding for real growth.'},
-      {href:'/services/website-development',icon:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',name:'WhatsApp Business API',desc:'Official Meta API for bulk messaging and automation.'},
+      {href:'/services/whatsapp-business-api',icon:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',name:'WhatsApp Business API',desc:'Official Meta API for bulk messaging and automation.'},
     ]
   },
 ]
@@ -665,9 +666,7 @@ export default function HomePage() {
               </p>
               <div className="hp-cta-row">
                 <a href="https://wa.me/918548854859" className="hp-btn-primary" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-                  </svg>
+                  <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{flexShrink:0}}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>
                   Chat on WhatsApp
                 </a>
                 <Link to="/services" className="hp-btn-secondary">
@@ -729,23 +728,38 @@ export default function HomePage() {
       {/* ═══ SERVICES MARQUEE ════════════════════════════════ */}
       {(() => {
         const items = [
-          'Private Limited Registration','GST Registration','Trademark Filing','LLP Registration',
-          'Website Development','MSME / Udyam','ROC Compliance','Accounting & Bookkeeping',
-          'ISO Certification','Digital Marketing','Payroll Management','E-Stamp Services',
-          'Income Tax Filing','Brand Identity Design','WhatsApp Business API','Startup India',
-          'One Person Company','Social Media Management','Mobile App Development','OPC Registration',
+          {label:'Private Limited Registration', href:'/services/private-limited-company-registration'},
+          {label:'GST Registration', href:'/services/gst-registration'},
+          {label:'Trademark Filing', href:'/services/trademark-registration'},
+          {label:'LLP Registration', href:'/services/llp-registration'},
+          {label:'Website Development', href:'/services/website-development'},
+          {label:'MSME / Udyam', href:'/services/msme-registration'},
+          {label:'ROC Compliance', href:'/services/roc-compliance'},
+          {label:'Accounting & Bookkeeping', href:'/services/accounting'},
+          {label:'ISO Certification', href:'/services/iso-certification'},
+          {label:'Digital Marketing', href:'/services/digital-marketing'},
+          {label:'Payroll Management', href:'/services/payroll'},
+          {label:'E-Stamp Services', href:'/estamp'},
+          {label:'Income Tax Filing', href:'/services/income-tax-filing'},
+          {label:'Brand Identity Design', href:'/services/branding-logo-design'},
+          {label:'WhatsApp Business API', href:'/services/whatsapp-business-api'},
+          {label:'Startup India', href:'/services/startup-india-dpiit'},
+          {label:'One Person Company', href:'/services/opc-registration'},
+          {label:'Social Media Management', href:'/services/social-media-management'},
+          {label:'Mobile App Development', href:'/services/mobile-app-development'},
+          {label:'OPC Registration', href:'/services/opc-registration'},
         ]
         const all = [...items, ...items]
         return (
           <div className="hp-marquee-wrap">
             <div className="hp-marquee-track">
               {all.map((s, i) => (
-                <a key={i} className="hp-marquee-item" href="/services"
+                <a key={i} className="hp-marquee-item" href={s.href}
                    style={{textDecoration:'none',cursor:'pointer'}}
                    onMouseEnter={e=>e.currentTarget.style.color='#1D6FE0'}
                    onMouseLeave={e=>e.currentTarget.style.color=''}>
                   <span className="hp-marquee-dot"/>
-                  {s}
+                  {s.label}
                 </a>
               ))}
             </div>
@@ -1017,9 +1031,7 @@ export default function HomePage() {
             <p>One chat is all it takes. Tell us what your business needs and we'll handle the rest — honestly, and on time.</p>
             <div className="hp-cta-btns">
               <a href="https://wa.me/918548854859" className="hp-cta-btn-wa" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-                </svg>
+                <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{flexShrink:0}}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>
                 Chat on WhatsApp
               </a>
               <Link to="/company/contact" className="hp-cta-btn-exp">
