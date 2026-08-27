@@ -8,7 +8,7 @@ const S = `
 
 /* ── HERO ── */
 .hp-hero {
-  background: linear-gradient(160deg, #04091A 0%, #0B1A35 55%, #112447 100%);
+  background: linear-gradient(160deg, #1A2F4E 0%, #1E3A6A 55%, #264D8C 100%);
   padding: clamp(72px,9vw,120px) 0 clamp(60px,7vw,100px);
   position: relative; overflow: hidden;
 }
@@ -258,7 +258,7 @@ const S = `
 .hp-type-arrow svg { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5; }
 
 /* ── HOW IT WORKS ── */
-.hp-how { padding:96px 0;background:#0D1F3C; }
+.hp-how { padding:96px 0;background:#1E3A6A; }
 .hp-how-steps {
   max-width:1200px;margin:0 auto;padding:0 28px;
   display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:52px;
@@ -352,7 +352,7 @@ const S = `
 .hp-faq-a-inner { padding:0 0 20px;font-size:14.5px;color:var(--text-2);line-height:1.72; }
 
 /* ── FINAL CTA ── */
-.hp-cta-section { padding:96px 0;background:linear-gradient(135deg,#0D1F3C 0%,#1a1060 40%,#0F52C0 100%); }
+.hp-cta-section { padding:96px 0;background:linear-gradient(135deg,#1E3A6A 0%,#1a1060 40%,#0F52C0 100%); }
 .hp-cta-card {
   max-width:1200px;margin:0 auto;padding:0 28px;
 }

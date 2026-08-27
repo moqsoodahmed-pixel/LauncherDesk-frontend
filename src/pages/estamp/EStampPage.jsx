@@ -4,7 +4,7 @@ const API = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-produc
 
 const S = `
 .es-hero {
-  background: linear-gradient(160deg, #080F1E 0%, #0D1F3C 55%, #162B52 100%);
+  background: linear-gradient(160deg, #1A2F4E 0%, #1E3A6A 55%, #264D8C 100%);
   padding: clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);
   position: relative; overflow: hidden;
 }
@@ -85,7 +85,7 @@ const S = `
 /* Form / CTA */
 .es-form-section { padding:80px 0;background:var(--sec-amber-bg); }
 .es-form-card {
-  background:linear-gradient(160deg,#080F1E,#0F52C0 70%,#1D6FE0);
+  background:linear-gradient(160deg,#1A2F4E,#0F52C0 70%,#1D6FE0);
   border-radius:24px;padding:clamp(40px,5vw,64px);position:relative;overflow:hidden;
 }
 .es-form-card::before { content:'';position:absolute;inset:0;background:radial-gradient(600px 400px at 80% -20%,rgba(59,143,239,.25),transparent 60%);pointer-events:none; }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const S = `
-.cw-hero{background:linear-gradient(160deg,#080F1E 0%,#051A12 55%,#082918 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden}
+.cw-hero{background:linear-gradient(160deg,#1A2F4E 0%,#051A12 55%,#082918 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden}
 .cw-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(800px 600px at 70% -10%,rgba(5,150,105,.22),transparent 60%),radial-gradient(400px 400px at 5% 100%,rgba(6,78,59,.18),transparent 60%)}
 .cw-inner{max-width:1160px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
 .cw-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(5,150,105,.15);border:1px solid rgba(5,150,105,.3);border-radius:99px;padding:5px 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#34d399;margin-bottom:20px}

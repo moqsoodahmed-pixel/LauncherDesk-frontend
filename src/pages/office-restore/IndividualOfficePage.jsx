@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const S = `
-.io-hero{background:linear-gradient(160deg,#080F1E 0%,#0D1F3C 55%,#162B52 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden}
+.io-hero{background:linear-gradient(160deg,#1A2F4E 0%,#1E3A6A 55%,#264D8C 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden}
 .io-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(800px 600px at 70% -10%,rgba(249,115,22,.18),transparent 60%),radial-gradient(400px 400px at 5% 100%,rgba(15,82,192,.15),transparent 60%)}
 .io-inner{max-width:1160px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
 .io-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.3);border-radius:99px;padding:5px 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fb923c;margin-bottom:20px}
@@ -22,7 +22,7 @@ const S = `
 .io-search-field label{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6da8e0;display:block;margin-bottom:8px}
 .io-search-field select,.io-search-field input{width:100%;height:44px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-family:var(--font);font-size:14px;padding:0 14px;outline:none;transition:.15s}
 .io-search-field select:focus,.io-search-field input:focus{border-color:rgba(249,115,22,.5);background:rgba(255,255,255,.15)}
-.io-search-field select option{background:#0D1F3C;color:#fff}
+.io-search-field select option{background:#1E3A6A;color:#fff}
 .io-search-btn{height:44px;padding:0 24px;background:#f97316;color:#fff;font-weight:700;font-size:14px;border-radius:10px;border:0;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s}
 .io-search-btn:hover{background:#ea6c0a}
 
@@ -71,7 +71,7 @@ const S = `
 .io-why-feat-ic svg{width:20px;height:20px;stroke:var(--sec-purple-accent);fill:none;stroke-width:2}
 .io-why-feat h4{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:5px}
 .io-why-feat p{font-size:13.5px;color:var(--text-2);line-height:1.6}
-.io-why-visual{background:linear-gradient(160deg,#0D1F3C,#080F1E);border-radius:20px;padding:32px}
+.io-why-visual{background:linear-gradient(160deg,#1E3A6A,#1A2F4E);border-radius:20px;padding:32px}
 .io-why-visual h3{color:#fff;font-size:17px;font-weight:700;margin-bottom:20px}
 .io-stat-list{display:flex;flex-direction:column;gap:12px}
 .io-stat-row-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,.06);border-radius:10px;border:1px solid rgba(255,255,255,.08)}
@@ -227,8 +227,8 @@ export default function IndividualOfficePage() {
                     <div key={label}>
                       <label style={{fontSize:11,fontWeight:700,letterSpacing:'.08em',textTransform:'uppercase',color:'#6da8e0',display:'block',marginBottom:6}}>{label}</label>
                       <select style={{width:'100%',height:42,background:'rgba(255,255,255,.1)',border:'1.5px solid rgba(255,255,255,.15)',borderRadius:10,color:'#fff',fontFamily:'var(--font)',fontSize:14,padding:'0 12px',outline:'none'}}>
-                        <option style={{background:'#0D1F3C'}}>Select {label.toLowerCase()}</option>
-                        {opts.map(o=><option key={o} style={{background:'#0D1F3C'}}>{o}</option>)}
+                        <option style={{background:'#1E3A6A'}}>Select {label.toLowerCase()}</option>
+                        {opts.map(o=><option key={o} style={{background:'#1E3A6A'}}>{o}</option>)}
                       </select>
                     </div>
                   ))}

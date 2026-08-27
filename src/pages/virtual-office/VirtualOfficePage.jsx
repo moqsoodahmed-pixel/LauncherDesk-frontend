@@ -3,7 +3,7 @@ import { useState } from 'react'
 const S = `
 /* ── HERO ── */
 .vo-hero {
-  background: linear-gradient(160deg,#080F1E 0%,#0D1F3C 55%,#162B52 100%);
+  background: linear-gradient(160deg,#1A2F4E 0%,#1E3A6A 55%,#264D8C 100%);
   padding: clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);
   position: relative; overflow: hidden;
 }
@@ -204,7 +204,7 @@ const S = `
 /* ── CTA FINAL ── */
 .vo-cta-section { padding:88px 0;background:var(--sec-purple-bg); }
 .vo-cta-card {
-  background:linear-gradient(160deg,#080F1E,#0F52C0 65%,#1D6FE0);
+  background:linear-gradient(160deg,#1A2F4E,#0F52C0 65%,#1D6FE0);
   border-radius:24px;padding:clamp(48px,6vw,80px);text-align:center;
   box-shadow:0 40px 80px rgba(13,31,60,.3);position:relative;overflow:hidden;
 }
@@ -227,7 +227,7 @@ const S = `
   box-shadow:0 32px 80px rgba(0,0,0,.25);max-height:90vh;overflow-y:auto;
 }
 .vo-modal-head {
-  background:linear-gradient(135deg,#0D1F3C,#162B52);
+  background:linear-gradient(135deg,#1E3A6A,#264D8C);
   border-radius:20px 20px 0 0;padding:24px 28px;
   display:flex;align-items:center;justify-content:space-between;
 }

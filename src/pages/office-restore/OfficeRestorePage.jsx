@@ -12,7 +12,7 @@ const CHECK = 'M9 11l3 3L22 4'
 const SEND = 'M22 2 11 13M22 2l-7 20-4-9-9-4z'
 
 const orStyles = `
-.or-hero{padding:64px 0 56px;position:relative;overflow:hidden;background:linear-gradient(160deg,#080F1E 0%,#0D1F3C 60%,#162B52 100%)}
+.or-hero{padding:64px 0 56px;position:relative;overflow:hidden;background:linear-gradient(160deg,#1A2F4E 0%,#1E3A6A 60%,#264D8C 100%)}
 .or-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 500px at 80% -10%,rgba(59,143,239,.28),transparent 60%),radial-gradient(400px 300px at 10% 100%,rgba(15,82,192,.22),transparent 60%);pointer-events:none}
 .or-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;position:relative}
 .or-eyebrow{font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#6da8e0;margin-bottom:14px}
@@ -71,7 +71,7 @@ const orStyles = `
 .or-wa-consent label{font-size:13px;color:var(--text-2);line-height:1.5;cursor:pointer}
 .or-submit{width:100%;margin-top:22px}
 .or-submit-disc{text-align:center;font-size:12px;color:var(--text-3);margin-top:10px}
-.or-summary{background:linear-gradient(165deg,#0D1F3C,#080F1E);border-radius:20px;padding:28px;position:sticky;top:90px;color:#fff}
+.or-summary{background:linear-gradient(165deg,#1E3A6A,#1A2F4E);border-radius:20px;padding:28px;position:sticky;top:90px;color:#fff}
 .or-summary h4{font-size:17px;color:#fff;margin-bottom:6px}
 .or-summary .sub{font-size:13px;color:#7494b8;margin-bottom:24px}
 .or-sum-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.07)}
