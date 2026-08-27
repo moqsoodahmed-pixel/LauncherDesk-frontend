@@ -35,7 +35,7 @@ export default function BlogPage() {
           <div className="art-grid">
             {ARTICLES.map((a, i) => (
               <a key={i} className="art reveal-up" href={a.href} style={{textDecoration:'none'}}>
-                <div className="thumb" style={{background:'linear-gradient(135deg,#0D1F3C,#1D6FE0)'}}></div>
+                <div className="thumb" style={{background:'linear-gradient(135deg,#1E3A6A,#1D6FE0)'}}></div>
                 <div className="body">
                   <span className="cat">{a.cat}</span>
                   <h3>{a.title}</h3>

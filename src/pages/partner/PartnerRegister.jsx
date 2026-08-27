@@ -16,7 +16,7 @@ const S = `
 
 /* Hero */
 .pr-hero {
-  background: linear-gradient(160deg,#080F1E 0%,#0D1F3C 55%,#162B52 100%);
+  background: linear-gradient(160deg,#1A2F4E 0%,#1E3A6A 55%,#264D8C 100%);
   padding: clamp(56px,7vw,88px) 0 clamp(44px,5vw,68px);
   position: relative; overflow: hidden; text-align: center;
 }

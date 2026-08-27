@@ -105,7 +105,7 @@ export function MockShot({ p, variant }) {
   if (variant === 0) {
     body = (
       <>
-        <rect x="24" y="76" width="180" height="14" rx="7" fill="#0D1F3C" opacity="0.8"/>
+        <rect x="24" y="76" width="180" height="14" rx="7" fill="#1E3A6A" opacity="0.8"/>
         {[0,1,2,3,4].map(i => {
           const y = 110 + i * 46
           return (

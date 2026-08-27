@@ -16,7 +16,7 @@ const S = `
   background:linear-gradient(135deg,#1D6FE0,#0F52C0);
   display:grid;place-items:center;color:#fff;font-weight:900;font-size:16px;flex:none;
 }
-.pd-topbar-title { font-size:15px;font-weight:800;color:#0D1F3C; }
+.pd-topbar-title { font-size:15px;font-weight:800;color:#1E3A6A; }
 .pd-topbar-title span { font-weight:400;color:#64748B;font-size:13px; }
 .pd-topbar-right { display:flex;align-items:center;gap:12px; }
 .pd-badge {
@@ -50,7 +50,7 @@ const S = `
 .pd-status-banner.approved,.pd-status-banner.active { background:#ECFDF5;border:1.5px solid #6EE7B7; }
 .pd-status-banner.rejected { background:#FFF1F2;border:1.5px solid #FECDD3; }
 .pd-status-icon { font-size:28px;flex:none; }
-.pd-status-title { font-size:16px;font-weight:800;color:#0D1F3C;margin-bottom:4px; }
+.pd-status-title { font-size:16px;font-weight:800;color:#1E3A6A;margin-bottom:4px; }
 .pd-status-desc  { font-size:13.5px;color:#475569;line-height:1.6; }
 
 /* ── Stats grid ── */
@@ -59,7 +59,7 @@ const S = `
   background:#fff;border-radius:14px;border:1.5px solid #E2E8F0;
   padding:22px 20px;
 }
-.pd-stat-num  { font-size:30px;font-weight:900;color:#0D1F3C;line-height:1; }
+.pd-stat-num  { font-size:30px;font-weight:900;color:#1E3A6A;line-height:1; }
 .pd-stat-label{ font-size:12.5px;color:#64748B;margin-top:6px;font-weight:600; }
 .pd-stat-icon { font-size:22px;margin-bottom:8px; }
 
@@ -71,7 +71,7 @@ const S = `
   background:#fff;border-radius:16px;border:1.5px solid #E2E8F0;
   padding:24px;margin-bottom:20px;
 }
-.pd-card-title { font-size:16px;font-weight:800;color:#0D1F3C;margin-bottom:18px; }
+.pd-card-title { font-size:16px;font-weight:800;color:#1E3A6A;margin-bottom:18px; }
 
 /* ── Table ── */
 .pd-table-wrap { overflow-x:auto;border-radius:10px;border:1px solid #E2E8F0; }
@@ -96,7 +96,7 @@ const S = `
 /* ── Profile card ── */
 .pd-profile-row { display:flex;gap:10px;margin-bottom:12px;align-items:flex-start; }
 .pd-profile-key { font-size:12px;font-weight:700;color:#64748B;min-width:110px;padding-top:1px; }
-.pd-profile-val { font-size:13px;color:#0D1F3C;word-break:break-word; }
+.pd-profile-val { font-size:13px;color:#1E3A6A;word-break:break-word; }
 .pd-cat-pill {
   display:inline-block;font-size:11px;font-weight:600;padding:2px 9px;
   border-radius:99px;background:#EEF2FF;color:#3730A3;margin:2px 3px 2px 0;
@@ -374,7 +374,7 @@ export default function PartnerDashboard() {
                 </div>
 
                 {/* Help card */}
-                <div className="pd-card" style={{ background: 'linear-gradient(135deg,#0D1F3C,#162B52)', border: 0 }}>
+                <div className="pd-card" style={{ background: 'linear-gradient(135deg,#1E3A6A,#264D8C)', border: 0 }}>
                   <div style={{ color: '#fff', fontWeight: 800, fontSize: 15, marginBottom: 8 }}>Need help?</div>
                   <div style={{ color: '#9ab5d4', fontSize: 13, lineHeight: 1.6, marginBottom: 16 }}>
                     Contact our partner success team for any questions about your listing or leads.

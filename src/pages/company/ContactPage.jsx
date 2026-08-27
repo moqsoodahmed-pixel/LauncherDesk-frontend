@@ -23,7 +23,7 @@ function RoadmapSummary({ roadmap }) {
   const priClass = { hi: 'hi', mid: 'mid', low: 'low' }
   return (
     <div style={{
-      background: 'linear-gradient(160deg,#080F1E,#0F52C0)',
+      background: 'linear-gradient(160deg,#1A2F4E,#0F52C0)',
       borderRadius: 16,
       padding: '24px 26px',
       marginBottom: 24,
