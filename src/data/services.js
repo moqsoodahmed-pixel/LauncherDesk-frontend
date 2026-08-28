@@ -8,7 +8,7 @@ export const SERVICES = {
     eyebrow: 'Start your business',
     crumbCategory: 'Start your business',
     lead: "The standard structure for startups that want limited liability, credibility and the ability to raise investment. We handle the entire MCA process end to end.",
-    priceCard: { label: 'Professional fee from', price: 'Custom quote', sub: '+ government fee & taxes, shown separately' },
+    priceCard: { label: 'Professional fee from', price: '₹3,999', sub: '+ government fee & taxes, shown separately' },
     helpCard: { title: 'Need help deciding?', body: "Not sure if Pvt Ltd is right for you? Get a personalised recommendation." },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -106,7 +106,7 @@ export const SERVICES = {
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "Register for GST and keep monthly, quarterly and annual returns filed on time — so a missed deadline never becomes a penalty or a blocked input credit.",
-    priceCard: { label: 'Professional fee from', price: 'Custom quote', sub: '+ taxes, shown separately' },
+    priceCard: { label: 'Professional fee from', price: '₹1,499', sub: '+ taxes, shown separately' },
     helpCard: { title: 'Not sure if you need GST yet?', body: "It depends on turnover, state and channel — we'll tell you plainly." },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -155,7 +155,7 @@ export const SERVICES = {
     eyebrow: 'Start your business',
     crumbCategory: 'Start your business',
     lead: "A partner-owned structure that combines limited liability with lower compliance than a Private Limited Company. Popular with professional and services firms.",
-    priceCard: { label: 'Professional fee from', price: 'Custom quote', sub: '+ government fee & taxes, shown separately' },
+    priceCard: { label: 'Professional fee from', price: '₹4,999', sub: '+ government fee & taxes, shown separately' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -198,7 +198,7 @@ export const SERVICES = {
     eyebrow: 'Start your business',
     crumbCategory: 'Start your business',
     lead: "Built for solo founders. An OPC gives you the limited liability and credibility of a company structure without needing a second shareholder.",
-    priceCard: { label: 'Professional fee from', price: 'Custom quote', sub: '+ government fee & taxes, shown separately' },
+    priceCard: { label: 'Professional fee from', price: '₹3,999', sub: '+ government fee & taxes, shown separately' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -283,7 +283,7 @@ export const SERVICES = {
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "A quick registration that unlocks collateral-free loans, subsidies, delayed-payment protection and priority in government tenders.",
-    priceCard: { label: 'Professional fee from', price: 'Custom quote', sub: '+ government fee & taxes, shown separately' },
+    priceCard: { label: 'Professional fee from', price: '₹999', sub: '+ taxes, shown separately' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -366,7 +366,7 @@ export const SERVICES = {
     eyebrow: 'Protect & grow',
     crumbCategory: 'Legal & IP',
     lead: "Your brand name is one of your most valuable assets — and one of the easiest to lose if you don't register it. We search, file and track your trademark through to registration.",
-    priceCard: { label: 'Professional fee from', price: 'Custom quote', sub: '+ government fee & taxes, shown separately' },
+    priceCard: { label: 'Professional fee from', price: '₹1,999', sub: '+ govt. fee ₹4,500/class for MSME' },
     helpCard: { title: "Not sure your name is free?", body: "We run a proper search before you file anything." },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: 'Who should register' }, { href: '#benefits', label: 'Benefits' },
@@ -1412,7 +1412,7 @@ export const SERVICES = {
     eyebrow: 'START — Certifications',
     crumbCategory: 'START',
     lead: 'Get your startup officially recognised by DPIIT — unlocking income tax benefits, government scheme access, patent fee rebates and investor credibility.',
-    priceCard: { label: 'Professional fee from', price: 'Custom quote', sub: '+ taxes, shown separately' },
+    priceCard: { label: 'Professional fee from', price: '₹4,499', sub: '+ taxes, shown separately' },
     helpCard: { title: 'Not sure if you qualify?', body: 'We check eligibility before you apply — free assessment.' },
     toc: [
       { href: '#overview', label: 'Overview' },
