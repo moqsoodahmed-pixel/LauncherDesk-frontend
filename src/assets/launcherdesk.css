@@ -1199,3 +1199,17 @@ img, video, svg { max-width: 100%; }
 }
 /* Hide desktop Get Started when burger is visible */
 @media(max-width:1080px){.hide-mobile{display:none!important}}
+
+/* ── Legal Pages ─────────────────────────────────────────── */
+.legal-body{font-size:15px;color:var(--text-2);line-height:1.8}
+.legal-body h2{font-size:19px;font-weight:800;color:var(--navy);margin:36px 0 10px;padding-top:4px;border-top:1px solid var(--line-2)}
+.legal-body h3{font-size:15.5px;font-weight:700;color:var(--navy);margin:20px 0 6px}
+.legal-body p{margin:0 0 14px}
+.legal-body ul{padding-left:22px;margin:0 0 14px}
+.legal-body ul li{margin-bottom:7px;line-height:1.7}
+.legal-body a{color:var(--blue);text-decoration:none}
+.legal-body a:hover{text-decoration:underline}
+.legal-contact-card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:16px 0}
+.legal-contact-card p{margin:0 0 6px;font-size:14px}
+.legal-contact-card p:last-child{margin-bottom:0}
+ 

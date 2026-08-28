@@ -376,6 +376,8 @@ export default function AIAssistant() {
           </DraSection>
           <a className="d-link" href="/market">Marketplace</a>
           <a className="d-link" href="/office-restore">Office Setup</a>
+          <a className="d-link" href="/virtual-office">Virtual Office</a>
+          <a className="d-link" href="/estamp">E-Stamp</a>
         </nav>
         <div style={{display:'flex',flexDirection:'column',gap:8}}>
           <a href="/partner/login" className="btn" style={{
