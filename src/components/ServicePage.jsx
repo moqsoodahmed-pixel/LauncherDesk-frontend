@@ -270,17 +270,71 @@ function QuoteForm({ svc }) {
 
 /* ── Aside ── */
 function ServiceAside({ priceCard, helpCard, svc }) {
+  const hasPrice = priceCard.price && priceCard.price !== 'Custom quote'
+
   return (
     <aside className="svc-aside">
-      <div className="price-card">
-        <div className="k">{priceCard.label}</div>
-        <div className="from">{priceCard.price}</div>
-        <small>{priceCard.sub}</small>
+      {/* Price card */}
+      <div style={{
+        background: 'linear-gradient(135deg,#1A2F4E 0%,#1D6FE0 100%)',
+        borderRadius: 16, padding: '24px 20px', color: '#fff', marginBottom: 16,
+        boxShadow: '0 8px 32px rgba(29,111,224,.25)',
+      }}>
+        <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,.6)', marginBottom: 8 }}>
+          {priceCard.label}
+        </div>
+        {hasPrice ? (
+          <>
+            <div style={{ fontSize: 42, fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: 4 }}>
+              {priceCard.price}
+            </div>
+            <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>
+              {priceCard.sub}
+            </div>
+            <div style={{ background: 'rgba(255,255,255,.1)', borderRadius: 8, padding: '8px 12px', fontSize: 12, color: 'rgba(255,255,255,.8)', marginBottom: 16 }}>
+              ⚡ Govt. fees billed separately & shown upfront
+            </div>
+          </>
+        ) : (
+          <>
+            <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: 4 }}>
+              Get Quote
+            </div>
+            <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>
+              {priceCard.sub}
+            </div>
+          </>
+        )}
+        <a href="/company/contact" style={{
+          display: 'block', textAlign: 'center', padding: '12px', borderRadius: 10,
+          background: '#F97316', color: '#fff', fontWeight: 700, fontSize: 14,
+          textDecoration: 'none', transition: 'background .15s',
+        }}
+          onMouseEnter={e => e.target.style.background = '#EA6C0A'}
+          onMouseLeave={e => e.target.style.background = '#F97316'}
+        >
+          Talk to an Expert →
+        </a>
+        <a href={`https://wa.me/918548854859?text=Hi, I'm interested in ${svc.title}`}
+          target="_blank" rel="noopener noreferrer"
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+            marginTop: 10, padding: '11px', borderRadius: 10,
+            background: '#25D366', color: '#fff', fontWeight: 700, fontSize: 14,
+            textDecoration: 'none',
+          }}>
+          <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>
+          WhatsApp Us
+        </a>
       </div>
-      <div style={{ marginTop: 16 }}>
+
+      {/* Quote form */}
+      <div style={{ marginBottom: 16 }}>
         <QuoteForm svc={svc} />
       </div>
-      <div className="help-card" style={{ marginTop: 16 }}>
+
+      {/* Help card */}
+      <div className="help-card">
         <h4>{helpCard.title}</h4>
         <p>{helpCard.body}</p>
         <button className="btn btn-soft" data-open-ai="true">Ask LauncherDesk AI</button>
