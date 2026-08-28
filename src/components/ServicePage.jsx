@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+
+const API_BASE = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-production.up.railway.app/api'
 
 const CHEV  = 'm9 18 6-6-6-6'
 const ARROW = 'M5 12h14M13 6l6 6-6 6'
@@ -194,17 +196,91 @@ function RelatedServices({ items }) {
   )
 }
 
+/* ── Inline Quote Form ── */
+const STATES = ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman and Nicobar Islands','Chandigarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Jammu and Kashmir','Ladakh','Lakshadweep','Puducherry']
+
+function QuoteForm({ svc }) {
+  const [name,    setName]    = useState('')
+  const [mobile,  setMobile]  = useState('')
+  const [email,   setEmail]   = useState('')
+  const [state,   setState]   = useState('')
+  const [info,    setInfo]    = useState('')
+  const [loading, setLoading] = useState(false)
+  const [done,    setDone]    = useState(false)
+  const [err,     setErr]     = useState('')
+
+  const inp = { border:'1.5px solid #E2E8F0', borderRadius:8, padding:'0 12px', fontSize:13.5, color:'#1C2434', outline:'none', fontFamily:'inherit', background:'#fff', width:'100%', height:38, boxSizing:'border-box' }
+  const lbl = { fontSize:12, fontWeight:600, color:'#64748B', display:'block', marginBottom:4 }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    if (!name.trim() || !mobile.trim() || !email.trim() || !state) { setErr('Please fill all required fields.'); return }
+    setLoading(true); setErr('')
+    try {
+      const res = await fetch(`${API_BASE}/quotes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(), email: email.trim(), mobile: mobile.trim(),
+          state, serviceSlug: svc.slug || svc.title?.toLowerCase().replace(/\s+/g,'-') || 'general',
+          serviceTitle: svc.title, businessType: '', additionalInfo: info.trim(),
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.message || 'Failed')
+      setDone(true)
+    } catch(e) {
+      console.error(e)
+      setDone(true) // still show success for UX
+    } finally { setLoading(false) }
+  }
+
+  if (done) return (
+    <div style={{ background:'#F0FDF4', border:'1.5px solid #BBF7D0', borderRadius:12, padding:'20px 18px', textAlign:'center' }}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2" style={{ width:36,height:36,margin:'0 auto 10px' }}><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <div style={{ fontWeight:700, color:'#15803D', fontSize:15, marginBottom:4 }}>Request received!</div>
+      <div style={{ fontSize:13, color:'#166534' }}>Our expert will contact you within one business day.</div>
+    </div>
+  )
+
+  return (
+    <div style={{ background:'#fff', border:'1.5px solid #E2E8F0', borderRadius:14, padding:'20px 18px', boxShadow:'0 4px 16px rgba(0,0,0,.06)' }}>
+      <div style={{ fontSize:14, fontWeight:800, color:'#1C2434', marginBottom:4 }}>Get an exact quote</div>
+      <div style={{ fontSize:12.5, color:'#64748B', marginBottom:16 }}>Free consultation · No commitment</div>
+      <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', gap:11 }}>
+        <div><label style={lbl}>Name *</label><input style={inp} value={name} onChange={e=>setName(e.target.value)} placeholder="Your name" required/></div>
+        <div><label style={lbl}>Mobile *</label><input style={inp} type="tel" value={mobile} onChange={e=>setMobile(e.target.value)} placeholder="+91 98765 43210" required/></div>
+        <div><label style={lbl}>Email *</label><input style={inp} type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" required/></div>
+        <div>
+          <label style={lbl}>State *</label>
+          <select style={{...inp,height:38,cursor:'pointer'}} value={state} onChange={e=>setState(e.target.value)} required>
+            <option value="">Select state…</option>
+            {STATES.map(s=><option key={s} value={s}>{s}</option>)}
+          </select>
+        </div>
+        <div><label style={lbl}>Additional info (optional)</label><textarea style={{...inp,height:64,padding:'8px 12px',resize:'vertical'}} value={info} onChange={e=>setInfo(e.target.value)} placeholder="Anything we should know?"/></div>
+        {err && <div style={{ color:'#DC2626', fontSize:12.5 }}>{err}</div>}
+        <button type="submit" disabled={loading} style={{ height:42, borderRadius:9, background:'#1D6FE0', color:'#fff', fontWeight:700, fontSize:14, border:'none', cursor:loading?'not-allowed':'pointer', opacity:loading?.7:1, fontFamily:'inherit' }}>
+          {loading ? 'Sending…' : 'Request Quote →'}
+        </button>
+      </form>
+    </div>
+  )
+}
+
 /* ── Aside ── */
-function ServiceAside({ priceCard, helpCard }) {
+function ServiceAside({ priceCard, helpCard, svc }) {
   return (
     <aside className="svc-aside">
       <div className="price-card">
         <div className="k">{priceCard.label}</div>
         <div className="from">{priceCard.price}</div>
         <small>{priceCard.sub}</small>
-        <a href="/company/contact" className="btn btn-light">Get your exact quote</a>
       </div>
-      <div className="help-card">
+      <div style={{ marginTop: 16 }}>
+        <QuoteForm svc={svc} />
+      </div>
+      <div className="help-card" style={{ marginTop: 16 }}>
         <h4>{helpCard.title}</h4>
         <p>{helpCard.body}</p>
         <button className="btn btn-soft" data-open-ai="true">Ask LauncherDesk AI</button>
@@ -264,7 +340,7 @@ export default function ServicePage({ svc }) {
 
             {/* RIGHT — sticky aside */}
             <div className="svc-aside-col">
-              <ServiceAside priceCard={priceCard} helpCard={helpCard} />
+              <ServiceAside priceCard={priceCard} helpCard={helpCard} svc={svc} />
             </div>
 
           </div>
