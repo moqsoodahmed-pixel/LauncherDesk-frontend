@@ -32,6 +32,11 @@ import OfficeRestorePage from './pages/office-restore/OfficeRestorePage'
 import IndividualOfficePage from './pages/office-restore/IndividualOfficePage'
 import CoworkingOfficePage from './pages/office-restore/CoworkingOfficePage'
 import EStampPage from './pages/estamp/EStampPage'
+// Legal
+import TermsPage from './pages/legal/TermsPage'
+import PrivacyPage from './pages/legal/PrivacyPage'
+import RefundPage from './pages/legal/RefundPage'
+import DisclaimerPage from './pages/legal/DisclaimerPage'
 import VirtualOfficePage from './pages/virtual-office/VirtualOfficePage'
 import PartnerRegister from './pages/partner/PartnerRegister'
 // Marketplace
@@ -93,6 +98,10 @@ export default function App() {
             <Route path="/estamp" element={<EStampPage />} />
             <Route path="/virtual-office" element={<VirtualOfficePage />} />
             <Route path="/partner-register" element={<PartnerRegister />} />
+            <Route path="/legal/terms" element={<TermsPage />} />
+            <Route path="/legal/privacy" element={<PrivacyPage />} />
+            <Route path="/legal/refund" element={<RefundPage />} />
+            <Route path="/legal/disclaimer" element={<DisclaimerPage />} />
             <Route path="/market" element={<MarketIndex />} />
             <Route path="/market/category" element={<CategoryPage />} />
             <Route path="/market/product" element={<ProductPage />} />

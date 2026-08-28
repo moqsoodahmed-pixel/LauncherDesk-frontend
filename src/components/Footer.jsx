@@ -39,7 +39,16 @@ export default function Footer() {
             <Fl href="/resources/faq">FAQ</Fl>
           </div>
 
-          {/* Col 3 — Contact */}
+          {/* Col 3 — Legal */}
+          <div>
+            <h5>Legal</h5>
+            <Fl href="/legal/terms">Terms of Use</Fl>
+            <Fl href="/legal/privacy">Privacy Policy</Fl>
+            <Fl href="/legal/refund">Cancellation &amp; Refund Policy</Fl>
+            <Fl href="/legal/disclaimer">Disclaimer</Fl>
+          </div>
+
+          {/* Col 4 — Contact */}
           <div>
             <h5>Contact</h5>
             <a href="tel:+918548854859" className="fl">+91 85488 54859</a>
@@ -113,6 +122,13 @@ export default function Footer() {
           <p style={{fontSize:11.5,color:'#3d618a',lineHeight:1.7,maxWidth:760,margin:0}}>
             LauncherDesk is operated by DutyLaunch Solutions Pvt. Ltd. Services may involve licensed professionals, statutory filings, or government approvals. Timelines and outcomes may vary. LauncherDesk is not a regulatory authority and does not guarantee approvals or registrations.
           </p>
+          <div style={{display:'flex',gap:16,flexWrap:'wrap',marginTop:10}}>
+            {[['Terms of Use','/legal/terms'],['Privacy Policy','/legal/privacy'],['Cancellation & Refund','/legal/refund'],['Disclaimer','/legal/disclaimer']].map(([label,href])=>(
+              <a key={href} href={href} style={{fontSize:12,color:'#3d618a',textDecoration:'none',transition:'color .15s'}}
+                onMouseEnter={e=>e.currentTarget.style.color='#6da8e0'}
+                onMouseLeave={e=>e.currentTarget.style.color='#3d618a'}>{label}</a>
+            ))}
+          </div>
           <div style={{display:'flex',justifyContent:'space-between',width:'100%',flexWrap:'wrap',gap:12,alignItems:'center',marginTop:16}}>
             <span style={{fontSize:12,color:'#3d618a'}}>© {year} LauncherDesk · DutyLaunch Solutions Private Limited · All rights reserved.</span>
             <div style={{display:'flex',alignItems:'center',gap:16}}>
