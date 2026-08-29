@@ -160,17 +160,41 @@ function MegaIT() {
             </div>
           </div>
           <div className="mp-panel" data-mp-panel="s30">
-            <div className="mp-panel-head">Digital Marketing — <span style={{color:'var(--blue)',fontWeight:700}}>in collab with TheSuper30</span></div>
+            <div className="mp-panel-head">Digital Marketing</div>
             <div className="mp-grp-grid">
               {[
-                ['AI-Powered SEO', ['AI Search Optimization','LLM Visibility & Citations','Technical SEO Audits','Content Strategy & Creation','Local & International SEO']],
-                ['Lead Generation', ['Google Ads Management','Meta & Instagram Ads','LinkedIn B2B Campaigns','YouTube Advertising','Remarketing & Retargeting']],
-                ['Social Media', ['Social Media Strategy','Content Calendar & Posting','Community Management','Ad Creative Design','Reels & Short-Form Video']],
-                ['Design & Branding', ['Brand Identity Design','Logo & Visual Identity','Marketing Collaterals','Packaging Design','Social Media Design']],
+                ['AI-Powered SEO', [
+                  {name:'AI Search Optimization',href:'/digital-marketing'},
+                  {name:'LLM Visibility & Citations',href:'/digital-marketing'},
+                  {name:'Technical SEO Audits',href:'/digital-marketing'},
+                  {name:'Content Strategy & Creation',href:'/digital-marketing'},
+                  {name:'Local & International SEO',href:'/digital-marketing'},
+                ]],
+                ['Lead Generation', [
+                  {name:'Google Ads Management',href:'/digital-marketing'},
+                  {name:'Meta & Instagram Ads',href:'/digital-marketing'},
+                  {name:'LinkedIn B2B Campaigns',href:'/digital-marketing'},
+                  {name:'YouTube Advertising',href:'/digital-marketing'},
+                  {name:'Remarketing & Retargeting',href:'/digital-marketing'},
+                ]],
+                ['Social Media', [
+                  {name:'Social Media Strategy',href:'/digital-marketing'},
+                  {name:'Content Calendar & Posting',href:'/digital-marketing'},
+                  {name:'Community Management',href:'/digital-marketing'},
+                  {name:'Ad Creative Design',href:'/digital-marketing'},
+                  {name:'Reels & Short-Form Video',href:'/digital-marketing'},
+                ]],
+                ['Design & Branding', [
+                  {name:'Brand Identity Design',href:'/digital-marketing'},
+                  {name:'Logo & Visual Identity',href:'/digital-marketing'},
+                  {name:'Marketing Collaterals',href:'/digital-marketing'},
+                  {name:'Packaging Design',href:'/digital-marketing'},
+                  {name:'Social Media Design',href:'/digital-marketing'},
+                ]],
               ].map(([group, items]) => (
                 <div key={group} className="mp-grp">
                   <div className="mp-grp-h">{group}</div>
-                  {items.map(item => <SvcLink key={item} href="https://www.thesuper30.ai/" title={item} />)}
+                  {items.map(item => <SvcLink key={item.name} href={item.href} title={item.name} />)}
                 </div>
               ))}
             </div>
@@ -178,7 +202,7 @@ function MegaIT() {
         </div>
       </div>
       <div className="mp-foot-wrap">
-        <div className="mp-footer"><a href="/services">View all IT services →</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://www.thesuper30.ai/" target="_blank" rel="noopener noreferrer">Visit TheSuper30 →</a></div>
+        <div className="mp-footer"><a href="/services">View all IT services →</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/digital-marketing">View Digital Marketing →</a></div>
       </div>
     </div>
   )

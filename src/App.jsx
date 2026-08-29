@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage'
 // Services
 import ServicesIndex from './pages/services/ServicesIndex'
 import ServiceDetailPage from './pages/services/ServiceDetailPage'
+import DigitalMarketingPage from './pages/services/DigitalMarketingPage'
 // Solutions
 import SolutionsIndex from './pages/solutions/SolutionsIndex'
 import SolutionDetailPage from './pages/solutions/SolutionDetailPage'
@@ -77,6 +78,7 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/services" element={<ServicesIndex />} />
             <Route path="/services/:slug" element={<ServiceDetailPage />} />
+            <Route path="/digital-marketing" element={<DigitalMarketingPage />} />
             <Route path="/solutions" element={<SolutionsIndex />} />
             <Route path="/solutions/:slug" element={<SolutionDetailPage />} />
             <Route path="/business-types" element={<BusinessTypesIndex />} />
