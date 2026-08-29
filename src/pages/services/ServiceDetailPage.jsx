@@ -25,5 +25,5 @@ export default function ServiceDetailPage() {
     )
   }
 
-  return <ServicePage svc={svc} />
+  return <ServicePage svc={{ ...svc, slug }} />
 }
