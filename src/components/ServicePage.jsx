@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const API_BASE = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-production.up.railway.app/api'
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 const CHEV  = 'm9 18 6-6-6-6'
 const ARROW = 'M5 12h14M13 6l6 6-6 6'
@@ -216,23 +216,38 @@ function QuoteForm({ svc }) {
     e.preventDefault()
     if (!name.trim() || !mobile.trim() || !email.trim() || !state) { setErr('Please fill all required fields.'); return }
     setLoading(true); setErr('')
+
+    // Derive slug reliably — prefer svc.slug, fall back to URL param, then title-based
+    const slug = svc.slug
+      || window.location.pathname.split('/').filter(Boolean).pop()
+      || svc.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+      || 'general'
+
     try {
       const res = await fetch(`${API_BASE}/quotes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: name.trim(), email: email.trim(), mobile: mobile.trim(),
-          state, serviceSlug: svc.slug || svc.title?.toLowerCase().replace(/\s+/g,'-') || 'general',
-          serviceTitle: svc.title, businessType: '', additionalInfo: info.trim(),
+          name: name.trim(),
+          email: email.trim(),
+          mobile: mobile.trim(),
+          state,
+          serviceSlug:    slug,
+          serviceTitle:   svc.title || '',
+          businessType:   '',
+          additionalInfo: info.trim(),
         }),
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.message || 'Failed')
+      if (!res.ok) throw new Error(data.message || 'Submission failed')
       setDone(true)
     } catch(e) {
       console.error(e)
-      setDone(true) // still show success for UX
-    } finally { setLoading(false) }
+      setErr(e.message || 'Something went wrong. Please try again.')
+      setLoading(false)
+      return
+    }
+    setLoading(false)
   }
 
   if (done) return (
