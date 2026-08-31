@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { PartnerAuthProvider } from './context/PartnerAuthContext'
+import { UserAuthProvider }    from './context/UserAuthContext'
 import PartnerLogin     from './pages/partner/PartnerLogin'
 import PartnerDashboard from './pages/partner/PartnerDashboard'
+import UserLoginPage    from './pages/user/UserLoginPage'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 // Services
@@ -70,6 +72,7 @@ function NotFound() {
 export default function App() {
   return (
     <AdminAuthProvider>
+    <UserAuthProvider>
     <PartnerAuthProvider>
       <BrowserRouter>
         <Routes>
@@ -128,9 +131,11 @@ export default function App() {
             {/* redirect /admin/anything-else → dashboard */}
             <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
           </Route>
+          <Route path="/user/login" element={<UserLoginPage />} />
         </Routes>
       </BrowserRouter>
     </PartnerAuthProvider>
+    </UserAuthProvider>
     </AdminAuthProvider>
   )
 }
