@@ -118,7 +118,7 @@ export default function Footer() {
               <span style={{ fontSize:13,color:'#5e7fa0',lineHeight:1.7 }}>
                 472/7, 20th L Cross Road<br/>
                 4th Block, Koramangala<br/>
-                Bengaluru – 560095
+                Bangalore – 560095
               </span>
             </div>
           </div>
@@ -131,7 +131,7 @@ export default function Footer() {
               <span style={{ fontSize:13,color:'#5e7fa0',lineHeight:1.7 }}>
                 #63, Office No. 224 & 225, 2nd Floor<br/>
                 The Plazzo Mall, Ibrahim Sahib St<br/>
-                Off Commercial Street, Bengaluru – 560001
+                Off Commercial Street, Bangalore – 560001
               </span>
             </div>
             <a href="https://maps.app.goo.gl/BCNfdV7j5PEBkYrM6" target="_blank" rel="noopener noreferrer"
