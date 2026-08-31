@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import logoImg from '../assets/launcherdesk-logo-transparent.png'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useUserAuth } from '../context/UserAuthContext'
 
 const I = {
   rocket: 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0',
@@ -238,6 +239,61 @@ function MegaMarket() {
   )
 }
 
+function LoginDropdown() {
+  const { isLoggedIn, user, logout } = useUserAuth()
+  const [open, setOpen] = useState(false)
+  const ref = useRef()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  if (isLoggedIn) return (
+    <div ref={ref} style={{position:'relative'}} className="hide-mobile">
+      <button onClick={() => setOpen(o => !o)} style={{display:'flex',alignItems:'center',gap:7,border:'1.5px solid var(--line)',background:'#F8FAFF',borderRadius:8,padding:'0 14px',height:38,fontSize:13.5,fontWeight:600,cursor:'pointer',color:'var(--navy)',fontFamily:'inherit'}}>
+        <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        {user?.name?.split(' ')[0] || 'Account'}
+        <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5} style={{transform:open?'rotate(180deg)':'none',transition:'transform .2s'}}><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      {open && (
+        <div style={{position:'absolute',top:'calc(100% + 8px)',right:0,background:'#fff',border:'1.5px solid #E2E8F0',borderRadius:12,boxShadow:'0 8px 32px rgba(0,0,0,.12)',minWidth:180,overflow:'hidden',zIndex:200}}>
+          <div style={{padding:'12px 16px',borderBottom:'1px solid #F1F5F9',fontSize:12,color:'#64748B',fontWeight:600}}>{user?.email}</div>
+          <Link to="/user/dashboard" onClick={() => setOpen(false)} style={{display:'block',padding:'11px 16px',fontSize:13.5,fontWeight:600,color:'var(--navy)',textDecoration:'none',transition:'background .1s'}} onMouseEnter={e=>e.target.style.background='#F8FAFF'} onMouseLeave={e=>e.target.style.background='transparent'}>
+            My Orders
+          </Link>
+          <button onClick={() => { logout(); setOpen(false); navigate('/') }} style={{display:'block',width:'100%',textAlign:'left',padding:'11px 16px',fontSize:13.5,fontWeight:600,color:'#EF4444',background:'none',border:'none',cursor:'pointer',fontFamily:'inherit',borderTop:'1px solid #F1F5F9'}}>
+            Log Out
+          </button>
+        </div>
+      )}
+    </div>
+  )
+
+  return (
+    <div ref={ref} style={{position:'relative'}} className="hide-mobile">
+      <button onClick={() => setOpen(o => !o)} style={{display:'flex',alignItems:'center',gap:6,border:'1.5px solid var(--line)',background:'transparent',borderRadius:8,padding:'0 18px',height:38,fontSize:13.5,fontWeight:600,cursor:'pointer',color:'var(--navy)',fontFamily:'inherit'}}>
+        Login
+        <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5} style={{transform:open?'rotate(180deg)':'none',transition:'transform .2s'}}><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      {open && (
+        <div style={{position:'absolute',top:'calc(100% + 8px)',right:0,background:'#fff',border:'1.5px solid #E2E8F0',borderRadius:12,boxShadow:'0 8px 32px rgba(0,0,0,.12)',minWidth:180,overflow:'hidden',zIndex:200}}>
+          <Link to="/user/login" onClick={() => setOpen(false)} style={{display:'flex',alignItems:'center',gap:10,padding:'13px 16px',fontSize:13.5,fontWeight:600,color:'var(--navy)',textDecoration:'none',borderBottom:'1px solid #F1F5F9',transition:'background .1s'}} onMouseEnter={e=>e.currentTarget.style.background='#F8FAFF'} onMouseLeave={e=>e.currentTarget.style.background='transparent'}>
+            <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="#1D6FE0" strokeWidth={2}><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            User Login
+          </Link>
+          <Link to="/partner/login" onClick={() => setOpen(false)} style={{display:'flex',alignItems:'center',gap:10,padding:'13px 16px',fontSize:13.5,fontWeight:600,color:'var(--navy)',textDecoration:'none',transition:'background .1s'}} onMouseEnter={e=>e.currentTarget.style.background='#F8FAFF'} onMouseLeave={e=>e.currentTarget.style.background='transparent'}>
+            <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="#F97316" strokeWidth={2}><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            Partner Login
+          </Link>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function Navbar({ activePage = '' }) {
   const navRef  = useRef(null)
   useEffect(() => {
@@ -314,7 +370,7 @@ export default function Navbar({ activePage = '' }) {
           <img
             src={logoImg}
             alt="LauncherDesk"
-            style={{height:40, width:'auto', display:'block'}}
+            style={{height:38, maxHeight:38, width:'auto', maxWidth:200, display:'block', objectFit:'contain'}}
           />
         </Link>
         <nav className="main-nav" id="mainNav">
@@ -350,7 +406,7 @@ export default function Navbar({ activePage = '' }) {
           </div>
         </nav>
         <div className="header-cta">
-          <a className="btn btn-sm hide-mobile" href="/partner/login" style={{border:'1.5px solid var(--line)',color:'var(--navy)',background:'transparent',borderRadius:8,padding:'0 18px',height:38,fontSize:13.5,fontWeight:600}}>Login</a>
+          <LoginDropdown />
           <a className="btn btn-primary btn-sm hide-mobile" href="/services#finder" style={{borderRadius:8,padding:'0 20px',height:38,fontSize:13.5}}>Get Started</a>
           <button className="burger" aria-label="Open menu" data-open-drawer="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
