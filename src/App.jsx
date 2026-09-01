@@ -6,12 +6,13 @@ import PartnerLogin     from './pages/partner/PartnerLogin'
 import PartnerDashboard from './pages/partner/PartnerDashboard'
 import UserLoginPage    from './pages/user/UserLoginPage'
 // Sales CRM
-import SalesLogin     from './pages/sales/SalesLogin'
-import SalesLayout    from './pages/sales/SalesLayout'
-import SalesDashboard from './pages/sales/SalesDashboard'
-import SalesLeads     from './pages/sales/SalesLeads'
-import SalesContacts  from './pages/sales/SalesContacts'
-import SalesQuotes    from './pages/sales/SalesQuotes'
+import SalesLogin      from './pages/sales/SalesLogin'
+import SalesLayout     from './pages/sales/SalesLayout'
+import SalesDashboard  from './pages/sales/SalesDashboard'
+import SalesEnquiries  from './pages/sales/SalesEnquiries'
+import SalesLeads      from './pages/sales/SalesLeads'
+import SalesContacts   from './pages/sales/SalesContacts'
+import SalesQuotes     from './pages/sales/SalesQuotes'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 // Services
@@ -146,10 +147,11 @@ export default function App() {
           {/* ── Sales CRM at /sales ── */}
           <Route path="/sales" element={<SalesLogin />} />
           <Route path="/sales" element={<SalesLayout />}>
-            <Route path="dashboard" element={<SalesDashboard />} />
-            <Route path="leads"     element={<SalesLeads />} />
-            <Route path="contacts"  element={<SalesContacts />} />
-            <Route path="quotes"    element={<SalesQuotes />} />
+            <Route path="dashboard"  element={<SalesDashboard />} />
+            <Route path="enquiries"  element={<SalesEnquiries />} />
+            <Route path="leads"      element={<SalesLeads />} />
+            <Route path="contacts"   element={<SalesContacts />} />
+            <Route path="quotes"     element={<SalesQuotes />} />
           </Route>
 
         </Routes>
