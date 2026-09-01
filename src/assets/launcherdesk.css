@@ -92,6 +92,7 @@ img{max-width:100%;display:block}
 .btn-ghost-d{background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.22)}
 .btn-ghost-d:hover{background:rgba(255,255,255,.18)}
 .btn-wa{background:#25D366;color:#fff}
+.btn-wa:hover{background:#1da851;transform:translateY(-2px)}
 .btn-sm{height:44px;font-size:14px;padding:0 18px;border-radius:var(--r1)}
 
 /* ============================================================
@@ -548,7 +549,7 @@ img{max-width:100%;display:block}
 .form-check{display:flex;align-items:flex-start;gap:9px;margin-top:16px;font-size:13.5px;color:var(--text-2);line-height:1.5}
 .form-check input[type=checkbox]{width:17px;height:17px;margin-top:1px;accent-color:var(--blue-dark);flex:none;cursor:pointer}
 .wa-line{margin-top:14px;font-size:14px;color:var(--text-2)}
-.wa-link{color:#1faa59;font-weight:700}
+.wa-link{color:#25D366;font-weight:700}
 .wa-link:hover{color:#178a48}
 
 /* AI page demo */
@@ -651,7 +652,7 @@ img{max-width:100%;display:block}
 .mb-btn:active{transform:scale(.97)}
 .mb-btn--primary{background:var(--grad);color:#fff;box-shadow:0 6px 18px rgba(15,82,192,.3)}
 .mb-btn--ai{background:rgba(29,111,224,.1);color:var(--blue-dark)}
-.mb-btn--wa{background:#1faa59;color:#fff}
+.mb-btn--wa{background:#25D366;color:#fff}
 
 /* reveal */
 .reveal-up{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
