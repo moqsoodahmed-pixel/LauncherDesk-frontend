@@ -91,7 +91,7 @@ img{max-width:100%;display:block}
 .btn-light:hover{transform:translateY(-2px)}
 .btn-ghost-d{background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.22)}
 .btn-ghost-d:hover{background:rgba(255,255,255,.18)}
-.btn-wa{background:#1faa59;color:#fff}
+.btn-wa{background:#25D366;color:#fff}
 .btn-sm{height:44px;font-size:14px;padding:0 18px;border-radius:var(--r1)}
 
 /* ============================================================
@@ -1212,4 +1212,3 @@ img, video, svg { max-width: 100%; }
 .legal-contact-card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:16px 0}
 .legal-contact-card p{margin:0 0 6px;font-size:14px}
 .legal-contact-card p:last-child{margin-bottom:0}
- 
