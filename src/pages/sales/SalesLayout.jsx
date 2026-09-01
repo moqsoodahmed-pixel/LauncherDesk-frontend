@@ -13,10 +13,11 @@ function Ic({ d, size = 17, sw = 2 }) {
 }
 
 const NAV = [
-  { label:'Dashboard',  path:'/sales/dashboard', icon:'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10' },
-  { label:'Leads',      path:'/sales/leads',     icon:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2|M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8|M23 21v-2a4 4 0 0 0-3-3.87|M16 3.13a4 4 0 0 1 0 7.75' },
-  { label:'Contacts',   path:'/sales/contacts',  icon:'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z' },
-  { label:'Quotes',     path:'/sales/quotes',    icon:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6|M16 13H8|M16 17H8|M10 9H8' },
+  { label:'Dashboard',   path:'/sales/dashboard',  icon:'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10' },
+  { label:'All Enquiries', path:'/sales/enquiries', icon:'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2' },
+  { label:'Leads',       path:'/sales/leads',      icon:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2|M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8|M23 21v-2a4 4 0 0 0-3-3.87|M16 3.13a4 4 0 0 1 0 7.75' },
+  { label:'Contacts',    path:'/sales/contacts',   icon:'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z' },
+  { label:'Quotes',      path:'/sales/quotes',     icon:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6|M16 13H8|M16 17H8|M10 9H8' },
 ]
 
 export default function SalesLayout() {
@@ -75,9 +76,7 @@ export default function SalesLayout() {
       <aside className={`sl-sidebar sl-mobile${mobileOpen?' open':''}`}><SidebarContent isMobile/></aside>
       <div className="sl-main">
         <header className="sl-topbar">
-          <button className="sl-hamburger" onClick={()=>setMobileOpen(true)}>
-            <Ic d="M3 12h18|M3 6h18|M3 18h18" size={20}/>
-          </button>
+          <button className="sl-hamburger" onClick={()=>setMobileOpen(true)}><Ic d="M3 12h18|M3 6h18|M3 18h18" size={20}/></button>
           <div style={{flex:1}}/>
           <div style={{display:'flex',alignItems:'center',gap:8}}>
             <a href="/" target="_blank" rel="noopener noreferrer" className="sl-icon-btn" title="View website">
@@ -95,7 +94,6 @@ export default function SalesLayout() {
         *{box-sizing:border-box;margin:0;padding:0}
         .sl-shell{display:flex;height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',system-ui,sans-serif;background:#F1F5F9}
         .sl-sidebar{background:#1C2434;display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;width:220px}
-        .sl-desktop{} 
         .sl-mobile{position:fixed;top:0;left:0;bottom:0;z-index:200;width:240px;transform:translateX(-100%);transition:transform .25s;box-shadow:4px 0 24px rgba(0,0,0,.2)}
         .sl-mobile.open{transform:translateX(0)}
         .sl-overlay{position:fixed;inset:0;z-index:199;background:rgba(0,0,0,.45)}
