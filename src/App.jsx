@@ -87,7 +87,8 @@ export default function App() {
             <Route path="/business-types" element={<BusinessTypesIndex />} />
             <Route path="/business-types/:slug" element={<BusinessTypeDetailPage />} />
             <Route path="/company/about" element={<AboutPage />} />
-            <Route path="/company/careers" element={<CareersPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/company/careers" element={<Navigate to="/careers" replace />} />
             <Route path="/company/contact" element={<ContactPage />} />
             <Route path="/company/why-launcherdesk" element={<WhyPage />} />
             <Route path="/resources" element={<ResourcesIndex />} />
