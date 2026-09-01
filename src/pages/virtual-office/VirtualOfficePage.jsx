@@ -42,10 +42,10 @@ const S = `
 .vo-btn-primary:hover { background:#0F52C0;transform:translateY(-2px); }
 .vo-btn-wa {
   display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;
-  background:rgba(37,211,102,.15);color:#25D366;font-weight:600;font-size:15px;border-radius:10px;
-  border:1.5px solid rgba(37,211,102,.3);text-decoration:none;transition:all .15s;
+  background:#25D366;color:#fff;font-weight:700;font-size:15px;border-radius:10px;
+  border:none;text-decoration:none;transition:all .15s;
 }
-.vo-btn-wa:hover { background:rgba(37,211,102,.25); }
+.vo-btn-wa:hover { background:#1da851;transform:translateY(-2px); }
 
 .vo-trust-row  { display:flex;gap:22px;flex-wrap:wrap; }
 .vo-trust-item { display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#6da8e0; }
