@@ -443,29 +443,6 @@ export default function CareersPage() {
         </div>
       </header>
 
-      <section className="section-sm" style={{background:'#F8FAFF'}}>
-        <div className="wrap">
-          <div className="sec-head center reveal-up" style={{marginBottom:40}}>
-            <span className="eyebrow">Why LauncherDesk</span>
-            <h2 style={{fontSize:'clamp(24px,3vw,34px)'}}>Why people love working here</h2>
-          </div>
-          <div className="grid-4 reveal-up">
-            {[
-              ['🚀','Real impact','Every service helps a founder start, grow or protect their business.'],
-              ['📈','Fast growth','We\'re scaling quickly — grow with the company and take on real responsibility.'],
-              ['🤝','Small, great team','Work directly with founders. No bureaucracy. Your ideas are heard from day one.'],
-              ['📍','Koramangala HQ','Prime Bengaluru location in the heart of the startup ecosystem.'],
-            ].map(([i,t,d]) => (
-              <div key={t} className="card" style={{textAlign:'center'}}>
-                <div style={{fontSize:32,marginBottom:12}}>{i}</div>
-                <h3 style={{fontSize:16,fontWeight:700,color:'var(--navy)',marginBottom:8}}>{t}</h3>
-                <p style={{fontSize:13.5,color:'var(--text-2)',lineHeight:1.6}}>{d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="section-sm" id="openings">
         <div className="wrap">
           <div className="sec-head reveal-up" style={{marginBottom:32}}>

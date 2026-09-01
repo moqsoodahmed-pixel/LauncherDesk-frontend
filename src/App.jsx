@@ -1,9 +1,17 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { PartnerAuthProvider } from './context/PartnerAuthContext'
 import { UserAuthProvider }    from './context/UserAuthContext'
+import { SalesAuthProvider }   from './context/SalesAuthContext'
 import PartnerLogin     from './pages/partner/PartnerLogin'
 import PartnerDashboard from './pages/partner/PartnerDashboard'
 import UserLoginPage    from './pages/user/UserLoginPage'
+// Sales CRM
+import SalesLogin     from './pages/sales/SalesLogin'
+import SalesLayout    from './pages/sales/SalesLayout'
+import SalesDashboard from './pages/sales/SalesDashboard'
+import SalesLeads     from './pages/sales/SalesLeads'
+import SalesContacts  from './pages/sales/SalesContacts'
+import SalesQuotes    from './pages/sales/SalesQuotes'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 // Services
@@ -73,6 +81,7 @@ export default function App() {
   return (
     <AdminAuthProvider>
     <UserAuthProvider>
+    <SalesAuthProvider>
     <PartnerAuthProvider>
       <BrowserRouter>
         <Routes>
@@ -133,9 +142,20 @@ export default function App() {
             <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
           </Route>
           <Route path="/user/login" element={<UserLoginPage />} />
+
+          {/* ── Sales CRM at /sales ── */}
+          <Route path="/sales" element={<SalesLogin />} />
+          <Route path="/sales" element={<SalesLayout />}>
+            <Route path="dashboard" element={<SalesDashboard />} />
+            <Route path="leads"     element={<SalesLeads />} />
+            <Route path="contacts"  element={<SalesContacts />} />
+            <Route path="quotes"    element={<SalesQuotes />} />
+          </Route>
+
         </Routes>
       </BrowserRouter>
     </PartnerAuthProvider>
+    </SalesAuthProvider>
     </UserAuthProvider>
     </AdminAuthProvider>
   )
