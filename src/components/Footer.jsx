@@ -13,7 +13,7 @@ const SOCIALS = [
 ]
 
 const NAV_COLS = [
-  { title: 'Company', links: [['About Us','/company/about'],['Contact Us','/company/contact'],['Careers','/company/careers'],['Pricing','/pricing'],['Resources','/resources'],['FAQ','/resources/faq']] },
+  { title: 'Company', links: [['About Us','/company/about'],['Contact Us','/company/contact'],['Careers','/careers'],['Pricing','/pricing'],['Resources','/resources'],['FAQ','/resources/faq']] },
   { title: 'Services', links: [['Company Registration','/services/private-limited-company-registration'],['GST Registration','/services/gst-registration'],['Trademark','/services/trademark-registration'],['ROC Compliance','/services/roc-compliance'],['Website Development','/services'],['Digital Marketing','/services']] },
   { title: 'Legal', links: [['Terms of Use','/legal/terms'],['Privacy Policy','/legal/privacy'],['Cancellation & Refund','/legal/refund'],['Disclaimer','/legal/disclaimer']] },
 ]
