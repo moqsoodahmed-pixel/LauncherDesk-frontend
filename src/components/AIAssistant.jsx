@@ -50,8 +50,18 @@ export default function AIAssistant() {
 
   const scrimOn = aiOpen || drawerOpen
 
+  function stripMarkdown(text) {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/^[\s]*[-*\u2022]\s+/gm, '')
+      .replace(/^#{1,6}\s+/gm, '')
+      .replace(/`([^`]+)`/g, '$1')
+      .trim()
+  }
+
   function addBotMsg(text) {
-    setMessages(m => [...m.filter(x => x.role !== 'typing'), { role: 'a', text }])
+    setMessages(m => [...m.filter(x => x.role !== 'typing'), { role: 'a', text: stripMarkdown(text) }])
   }
   function showTyping() {
     setMessages(m => [...m.filter(x => x.role !== 'typing'), { role: 'typing', text: '' }])
