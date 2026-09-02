@@ -9,7 +9,6 @@ const SOCIALS = [
   { href:'https://www.instagram.com/launcherdesk?igsh=MWxleG1ubm9kNW4xbw==', label:'Instagram', path:'M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z|M17.5 6.5h.01|M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z' },
   { href:'https://x.com/LauncherDesk', label:'X', path:'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.736l7.73-8.835L1.254 2.25H8.08l4.259 5.631zM17.11 20.89h1.833L7.05 4.126H5.099z' },
   { href:'https://www.facebook.com/share/181iGTzpPf/', label:'Facebook', path:'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' },
-  { href:'https://www.linkedin.com/in/launcher-desk-9251923a3', label:'LinkedIn', path:'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z|M2 9h4v12H2z|M4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' },
 ]
 
 const NAV_COLS = [
