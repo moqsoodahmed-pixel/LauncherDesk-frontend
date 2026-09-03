@@ -274,9 +274,15 @@ function LoginDropdown() {
 
   return (
     <div ref={ref} style={{position:'relative'}} className="hide-mobile">
-      <button onClick={() => setOpen(o => !o)} style={{display:'flex',alignItems:'center',gap:6,border:'1.5px solid var(--line)',background:'transparent',borderRadius:8,padding:'0 18px',height:38,fontSize:13.5,fontWeight:600,cursor:'pointer',color:'var(--navy)',fontFamily:'inherit'}}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="nav-login-btn"
+        style={{display:'flex',alignItems:'center',gap:6,border:'none',background:'#F97316',borderRadius:8,padding:'0 18px',height:38,fontSize:13.5,fontWeight:700,cursor:'pointer',color:'#fff',fontFamily:'inherit',letterSpacing:'.01em',boxShadow:'0 2px 8px rgba(249,115,22,.30)',transition:'background .18s,box-shadow .18s'}}
+        onMouseEnter={e=>{e.currentTarget.style.background='#EA6C0A';e.currentTarget.style.boxShadow='0 4px 14px rgba(249,115,22,.40)'}}
+        onMouseLeave={e=>{e.currentTarget.style.background='#F97316';e.currentTarget.style.boxShadow='0 2px 8px rgba(249,115,22,.30)'}}
+      >
         Login
-        <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5} style={{transform:open?'rotate(180deg)':'none',transition:'transform .2s'}}><path d="m6 9 6 6 6-6"/></svg>
+        <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="#fff" strokeWidth={2.5} style={{transform:open?'rotate(180deg)':'none',transition:'transform .2s'}}><path d="m6 9 6 6 6-6"/></svg>
       </button>
       {open && (
         <div style={{position:'absolute',top:'calc(100% + 8px)',right:0,background:'#fff',border:'1.5px solid #E2E8F0',borderRadius:12,boxShadow:'0 8px 32px rgba(0,0,0,.12)',minWidth:180,overflow:'hidden',zIndex:200}}>
