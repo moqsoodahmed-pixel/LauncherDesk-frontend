@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin
+Disallow: /admin/
+Disallow: /sales
+Disallow: /sales/
+Disallow: /partner/dashboard
+Disallow: /user/dashboard
+Disallow: /user/services
+Disallow: /user/documents
+Disallow: /user/payments
+Disallow: /user/profile
+
+Sitemap: https://www.launcherdesk.com/sitemap.xml
