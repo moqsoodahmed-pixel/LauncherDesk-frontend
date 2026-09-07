@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useUserAuth } from '../../context/UserAuthContext'
+import logoImg from '../../assets/launcherdesk-logo-transparent.png'
 
 const S = `
 .ul-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(155deg,#04091A 0%,#0D1B6E 60%,#1A1070 100%);padding:24px}
@@ -23,14 +24,14 @@ const S = `
 
 export default function UserLoginPage() {
   const { login, register, error, setError, loading, isLoggedIn } = useUserAuth()
-  const navigate  = useNavigate()
-  const location  = useLocation()
-  const from      = location.state?.from || '/'
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from     = location.state?.from?.startsWith('/user') ? location.state.from : '/user/dashboard'
   const [tab, setTab]   = useState(location.state?.tab || 'login')
   const [form, setForm] = useState({ name:'', email:'', password:'', phone:'' })
   const [localErr, setLocalErr] = useState('')
 
-  useEffect(() => { if (isLoggedIn) navigate(from, { replace: true }) }, [isLoggedIn])
+  useEffect(() => { if (isLoggedIn) navigate(from, { replace: true }) }, [isLoggedIn, from, navigate])
 
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
 
@@ -39,12 +40,12 @@ export default function UserLoginPage() {
     setLocalErr(''); if (setError) setError('')
     if (tab === 'login') {
       const res = await login(form.email, form.password)
-      if (!res.success) setLocalErr(res.message)
+      if (!res?.success) setLocalErr(res?.message || 'Invalid credentials')
     } else {
-      if (!form.name) { setLocalErr('Name is required'); return }
+      if (!form.name.trim()) { setLocalErr('Name is required'); return }
       if (form.password.length < 6) { setLocalErr('Password must be at least 6 characters'); return }
-      const res = await register(form.name, form.email, form.password, form.phone)
-      if (!res.success) setLocalErr(res.message)
+      const res = await register(form.name.trim(), form.email, form.password, form.phone)
+      if (!res?.success) setLocalErr(res?.message || 'Registration failed')
     }
   }
 
@@ -55,33 +56,33 @@ export default function UserLoginPage() {
       <style>{S}</style>
       <div className="ul-card">
         <div style={{textAlign:'center',marginBottom:28}}>
-          <Link to="/"><img src="/launcherdesk-logo-transparent.png" alt="LauncherDesk" style={{height:36,width:'auto'}} onError={e=>e.target.style.display='none'} /></Link>
+          <Link to="/"><img src={logoImg} alt="LauncherDesk — home" style={{height:36,width:'auto'}} /></Link>
         </div>
-        <h2 style={{textAlign:'center',fontSize:22,fontWeight:800,color:'#0A2540',marginBottom:6}}>
+        <h1 style={{textAlign:'center',fontSize:22,fontWeight:800,color:'#0A2540',marginBottom:6}}>
           {tab==='login'?'Welcome back':'Create your account'}
-        </h2>
+        </h1>
         <p style={{textAlign:'center',fontSize:14,color:'#64748B',marginBottom:24}}>
           {tab==='login'?'Log in to access your services and orders':'Sign up to get started with LauncherDesk'}
         </p>
-        <div className="ul-tabs">
-          <button className={`ul-tab${tab==='login'?' active':''}`} onClick={()=>setTab('login')}>Log In</button>
-          <button className={`ul-tab${tab==='register'?' active':''}`} onClick={()=>setTab('register')}>Sign Up</button>
+        <div className="ul-tabs" role="tablist" aria-label="Login or sign up">
+          <button role="tab" aria-selected={tab==='login'} className={`ul-tab${tab==='login'?' active':''}`} onClick={()=>{setTab('login');setLocalErr('')}}>Log In</button>
+          <button role="tab" aria-selected={tab==='register'} className={`ul-tab${tab==='register'?' active':''}`} onClick={()=>{setTab('register');setLocalErr('')}}>Sign Up</button>
         </div>
-        {err && <div className="ul-err">{err}</div>}
-        <form onSubmit={handleSubmit}>
+        {err && <div className="ul-err" role="alert" aria-live="polite">{err}</div>}
+        <form onSubmit={handleSubmit} noValidate>
           {tab==='register' && (
             <>
-              <div className="ul-field"><label>Full Name *</label><input value={form.name} onChange={set('name')} placeholder="Your full name" required /></div>
-              <div className="ul-field"><label>Phone</label><input type="tel" value={form.phone} onChange={set('phone')} placeholder="+91 98765 43210" /></div>
+              <div className="ul-field"><label htmlFor="ul-name">Full Name *</label><input id="ul-name" value={form.name} onChange={set('name')} placeholder="Your full name" required aria-required="true" autoComplete="name"/></div>
+              <div className="ul-field"><label htmlFor="ul-phone">Phone <span style={{fontWeight:400,textTransform:'none',fontSize:11}}>(optional)</span></label><input id="ul-phone" type="tel" value={form.phone} onChange={set('phone')} placeholder="+91 98765 43210" autoComplete="tel"/></div>
             </>
           )}
-          <div className="ul-field"><label>Email *</label><input type="email" value={form.email} onChange={set('email')} placeholder="you@example.com" required /></div>
-          <div className="ul-field"><label>Password *</label><input type="password" value={form.password} onChange={set('password')} placeholder={tab==='register'?'Min. 6 characters':'Your password'} required /></div>
-          <button type="submit" disabled={loading} className="ul-submit">
+          <div className="ul-field"><label htmlFor="ul-email">Email *</label><input id="ul-email" type="email" value={form.email} onChange={set('email')} placeholder="you@example.com" required aria-required="true" autoComplete="email"/></div>
+          <div className="ul-field"><label htmlFor="ul-password">Password *</label><input id="ul-password" type="password" value={form.password} onChange={set('password')} placeholder={tab==='register'?'Min. 6 characters':'Your password'} required aria-required="true" autoComplete={tab==='login'?'current-password':'new-password'}/></div>
+          <button type="submit" disabled={loading} className="ul-submit" aria-busy={loading}>
             {loading?'Please wait…':tab==='login'?'Log In →':'Create Account →'}
           </button>
         </form>
-        <div className="ul-divider">or</div>
+        <div className="ul-divider" aria-hidden="true">or</div>
         <p style={{textAlign:'center',fontSize:13,color:'#64748B'}}>
           Are you a partner? <Link to="/partner/login" style={{color:'#1D6FE0',fontWeight:600}}>Partner Login →</Link>
         </p>

@@ -1,10 +1,17 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom'
 import { PartnerAuthProvider } from './context/PartnerAuthContext'
 import { UserAuthProvider }    from './context/UserAuthContext'
 import { SalesAuthProvider }   from './context/SalesAuthContext'
 import PartnerLogin     from './pages/partner/PartnerLogin'
 import PartnerDashboard from './pages/partner/PartnerDashboard'
 import UserLoginPage    from './pages/user/UserLoginPage'
+// Customer dashboard
+import UserLayout        from './pages/user/UserLayout'
+import UserDashboard     from './pages/user/UserDashboard'
+import UserServices      from './pages/user/UserServices'
+import UserServiceDetail from './pages/user/UserServiceDetail'
+import UserPayments      from './pages/user/UserPayments'
+import UserProfile       from './pages/user/UserProfile'
 // Sales CRM
 import SalesLogin      from './pages/sales/SalesLogin'
 import SalesLayout     from './pages/sales/SalesLayout'
@@ -15,47 +22,37 @@ import SalesContacts   from './pages/sales/SalesContacts'
 import SalesQuotes     from './pages/sales/SalesQuotes'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
-// Services
 import ServicesIndex from './pages/services/ServicesIndex'
 import ServiceDetailPage from './pages/services/ServiceDetailPage'
 import DigitalMarketingPage from './pages/services/DigitalMarketingPage'
-// Solutions
 import SolutionsIndex from './pages/solutions/SolutionsIndex'
 import SolutionDetailPage from './pages/solutions/SolutionDetailPage'
-// Business Types
 import BusinessTypesIndex from './pages/business-types/BusinessTypesIndex'
 import BusinessTypeDetailPage from './pages/business-types/BusinessTypeDetailPage'
-// Company
 import AboutPage from './pages/company/AboutPage'
 import CareersPage from './pages/company/CareersPage'
 import ContactPage from './pages/company/ContactPage'
 import WhyPage from './pages/company/WhyPage'
-// Resources
 import ResourcesIndex from './pages/resources/ResourcesIndex'
 import BlogPage from './pages/resources/BlogPage'
 import GuidesPage from './pages/resources/GuidesPage'
 import ToolsPage from './pages/resources/ToolsPage'
 import FaqPage from './pages/resources/FaqPage'
-// Pricing & AI
 import PricingPage from './pages/pricing/PricingPage'
 import AiPage from './pages/ai/AiPage'
-// Office Restore
 import OfficeRestorePage from './pages/office-restore/OfficeRestorePage'
 import IndividualOfficePage from './pages/office-restore/IndividualOfficePage'
 import CoworkingOfficePage from './pages/office-restore/CoworkingOfficePage'
 import EStampPage from './pages/estamp/EStampPage'
-// Legal
 import TermsPage from './pages/legal/TermsPage'
 import PrivacyPage from './pages/legal/PrivacyPage'
 import RefundPage from './pages/legal/RefundPage'
 import DisclaimerPage from './pages/legal/DisclaimerPage'
 import VirtualOfficePage from './pages/virtual-office/VirtualOfficePage'
 import PartnerRegister from './pages/partner/PartnerRegister'
-// Marketplace
 import MarketIndex from './pages/market/MarketIndex'
 import CategoryPage from './pages/market/CategoryPage'
 import ProductPage from './pages/market/ProductPage'
-// Admin
 import { AdminAuthProvider } from './context/AdminAuthContext'
 import AdminLogin        from './pages/admin/AdminLogin'
 import AdminLayout       from './pages/admin/AdminLayout'
@@ -70,10 +67,10 @@ import AdminPartners     from './pages/admin/pages/AdminPartners'
 
 function NotFound() {
   return (
-    <div className="wrap" style={{ padding: '80px 0', textAlign: 'center' }}>
+    <div className="wrap" style={{padding:'80px 0',textAlign:'center'}}>
       <h1>Page not found</h1>
-      <p className="mut" style={{ marginTop: 12 }}>The page you're looking for doesn't exist.</p>
-      <a href="/" className="btn btn-primary" style={{ marginTop: 28, display: 'inline-flex' }}>Go home</a>
+      <p className="mut" style={{marginTop:12}}>The page you're looking for doesn't exist.</p>
+      <Link to="/" className="btn btn-primary" style={{marginTop:28,display:'inline-flex'}}>Go home</Link>
     </div>
   )
 }
@@ -124,11 +121,25 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
           </Route>
 
+          {/* ── User auth ── */}
+          <Route path="/user/login" element={<UserLoginPage />} />
+
+          {/* ── Customer dashboard ── */}
+          <Route path="/user" element={<UserLayout />}>
+            <Route index element={<Navigate to="/user/dashboard" replace />} />
+            <Route path="dashboard"    element={<UserDashboard />} />
+            <Route path="services"     element={<UserServices />} />
+            <Route path="services/:id" element={<UserServiceDetail />} />
+            <Route path="payments"     element={<UserPayments />} />
+            <Route path="profile"      element={<UserProfile />} />
+            <Route path="*"            element={<Navigate to="/user/dashboard" replace />} />
+          </Route>
+
           {/* ── Partner portal ── */}
           <Route path="/partner/login"     element={<PartnerLogin />} />
           <Route path="/partner/dashboard" element={<PartnerDashboard />} />
 
-          {/* ── Admin panel at /admin ── */}
+          {/* ── Admin panel ── */}
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="dashboard"    element={<AdminDashboard />} />
@@ -139,21 +150,18 @@ export default function App() {
             <Route path="office"       element={<AdminOffice />} />
             <Route path="settings"     element={<AdminSettings />} />
             <Route path="partners"     element={<AdminPartners />} />
-            {/* redirect /admin/anything-else → dashboard */}
-            <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
+            <Route path="*"            element={<Navigate to="/admin/dashboard" replace />} />
           </Route>
-          <Route path="/user/login" element={<UserLoginPage />} />
 
-          {/* ── Sales CRM at /sales ── */}
+          {/* ── Sales CRM ── */}
           <Route path="/sales" element={<SalesLogin />} />
           <Route path="/sales" element={<SalesLayout />}>
-            <Route path="dashboard"  element={<SalesDashboard />} />
-            <Route path="enquiries"  element={<SalesEnquiries />} />
-            <Route path="leads"      element={<SalesLeads />} />
-            <Route path="contacts"   element={<SalesContacts />} />
-            <Route path="quotes"     element={<SalesQuotes />} />
+            <Route path="dashboard" element={<SalesDashboard />} />
+            <Route path="enquiries" element={<SalesEnquiries />} />
+            <Route path="leads"     element={<SalesLeads />} />
+            <Route path="contacts"  element={<SalesContacts />} />
+            <Route path="quotes"    element={<SalesQuotes />} />
           </Route>
-
         </Routes>
       </BrowserRouter>
     </PartnerAuthProvider>

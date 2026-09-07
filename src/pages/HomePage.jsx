@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import { Link } from 'react-router-dom'
+import SEO, { organizationSchema, websiteSchema } from '../components/SEO'
 
 /* ─── Inline styles for the redesigned homepage ──────────────────────── */
 const S = `
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap');
 
 /* ── HERO ── */
 .hp-hero {
@@ -647,6 +647,12 @@ export default function HomePage() {
 
   return (
     <>
+      <SEO
+        title="Your Business HQ | Launch. Manage. Grow."
+        description="LauncherDesk helps founders and businesses with company registration, GST, compliance, trademark, accounting, website development and growth — one platform, one point of contact."
+        canonical="/"
+        jsonLd={[organizationSchema, websiteSchema]}
+      />
       <style>{S}</style>
 
       {/* ═══ HERO ═══════════════════════════════════════════ */}
