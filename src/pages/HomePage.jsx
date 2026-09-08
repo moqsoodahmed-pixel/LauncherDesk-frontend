@@ -9,7 +9,7 @@ const S = `
 /* ── HERO ── */
 .hp-hero {
   background: linear-gradient(160deg, #1A2F4E 0%, #1E3A6A 55%, #264D8C 100%);
-  padding: clamp(72px,9vw,120px) 0 clamp(60px,7vw,100px);
+  padding: clamp(40px,5vw,72px) 0 clamp(52px,6vw,88px);
   position: relative; overflow: hidden;
 }
 .hp-hero::before {
@@ -444,7 +444,7 @@ const S = `
   .lc2-inner     { gap:28px }
 }
 @media(max-width:640px){
-  .hp-hero       { padding:56px 0 48px }
+  .hp-hero       { padding:36px 0 44px }
   .hp-hero h1    { font-size:clamp(30px,8vw,44px) }
   .hp-cta-row    { flex-direction:column;align-items:stretch }
   .hp-btn-primary,.hp-btn-secondary { width:100%;justify-content:center }
