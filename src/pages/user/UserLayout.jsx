@@ -22,7 +22,7 @@ const CSS = `
 .ud-sidebar-nav{padding:12px 8px;flex:1}
 .ud-nav-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;color:rgba(255,255,255,.6);font-size:13.5px;font-weight:600;text-decoration:none;margin-bottom:2px;transition:background .15s,color .15s}
 .ud-nav-link:hover{background:rgba(255,255,255,.07);color:#fff}
-.ud-nav-link.active{background:rgba(29,111,224,.25);color:#7ecef4;border-left:3px solid #1D6FE0}
+.ud-nav-link.active{background:rgba(29,93,184,.25);color:#93C5FD;border-left:3px solid #1D5DB8}
 .ud-sidebar-footer{padding:12px 8px 16px;border-top:1px solid rgba(255,255,255,.08)}
 .ud-logout-btn{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border-radius:9px;background:transparent;border:none;color:rgba(255,255,255,.5);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:color .15s,background .15s}
 .ud-logout-btn:hover{background:rgba(239,68,68,.15);color:#F87171}

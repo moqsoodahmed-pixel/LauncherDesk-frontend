@@ -32,7 +32,7 @@ export default function Footer() {
             <Link to="/" style={{ display:'inline-flex', textDecoration:'none', marginBottom:16 }}>
               <img src={logoImg} alt="LauncherDesk" style={{ height:46, width:'auto', filter:'brightness(0) invert(1)' }} />
             </Link>
-            <p style={{ fontSize:12,fontWeight:700,color:'#F97316',letterSpacing:'.04em',marginBottom:8 }}>
+            <p style={{ fontSize:12,fontWeight:700,color:'#93C5FD',letterSpacing:'.04em',marginBottom:8 }}>
               Your Business HQ. Launch. Manage. Grow.
             </p>
             <p style={{ fontSize:13,color:'#c8d8e8',lineHeight:1.75,marginBottom:20 }}>

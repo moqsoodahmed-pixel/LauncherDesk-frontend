@@ -156,10 +156,10 @@ export default function AdminLayout() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:'Inter',system-ui,sans-serif}
+        body{font-family:'Manrope',system-ui,sans-serif}
 
         /* ── Shell ── */
-        .adm-shell{display:flex;height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',system-ui,sans-serif;background:#F1F5F9}
+        .adm-shell{display:flex;height:100vh;height:100dvh;overflow:hidden;font-family:'Manrope',system-ui,sans-serif;background:#F1F5F9}
 
         /* ── Sidebar base ── */
         .adm-sidebar{background:#1C2434;display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
@@ -192,12 +192,12 @@ export default function AdminLayout() {
           border:0;background:none;width:100%;font-family:inherit;
         }
         .adm-nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
-        .adm-nav-item.active{background:#3B5BDB;color:#fff}
+        .adm-nav-item.active{background:#1D5DB8;color:#fff}
         .adm-logout-btn{color:#FF8080}
         .adm-logout-btn:hover{background:rgba(255,128,128,.12);color:#FF6060}
 
         .adm-user-chip{display:flex;align-items:center;gap:10px;padding:14px 14px;border-top:1px solid rgba(255,255,255,.07);flex-shrink:0}
-        .adm-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3B5BDB,#7C9FFF);display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+        .adm-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1A3665,#2B72D4);display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
         .adm-user-name{font-size:13px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
         .adm-user-role{font-size:11px;color:#6da8e0;margin-top:1px}
 

@@ -181,7 +181,7 @@ function pwStrength(pw) {
   const map = [
     { label: '',        color: '#E2E8F0', width: '0%'   },
     { label: 'Weak',    color: '#EF4444', width: '25%'  },
-    { label: 'Fair',    color: '#F97316', width: '50%'  },
+    { label: 'Fair',    color: 'var(--blue)', width: '50%'  },
     { label: 'Good',    color: '#EAB308', width: '75%'  },
     { label: 'Strong',  color: '#22C55E', width: '100%' },
   ]
