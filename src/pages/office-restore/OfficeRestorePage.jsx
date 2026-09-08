@@ -302,7 +302,7 @@ export default function OfficeRestorePage() {
       </section>
 
       {/* CATALOGUE */}
-      <section className="section-sm" style={{background:"var(--sec-orange-bg)"}}>
+      <section className="section-sm" style={{background:"var(--sec-b)"}}>
         <div className="wrap">
           <div className="sec-head center reveal-up" style={{ marginBottom: 36 }}>
             <span className="eyebrow">Product Catalogue</span>
@@ -339,7 +339,7 @@ export default function OfficeRestorePage() {
       </section>
 
       {/* PLANNER */}
-      <section className="section" style={{background:"var(--sec-teal-bg)"}} id="planner">
+      <section className="section" style={{background:"var(--sec-b)"}} id="planner">
         <div className="wrap">
           <div className="sec-head reveal-up" style={{ marginBottom: 32 }}>
             <span className="eyebrow">Workspace Planner</span>
@@ -451,7 +451,7 @@ export default function OfficeRestorePage() {
       </section>
 
       {/* WORKFLOW */}
-      <section className="section" style={{background:"var(--sec-sky-bg)"}}>
+      <section className="section" style={{background:"var(--sec-b)"}}>
         <div className="wrap">
           <div className="sec-head center reveal-up" style={{ marginBottom: 52 }}>
             <span className="eyebrow">Process</span>
@@ -476,7 +476,7 @@ export default function OfficeRestorePage() {
       </section>
 
       {/* FAQ */}
-      <section className="section-sm" style={{background:"var(--sec-amber-bg)"}}>
+      <section className="section-sm" style={{background:"var(--sec-b)"}}>
         <div className="wrap">
           <div className="sec-head center reveal-up" style={{ marginBottom: 36 }}>
             <span className="eyebrow">FAQ</span>
@@ -490,7 +490,7 @@ export default function OfficeRestorePage() {
       </section>
 
       {/* CTA */}
-      <section className="section-sm" style={{background:"var(--sec-purple-bg)"}}>
+      <section className="section-sm" style={{background:"var(--sec-b)"}}>
         <div className="wrap">
           <div className="final reveal-up">
             <h2>Ready to design your workspace?</h2>

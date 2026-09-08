@@ -30,25 +30,25 @@ const S = `
 .wa-meta-badge span{font-size:13px;color:#9ab5d4}
 .wa-meta-badge b{display:block;color:#fff;font-size:14px;font-weight:700}
 
-.wa-features{padding:88px 0;background:var(--sec-teal-bg)}
+.wa-features{padding:88px 0;background:var(--sec-b)}
 .wa-feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
-.wa-feat-card{background:#fff;border-radius:20px;padding:28px;border:1.5px solid var(--sec-teal-border);transition:transform .2s,box-shadow .2s}
+.wa-feat-card{background:#fff;border-radius:20px;padding:28px;border:1.5px solid var(--line);transition:transform .2s,box-shadow .2s}
 .wa-feat-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(5,150,105,.12)}
 .wa-feat-ic{width:52px;height:52px;border-radius:14px;background:#DCFCE7;display:grid;place-items:center;margin-bottom:18px}
 .wa-feat-ic svg{width:24px;height:24px;stroke:#16A34A;fill:none;stroke-width:2}
 .wa-feat-card h3{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:8px}
 .wa-feat-card p{font-size:14px;color:var(--text-2);line-height:1.6}
 
-.wa-usecases{padding:88px 0;background:var(--sec-orange-bg)}
+.wa-usecases{padding:88px 0;background:var(--sec-b)}
 .wa-uc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
-.wa-uc-card{background:#fff;border-radius:16px;padding:24px;border:1.5px solid var(--sec-orange-border);display:flex;gap:16px;align-items:flex-start;transition:border-color .15s}
-.wa-uc-card:hover{border-color:var(--sec-orange-accent)}
-.wa-uc-ic{width:44px;height:44px;border-radius:10px;background:var(--sec-orange-bg);display:grid;place-items:center;flex:none}
-.wa-uc-ic svg{width:20px;height:20px;stroke:var(--sec-orange-accent);fill:none;stroke-width:2}
+.wa-uc-card{background:#fff;border-radius:16px;padding:24px;border:1.5px solid var(--line);display:flex;gap:16px;align-items:flex-start;transition:border-color .15s}
+.wa-uc-card:hover{border-color:var(--blue)}
+.wa-uc-ic{width:44px;height:44px;border-radius:10px;background:var(--sec-b);display:grid;place-items:center;flex:none}
+.wa-uc-ic svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2}
 .wa-uc-card h4{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px}
 .wa-uc-card p{font-size:13.5px;color:var(--text-2);line-height:1.6}
 
-.wa-process{padding:88px 0;background:var(--sec-purple-bg)}
+.wa-process{padding:88px 0;background:var(--sec-b)}
 .wa-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;position:relative}
 .wa-steps::before{content:'';position:absolute;top:30px;left:48px;right:48px;height:2px;background:linear-gradient(90deg,#25D366,#128C7E);z-index:0}
 .wa-step{text-align:center;position:relative;z-index:1}
@@ -56,9 +56,9 @@ const S = `
 .wa-step h4{font-size:14.5px;font-weight:700;color:var(--navy);margin-bottom:8px}
 .wa-step p{font-size:13px;color:var(--text-2);line-height:1.6}
 
-.wa-pricing{padding:88px 0;background:var(--sec-amber-bg)}
+.wa-pricing{padding:88px 0;background:var(--sec-b)}
 .wa-price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
-.wa-price-card{background:#fff;border-radius:20px;padding:28px;border:1.5px solid var(--sec-amber-border);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.wa-price-card{background:#fff;border-radius:20px;padding:28px;border:1.5px solid var(--line);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
 .wa-price-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(217,119,6,.1)}
 .wa-price-card.featured{border-color:#25D366;box-shadow:0 0 0 2px rgba(37,211,102,.2)}
 .wa-price-badge{position:absolute;top:16px;right:16px;background:#25D366;color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px}
@@ -72,11 +72,11 @@ const S = `
 .wa-price-cta{display:block;text-align:center;padding:12px;background:#25D366;color:#fff;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;transition:background .15s}
 .wa-price-cta:hover{background:#1da851}
 
-.wa-faq{padding:88px 0;background:var(--sec-sky-bg)}
+.wa-faq{padding:88px 0;background:var(--sec-b)}
 .wa-faq-list{max-width:720px;margin:48px auto 0}
-.wa-faq-item{border-bottom:1px solid var(--sec-sky-border)}
+.wa-faq-item{border-bottom:1px solid var(--brand-100)}
 .wa-faq-q{width:100%;padding:20px 0;cursor:pointer;background:none;border:0;text-align:left;font-family:var(--font);font-size:16px;font-weight:600;color:var(--navy);display:flex;justify-content:space-between;align-items:center;gap:16px}
-.wa-faq-q svg{width:20px;height:20px;stroke:var(--sec-sky-accent);fill:none;stroke-width:2.5;flex:none;transition:transform .25s}
+.wa-faq-q svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none;transition:transform .25s}
 .wa-faq-q.open svg{transform:rotate(45deg)}
 .wa-faq-a{font-size:14.5px;color:var(--text-2);line-height:1.7;overflow:hidden;max-height:0;transition:max-height .35s}
 .wa-faq-a-in{padding-bottom:20px}
@@ -180,7 +180,7 @@ export default function WhatsAppBusinessPage() {
       {/* FEATURES */}
       <section className="wa-features">
         <div className="wa-inner">
-          <span style={{fontSize:12,fontWeight:700,letterSpacing:'.16em',textTransform:'uppercase',color:'var(--sec-teal-accent)',display:'block',marginBottom:14}}>What You Get</span>
+          <span style={{fontSize:12,fontWeight:700,letterSpacing:'.16em',textTransform:'uppercase',color:'var(--blue)',display:'block',marginBottom:14}}>What You Get</span>
           <h2 style={{fontSize:'clamp(26px,3.6vw,44px)',fontWeight:900,letterSpacing:'-.04em',color:'var(--navy)',marginBottom:8}}>Everything in one WhatsApp integration</h2>
           <p style={{fontSize:16,color:'var(--text-2)',maxWidth:560,lineHeight:1.7}}>The complete WhatsApp Business API stack — from setup to automation to analytics.</p>
           <div className="wa-feat-grid">
@@ -198,7 +198,7 @@ export default function WhatsAppBusinessPage() {
       <section className="wa-usecases">
         <div className="wa-inner">
           <div className="sec-head center reveal-up" style={{marginBottom:0}}>
-            <span className="eyebrow" style={{color:'var(--sec-orange-accent)'}}>Use Cases</span>
+            <span className="eyebrow" style={{color:'var(--blue)'}}>Use Cases</span>
             <h2 style={{marginTop:10}}>Built for every industry</h2>
             <p>WhatsApp automation works for any business that communicates with customers.</p>
           </div>
@@ -241,7 +241,7 @@ export default function WhatsAppBusinessPage() {
       <section className="wa-pricing">
         <div className="wa-inner">
           <div className="sec-head center reveal-up" style={{marginBottom:0}}>
-            <span className="eyebrow" style={{color:'var(--sec-amber-accent)'}}>Pricing</span>
+            <span className="eyebrow" style={{color:'var(--warn)'}}>Pricing</span>
             <h2 style={{marginTop:10}}>Transparent pricing</h2>
             <p>No hidden fees. Professional fee + Meta's conversation charges billed separately.</p>
           </div>
@@ -272,7 +272,7 @@ export default function WhatsAppBusinessPage() {
       {/* FAQ */}
       <section className="wa-faq">
         <div className="wa-inner">
-          <div className="sec-head center reveal-up"><span className="eyebrow" style={{color:'var(--sec-sky-accent)'}}>FAQ</span><h2 style={{marginTop:10}}>Common questions</h2></div>
+          <div className="sec-head center reveal-up"><span className="eyebrow" style={{color:'var(--blue)'}}>FAQ</span><h2 style={{marginTop:10}}>Common questions</h2></div>
           <div className="wa-faq-list">{FAQS.map(f => <FaqItem key={f.q} q={f.q} a={f.a} />)}</div>
         </div>
       </section>

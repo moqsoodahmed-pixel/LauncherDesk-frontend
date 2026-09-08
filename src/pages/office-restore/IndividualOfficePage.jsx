@@ -26,25 +26,25 @@ const S = `
 .io-search-btn{height:44px;padding:0 24px;background:#f97316;color:#fff;font-weight:700;font-size:14px;border-radius:10px;border:0;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s}
 .io-search-btn:hover{background:#ea6c0a}
 
-.io-types{padding:88px 0;background:var(--sec-orange-bg)}
-.io-sec-label{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sec-orange-accent);margin-bottom:14px;display:block}
+.io-types{padding:88px 0;background:var(--sec-b)}
+.io-sec-label{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block}
 .io-sec-h2{font-size:clamp(26px,3.6vw,44px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:8px}
 .io-sec-p{font-size:16px;color:var(--text-2);max-width:560px;line-height:1.7;margin-bottom:48px}
 .io-types-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.io-type-card{background:#fff;border-radius:20px;padding:28px;border:1.5px solid var(--sec-orange-border);transition:transform .2s,box-shadow .2s,border-color .2s}
-.io-type-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(249,115,22,.14);border-color:var(--sec-orange-accent)}
-.io-type-ic{width:52px;height:52px;border-radius:14px;background:var(--sec-orange-bg);border:1.5px solid var(--sec-orange-border);display:grid;place-items:center;margin-bottom:18px}
-.io-type-ic svg{width:24px;height:24px;stroke:var(--sec-orange-accent);fill:none;stroke-width:2}
+.io-type-card{background:#fff;border-radius:20px;padding:28px;border:1.5px solid var(--line);transition:transform .2s,box-shadow .2s,border-color .2s}
+.io-type-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(249,115,22,.14);border-color:var(--blue)}
+.io-type-ic{width:52px;height:52px;border-radius:14px;background:var(--sec-b);border:1.5px solid var(--line);display:grid;place-items:center;margin-bottom:18px}
+.io-type-ic svg{width:24px;height:24px;stroke:var(--blue);fill:none;stroke-width:2}
 .io-type-card h3{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:8px}
 .io-type-card p{font-size:14px;color:var(--text-2);line-height:1.6;margin-bottom:18px}
 .io-type-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.io-type-tag{font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--sec-orange-bg);color:var(--sec-orange-accent);border:1px solid var(--sec-orange-border)}
-.io-type-link{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--sec-orange-accent);text-decoration:none}
+.io-type-tag{font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--sec-b);color:var(--blue);border:1px solid var(--line)}
+.io-type-link{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--blue);text-decoration:none}
 .io-type-link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5}
 
-.io-listings{padding:88px 0;background:var(--sec-teal-bg)}
+.io-listings{padding:88px 0;background:var(--sec-b)}
 .io-listings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
-.io-listing-card{background:#fff;border-radius:18px;overflow:hidden;border:1.5px solid var(--sec-teal-border);transition:transform .2s,box-shadow .2s}
+.io-listing-card{background:#fff;border-radius:18px;overflow:hidden;border:1.5px solid var(--line);transition:transform .2s,box-shadow .2s}
 .io-listing-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(5,150,105,.12)}
 .io-listing-img{height:180px;background:linear-gradient(135deg,#EEF2FF,#DBEAFE);display:flex;align-items:center;justify-content:center;position:relative}
 .io-listing-img svg{width:48px;height:48px;stroke:#3B8FEF;fill:none;stroke-width:1.2;opacity:.4}
@@ -59,16 +59,16 @@ const S = `
 .io-listing-stat{background:var(--bg);border-radius:8px;padding:9px;text-align:center}
 .io-listing-stat .n{font-size:13.5px;font-weight:800;color:var(--navy);display:block}
 .io-listing-stat .l{font-size:10.5px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em}
-.io-listing-price{font-size:13px;font-weight:700;color:var(--sec-teal-accent);margin-bottom:14px}
-.io-listing-cta{display:block;text-align:center;padding:10px;background:var(--sec-teal-light);color:var(--sec-teal-accent);border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;transition:background .15s}
-.io-listing-cta:hover{background:var(--sec-teal-border)}
+.io-listing-price{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:14px}
+.io-listing-cta{display:block;text-align:center;padding:10px;background:var(--brand-50);color:var(--blue);border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;transition:background .15s}
+.io-listing-cta:hover{background:var(--line)}
 
-.io-why{padding:88px 0;background:var(--sec-purple-bg)}
+.io-why{padding:88px 0;background:var(--sec-b)}
 .io-why-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:48px}
 .io-why-feats{display:flex;flex-direction:column;gap:20px}
 .io-why-feat{display:flex;gap:16px;align-items:flex-start}
-.io-why-feat-ic{width:44px;height:44px;border-radius:12px;background:var(--sec-purple-light);display:grid;place-items:center;flex:none}
-.io-why-feat-ic svg{width:20px;height:20px;stroke:var(--sec-purple-accent);fill:none;stroke-width:2}
+.io-why-feat-ic{width:44px;height:44px;border-radius:12px;background:var(--brand-50);display:grid;place-items:center;flex:none}
+.io-why-feat-ic svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2}
 .io-why-feat h4{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:5px}
 .io-why-feat p{font-size:13.5px;color:var(--text-2);line-height:1.6}
 .io-why-visual{background:linear-gradient(160deg,#1E3A6A,#1A2F4E);border-radius:20px;padding:32px}
@@ -78,31 +78,31 @@ const S = `
 .io-stat-row-item span{font-size:13.5px;color:#9ab5d4}
 .io-stat-row-item b{font-size:15px;font-weight:800;color:#fff}
 
-.io-process{padding:88px 0;background:var(--sec-amber-bg)}
+.io-process{padding:88px 0;background:var(--sec-b)}
 .io-proc-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
-.io-proc-step{background:#fff;border-radius:16px;padding:24px;border:1.5px solid var(--sec-amber-border);text-align:center}
-.io-proc-num{width:48px;height:48px;border-radius:50%;background:var(--sec-amber-light);color:var(--sec-amber-accent);font-weight:900;font-size:18px;display:grid;place-items:center;margin:0 auto 16px}
+.io-proc-step{background:#fff;border-radius:16px;padding:24px;border:1.5px solid var(--line);text-align:center}
+.io-proc-num{width:48px;height:48px;border-radius:50%;background:var(--warn-bg);color:var(--warn);font-weight:900;font-size:18px;display:grid;place-items:center;margin:0 auto 16px}
 .io-proc-step h4{font-size:14.5px;font-weight:700;color:var(--navy);margin-bottom:8px}
 .io-proc-step p{font-size:13px;color:var(--text-2);line-height:1.6}
 
-.io-locs{padding:88px 0;background:var(--sec-sky-bg)}
+.io-locs{padding:88px 0;background:var(--sec-b)}
 .io-loc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
-.io-loc-card{background:#fff;border-radius:14px;padding:18px 20px;border:1.5px solid var(--sec-sky-border);transition:border-color .15s,box-shadow .15s;cursor:pointer}
-.io-loc-card:hover{border-color:var(--sec-sky-accent);box-shadow:0 4px 16px rgba(2,132,199,.1)}
+.io-loc-card{background:#fff;border-radius:14px;padding:18px 20px;border:1.5px solid var(--brand-100);transition:border-color .15s,box-shadow .15s;cursor:pointer}
+.io-loc-card:hover{border-color:var(--blue);box-shadow:0 4px 16px rgba(2,132,199,.1)}
 .io-loc-card h4{font-size:14.5px;font-weight:700;color:var(--navy);margin-bottom:4px}
 .io-loc-card p{font-size:12.5px;color:var(--text-2)}
-.io-loc-card .tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--sec-sky-light);color:var(--sec-sky-accent);margin-top:8px;display:inline-block}
+.io-loc-card .tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--brand-50);color:var(--blue);margin-top:8px;display:inline-block}
 
-.io-faq-sec{padding:88px 0;background:var(--sec-orange-bg)}
+.io-faq-sec{padding:88px 0;background:var(--sec-b)}
 .io-faq-list{max-width:720px;margin:48px auto 0}
-.io-faq-item{border-bottom:1px solid var(--sec-orange-border)}
+.io-faq-item{border-bottom:1px solid var(--line)}
 .io-faq-q{width:100%;padding:20px 0;cursor:pointer;background:none;border:0;text-align:left;font-family:var(--font);font-size:16px;font-weight:600;color:var(--navy);display:flex;justify-content:space-between;align-items:center;gap:16px}
-.io-faq-q svg{width:20px;height:20px;stroke:var(--sec-orange-accent);fill:none;stroke-width:2.5;flex:none;transition:transform .25s}
+.io-faq-q svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none;transition:transform .25s}
 .io-faq-q.open svg{transform:rotate(45deg)}
 .io-faq-a{font-size:14.5px;color:var(--text-2);line-height:1.7;overflow:hidden;max-height:0;transition:max-height .35s}
 .io-faq-a-in{padding-bottom:20px}
 
-.io-cta-fin{padding:88px 0;background:var(--sec-teal-bg)}
+.io-cta-fin{padding:88px 0;background:var(--sec-b)}
 
 @media(max-width:1024px){
   .io-search-bar{grid-template-columns:1fr 1fr;gap:10px}
@@ -251,7 +251,7 @@ export default function IndividualOfficePage() {
               <div key={t.title} className="io-type-card reveal-up">
                 <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:16}}>
                   <div className="io-type-ic"><svg viewBox="0 0 24 24"><path d={t.icon}/></svg></div>
-                  <span style={{fontSize:10.5,fontWeight:700,padding:'3px 10px',borderRadius:99,background:'var(--sec-orange-bg)',color:'var(--sec-orange-accent)',border:'1px solid var(--sec-orange-border)'}}>{t.label}</span>
+                  <span style={{fontSize:10.5,fontWeight:700,padding:'3px 10px',borderRadius:99,background:'var(--sec-b)',color:'var(--blue)',border:'1px solid var(--line)'}}>{t.label}</span>
                 </div>
                 <h3>{t.title}</h3>
                 <p>{t.desc}</p>
@@ -266,7 +266,7 @@ export default function IndividualOfficePage() {
       {/* LISTINGS */}
       <section className="io-listings" id="listings">
         <div className="io-inner">
-          <span className="io-sec-label" style={{color:'var(--sec-teal-accent)'}}>Available Spaces</span>
+          <span className="io-sec-label" style={{color:'var(--blue)'}}>Available Spaces</span>
           <h2 className="io-sec-h2">Private offices in Bangalore</h2>
           <p className="io-sec-p">Shortlisted, verified private office spaces ready for immediate occupation. Contact us for a site visit.</p>
           <div className="io-listings-grid">
@@ -295,7 +295,7 @@ export default function IndividualOfficePage() {
       {/* WHY */}
       <section className="io-why">
         <div className="io-inner">
-          <span className="io-sec-label" style={{color:'var(--sec-purple-accent)'}}>Why LauncherDesk</span>
+          <span className="io-sec-label" style={{color:'var(--blue)'}}>Why LauncherDesk</span>
           <h2 className="io-sec-h2">Find your perfect office — free</h2>
           <div className="io-why-grid">
             <div className="io-why-feats">
@@ -322,7 +322,7 @@ export default function IndividualOfficePage() {
       <section className="io-process">
         <div className="io-inner">
           <div className="sec-head center reveal-up" style={{marginBottom:0}}>
-            <span className="eyebrow" style={{color:'var(--sec-amber-accent)'}}>How it works</span>
+            <span className="eyebrow" style={{color:'var(--warn)'}}>How it works</span>
             <h2 style={{marginTop:10}}>From inquiry to move-in</h2>
             <p>Our advisors handle every step of finding and securing your private office space.</p>
           </div>
@@ -346,7 +346,7 @@ export default function IndividualOfficePage() {
       <section className="io-locs">
         <div className="io-inner">
           <div className="sec-head center reveal-up" style={{marginBottom:0}}>
-            <span className="eyebrow" style={{color:'var(--sec-sky-accent)'}}>Locations</span>
+            <span className="eyebrow" style={{color:'var(--blue)'}}>Locations</span>
             <h2 style={{marginTop:10}}>Private offices across Bangalore</h2>
             <p>We have verified private office listings across all major business districts.</p>
           </div>
@@ -364,7 +364,7 @@ export default function IndividualOfficePage() {
       {/* FAQ */}
       <section className="io-faq-sec">
         <div className="io-inner">
-          <div className="sec-head center reveal-up"><span className="eyebrow" style={{color:'var(--sec-orange-accent)'}}>FAQ</span><h2 style={{marginTop:10}}>Common questions</h2></div>
+          <div className="sec-head center reveal-up"><span className="eyebrow" style={{color:'var(--blue)'}}>FAQ</span><h2 style={{marginTop:10}}>Common questions</h2></div>
           <div className="io-faq-list">{FAQS.map(f => <FaqItem key={f.q} q={f.q} a={f.a} />)}</div>
         </div>
       </section>

@@ -26,67 +26,67 @@ const S = `
 .cw-plan-price{font-size:15px;font-weight:800;color:#34d399}
 .cw-plan-hint{font-size:10.5px;color:#6da8e0;margin-top:2px}
 
-.cw-seats{padding:88px 0;background:var(--sec-teal-bg)}
-.cw-sec-label{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sec-teal-accent);margin-bottom:14px;display:block}
+.cw-seats{padding:88px 0;background:var(--sec-b)}
+.cw-sec-label{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block}
 .cw-sec-h2{font-size:clamp(26px,3.6vw,44px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:8px}
 .cw-sec-p{font-size:16px;color:var(--text-2);max-width:560px;line-height:1.7;margin-bottom:48px}
 .cw-seat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.cw-seat-card{background:#fff;border-radius:20px;padding:32px;border:1.5px solid var(--sec-teal-border);transition:transform .2s,box-shadow .2s,border-color .2s;position:relative;overflow:hidden}
-.cw-seat-card.popular::before{content:'Most Popular';position:absolute;top:16px;right:-28px;background:var(--sec-teal-accent);color:#fff;font-size:10px;font-weight:700;padding:5px 40px;transform:rotate(35deg);letter-spacing:.05em}
-.cw-seat-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(5,150,105,.14);border-color:var(--sec-teal-accent)}
-.cw-seat-ic{width:52px;height:52px;border-radius:14px;background:var(--sec-teal-light);display:grid;place-items:center;margin-bottom:20px}
-.cw-seat-ic svg{width:24px;height:24px;stroke:var(--sec-teal-accent);fill:none;stroke-width:2}
+.cw-seat-card{background:#fff;border-radius:20px;padding:32px;border:1.5px solid var(--line);transition:transform .2s,box-shadow .2s,border-color .2s;position:relative;overflow:hidden}
+.cw-seat-card.popular::before{content:'Most Popular';position:absolute;top:16px;right:-28px;background:var(--blue);color:#fff;font-size:10px;font-weight:700;padding:5px 40px;transform:rotate(35deg);letter-spacing:.05em}
+.cw-seat-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(5,150,105,.14);border-color:var(--blue)}
+.cw-seat-ic{width:52px;height:52px;border-radius:14px;background:var(--brand-50);display:grid;place-items:center;margin-bottom:20px}
+.cw-seat-ic svg{width:24px;height:24px;stroke:var(--blue);fill:none;stroke-width:2}
 .cw-seat-card h3{font-size:20px;font-weight:900;color:var(--navy);margin-bottom:6px}
-.cw-seat-price{font-size:26px;font-weight:900;color:var(--sec-teal-accent);margin-bottom:4px}
+.cw-seat-price{font-size:26px;font-weight:900;color:var(--blue);margin-bottom:4px}
 .cw-seat-price span{font-size:14px;font-weight:500;color:var(--text-2)}
 .cw-seat-card p{font-size:14px;color:var(--text-2);line-height:1.6;margin-bottom:20px}
 .cw-seat-inc{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
 .cw-seat-inc-item{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--navy)}
-.cw-seat-inc-item svg{width:15px;height:15px;stroke:var(--sec-teal-accent);fill:none;stroke-width:2.5;flex:none}
-.cw-seat-cta{display:block;text-align:center;padding:12px;background:var(--sec-teal-accent);color:#fff;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;transition:background .15s}
+.cw-seat-inc-item svg{width:15px;height:15px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none}
+.cw-seat-cta{display:block;text-align:center;padding:12px;background:var(--blue);color:#fff;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;transition:background .15s}
 .cw-seat-cta:hover{background:#047857}
 
-.cw-spaces{padding:88px 0;background:var(--sec-purple-bg)}
+.cw-spaces{padding:88px 0;background:var(--sec-b)}
 .cw-spaces-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
-.cw-space-card{background:#fff;border-radius:18px;padding:28px;border:1.5px solid var(--sec-purple-border);transition:transform .2s,box-shadow .2s}
+.cw-space-card{background:#fff;border-radius:18px;padding:28px;border:1.5px solid var(--line);transition:transform .2s,box-shadow .2s}
 .cw-space-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(124,58,237,.12)}
 .cw-space-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px}
-.cw-space-ic{width:48px;height:48px;border-radius:12px;background:var(--sec-purple-light);display:grid;place-items:center;flex:none}
-.cw-space-ic svg{width:22px;height:22px;stroke:var(--sec-purple-accent);fill:none;stroke-width:2}
+.cw-space-ic{width:48px;height:48px;border-radius:12px;background:var(--brand-50);display:grid;place-items:center;flex:none}
+.cw-space-ic svg{width:22px;height:22px;stroke:var(--blue);fill:none;stroke-width:2}
 .cw-space-head h3{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:4px}
 .cw-space-head p{font-size:13.5px;color:var(--text-2)}
 .cw-space-list{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
 .cw-space-item{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--navy)}
-.cw-space-item svg{width:14px;height:14px;stroke:var(--sec-purple-accent);fill:none;stroke-width:2.5;flex:none}
-.cw-space-from{font-size:13px;font-weight:700;color:var(--sec-purple-accent)}
+.cw-space-item svg{width:14px;height:14px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none}
+.cw-space-from{font-size:13px;font-weight:700;color:var(--blue)}
 
-.cw-amenities{padding:88px 0;background:var(--sec-amber-bg)}
+.cw-amenities{padding:88px 0;background:var(--sec-b)}
 .cw-amen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
-.cw-amen-card{background:#fff;border-radius:14px;padding:22px;border:1.5px solid var(--sec-amber-border);text-align:center;transition:border-color .15s}
-.cw-amen-card:hover{border-color:var(--sec-amber-accent)}
-.cw-amen-ic{width:48px;height:48px;border-radius:12px;background:var(--sec-amber-light);display:grid;place-items:center;margin:0 auto 14px}
-.cw-amen-ic svg{width:22px;height:22px;stroke:var(--sec-amber-accent);fill:none;stroke-width:2}
+.cw-amen-card{background:#fff;border-radius:14px;padding:22px;border:1.5px solid var(--line);text-align:center;transition:border-color .15s}
+.cw-amen-card:hover{border-color:var(--warn)}
+.cw-amen-ic{width:48px;height:48px;border-radius:12px;background:var(--warn-bg);display:grid;place-items:center;margin:0 auto 14px}
+.cw-amen-ic svg{width:22px;height:22px;stroke:var(--warn);fill:none;stroke-width:2}
 .cw-amen-card h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px}
 .cw-amen-card p{font-size:12.5px;color:var(--text-2);line-height:1.5}
 
-.cw-locs{padding:88px 0;background:var(--sec-sky-bg)}
+.cw-locs{padding:88px 0;background:var(--sec-b)}
 .cw-loc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
-.cw-loc-card{background:#fff;border-radius:14px;padding:18px 20px;border:1.5px solid var(--sec-sky-border);transition:border-color .15s,box-shadow .15s;cursor:pointer}
-.cw-loc-card:hover{border-color:var(--sec-sky-accent);box-shadow:0 4px 16px rgba(2,132,199,.1)}
+.cw-loc-card{background:#fff;border-radius:14px;padding:18px 20px;border:1.5px solid var(--brand-100);transition:border-color .15s,box-shadow .15s;cursor:pointer}
+.cw-loc-card:hover{border-color:var(--blue);box-shadow:0 4px 16px rgba(2,132,199,.1)}
 .cw-loc-card h4{font-size:14.5px;font-weight:700;color:var(--navy);margin-bottom:4px}
 .cw-loc-card p{font-size:12.5px;color:var(--text-2)}
-.cw-loc-tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--sec-sky-light);color:var(--sec-sky-accent);margin-top:8px;display:inline-block}
+.cw-loc-tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--brand-50);color:var(--blue);margin-top:8px;display:inline-block}
 
-.cw-faq-sec{padding:88px 0;background:var(--sec-orange-bg)}
+.cw-faq-sec{padding:88px 0;background:var(--sec-b)}
 .cw-faq-list{max-width:720px;margin:48px auto 0}
-.cw-faq-item{border-bottom:1px solid var(--sec-orange-border)}
+.cw-faq-item{border-bottom:1px solid var(--line)}
 .cw-faq-q{width:100%;padding:20px 0;cursor:pointer;background:none;border:0;text-align:left;font-family:var(--font);font-size:16px;font-weight:600;color:var(--navy);display:flex;justify-content:space-between;align-items:center;gap:16px}
-.cw-faq-q svg{width:20px;height:20px;stroke:var(--sec-orange-accent);fill:none;stroke-width:2.5;flex:none;transition:transform .25s}
+.cw-faq-q svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none;transition:transform .25s}
 .cw-faq-q.open svg{transform:rotate(45deg)}
 .cw-faq-a{font-size:14.5px;color:var(--text-2);line-height:1.7;overflow:hidden;max-height:0;transition:max-height .35s}
 .cw-faq-a-in{padding-bottom:20px}
 
-.cw-cta-fin{padding:88px 0;background:var(--sec-teal-bg)}
+.cw-cta-fin{padding:88px 0;background:var(--sec-b)}
 
 @media(max-width:900px){.cw-hero-grid,.cw-seat-grid,.cw-spaces-grid,.cw-amen-grid,.cw-loc-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.cw-seat-grid,.cw-spaces-grid,.cw-amen-grid,.cw-loc-grid{grid-template-columns:1fr}.cw-hero-grid{grid-template-columns:1fr}}
@@ -259,7 +259,7 @@ export default function CoworkingOfficePage() {
       {/* SPACE TYPES */}
       <section className="cw-spaces">
         <div className="cw-inner">
-          <span className="cw-sec-label" style={{color:'var(--sec-purple-accent)'}}>Space Types</span>
+          <span className="cw-sec-label" style={{color:'var(--blue)'}}>Space Types</span>
           <h2 className="cw-sec-h2">What's available at our co-working centres</h2>
           <p className="cw-sec-p">From open hot desks to private meeting rooms — every type of workspace in one building.</p>
           <div className="cw-spaces-grid">
@@ -285,7 +285,7 @@ export default function CoworkingOfficePage() {
       <section className="cw-amenities">
         <div className="cw-inner">
           <div className="sec-head center reveal-up" style={{marginBottom:0}}>
-            <span className="eyebrow" style={{color:'var(--sec-amber-accent)'}}>Amenities</span>
+            <span className="eyebrow" style={{color:'var(--warn)'}}>Amenities</span>
             <h2 style={{marginTop:10}}>Everything included, always</h2>
             <p>All co-working plans include access to our full amenity stack — no hidden extras.</p>
           </div>
@@ -304,7 +304,7 @@ export default function CoworkingOfficePage() {
       <section className="cw-locs">
         <div className="cw-inner">
           <div className="sec-head center reveal-up" style={{marginBottom:0}}>
-            <span className="eyebrow" style={{color:'var(--sec-sky-accent)'}}>Locations</span>
+            <span className="eyebrow" style={{color:'var(--blue)'}}>Locations</span>
             <h2 style={{marginTop:10}}>Co-working centres across Bangalore</h2>
             <p>Prime locations across Bangalore's top business districts — close to metro, cafes and amenities.</p>
           </div>
@@ -322,7 +322,7 @@ export default function CoworkingOfficePage() {
       {/* FAQ */}
       <section className="cw-faq-sec">
         <div className="cw-inner">
-          <div className="sec-head center reveal-up"><span className="eyebrow" style={{color:'var(--sec-orange-accent)'}}>FAQ</span><h2 style={{marginTop:10}}>Common questions</h2></div>
+          <div className="sec-head center reveal-up"><span className="eyebrow" style={{color:'var(--blue)'}}>FAQ</span><h2 style={{marginTop:10}}>Common questions</h2></div>
           <div className="cw-faq-list">{FAQS.map(f => <FaqItem key={f.q} q={f.q} a={f.a} />)}</div>
         </div>
       </section>

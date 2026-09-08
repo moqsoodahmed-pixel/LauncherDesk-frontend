@@ -15,7 +15,7 @@ const S = `
   justify-content: center;
   background: radial-gradient(1000px 600px at 50% -10%, rgba(59,143,239,.32), transparent 70%),
               radial-gradient(800px 500px at 15% 100%, rgba(29,111,224,.22), transparent 60%),
-              radial-gradient(600px 400px at 85% 90%, rgba(124,58,237,.15), transparent 60%),
+              radial-gradient(600px 400px at 85% 90%, rgba(29,93,184,.12), transparent 60%),
               linear-gradient(155deg, #070E22 0%, #0D1C44 45%, #152B60 100%);
   padding: 36px 20px;
   position: relative;
@@ -45,7 +45,7 @@ const S = `
   width: 350px;
   height: 350px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(249,115,22,.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(29,93,184,.08) 0%, transparent 70%);
   bottom: 12%;
   right: 10%;
   pointer-events: none;
