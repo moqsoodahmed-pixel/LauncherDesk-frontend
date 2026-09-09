@@ -1,9 +1,26 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import logoImg from '../assets/launcherdesk-logo-transparent.png'
 
-const SPARK  = 'M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z'
+/* ─── WhatsApp pre-filled message (FAB button trigger) ──────────────────── */
+const WA_PHONE = '918548854859'
+const WA_MESSAGE = [
+  'Hi LauncherDesk!',
+  '',
+  "I'm interested in your services and found you from your website.",
+  '',
+  'Could you help me with the following?',
+  '• Business Registration & Compliance',
+  '• GST / Trademark / Licences',
+  '• Accounting & Payroll',
+  '• Website / Digital Marketing',
+  '',
+  'Please guide me on the right service for my business.',
+].join('\n')
+const WA_URL = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(WA_MESSAGE)}`
+
+const SPARK = 'M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z'
 const ROCKET = 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0'
-const WA     = 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z'
+const WA = 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z'
 
 const API_BASE = (import.meta.env.VITE_API_URL || 'http://localhost:5001/api').replace(/\/api\/?$/, '')
 const CHIPS = [
@@ -36,17 +53,17 @@ function extractReplies(traces = []) {
 }
 
 export default function AIAssistant() {
-  const [aiOpen,       setAiOpen]       = useState(false)
-  const [drawerOpen,   setDrawerOpen]   = useState(false)
-  const [messages,     setMessages]     = useState([])
-  const [input,        setInput]        = useState('')
-  const [sending,      setSending]      = useState(false)
+  const [aiOpen, setAiOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [messages, setMessages] = useState([])
+  const [input, setInput] = useState('')
+  const [sending, setSending] = useState(false)
   const [chipsVisible, setChipsVisible] = useState(true)
 
-  const bodyRef     = useRef(null)
-  const inputRef    = useRef(null)
+  const bodyRef = useRef(null)
+  const inputRef = useRef(null)
   const launchedRef = useRef(false)
-  const userId      = useRef(getOrCreateUserId())
+  const userId = useRef(getOrCreateUserId())
 
   const scrimOn = aiOpen || drawerOpen
 
@@ -68,10 +85,10 @@ export default function AIAssistant() {
   }
 
   const interact = useCallback(async (action) => {
-    const res  = await fetch(`${API_BASE}/api/voiceflow/interact`, {
-      method : 'POST',
+    const res = await fetch(`${API_BASE}/api/voiceflow/interact`, {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body   : JSON.stringify({ userId: userId.current, action }),
+      body: JSON.stringify({ userId: userId.current, action }),
     })
     const data = await res.json()
     if (!data.success) throw new Error('Voiceflow error')
@@ -84,7 +101,7 @@ export default function AIAssistant() {
     setSending(true)
     showTyping()
     try {
-      const traces  = await interact({ type: 'launch' })
+      const traces = await interact({ type: 'launch' })
       const replies = extractReplies(traces)
       addBotMsg(replies ? replies.join('\n\n') : "Hi! I'm the LauncherDesk AI. How can I help you today?")
     } catch {
@@ -102,7 +119,7 @@ export default function AIAssistant() {
     setSending(true)
     showTyping()
     try {
-      const traces  = await interact({ type: 'text', payload: text })
+      const traces = await interact({ type: 'text', payload: text })
       const replies = extractReplies(traces)
       addBotMsg(replies ? replies.join('\n\n') : 'Let me know if you need anything else.')
     } catch {
@@ -117,10 +134,10 @@ export default function AIAssistant() {
     setTimeout(() => inputRef.current?.focus(), 250)
     if (!launchedRef.current) launchSession()
   }
-  function closeAI()     { setAiOpen(false) }
-  function openDrawer()  { setDrawerOpen(true) }
+  function closeAI() { setAiOpen(false) }
+  function openDrawer() { setDrawerOpen(true) }
   function closeDrawer() { setDrawerOpen(false) }
-  function onScrim()     { closeDrawer(); closeAI() }
+  function onScrim() { closeDrawer(); closeAI() }
 
   function handleSubmit(e) { e.preventDefault(); send(input); setInput('') }
 
@@ -140,7 +157,7 @@ export default function AIAssistant() {
     function wireDrawer() {
       document.querySelectorAll('.d-sec-btn').forEach(btn => {
         btn.addEventListener('click', function () {
-          const sec  = btn.closest('.d-section')
+          const sec = btn.closest('.d-section')
           const body = sec.querySelector('.d-sec-body')
           const open = sec.classList.contains('open')
           document.querySelectorAll('.d-section').forEach(s => {
@@ -151,7 +168,7 @@ export default function AIAssistant() {
       })
       document.querySelectorAll('.d-subsec-btn').forEach(btn => {
         btn.addEventListener('click', function () {
-          const sub  = btn.closest('.d-subsec')
+          const sub = btn.closest('.d-subsec')
           const body = sub.querySelector('.d-subsec-body')
           const open = sub.classList.contains('open')
           sub.classList.toggle('open', !open)
@@ -184,7 +201,7 @@ export default function AIAssistant() {
       <div className="d-section">
         <button className="d-sec-btn">
           {label}
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6" /></svg>
         </button>
         <div className="d-sec-body">{children}</div>
       </div>
@@ -208,7 +225,7 @@ export default function AIAssistant() {
         {/* Row 1: WhatsApp + Partner With Us — side by side */}
         <div className="fab-row">
           <a
-            href="https://wa.me/918548854859"
+            href={WA_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="fab-wa"
@@ -217,7 +234,7 @@ export default function AIAssistant() {
           >
             {/* WhatsApp official logo icon */}
             <svg viewBox="0 0 32 32" width={26} height={26} fill="currentColor">
-              <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/>
+              <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z" />
             </svg>
           </a>
 
@@ -228,7 +245,7 @@ export default function AIAssistant() {
             title="Partner with us"
           >
             <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
             Partner With Us
           </a>
@@ -256,23 +273,23 @@ export default function AIAssistant() {
           <div>
             <b>LauncherDesk AI</b>
             <small>
-              <span style={{width:7,height:7,borderRadius:'50%',background:'#4ade80',display:'inline-block'}}/>{' '}
+              <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#4ade80', display: 'inline-block' }} />{' '}
               Online · Your Business Manager
             </small>
           </div>
           <button className="x" onClick={closeAI}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12" /></svg>
           </button>
         </div>
 
         <div className="as-body" id="asBody" ref={bodyRef}>
           {messages.map((msg, i) =>
             msg.role === 'typing' ? (
-              <div key={i} className="as-msg a as-typing"><span/><span/><span/></div>
+              <div key={i} className="as-msg a as-typing"><span /><span /><span /></div>
             ) : (
               <div key={i} className={`as-msg ${msg.role}`}>
                 {msg.text.split('\n').map((line, j, arr) => (
-                  <span key={j}>{line}{j < arr.length - 1 && <br/>}</span>
+                  <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
                 ))}
               </div>
             )
@@ -288,8 +305,8 @@ export default function AIAssistant() {
         )}
 
         <div className="as-esc">
-          <a className="btn btn-wa btn-sm" style={{flex:1,justifyContent:'center'}} href="/company/contact">
-            <svg className="ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={WA}/></svg>
+          <a className="btn btn-wa btn-sm" style={{ flex: 1, justifyContent: 'center' }} href="/company/contact">
+            <svg className="ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={WA} /></svg>
             WhatsApp
           </a>
         </div>
@@ -306,7 +323,7 @@ export default function AIAssistant() {
             onChange={e => setInput(e.target.value)}
           />
           <button type="submit" aria-label="Send" disabled={sending}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z" /></svg>
           </button>
         </form>
         <div className="as-disc">General information only · not a substitute for professional legal or tax advice</div>
@@ -314,21 +331,21 @@ export default function AIAssistant() {
 
       <div className="mobile-bar">
         <a href="/services#finder" className="mb-btn mb-btn--primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16,flex:'none'}}>
-            <path d="M5 12h14M12 5l7 7-7 7"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 16, height: 16, flex: 'none' }}>
+            <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
           Get Started
         </a>
 
         <button className="mb-btn mb-btn--ai" onClick={openAI}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16,flex:'none'}}>
-            <path d={SPARK}/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 16, height: 16, flex: 'none' }}>
+            <path d={SPARK} />
           </svg>
           Ask AI
         </button>
         <a href="/company/contact" className="mb-btn mb-btn--wa">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16,flex:'none'}}>
-            <path d={WA}/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 16, height: 16, flex: 'none' }}>
+            <path d={WA} />
           </svg>
           WhatsApp
         </a>
@@ -338,11 +355,11 @@ export default function AIAssistant() {
 
       <aside className={`drawer${drawerOpen ? ' open' : ''}`} id="drawer">
         <div className="d-top">
-          <a href="/" style={{display:'flex',alignItems:'center',textDecoration:'none'}}>
-            <img src={logoImg} alt="LauncherDesk" style={{height:34,width:'auto',display:'block'}} />
+          <a href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+            <img src={logoImg} alt="LauncherDesk" style={{ height: 34, width: 'auto', display: 'block' }} />
           </a>
           <button className="x" onClick={closeDrawer}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12" /></svg>
           </button>
         </div>
         <nav className="d-nav">
@@ -389,12 +406,12 @@ export default function AIAssistant() {
           <a className="d-link" href="/virtual-office">Virtual Office</a>
           <a className="d-link" href="/estamp">E-Stamp</a>
         </nav>
-        <div style={{display:'flex',flexDirection:'column',gap:8}}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <a href="/partner/login" className="btn" style={{
-            justifyContent:'center',background:'#E8EDF8',
-            color:'var(--navy)',fontWeight:600,border:'none'
+            justifyContent: 'center', background: '#E8EDF8',
+            color: 'var(--navy)', fontWeight: 600, border: 'none'
           }}>Login</a>
-          <a className="btn btn-primary" href="/services#finder" style={{justifyContent:'center'}}>Get Started →</a>
+          <a className="btn btn-primary" href="/services#finder" style={{ justifyContent: 'center' }}>Get Started →</a>
         </div>
       </aside>
     </>
