@@ -1,30 +1,32 @@
 import { useState } from 'react'
 
 const S = `
-.cw-hero{background:linear-gradient(160deg,#1A2F4E 0%,#051A12 55%,#082918 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden}
-.cw-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(800px 600px at 70% -10%,rgba(5,150,105,.22),transparent 60%),radial-gradient(400px 400px at 5% 100%,rgba(6,78,59,.18),transparent 60%)}
+.cw-hero{background:linear-gradient(180deg,#FBFDFF 0%,#F1FBF7 55%,#E9F7F1 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.cw-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(820px 600px at 78% -12%,rgba(5,150,105,.10),transparent 62%),radial-gradient(420px 380px at 4% 105%,rgba(29,93,184,.06),transparent 60%);animation:cwHeroGlow 22s ease-in-out infinite alternate}
+@keyframes cwHeroGlow{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-1.4%,1.3%,0) scale(1.03)}}
+@media (prefers-reduced-motion: reduce){.cw-hero::before{animation:none}}
 .cw-inner{max-width:1160px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
-.cw-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(5,150,105,.15);border:1px solid rgba(5,150,105,.3);border-radius:99px;padding:5px 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#34d399;margin-bottom:20px}
-.cw-hero h1{font-size:clamp(34px,4.8vw,62px);font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1.04;margin-bottom:18px}
-.cw-hero h1 span{background:linear-gradient(118deg,#34d399,#059669);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.cw-hero-desc{font-size:17px;color:#9ab5d4;line-height:1.7;max-width:520px;margin-bottom:32px}
+.cw-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.25);border-radius:99px;padding:5px 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#047857;margin-bottom:20px}
+.cw-hero h1{font-size:clamp(34px,4.8vw,62px);font-weight:900;color:var(--navy);letter-spacing:-.04em;line-height:1.04;margin-bottom:18px}
+.cw-hero h1 span{background:linear-gradient(118deg,#059669,#047857);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.cw-hero-desc{font-size:17px;color:var(--text-2);line-height:1.7;max-width:520px;margin-bottom:32px}
 .cw-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
 .cw-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
 .cw-btn-primary{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 28px;background:#059669;color:#fff;font-weight:700;font-size:15px;border-radius:10px;text-decoration:none;transition:all .15s;box-shadow:0 8px 24px rgba(5,150,105,.35);border:0;cursor:pointer;font-family:inherit}
 .cw-btn-primary:hover{background:#047857;transform:translateY(-2px)}
-.cw-btn-outline{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:15px;border-radius:10px;border:1.5px solid rgba(255,255,255,.2);text-decoration:none;transition:all .15s}
-.cw-btn-outline:hover{background:rgba(255,255,255,.14)}
+.cw-btn-outline{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;background:#fff;color:#047857;font-weight:600;font-size:15px;border-radius:10px;border:1.5px solid var(--line-strong);text-decoration:none;transition:all .15s}
+.cw-btn-outline:hover{background:rgba(5,150,105,.08);border-color:#059669}
 .cw-badges{display:flex;flex-wrap:wrap;gap:10px}
-.cw-badge{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;color:#9ab5d4}
-.cw-badge svg{width:14px;height:14px;stroke:#34d399;fill:none;stroke-width:2.5;flex:none}
+.cw-badge{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--text-2)}
+.cw-badge svg{width:14px;height:14px;stroke:#059669;fill:none;stroke-width:2.5;flex:none}
 
-.cw-pricing-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;backdrop-filter:blur(10px)}
-.cw-pricing-card h3{color:#fff;font-size:16px;font-weight:700;margin-bottom:20px}
+.cw-pricing-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 24px 64px rgba(15,28,46,.09), 0 4px 16px rgba(15,28,46,.05)}
+.cw-pricing-card h3{color:var(--navy);font-size:16px;font-weight:700;margin-bottom:20px}
 .cw-plan-grid{display:flex;flex-direction:column;gap:10px}
-.cw-plan-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,.06);border-radius:10px;border:1px solid rgba(255,255,255,.08)}
-.cw-plan-name{font-size:13px;font-weight:600;color:#9ab5d4}
-.cw-plan-price{font-size:15px;font-weight:800;color:#34d399}
-.cw-plan-hint{font-size:10.5px;color:#6da8e0;margin-top:2px}
+.cw-plan-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(5,150,105,.06);border-radius:10px;border:1px solid rgba(5,150,105,.12)}
+.cw-plan-name{font-size:13px;font-weight:600;color:var(--text-2)}
+.cw-plan-price{font-size:15px;font-weight:800;color:#059669}
+.cw-plan-hint{font-size:10.5px;color:var(--text-3);margin-top:2px}
 
 .cw-seats{padding:88px 0;background:var(--sec-b)}
 .cw-sec-label{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block}

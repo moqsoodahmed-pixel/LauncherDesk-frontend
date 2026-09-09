@@ -342,7 +342,46 @@ function LoginDropdown() {
 
 export default function Navbar({ activePage = '' }) {
   const navRef = useRef(null)
+  const mainNavRef = useRef(null)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [pill, setPill] = useState({ left: 0, width: 0, opacity: 0 })
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Sliding active-item pill: settle on the active item, glide to whichever is hovered
+  const movePillTo = useCallback(el => {
+    const nav = mainNavRef.current
+    if (!nav || !el) return
+    const navRect = nav.getBoundingClientRect()
+    const rect = el.getBoundingClientRect()
+    setPill({ left: rect.left - navRect.left, width: rect.width, opacity: 1 })
+  }, [])
+
+  const restorePill = useCallback(() => {
+    const nav = mainNavRef.current
+    if (!nav) return
+    const activeEl = nav.querySelector('.nav-item.active')
+    if (activeEl) movePillTo(activeEl)
+    else setPill(p => ({ ...p, opacity: 0 }))
+  }, [movePillTo])
+
+  useEffect(() => { restorePill() }, [activePage, restorePill])
+
+  useEffect(() => {
+    window.addEventListener('resize', restorePill)
+    return () => window.removeEventListener('resize', restorePill)
+  }, [restorePill])
+
+  const onNavMouseOver = e => {
+    const item = e.target.closest('.nav-item')
+    if (item && mainNavRef.current?.contains(item)) movePillTo(item)
+  }
 
   // Close search on route change
   const location = useLocation()
@@ -430,13 +469,14 @@ export default function Navbar({ activePage = '' }) {
 
       {searchOpen && <SearchOverlay onClose={closeSearch} />}
 
-      <header className="site-header" ref={navRef}>
+      <header className={`site-header${scrolled ? ' is-scrolled' : ''}`} ref={navRef}>
         <div className="header-in">
           <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0, marginRight: 36 }}>
             <img src={logoImg} alt="LauncherDesk" className="nav-logo-img" />
           </Link>
 
-          <nav className="main-nav" id="mainNav">
+          <nav className="main-nav" id="mainNav" ref={mainNavRef} onMouseOver={onNavMouseOver} onMouseLeave={restorePill}>
+            <span className="nav-pill" style={{ transform: `translateX(${pill.left}px)`, width: pill.width, opacity: pill.opacity }} aria-hidden="true" />
             <div className={`nav-item${activePage === 'registrations' ? ' active' : ''} nav-item--reg`} data-drop="true">
               <button>Registrations <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg></button>
               <MegaRegistrations />

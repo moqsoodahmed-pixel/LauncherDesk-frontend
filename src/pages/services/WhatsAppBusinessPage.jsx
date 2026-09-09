@@ -2,33 +2,35 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const S = `
-.wa-hero{background:linear-gradient(160deg,#04091A 0%,#064E1A 55%,#065F2A 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden}
-.wa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(800px 600px at 70% -10%,rgba(37,211,102,.18),transparent 60%)}
+.wa-hero{background:linear-gradient(180deg,#FBFFFC 0%,#F1FBF5 55%,#EBFAF0 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.wa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(800px 600px at 70% -10%,rgba(37,211,102,.14),transparent 60%);animation:waGlowDrift 22s ease-in-out infinite alternate}
+@keyframes waGlowDrift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-1.5%,1.5%,0) scale(1.03)}}
+@media(prefers-reduced-motion:reduce){.wa-hero::before{animation:none}}
 .wa-inner{max-width:1160px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
-.wa-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.3);border-radius:99px;padding:5px 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#25D366;margin-bottom:20px}
-.wa-hero h1{font-size:clamp(34px,4.8vw,62px);font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1.04;margin-bottom:18px}
-.wa-hero h1 span{background:linear-gradient(118deg,#25D366,#128C7E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.wa-hero-desc{font-size:17px;color:#9ab5d4;line-height:1.7;max-width:520px;margin-bottom:32px}
+.wa-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.3);border-radius:99px;padding:5px 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#128C4E;margin-bottom:20px}
+.wa-hero h1{font-size:clamp(34px,4.8vw,62px);font-weight:900;color:var(--navy);letter-spacing:-.04em;line-height:1.04;margin-bottom:18px}
+.wa-hero h1 span{background:linear-gradient(118deg,#128C7E,#1da851);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.wa-hero-desc{font-size:17px;color:var(--text-2);line-height:1.7;max-width:520px;margin-bottom:32px}
 .wa-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
 .wa-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
 .wa-btn-primary{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 28px;background:#25D366;color:#fff;font-weight:700;font-size:15px;border-radius:10px;text-decoration:none;transition:all .15s;box-shadow:0 8px 24px rgba(37,211,102,.35);border:0;cursor:pointer;font-family:inherit}
 .wa-btn-primary:hover{background:#1da851;transform:translateY(-2px)}
-.wa-btn-outline{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:15px;border-radius:10px;border:1.5px solid rgba(255,255,255,.2);text-decoration:none;transition:all .15s}
-.wa-btn-outline:hover{background:rgba(255,255,255,.14)}
+.wa-btn-outline{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;background:#fff;color:var(--navy);font-weight:600;font-size:15px;border-radius:10px;border:1.5px solid var(--line-strong);text-decoration:none;transition:all .15s}
+.wa-btn-outline:hover{background:var(--brand-50);border-color:var(--blue)}
 .wa-badges{display:flex;flex-wrap:wrap;gap:10px}
-.wa-badge{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;color:#9ab5d4}
+.wa-badge{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--text-2);box-shadow:var(--sh-xs)}
 .wa-badge svg{width:14px;height:14px;stroke:#25D366;fill:none;stroke-width:2.5;flex:none}
 
-.wa-stats-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;backdrop-filter:blur(10px)}
-.wa-stats-card h3{color:#fff;font-size:16px;font-weight:700;margin-bottom:20px}
+.wa-stats-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 24px 56px rgba(15,28,46,.08),0 4px 16px rgba(15,28,46,.05)}
+.wa-stats-card h3{color:var(--navy);font-size:16px;font-weight:700;margin-bottom:20px}
 .wa-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-.wa-stat-box{background:rgba(255,255,255,.07);border-radius:12px;padding:16px;text-align:center}
-.wa-stat-box .n{font-size:24px;font-weight:900;color:#25D366;line-height:1}
-.wa-stat-box .l{font-size:11px;color:#9ab5d4;margin-top:4px;text-transform:uppercase;letter-spacing:.06em}
-.wa-meta-badge{display:flex;align-items:center;gap:10px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);border-radius:10px;padding:12px 16px}
+.wa-stat-box{background:#F0FDF6;border:1px solid #DCFCE7;border-radius:12px;padding:16px;text-align:center}
+.wa-stat-box .n{font-size:24px;font-weight:900;color:#128C4E;line-height:1}
+.wa-stat-box .l{font-size:11px;color:var(--text-3);margin-top:4px;text-transform:uppercase;letter-spacing:.06em}
+.wa-meta-badge{display:flex;align-items:center;gap:10px;background:#F0FDF6;border:1px solid #DCFCE7;border-radius:10px;padding:12px 16px}
 .wa-meta-badge svg{width:22px;height:22px;flex:none}
-.wa-meta-badge span{font-size:13px;color:#9ab5d4}
-.wa-meta-badge b{display:block;color:#fff;font-size:14px;font-weight:700}
+.wa-meta-badge span{font-size:13px;color:var(--text-2)}
+.wa-meta-badge b{display:block;color:var(--navy);font-size:14px;font-weight:700}
 
 .wa-features{padding:88px 0;background:var(--sec-b)}
 .wa-feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
@@ -278,11 +280,11 @@ export default function WhatsAppBusinessPage() {
       </section>
 
       {/* CTA */}
-      <section style={{padding:'88px 0',background:'#064E1A'}}>
+      <section style={{padding:'88px 0',background:'linear-gradient(180deg,#fff 0%,#F1FBF5 100%)'}}>
         <div className="wa-inner">
-          <div className="final reveal-up" style={{background:'transparent',color:'#fff'}}>
-            <h2 style={{color:'#fff'}}>Ready to automate your business on WhatsApp?</h2>
-            <p style={{color:'rgba(255,255,255,.75)'}}>Talk to our WhatsApp API experts — get a demo and custom quote within 24 hours.</p>
+          <div className="final reveal-up" style={{'--final-glow':'rgba(37,211,102,.12)'}}>
+            <h2>Ready to automate your business on WhatsApp?</h2>
+            <p>Talk to our WhatsApp API experts — get a demo and custom quote within 24 hours.</p>
             <div className="row">
               <a href="https://wa.me/918548854859?text=Hi, I want to know more about WhatsApp Business API" className="wa-btn-primary" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2}><path d={WA_PATH}/></svg>

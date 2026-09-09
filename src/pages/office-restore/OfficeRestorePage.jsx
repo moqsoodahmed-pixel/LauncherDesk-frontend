@@ -12,27 +12,29 @@ const CHECK = 'M9 11l3 3L22 4'
 const SEND = 'M22 2 11 13M22 2l-7 20-4-9-9-4z'
 
 const orStyles = `
-.or-hero{padding:64px 0 56px;position:relative;overflow:hidden;background:linear-gradient(160deg,#1A2F4E 0%,#1E3A6A 60%,#264D8C 100%)}
-.or-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 500px at 80% -10%,rgba(59,143,239,.28),transparent 60%),radial-gradient(400px 300px at 10% 100%,rgba(15,82,192,.22),transparent 60%);pointer-events:none}
+.or-hero{padding:64px 0 56px;position:relative;overflow:hidden;background:linear-gradient(180deg,#FBFDFF 0%,#F3F8FF 55%,#EEF5FF 100%);border-bottom:1px solid var(--line)}
+.or-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(820px 520px at 80% -10%,rgba(29,93,184,.10),transparent 62%),radial-gradient(420px 340px at 8% 105%,rgba(29,93,184,.07),transparent 60%);pointer-events:none;animation:orHeroGlow 22s ease-in-out infinite alternate}
+@keyframes orHeroGlow{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-1.4%,1.3%,0) scale(1.03)}}
+@media (prefers-reduced-motion: reduce){.or-hero::before{animation:none}}
 .or-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;position:relative}
-.or-eyebrow{font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#6da8e0;margin-bottom:14px}
-.or-hero h1{font-size:clamp(36px,4.8vw,62px);font-weight:800;letter-spacing:-.03em;line-height:1.04;color:#fff;margin-bottom:20px}
-.or-hero h1 span{background:linear-gradient(118deg,#7ecef4,#3B8FEF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.or-hero p{font-size:17px;color:#9ab5d4;line-height:1.7;max-width:500px;margin-bottom:32px}
+.or-eyebrow{font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:14px}
+.or-hero h1{font-size:clamp(36px,4.8vw,62px);font-weight:800;letter-spacing:-.03em;line-height:1.04;color:var(--navy);margin-bottom:20px}
+.or-hero h1 span{background:linear-gradient(118deg,var(--blue-dark),var(--blue-bright));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.or-hero p{font-size:17px;color:var(--text-2);line-height:1.7;max-width:500px;margin-bottom:32px}
 .or-hero-badges{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px}
-.or-badge{display:flex;align-items:center;gap:9px;font-size:13px;color:#6da8e0}
-.or-badge svg{width:16px;height:16px;stroke:#3B8FEF;fill:none;stroke-width:2;flex:none}
-.or-hero-visual-inner{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;box-shadow:0 40px 80px -20px rgba(0,0,0,.4)}
-.or-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,.08);border-radius:12px;overflow:hidden;margin-bottom:20px}
-.or-stat{background:#0A1A30;padding:16px;text-align:center}
-.or-stat .n{font-family:var(--font);font-weight:800;font-size:26px;color:#fff;letter-spacing:-.02em}
-.or-stat .l{font-size:11px;color:#5e7fa0;margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
+.or-badge{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text-2)}
+.or-badge svg{width:16px;height:16px;stroke:var(--blue);fill:none;stroke-width:2;flex:none}
+.or-hero-visual-inner{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 24px 64px rgba(15,28,46,.09),0 4px 16px rgba(15,28,46,.05)}
+.or-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--line);border-radius:12px;overflow:hidden;margin-bottom:20px}
+.or-stat{background:var(--brand-50);padding:16px;text-align:center}
+.or-stat .n{font-family:var(--font);font-weight:800;font-size:26px;color:var(--navy);letter-spacing:-.02em}
+.or-stat .l{font-size:11px;color:var(--blue-dark);margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
 .or-mini-items{display:flex;flex-direction:column;gap:8px}
-.or-mini-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border-radius:10px;padding:10px 14px}
-.or-mini-ic{width:32px;height:32px;border-radius:8px;background:rgba(36,154,226,.2);display:grid;place-items:center;flex:none}
-.or-mini-ic svg{width:16px;height:16px;stroke:#6da8e0;fill:none;stroke-width:2}
-.or-mini-txt b{font-family:var(--font);font-size:13.5px;color:#e4eef9;display:block;font-weight:600}
-.or-mini-txt span{font-size:11.5px;color:#5e7fa0}
+.or-mini-item{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.or-mini-ic{width:32px;height:32px;border-radius:8px;background:var(--brand-50);display:grid;place-items:center;flex:none}
+.or-mini-ic svg{width:16px;height:16px;stroke:var(--blue);fill:none;stroke-width:2}
+.or-mini-txt b{font-family:var(--font);font-size:13.5px;color:var(--navy);display:block;font-weight:600}
+.or-mini-txt span{font-size:11.5px;color:var(--text-3)}
 .or-cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .or-cat{background:#fff;border-radius:18px;border:1px solid var(--line);overflow:hidden;transition:transform .2s,box-shadow .2s}
 .or-cat:hover{transform:translateY(-4px);box-shadow:var(--sh)}
@@ -250,9 +252,9 @@ export default function OfficeRestorePage() {
       <section className="or-hero">
         <div className="wrap">
           <nav className="crumb reveal-up in" style={{ marginBottom: 28 }}>
-            <a href="/" style={{ color: '#5e7fa0' }}>Home</a>
-            <svg viewBox="0 0 24 24" style={{ stroke: '#3d618a' }}><path d={CHEV}/></svg>
-            <span className="cur" style={{ color: '#9ab5d4' }}>Office Setup</span>
+            <a href="/" style={{ color: 'var(--text-3)' }}>Home</a>
+            <svg viewBox="0 0 24 24" style={{ stroke: 'var(--text-4)' }}><path d={CHEV}/></svg>
+            <span className="cur" style={{ color: 'var(--text)' }}>Office Setup</span>
           </nav>
           <div className="or-hero-grid">
             <div className="reveal-up in">
