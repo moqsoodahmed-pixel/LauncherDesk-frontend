@@ -6,7 +6,7 @@ import SEO, { organizationSchema, websiteSchema } from '../components/SEO'
 /* ─── WhatsApp pre-filled message ────────────────────────────────────── */
 const WA_PHONE = '918548854859'
 const WA_MESSAGE = [
-  'Hi LauncherDesk! 👋',
+  'Hi LauncherDesk!',
   '',
   'I found you from your website and I\'m interested in your services.',
   '',
