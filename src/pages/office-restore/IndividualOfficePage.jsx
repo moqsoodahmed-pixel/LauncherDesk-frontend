@@ -1,28 +1,30 @@
 import { useState } from 'react'
 
 const S = `
-.io-hero{background:linear-gradient(160deg,#1A2F4E 0%,#1E3A6A 55%,#264D8C 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden}
-.io-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(800px 600px at 70% -10%,rgba(249,115,22,.18),transparent 60%),radial-gradient(400px 400px at 5% 100%,rgba(15,82,192,.15),transparent 60%)}
+.io-hero{background:linear-gradient(180deg,#FBFDFF 0%,#FFF7F1 55%,#FFEFE2 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.io-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(820px 600px at 78% -12%,rgba(249,115,22,.10),transparent 62%),radial-gradient(420px 380px at 4% 105%,rgba(29,93,184,.06),transparent 60%);animation:ioHeroGlow 22s ease-in-out infinite alternate}
+@keyframes ioHeroGlow{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-1.4%,1.3%,0) scale(1.03)}}
+@media (prefers-reduced-motion: reduce){.io-hero::before{animation:none}}
 .io-inner{max-width:1160px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
-.io-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.3);border-radius:99px;padding:5px 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fb923c;margin-bottom:20px}
-.io-hero h1{font-size:clamp(34px,4.8vw,62px);font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1.04;margin-bottom:18px}
-.io-hero h1 span{background:linear-gradient(118deg,#fb923c,#f97316);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.io-hero-desc{font-size:17px;color:#9ab5d4;line-height:1.7;max-width:520px;margin-bottom:32px}
+.io-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);border-radius:99px;padding:5px 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#c2530a;margin-bottom:20px}
+.io-hero h1{font-size:clamp(34px,4.8vw,62px);font-weight:900;color:var(--navy);letter-spacing:-.04em;line-height:1.04;margin-bottom:18px}
+.io-hero h1 span{background:linear-gradient(118deg,#f97316,#c2530a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.io-hero-desc{font-size:17px;color:var(--text-2);line-height:1.7;max-width:520px;margin-bottom:32px}
 .io-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
 .io-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
 .io-btn-primary{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 28px;background:#f97316;color:#fff;font-weight:700;font-size:15px;border-radius:10px;text-decoration:none;transition:all .15s;box-shadow:0 8px 24px rgba(249,115,22,.35);border:0;cursor:pointer;font-family:inherit}
 .io-btn-primary:hover{background:#ea6c0a;transform:translateY(-2px)}
-.io-btn-outline{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:15px;border-radius:10px;border:1.5px solid rgba(255,255,255,.2);text-decoration:none;transition:all .15s}
-.io-btn-outline:hover{background:rgba(255,255,255,.14)}
+.io-btn-outline{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;background:#fff;color:var(--blue-dark);font-weight:600;font-size:15px;border-radius:10px;border:1.5px solid var(--line-strong);text-decoration:none;transition:all .15s}
+.io-btn-outline:hover{background:var(--brand-50);border-color:var(--blue)}
 .io-badges{display:flex;flex-wrap:wrap;gap:10px}
-.io-badge{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;color:#9ab5d4}
-.io-badge svg{width:14px;height:14px;stroke:#34d399;fill:none;stroke-width:2.5;flex:none}
+.io-badge{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--text-2)}
+.io-badge svg{width:14px;height:14px;stroke:#10B981;fill:none;stroke-width:2.5;flex:none}
 
-.io-search-bar{padding:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;backdrop-filter:blur(10px);display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;margin-top:32px}
-.io-search-field label{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6da8e0;display:block;margin-bottom:8px}
-.io-search-field select,.io-search-field input{width:100%;height:44px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-family:var(--font);font-size:14px;padding:0 14px;outline:none;transition:.15s}
-.io-search-field select:focus,.io-search-field input:focus{border-color:rgba(249,115,22,.5);background:rgba(255,255,255,.15)}
-.io-search-field select option{background:#1E3A6A;color:#fff}
+.io-search-bar{padding:20px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 64px rgba(15,28,46,.09),0 4px 16px rgba(15,28,46,.05);display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;margin-top:32px}
+.io-search-field label{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-dark);display:block;margin-bottom:8px}
+.io-search-field select,.io-search-field input{width:100%;height:44px;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;color:var(--navy);font-family:var(--font);font-size:14px;padding:0 14px;outline:none;transition:.15s}
+.io-search-field select:focus,.io-search-field input:focus{border-color:#f97316;background:#fff}
+.io-search-field select option{background:#fff;color:var(--navy)}
 .io-search-btn{height:44px;padding:0 24px;background:#f97316;color:#fff;font-weight:700;font-size:14px;border-radius:10px;border:0;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s}
 .io-search-btn:hover{background:#ea6c0a}
 
@@ -71,12 +73,12 @@ const S = `
 .io-why-feat-ic svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2}
 .io-why-feat h4{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:5px}
 .io-why-feat p{font-size:13.5px;color:var(--text-2);line-height:1.6}
-.io-why-visual{background:linear-gradient(160deg,#1E3A6A,#1A2F4E);border-radius:20px;padding:32px}
-.io-why-visual h3{color:#fff;font-size:17px;font-weight:700;margin-bottom:20px}
+.io-why-visual{background:#fff;border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:0 20px 56px rgba(15,28,46,.08)}
+.io-why-visual h3{color:var(--navy);font-size:17px;font-weight:700;margin-bottom:20px}
 .io-stat-list{display:flex;flex-direction:column;gap:12px}
-.io-stat-row-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,.06);border-radius:10px;border:1px solid rgba(255,255,255,.08)}
-.io-stat-row-item span{font-size:13.5px;color:#9ab5d4}
-.io-stat-row-item b{font-size:15px;font-weight:800;color:#fff}
+.io-stat-row-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--brand-50);border-radius:10px;border:1px solid var(--brand-100)}
+.io-stat-row-item span{font-size:13.5px;color:var(--text-2)}
+.io-stat-row-item b{font-size:15px;font-weight:800;color:var(--navy)}
 
 .io-process{padding:88px 0;background:var(--sec-b)}
 .io-proc-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
@@ -217,16 +219,16 @@ export default function IndividualOfficePage() {
               </div>
             </div>
             <div className="reveal-up in" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-              <div style={{background:'rgba(255,255,255,.06)',border:'1px solid rgba(255,255,255,.1)',borderRadius:16,padding:28,backdropFilter:'blur(10px)',width:'100%'}}>
-                <div style={{fontSize:13,fontWeight:700,color:'#6da8e0',marginBottom:16,letterSpacing:'.06em',textTransform:'uppercase'}}>Quick Search</div>
+              <div style={{background:'#fff',border:'1px solid var(--line)',borderRadius:16,padding:28,boxShadow:'0 24px 64px rgba(15,28,46,.09), 0 4px 16px rgba(15,28,46,.05)',width:'100%'}}>
+                <div style={{fontSize:13,fontWeight:700,color:'var(--blue-dark)',marginBottom:16,letterSpacing:'.06em',textTransform:'uppercase'}}>Quick Search</div>
                 <div style={{display:'flex',flexDirection:'column',gap:12}}>
                   {[['Location',['Koramangala','Indiranagar','HSR Layout','MG Road','Whitefield','Electronic City','Hebbal','Marathahalli']],
                     ['Office Type',['Furnished Office','Managed Office','Plug & Play','Bare Shell']],
                     ['Team Size',['1–5 seats','6–15 seats','16–30 seats','31–50 seats','50+ seats']]
                   ].map(([label, opts]) => (
                     <div key={label}>
-                      <label style={{fontSize:11,fontWeight:700,letterSpacing:'.08em',textTransform:'uppercase',color:'#6da8e0',display:'block',marginBottom:6}}>{label}</label>
-                      <select style={{width:'100%',height:42,background:'rgba(255,255,255,.1)',border:'1.5px solid rgba(255,255,255,.15)',borderRadius:10,color:'#fff',fontFamily:'var(--font)',fontSize:14,padding:'0 12px',outline:'none'}}>
+                      <label style={{fontSize:11,fontWeight:700,letterSpacing:'.08em',textTransform:'uppercase',color:'var(--blue-dark)',display:'block',marginBottom:6}}>{label}</label>
+                      <select style={{width:'100%',height:42,background:'var(--bg)',border:'1.5px solid var(--line)',borderRadius:10,color:'var(--navy)',fontFamily:'var(--font)',fontSize:14,padding:'0 12px',outline:'none'}}>
                         <option style={{background:'#1E3A6A'}}>Select {label.toLowerCase()}</option>
                         {opts.map(o=><option key={o} style={{background:'#1E3A6A'}}>{o}</option>)}
                       </select>

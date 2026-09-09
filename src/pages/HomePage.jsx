@@ -3,36 +3,34 @@ import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import { Link } from 'react-router-dom'
 import SEO, { organizationSchema, websiteSchema } from '../components/SEO'
 
-/* ─── WhatsApp pre-filled message ────────────────────────────────────── */
-const WA_PHONE = '918548854859'
-const WA_MESSAGE = [
-  'Hi LauncherDesk!',
-  '',
-  'I found you from your website and I\'m interested in your services.',
-  '',
-  'Could you help me with the following?',
-  '• Business Registration & Compliance',
-  '• GST / Trademark / Licences',
-  '• Accounting & Payroll',
-  '• Website / Digital Marketing',
-  '',
-  'Please guide me on the right service for my business.',
-].join('\n')
-const WA_URL = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(WA_MESSAGE)}`
-
 /* ─── Inline styles for the redesigned homepage ──────────────────────── */
 const S = `
 
 /* ── HERO ── */
 .hp-hero {
-  background: linear-gradient(160deg, #1A2F4E 0%, #1E3A6A 55%, #264D8C 100%);
+  background: linear-gradient(180deg, #FBFDFF 0%, #F3F8FF 55%, #EEF5FF 100%);
   padding: clamp(40px,5vw,72px) 0 clamp(52px,6vw,88px);
   position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--line);
 }
 .hp-hero::before {
   content: '';position:absolute;inset:0;pointer-events:none;
-  background: radial-gradient(800px 600px at 70% -10%, rgba(59,143,239,.22), transparent 60%),
-              radial-gradient(400px 400px at 10% 100%, rgba(15,82,192,.18), transparent 60%);
+  background: radial-gradient(900px 620px at 78% -12%, rgba(43,114,212,.10), transparent 62%),
+              radial-gradient(500px 420px at 6% 105%, rgba(43,114,212,.07), transparent 60%);
+  animation: heroGlowDrift 22s ease-in-out infinite alternate;
+}
+.hp-hero::after {
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    linear-gradient(rgba(29,93,184,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29,93,184,.035) 1px, transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image: radial-gradient(760px 480px at 72% 0%, #000, transparent 72%);
+  mask-image: radial-gradient(760px 480px at 72% 0%, #000, transparent 72%);
+}
+@keyframes heroGlowDrift {
+  from { transform: translate3d(0,0,0) scale(1); }
+  to   { transform: translate3d(-1.5%, 1.5%, 0) scale(1.03); }
 }
 .hp-hero-inner { max-width:1200px;margin:0 auto;padding:0 28px;position:relative;z-index:1; }
 .hp-hero-grid  { display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center; }
@@ -40,19 +38,19 @@ const S = `
 .hp-eyebrow {
   display:inline-flex;align-items:center;gap:8px;
   font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
-  color:#6da8e0;margin-bottom:22px;
+  color:var(--blue-dark);margin-bottom:22px;
 }
-.hp-eyebrow-dot { width:6px;height:6px;border-radius:50%;background:#1D6FE0;flex:none; }
+.hp-eyebrow-dot { width:6px;height:6px;border-radius:50%;background:var(--blue);flex:none;box-shadow:0 0 0 4px rgba(29,93,184,.14); }
 .hp-hero h1 {
   font-size: clamp(34px, 4.8vw, 64px);
-  font-weight: 900; letter-spacing: -.04em; line-height: 1.02; color:#fff; margin-bottom:22px;
+  font-weight: 900; letter-spacing: -.04em; line-height: 1.02; color:var(--navy); margin-bottom:22px;
 }
 .hp-hero h1 em {
   font-style:normal;
-  background: linear-gradient(118deg,#7ecef4,#3B8FEF);
+  background: linear-gradient(118deg,var(--blue-dark),var(--blue-bright));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.hp-hero-desc { font-size:17px;color:#9ab5d4;line-height:1.7;max-width:500px;margin-bottom:36px; }
+.hp-hero-desc { font-size:17px;color:var(--text-2);line-height:1.7;max-width:500px;margin-bottom:36px; }
 .hp-cta-row   { display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px; }
 .hp-btn-primary {
   display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 28px;
@@ -65,43 +63,45 @@ const S = `
 .hp-btn-wa:hover { background:#1da851;transform:translateY(-2px); }
 .hp-btn-secondary {
   display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;
-  background:var(--brand-50);color:var(--blue);font-weight:700;font-size:15px;border-radius:10px;border:1.5px solid var(--brand-200);
-  border:none;transition:background .15s,transform .15s;text-decoration:none;
-  
+  background:#fff;color:var(--blue-dark);font-weight:700;font-size:15px;border-radius:10px;
+  border:1.5px solid var(--line-strong);transition:background .15s,transform .15s,border-color .15s;text-decoration:none;
 }
-.hp-btn-secondary:hover { background:var(--brand-100);color:var(--blue-dark);border-color:var(--blue); }
+.hp-btn-secondary:hover { background:var(--brand-50);color:var(--blue-dark);border-color:var(--blue); }
 .hp-trust-pills { display:flex;gap:16px;flex-wrap:wrap; }
 .hp-trust-pill  {
   display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;
-  color:#8aaece;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  border-radius:99px;padding:6px 14px;
+  color:var(--text-2);background:#fff;border:1px solid var(--line);
+  border-radius:99px;padding:6px 14px;box-shadow:var(--sh-xs);
 }
-.hp-trust-pill svg { width:14px;height:14px;stroke:#3B8FEF;fill:none;stroke-width:2.5;flex:none; }
+.hp-trust-pill svg { width:14px;height:14px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none; }
 
 /* hero right — dashboard card */
 .hp-dash-card {
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;
-  padding:28px;backdrop-filter:blur(12px);
+  background:#fff;border:1px solid var(--line);border-radius:20px;
+  padding:28px;box-shadow:0 24px 64px rgba(15,28,46,.09), 0 4px 16px rgba(15,28,46,.05);
 }
 .hp-dash-head {
   display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;
 }
-.hp-dash-title { font-size:13px;font-weight:700;color:#fff;letter-spacing:.02em; }
+.hp-dash-title { font-size:13px;font-weight:700;color:var(--navy);letter-spacing:.02em; }
 .hp-dash-badge {
   font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;
-  background:rgba(14,159,110,.2);color:#4ADE80;border:1px solid rgba(14,159,110,.3);
+  background:var(--success-bg);color:var(--success);border:1px solid rgba(5,150,105,.25);
 }
 .hp-stat-row { display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px; }
 .hp-stat-box {
-  background:rgba(255,255,255,.07);border-radius:12px;padding:14px;text-align:center;
-  border:1px solid rgba(255,255,255,.08);
+  background:var(--brand-50);border-radius:12px;padding:14px;text-align:center;
+  border:1px solid var(--brand-100);
 }
-.hp-stat-box .n { font-size:22px;font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1; }
-.hp-stat-box .l { font-size:11px;color:#6da8e0;margin-top:3px;text-transform:uppercase;letter-spacing:.06em; }
+.hp-stat-box .n { font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.03em;line-height:1; }
+.hp-stat-box .l { font-size:11px;color:var(--blue-dark);margin-top:3px;text-transform:uppercase;letter-spacing:.06em; }
 .hp-svc-chips { display:flex;flex-wrap:wrap;gap:8px; }
 .hp-svc-chip  {
   font-size:12px;font-weight:600;padding:6px 13px;border-radius:99px;
-  background:rgba(29,111,224,.15);color:#7ecef4;border:1px solid rgba(29,111,224,.25);
+  background:var(--brand-50);color:var(--blue-dark);border:1px solid var(--brand-100);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hp-hero::before { animation: none; }
 }
 
 /* ── STATS STRIP ── */
@@ -277,28 +277,33 @@ const S = `
 .hp-type-arrow svg { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5; }
 
 /* ── HOW IT WORKS ── */
-.hp-how { padding:96px 0;background:#1E3A6A; }
+.hp-how { padding:96px 0;background:var(--brand-50); position:relative; overflow:hidden; }
+.hp-how::before {
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(700px 400px at 90% 0%, rgba(43,114,212,.08), transparent 65%);
+}
+.hp-how > * { position:relative; z-index:1; }
 .hp-how-steps {
   max-width:1200px;margin:0 auto;padding:0 28px;
   display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:52px;
 }
 .hp-how-step {
-  padding:28px;border-radius:18px;border:1.5px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.05);position:relative;
-  transition:border-color .2s,background .2s;
+  padding:28px;border-radius:18px;border:1.5px solid var(--line);
+  background:#fff;position:relative;box-shadow:var(--sh-xs);
+  transition:border-color .2s,box-shadow .2s,transform .2s;
 }
-.hp-how-step:hover { border-color:rgba(59,143,239,.5);background:rgba(29,111,224,.1); }
+.hp-how-step:hover { border-color:var(--blue);box-shadow:var(--sh);transform:translateY(-3px); }
 .hp-how-num {
   font-size:clamp(42px,5vw,64px);font-weight:900;letter-spacing:-.04em;
   line-height:1;margin-bottom:16px;
-  background:linear-gradient(135deg,#3B8FEF,#7ecef4);
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue-bright));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.hp-how-step h4 { font-size:16px;font-weight:800;color:#fff;margin-bottom:8px; }
-.hp-how-step p  { font-size:13.5px;color:#9ab5d4;line-height:1.6; }
+.hp-how-step h4 { font-size:16px;font-weight:800;color:var(--navy);margin-bottom:8px; }
+.hp-how-step p  { font-size:13.5px;color:var(--text-2);line-height:1.6; }
 .hp-how-connector {
   position:absolute;top:50%;right:-12px;width:24px;height:2px;
-  background:linear-gradient(90deg,#3B8FEF,rgba(59,143,239,.3));z-index:1;
+  background:linear-gradient(90deg,var(--blue),rgba(43,114,212,.15));z-index:1;
 }
 
 /* ── RESOURCES ── */
@@ -371,44 +376,42 @@ const S = `
 .hp-faq-a-inner { padding:0 0 20px;font-size:14.5px;color:var(--text-2);line-height:1.72; }
 
 /* ── FINAL CTA ── */
-.hp-cta-section { padding:96px 0;background:linear-gradient(135deg,#1E3A6A 0%,#1a1060 40%,#0F52C0 100%); }
+.hp-cta-section { padding:96px 0;background:linear-gradient(180deg,#fff 0%,#F3F8FF 100%); }
 .hp-cta-card {
   max-width:1200px;margin:0 auto;padding:0 28px;
 }
 .hp-cta-inner {
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.12);
+  background:#fff;
+  border:1px solid var(--line);
   border-radius:24px;padding:clamp(48px,6vw,80px);text-align:center;
-  box-shadow:0 40px 80px rgba(0,0,0,.3);position:relative;overflow:hidden;
-  backdrop-filter:blur(12px);
+  box-shadow:0 32px 72px rgba(15,28,46,.10), 0 4px 16px rgba(15,28,46,.05);position:relative;overflow:hidden;
 }
 .hp-cta-inner::before {
   content:'';position:absolute;inset:0;
-  background:radial-gradient(700px 400px at 50% -20%,rgba(59,143,239,.25),transparent 60%);
+  background:radial-gradient(700px 400px at 50% -20%,rgba(43,114,212,.10),transparent 60%);
   pointer-events:none;
 }
 .hp-cta-inner h2 {
-  font-size:clamp(28px,4vw,52px);font-weight:900;letter-spacing:-.04em;color:#fff;
+  font-size:clamp(28px,4vw,52px);font-weight:900;letter-spacing:-.04em;color:var(--navy);
   margin-bottom:16px;position:relative;
 }
 .hp-cta-inner p {
-  font-size:clamp(15px,1.8vw,18px);color:#9ab5d4;max-width:540px;
+  font-size:clamp(15px,1.8vw,18px);color:var(--text-2);max-width:540px;
   margin:0 auto 40px;line-height:1.7;position:relative;
 }
 .hp-cta-btns { display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative; }
 .hp-cta-btn-wa {
   display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 32px;
   background:#25D366;color:#fff;font-weight:700;font-size:15.5px;border-radius:12px;
-  text-decoration:none;transition:background .15s,transform .15s;
+  text-decoration:none;transition:background .15s,transform .15s;box-shadow:0 8px 24px rgba(37,211,102,.28);
 }
-.hp-cta-btn-wa:hover { background:#25D366;transform:translateY(-2px); }
+.hp-cta-btn-wa:hover { background:#1da851;transform:translateY(-2px); }
 .hp-cta-btn-exp {
   display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 28px;
-  background:var(--brand-50);color:var(--blue);font-weight:700;font-size:15px;border-radius:12px;border:1.5px solid var(--brand-200);
-  border:none;text-decoration:none;transition:background .15s,transform .15s;
-  
+  background:#fff;color:var(--blue-dark);font-weight:700;font-size:15px;border-radius:12px;border:1.5px solid var(--line-strong);
+  text-decoration:none;transition:background .15s,transform .15s,border-color .15s;
 }
-.hp-cta-btn-exp:hover { background:var(--brand-100);color:var(--blue-dark); }
+.hp-cta-btn-exp:hover { background:var(--brand-50);color:var(--blue-dark);border-color:var(--blue); }
 
 /* ── LIFECYCLE ACCORDION (reused from original) ── */
 .lc2-section{background:var(--sec-b);padding:96px 0}
@@ -489,120 +492,120 @@ const S = `
 /* ── DATA ─────────────────────────────────────────────────── */
 const STAGES = [
   {
-    id: 'idea', num: '01', name: 'Idea & Research',
-    desc: 'Turn your idea into a validated business concept. We help you choose the right structure before you file anything.',
-    chips: [{ l: 'Entity Comparison', h: '/services/private-limited-company-registration' }, { l: 'Service Finder', h: '/services' }, { l: 'LauncherDesk AI', h: '/ai' }]
+    id:'idea', num:'01', name:'Idea & Research',
+    desc:'Turn your idea into a validated business concept. We help you choose the right structure before you file anything.',
+    chips:[ {l:'Entity Comparison',h:'/services/private-limited-company-registration'},{l:'Service Finder',h:'/services'},{l:'LauncherDesk AI',h:'/ai'} ]
   },
   {
-    id: 'start', num: '02', name: 'Register & Incorporate',
-    desc: 'Get your business legally registered with the right entity — Private Limited, LLP, OPC or Partnership.',
-    chips: [{ l: 'Pvt Ltd Registration', h: '/services/private-limited-company-registration' }, { l: 'LLP Registration', h: '/services/llp-registration' }, { l: 'OPC Registration', h: '/services/opc-registration' }, { l: 'Partnership Firm', h: '/services/partnership-registration' }]
+    id:'start', num:'02', name:'Register & Incorporate',
+    desc:'Get your business legally registered with the right entity — Private Limited, LLP, OPC or Partnership.',
+    chips:[ {l:'Pvt Ltd Registration',h:'/services/private-limited-company-registration'},{l:'LLP Registration',h:'/services/llp-registration'},{l:'OPC Registration',h:'/services/opc-registration'},{l:'Partnership Firm',h:'/services/partnership-registration'} ]
   },
   {
-    id: 'build', num: '03', name: 'Licences & Compliance',
-    desc: 'Get GST, MSME, FSSAI, trademark and every licence you need — without chasing government portals yourself.',
-    chips: [{ l: 'GST Registration', h: '/services/gst-registration' }, { l: 'Trademark', h: '/services/trademark-registration' }, { l: 'MSME / Udyam', h: '/services/msme-registration' }, { l: 'FSSAI', h: '/services/fssai-registration' }]
+    id:'build', num:'03', name:'Licences & Compliance',
+    desc:'Get GST, MSME, FSSAI, trademark and every licence you need — without chasing government portals yourself.',
+    chips:[ {l:'GST Registration',h:'/services/gst-registration'},{l:'Trademark',h:'/services/trademark-registration'},{l:'MSME / Udyam',h:'/services/msme-registration'},{l:'FSSAI',h:'/services/fssai-registration'} ]
   },
   {
-    id: 'manage', num: '04', name: 'Finance & Accounts',
-    desc: 'Bookkeeping, payroll, ITR filing and ROC annual compliance — all handled proactively so deadlines never slip.',
-    chips: [{ l: 'Accounting', h: '/services/accounting' }, { l: 'Payroll', h: '/services/payroll' }, { l: 'ROC Compliance', h: '/services/roc-compliance' }]
+    id:'manage', num:'04', name:'Finance & Accounts',
+    desc:'Bookkeeping, payroll, ITR filing and ROC annual compliance — all handled proactively so deadlines never slip.',
+    chips:[ {l:'Accounting',h:'/services/accounting'},{l:'Payroll',h:'/services/payroll'},{l:'ROC Compliance',h:'/services/roc-compliance'} ]
   },
   {
-    id: 'grow', num: '05', name: 'Technology & Growth',
-    desc: 'Website, CRM, automation, digital marketing and brand identity — everything you need to get found and grow.',
-    chips: [{ l: 'Website Development', h: '/services/website-development' }, { l: 'Digital Marketing', h: '/services/digital-marketing' }, { l: 'Business Automation', h: '/services/business-automation' }]
+    id:'grow', num:'05', name:'Technology & Growth',
+    desc:'Website, CRM, automation, digital marketing and brand identity — everything you need to get found and grow.',
+    chips:[ {l:'Website Development',h:'/services/website-development'},{l:'Digital Marketing',h:'/services/digital-marketing'},{l:'Business Automation',h:'/services/business-automation'} ]
   },
   {
-    id: 'expand', num: '06', name: 'International Expansion',
-    desc: 'UAE setup, fundraising documentation and business consulting for businesses ready to go beyond India.',
-    chips: [{ l: 'UAE Business Setup', h: '/services/uae-business-setup' }, { l: 'Fundraising Docs', h: '/services/fundraising-documentation' }, { l: 'Business Consulting', h: '/services/business-consulting' }]
+    id:'expand', num:'06', name:'International Expansion',
+    desc:'UAE setup, fundraising documentation and business consulting for businesses ready to go beyond India.',
+    chips:[ {l:'UAE Business Setup',h:'/services/uae-business-setup'},{l:'Fundraising Docs',h:'/services/fundraising-documentation'},{l:'Business Consulting',h:'/services/business-consulting'} ]
   },
 ]
 
 const SVC_CATS = [
   {
-    name: 'Company Registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14', count: 4,
-    services: [
-      { href: '/services/private-limited-company-registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14', name: 'Private Limited Company', desc: 'The standard for funded startups — limited liability, fundraising-ready.' },
-      { href: '/services/llp-registration', icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', name: 'LLP Registration', desc: 'Partner-run firms wanting limited liability with lighter compliance.' },
-      { href: '/services/opc-registration', icon: 'M12 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21v-1a6 6 0 0 1 12 0v1', name: 'OPC Registration', desc: 'One-person companies with limited liability for solo founders.' },
-      { href: '/services/partnership-registration', icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87', name: 'Partnership Firm', desc: 'Simple, lowest-cost registration for small owner-operated businesses.' },
+    name:'Company Registration', icon:'M3 21h18M6 21V7l6-4 6 4v14', count:4,
+    services:[
+      {href:'/services/private-limited-company-registration',icon:'M3 21h18M6 21V7l6-4 6 4v14',name:'Private Limited Company',desc:'The standard for funded startups — limited liability, fundraising-ready.'},
+      {href:'/services/llp-registration',icon:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',name:'LLP Registration',desc:'Partner-run firms wanting limited liability with lighter compliance.'},
+      {href:'/services/opc-registration',icon:'M12 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21v-1a6 6 0 0 1 12 0v1',name:'OPC Registration',desc:'One-person companies with limited liability for solo founders.'},
+      {href:'/services/partnership-registration',icon:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87',name:'Partnership Firm',desc:'Simple, lowest-cost registration for small owner-operated businesses.'},
     ]
   },
   {
-    name: 'Licences & Registrations', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6', count: 5,
-    services: [
-      { href: '/services/gst-registration', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z', name: 'GST Registration & Filing', desc: 'GSTIN + ongoing return filing so you never miss a deadline.' },
-      { href: '/services/msme-registration', icon: 'M9 11l3 3L22 4', name: 'MSME / Udyam Registration', desc: 'Unlock collateral-free loans, subsidies and payment protection.' },
-      { href: '/services/fssai-registration', icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', name: 'FSSAI Registration', desc: 'Mandatory for all food businesses — we identify the right tier.' },
-      { href: '/services/trademark-registration', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', name: 'Trademark Registration', desc: 'Protect your brand name, logo and tagline across the right classes.' },
-      { href: '/services/roc-compliance', icon: 'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11', name: 'ROC & Annual Compliance', desc: 'Annual filings for companies and LLPs — tracked proactively.' },
+    name:'Licences & Registrations', icon:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6', count:5,
+    services:[
+      {href:'/services/gst-registration',icon:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z',name:'GST Registration & Filing',desc:'GSTIN + ongoing return filing so you never miss a deadline.'},
+      {href:'/services/msme-registration',icon:'M9 11l3 3L22 4',name:'MSME / Udyam Registration',desc:'Unlock collateral-free loans, subsidies and payment protection.'},
+      {href:'/services/fssai-registration',icon:'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',name:'FSSAI Registration',desc:'Mandatory for all food businesses — we identify the right tier.'},
+      {href:'/services/trademark-registration',icon:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',name:'Trademark Registration',desc:'Protect your brand name, logo and tagline across the right classes.'},
+      {href:'/services/roc-compliance',icon:'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11',name:'ROC & Annual Compliance',desc:'Annual filings for companies and LLPs — tracked proactively.'},
     ]
   },
   {
-    name: 'Finance & Accounts', icon: 'M4 21V10M10 21V4M16 21v-8M22 21H2', count: 3,
-    services: [
-      { href: '/services/accounting', icon: 'M4 21V10M10 21V4M16 21v-8M22 21H2', name: 'Accounting & Bookkeeping', desc: 'Monthly books that stay tax-ready — not scrambled at year-end.' },
-      { href: '/services/payroll', icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', name: 'Payroll Management', desc: 'Salary processing, PF, ESI, TDS and payslips — every month.' },
-      { href: '/services/roc-compliance', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z', name: 'ITR & Tax Filing', desc: 'Income tax returns backed by accurate, up-to-date books.' },
+    name:'Finance & Accounts', icon:'M4 21V10M10 21V4M16 21v-8M22 21H2', count:3,
+    services:[
+      {href:'/services/accounting',icon:'M4 21V10M10 21V4M16 21v-8M22 21H2',name:'Accounting & Bookkeeping',desc:'Monthly books that stay tax-ready — not scrambled at year-end.'},
+      {href:'/services/payroll',icon:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',name:'Payroll Management',desc:'Salary processing, PF, ESI, TDS and payslips — every month.'},
+      {href:'/services/roc-compliance',icon:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z',name:'ITR & Tax Filing',desc:'Income tax returns backed by accurate, up-to-date books.'},
     ]
   },
   {
-    name: 'Technology & IT', icon: 'M2 3h20v14H2zM8 21h8M12 17v4', count: 4,
-    services: [
-      { href: '/services/website-development', icon: 'M2 3h20v14H2zM8 21h8M12 17v4', name: 'Website Development', desc: 'Mobile-first business websites, e-commerce stores and portals.' },
-      { href: '/services/business-automation', icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5', name: 'Business Automation', desc: 'CRM setup, workflow automation and operational systems.' },
-      { href: '/services/digital-marketing', icon: 'M23 6l-9.5 9.5-5-5L1 18', name: 'Digital Marketing', desc: 'SEO, Google Ads, social media and branding for real growth.' },
-      { href: '/services/whatsapp-business-api', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', name: 'WhatsApp Business API', desc: 'Official Meta API for bulk messaging and automation.' },
+    name:'Technology & IT', icon:'M2 3h20v14H2zM8 21h8M12 17v4', count:4,
+    services:[
+      {href:'/services/website-development',icon:'M2 3h20v14H2zM8 21h8M12 17v4',name:'Website Development',desc:'Mobile-first business websites, e-commerce stores and portals.'},
+      {href:'/services/business-automation',icon:'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',name:'Business Automation',desc:'CRM setup, workflow automation and operational systems.'},
+      {href:'/services/digital-marketing',icon:'M23 6l-9.5 9.5-5-5L1 18',name:'Digital Marketing',desc:'SEO, Google Ads, social media and branding for real growth.'},
+      {href:'/services/whatsapp-business-api',icon:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',name:'WhatsApp Business API',desc:'Official Meta API for bulk messaging and automation.'},
     ]
   },
 ]
 
 const BIZ_TYPES = [
-  { icon: 'M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18|M16 10a4 4 0 0 1-8 0', name: 'E-commerce', desc: 'Sell online with the right structure, GST, trademark and a converting storefront.', href: '/business-types/ecommerce', tags: ['Pvt Ltd', 'GST', 'Trademark', 'Website'] },
-  { icon: 'M18 8h1a4 4 0 0 1 0 8h-1|M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z|M6 1v3|M10 1v3|M14 1v3', name: 'Restaurant & Food', desc: 'FSSAI, GST and entity setup before you open — not after the inspector visits.', href: '/business-types/restaurant', tags: ['FSSAI', 'Entity Setup', 'GST', 'Payroll'] },
-  { icon: 'M2 3h20v14H2z|M8 21h8|M12 17v4', name: 'Technology / SaaS', desc: 'Investor-ready structure, IP protection and the clean compliance record funding rounds require.', href: '/business-types/technology', tags: ['Pvt Ltd', 'Trademark', 'ROC', 'Accounting'] },
-  { icon: 'M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z|M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16', name: 'Consulting', desc: 'Lightweight structure, clean invoicing and GST handled from day one.', href: '/business-types/consulting', tags: ['OPC / LLP', 'GST', 'MSME', 'Trademark'] },
-  { icon: 'M2 20h20|M6 20V10|M12 20V4|M18 20v-6|M6 10l6-6 6 6', name: 'Manufacturing', desc: 'Entity, GST, MSME and payroll for production businesses with real compliance layers.', href: '/business-types/manufacturing', tags: ['Pvt Ltd', 'GST', 'MSME', 'ROC'] },
-  { icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10', name: 'Retail', desc: 'Shop registration, GST and inventory-aware accounting for single or multi-location stores.', href: '/business-types/retail', tags: ['Entity Setup', 'GST', 'Accounting', 'Trademark'] },
+  {icon:'M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18|M16 10a4 4 0 0 1-8 0',name:'E-commerce',desc:'Sell online with the right structure, GST, trademark and a converting storefront.',href:'/business-types/ecommerce',tags:['Pvt Ltd','GST','Trademark','Website']},
+  {icon:'M18 8h1a4 4 0 0 1 0 8h-1|M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z|M6 1v3|M10 1v3|M14 1v3',name:'Restaurant & Food',desc:'FSSAI, GST and entity setup before you open — not after the inspector visits.',href:'/business-types/restaurant',tags:['FSSAI','Entity Setup','GST','Payroll']},
+  {icon:'M2 3h20v14H2z|M8 21h8|M12 17v4',name:'Technology / SaaS',desc:'Investor-ready structure, IP protection and the clean compliance record funding rounds require.',href:'/business-types/technology',tags:['Pvt Ltd','Trademark','ROC','Accounting']},
+  {icon:'M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z|M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16',name:'Consulting',desc:'Lightweight structure, clean invoicing and GST handled from day one.',href:'/business-types/consulting',tags:['OPC / LLP','GST','MSME','Trademark']},
+  {icon:'M2 20h20|M6 20V10|M12 20V4|M18 20v-6|M6 10l6-6 6 6',name:'Manufacturing',desc:'Entity, GST, MSME and payroll for production businesses with real compliance layers.',href:'/business-types/manufacturing',tags:['Pvt Ltd','GST','MSME','ROC']},
+  {icon:'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10',name:'Retail',desc:'Shop registration, GST and inventory-aware accounting for single or multi-location stores.',href:'/business-types/retail',tags:['Entity Setup','GST','Accounting','Trademark']},
 ]
 
 const WHY_FEATURES = [
-  { icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10', title: 'One point of contact', desc: 'Tell us once. We coordinate every service — no repeating your story to five different vendors.' },
-  { icon: 'M9 11l3 3L22 4|M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11', title: 'We own it start to finish', desc: 'From first call to final filing — LauncherDesk takes accountability for the outcome, not just the paperwork.' },
-  { icon: 'M12 2v20|M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', title: 'Transparent pricing', desc: 'No padded bundles. Every quote separates professional fee, government fee and taxes — shown clearly upfront.' },
-  { icon: 'M23 6l-9.5 9.5-5-5L1 18', title: 'Proactive reminders', desc: 'We track your deadlines and notify you before they become penalties. Nothing falls through the cracks.' },
+  {icon:'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10',title:'One point of contact',desc:'Tell us once. We coordinate every service — no repeating your story to five different vendors.'},
+  {icon:'M9 11l3 3L22 4|M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11',title:'We own it start to finish',desc:'From first call to final filing — LauncherDesk takes accountability for the outcome, not just the paperwork.'},
+  {icon:'M12 2v20|M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6',title:'Transparent pricing',desc:'No padded bundles. Every quote separates professional fee, government fee and taxes — shown clearly upfront.'},
+  {icon:'M23 6l-9.5 9.5-5-5L1 18',title:'Proactive reminders',desc:'We track your deadlines and notify you before they become penalties. Nothing falls through the cracks.'},
 ]
 
 const VS_ROWS = [
-  { bad: 'Five vendors, five invoices', good: 'One team, one invoice' },
-  { bad: 'Nobody owns the outcome', good: 'We own it start to finish' },
-  { bad: 'Repeat your story every time', good: 'Tell us once, we coordinate' },
-  { bad: 'Deadlines slip through the cracks', good: 'Proactive reminders — nothing missed' },
-  { bad: 'Discover problems after the fact', good: 'Proactive advice at every step' },
+  {bad:'Five vendors, five invoices',good:'One team, one invoice'},
+  {bad:'Nobody owns the outcome',good:'We own it start to finish'},
+  {bad:'Repeat your story every time',good:'Tell us once, we coordinate'},
+  {bad:'Deadlines slip through the cracks',good:'Proactive reminders — nothing missed'},
+  {bad:'Discover problems after the fact',good:'Proactive advice at every step'},
 ]
 
 const FAQS = [
-  { q: 'How quickly can LauncherDesk register my company?', a: 'Private Limited and LLP registration typically takes 7–14 working days once all documents are in order, subject to MCA processing times. Some licences like MSME/Udyam can be same-day. We give you realistic timelines upfront — not optimistic guesses.' },
-  { q: 'Do I need to visit your office to get started?', a: 'No. Everything is handled digitally — document collection, verification and filing. Most founders complete their entire registration without visiting any office.' },
-  { q: 'How is LauncherDesk different from doing it myself or using a CA?', a: 'A CA typically handles one function (tax or compliance). LauncherDesk coordinates across registration, compliance, technology and growth — through one point of contact. No handoffs, no gaps.' },
-  { q: 'What does "transparent pricing" actually mean?', a: 'Every quote we send separates the professional fee (what LauncherDesk charges), the government fee (MCA, stamp duty, etc.) and taxes (GST on the professional fee). We never bundle these into a single headline number.' },
-  { q: 'Can LauncherDesk help after registration too?', a: 'Yes — that\'s the core of what we do. Registration is just the beginning. We support ongoing compliance, accounting, payroll, IT and growth as your business scales.' },
-  { q: 'I already have a company but need help with compliance. Can you help?', a: 'Absolutely. We regularly onboard businesses mid-journey — taking over backlogged filings, compliance catch-up, accounting and ongoing support. You don\'t need to have started with us.' },
+  {q:'How quickly can LauncherDesk register my company?',a:'Private Limited and LLP registration typically takes 7–14 working days once all documents are in order, subject to MCA processing times. Some licences like MSME/Udyam can be same-day. We give you realistic timelines upfront — not optimistic guesses.'},
+  {q:'Do I need to visit your office to get started?',a:'No. Everything is handled digitally — document collection, verification and filing. Most founders complete their entire registration without visiting any office.'},
+  {q:'How is LauncherDesk different from doing it myself or using a CA?',a:'A CA typically handles one function (tax or compliance). LauncherDesk coordinates across registration, compliance, technology and growth — through one point of contact. No handoffs, no gaps.'},
+  {q:'What does "transparent pricing" actually mean?',a:'Every quote we send separates the professional fee (what LauncherDesk charges), the government fee (MCA, stamp duty, etc.) and taxes (GST on the professional fee). We never bundle these into a single headline number.'},
+  {q:'Can LauncherDesk help after registration too?',a:'Yes — that\'s the core of what we do. Registration is just the beginning. We support ongoing compliance, accounting, payroll, IT and growth as your business scales.'},
+  {q:'I already have a company but need help with compliance. Can you help?',a:'Absolutely. We regularly onboard businesses mid-journey — taking over backlogged filings, compliance catch-up, accounting and ongoing support. You don\'t need to have started with us.'},
 ]
 
 const HOW_STEPS = [
-  { num: '01', title: 'Tell us what you need', desc: 'One conversation with a single point of contact — no call centres, no runaround.' },
-  { num: '02', title: 'Get a clear plan & quote', desc: 'Honest timelines and upfront pricing, broken down so you always know what you\'re paying for.' },
-  { num: '03', title: 'We handle the paperwork', desc: 'Filings, follow-ups and coordination across every service — done for you.' },
-  { num: '04', title: 'Stay supported as you grow', desc: 'Ongoing compliance and support so nothing slips through the cracks.' },
+  {num:'01',title:'Tell us what you need',desc:'One conversation with a single point of contact — no call centres, no runaround.'},
+  {num:'02',title:'Get a clear plan & quote',desc:'Honest timelines and upfront pricing, broken down so you always know what you\'re paying for.'},
+  {num:'03',title:'We handle the paperwork',desc:'Filings, follow-ups and coordination across every service — done for you.'},
+  {num:'04',title:'Stay supported as you grow',desc:'Ongoing compliance and support so nothing slips through the cracks.'},
 ]
 
 const RESOURCES = [
-  { cat: 'Guide', title: 'Which company structure is right for you?', desc: 'Private Limited, LLP, OPC or Proprietorship — a plain-English breakdown of what each means for your business.', href: '/resources/guides' },
-  { cat: 'Blog', title: 'GST registration: everything a new business owner needs to know', desc: 'Who needs it, what it costs, how long it takes, and what happens if you miss the threshold.', href: '/resources/blog' },
-  { cat: 'Tools', title: 'Service Finder', desc: 'Answer five questions and get a personalised list of the registrations and services your business actually needs.', href: '/services' },
+  {cat:'Guide',title:'Which company structure is right for you?',desc:'Private Limited, LLP, OPC or Proprietorship — a plain-English breakdown of what each means for your business.',href:'/resources/guides'},
+  {cat:'Blog',title:'GST registration: everything a new business owner needs to know',desc:'Who needs it, what it costs, how long it takes, and what happens if you miss the threshold.',href:'/resources/blog'},
+  {cat:'Tools',title:'Service Finder',desc:'Answer five questions and get a personalised list of the registrations and services your business actually needs.',href:'/services'},
 ]
 
 /* ── COMPONENT ────────────────────────────────────────────── */
@@ -610,11 +613,11 @@ export default function HomePage() {
 
   // Lifecycle accordion
   const STAGE_IDS = STAGES.map(s => s.id)
-  const DURATION = 4000  // ms each stage stays open
+  const DURATION  = 4000  // ms each stage stays open
   const [openStage, setOpenStage] = useState('start')
-  const [paused, setPaused] = useState(false)
-  const timerRef = useRef(null)
-  const rafRef = useRef(null)
+  const [paused,    setPaused]    = useState(false)
+  const timerRef  = useRef(null)
+  const rafRef    = useRef(null)
 
   const advanceTo = (id) => {
     setOpenStage(id)
@@ -649,7 +652,7 @@ export default function HomePage() {
 
     // Advance to next stage after DURATION
     timerRef.current = setTimeout(() => {
-      const idx = STAGE_IDS.indexOf(openStage)
+      const idx  = STAGE_IDS.indexOf(openStage)
       const next = STAGE_IDS[(idx + 1) % STAGE_IDS.length]
       setOpenStage(next)
     }, DURATION)
@@ -678,11 +681,11 @@ export default function HomePage() {
           <div className="hp-hero-grid">
             <div>
               <div className="hp-eyebrow">
-                <span className="hp-eyebrow-dot" />
+                <span className="hp-eyebrow-dot"/>
                 India's 360° Business Platform
               </div>
               <h1>
-                Register your company.<br />
+                Register your company.<br/>
                 <em>Run it all from one desk.</em>
               </h1>
               <p className="hp-hero-desc">
@@ -690,21 +693,21 @@ export default function HomePage() {
                 LauncherDesk handles everything through a single point of contact.
               </p>
               <div className="hp-cta-row">
-                <a href={WA_URL} className="hp-btn-wa" target="_blank" rel="noopener noreferrer">
-                  <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{ flexShrink: 0 }}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z" /></svg>
+                <a href="https://wa.me/918548854859" className="hp-btn-wa" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{flexShrink:0}}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>
                   Chat on WhatsApp
                 </a>
                 <Link to="/services" className="hp-btn-secondary">
                   Explore Services
                   <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
                 </Link>
               </div>
               <div className="hp-trust-pills">
-                {['20+ Businesses Launched', '15+ Service Categories', 'One Point of Contact', 'Bengaluru-based'].map(t => (
+                {['20+ Businesses Launched','15+ Service Categories','One Point of Contact','Bengaluru-based'].map(t => (
                   <div key={t} className="hp-trust-pill">
-                    <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></svg>
+                    <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
                     {t}
                   </div>
                 ))}
@@ -722,9 +725,9 @@ export default function HomePage() {
                 <div className="hp-stat-box"><div className="n">15+</div><div className="l">Categories</div></div>
                 <div className="hp-stat-box"><div className="n">1</div><div className="l">Contact</div></div>
               </div>
-              <div style={{ marginBottom: 12, fontSize: 12, fontWeight: 600, color: '#8496AB', letterSpacing: '.06em', textTransform: 'uppercase' }}>Services we cover</div>
+              <div style={{marginBottom:12,fontSize:12,fontWeight:600,color:'#8496AB',letterSpacing:'.06em',textTransform:'uppercase'}}>Services we cover</div>
               <div className="hp-svc-chips">
-                {['Pvt Ltd Registration', 'GST Filing', 'Trademark', 'Payroll', 'Website Dev', 'ROC Compliance', 'MSME', 'Digital Marketing', 'Accounting'].map(s => (
+                {['Pvt Ltd Registration','GST Filing','Trademark','Payroll','Website Dev','ROC Compliance','MSME','Digital Marketing','Accounting'].map(s=>(
                   <span key={s} className="hp-svc-chip">{s}</span>
                 ))}
               </div>
@@ -737,11 +740,11 @@ export default function HomePage() {
       <section className="hp-stats">
         <div className="hp-stats-grid">
           {[
-            { num: '20+', label: 'Businesses launched across India' },
-            { num: '15+', label: 'Service categories covered' },
-            { num: '360°', label: 'Complete business solutions' },
-            { num: '1', label: 'Single point of contact' },
-          ].map(s => (
+            {num:'20+',label:'Businesses launched across India'},
+            {num:'15+', label:'Service categories covered'},
+            {num:'360°',label:'Complete business solutions'},
+            {num:'1',   label:'Single point of contact'},
+          ].map(s=>(
             <div key={s.num} className="hp-stats-item">
               <div className="hp-stats-num">{s.num}</div>
               <div className="hp-stats-label">{s.label}</div>
@@ -753,26 +756,26 @@ export default function HomePage() {
       {/* ═══ SERVICES MARQUEE ════════════════════════════════ */}
       {(() => {
         const items = [
-          { label: 'Private Limited Registration', href: '/services/private-limited-company-registration' },
-          { label: 'GST Registration', href: '/services/gst-registration' },
-          { label: 'Trademark Filing', href: '/services/trademark-registration' },
-          { label: 'LLP Registration', href: '/services/llp-registration' },
-          { label: 'Website Development', href: '/services/website-development' },
-          { label: 'MSME / Udyam', href: '/services/msme-registration' },
-          { label: 'ROC Compliance', href: '/services/roc-compliance' },
-          { label: 'Accounting & Bookkeeping', href: '/services/accounting' },
-          { label: 'ISO Certification', href: '/services/iso-certification' },
-          { label: 'Digital Marketing', href: '/services/digital-marketing' },
-          { label: 'Payroll Management', href: '/services/payroll' },
-          { label: 'E-Stamp Services', href: '/estamp' },
-          { label: 'Income Tax Filing', href: '/services/income-tax-filing' },
-          { label: 'Brand Identity Design', href: '/services/branding-logo-design' },
-          { label: 'WhatsApp Business API', href: '/services/whatsapp-business-api' },
-          { label: 'Startup India', href: '/services/startup-india-dpiit' },
-          { label: 'One Person Company', href: '/services/opc-registration' },
-          { label: 'Social Media Management', href: '/services/social-media-management' },
-          { label: 'Mobile App Development', href: '/services/mobile-app-development' },
-          { label: 'OPC Registration', href: '/services/opc-registration' },
+          {label:'Private Limited Registration', href:'/services/private-limited-company-registration'},
+          {label:'GST Registration', href:'/services/gst-registration'},
+          {label:'Trademark Filing', href:'/services/trademark-registration'},
+          {label:'LLP Registration', href:'/services/llp-registration'},
+          {label:'Website Development', href:'/services/website-development'},
+          {label:'MSME / Udyam', href:'/services/msme-registration'},
+          {label:'ROC Compliance', href:'/services/roc-compliance'},
+          {label:'Accounting & Bookkeeping', href:'/services/accounting'},
+          {label:'ISO Certification', href:'/services/iso-certification'},
+          {label:'Digital Marketing', href:'/services/digital-marketing'},
+          {label:'Payroll Management', href:'/services/payroll'},
+          {label:'E-Stamp Services', href:'/estamp'},
+          {label:'Income Tax Filing', href:'/services/income-tax-filing'},
+          {label:'Brand Identity Design', href:'/services/branding-logo-design'},
+          {label:'WhatsApp Business API', href:'/services/whatsapp-business-api'},
+          {label:'Startup India', href:'/services/startup-india-dpiit'},
+          {label:'One Person Company', href:'/services/opc-registration'},
+          {label:'Social Media Management', href:'/services/social-media-management'},
+          {label:'Mobile App Development', href:'/services/mobile-app-development'},
+          {label:'OPC Registration', href:'/services/opc-registration'},
         ]
         const all = [...items, ...items]
         return (
@@ -780,10 +783,10 @@ export default function HomePage() {
             <div className="hp-marquee-track">
               {all.map((s, i) => (
                 <a key={i} className="hp-marquee-item" href={s.href}
-                  style={{ textDecoration: 'none', cursor: 'pointer' }}
-                  onMouseEnter={e => e.currentTarget.style.color = '#1D6FE0'}
-                  onMouseLeave={e => e.currentTarget.style.color = ''}>
-                  <span className="hp-marquee-dot" />
+                   style={{textDecoration:'none',cursor:'pointer'}}
+                   onMouseEnter={e=>e.currentTarget.style.color='#1D6FE0'}
+                   onMouseLeave={e=>e.currentTarget.style.color=''}>
+                  <span className="hp-marquee-dot"/>
                   {s.label}
                 </a>
               ))}
@@ -795,39 +798,39 @@ export default function HomePage() {
       {/* ═══ SERVICES ═══════════════════════════════════════ */}
       <section className="hp-services">
         <div className="hp-section-head">
-          <div className="hp-section-eyebrow" style={{ color: 'var(--blue)' }}>Our Services</div>
-          <h2>Everything your business needs,<br />in one place.</h2>
+          <div className="hp-section-eyebrow" style={{color:'var(--blue)'}}>Our Services</div>
+          <h2>Everything your business needs,<br/>in one place.</h2>
           <p>From the first filing to ongoing compliance, technology and growth — all coordinated through LauncherDesk.</p>
         </div>
         <div className="hp-svc-cats">
           {SVC_CATS.map((cat, ci) => (
-            <div key={cat.name} className={`hp-svc-cat${openCat === ci ? ' open' : ''}`}>
-              <div className="hp-svc-cat-head" onClick={() => setOpenCat(openCat === ci ? -1 : ci)}>
+            <div key={cat.name} className={`hp-svc-cat${openCat===ci?' open':''}`}>
+              <div className="hp-svc-cat-head" onClick={()=>setOpenCat(openCat===ci?-1:ci)}>
                 <div className="hp-svc-cat-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                    {cat.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                    {cat.icon.split('|').map((p,i)=><path key={i} d={p}/>)}
                   </svg>
                 </div>
                 <div className="hp-svc-cat-name">{cat.name}</div>
                 <span className="hp-svc-cat-count">{cat.count} services</span>
                 <svg className="hp-svc-cat-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 18l6-6-6-6" />
+                  <path d="M9 18l6-6-6-6"/>
                 </svg>
               </div>
-              <div className={`hp-svc-cat-body${openCat === ci ? ' open' : ''}`}>
+              <div className={`hp-svc-cat-body${openCat===ci?' open':''}`}>
                 <div className="hp-svc-cards">
-                  {cat.services.map(svc => (
+                  {cat.services.map(svc=>(
                     <Link key={svc.name} to={svc.href} className="hp-svc-card">
                       <div className="hp-svc-card-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                          {svc.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                          {svc.icon.split('|').map((p,i)=><path key={i} d={p}/>)}
                         </svg>
                       </div>
                       <div className="hp-svc-card-name">{svc.name}</div>
                       <div className="hp-svc-card-desc">{svc.desc}</div>
                       <div className="hp-svc-card-arrow">
                         Learn more
-                        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                       </div>
                     </Link>
                   ))}
@@ -840,7 +843,7 @@ export default function HomePage() {
           <Link to="/services">
             View all services
             <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
+              <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </Link>
         </div>
@@ -850,15 +853,15 @@ export default function HomePage() {
       <section className="hp-why">
         <div className="hp-why-grid">
           <div className="hp-why-left">
-            <div className="hp-section-eyebrow" style={{ textAlign: 'left', display: 'block', marginBottom: 14, color: '#059669' }}>Why LauncherDesk</div>
+            <div className="hp-section-eyebrow" style={{textAlign:'left',display:'block',marginBottom:14,color:'#059669'}}>Why LauncherDesk</div>
             <h2>One desk beats multiple vendors.</h2>
             <p>Most founders waste months juggling CAs, lawyers, web agencies and consultants — each one solving only their piece. LauncherDesk coordinates the whole picture.</p>
             <div className="hp-why-features">
-              {WHY_FEATURES.map(f => (
+              {WHY_FEATURES.map(f=>(
                 <div key={f.title} className="hp-why-feat">
                   <div className="hp-why-feat-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                      {f.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                      {f.icon.split('|').map((p,i)=><path key={i} d={p}/>)}
                     </svg>
                   </div>
                   <div>
@@ -876,14 +879,14 @@ export default function HomePage() {
                 <div className="hp-vs-col good"><div className="hp-vs-col-label">The LauncherDesk Way</div></div>
               </div>
               <div className="hp-vs-rows">
-                {VS_ROWS.map((r, i) => (
+                {VS_ROWS.map((r,i)=>(
                   <div key={i} className="hp-vs-row">
                     <div className="hp-vs-cell bad">
-                      <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+                      <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
                       {r.bad}
                     </div>
                     <div className="hp-vs-cell good">
-                      <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></svg>
+                      <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
                       {r.good}
                     </div>
                   </div>
@@ -898,34 +901,34 @@ export default function HomePage() {
       <section className="lc2-section">
         <div className="lc2-inner">
           <div className="lc2-left">
-            <span className="eyebrow" style={{ color: 'var(--blue)' }}>Your business journey</span>
-            <h2 className="lc2-heading">Incorporation is just the start.<br />We run the whole business.</h2>
+            <span className="eyebrow" style={{color:'var(--blue)'}}>Your business journey</span>
+            <h2 className="lc2-heading">Incorporation is just the start.<br/>We run the whole business.</h2>
             <p className="lc2-desc">Building and scaling a company takes expertise across registrations, compliance, IT, finance, legal and marketing. LauncherDesk replaces multiple vendors with a single integrated platform.</p>
-            <Link to="/services" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 22px', borderRadius: 9, background: 'var(--blue)', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
+            <Link to="/services" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'10px 22px',borderRadius:9,background:'var(--blue)',color:'#fff',fontWeight:700,fontSize:14,textDecoration:'none'}}>
               Explore all services
-              <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
           </div>
           <div className="lc2-list">
-            {STAGES.map(s => (
-              <div key={s.id} className={`lc2-item${openStage === s.id ? ' lc2-open' : ''}`}>
-                <button className="lc2-trigger" onClick={() => toggleStage(s.id)}
-                  title={openStage === s.id ? (paused ? 'Click to resume' : 'Click to pause') : 'Click to open'}>
+            {STAGES.map(s=>(
+              <div key={s.id} className={`lc2-item${openStage===s.id?' lc2-open':''}`}>
+                <button className="lc2-trigger" onClick={()=>toggleStage(s.id)}
+                  title={openStage===s.id ? (paused?'Click to resume':'Click to pause') : 'Click to open'}>
                   <span className="lc2-num">{s.num}</span>
                   <span className="lc2-name">{s.name}</span>
-                  {openStage === s.id && paused
-                    ? <svg className="lc2-chevron" viewBox="0 0 24 24" style={{ stroke: 'var(--blue)' }}><path d="M10 9v6m4-6v6" /></svg>
-                    : <svg className="lc2-chevron" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" /></svg>
+                  {openStage===s.id && paused
+                    ? <svg className="lc2-chevron" viewBox="0 0 24 24" style={{stroke:'var(--blue)'}}><path d="M10 9v6m4-6v6"/></svg>
+                    : <svg className="lc2-chevron" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
                   }
                 </button>
-                <div className="lc2-body" style={{ maxHeight: openStage === s.id ? '400px' : '0' }}>
+                <div className="lc2-body" style={{maxHeight: openStage===s.id ? '400px':'0'}}>
                   <div className="lc2-body-inner">
                     <p className="lc2-body-desc">{s.desc}</p>
                     <div className="lc2-chips">
-                      {s.chips.map(c => <Link key={c.l} to={c.h} className="lc2-chip">{c.l}</Link>)}
+                      {s.chips.map(c=><Link key={c.l} to={c.h} className="lc2-chip">{c.l}</Link>)}
                     </div>
                   </div>
-                  <div className="lc2-prog"><div className="lc2-prog-bar" data-prog={s.id} /></div>
+                  <div className="lc2-prog"><div className="lc2-prog-bar" data-prog={s.id}/></div>
                 </div>
               </div>
             ))}
@@ -935,26 +938,26 @@ export default function HomePage() {
 
       {/* ═══ BUSINESS TYPES ══════════════════════════════════ */}
       <section className="hp-types">
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 28px' }}>
+        <div style={{maxWidth:1200,margin:'0 auto',padding:'0 28px'}}>
           <div className="hp-section-head">
-            <div className="hp-section-eyebrow" style={{ color: 'var(--blue)' }}>Business Types</div>
+            <div className="hp-section-eyebrow" style={{color:'var(--blue)'}}>Business Types</div>
             <h2>Built for your kind of business.</h2>
             <p>Every business type has a different compliance and growth journey. LauncherDesk knows the path for each one.</p>
           </div>
           <div className="hp-types-grid">
-            {BIZ_TYPES.map(b => (
+            {BIZ_TYPES.map(b=>(
               <Link key={b.name} to={b.href} className="hp-type-card">
                 <div className="hp-type-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-                    {b.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                    {b.icon.split('|').map((p,i)=><path key={i} d={p}/>)}
                   </svg>
                 </div>
                 <div className="hp-type-name">{b.name}</div>
                 <div className="hp-type-desc">{b.desc}</div>
-                <div className="hp-type-tags">{b.tags.map(t => <span key={t} className="hp-type-tag">{t}</span>)}</div>
+                <div className="hp-type-tags">{b.tags.map(t=><span key={t} className="hp-type-tag">{t}</span>)}</div>
                 <div className="hp-type-arrow">
                   See the journey
-                  <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                  <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </div>
               </Link>
             ))}
@@ -964,19 +967,19 @@ export default function HomePage() {
 
       {/* ═══ HOW IT WORKS ════════════════════════════════════ */}
       <section className="hp-how">
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 28px' }}>
+        <div style={{maxWidth:1200,margin:'0 auto',padding:'0 28px'}}>
           <div className="hp-section-head">
-            <div className="hp-section-eyebrow" style={{ color: '#7ecef4' }}>How it works</div>
-            <h2 style={{ color: '#fff' }}>One conversation.<br />We take it from there.</h2>
-            <p style={{ color: '#9ab5d4' }}>No portals to navigate, no consultants to chase. Tell us what you need and LauncherDesk handles the rest.</p>
+            <div className="hp-section-eyebrow" style={{color:'var(--blue)'}}>How it works</div>
+            <h2>One conversation.<br/>We take it from there.</h2>
+            <p>No portals to navigate, no consultants to chase. Tell us what you need and LauncherDesk handles the rest.</p>
           </div>
           <div className="hp-how-steps">
-            {HOW_STEPS.map((s, i) => (
+            {HOW_STEPS.map((s,i)=>(
               <div key={s.num} className="hp-how-step">
                 <div className="hp-how-num">{s.num}</div>
                 <h4>{s.title}</h4>
                 <p>{s.desc}</p>
-                {i < HOW_STEPS.length - 1 && <div className="hp-how-connector" />}
+                {i < HOW_STEPS.length-1 && <div className="hp-how-connector"/>}
               </div>
             ))}
           </div>
@@ -985,32 +988,32 @@ export default function HomePage() {
 
       {/* ═══ RESOURCES ═══════════════════════════════════════ */}
       <section className="hp-resources">
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 28px' }}>
+        <div style={{maxWidth:1200,margin:'0 auto',padding:'0 28px'}}>
           <div className="hp-section-head">
-            <div className="hp-section-eyebrow" style={{ color: 'var(--blue)' }}>Resources</div>
+            <div className="hp-section-eyebrow" style={{color:'var(--blue)'}}>Resources</div>
             <h2>Know more. Decide better.</h2>
             <p>Practical guides and tools for founders and business owners across India.</p>
           </div>
           <div className="hp-res-grid">
-            {RESOURCES.map(r => (
+            {RESOURCES.map(r=>(
               <Link key={r.title} to={r.href} className="hp-res-card">
-                <div className="hp-res-card-thumb" />
+                <div className="hp-res-card-thumb"/>
                 <div className="hp-res-card-body">
                   <div className="hp-res-cat">{r.cat}</div>
                   <div className="hp-res-title">{r.title}</div>
                   <div className="hp-res-desc">{r.desc}</div>
                   <div className="hp-res-link">
                     Read more
-                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                   </div>
                 </div>
               </Link>
             ))}
           </div>
-          <div style={{ textAlign: 'center', marginTop: 36 }}>
-            <Link to="/resources" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '0 28px', height: 48, borderRadius: 10, border: '1.5px solid var(--blue)', color: 'var(--blue)', fontWeight: 700, fontSize: 14.5, textDecoration: 'none' }}>
+          <div style={{textAlign:'center',marginTop:36}}>
+            <Link to="/resources" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 28px',height:48,borderRadius:10,border:'1.5px solid var(--blue)',color:'var(--blue)',fontWeight:700,fontSize:14.5,textDecoration:'none'}}>
               View all resources
-              <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
           </div>
         </div>
@@ -1020,7 +1023,7 @@ export default function HomePage() {
       <section className="hp-faq">
         <div className="hp-faq-inner">
           <div className="hp-section-head">
-            <div className="hp-section-eyebrow" style={{ color: '#0284C7' }}>FAQ</div>
+            <div className="hp-section-eyebrow" style={{color:'#0284C7'}}>FAQ</div>
             <h2>Frequently asked questions.</h2>
             <p>Answers to the questions founders ask us every day.</p>
           </div>
@@ -1030,7 +1033,7 @@ export default function HomePage() {
                 <div className="hp-faq-q">
                   <div className="hp-faq-q-text">{f.q}</div>
                   <div className="hp-faq-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
                   </div>
                 </div>
                 <div className="hp-faq-a">
@@ -1039,10 +1042,10 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          <div style={{ textAlign: 'center', marginTop: 36 }}>
-            <Link to="/resources/faq" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '0 28px', height: 48, borderRadius: 10, background: 'var(--blue)', color: '#fff', fontWeight: 700, fontSize: 14.5, textDecoration: 'none', boxShadow: '0 6px 20px rgba(29,111,224,.3)' }}>
+          <div style={{textAlign:'center',marginTop:36}}>
+            <Link to="/resources/faq" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 28px',height:48,borderRadius:10,background:'var(--blue)',color:'#fff',fontWeight:700,fontSize:14.5,textDecoration:'none',boxShadow:'0 6px 20px rgba(29,111,224,.3)'}}>
               View more
-              <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
           </div>
         </div>
@@ -1055,13 +1058,13 @@ export default function HomePage() {
             <h2>Ready to get everything under one roof?</h2>
             <p>One chat is all it takes. Tell us what your business needs and we'll handle the rest — honestly, and on time.</p>
             <div className="hp-cta-btns">
-              <a href={WA_URL} className="hp-cta-btn-wa" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{ flexShrink: 0 }}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z" /></svg>
+              <a href="https://wa.me/918548854859" className="hp-cta-btn-wa" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{flexShrink:0}}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>
                 Chat on WhatsApp
               </a>
               <Link to="/company/contact" className="hp-cta-btn-exp">
                 <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
                 Book a consultation
               </Link>

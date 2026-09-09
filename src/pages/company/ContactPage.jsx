@@ -23,43 +23,44 @@ function RoadmapSummary({ roadmap }) {
   const priClass = { hi: 'hi', mid: 'mid', low: 'low' }
   return (
     <div style={{
-      background: 'linear-gradient(160deg,#1A2F4E,#0F52C0)',
+      background: 'linear-gradient(160deg,#FBFDFF,#F2F8FF)',
+      border: '1px solid var(--line)',
       borderRadius: 16,
       padding: '24px 26px',
       marginBottom: 24,
-      color: '#fff',
+      boxShadow: '0 16px 40px rgba(15,28,46,.07)',
     }}>
-      <div style={{ fontSize: 11, fontFamily: 'var(--font)', fontWeight: 800, letterSpacing: '.16em', textTransform: 'uppercase', color: '#6da8e0', marginBottom: 6 }}>
+      <div style={{ fontSize: 11, fontFamily: 'var(--font)', fontWeight: 800, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--blue-dark)', marginBottom: 6 }}>
         Your LauncherDesk Roadmap
       </div>
-      <h3 style={{ color: '#fff', fontSize: 18, marginBottom: 4 }}>Here's what your business needs next</h3>
+      <h3 style={{ color: 'var(--navy)', fontSize: 18, marginBottom: 4 }}>Here's what your business needs next</h3>
       {roadmap.answers && (
-        <div style={{ fontSize: 13, color: '#9ab5d4', marginBottom: 14, lineHeight: 1.6 }}>
+        <div style={{ fontSize: 13, color: 'var(--text-2)', marginBottom: 14, lineHeight: 1.6 }}>
           {roadmap.answers.type && <span><b>What you're building:</b> {roadmap.answers.type} &nbsp;·&nbsp; </span>}
           {roadmap.answers.state && <span><b>State:</b> {roadmap.answers.state} &nbsp;·&nbsp; </span>}
           {roadmap.answers.founders && <span><b>Founders:</b> {roadmap.answers.founders} &nbsp;·&nbsp; </span>}
           {roadmap.answers.turnover && <span><b>Turnover:</b> {roadmap.answers.turnover}</span>}
         </div>
       )}
-      <div style={{ borderTop: '1px solid rgba(255,255,255,.15)', paddingTop: 14 }}>
+      <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}>
         {roadmap.plan.map((item, i) => (
-          <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', padding: '10px 0', borderBottom: i < roadmap.plan.length - 1 ? '1px solid rgba(255,255,255,.08)' : 'none' }}>
+          <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', padding: '10px 0', borderBottom: i < roadmap.plan.length - 1 ? '1px solid var(--line)' : 'none' }}>
             <span style={{
               fontSize: 10.5, fontFamily: 'var(--font)', fontWeight: 700, letterSpacing: '.05em', textTransform: 'uppercase',
               padding: '4px 9px', borderRadius: 7, flex: 'none', marginTop: 2,
-              background: item[2] === 'hi' ? '#fdeaea' : item[2] === 'mid' ? '#fff4e0' : 'rgba(255,255,255,.12)',
-              color: item[2] === 'hi' ? '#c0392b' : item[2] === 'mid' ? '#b7791f' : '#9ab5d4',
+              background: item[2] === 'hi' ? '#fdeaea' : item[2] === 'mid' ? '#fff4e0' : 'var(--brand-50)',
+              color: item[2] === 'hi' ? '#c0392b' : item[2] === 'mid' ? '#b7791f' : 'var(--blue-dark)',
             }}>
               {priLabel[item[2]] || item[2]}
             </span>
             <div>
-              <b style={{ fontFamily: 'var(--font)', fontSize: 14.5, color: '#fff', display: 'block' }}>{item[0]}</b>
-              <p style={{ fontSize: 13, color: '#9ab5d4', marginTop: 2 }}>{item[1]}</p>
+              <b style={{ fontFamily: 'var(--font)', fontSize: 14.5, color: 'var(--navy)', display: 'block' }}>{item[0]}</b>
+              <p style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 2 }}>{item[1]}</p>
             </div>
           </div>
         ))}
       </div>
-      <p style={{ fontSize: 11.5, color: '#6da8e0', marginTop: 14, lineHeight: 1.5 }}>
+      <p style={{ fontSize: 11.5, color: 'var(--text-3)', marginTop: 14, lineHeight: 1.5 }}>
         General guidance based on your answers. A qualified LauncherDesk professional confirms specifics before anything is filed.
       </p>
     </div>

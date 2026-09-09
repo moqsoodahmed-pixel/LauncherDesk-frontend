@@ -4,24 +4,42 @@ const API = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-produc
 
 const S = `
 .es-hero {
-  background: linear-gradient(160deg, #1A2F4E 0%, #1E3A6A 55%, #264D8C 100%);
+  background: linear-gradient(180deg, #FBFDFF 0%, #F2F8FF 55%, #EAF3FF 100%);
   padding: clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);
   position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--line);
 }
 .es-hero::before {
   content:'';position:absolute;inset:0;pointer-events:none;
-  background: radial-gradient(700px 500px at 70% -10%,rgba(59,143,239,.22),transparent 60%),
-              radial-gradient(300px 300px at 10% 100%,rgba(15,82,192,.18),transparent 60%);
+  background: radial-gradient(760px 520px at 22% -12%,rgba(29,93,184,.10),transparent 62%),
+              radial-gradient(360px 360px at 92% 100%,rgba(29,93,184,.07),transparent 60%);
+  animation: esHeroGlow 22s ease-in-out infinite alternate;
+}
+@keyframes esHeroGlow {
+  from { transform: translate3d(0,0,0) scale(1); }
+  to   { transform: translate3d(1.5%, 1.2%, 0) scale(1.03); }
+}
+.es-hero::after {
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    linear-gradient(rgba(29,93,184,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29,93,184,.035) 1px, transparent 1px);
+  background-size:44px 44px;
+  -webkit-mask-image: radial-gradient(700px 460px at 20% 0%, #000, transparent 72%);
+  mask-image: radial-gradient(700px 460px at 20% 0%, #000, transparent 72%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .es-hero::before { animation: none; }
 }
 .es-hero-inner { max-width:1100px;margin:0 auto;padding:0 28px;position:relative;z-index:1;text-align:center; }
 .es-badge {
-  display:inline-flex;align-items:center;gap:8px;background:rgba(29,111,224,.2);
-  border:1px solid rgba(29,111,224,.4);border-radius:99px;padding:6px 16px;
-  font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7ecef4;margin-bottom:22px;
+  display:inline-flex;align-items:center;gap:8px;background:var(--brand-50);
+  border:1px solid var(--brand-100);border-radius:99px;padding:6px 16px;
+  font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:22px;
 }
-.es-hero h1 { font-size:clamp(34px,5vw,62px);font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1.04;margin-bottom:18px; }
-.es-hero h1 span { background:linear-gradient(118deg,#7ecef4,#3B8FEF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent; }
-.es-hero p { font-size:clamp(15px,1.8vw,18px);color:#9ab5d4;max-width:580px;margin:0 auto 36px;line-height:1.7; }
+.es-hero h1 { font-size:clamp(34px,5vw,62px);font-weight:900;color:var(--navy);letter-spacing:-.04em;line-height:1.04;margin-bottom:18px; }
+.es-hero h1 span { background:linear-gradient(118deg,var(--blue-dark),var(--blue-bright));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent; }
+.es-hero p { font-size:clamp(15px,1.8vw,18px);color:var(--text-2);max-width:580px;margin:0 auto 36px;line-height:1.7; }
 .es-hero-cta { display:flex;gap:14px;justify-content:center;flex-wrap:wrap; }
 .es-btn-primary {
   display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 28px;
@@ -31,10 +49,10 @@ const S = `
 .es-btn-primary:hover { background:#0F52C0;transform:translateY(-2px); }
 .es-btn-secondary {
   display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;
-  background:rgba(255,255,255,.1);color:#fff;font-weight:600;font-size:15px;border-radius:10px;
-  border:1.5px solid rgba(255,255,255,.2);text-decoration:none;transition:all .15s;cursor:pointer;font-family:inherit;
+  background:#fff;color:var(--blue-dark);font-weight:600;font-size:15px;border-radius:10px;
+  border:1.5px solid var(--line-strong);text-decoration:none;transition:all .15s;cursor:pointer;font-family:inherit;
 }
-.es-btn-secondary:hover { background:rgba(255,255,255,.18); }
+.es-btn-secondary:hover { background:var(--brand-50);border-color:var(--blue); }
 
 /* What is E-Stamp */
 .es-what { padding:80px 0;background:var(--sec-b); }
@@ -85,40 +103,42 @@ const S = `
 /* Form / CTA */
 .es-form-section { padding:80px 0;background:var(--sec-b); }
 .es-form-card {
-  background:linear-gradient(160deg,#1A2F4E,#0F52C0 70%,#1D6FE0);
+  background:linear-gradient(160deg,#FBFDFF,#F3F8FF 70%,#EAF3FF);
+  border:1px solid var(--line);
   border-radius:24px;padding:clamp(40px,5vw,64px);position:relative;overflow:hidden;
+  box-shadow:0 24px 64px rgba(15,28,46,.07);
 }
-.es-form-card::before { content:'';position:absolute;inset:0;background:radial-gradient(600px 400px at 80% -20%,rgba(59,143,239,.25),transparent 60%);pointer-events:none; }
+.es-form-card::before { content:'';position:absolute;inset:0;background:radial-gradient(600px 400px at 80% -20%,rgba(29,93,184,.09),transparent 60%);pointer-events:none; }
 .es-form-grid { display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative; }
-.es-form-left h2 { font-size:clamp(26px,3.4vw,42px);font-weight:900;color:#fff;letter-spacing:-.04em;margin-bottom:12px; }
-.es-form-left p  { font-size:15px;color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:24px; }
+.es-form-left h2 { font-size:clamp(26px,3.4vw,42px);font-weight:900;color:var(--navy);letter-spacing:-.04em;margin-bottom:12px; }
+.es-form-left p  { font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:24px; }
 .es-contact-rows { display:flex;flex-direction:column;gap:12px; }
-.es-contact-row  { display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.75);font-size:14px; }
-.es-contact-row svg { width:18px;height:18px;stroke:#3B8FEF;fill:none;stroke-width:2;flex:none; }
+.es-contact-row  { display:flex;align-items:center;gap:12px;color:var(--text-2);font-size:14px; }
+.es-contact-row svg { width:18px;height:18px;stroke:var(--blue);fill:none;stroke-width:2;flex:none; }
 .es-form { display:flex;flex-direction:column;gap:14px; }
 .es-form-field { display:flex;flex-direction:column;gap:6px; }
-.es-form-label { font-size:12.5px;font-weight:600;color:rgba(255,255,255,.7); }
+.es-form-label { font-size:12.5px;font-weight:600;color:var(--text-2); }
 .es-form-input {
-  height:46px;border:1.5px solid rgba(255,255,255,.15);border-radius:10px;
+  height:46px;border-radius:10px;
   background:#fff;color:var(--navy);padding:0 16px;font-size:14px;border:1.5px solid var(--line);
   outline:none;font-family:inherit;transition:border-color .15s;
 }
-.es-form-input::placeholder { color:rgba(255,255,255,.35); }
-.es-form-input:focus { border-color:rgba(59,143,239,.6);background:rgba(255,255,255,.12); }
+.es-form-input::placeholder { color:var(--text-4); }
+.es-form-input:focus { border-color:var(--blue); }
 .es-form-select {
-  height:46px;border:1.5px solid rgba(255,255,255,.15);border-radius:10px;
+  height:46px;border-radius:10px;
   background:#fff;color:var(--navy);padding:0 16px;font-size:14px;border:1.5px solid var(--line);
   outline:none;font-family:inherit;cursor:pointer;
 }
 .es-form-select option { background:#fff;color:var(--navy); }
 .es-form-row { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
 .es-submit-btn {
-  height:50px;border-radius:10px;background:#fff;color:#0F52C0;
+  height:50px;border-radius:10px;background:#1D6FE0;color:#fff;
   font-weight:800;font-size:15px;border:0;cursor:pointer;font-family:inherit;
-  transition:all .15s;margin-top:4px;
+  transition:all .15s;margin-top:4px;box-shadow:0 8px 24px rgba(29,111,224,.3);
 }
-.es-submit-btn:hover { background:#F0F7FF;transform:translateY(-1px); }
-.es-success { background:rgba(14,159,110,.15);border:1px solid rgba(14,159,110,.3);border-radius:12px;padding:20px;text-align:center;color:#4ADE80;font-weight:600; }
+.es-submit-btn:hover { background:#0F52C0;transform:translateY(-1px); }
+.es-success { background:var(--success-bg);border:1px solid rgba(5,150,105,.25);border-radius:12px;padding:20px;text-align:center;color:var(--success);font-weight:600; }
 
 /* Responsive */
 @media(max-width:900px){
@@ -340,8 +360,8 @@ export default function EStampPage() {
               {submitted ? (
                 <div className="es-success">
                   <div style={{fontSize:36,marginBottom:12}}>✅</div>
-                  <div style={{fontSize:18,fontWeight:800,color:'#fff',marginBottom:8}}>Request received!</div>
-                  <div style={{fontSize:14,color:'#9ab5d4'}}>Our team will contact you within 2 hours with stamp duty details and a quote.</div>
+                  <div style={{fontSize:18,fontWeight:800,color:'var(--navy)',marginBottom:8}}>Request received!</div>
+                  <div style={{fontSize:14,color:'var(--text-2)'}}>Our team will contact you within 2 hours with stamp duty details and a quote.</div>
                 </div>
               ) : (
                 <form className="es-form" onSubmit={handleSubmit}>
@@ -381,12 +401,12 @@ export default function EStampPage() {
                   <button type="submit" className="es-submit-btn" disabled={saving}>
                     {saving ? 'Submitting…' : 'Request E-Stamp Quote →'}
                   </button>
-                  {formErr && <p style={{fontSize:13,color:'#FCA5A5',textAlign:'center',marginTop:8}}>{formErr}</p>}
+                  {formErr && <p style={{fontSize:13,color:'#DC2626',textAlign:'center',marginTop:8}}>{formErr}</p>}
                   <a href="https://doqfy.in/stamping" target="_blank" rel="noopener noreferrer"
-                    style={{display:'block',textAlign:'center',marginTop:12,fontSize:13,color:'rgba(255,255,255,.55)',textDecoration:'underline'}}>
+                    style={{display:'block',textAlign:'center',marginTop:12,fontSize:13,color:'var(--text-3)',textDecoration:'underline'}}>
                     Or get it directly on Doqfy →
                   </a>
-                  <p style={{fontSize:12,color:'rgba(255,255,255,.45)',textAlign:'center'}}>
+                  <p style={{fontSize:12,color:'var(--text-4)',textAlign:'center'}}>
                     We'll respond within 2 hours · No spam · 100% confidential
                   </p>
                 </form>
