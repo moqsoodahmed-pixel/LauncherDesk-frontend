@@ -44,7 +44,7 @@ export default function SolutionPage({ sol }) {
                 </div>
                 <h3>{card.title}</h3>
                 <p>{card.desc}</p>
-                <span className="arrow">View →</span>
+                <span className="arrow">View</span>
               </a>
             ))}
           </div>

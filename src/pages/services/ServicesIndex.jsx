@@ -289,7 +289,7 @@ export default function ServicesIndex() {
                 </div>
                 <h3>{cat.title}</h3>
                 <p>{cat.desc}</p>
-                <span className="arrow">View →</span>
+                <span className="arrow">View</span>
               </a>
             ))}
           </div>
@@ -312,7 +312,7 @@ export default function ServicesIndex() {
               <a key={svc.href} className="card reveal-up" data-allsvc={`${svc.title.toLowerCase()} ${svc.desc.toLowerCase()}`} href={svc.href}>
                 <h3>{svc.title}</h3>
                 <p>{svc.desc}</p>
-                <span className="arrow">View →</span>
+                <span className="arrow">View</span>
               </a>
             ))}
           </div>

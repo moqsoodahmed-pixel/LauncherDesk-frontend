@@ -130,7 +130,7 @@ export default function AiPage() {
               >
                 <h3>{p.title}</h3>
                 <p>{p.desc}</p>
-                <span className="arrow">Ask LauncherDesk AI →</span>
+                <span className="arrow">Ask LauncherDesk AI</span>
               </button>
             ))}
           </div>

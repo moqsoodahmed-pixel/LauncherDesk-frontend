@@ -103,7 +103,7 @@ export default function UserDashboard() {
             <p style={{fontSize:13,color:'rgba(255,255,255,.7)',marginBottom:18}}>Start a new service, ask our AI, or talk to an expert directly.</p>
             <div style={{display:'flex',gap:10,flexWrap:'wrap'}}>
               <Link to="/services" style={{display:'inline-flex',alignItems:'center',gap:7,padding:'0 18px',height:40,borderRadius:8,background:'#F97316',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none'}}>Browse Services →</Link>
-              <Link to="/ai" style={{display:'inline-flex',alignItems:'center',gap:7,padding:'0 18px',height:40,borderRadius:8,background:'rgba(255,255,255,.12)',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none',border:'1px solid rgba(255,255,255,.2)'}}>Ask AI</Link>
+              <Link to="/ai" style={{display:'inline-flex',alignItems:'center',gap:7,padding:'0 18px',height:40,borderRadius:8,background:'rgba(255,255,255,.12)',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none',border:'1px solid rgba(255,255,255,.2)'}}>Ask Sneha</Link>
               <Link to="/company/contact" style={{display:'inline-flex',alignItems:'center',gap:7,padding:'0 18px',height:40,borderRadius:8,background:'rgba(255,255,255,.12)',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none',border:'1px solid rgba(255,255,255,.2)'}}>Talk to Expert</Link>
             </div>
           </div>

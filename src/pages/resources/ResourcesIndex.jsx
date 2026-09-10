@@ -1,10 +1,10 @@
 const CHEV = 'm9 18 6-6-6-6'
 
 const CARDS = [
-  { href: '/resources/blog', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M9 13h6M9 17h4', title: 'Blog', desc: 'Practical articles on registration, compliance and running a business in India. Written in plain English for first-time founders.', cta: 'Read →' },
-  { href: '/resources/guides', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z', title: 'Guides', desc: 'Deep, step-by-step guides on specific registrations and processes — for founders who want to understand the detail.', cta: 'Read →' },
-  { href: '/resources/tools', icon: 'M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', title: 'Tools', desc: 'Calculators and checklists to help you plan before you talk to anyone. Free, no signup required.', cta: 'Explore →' },
-  { href: '/resources/faq', icon: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01', title: 'FAQ', desc: 'Straight answers to the questions we hear most often — about LauncherDesk, our services, pricing and how to get started.', cta: 'Read →' },
+  { href: '/resources/blog', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M9 13h6M9 17h4', title: 'Blog', desc: 'Practical articles on registration, compliance and running a business in India. Written in plain English for first-time founders.', cta: 'Read' },
+  { href: '/resources/guides', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z', title: 'Guides', desc: 'Deep, step-by-step guides on specific registrations and processes — for founders who want to understand the detail.', cta: 'Read' },
+  { href: '/resources/tools', icon: 'M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', title: 'Tools', desc: 'Calculators and checklists to help you plan before you talk to anyone. Free, no signup required.', cta: 'Explore' },
+  { href: '/resources/faq', icon: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01', title: 'FAQ', desc: 'Straight answers to the questions we hear most often — about LauncherDesk, our services, pricing and how to get started.', cta: 'Read' },
 ]
 
 const FEATURED = [

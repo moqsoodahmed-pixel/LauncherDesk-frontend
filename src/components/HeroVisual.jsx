@@ -125,7 +125,7 @@ export default function HeroVisual() {
       if (!wrapRef.current) return
       const availableWidth = wrapRef.current.clientWidth || window.innerWidth
       if (availableWidth > 0 && availableWidth < 590) {
-        const computed = Math.min(1, Math.max(0.48, (availableWidth - 12) / 580))
+        const computed = Math.min(1, Math.max(0.46, (availableWidth - 20) / 580))
         setScale(Number(computed.toFixed(3)))
       } else {
         setScale(1)

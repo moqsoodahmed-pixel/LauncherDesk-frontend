@@ -23,7 +23,7 @@ export default function ToolsPage() {
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
               <h3>Service Finder</h3>
               <p>Answer six questions, get a prioritised roadmap for your business.</p>
-              <span className="arrow">Use it now →</span>
+              <span className="arrow">Use it now</span>
             </a>
             <div className="card reveal-up">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 11l3 3L22 4"/></svg></div>
