@@ -50,6 +50,11 @@ const S = `
   .hp-cta-row { margin-bottom: 28px; }
 }
 
+@media (max-width: 480px) {
+  .hp-hero-inner { padding: 0 16px !important; }
+  .hp-hero-grid { gap: 24px !important; }
+}
+
 .hp-eyebrow {
   display:inline-flex;align-items:center;gap:8px;
   font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;

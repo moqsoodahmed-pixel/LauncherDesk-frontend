@@ -65,9 +65,9 @@ const FLOATING_SERVICES = [
     badge: 'Automated',
     badgeColor: '#F59E0B',
     link: '/company/contact',
-    className: 'hv-card--mid-right hv-card--desktop-only',
+    className: 'hv-card--mid-right',
     depth: 1.1,
-    mobile: false,
+    mobile: true,
   },
   {
     id: 'it',
@@ -99,18 +99,57 @@ const FLOATING_SERVICES = [
     badge: 'High ROI',
     badgeColor: '#EC4899',
     link: '/digital-marketing',
-    className: 'hv-card--bot-right hv-card--desktop-only',
+    className: 'hv-card--bot-right',
     depth: 1.25,
-    mobile: false,
+    mobile: true,
   },
 ]
 
 export default function HeroVisual() {
+  const wrapRef = useRef(null)
   const containerRef = useRef(null)
+  const [scale, setScale] = useState(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 590) {
+      return Number(Math.min(1, Math.max(0.48, (window.innerWidth - 24) / 580)).toFixed(3))
+    }
+    return 1
+  })
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const targetPos = useRef({ x: 0, y: 0 })
   const currentPos = useRef({ x: 0, y: 0 })
   const rafId = useRef(null)
+
+  // Fluid responsive scale calculation
+  useEffect(() => {
+    const updateScale = () => {
+      if (!wrapRef.current) return
+      const availableWidth = wrapRef.current.clientWidth || window.innerWidth
+      if (availableWidth > 0 && availableWidth < 590) {
+        const computed = Math.min(1, Math.max(0.48, (availableWidth - 12) / 580))
+        setScale(Number(computed.toFixed(3)))
+      } else {
+        setScale(1)
+      }
+    }
+
+    updateScale()
+    window.addEventListener('resize', updateScale, { passive: true })
+    window.addEventListener('orientationchange', updateScale, { passive: true })
+
+    const observer = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(updateScale)
+      : null
+
+    if (observer && wrapRef.current) {
+      observer.observe(wrapRef.current)
+    }
+
+    return () => {
+      window.removeEventListener('resize', updateScale)
+      window.removeEventListener('orientationchange', updateScale)
+      if (observer) observer.disconnect()
+    }
+  }, [])
 
   // Smooth 60fps lerped mouse parallax
   useEffect(() => {
@@ -165,162 +204,183 @@ export default function HeroVisual() {
   }, [])
 
   return (
-    <div className="hv-container" ref={containerRef} aria-label="LauncherDesk 360 Degree Business Platform Ecosystem">
-      
-      {/* ── Layer 1: Ambient Glow & Orbital Grid ── */}
+    <div
+      className="hv-wrap"
+      ref={wrapRef}
+      style={{
+        height: `${Math.round(380 * scale)}px`,
+      }}
+    >
       <div
-        className="hv-ambient-glow"
+        className="hv-scaler"
         style={{
-          transform: `translate3d(${mousePos.x * 4}px, ${mousePos.y * 4}px, 0)`,
-        }}
-      />
-
-      <svg className="hv-orbit-svg" viewBox="0 0 640 440" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="hv-line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#1D6FE0" stopOpacity="0.05" />
-            <stop offset="50%" stopColor="#3B82F6" stopOpacity="0.25" />
-            <stop offset="100%" stopColor="#0F52C0" stopOpacity="0.05" />
-          </linearGradient>
-          <radialGradient id="hv-center-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#2563EB" stopOpacity="0.12" />
-            <stop offset="100%" stopColor="#2563EB" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-
-        {/* Center Glow Area */}
-        <circle cx="320" cy="220" r="175" fill="url(#hv-center-glow)" />
-
-        {/* Orbital Ellipses */}
-        <ellipse cx="320" cy="220" rx="285" ry="190" stroke="url(#hv-line-grad)" strokeWidth="1.5" strokeDasharray="6 8" className="hv-orbit-spin-slow" />
-        <ellipse cx="320" cy="220" rx="215" ry="138" stroke="url(#hv-line-grad)" strokeWidth="1.2" className="hv-orbit-spin-rev" />
-        <ellipse cx="320" cy="220" rx="142" ry="90" stroke="url(#hv-line-grad)" strokeWidth="1" strokeDasharray="3 5" />
-
-        {/* Dynamic Connection Rays linking hub to orbiting quadrants */}
-        <line x1="320" y1="220" x2="100" y2="65" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
-        <line x1="320" y1="220" x2="540" y2="65" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
-        <line x1="320" y1="220" x2="55" y2="220" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
-        <line x1="320" y1="220" x2="585" y2="220" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
-        <line x1="320" y1="220" x2="100" y2="375" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
-        <line x1="320" y1="220" x2="540" y2="375" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
-
-        {/* Orbiting Tech Nodes */}
-        <circle cx="320" cy="30" r="4" fill="#3B82F6" className="hv-node-pulse-1" />
-        <circle cx="605" cy="220" r="3.5" fill="#10B981" className="hv-node-pulse-2" />
-        <circle cx="320" cy="410" r="4" fill="#8B5CF6" className="hv-node-pulse-3" />
-        <circle cx="35" cy="220" r="3" fill="#3B82F6" className="hv-node-pulse-1" />
-      </svg>
-
-      {/* ── Layer 2: Central Platform Orchestration Hub ── */}
-      <div
-        className="hv-central-hub"
-        style={{
-          transform: `translate3d(${mousePos.x * 5}px, ${mousePos.y * 5}px, 0)`,
+          width: `${Math.round(580 * scale)}px`,
+          height: `${Math.round(380 * scale)}px`,
         }}
       >
-        {/* Hub Header */}
-        <div className="hv-hub-header">
-          <div className="hv-hub-brand">
-            <div className="hv-hub-logo-dot">
-              <svg viewBox="0 0 24 24" width={13} height={13} fill="currentColor">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-              </svg>
-            </div>
-            <div>
-              <div className="hv-hub-title">LauncherDesk HQ</div>
-              <div className="hv-hub-sub">Unified Business Engine</div>
-            </div>
-          </div>
-          <div className="hv-live-badge">
-            <span className="hv-live-dot" />
-            <span>360° Live</span>
-          </div>
-        </div>
-
-        {/* Hub Core Business Grid */}
-        <div className="hv-hub-grid">
-          <div className="hv-hub-pill">
-            <div className="hv-pill-top">
-              <span className="hv-pill-icon" style={{ background: '#EFF6FF', color: '#1D6FE0' }}>🏢</span>
-              <span className="hv-pill-stat">SPICe+ MCA</span>
-            </div>
-            <div className="hv-pill-name">Incorporation</div>
-            <div className="hv-pill-meta">100% Digital</div>
-          </div>
-
-          <div className="hv-hub-pill">
-            <div className="hv-pill-top">
-              <span className="hv-pill-icon" style={{ background: '#ECFDF5', color: '#059669' }}>📊</span>
-              <span className="hv-pill-stat">GST &amp; ROC</span>
-            </div>
-            <div className="hv-pill-name">Tax &amp; Filings</div>
-            <div className="hv-pill-meta">Automated</div>
-          </div>
-
-          <div className="hv-hub-pill">
-            <div className="hv-pill-top">
-              <span className="hv-pill-icon" style={{ background: '#F5F3FF', color: '#7C3AED' }}>🌐</span>
-              <span className="hv-pill-stat">Web &amp; Apps</span>
-            </div>
-            <div className="hv-pill-name">IT &amp; Software</div>
-            <div className="hv-pill-meta">Production-Ready</div>
-          </div>
-
-          <div className="hv-hub-pill">
-            <div className="hv-pill-top">
-              <span className="hv-pill-icon" style={{ background: '#FFF1F2', color: '#E11D48' }}>🚀</span>
-              <span className="hv-pill-stat">SEO &amp; Ads</span>
-            </div>
-            <div className="hv-pill-name">Growth Engine</div>
-            <div className="hv-pill-meta">Lead Generation</div>
-          </div>
-        </div>
-
-        {/* Hub Live Activity & Metric Stream */}
-        <div className="hv-hub-footer">
-          <div className="hv-metric-box">
-            <div className="hv-metric-val">99.8%</div>
-            <div className="hv-metric-lbl">Compliance</div>
-          </div>
-          <div className="hv-metric-divider" />
-          <div className="hv-metric-box">
-            <div className="hv-metric-val">1 Desk</div>
-            <div className="hv-metric-lbl">Single Point</div>
-          </div>
-          <div className="hv-metric-divider" />
-          <div className="hv-metric-box">
-            <div className="hv-metric-val" style={{ color: '#059669' }}>24/7</div>
-            <div className="hv-metric-lbl">Support</div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Layer 3: Floating Organic Service Cards ── */}
-      <div className="hv-cards-layer">
-        {FLOATING_SERVICES.map((svc) => (
-          <Link
-            key={svc.id}
-            to={svc.link}
-            className={`hv-card ${svc.className}`}
+        <div
+          className="hv-container"
+          ref={containerRef}
+          aria-label="LauncherDesk 360 Degree Business Platform Ecosystem"
+          style={{
+            transform: `translate(-50%, -50%) scale(${scale})`,
+          }}
+        >
+          {/* ── Layer 1: Ambient Glow & Orbital Grid ── */}
+          <div
+            className="hv-ambient-glow"
             style={{
-              transform: `translate3d(${mousePos.x * 8 * svc.depth}px, ${mousePos.y * 8 * svc.depth}px, 0)`,
+              transform: `translate3d(${mousePos.x * 4}px, ${mousePos.y * 4}px, 0)`,
             }}
-            aria-label={`Explore ${svc.title}`}
-          >
-            <div className="hv-card-left">
-              <div className="hv-card-icon">{svc.icon}</div>
-              <div className="hv-card-text">
-                <div className="hv-card-title">{svc.title}</div>
-                <div className="hv-card-sub">{svc.subtitle}</div>
+          />
+
+        <svg className="hv-orbit-svg" viewBox="0 0 580 380" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="hv-line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#1D6FE0" stopOpacity="0.05" />
+              <stop offset="50%" stopColor="#3B82F6" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#0F52C0" stopOpacity="0.05" />
+            </linearGradient>
+            <radialGradient id="hv-center-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#2563EB" stopOpacity="0.12" />
+              <stop offset="100%" stopColor="#2563EB" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+
+          {/* Center Glow Area */}
+          <circle cx="290" cy="190" r="155" fill="url(#hv-center-glow)" />
+
+          {/* Orbital Ellipses */}
+          <ellipse cx="290" cy="190" rx="265" ry="168" stroke="url(#hv-line-grad)" strokeWidth="1.5" strokeDasharray="6 8" className="hv-orbit-spin-slow" />
+          <ellipse cx="290" cy="190" rx="200" ry="125" stroke="url(#hv-line-grad)" strokeWidth="1.2" className="hv-orbit-spin-rev" />
+          <ellipse cx="290" cy="190" rx="135" ry="85" stroke="url(#hv-line-grad)" strokeWidth="1" strokeDasharray="3 5" />
+
+          {/* Dynamic Connection Rays linking hub to orbiting quadrants */}
+          <line x1="290" y1="190" x2="95" y2="35" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
+          <line x1="290" y1="190" x2="485" y2="35" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
+          <line x1="290" y1="190" x2="55" y2="190" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
+          <line x1="290" y1="190" x2="525" y2="190" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
+          <line x1="290" y1="190" x2="95" y2="345" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
+          <line x1="290" y1="190" x2="485" y2="345" stroke="rgba(29,111,224,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
+
+          {/* Orbiting Tech Nodes */}
+          <circle cx="290" cy="22" r="4" fill="#3B82F6" className="hv-node-pulse-1" />
+          <circle cx="555" cy="190" r="3.5" fill="#10B981" className="hv-node-pulse-2" />
+          <circle cx="290" cy="358" r="4" fill="#8B5CF6" className="hv-node-pulse-3" />
+          <circle cx="25" cy="190" r="3" fill="#3B82F6" className="hv-node-pulse-1" />
+        </svg>
+
+        {/* ── Layer 2: Central Platform Orchestration Hub ── */}
+        <div
+          className="hv-central-hub"
+          style={{
+            transform: `translate3d(${mousePos.x * 5}px, ${mousePos.y * 5}px, 0)`,
+          }}
+        >
+          {/* Hub Header */}
+          <div className="hv-hub-header">
+            <div className="hv-hub-brand">
+              <div className="hv-hub-logo-dot">
+                <svg viewBox="0 0 24 24" width={13} height={13} fill="currentColor">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+              </div>
+              <div>
+                <div className="hv-hub-title">LauncherDesk HQ</div>
+                <div className="hv-hub-sub">Unified Business Engine</div>
               </div>
             </div>
-            <span className="hv-card-badge" style={{ '--b-color': svc.badgeColor }}>
-              {svc.badge}
-            </span>
-          </Link>
-        ))}
-      </div>
+            <div className="hv-live-badge">
+              <span className="hv-live-dot" />
+              <span>360° Live</span>
+            </div>
+          </div>
 
+          {/* Hub Core Business Grid */}
+          <div className="hv-hub-grid">
+            <div className="hv-hub-pill">
+              <div className="hv-pill-top">
+                <span className="hv-pill-icon" style={{ background: '#EFF6FF', color: '#1D6FE0' }}>🏢</span>
+                <span className="hv-pill-stat">SPICe+ MCA</span>
+              </div>
+              <div className="hv-pill-name">Incorporation</div>
+              <div className="hv-pill-meta">100% Digital</div>
+            </div>
+
+            <div className="hv-hub-pill">
+              <div className="hv-pill-top">
+                <span className="hv-pill-icon" style={{ background: '#ECFDF5', color: '#059669' }}>📊</span>
+                <span className="hv-pill-stat">GST &amp; ROC</span>
+              </div>
+              <div className="hv-pill-name">Tax &amp; Filings</div>
+              <div className="hv-pill-meta">Automated</div>
+            </div>
+
+            <div className="hv-hub-pill">
+              <div className="hv-pill-top">
+                <span className="hv-pill-icon" style={{ background: '#F5F3FF', color: '#7C3AED' }}>🌐</span>
+                <span className="hv-pill-stat">Web &amp; Apps</span>
+              </div>
+              <div className="hv-pill-name">IT &amp; Software</div>
+              <div className="hv-pill-meta">Production-Ready</div>
+            </div>
+
+            <div className="hv-hub-pill">
+              <div className="hv-pill-top">
+                <span className="hv-pill-icon" style={{ background: '#FFF1F2', color: '#E11D48' }}>🚀</span>
+                <span className="hv-pill-stat">SEO &amp; Ads</span>
+              </div>
+              <div className="hv-pill-name">Growth Engine</div>
+              <div className="hv-pill-meta">Lead Generation</div>
+            </div>
+          </div>
+
+          {/* Hub Live Activity & Metric Stream */}
+          <div className="hv-hub-footer">
+            <div className="hv-metric-box">
+              <div className="hv-metric-val">99.8%</div>
+              <div className="hv-metric-lbl">Compliance</div>
+            </div>
+            <div className="hv-metric-divider" />
+            <div className="hv-metric-box">
+              <div className="hv-metric-val">1 Desk</div>
+              <div className="hv-metric-lbl">Single Point</div>
+            </div>
+            <div className="hv-metric-divider" />
+            <div className="hv-metric-box">
+              <div className="hv-metric-val" style={{ color: '#059669' }}>24/7</div>
+              <div className="hv-metric-lbl">Support</div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Layer 3: Floating Organic Service Cards ── */}
+        <div className="hv-cards-layer">
+          {FLOATING_SERVICES.map((svc) => (
+            <Link
+              key={svc.id}
+              to={svc.link}
+              className={`hv-card ${svc.className}`}
+              style={{
+                transform: `translate3d(${mousePos.x * 8 * svc.depth}px, ${mousePos.y * 8 * svc.depth}px, 0)`,
+              }}
+              aria-label={`Explore ${svc.title}`}
+            >
+              <div className="hv-card-left">
+                <div className="hv-card-icon">{svc.icon}</div>
+                <div className="hv-card-text">
+                  <div className="hv-card-title">{svc.title}</div>
+                  <div className="hv-card-sub">{svc.subtitle}</div>
+                </div>
+              </div>
+              <span className="hv-card-badge" style={{ '--b-color': svc.badgeColor }}>
+                {svc.badge}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
+  </div>
   )
 }
