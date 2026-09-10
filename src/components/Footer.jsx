@@ -17,6 +17,49 @@ const NAV_COLS = [
   { title: 'Legal', links: [['Terms of Use','/legal/terms'],['Privacy Policy','/legal/privacy'],['Cancellation & Refund','/legal/refund'],['Disclaimer','/legal/disclaimer']] },
 ]
 
+function IndiaFlag({ width = 24, height = 16, style = {} }) {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 16"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{
+        display: 'inline-block',
+        verticalAlign: 'middle',
+        borderRadius: 2.5,
+        flexShrink: 0,
+        boxShadow: '0 1px 4px rgba(0,0,0,0.35)',
+        overflow: 'hidden',
+        border: '0.5px solid rgba(255,255,255,0.18)',
+        ...style
+      }}
+    >
+      {/* Saffron Top */}
+      <rect width="24" height="5.33" fill="#FF9933" />
+      {/* White Middle */}
+      <rect y="5.33" width="24" height="5.34" fill="#FFFFFF" />
+      {/* Green Bottom */}
+      <rect y="10.67" width="24" height="5.33" fill="#138808" />
+      {/* Ashoka Chakra in Center */}
+      <circle cx="12" cy="8" r="2.1" fill="none" stroke="#000080" strokeWidth="0.45" />
+      <circle cx="12" cy="8" r="0.6" fill="#000080" />
+      {/* 24 spokes */}
+      {[0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255, 270, 285, 300, 315, 330, 345].map((deg) => (
+        <line
+          key={deg}
+          x1="12"
+          y1="8"
+          x2={12 + 2.05 * Math.cos((deg * Math.PI) / 180)}
+          y2={8 + 2.05 * Math.sin((deg * Math.PI) / 180)}
+          stroke="#000080"
+          strokeWidth="0.25"
+        />
+      ))}
+    </svg>
+  )
+}
+
 export default function Footer() {
   const year = new Date().getFullYear()
 
@@ -54,8 +97,8 @@ export default function Footer() {
               ))}
             </div>
             {/* Made in India */}
-            <div style={{ display:'inline-flex',alignItems:'center',gap:8,padding:'8px 14px',background:'rgba(255,255,255,.04)',border:'1px solid rgba(255,255,255,.07)',borderRadius:10 }}>
-              <span style={{ fontSize:16 }}>🇮🇳</span>
+            <div style={{ display:'inline-flex',alignItems:'center',gap:10,padding:'8px 14px',background:'rgba(255,255,255,.04)',border:'1px solid rgba(255,255,255,.08)',borderRadius:10 }}>
+              <IndiaFlag width={24} height={16} />
               <div>
                 <div style={{ fontSize:11.5,fontWeight:700,letterSpacing:'.04em' }}>
                   <span style={{ color:'#FF9933' }}>Proudly </span>
