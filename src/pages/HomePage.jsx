@@ -194,54 +194,184 @@ const S = `
 .hp-svc-all-btn a:hover { background:var(--blue);color:#fff; }
 
 /* ── WHY LAUNCHERDESK ── */
-.hp-why { padding:96px 0;background:var(--sec-b); }
+.hp-why {
+  padding:104px 0;background:var(--sec-b);
+  position:relative;overflow:hidden;
+}
+.hp-why::before {
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(620px 420px at 90% 4%, rgba(43,114,212,.11), transparent 60%),
+    radial-gradient(460px 380px at 6% 30%, rgba(43,114,212,.055), transparent 62%);
+  background-size:140% 140%,140% 140%;
+  animation:hpWhyBgDrift 22s ease-in-out infinite alternate;
+}
+@keyframes hpWhyBgDrift {
+  0%   { background-position:100% 0%, 0% 0%; }
+  100% { background-position:80% 20%, 20% 20%; }
+}
 .hp-why-grid {
-  max-width:1200px;margin:0 auto;padding:0 28px;
-  display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;
+  max-width:1200px;margin:0 auto;padding:0 28px;position:relative;z-index:1;
+  display:grid;grid-template-columns:1.06fr 0.94fr;gap:60px;align-items:center;
 }
+
+/* faint connective thread between the benefits column and the comparison panel */
+.hp-why-connector {
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(1200px,calc(100% - 56px));height:1px;z-index:0;pointer-events:none;
+}
+.hp-why-connector-dot {
+  position:absolute;top:50%;width:5px;height:5px;border-radius:50%;
+  background:var(--blue);box-shadow:0 0 0 5px rgba(43,114,212,.14),0 0 14px rgba(43,114,212,.5);
+  animation:hpConnectorPulse 3.6s ease-in-out infinite;
+}
+.hp-why-connector-dot--a { left:calc(53% - 2px); animation-delay:0s; }
+.hp-why-connector-dot--b { left:calc(53% - 2px); animation-delay:1.8s; }
+@keyframes hpConnectorPulse {
+  0%,100% { opacity:0; transform:translateY(-50%) scale(.6); }
+  50%     { opacity:1; transform:translateY(-50%) scale(1.6); }
+}
+
+.hp-why-eyebrow-line {
+  height:1px;flex:1 1 auto;max-width:64px;
+  background:linear-gradient(90deg, rgba(5,150,105,.55), transparent);
+  position:relative;overflow:hidden;
+}
+.hp-why-eyebrow-line::after {
+  content:'';position:absolute;inset:0;width:40%;
+  background:linear-gradient(90deg, transparent, rgba(5,150,105,.9), transparent);
+  animation:hpEyebrowLine 3.2s ease-in-out infinite;
+}
+@keyframes hpEyebrowLine { 0%{transform:translateX(-100%);} 60%,100%{transform:translateX(280%);} }
+
 .hp-why-left h2 {
-  font-size:clamp(28px,3.6vw,48px);font-weight:900;letter-spacing:-.04em;color:var(--navy);
-  margin-bottom:16px;line-height:1.06;
+  font-size:clamp(30px,3.8vw,50px);font-weight:800;letter-spacing:-.035em;color:var(--navy);
+  margin-bottom:18px;line-height:1.1;
 }
-.hp-why-left p { font-size:16px;color:var(--text-2);line-height:1.7;margin-bottom:32px;max-width:440px; }
-.hp-why-features { display:flex;flex-direction:column;gap:20px; }
+.hp-why-accent {
+  background:linear-gradient(100deg,var(--blue-dark),var(--blue),var(--blue-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hp-why-left p { font-size:16.5px;color:var(--text-2);line-height:1.75;margin-bottom:34px;max-width:440px; }
+.hp-why-features { display:flex;flex-direction:column;gap:16px; }
 .hp-why-feat {
-  display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:14px;
-  border:1.5px solid var(--sec-teal-border);background:#fff;transition:border-color .15s,box-shadow .15s;
+  --mx:50%;--my:50%;
+  position:relative;isolation:isolate;overflow:hidden;
+  display:flex;gap:16px;align-items:flex-start;padding:20px 22px;border-radius:18px;
+  border:1px solid var(--line);
+  background:linear-gradient(165deg,rgba(255,255,255,.92),rgba(247,251,255,.8));
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 1px 2px rgba(15,28,46,.03), 0 14px 30px -20px rgba(15,28,46,.18);
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1),border-color .35s;
 }
-.hp-why-feat:hover { border-color:var(--blue);box-shadow:0 6px 18px rgba(29,93,184,.10); }
+.hp-why-feat::before {
+  /* cursor-follow highlight */
+  content:'';position:absolute;inset:0;z-index:-1;opacity:0;
+  background:radial-gradient(220px circle at var(--mx) var(--my), rgba(43,114,212,.16), transparent 68%);
+  transition:opacity .35s ease;
+}
+.hp-why-feat-glow {
+  position:absolute;top:-30px;right:-30px;width:90px;height:90px;border-radius:50%;z-index:-1;
+  background:radial-gradient(circle, rgba(43,114,212,.16), transparent 70%);
+  filter:blur(2px);opacity:.7;
+  animation:hpFeatGlowDrift 7s ease-in-out infinite;
+}
+.hp-why-feat:nth-child(2) .hp-why-feat-glow { animation-delay:1.2s; }
+.hp-why-feat:nth-child(3) .hp-why-feat-glow { animation-delay:2.4s; }
+.hp-why-feat:nth-child(4) .hp-why-feat-glow { animation-delay:3.6s; }
+@keyframes hpFeatGlowDrift {
+  0%,100% { transform:translate(0,0) scale(1); }
+  50%     { transform:translate(-8px,8px) scale(1.15); }
+}
+.hp-why-feat::after {
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:1;
+  background:linear-gradient(90deg,transparent,var(--blue),transparent);
+  transform:scaleX(0);transform-origin:0 50%;transition:transform .45s cubic-bezier(.16,1,.3,1);
+}
+.hp-why-feat:hover {
+  transform:translateY(-6px);border-color:rgba(43,114,212,.36);
+  box-shadow:0 1px 2px rgba(15,28,46,.04), 0 26px 44px -20px rgba(29,93,184,.3);
+}
+.hp-why-feat:hover::before { opacity:1; }
+.hp-why-feat:hover::after { transform:scaleX(1); }
 .hp-why-feat-icon {
-  width:44px;height:44px;border-radius:10px;background:var(--brand-50);
-  display:grid;place-items:center;flex:none;
+  width:46px;height:46px;border-radius:12px;flex:none;
+  background:linear-gradient(160deg,var(--brand-50) 0%,#fff 60%,var(--brand-100) 130%);
+  border:1px solid rgba(43,114,212,.16);
+  display:grid;place-items:center;position:relative;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
 }
+.hp-why-feat:hover .hp-why-feat-icon { transform:scale(1.05) rotate(-3deg);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 14px -4px rgba(43,114,212,.35); }
 .hp-why-feat-icon svg { width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2; }
-.hp-why-feat h4 { font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px; }
-.hp-why-feat p  { font-size:13.5px;color:var(--text-2);line-height:1.6; }
+.hp-why-feat h4 { font-size:15.5px;font-weight:700;color:var(--navy);margin-bottom:6px;letter-spacing:-.01em; }
+.hp-why-feat p  { font-size:13.5px;color:var(--text-2);line-height:1.62; }
+
 /* comparison right card */
 .hp-vs-card {
-  background:var(--navy);border-radius:20px;overflow:hidden;color:#fff;
-  box-shadow:0 32px 64px rgba(13,31,60,.25);
+  position:relative;background:linear-gradient(165deg,var(--navy-3),var(--navy));
+  border-radius:24px;overflow:hidden;color:#fff;
+  box-shadow:0 10px 20px -10px rgba(13,31,60,.3), 0 40px 70px -24px rgba(13,31,60,.4);
+  border:1px solid rgba(255,255,255,.06);
 }
+.hp-vs-card::before {
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:.55;z-index:0;
+  background:linear-gradient(100deg, transparent 20%, rgba(255,255,255,.06) 35%, transparent 50%);
+  background-size:220% 100%;animation:hpVsSheen 9s ease-in-out infinite;
+}
+@keyframes hpVsSheen { 0%{background-position:130% 0;} 50%{background-position:-30% 0;} 100%{background-position:130% 0;} }
+.hp-vs-glow {
+  position:absolute;top:-10%;right:0;width:52%;height:120%;z-index:0;pointer-events:none;
+  background:radial-gradient(closest-side, rgba(43,114,212,.30), transparent 72%);
+  filter:blur(6px);animation:hpVsGlowDrift 8s ease-in-out infinite;
+}
+@keyframes hpVsGlowDrift { 0%,100%{transform:translateY(-4%);opacity:.85;} 50%{transform:translateY(4%);opacity:1;} }
 .hp-vs-head {
-  display:grid;grid-template-columns:1fr 1fr;
+  display:grid;grid-template-columns:1fr 1fr;position:relative;z-index:1;
   border-bottom:1px solid rgba(255,255,255,.08);
 }
-.hp-vs-col { padding:16px 22px;text-align:center; }
-.hp-vs-col.bad { background:rgba(239,68,68,.08); }
-.hp-vs-col.good { background:rgba(29,111,224,.12); }
+.hp-vs-col { padding:18px 22px;text-align:center;position:relative; }
+.hp-vs-col.bad { background:rgba(239,68,68,.07); }
+.hp-vs-col.good { background:rgba(29,111,224,.16); }
+.hp-vs-col.good::after {
+  content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(126,206,244,.6),transparent);
+}
 .hp-vs-col-label { font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase; }
 .hp-vs-col.bad  .hp-vs-col-label { color:#FCA5A5; }
-.hp-vs-col.good .hp-vs-col-label { color:#7ecef4; }
-.hp-vs-rows { padding:8px 0; }
+.hp-vs-col.good .hp-vs-col-label { color:#8fd4fb; }
+.hp-vs-rows { padding:8px 0;position:relative;z-index:1; }
 .hp-vs-row  {
   display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(255,255,255,.05);
-  padding:0;
+  padding:0;transition:background .25s ease;
 }
+.hp-vs-row:hover { background:rgba(255,255,255,.04); }
+.hp-vs-row:hover .hp-vs-cell.good { text-shadow:0 0 16px rgba(94,193,255,.55); }
 .hp-vs-row:last-child { border-bottom:0; }
-.hp-vs-cell { padding:13px 22px;font-size:13.5px;display:flex;align-items:center;gap:8px; }
-.hp-vs-cell.bad  { color:#FCA5A5; }
-.hp-vs-cell.good { color:#9ab5d4; }
+.hp-vs-cell { padding:14px 22px;font-size:13.5px;display:flex;align-items:center;gap:9px;overflow-wrap:anywhere;transition:text-shadow .25s ease; }
+.hp-vs-cell.bad  { color:#f0b3b3; }
+.hp-vs-cell.good { color:#c9def2;font-weight:600; }
 .hp-vs-cell svg  { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;flex:none; }
+.hp-vs-cell.good svg { color:#5ec1ff; }
+
+/* scroll-reveal for this section (reuses site-wide .reveal-up mechanism) */
+.hp-why .reveal-up { opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1); }
+.hp-why .reveal-up.in { opacity:1;transform:none; }
+.hp-why-vs-wrap.reveal-up { transform:translateX(16px) translateY(6px) scale(.96); }
+.hp-why-vs-wrap.reveal-up.in { transform:none; }
+.hp-why-features.reveal-up > * { opacity:0; }
+.hp-why-features.reveal-up.in > * {
+  /* static end-state as a safety net, in case the entrance animation is
+     skipped/interrupted — cards must never get stuck invisible */
+  opacity:1;animation:hpWhyCardIn .6s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes hpWhyCardIn { from{opacity:0;transform:translateY(18px);} to{opacity:1;transform:none;} }
+@media (prefers-reduced-motion: reduce) {
+  .hp-vs-card::before { animation:none; }
+  .hp-why-feat, .hp-why-feat-icon { transition:none; }
+  .hp-why .reveal-up, .hp-why-features.reveal-up > * { transition:none!important;animation:none!important; }
+  .hp-why .reveal-up.in, .hp-why-features.reveal-up.in > * { opacity:1!important;transform:none!important; }
+}
 
 /* ── BUSINESS TYPES ── */
 .hp-types { padding:96px 0;background:var(--sec-b); }
@@ -447,6 +577,7 @@ const S = `
   .hp-hero-grid  { grid-template-columns:1fr;gap:48px }
   .hp-dash-card  { display:none }
   .hp-why-grid   { grid-template-columns:1fr;gap:48px }
+  .hp-why-connector { display:none }
   .hp-types-grid { grid-template-columns:1fr 1fr }
   .hp-how-steps  { grid-template-columns:1fr 1fr;gap:20px }
   .hp-res-grid   { grid-template-columns:1fr 1fr }
@@ -459,7 +590,8 @@ const S = `
   .hp-how-steps  { grid-template-columns:1fr 1fr }
   .hp-res-grid   { grid-template-columns:1fr }
   .hp-svc-cards  { grid-template-columns:1fr }
-  .hp-vs-card    { display:none }
+  .hp-vs-cell    { padding:12px 14px;font-size:12.5px;gap:6px }
+  .hp-vs-col     { padding:14px 12px }
   .hp-why-grid   { gap:32px }
   .lc2-inner     { gap:28px }
 }
@@ -483,9 +615,12 @@ const S = `
   .hp-stats-grid { grid-template-columns:1fr 1fr }
   .lc2-inner     { padding:0 16px }
   .hp-section-head h2 { font-size:clamp(24px,7vw,36px) }
+  .hp-vs-cell    { padding:10px 10px;font-size:11.5px }
+  .hp-vs-col-label { font-size:10px }
 }
 @media(prefers-reduced-motion:reduce){
   .lc2-prog-bar  { transition:none!important }
+  .hp-why-connector-dot,.hp-vs-card::before,.hp-vs-glow,.hp-why::before,.hp-why-eyebrow-line,.hp-why-feat-glow { animation:none!important; }
 }
 `
 
@@ -693,7 +828,7 @@ export default function HomePage() {
                 LauncherDesk handles everything through a single point of contact.
               </p>
               <div className="hp-cta-row">
-                <a href="https://wa.me/918548854859" className="hp-btn-wa" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services." className="hp-btn-wa" target="_blank" rel="noopener noreferrer">
                   <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{flexShrink:0}}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>
                   Chat on WhatsApp
                 </a>
@@ -851,14 +986,28 @@ export default function HomePage() {
 
       {/* ═══ WHY LAUNCHERDESK ════════════════════════════════ */}
       <section className="hp-why">
+        <div className="hp-why-connector" aria-hidden="true">
+          <span className="hp-why-connector-dot hp-why-connector-dot--a" />
+          <span className="hp-why-connector-dot hp-why-connector-dot--b" />
+        </div>
         <div className="hp-why-grid">
           <div className="hp-why-left">
-            <div className="hp-section-eyebrow" style={{textAlign:'left',display:'block',marginBottom:14,color:'#059669'}}>Why LauncherDesk</div>
-            <h2>One desk beats multiple vendors.</h2>
-            <p>Most founders waste months juggling CAs, lawyers, web agencies and consultants — each one solving only their piece. LauncherDesk coordinates the whole picture.</p>
-            <div className="hp-why-features">
-              {WHY_FEATURES.map(f=>(
-                <div key={f.title} className="hp-why-feat">
+            <div className="hp-section-eyebrow reveal-up" style={{textAlign:'left',display:'flex',alignItems:'center',gap:10,marginBottom:16,color:'#059669',transitionDelay:'0ms'}}>
+              Why LauncherDesk
+              <span className="hp-why-eyebrow-line" aria-hidden="true" />
+            </div>
+            <h2 className="reveal-up" style={{transitionDelay:'100ms'}}><span className="hp-why-accent">One desk</span> beats multiple vendors.</h2>
+            <p className="reveal-up" style={{transitionDelay:'200ms'}}>Most founders waste months juggling CAs, lawyers, web agencies and consultants — each one solving only their piece. LauncherDesk coordinates the whole picture.</p>
+            <div className="hp-why-features reveal-up">
+              {WHY_FEATURES.map((f,i)=>(
+                <div key={f.title} className="hp-why-feat" style={{animationDelay:`${300+i*100}ms`}}
+                  onMouseMove={e=>{
+                    const r=e.currentTarget.getBoundingClientRect();
+                    e.currentTarget.style.setProperty('--mx',`${((e.clientX-r.left)/r.width*100).toFixed(1)}%`);
+                    e.currentTarget.style.setProperty('--my',`${((e.clientY-r.top)/r.height*100).toFixed(1)}%`);
+                  }}
+                >
+                  <span className="hp-why-feat-glow" aria-hidden="true" />
                   <div className="hp-why-feat-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                       {f.icon.split('|').map((p,i)=><path key={i} d={p}/>)}
@@ -872,8 +1021,9 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-          <div>
+          <div className="hp-why-vs-wrap reveal-up" style={{transitionDelay:'350ms'}}>
             <div className="hp-vs-card">
+              <span className="hp-vs-glow" aria-hidden="true" />
               <div className="hp-vs-head">
                 <div className="hp-vs-col bad"><div className="hp-vs-col-label">The Usual Way</div></div>
                 <div className="hp-vs-col good"><div className="hp-vs-col-label">The LauncherDesk Way</div></div>
@@ -1058,7 +1208,7 @@ export default function HomePage() {
             <h2>Ready to get everything under one roof?</h2>
             <p>One chat is all it takes. Tell us what your business needs and we'll handle the rest — honestly, and on time.</p>
             <div className="hp-cta-btns">
-              <a href="https://wa.me/918548854859" className="hp-cta-btn-wa" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I%20would%20like%20to%20discuss%20my%20business%20requirements." className="hp-cta-btn-wa" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{flexShrink:0}}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>
                 Chat on WhatsApp
               </a>
