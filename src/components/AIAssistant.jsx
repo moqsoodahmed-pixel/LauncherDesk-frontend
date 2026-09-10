@@ -38,7 +38,7 @@ export default function AIAssistant() {
 
   const scrimOn = aiOpen || drawerOpen || waOpen
 
-  // Mobile bottom CTA bar: hidden on load, hides while scrolling down, reveals on scroll up
+  // Mobile bottom CTA bar: visible on load/scroll up, hides on downward scroll
   useEffect(() => {
     let lastY = window.scrollY
     let ticking = false
@@ -48,13 +48,18 @@ export default function AIAssistant() {
       requestAnimationFrame(() => {
         const y = window.scrollY
         const delta = y - lastY
-        if (y < 80) setMobileBarShown(false)
-        else if (delta > 6) setMobileBarShown(false)
-        else if (delta < -6) setMobileBarShown(true)
+        if (delta > 8 && y > 100) {
+          // Scrolling down - hide mobile bar
+          setMobileBarShown(false)
+        } else if (delta < -3 || y <= 50) {
+          // Scrolling up or at top - show mobile bar
+          setMobileBarShown(true)
+        }
         lastY = y
         ticking = false
       })
     }
+    setMobileBarShown(true)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -452,9 +457,9 @@ export default function AIAssistant() {
           </svg>
           Ask AI
         </button>
-        <button type="button" className="mb-btn mb-btn--wa" onClick={toggleWA}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16,flex:'none'}}>
-            <path d={WA}/>
+        <button type="button" className="mb-btn mb-btn--wa" onClick={toggleWA} aria-label="Open WhatsApp Support">
+          <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" style={{flex:'none'}}>
+            <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/>
           </svg>
           WhatsApp
         </button>

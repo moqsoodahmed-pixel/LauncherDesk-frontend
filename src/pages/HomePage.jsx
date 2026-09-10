@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import { Link } from 'react-router-dom'
 import SEO, { organizationSchema, websiteSchema } from '../components/SEO'
+import HeroVisual from '../components/HeroVisual'
 
 /* ─── Inline styles for the redesigned homepage ──────────────────────── */
 const S = `
@@ -9,7 +10,7 @@ const S = `
 /* ── HERO ── */
 .hp-hero {
   background: linear-gradient(180deg, #FBFDFF 0%, #F3F8FF 55%, #EEF5FF 100%);
-  padding: clamp(40px,5vw,72px) 0 clamp(52px,6vw,88px);
+  padding: clamp(24px, 3.2vw, 42px) 0 clamp(28px, 3.5vw, 46px);
   position: relative; overflow: hidden;
   border-bottom: 1px solid var(--line);
 }
@@ -33,7 +34,21 @@ const S = `
   to   { transform: translate3d(-1.5%, 1.5%, 0) scale(1.03); }
 }
 .hp-hero-inner { max-width:1200px;margin:0 auto;padding:0 28px;position:relative;z-index:1; }
-.hp-hero-grid  { display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center; }
+.hp-hero-grid  { display:grid;grid-template-columns:46% 54%;gap:36px;align-items:center; }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .hp-hero-grid { grid-template-columns: 47% 53%; gap: 20px; }
+  .hp-hero h1 { font-size: clamp(32px, 3.8vw, 46px) !important; margin-bottom: 16px !important; }
+  .hp-hero-desc { font-size: 15px !important; margin-bottom: 24px !important; }
+  .hp-cta-row { margin-bottom: 24px !important; }
+}
+
+@media (max-width: 991px) {
+  .hp-hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  .hp-hero h1 { font-size: clamp(30px, 6vw, 48px); }
+  .hp-hero-desc { font-size: 15px; margin-bottom: 24px; }
+  .hp-cta-row { margin-bottom: 28px; }
+}
 
 .hp-eyebrow {
   display:inline-flex;align-items:center;gap:8px;
@@ -75,31 +90,6 @@ const S = `
 }
 .hp-trust-pill svg { width:14px;height:14px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none; }
 
-/* hero right — dashboard card */
-.hp-dash-card {
-  background:#fff;border:1px solid var(--line);border-radius:20px;
-  padding:28px;box-shadow:0 24px 64px rgba(15,28,46,.09), 0 4px 16px rgba(15,28,46,.05);
-}
-.hp-dash-head {
-  display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;
-}
-.hp-dash-title { font-size:13px;font-weight:700;color:var(--navy);letter-spacing:.02em; }
-.hp-dash-badge {
-  font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;
-  background:var(--success-bg);color:var(--success);border:1px solid rgba(5,150,105,.25);
-}
-.hp-stat-row { display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px; }
-.hp-stat-box {
-  background:var(--brand-50);border-radius:12px;padding:14px;text-align:center;
-  border:1px solid var(--brand-100);
-}
-.hp-stat-box .n { font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.03em;line-height:1; }
-.hp-stat-box .l { font-size:11px;color:var(--blue-dark);margin-top:3px;text-transform:uppercase;letter-spacing:.06em; }
-.hp-svc-chips { display:flex;flex-wrap:wrap;gap:8px; }
-.hp-svc-chip  {
-  font-size:12px;font-weight:600;padding:6px 13px;border-radius:99px;
-  background:var(--brand-50);color:var(--blue-dark);border:1px solid var(--brand-100);
-}
 @media (prefers-reduced-motion: reduce) {
   .hp-hero::before { animation: none; }
 }
@@ -573,9 +563,8 @@ const S = `
 .lc2-prog-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue-dark),var(--blue-bright));border-radius:2px;transition:width linear}
 
 /* ── RESPONSIVE ── */
-@media(max-width:1040px){
-  .hp-hero-grid  { grid-template-columns:1fr;gap:48px }
-  .hp-dash-card  { display:none }
+@media(max-width:960px){
+  .hp-hero-grid  { grid-template-columns:1fr;gap:36px }
   .hp-why-grid   { grid-template-columns:1fr;gap:48px }
   .hp-why-connector { display:none }
   .hp-types-grid { grid-template-columns:1fr 1fr }
@@ -849,24 +838,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Hero right — stats dashboard */}
-            <div className="hp-dash-card">
-              <div className="hp-dash-head">
-                <div className="hp-dash-title">LauncherDesk Business HQ</div>
-                <span className="hp-dash-badge">● Live</span>
-              </div>
-              <div className="hp-stat-row">
-                <div className="hp-stat-box"><div className="n">20+</div><div className="l">Businesses</div></div>
-                <div className="hp-stat-box"><div className="n">15+</div><div className="l">Categories</div></div>
-                <div className="hp-stat-box"><div className="n">1</div><div className="l">Contact</div></div>
-              </div>
-              <div style={{marginBottom:12,fontSize:12,fontWeight:600,color:'#8496AB',letterSpacing:'.06em',textTransform:'uppercase'}}>Services we cover</div>
-              <div className="hp-svc-chips">
-                {['Pvt Ltd Registration','GST Filing','Trademark','Payroll','Website Dev','ROC Compliance','MSME','Digital Marketing','Accounting'].map(s=>(
-                  <span key={s} className="hp-svc-chip">{s}</span>
-                ))}
-              </div>
-            </div>
+            {/* Hero right — animated platform ecosystem visual */}
+            <HeroVisual />
           </div>
         </div>
       </section>
