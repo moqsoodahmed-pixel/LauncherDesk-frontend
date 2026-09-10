@@ -355,6 +355,7 @@ const S = `
 
 
 /* ── WHY LAUNCHERDESK ── */
+/* ── WHY LAUNCHERDESK ── */
 .hp-why {
   padding:80px 0;background:var(--sec-b);
   position:relative;overflow:hidden;
@@ -371,12 +372,54 @@ const S = `
   0%   { background-position:100% 0%, 0% 0%; }
   100% { background-position:80% 20%, 20% 20%; }
 }
-.hp-why-grid {
-  max-width:1200px;margin:0 auto;padding:0 28px;position:relative;z-index:1;
-  display:grid;grid-template-columns:1.06fr 0.94fr;gap:60px;align-items:center;
+
+/* ── Centered intro block (eyebrow + heading + paragraph) ── */
+.hp-why-intro {
+  max-width:1200px;margin:0 auto;padding:0 28px;
+  position:relative;z-index:1;
+  text-align:center;
+  margin-bottom:52px;
+}
+.hp-why-intro .hp-section-eyebrow {
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  color:#059669;margin-bottom:20px;
+}
+/* Two decorative lines flanking the eyebrow label */
+.hp-why-eyebrow-line {
+  height:1px;width:48px;flex:none;
+  background:linear-gradient(90deg, rgba(5,150,105,.55), transparent);
+  position:relative;overflow:hidden;
+}
+/* Mirror the right-side line */
+.hp-why-eyebrow-line--right {
+  background:linear-gradient(270deg, rgba(5,150,105,.55), transparent);
+}
+.hp-why-eyebrow-line::after {
+  content:'';position:absolute;inset:0;width:40%;
+  background:linear-gradient(90deg, transparent, rgba(5,150,105,.9), transparent);
+  animation:hpEyebrowLine 3.2s ease-in-out infinite;
+}
+@keyframes hpEyebrowLine { 0%{transform:translateX(-100%);} 60%,100%{transform:translateX(280%);} }
+
+.hp-why-intro h2 {
+  font-size:clamp(30px,3.8vw,54px);
+  font-weight:800;letter-spacing:-.035em;color:var(--navy);
+  line-height:1.08;margin-bottom:20px;
+  max-width:720px;margin-left:auto;margin-right:auto;
+}
+.hp-why-intro p {
+  font-size:clamp(15px,1.6vw,17px);color:var(--text-2);
+  line-height:1.75;
+  max-width:560px;margin:0 auto;
 }
 
-/* faint connective thread between the benefits column and the comparison panel */
+/* ── Two-column content grid (feature cards + comparison) ── */
+.hp-why-grid {
+  max-width:1200px;margin:0 auto;padding:0 28px;position:relative;z-index:1;
+  display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:start;
+}
+
+/* faint connective thread */
 .hp-why-connector {
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   width:min(1200px,calc(100% - 56px));height:1px;z-index:0;pointer-events:none;
@@ -386,34 +429,17 @@ const S = `
   background:var(--blue);box-shadow:0 0 0 5px rgba(43,114,212,.14),0 0 14px rgba(43,114,212,.5);
   animation:hpConnectorPulse 3.6s ease-in-out infinite;
 }
-.hp-why-connector-dot--a { left:calc(53% - 2px); animation-delay:0s; }
-.hp-why-connector-dot--b { left:calc(53% - 2px); animation-delay:1.8s; }
+.hp-why-connector-dot--a { left:calc(50% - 2px); animation-delay:0s; }
+.hp-why-connector-dot--b { left:calc(50% - 2px); animation-delay:1.8s; }
 @keyframes hpConnectorPulse {
   0%,100% { opacity:0; transform:translateY(-50%) scale(.6); }
   50%     { opacity:1; transform:translateY(-50%) scale(1.6); }
 }
 
-.hp-why-eyebrow-line {
-  height:1px;flex:1 1 auto;max-width:64px;
-  background:linear-gradient(90deg, rgba(5,150,105,.55), transparent);
-  position:relative;overflow:hidden;
-}
-.hp-why-eyebrow-line::after {
-  content:'';position:absolute;inset:0;width:40%;
-  background:linear-gradient(90deg, transparent, rgba(5,150,105,.9), transparent);
-  animation:hpEyebrowLine 3.2s ease-in-out infinite;
-}
-@keyframes hpEyebrowLine { 0%{transform:translateX(-100%);} 60%,100%{transform:translateX(280%);} }
-
-.hp-why-left h2 {
-  font-size:clamp(30px,3.8vw,50px);font-weight:800;letter-spacing:-.035em;color:var(--navy);
-  margin-bottom:18px;line-height:1.1;
-}
 .hp-why-accent {
   background:linear-gradient(100deg,var(--blue-dark),var(--blue),var(--blue-bright));
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-.hp-why-left p { font-size:16.5px;color:var(--text-2);line-height:1.75;margin-bottom:34px;max-width:440px; }
 .hp-why-features { display:flex;flex-direction:column;gap:16px; }
 .hp-why-feat {
   --mx:50%;--my:50%;
@@ -736,7 +762,8 @@ const S = `
 /* ── RESPONSIVE ── */
 @media(max-width:960px){
   .hp-hero-grid  { grid-template-columns:1fr;gap:36px }
-  .hp-why-grid   { grid-template-columns:1fr;gap:48px }
+  .hp-why-grid   { grid-template-columns:1fr;gap:36px }
+  .hp-why-intro  { margin-bottom:36px; }
   .hp-why-connector { display:none }
   .hp-types-grid { grid-template-columns:1fr 1fr }
   .hp-how-steps  { grid-template-columns:1fr 1fr;gap:20px }
@@ -751,7 +778,7 @@ const S = `
   .hp-res-grid   { grid-template-columns:1fr }
   .hp-vs-cell    { padding:12px 14px;font-size:12.5px;gap:6px }
   .hp-vs-col     { padding:14px 12px }
-  .hp-why-grid   { gap:32px }
+  .hp-why-grid   { gap:28px }
   .lc2-inner     { gap:28px }
 }
 @media(max-width:640px){
@@ -1134,14 +1161,25 @@ export default function HomePage() {
           <span className="hp-why-connector-dot hp-why-connector-dot--a" />
           <span className="hp-why-connector-dot hp-why-connector-dot--b" />
         </div>
+
+        {/* ── Centered intro: eyebrow + heading + paragraph ── */}
+        <div className="hp-why-intro">
+          <div className="hp-section-eyebrow reveal-up" style={{transitionDelay:'0ms'}}>
+            <span className="hp-why-eyebrow-line" aria-hidden="true" />
+            Why LauncherDesk
+            <span className="hp-why-eyebrow-line hp-why-eyebrow-line--right" aria-hidden="true" />
+          </div>
+          <h2 className="reveal-up" style={{transitionDelay:'80ms'}}>
+            <span className="hp-why-accent">One desk</span> beats multiple vendors.
+          </h2>
+          <p className="reveal-up" style={{transitionDelay:'160ms'}}>
+            Most founders waste months juggling CAs, lawyers, web agencies and consultants — each one solving only their piece. LauncherDesk coordinates the whole picture.
+          </p>
+        </div>
+
+        {/* ── Two-column: feature cards + comparison table ── */}
         <div className="hp-why-grid">
           <div className="hp-why-left">
-            <div className="hp-section-eyebrow reveal-up" style={{textAlign:'left',display:'flex',alignItems:'center',gap:10,marginBottom:16,color:'#059669',transitionDelay:'0ms'}}>
-              Why LauncherDesk
-              <span className="hp-why-eyebrow-line" aria-hidden="true" />
-            </div>
-            <h2 className="reveal-up" style={{transitionDelay:'100ms'}}><span className="hp-why-accent">One desk</span> beats multiple vendors.</h2>
-            <p className="reveal-up" style={{transitionDelay:'200ms'}}>Most founders waste months juggling CAs, lawyers, web agencies and consultants — each one solving only their piece. LauncherDesk coordinates the whole picture.</p>
             <div className="hp-why-features reveal-up">
               {WHY_FEATURES.map((f,i)=>(
                 <div key={f.title} className="hp-why-feat" style={{animationDelay:`${300+i*100}ms`}}
