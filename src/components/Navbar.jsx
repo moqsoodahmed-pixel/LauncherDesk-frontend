@@ -302,16 +302,31 @@ function LoginDropdown() {
   }, [])
 
   if (isLoggedIn) return (
-    <div ref={ref} style={{ position: 'relative' }} className="hide-mobile">
-      <button onClick={() => setOpen(o => !o)} style={{ display: 'flex', alignItems: 'center', gap: 7, border: '1.5px solid var(--line)', background: '#F8FAFF', borderRadius: 8, padding: '0 14px', height: 38, fontSize: 13.5, fontWeight: 600, cursor: 'pointer', color: 'var(--navy)', fontFamily: 'inherit' }}>
-        <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
-        {user?.name?.split(' ')[0] || 'Account'}
-        <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5} style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}><path d="m6 9 6 6 6-6" /></svg>
+    <div ref={ref} style={{ position: 'relative' }} className="nav-auth-wrap">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="nav-acc-btn"
+        aria-expanded={open}
+        style={{
+          display: 'flex', alignItems: 'center', gap: 6,
+          border: '1.5px solid var(--line)', background: '#F8FAFF',
+          borderRadius: 999, padding: '0 14px', height: 38,
+          fontSize: 13, fontWeight: 700, cursor: 'pointer',
+          color: 'var(--navy)', fontFamily: 'inherit'
+        }}
+      >
+        <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="#1D6FE0" strokeWidth={2}>
+          <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+        </svg>
+        <span>{user?.name?.split(' ')[0] || 'Account'}</span>
+        <svg viewBox="0 0 24 24" width={12} height={12} fill="none" stroke="currentColor" strokeWidth={2.5} style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>
+          <path d="m6 9 6 6 6-6" />
+        </svg>
       </button>
       {open && (
-        <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: '#fff', border: '1.5px solid #E2E8F0', borderRadius: 12, boxShadow: '0 8px 32px rgba(0,0,0,.12)', minWidth: 180, overflow: 'hidden', zIndex: 200 }}>
+        <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: '#fff', border: '1.5px solid #E2E8F0', borderRadius: 12, boxShadow: '0 12px 36px rgba(0,0,0,.15)', minWidth: 200, overflow: 'hidden', zIndex: 200 }}>
           <div style={{ padding: '12px 16px', borderBottom: '1px solid #F1F5F9', fontSize: 12, color: '#64748B', fontWeight: 600 }}>{user?.email}</div>
-          <Link to="/user/dashboard" onClick={() => setOpen(false)} style={{ display: 'block', padding: '11px 16px', fontSize: 13.5, fontWeight: 600, color: 'var(--navy)', textDecoration: 'none', transition: 'background .1s' }} onMouseEnter={e => e.target.style.background = '#F8FAFF'} onMouseLeave={e => e.target.style.background = 'transparent'}>My Orders</Link>
+          <Link to="/user/dashboard" onClick={() => setOpen(false)} style={{ display: 'block', padding: '11px 16px', fontSize: 13.5, fontWeight: 600, color: 'var(--navy)', textDecoration: 'none', transition: 'background .1s' }} onMouseEnter={e => e.currentTarget.style.background = '#F8FAFF'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>My Orders & Dashboard</Link>
           <button onClick={() => { logout(); setOpen(false); navigate('/') }} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '11px 16px', fontSize: 13.5, fontWeight: 600, color: '#EF4444', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', borderTop: '1px solid #F1F5F9' }}>Log Out</button>
         </div>
       )}
@@ -319,20 +334,54 @@ function LoginDropdown() {
   )
 
   return (
-    <div ref={ref} style={{ position: 'relative' }} className="hide-mobile">
-      <button onClick={() => setOpen(o => !o)} className="nav-login-btn" style={{ display: 'flex', alignItems: 'center', gap: 6, border: '1px solid rgba(255,255,255,.35)', background: 'linear-gradient(180deg, #FB923C 0%, #F97316 55%, #EA6C0A 100%)', borderRadius: 999, padding: '0 18px', height: 38, fontSize: 13.5, fontWeight: 700, cursor: 'pointer', color: '#fff', fontFamily: 'inherit', letterSpacing: '.01em', boxShadow: '0 1px 0 rgba(255,255,255,.4) inset, 0 4px 14px rgba(249,115,22,.32)', transition: 'transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s,background .18s' }} onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(180deg, #FDBA74 0%, #F97316 55%, #EA6C0A 100%)'; e.currentTarget.style.boxShadow = '0 1px 0 rgba(255,255,255,.5) inset, 0 8px 22px rgba(249,115,22,.42)'; e.currentTarget.style.transform = 'translateY(-2px)' }} onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(180deg, #FB923C 0%, #F97316 55%, #EA6C0A 100%)'; e.currentTarget.style.boxShadow = '0 1px 0 rgba(255,255,255,.4) inset, 0 4px 14px rgba(249,115,22,.32)'; e.currentTarget.style.transform = 'none' }}>
-        Login
+    <div ref={ref} style={{ position: 'relative' }} className="nav-auth-wrap">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="nav-login-btn"
+        aria-expanded={open}
+        style={{
+          display: 'flex', alignItems: 'center', gap: 6,
+          border: '1px solid rgba(255,255,255,.35)',
+          background: 'linear-gradient(180deg, #FB923C 0%, #F97316 55%, #EA6C0A 100%)',
+          borderRadius: 999, padding: '0 16px', height: 38,
+          fontSize: 13.5, fontWeight: 700, cursor: 'pointer',
+          color: '#fff', fontFamily: 'inherit', letterSpacing: '.01em',
+          boxShadow: '0 1px 0 rgba(255,255,255,.4) inset, 0 4px 14px rgba(249,115,22,.32)',
+          transition: 'transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s,background .18s'
+        }}
+        onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(180deg, #FDBA74 0%, #F97316 55%, #EA6C0A 100%)'; e.currentTarget.style.boxShadow = '0 1px 0 rgba(255,255,255,.5) inset, 0 8px 22px rgba(249,115,22,.42)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(180deg, #FB923C 0%, #F97316 55%, #EA6C0A 100%)'; e.currentTarget.style.boxShadow = '0 1px 0 rgba(255,255,255,.4) inset, 0 4px 14px rgba(249,115,22,.32)'; e.currentTarget.style.transform = 'none' }}
+      >
+        <span>Login</span>
         <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="#fff" strokeWidth={2.5} style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}><path d="m6 9 6 6 6-6" /></svg>
       </button>
       {open && (
-        <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: '#fff', border: '1.5px solid #E2E8F0', borderRadius: 12, boxShadow: '0 8px 32px rgba(0,0,0,.12)', minWidth: 180, overflow: 'hidden', zIndex: 200 }}>
-          <Link to="/user/login" onClick={() => setOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '13px 16px', fontSize: 13.5, fontWeight: 600, color: 'var(--navy)', textDecoration: 'none', borderBottom: '1px solid #F1F5F9', transition: 'background .1s' }} onMouseEnter={e => e.currentTarget.style.background = '#F8FAFF'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-            <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="#1D6FE0" strokeWidth={2}><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
-            User Login
+        <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: '#fff', border: '1.5px solid #E2E8F0', borderRadius: 14, boxShadow: '0 12px 36px rgba(0,0,0,.15)', minWidth: 220, overflow: 'hidden', zIndex: 200 }}>
+          <Link
+            to="/user/login"
+            onClick={() => setOpen(false)}
+            style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 16px', fontSize: 13.5, fontWeight: 700, color: 'var(--navy)', textDecoration: 'none', borderBottom: '1px solid #F1F5F9', transition: 'background .1s' }}
+            onMouseEnter={e => e.currentTarget.style.background = '#F8FAFF'}
+            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+          >
+            <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="#1D6FE0" strokeWidth={2} style={{ marginTop: 2, flex: 'none' }}><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
+            <div>
+              <div>Login / Sign Up</div>
+              <div style={{ fontSize: 11, color: '#64748B', fontWeight: 500, marginTop: 1 }}>Customer Account &amp; Orders</div>
+            </div>
           </Link>
-          <Link to="/partner/login" onClick={() => setOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '13px 16px', fontSize: 13.5, fontWeight: 600, color: 'var(--navy)', textDecoration: 'none', transition: 'background .1s' }} onMouseEnter={e => e.currentTarget.style.background = '#F8FAFF'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-            <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="#F97316" strokeWidth={2}><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></svg>
-            Partner Login
+          <Link
+            to="/partner/login"
+            onClick={() => setOpen(false)}
+            style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 16px', fontSize: 13.5, fontWeight: 700, color: 'var(--navy)', textDecoration: 'none', transition: 'background .1s' }}
+            onMouseEnter={e => e.currentTarget.style.background = '#F8FAFF'}
+            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+          >
+            <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="#F97316" strokeWidth={2} style={{ marginTop: 2, flex: 'none' }}><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></svg>
+            <div>
+              <div>Partner Login</div>
+              <div style={{ fontSize: 11, color: '#64748B', fontWeight: 500, marginTop: 1 }}>Vendor &amp; Partner Portal</div>
+            </div>
           </Link>
         </div>
       )}

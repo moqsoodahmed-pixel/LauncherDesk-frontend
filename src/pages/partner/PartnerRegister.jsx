@@ -163,8 +163,14 @@ const S = `
   .pr-form-card { padding:28px 20px }
   .pr-row { grid-template-columns:1fr }
 }
+@media(max-width:640px){
+  .pr-partner-card { flex-wrap:wrap; padding:16px; gap:12px; }
+  .pr-partner-badge { margin-left:0; }
+}
 @media(max-width:480px){
-  .pr-benefits-inner { grid-template-columns:1fr }
+  .pr-hero-inner, .pr-benefits-inner, .pr-form-inner, .pr-partners-inner { padding:0 16px; }
+  .pr-benefits-inner { grid-template-columns:1fr; }
+  .pr-form-card { padding:24px 16px; }
 }
 `
 

@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useUserAuth } from '../context/UserAuthContext'
 import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import snehaImg from '../assets/sneha-ai.png'
 import { initState, currentOptions, currentPrompt, handleOption, handleText, buildLeadPayload, menuIntro } from '../lib/flowEngine'
@@ -22,6 +24,7 @@ const WA_QUICK_REPLIES = [
 ]
 
 export default function AIAssistant() {
+  const { isLoggedIn, user, logout } = useUserAuth()
   const [aiOpen,         setAiOpen]         = useState(false)
   const [waOpen,         setWaOpen]         = useState(false)
   const [drawerOpen,     setDrawerOpen]     = useState(false)
@@ -30,7 +33,11 @@ export default function AIAssistant() {
   const [sending,        setSending]        = useState(false)
   const [engineState,    setEngineState]    = useState(initState)
   const [activeOptions,  setActiveOptions]  = useState({ kind: 'none', options: [] })
-  const [mobileBarShown, setMobileBarShown] = useState(false)
+  const [mobileBarShown, setMobileBarShown] = useState(true)
+  const [showFloatingWa, setShowFloatingWa] = useState(false)
+  const [showScrollTop,  setShowScrollTop]  = useState(false)
+  const [activeSec,      setActiveSec]      = useState('reg')
+  const [activeSubSec,   setActiveSubSec]   = useState('inc')
 
   const bodyRef     = useRef(null)
   const inputRef    = useRef(null)
@@ -38,28 +45,31 @@ export default function AIAssistant() {
 
   const scrimOn = aiOpen || drawerOpen || waOpen
 
-  // Mobile bottom CTA bar: visible on load/scroll up, hides on downward scroll
+  // Scroll to top button visibility & mobile bottom bar & floating WhatsApp toggle
   useEffect(() => {
     let lastY = window.scrollY
     let ticking = false
     const onScroll = () => {
+      const y = window.scrollY
+      setShowScrollTop(y > 350)
       if (ticking) return
       ticking = true
       requestAnimationFrame(() => {
-        const y = window.scrollY
         const delta = y - lastY
-        if (delta > 8 && y > 100) {
-          // Scrolling down - hide mobile bar
+        if (delta > 8 && y > 80) {
           setMobileBarShown(false)
+          setShowFloatingWa(true)
         } else if (delta < -3 || y <= 50) {
-          // Scrolling up or at top - show mobile bar
           setMobileBarShown(true)
+          setShowFloatingWa(false)
         }
         lastY = y
         ticking = false
       })
     }
     setMobileBarShown(true)
+    setShowFloatingWa(false)
+    setShowScrollTop(window.scrollY > 350)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -170,34 +180,6 @@ export default function AIAssistant() {
     if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight
   }, [messages])
 
-  useEffect(() => {
-    function wireDrawer() {
-      document.querySelectorAll('.d-sec-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-          const sec  = btn.closest('.d-section')
-          const body = sec.querySelector('.d-sec-body')
-          const open = sec.classList.contains('open')
-          document.querySelectorAll('.d-section').forEach(s => {
-            s.classList.remove('open'); s.querySelector('.d-sec-body').style.maxHeight = null
-          })
-          if (!open) { sec.classList.add('open'); body.style.maxHeight = body.scrollHeight + 'px' }
-        })
-      })
-      document.querySelectorAll('.d-subsec-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-          const sub  = btn.closest('.d-subsec')
-          const body = sub.querySelector('.d-subsec-body')
-          const open = sub.classList.contains('open')
-          sub.classList.toggle('open', !open)
-          body.style.maxHeight = open ? null : body.scrollHeight + 'px'
-          const parentBody = btn.closest('.d-sec-body')
-          if (parentBody) parentBody.style.maxHeight = parentBody.scrollHeight + 'px'
-        })
-      })
-    }
-    if (drawerOpen) setTimeout(wireDrawer, 50)
-  }, [drawerOpen])
-
   function sendText(text) {
     const t = (text || '').trim()
     if (!t || sending) return
@@ -224,26 +206,46 @@ export default function AIAssistant() {
     }
     document.addEventListener('click', handleDocClick)
     return () => document.removeEventListener('click', handleDocClick)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  function DraSection({ label, children }) {
+  function DraSection({ id, label, children }) {
+    const isOpen = activeSec === id
     return (
-      <div className="d-section">
-        <button className="d-sec-btn">
-          {label}
+      <div className={`d-section${isOpen ? ' open' : ''}`}>
+        <button
+          type="button"
+          className="d-sec-btn"
+          onClick={() => setActiveSec(s => s === id ? null : id)}
+          aria-expanded={isOpen}
+        >
+          <span>{label}</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg>
         </button>
-        <div className="d-sec-body">{children}</div>
+        <div className={`d-sec-body${isOpen ? ' open' : ''}`} style={{ display: isOpen ? 'block' : 'none' }}>
+          {children}
+        </div>
       </div>
     )
   }
 
-  function DraSubSection({ label, children }) {
+  function DraSubSection({ id, label, children }) {
+    const isOpen = activeSubSec === id
     return (
-      <div className="d-subsec">
-        <button className="d-subsec-btn">{label}</button>
-        <div className="d-subsec-body">{children}</div>
+      <div className={`d-subsec${isOpen ? ' open' : ''}`}>
+        <button
+          type="button"
+          className="d-subsec-btn"
+          onClick={() => setActiveSubSec(s => s === id ? null : id)}
+          aria-expanded={isOpen}
+        >
+          <span>{label}</span>
+          <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: isOpen ? 'rotate(90deg)' : 'none', transition: 'transform 0.18s' }}>
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+        </button>
+        <div className={`d-subsec-body${isOpen ? ' open' : ''}`} style={{ display: isOpen ? 'block' : 'none' }}>
+          {children}
+        </div>
       </div>
     )
   }
@@ -251,7 +253,7 @@ export default function AIAssistant() {
   return (
     <>
       {/* ── FAB Stack: row1 = WhatsApp + Partner, row2 = Ask Sneha — hidden while chat/widget is open ── */}
-      <div className={`fab-stack${aiOpen || waOpen ? ' fab-stack--hidden' : ''}`}>
+      <div className={`fab-stack${aiOpen || waOpen ? ' fab-stack--hidden' : ''}${showFloatingWa ? ' mob-show' : ''}`}>
 
         {/* Row 1: WhatsApp + Partner With Us — side by side */}
         <div className="fab-row">
@@ -467,65 +469,144 @@ export default function AIAssistant() {
 
       <div className={`scrim${scrimOn ? ' on' : ''}`} onClick={onScrim} />
 
-      <aside className={`drawer${drawerOpen ? ' open' : ''}`} id="drawer">
+      {/* ── Scroll To Top Floating Button (Mobile & Tablet friendly) ── */}
+      <button
+        type="button"
+        className={`scroll-top-btn${showScrollTop && !scrimOn ? ' visible' : ''}`}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="Scroll to top"
+        title="Scroll to top"
+      >
+        <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <path d="m18 15-6-6-6 6" />
+        </svg>
+      </button>
+
+      {/* ── Mobile / Tablet Navigation Drawer ── */}
+      <aside className={`drawer${drawerOpen ? ' open' : ''}`} id="drawer" aria-label="Navigation drawer">
         <div className="d-top">
-          <a href="/" style={{display:'flex',alignItems:'center',textDecoration:'none'}}>
-            <img src={logoImg} alt="LauncherDesk" style={{height:34,width:'auto',display:'block'}} />
-          </a>
-          <button className="x" onClick={closeDrawer}>
+          <Link to="/" onClick={closeDrawer} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+            <img src={logoImg} alt="LauncherDesk" style={{ height: 34, width: 'auto', display: 'block' }} />
+          </Link>
+          <button type="button" className="x" onClick={closeDrawer} aria-label="Close menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
           </button>
         </div>
+
         <nav className="d-nav">
-          <DraSection label="Registrations">
-            <DraSubSection label="Business Incorporation">
-              <a href="/services/private-limited-company-registration">Private Limited Company Registration</a>
-              <a href="/services/llp-registration">LLP Registration</a>
-              <a href="/services/opc-registration">One Person Company Registration</a>
+          <DraSection id="reg" label="Registrations">
+            <DraSubSection id="inc" label="Business Incorporation">
+              <Link to="/services/private-limited-company-registration" onClick={closeDrawer}>Private Limited Company Registration</Link>
+              <Link to="/services/llp-registration" onClick={closeDrawer}>LLP Registration</Link>
+              <Link to="/services/opc-registration" onClick={closeDrawer}>One Person Company Registration</Link>
             </DraSubSection>
-            <DraSubSection label="Certifications">
-              <a href="/services/startup-india-dpiit">Start-up India Registration</a>
-              <a href="/services/msme-registration">MSME Udyam Registration</a>
-              <a href="/services/iso-certification">ISO Certification</a>
-              <a href="/services/gst-registration">GST Registration</a>
-              <a href="/services">PAN / TAN Application</a>
+            <DraSubSection id="cert" label="Certifications">
+              <Link to="/services/startup-india-dpiit" onClick={closeDrawer}>Start-up India Registration</Link>
+              <Link to="/services/msme-registration" onClick={closeDrawer}>MSME Udyam Registration</Link>
+              <Link to="/services/iso-certification" onClick={closeDrawer}>ISO Certification</Link>
+              <Link to="/services/gst-registration" onClick={closeDrawer}>GST Registration</Link>
+              <Link to="/services" onClick={closeDrawer}>PAN / TAN Application</Link>
             </DraSubSection>
-            <DraSubSection label="IPR &amp; Trademark">
-              <a href="/services/trademark-registration">Trademark Registration</a>
-              <a href="/services/trademark-registration">Trademark Objection</a>
-              <a href="/services/trademark-registration">Patent Registration</a>
-              <a href="/services/trademark-registration">Copyright Registration</a>
-              <a href="/services/trademark-registration">IP &amp; Trademark Management</a>
+            <DraSubSection id="ipr" label="IPR & Trademark">
+              <Link to="/services/trademark-registration" onClick={closeDrawer}>Trademark Registration</Link>
+              <Link to="/services/trademark-objection" onClick={closeDrawer}>Trademark Objection</Link>
+              <Link to="/services/patent-registration" onClick={closeDrawer}>Patent Registration</Link>
+              <Link to="/services/copyright-registration" onClick={closeDrawer}>Copyright Registration</Link>
+              <Link to="/services/ip-trademark-management" onClick={closeDrawer}>IP & Trademark Management</Link>
             </DraSubSection>
+            <div style={{ padding: '4px 10px 6px' }}>
+              <Link to="/services" onClick={closeDrawer} style={{ fontSize: 13, fontWeight: 700, color: 'var(--blue)', textDecoration: 'none', display: 'inline-block' }}>
+                View all registrations →
+              </Link>
+            </div>
           </DraSection>
-          <DraSection label="IT Services">
-            <DraSubSection label="Website Development">
-              <a href="/services/website-development">Static Website Development</a>
-              <a href="/services/website-development">Dynamic Website Development</a>
-              <a href="/services/ecommerce-website">E-commerce Website Development</a>
-              <a href="/services/crm-setup-lead-management">CRM Website / Portal Development</a>
+
+          <DraSection id="it" label="IT Services">
+            <DraSubSection id="web" label="Website Development">
+              <Link to="/services/static-website" onClick={closeDrawer}>Static Website Development</Link>
+              <Link to="/services/dynamic-website" onClick={closeDrawer}>Dynamic Website Development</Link>
+              <Link to="/services/ecommerce-website" onClick={closeDrawer}>E-commerce Website Development</Link>
+              <Link to="/services/crm-setup-lead-management" onClick={closeDrawer}>CRM Website / Portal Development</Link>
             </DraSubSection>
-            <DraSubSection label="Mobile Solutions">
-              <a href="/services/mobile-app-development">Mobile Application Development</a>
-              <a href="/services/software-saas-development">Custom Software Development</a>
+            <DraSubSection id="mob" label="Mobile Solutions">
+              <Link to="/services/mobile-app-development" onClick={closeDrawer}>Mobile Application Development</Link>
+              <Link to="/services/software-saas-development" onClick={closeDrawer}>Custom Software Development</Link>
             </DraSubSection>
-            <DraSubSection label="Digital Marketing">
-              <a href="/services/digital-marketing">SEO &amp; Search Marketing</a>
-              <a href="/services/social-media-management">Social Media Marketing</a>
-              <a href="/services/digital-marketing">Performance Marketing</a>
+            <DraSubSection id="mkt" label="Marketing & Sales">
+              <Link to="/services/seo-marketing" onClick={closeDrawer}>SEO & Search Marketing</Link>
+              <Link to="/services/social-media-management" onClick={closeDrawer}>Social Media Marketing</Link>
+              <Link to="/services/google-ads-paid-marketing" onClick={closeDrawer}>Performance Marketing</Link>
+              <Link to="/services/branding-logo-design" onClick={closeDrawer}>Brand Identity & Logo Design</Link>
+              <Link to="/services/whatsapp-business-api" onClick={closeDrawer}>WhatsApp Business API & Automation</Link>
             </DraSubSection>
+            <DraSubSection id="digital" label="Digital Marketing">
+              <Link to="/digital-marketing" onClick={closeDrawer}>AI Search Optimization</Link>
+              <Link to="/digital-marketing" onClick={closeDrawer}>Google Ads & Meta Campaigns</Link>
+              <Link to="/digital-marketing" onClick={closeDrawer}>Social Media & Creative Design</Link>
+            </DraSubSection>
+            <div style={{ padding: '4px 10px 6px' }}>
+              <Link to="/services" onClick={closeDrawer} style={{ fontSize: 13, fontWeight: 700, color: 'var(--blue)', textDecoration: 'none', display: 'inline-block' }}>
+                View all IT services →
+              </Link>
+            </div>
           </DraSection>
-          <a className="d-link" href="/market">Marketplace</a>
-          <a className="d-link" href="/office-restore">Office Setup</a>
-          <a className="d-link" href="/virtual-office">Virtual Office</a>
-          <a className="d-link" href="/estamp">E-Stamp</a>
+
+          <Link className="d-link" to="/market" onClick={closeDrawer}>Marketplace</Link>
+          <DraSection id="office" label="Office Setup">
+            <Link to="/office-restore" onClick={closeDrawer}>Office Furniture & Setup</Link>
+            <Link to="/office-restore/individual" onClick={closeDrawer}>Private Office Space</Link>
+            <Link to="/office-restore/coworking" onClick={closeDrawer}>Co-working Space</Link>
+          </DraSection>
+          <Link className="d-link" to="/virtual-office" onClick={closeDrawer}>Virtual Office</Link>
+          <Link className="d-link" to="/estamp" onClick={closeDrawer}>E-Stamp</Link>
         </nav>
-        <div style={{display:'flex',flexDirection:'column',gap:8}}>
-          <a href="/partner/login" className="btn" style={{
-            justifyContent:'center',background:'#E8EDF8',
-            color:'var(--navy)',fontWeight:600,border:'none'
-          }}>Login</a>
-          <a className="btn btn-primary" href="/services#finder" style={{justifyContent:'center'}}>Get Started →</a>
+
+        {/* ── Action Buttons: Login / Sign Up & Get Started (Always visible in fixed footer) ── */}
+        <div className="d-actions">
+          {isLoggedIn ? (
+            <div className="d-user-box">
+              <div className="d-user-info">
+                <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="#1D6FE0" strokeWidth={2}>
+                  <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                </svg>
+                <div className="d-user-text">
+                  <span className="d-user-name">{user?.name || 'My Account'}</span>
+                  <span className="d-user-email">{user?.email}</span>
+                </div>
+              </div>
+              <div className="d-btn-row">
+                <Link to="/user/dashboard" className="btn btn-sm d-btn-dashboard" onClick={closeDrawer}>
+                  Dashboard
+                </Link>
+                <button type="button" className="btn btn-sm d-btn-logout" onClick={() => { logout(); closeDrawer() }}>
+                  Log Out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="d-auth-box">
+              <div className="d-btn-row">
+                <Link to="/user/login" className="d-btn-login" onClick={closeDrawer}>
+                  <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2}>
+                    <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                  </svg>
+                  Login
+                </Link>
+                <Link to="/user/login" state={{ tab: 'register' }} className="d-btn-signup" onClick={closeDrawer}>
+                  <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2}>
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
+                  </svg>
+                  Sign Up
+                </Link>
+              </div>
+              <Link to="/services#finder" className="btn btn-primary d-btn-getstarted" onClick={closeDrawer}>
+                Get Started →
+              </Link>
+              <div className="d-partner-link-row">
+                <Link to="/partner/login" onClick={closeDrawer}>Are you a partner? Partner Login →</Link>
+              </div>
+            </div>
+          )}
         </div>
       </aside>
     </>
