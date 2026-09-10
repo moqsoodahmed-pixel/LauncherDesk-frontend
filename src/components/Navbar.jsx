@@ -20,8 +20,8 @@ const I = {
 /* ─── Search bar styles injected once ─────────────────────────────────────── */
 const SEARCH_STYLES = `
 .ld-search-wrap{position:relative;display:flex;align-items:center}
-.ld-search-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border:1.5px solid #E2E8F0;border-radius:8px;background:#F8FAFF;cursor:pointer;transition:all .18s;color:#475569;flex-shrink:0}
-.ld-search-btn:hover{background:#EFF6FF;border-color:#1D6FE0;color:#1D6FE0}
+.ld-search-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(255,255,255,.7);border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(240,247,255,.55));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 2px 8px rgba(15,28,46,.06);cursor:pointer;transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,background .18s,color .18s;color:#475569;flex-shrink:0}
+.ld-search-btn:hover{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(239,246,255,.85));color:#1D6FE0;transform:scale(1.05);box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 6px 16px rgba(29,111,224,.20)}
 .ld-search-overlay{position:fixed;inset:0;z-index:999;background:rgba(10,37,64,.45);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding-top:80px;animation:srchIn .15s ease}
 @keyframes srchIn{from{opacity:0}to{opacity:1}}
 .ld-search-box{background:#fff;border-radius:16px;width:100%;max-width:620px;box-shadow:0 24px 64px rgba(0,0,0,.22);overflow:hidden;animation:srchUp .2s cubic-bezier(.16,1,.3,1)}
@@ -320,7 +320,7 @@ function LoginDropdown() {
 
   return (
     <div ref={ref} style={{ position: 'relative' }} className="hide-mobile">
-      <button onClick={() => setOpen(o => !o)} className="nav-login-btn" style={{ display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: '#F97316', borderRadius: 8, padding: '0 18px', height: 38, fontSize: 13.5, fontWeight: 700, cursor: 'pointer', color: '#fff', fontFamily: 'inherit', letterSpacing: '.01em', boxShadow: '0 2px 8px rgba(249,115,22,.30)', transition: 'background .18s,box-shadow .18s' }} onMouseEnter={e => { e.currentTarget.style.background = '#EA6C0A'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(249,115,22,.40)' }} onMouseLeave={e => { e.currentTarget.style.background = '#F97316'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(249,115,22,.30)' }}>
+      <button onClick={() => setOpen(o => !o)} className="nav-login-btn" style={{ display: 'flex', alignItems: 'center', gap: 6, border: '1px solid rgba(255,255,255,.35)', background: 'linear-gradient(180deg, #FB923C 0%, #F97316 55%, #EA6C0A 100%)', borderRadius: 999, padding: '0 18px', height: 38, fontSize: 13.5, fontWeight: 700, cursor: 'pointer', color: '#fff', fontFamily: 'inherit', letterSpacing: '.01em', boxShadow: '0 1px 0 rgba(255,255,255,.4) inset, 0 4px 14px rgba(249,115,22,.32)', transition: 'transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s,background .18s' }} onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(180deg, #FDBA74 0%, #F97316 55%, #EA6C0A 100%)'; e.currentTarget.style.boxShadow = '0 1px 0 rgba(255,255,255,.5) inset, 0 8px 22px rgba(249,115,22,.42)'; e.currentTarget.style.transform = 'translateY(-2px)' }} onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(180deg, #FB923C 0%, #F97316 55%, #EA6C0A 100%)'; e.currentTarget.style.boxShadow = '0 1px 0 rgba(255,255,255,.4) inset, 0 4px 14px rgba(249,115,22,.32)'; e.currentTarget.style.transform = 'none' }}>
         Login
         <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="#fff" strokeWidth={2.5} style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}><path d="m6 9 6 6 6-6" /></svg>
       </button>
@@ -463,13 +463,30 @@ export default function Navbar({ activePage = '' }) {
 
   const closeSearch = useCallback(() => setSearchOpen(false), [])
 
+  // Subtle mouse-following glass highlight across the navbar surface
+  const onHeaderMouseMove = e => {
+    const el = navRef.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    el.style.setProperty('--mx', `${((e.clientX - r.left) / r.width * 100).toFixed(1)}%`)
+    el.style.setProperty('--my', `${((e.clientY - r.top) / r.height * 100).toFixed(1)}%`)
+  }
+  const onHeaderMouseEnter = () => navRef.current?.classList.add('mouse-glow')
+  const onHeaderMouseLeave = () => navRef.current?.classList.remove('mouse-glow')
+
   return (
     <>
       <style>{SEARCH_STYLES}</style>
 
       {searchOpen && <SearchOverlay onClose={closeSearch} />}
 
-      <header className={`site-header${scrolled ? ' is-scrolled' : ''}`} ref={navRef}>
+      <header
+        className={`site-header${scrolled ? ' is-scrolled' : ''}`}
+        ref={navRef}
+        onMouseMove={onHeaderMouseMove}
+        onMouseEnter={onHeaderMouseEnter}
+        onMouseLeave={onHeaderMouseLeave}
+      >
         <div className="header-in">
           <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0, marginRight: 36 }}>
             <img src={logoImg} alt="LauncherDesk" className="nav-logo-img" />

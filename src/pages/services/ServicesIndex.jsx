@@ -158,7 +158,7 @@ function ServiceFinder() {
               >
                 Get this plan actioned
               </button>
-              <a href="https://wa.me/918548854859" className="btn btn-wa btn-sm" style={{ justifyContent: 'center' }}>
+              <a href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services." target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-sm" style={{ justifyContent: 'center' }}>
                 <svg className="ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={WA}/></svg> WhatsApp
               </a>
               <button className="finder-back" onClick={handleStartOver}>Start over</button>
