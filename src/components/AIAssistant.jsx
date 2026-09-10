@@ -221,8 +221,12 @@ export default function AIAssistant() {
           <span>{label}</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg>
         </button>
-        <div className={`d-sec-body${isOpen ? ' open' : ''}`} style={{ display: isOpen ? 'block' : 'none' }}>
-          {children}
+        <div className="d-sec-body-wrapper">
+          <div className="d-sec-body-inner">
+            <div className="d-sec-body">
+              {children}
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -239,12 +243,16 @@ export default function AIAssistant() {
           aria-expanded={isOpen}
         >
           <span>{label}</span>
-          <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: isOpen ? 'rotate(90deg)' : 'none', transition: 'transform 0.18s' }}>
+          <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth="2.5" className="d-subsec-chev">
             <path d="m9 18 6-6-6-6"/>
           </svg>
         </button>
-        <div className={`d-subsec-body${isOpen ? ' open' : ''}`} style={{ display: isOpen ? 'block' : 'none' }}>
-          {children}
+        <div className="d-subsec-body-wrapper">
+          <div className="d-subsec-body-inner">
+            <div className="d-subsec-body">
+              {children}
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -253,7 +261,7 @@ export default function AIAssistant() {
   return (
     <>
       {/* ── FAB Stack: row1 = WhatsApp + Partner, row2 = Ask Sneha — hidden while chat/widget is open ── */}
-      <div className={`fab-stack${aiOpen || waOpen ? ' fab-stack--hidden' : ''}${showFloatingWa ? ' mob-show' : ''}`}>
+      <div className={`fab-stack${aiOpen || waOpen ? ' fab-stack--hidden' : ''}${showFloatingWa && !mobileBarShown ? ' mob-show' : ''}`}>
 
         {/* Row 1: WhatsApp + Partner With Us — side by side */}
         <div className="fab-row">
@@ -453,11 +461,9 @@ export default function AIAssistant() {
           Get Started
         </a>
 
-        <button className="mb-btn mb-btn--ai" onClick={openAI}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16,flex:'none'}}>
-            <path d={SPARK}/>
-          </svg>
-          Ask AI
+        <button type="button" className="mb-btn mb-btn--ai" onClick={openAI} aria-label="Ask Sneha">
+          <img className="mb-btn-av" src={snehaImg} alt="" />
+          Ask Sneha
         </button>
         <button type="button" className="mb-btn mb-btn--wa" onClick={toggleWA} aria-label="Open WhatsApp Support">
           <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" style={{flex:'none'}}>

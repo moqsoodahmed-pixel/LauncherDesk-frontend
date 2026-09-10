@@ -129,7 +129,7 @@ function RelatedServices({ items }) {
             <Link key={item.href} to={item.href} className="card">
               <h3 style={{fontSize:17,marginBottom:8}}>{item.label}</h3>
               <p style={{fontSize:14,color:'var(--text-2)',marginBottom:12}}>{item.note}</p>
-              <span className="arrow" style={{color:'var(--blue)',fontWeight:600,fontSize:14}}>Learn more →</span>
+              <span className="arrow" style={{color:'var(--blue)',fontWeight:600,fontSize:14}}>Learn more</span>
             </Link>
           ))}
         </div>

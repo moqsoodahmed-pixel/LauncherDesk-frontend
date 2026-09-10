@@ -29,7 +29,7 @@ export default function GuidesPage() {
               <a key={g.href} className="card reveal-up" href={g.href}>
                 <h3>{g.title}</h3>
                 <p>{g.desc}</p>
-                <span className="arrow">Read the service page →</span>
+                <span className="arrow">Read the service page</span>
               </a>
             ))}
           </div>
