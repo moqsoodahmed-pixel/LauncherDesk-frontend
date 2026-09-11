@@ -249,7 +249,7 @@ export default function EStampPage() {
           </div>
           <h1>
             We help you to get<br/>
-            <span>pan India E-stamps</span>
+            <span>Pan India E-stamps</span>
           </h1>
           <p>Get legally valid e-stamped documents for property, business and personal needs — handled end to end by LauncherDesk. No government portal visits required.</p>
           <div className="es-hero-cta">
