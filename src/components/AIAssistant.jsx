@@ -180,13 +180,53 @@ export default function AIAssistant() {
     if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight
   }, [messages])
 
-  function sendText(text) {
+  async function sendText(text) {
     const t = (text || '').trim()
     if (!t || sending) return
     setMessages(m => [...m, { role: 'u', text: t }])
-    const result = handleText(engineState, t)
-    if (result.action === 'submit') { submitLead(result.state); return }
-    applyEngineResult(result)
+
+    // If we're inside a guided flow step waiting for a specific text input (like name, mobile, email, city)
+    if (engineState.screen === 'flow') {
+      const result = handleText(engineState, t)
+      if (result.action === 'submit') { submitLead(result.state); return }
+      // If it matched a flow advance step, use it
+      if (result.state.stepId !== engineState.stepId) {
+        applyEngineResult(result)
+        return
+      }
+    }
+
+    // Call the intelligent Groq AI backend for natural, conversational responses
+    showTyping()
+    setSending(true)
+    try {
+      const res = await fetch(`${CONTACT_BASE}/voiceflow/interact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user?.id || 'guest-' + (window.sessionStorage.getItem('ld_ai_uid') || (() => {
+            const uid = Math.random().toString(36).substring(2, 9)
+            window.sessionStorage.setItem('ld_ai_uid', uid)
+            return uid
+          })()),
+          action: { type: 'text', payload: t }
+        })
+      })
+      const data = await res.json()
+      const reply = data?.traces?.[0]?.payload?.message
+      if (reply) {
+        addBotMsg(reply)
+      } else {
+        const result = handleText(engineState, t)
+        applyEngineResult(result)
+      }
+    } catch (err) {
+      console.warn('AI backend unreachable, falling back to local engine:', err)
+      const result = handleText(engineState, t)
+      applyEngineResult(result)
+    } finally {
+      setSending(false)
+    }
   }
 
   useEffect(() => {
