@@ -2498,6 +2498,9 @@ img, video, canvas, svg { max-width: 100%; display: block; }
 .legal-contact-card p:last-child { margin-bottom: 0; }
 
 /* Nav logo */
+.nav-logo-link { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; margin-right: 36px; }
+@media(max-width: 900px)  { .nav-logo-link { margin-right: 18px; } }
+@media(max-width: 640px)  { .nav-logo-link { margin-right: 8px; } }
 .nav-logo-img { height: 48px; width: auto; display: block; object-fit: contain; }
 @media(max-width: 1280px) { .nav-logo-img { height: 44px; } }
 @media(max-width: 900px)  { .nav-logo-img { height: 40px; } }
