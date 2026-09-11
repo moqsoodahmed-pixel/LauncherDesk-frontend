@@ -139,9 +139,9 @@ export default function AIAssistant() {
       launchedRef.current = true
       const fresh = initState()
       setEngineState(fresh)
-      setActiveOptions(currentOptions(fresh))
+      setActiveOptions({ kind: 'none', options: [] })
       showTyping()
-      addBotMsg(`${GREETING}\n\n${menuIntro()}`)
+      addBotMsg("Hi! I'm Sneha, your LauncherDesk business assistant. How can I help you today?")
     }
   }
   function closeAI()     { setAiOpen(false) }
@@ -215,6 +215,7 @@ export default function AIAssistant() {
       const data = await res.json()
       const reply = data?.traces?.[0]?.payload?.message
       if (reply) {
+        setActiveOptions({ kind: 'none', options: [] })
         addBotMsg(reply)
       } else {
         const result = handleText(engineState, t)
