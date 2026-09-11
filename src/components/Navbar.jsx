@@ -22,6 +22,10 @@ const SEARCH_STYLES = `
 .ld-search-wrap{position:relative;display:flex;align-items:center}
 .ld-search-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(255,255,255,.7);border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(240,247,255,.55));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 2px 8px rgba(15,28,46,.06);cursor:pointer;transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,background .18s,color .18s;color:#475569;flex-shrink:0}
 .ld-search-btn:hover{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(239,246,255,.85));color:#1D6FE0;transform:scale(1.05);box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 6px 16px rgba(29,111,224,.20)}
+@media (max-width: 640px) {
+  .ld-search-btn { width: 34px; height: 34px; }
+  .ld-search-btn svg { width: 15px; height: 15px; }
+}
 .ld-search-overlay{position:fixed;inset:0;z-index:999;background:rgba(10,37,64,.45);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding-top:80px;animation:srchIn .15s ease}
 @keyframes srchIn{from{opacity:0}to{opacity:1}}
 .ld-search-box{background:#fff;border-radius:16px;width:100%;max-width:620px;box-shadow:0 24px 64px rgba(0,0,0,.22);overflow:hidden;animation:srchUp .2s cubic-bezier(.16,1,.3,1)}
@@ -541,7 +545,7 @@ export default function Navbar({ activePage = '' }) {
         onMouseLeave={onHeaderMouseLeave}
       >
         <div className="header-in">
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0, marginRight: 36 }}>
+          <Link to="/" className="nav-logo-link">
             <img src={logoImg} alt="LauncherDesk" className="nav-logo-img" />
           </Link>
 
@@ -581,7 +585,7 @@ export default function Navbar({ activePage = '' }) {
           <div className="header-cta">
             {/* ── Search button ── */}
             <button
-              className="ld-search-btn hide-mobile"
+              className="ld-search-btn"
               onClick={() => setSearchOpen(true)}
               aria-label="Search services (Ctrl+K)"
               title="Search (Ctrl+K)"
