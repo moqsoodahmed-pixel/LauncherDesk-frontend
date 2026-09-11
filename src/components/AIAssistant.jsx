@@ -5,42 +5,42 @@ import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import snehaImg from '../assets/sneha-ai.png'
 import { initState, currentOptions, currentPrompt, handleOption, handleText, buildLeadPayload, menuIntro } from '../lib/flowEngine'
 
-const SPARK  = 'M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z'
+const SPARK = 'M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z'
 const ROCKET = 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0'
-const WA     = 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z'
+const WA = 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z'
 
 const CONTACT_BASE = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-production.up.railway.app/api'
 const GREETING = "Hi, I'm Sneha, your LauncherDesk business assistant."
 
 const WA_QUICK_REPLIES = [
   { label: 'Company Registration', emoji: '🏢', text: 'Hi LauncherDesk, I want to know about Company Registration.' },
-  { label: 'GST Registration',     emoji: '📋', text: 'Hi LauncherDesk, I want to know about GST Registration.' },
-  { label: 'Trademark',            emoji: '™️',  text: 'Hi LauncherDesk, I want to know about Trademark Registration.' },
-  { label: 'MSME Registration',    emoji: '💼', text: 'Hi LauncherDesk, I want to know about MSME Registration.' },
-  { label: 'Website Development',  emoji: '🌐', text: 'Hi LauncherDesk, I want to know about Website Development.' },
-  { label: 'Compliance & Tax',     emoji: '📊', text: 'Hi LauncherDesk, I want to know about Compliance & Tax.' },
-  { label: 'Virtual Office',       emoji: '🏠', text: 'Hi LauncherDesk, I want to know about Virtual Office.' },
-  { label: 'Talk to an Expert',    emoji: '💬', text: 'Hi LauncherDesk, I want to talk to an expert.' },
+  { label: 'GST Registration', emoji: '📋', text: 'Hi LauncherDesk, I want to know about GST Registration.' },
+  { label: 'Trademark', emoji: '™️', text: 'Hi LauncherDesk, I want to know about Trademark Registration.' },
+  { label: 'MSME Registration', emoji: '💼', text: 'Hi LauncherDesk, I want to know about MSME Registration.' },
+  { label: 'Website Development', emoji: '🌐', text: 'Hi LauncherDesk, I want to know about Website Development.' },
+  { label: 'Compliance & Tax', emoji: '📊', text: 'Hi LauncherDesk, I want to know about Compliance & Tax.' },
+  { label: 'Virtual Office', emoji: '🏠', text: 'Hi LauncherDesk, I want to know about Virtual Office.' },
+  { label: 'Talk to an Expert', emoji: '💬', text: 'Hi LauncherDesk, I want to talk to an expert.' },
 ]
 
 export default function AIAssistant() {
   const { isLoggedIn, user, logout } = useUserAuth()
-  const [aiOpen,         setAiOpen]         = useState(false)
-  const [waOpen,         setWaOpen]         = useState(false)
-  const [drawerOpen,     setDrawerOpen]     = useState(false)
-  const [messages,       setMessages]       = useState([])
-  const [input,          setInput]          = useState('')
-  const [sending,        setSending]        = useState(false)
-  const [engineState,    setEngineState]    = useState(initState)
-  const [activeOptions,  setActiveOptions]  = useState({ kind: 'none', options: [] })
+  const [aiOpen, setAiOpen] = useState(false)
+  const [waOpen, setWaOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [messages, setMessages] = useState([])
+  const [input, setInput] = useState('')
+  const [sending, setSending] = useState(false)
+  const [engineState, setEngineState] = useState(initState)
+  const [activeOptions, setActiveOptions] = useState({ kind: 'none', options: [] })
   const [mobileBarShown, setMobileBarShown] = useState(true)
   const [showFloatingWa, setShowFloatingWa] = useState(false)
-  const [showScrollTop,  setShowScrollTop]  = useState(false)
-  const [activeSec,      setActiveSec]      = useState('reg')
-  const [activeSubSec,   setActiveSubSec]   = useState('inc')
+  const [showScrollTop, setShowScrollTop] = useState(false)
+  const [activeSec, setActiveSec] = useState('reg')
+  const [activeSubSec, setActiveSubSec] = useState('inc')
 
-  const bodyRef     = useRef(null)
-  const inputRef    = useRef(null)
+  const bodyRef = useRef(null)
+  const inputRef = useRef(null)
   const launchedRef = useRef(false)
 
   const scrimOn = aiOpen || drawerOpen || waOpen
@@ -111,10 +111,10 @@ export default function AIAssistant() {
     showTyping()
     const payload = buildLeadPayload(state)
     try {
-      const res  = await fetch(`${CONTACT_BASE}/contact`, {
-        method : 'POST',
+      const res = await fetch(`${CONTACT_BASE}/contact`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body   : JSON.stringify(payload),
+        body: JSON.stringify(payload),
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(data.message || 'Submission failed')
@@ -144,13 +144,13 @@ export default function AIAssistant() {
       addBotMsg("Hi! I'm Sneha, your LauncherDesk business assistant. How can I help you today?")
     }
   }
-  function closeAI()     { setAiOpen(false) }
-  function openWA()      { setAiOpen(false); setWaOpen(true) }
-  function closeWA()     { setWaOpen(false) }
-  function toggleWA(e)   { if (e) e.preventDefault(); setAiOpen(false); setWaOpen(prev => !prev) }
-  function openDrawer()  { setDrawerOpen(true) }
+  function closeAI() { setAiOpen(false) }
+  function openWA() { setAiOpen(false); setWaOpen(true) }
+  function closeWA() { setWaOpen(false) }
+  function toggleWA(e) { if (e) e.preventDefault(); setAiOpen(false); setWaOpen(prev => !prev) }
+  function openDrawer() { setDrawerOpen(true) }
   function closeDrawer() { setDrawerOpen(false) }
-  function onScrim()     { closeDrawer(); closeAI(); closeWA() }
+  function onScrim() { closeDrawer(); closeAI(); closeWA() }
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -215,7 +215,15 @@ export default function AIAssistant() {
       const data = await res.json()
       const reply = data?.traces?.[0]?.payload?.message
       if (reply) {
-        setActiveOptions({ kind: 'none', options: [] })
+        // If user is asking for services list/options, show the clean template option cards
+        const isAskingServices = /\b(services?|what (do you (provide|offer)|are (the|your) services)|list (of )?services?|what can you do|what services are available)\b/i.test(t)
+        if (isAskingServices) {
+          const fresh = initState()
+          setEngineState(fresh)
+          setActiveOptions(currentOptions(fresh))
+        } else {
+          setActiveOptions({ kind: 'none', options: [] })
+        }
         addBotMsg(reply)
       } else {
         const result = handleText(engineState, t)
@@ -260,7 +268,7 @@ export default function AIAssistant() {
           aria-expanded={isOpen}
         >
           <span>{label}</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 9 6 6 6-6" /></svg>
         </button>
         <div className="d-sec-body-wrapper">
           <div className="d-sec-body-inner">
@@ -285,7 +293,7 @@ export default function AIAssistant() {
         >
           <span>{label}</span>
           <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth="2.5" className="d-subsec-chev">
-            <path d="m9 18 6-6-6-6"/>
+            <path d="m9 18 6-6-6-6" />
           </svg>
         </button>
         <div className="d-subsec-body-wrapper">
@@ -316,7 +324,7 @@ export default function AIAssistant() {
           >
             {/* WhatsApp official logo icon */}
             <svg viewBox="0 0 32 32" width={26} height={26} fill="currentColor">
-              <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/>
+              <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z" />
             </svg>
           </button>
 
@@ -327,7 +335,7 @@ export default function AIAssistant() {
             title="Partner with us"
           >
             <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
             Partner With Us
           </a>
@@ -350,7 +358,7 @@ export default function AIAssistant() {
           <div className="wa-widget-head-left">
             <div className="wa-widget-logo-badge">
               <svg viewBox="0 0 32 32" width={22} height={22} fill="currentColor">
-                <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/>
+                <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z" />
               </svg>
             </div>
             <div className="wa-widget-info">
@@ -362,7 +370,7 @@ export default function AIAssistant() {
             </div>
           </div>
           <button className="wa-widget-close" onClick={closeWA} aria-label="Close WhatsApp Support">
-            <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18M6 6l12 12" /></svg>
           </button>
         </div>
 
@@ -400,7 +408,7 @@ export default function AIAssistant() {
             onClick={closeWA}
           >
             <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor">
-              <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/>
+              <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z" />
             </svg>
             Open WhatsApp Chat
           </a>
@@ -418,7 +426,7 @@ export default function AIAssistant() {
             <small>Virtual Assistance</small>
           </div>
           <button className="x" onClick={closeAI} aria-label="Close AI Assistant">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12" /></svg>
           </button>
         </div>
 
@@ -429,7 +437,7 @@ export default function AIAssistant() {
                 <img className="as-av" src={snehaImg} alt="" />
                 <div className={`as-msg a as-typing${msg.role === 'typing-exit' ? ' as-typing-exit' : ''}`} aria-live="polite">
                   <span className="as-typing-label">Typing</span>
-                  <span className="as-typing-dots"><span/><span/><span/></span>
+                  <span className="as-typing-dots"><span /><span /><span /></span>
                 </div>
               </div>
             ) : msg.role === 'a' ? (
@@ -437,14 +445,14 @@ export default function AIAssistant() {
                 <img className="as-av" src={snehaImg} alt="" />
                 <div className="as-msg a as-msg-in">
                   {msg.text.split('\n').map((line, j, arr) => (
-                    <span key={j}>{line}{j < arr.length - 1 && <br/>}</span>
+                    <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
                   ))}
                 </div>
               </div>
             ) : (
               <div key={i} className={`as-msg ${msg.role}`}>
                 {msg.text.split('\n').map((line, j, arr) => (
-                  <span key={j}>{line}{j < arr.length - 1 && <br/>}</span>
+                  <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
                 ))}
               </div>
             )
@@ -488,7 +496,7 @@ export default function AIAssistant() {
             onChange={e => setInput(e.target.value)}
           />
           <button type="submit" aria-label="Send" disabled={sending}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z" /></svg>
           </button>
         </form>
         <div className="as-disc">General information only · not a substitute for professional legal or tax advice</div>
@@ -496,8 +504,8 @@ export default function AIAssistant() {
 
       <div className={`mobile-bar${mobileBarShown ? ' mb-shown' : ''}`}>
         <a href="/services#finder" className="mb-btn mb-btn--primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:16,height:16,flex:'none'}}>
-            <path d="M5 12h14M12 5l7 7-7 7"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 16, height: 16, flex: 'none' }}>
+            <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
           Get Started
         </a>
@@ -507,8 +515,8 @@ export default function AIAssistant() {
           Ask Sneha
         </button>
         <button type="button" className="mb-btn mb-btn--wa" onClick={toggleWA} aria-label="Open WhatsApp Support">
-          <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" style={{flex:'none'}}>
-            <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/>
+          <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" style={{ flex: 'none' }}>
+            <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z" />
           </svg>
           WhatsApp
         </button>
@@ -536,7 +544,7 @@ export default function AIAssistant() {
             <img src={logoImg} alt="LauncherDesk" style={{ height: 34, width: 'auto', display: 'block' }} />
           </Link>
           <button type="button" className="x" onClick={closeDrawer} aria-label="Close menu">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12" /></svg>
           </button>
         </div>
 
@@ -614,7 +622,7 @@ export default function AIAssistant() {
             <div className="d-user-box">
               <div className="d-user-info">
                 <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="#1D6FE0" strokeWidth={2}>
-                  <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                  <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
                 </svg>
                 <div className="d-user-text">
                   <span className="d-user-name">{user?.name || 'My Account'}</span>
@@ -635,13 +643,13 @@ export default function AIAssistant() {
               <div className="d-btn-row">
                 <Link to="/user/login" className="d-btn-login" onClick={closeDrawer}>
                   <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2}>
-                    <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                    <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
                   </svg>
                   Login
                 </Link>
                 <Link to="/user/login" state={{ tab: 'register' }} className="d-btn-signup" onClick={closeDrawer}>
                   <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2}>
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="20" y1="8" x2="20" y2="14" /><line x1="23" y1="11" x2="17" y2="11" />
                   </svg>
                   Sign Up
                 </Link>
