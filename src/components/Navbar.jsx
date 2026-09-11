@@ -334,7 +334,7 @@ function LoginDropdown() {
       {open && (
         <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: '#fff', border: '1.5px solid #E2E8F0', borderRadius: 12, boxShadow: '0 12px 36px rgba(0,0,0,.15)', minWidth: 200, overflow: 'hidden', zIndex: 200 }}>
           <div style={{ padding: '12px 16px', borderBottom: '1px solid #F1F5F9', fontSize: 12, color: '#64748B', fontWeight: 600 }}>{user?.email}</div>
-          <Link to="/user/dashboard" onClick={() => setOpen(false)} style={{ display: 'block', padding: '11px 16px', fontSize: 13.5, fontWeight: 600, color: 'var(--navy)', textDecoration: 'none', transition: 'background .1s' }} onMouseEnter={e => e.currentTarget.style.background = '#F8FAFF'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>My Orders & Dashboard</Link>
+          <Link to="/user/dashboard" onClick={() => setOpen(false)} style={{ display: 'block', padding: '11px 16px', fontSize: 13.5, fontWeight: 600, color: 'var(--navy)', textDecoration: 'none', transition: 'background .1s' }} onMouseEnter={e => e.currentTarget.style.background = '#F8FAFF'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>My Services & Dashboard</Link>
           <button onClick={() => { logout(); setOpen(false); navigate('/') }} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '11px 16px', fontSize: 13.5, fontWeight: 600, color: '#EF4444', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', borderTop: '1px solid #F1F5F9' }}>Log Out</button>
         </div>
       )}
