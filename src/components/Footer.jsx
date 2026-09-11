@@ -143,12 +143,15 @@ export default function Footer() {
             </a>
             <div style={{ display:'flex',gap:8 }}>
               <a href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I%20need%20assistance%20with%20my%20business." target="_blank" rel="noopener noreferrer"
-                style={{ display:'inline-flex',alignItems:'center',gap:6,padding:'8px 14px',background:'#25D366',color:'#fff',borderRadius:8,fontWeight:700,fontSize:12.5,textDecoration:'none' }}>
+                style={{ display:'inline-flex',alignItems:'center',gap:6,padding:'8px 14px',background:'#25D366',color:'#fff',borderRadius:8,fontWeight:700,fontSize:12.5,textDecoration:'none',transition:'opacity .15s' }}>
                 <svg viewBox="0 0 32 32" width={14} height={14} fill="currentColor"><path d={WA_PATH}/></svg>
                 WhatsApp
               </a>
               <a href="mailto:contact@launcherdesk.com"
-                style={{ display:'inline-flex',alignItems:'center',gap:6,padding:'8px 14px',background:'rgba(255,255,255,.08)',color:'#dde8f4',borderRadius:8,fontWeight:600,fontSize:12.5,textDecoration:'none',border:'1px solid rgba(255,255,255,.1)' }}>
+                style={{ display:'inline-flex',alignItems:'center',gap:6,padding:'8px 14px',background:'linear-gradient(135deg, #1D6FE0, #1656B0)',color:'#fff',borderRadius:8,fontWeight:600,fontSize:12.5,textDecoration:'none',boxShadow:'0 2px 8px rgba(29,111,224,.35)',border:'1px solid rgba(255,255,255,.15)',transition:'all .15s' }}
+                onMouseEnter={e=>{ e.currentTarget.style.filter='brightness(1.1)'; e.currentTarget.style.transform='translateY(-1px)' }}
+                onMouseLeave={e=>{ e.currentTarget.style.filter='none'; e.currentTarget.style.transform='none' }}>
+                <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 Email us
               </a>
             </div>
@@ -193,14 +196,6 @@ export default function Footer() {
             <div style={{ display:'flex',alignItems:'center',gap:16,flexWrap:'wrap' }}>
               <img src={msmeImg} alt="MSME Registered" style={{ height:36,width:'auto',filter:'brightness(0) invert(1)',opacity:.75 }} />
               <img src={startupIndiaImg} alt="DPIIT Startup India" style={{ height:32,width:'auto',opacity:.85 }} />
-            </div>
-            {/* Legal links */}
-            <div style={{ display:'flex',gap:20,flexWrap:'wrap' }}>
-              {[['Terms','/legal/terms'],['Privacy','/legal/privacy'],['Refund Policy','/legal/refund'],['Disclaimer','/legal/disclaimer']].map(([l,h])=>(
-                <a key={h} href={h} style={{ fontSize:12,color:'#8aadd0',textDecoration:'none',transition:'color .15s' }}
-                  onMouseEnter={e=>e.currentTarget.style.color='#6da8e0'}
-                  onMouseLeave={e=>e.currentTarget.style.color='#8aadd0'}>{l}</a>
-              ))}
             </div>
           </div>
           <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:12 }}>
