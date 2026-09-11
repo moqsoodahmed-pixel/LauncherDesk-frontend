@@ -216,11 +216,37 @@ export default function Footer() {
 
       <style>{`
         @media(max-width:900px){
-          footer > div > div:first-child { grid-template-columns: 1fr 1fr !important; }
-          footer > div > div:nth-child(2) { grid-template-columns: 1fr !important; }
+          footer > div > div:first-child { 
+            grid-template-columns: 1fr 1fr !important; 
+            gap: 32px 24px !important;
+          }
+          footer > div > div:first-child > div:first-child {
+            grid-column: 1 / -1 !important;
+            max-width: 560px;
+          }
+          footer > div > div:nth-child(2) { 
+            grid-template-columns: 1fr 1fr !important;
+            gap: 24px !important;
+          }
+          footer > div > div:nth-child(2) > div:first-child {
+            grid-column: 1 / -1 !important;
+          }
         }
         @media(max-width:600px){
-          footer > div > div:first-child { grid-template-columns: 1fr !important; }
+          footer > div > div:first-child { 
+            grid-template-columns: 1fr 1fr !important; 
+            gap: 28px 16px !important;
+          }
+          footer > div > div:first-child > div:first-child {
+            grid-column: 1 / -1 !important;
+          }
+          footer > div > div:nth-child(2) { 
+            grid-template-columns: 1fr !important; 
+            gap: 20px !important;
+          }
+          footer > div > div:nth-child(2) > div:first-child {
+            grid-column: auto !important;
+          }
         }
       `}</style>
     </footer>
