@@ -28,9 +28,8 @@ const SEARCH_STYLES = `
 @keyframes srchUp{from{transform:translateY(-16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
 .ld-search-input-row{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #F1F5F9}
 .ld-search-input{flex:1;border:none;outline:none;font-size:16px;font-family:inherit;color:#0A2540;background:transparent}
-.ld-search-input::placeholder{color:#94A3B8}
-.ld-search-esc{font-size:11px;font-weight:700;color:#94A3B8;border:1px solid #E2E8F0;border-radius:5px;padding:2px 7px;cursor:pointer;flex-shrink:0}
-.ld-search-results{max-height:420px;overflow-y:auto}
+.ld-search-esc{display:flex;align-items:center;justify-content:center;width:26px;height:26px;color:#94A3B8;border:1px solid #E2E8F0;border-radius:6px;background:#F8FAFC;cursor:pointer;flex-shrink:0;padding:0;transition:all .15s}
+.ld-search-esc:hover{background:#EFF6FF;color:#1D6FE0;border-color:#BFDBFE}
 .ld-search-result{display:flex;align-items:flex-start;gap:12px;padding:12px 20px;cursor:pointer;transition:background .12s;text-decoration:none;color:inherit}
 .ld-search-result:hover,.ld-search-result:focus{background:#F8FAFF;outline:none}
 .ld-search-result-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#EFF6FF;color:#1D6FE0;flex-shrink:0;margin-top:2px;letter-spacing:.04em}
@@ -83,7 +82,12 @@ function SearchOverlay({ onClose }) {
             aria-label="Search"
             autoComplete="off"
           />
-          <button className="ld-search-esc" onClick={onClose} aria-label="Close search">ESC</button>
+          <button className="ld-search-esc" onClick={onClose} aria-label="Close search">
+            <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
         </div>
 
         <div className="ld-search-results">
