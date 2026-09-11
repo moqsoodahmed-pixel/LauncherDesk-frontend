@@ -3342,35 +3342,35 @@ img, video, svg { max-width: 100%; }
 
 /* Card Specific Positions & Floating Keyframes */
 .hv-card--top-left {
-  top: 6px;
-  left: 4px;
+  top: 8px;
+  left: -8px;
   animation: hvFloatTopLeft 6.4s ease-in-out infinite alternate;
 }
 .hv-card--top-right {
-  top: 6px;
-  right: 4px;
+  top: 8px;
+  right: -6px;
   animation: hvFloatTopRight 7.2s ease-in-out infinite alternate 0.5s;
 }
 .hv-card--mid-left {
   top: 50%;
   margin-top: -19px;
-  left: -14px;
+  left: -48px;
   animation: hvFloatMidLeft 8.0s ease-in-out infinite alternate 1.0s;
 }
 .hv-card--mid-right {
   top: 50%;
   margin-top: -19px;
-  right: -14px;
+  right: -24px;
   animation: hvFloatMidRight 6.8s ease-in-out infinite alternate 0.4s;
 }
 .hv-card--bot-left {
-  bottom: 6px;
-  left: 4px;
+  bottom: 8px;
+  left: -8px;
   animation: hvFloatBotLeft 7.6s ease-in-out infinite alternate 1.4s;
 }
 .hv-card--bot-right {
-  bottom: 6px;
-  right: 4px;
+  bottom: 8px;
+  right: -6px;
   animation: hvFloatBotRight 6.1s ease-in-out infinite alternate 0.8s;
 }
 
