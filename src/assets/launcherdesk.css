@@ -3457,3 +3457,245 @@ img, video, svg { max-width: 100%; }
   .lc-panel-in { animation: none; }
 }
 
+
+/* ================================================================
+   RESPONSIVE FIT PASS — preserve design, eliminate nested mobile gutters
+   ================================================================ */
+@media (max-width: 640px) {
+  /* Homepage sections use an inline 28px wrapper plus grid-level padding.
+     Collapse that duplicated gutter so cards use the available viewport. */
+  .hp-types > div,
+  .hp-how > div,
+  .hp-resources > div {
+    width: 100% !important;
+    max-width: 1200px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .hp-types-grid,
+  .hp-how-steps,
+  .hp-res-grid,
+  .hp-stats-grid,
+  .hp-svc-cats {
+    width: 100% !important;
+    max-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box;
+  }
+
+  .hp-types-grid,
+  .hp-how-steps,
+  .hp-res-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .hp-type-card,
+  .hp-how-step,
+  .hp-res-card,
+  .hp-svc-card,
+  .hp-why-feat {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  /* The Why section has its own container padding; keep one clean gutter. */
+  .hp-why-grid,
+  .hp-why-intro {
+    width: 100%;
+    max-width: 1200px;
+    padding-left: 14px;
+    padding-right: 14px;
+    box-sizing: border-box;
+  }
+
+  .hp-why-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .hp-why-feat {
+    padding: 18px 16px;
+  }
+
+  .hp-why-feat > div:last-child {
+    min-width: 0;
+  }
+
+  /* Prevent desktop min-content sizing from making cards narrower than the viewport. */
+  .hp-why-left,
+  .hp-why-features,
+  .hp-why-vs-wrap,
+  .hp-types-grid > *,
+  .hp-how-steps > *,
+  .hp-res-grid > * {
+    min-width: 0;
+  }
+
+  /* Common responsive cards/containers across page families. */
+  .card,
+  .type-tile,
+  .pricebox,
+  .price-card,
+  .help-card,
+  .art-card,
+  .svc-card,
+  .market-card,
+  .market-product-card,
+  .mp-product-card,
+  .journey-step,
+  .lc-panel,
+  .finder,
+  .form,
+  .final {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Keep content readable without wasting horizontal space. */
+  .card,
+  .type-tile,
+  .pricebox,
+  .price-card,
+  .help-card,
+  .art-card,
+  .svc-card {
+    padding-inline: clamp(14px, 4.5vw, 20px);
+  }
+
+  /* Images/embedded media can never widen their cards. */
+  .card img,
+  .type-tile img,
+  .pricebox img,
+  .price-card img,
+  .help-card img,
+  .art-card img,
+  .svc-card img,
+  .market-card img,
+  .market-product-card img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Long labels and action rows may wrap instead of forcing overflow. */
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-quiet,
+  .btn-soft,
+  .btn-light,
+  .btn-ghost-d {
+    max-width: 100%;
+  }
+
+  .hp-type-tags,
+  .hp-trust-pills,
+  .lc2-chips {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Give fixed bottom UI enough breathing room without changing its behavior. */
+  body {
+    padding-bottom: max(66px, calc(66px + env(safe-area-inset-bottom, 0px)));
+  }
+}
+
+@media (max-width: 430px) {
+  .hp-types > div,
+  .hp-how > div,
+  .hp-resources > div,
+  .hp-why-grid,
+  .hp-why-intro {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .hp-type-card,
+  .hp-how-step,
+  .hp-res-card {
+    padding: 18px 16px;
+  }
+
+  .hp-why-feat {
+    padding: 16px 14px;
+    gap: 12px;
+  }
+
+  .hp-why-feat-icon {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (max-width: 360px) {
+  .hp-types > div,
+  .hp-how > div,
+  .hp-resources > div,
+  .hp-why-grid,
+  .hp-why-intro {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .hp-type-card,
+  .hp-how-step,
+  .hp-res-card,
+  .card,
+  .type-tile,
+  .pricebox,
+  .price-card,
+  .help-card,
+  .art-card,
+  .svc-card {
+    padding-inline: 14px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* Tablet: use two columns where the existing content supports it,
+     while preventing min-content sizing from squeezing cards. */
+  .hp-types-grid,
+  .hp-how-steps,
+  .hp-res-grid,
+  .hp-stats-grid,
+  .hp-why-grid {
+    min-width: 0;
+  }
+
+  .hp-types-grid > *,
+  .hp-how-steps > *,
+  .hp-res-grid > *,
+  .hp-why-grid > * {
+    min-width: 0;
+  }
+}
+
+/* Never allow decorative transforms or oversized children to create a
+   real horizontal layout expansion. This is intentionally scoped rather
+   than using overflow-x:hidden as a universal band-aid. */
+@media (max-width: 640px) {
+  .hp-hero,
+  .hp-services,
+  .hp-why,
+  .hp-types,
+  .hp-how,
+  .hp-resources,
+  .hp-faq,
+  .hp-cta-section,
+  .lc2-section {
+    max-width: 100%;
+  }
+
+  .hp-hero-inner,
+  .hp-svc-cats,
+  .hp-why-grid,
+  .hp-types-grid,
+  .hp-how-steps,
+  .hp-res-grid,
+  .lc2-inner {
+    min-width: 0;
+  }
+}
