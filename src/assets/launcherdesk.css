@@ -419,61 +419,47 @@ img, video, canvas, svg { max-width: 100%; display: block; }
   top: 0;
   z-index: 60;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.62) 0%, rgba(240,247,255,0.5) 100%);
-  backdrop-filter: blur(22px) saturate(165%);
-  -webkit-backdrop-filter: blur(22px) saturate(165%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(243,249,255,0.91) 100%);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid rgba(200, 220, 245, 0.45);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.75) inset,
-    0 -1px 0 rgba(255, 255, 255, 0.25) inset,
-    0 18px 40px -18px rgba(29, 93, 184, 0.18),
-    0 2px 10px rgba(15, 28, 46, 0.05);
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 4px 24px rgba(29, 93, 184, 0.08),
+    0 1px 6px rgba(15, 28, 46, 0.06);
   transition: box-shadow 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.32s ease, background 0.32s ease, border-radius 0.32s ease, top 0.32s ease;
+              border-color 0.32s ease, background 0.32s ease, border-radius 0.32s ease;
   isolation: isolate;
 }
-/* Liquid-glass gloss sweep + slow-drifting ambient light blobs, one pseudo-element */
+/* Subtle static inner highlight — no animation, no sweep */
 .site-header::before {
   content: "";
   position: absolute; inset: 0; pointer-events: none; z-index: -1;
   background:
-    linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.5) 42%, transparent 58%),
-    radial-gradient(140px 90px at 12% 30%, rgba(43, 114, 212, 0.20), transparent 70%),
-    radial-gradient(160px 100px at 88% 70%, rgba(147, 197, 253, 0.22), transparent 72%);
-  background-size: 220% 100%, 120% 120%, 120% 120%;
-  background-position: 100% 0, 0% 0%, 100% 100%;
+    radial-gradient(160px 80px at 15% 0%, rgba(43, 114, 212, 0.06), transparent 70%),
+    radial-gradient(160px 80px at 85% 0%, rgba(147, 197, 253, 0.07), transparent 70%);
   background-repeat: no-repeat;
-  animation: navGloss 14s ease-in-out infinite, navBlobs 24s ease-in-out infinite alternate;
-  opacity: 0.75;
+  opacity: 1;
 }
-/* Cursor-follow highlight — set via --mx/--my from Navbar's onMouseMove */
+/* Cursor-follow highlight — extremely subtle on the whiter surface */
 .site-header::after {
   content: "";
   position: absolute; inset: 0; pointer-events: none; z-index: -1;
-  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.45), transparent 72%);
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.28), transparent 70%);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
 .site-header.mouse-glow::after { opacity: 1; }
-@keyframes navGloss {
-  0%, 65% { background-position: 130% 0, 0% 0%, 100% 100%; }
-  100%    { background-position: -30% 0, 0% 0%, 100% 100%; }
-}
-@keyframes navBlobs {
-  0%   { background-position: 130% 0, 8% 24%, 92% 76%; }
-  100% { background-position: 130% 0, 20% 40%, 80% 60%; }
-}
 .site-header.is-scrolled {
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.86) 0%, rgba(240,247,255,0.8) 100%);
-  backdrop-filter: blur(26px) saturate(175%);
-  -webkit-backdrop-filter: blur(26px) saturate(175%);
+    linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(243,249,255,0.95) 100%);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 -1px 0 rgba(255, 255, 255, 0.3) inset,
-    0 22px 48px -16px rgba(29, 93, 184, 0.22),
-    0 12px 32px rgba(15, 28, 46, 0.10);
-  border-bottom-color: rgba(255, 255, 255, 0.6);
+    0 1px 0 rgba(255, 255, 255, 1) inset,
+    0 6px 28px rgba(29, 93, 184, 0.10),
+    0 1px 8px rgba(15, 28, 46, 0.08);
+  border-bottom-color: rgba(200, 220, 245, 0.55);
 }
 @media (min-width: 1025px) {
   .site-header {
@@ -481,13 +467,13 @@ img, video, canvas, svg { max-width: 100%; display: block; }
     width: min(1360px, calc(100% - 40px));
     margin: 0 auto;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(200, 220, 245, 0.50);
+    border-bottom: 1px solid rgba(200, 220, 245, 0.45);
   }
-  .site-header.is-scrolled { border-color: rgba(255, 255, 255, 0.7); }
+  .site-header.is-scrolled { border-color: rgba(200, 220, 245, 0.65); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .site-header::before { animation: none; opacity: 0.4; }
+  .site-header::before { animation: none; opacity: 0.6; }
   .site-header::after { transition: none; }
 }
 .header-in {
