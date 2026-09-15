@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useUserAuth } from '../context/UserAuthContext'
 import SEO, { serviceSchema, breadcrumbSchema, faqSchema } from './SEO'
 
@@ -203,39 +203,69 @@ function QuoteForm({ svc }) {
 function BuyNowButton({ svc, priceCard }) {
   const { isLoggedIn, token } = useUserAuth()
   const navigate = useNavigate()
+  const location = useLocation()
   const [loading, setLoading]       = useState(false)
   const [msg, setMsg]               = useState('')
   const [payEnabled, setPayEnabled] = useState(null)
 
   const rawPrice     = priceCard?.price || ''
-  const numericPrice = parseFloat(rawPrice.replace(/[₹,]/g, ''))
+  const numericPrice = parseFloat(rawPrice.replace(/[₹,*]/g, ''))
   const hasPrice     = !isNaN(numericPrice) && numericPrice > 0
 
   useEffect(() => {
     if (!hasPrice) return
-    fetch(`${API_BASE}/payments/config`).then(r => r.json()).then(d => setPayEnabled(d.enabled)).catch(() => setPayEnabled(false))
+    fetch(`${API_BASE}/payments/config`)
+      .then(r => r.json())
+      .then(d => setPayEnabled(d.enabled))
+      .catch(() => setPayEnabled(false))
   }, [hasPrice])
 
-  if (!hasPrice || payEnabled === null) return null
+  // No numeric price — no payment button at all
+  if (!hasPrice) return null
 
-  if (!payEnabled) return (
-    <div style={{marginTop:10}}>
-      <Link to="/company/contact" style={{display:'block',width:'100%',textAlign:'center',padding:'12px',borderRadius:10,background:'rgba(255,255,255,.15)',color:'#fff',fontWeight:700,fontSize:14,textDecoration:'none',border:'1px solid rgba(255,255,255,.25)'}}>
-        Request a Quote →
-      </Link>
-    </div>
-  )
+  // While checking payment config, show the login/pay button already
+  // (will navigate to login if needed; payment will only fire once config loads)
+  const btnLabel = loading
+    ? 'Processing…'
+    : isLoggedIn
+      ? `Pay ₹${numericPrice.toLocaleString('en-IN')} →`
+      : 'Login to Pay'
 
   async function handleBuy() {
-    if (!isLoggedIn) { navigate('/user/login', { state: { from: window.location.pathname, tab: 'login' } }); return }
+    // Not logged in → go to login, preserve current service page path
+    if (!isLoggedIn) {
+      navigate('/user/login', {
+        state: { from: location.pathname, tab: 'login' }
+      })
+      return
+    }
+
+    // Payment config not yet loaded or disabled → fallback to contact
+    if (payEnabled === null) return
+    if (!payEnabled) {
+      navigate('/company/contact')
+      return
+    }
+
     setLoading(true); setMsg('')
     try {
-      const res  = await fetch(`${API_BASE}/payments/create-order`, { method:'POST', headers:{'Content-Type':'application/json',Authorization:`Bearer ${token}`}, body: JSON.stringify({ amount:numericPrice, serviceSlug:svc.slug||'', serviceTitle:svc.title }) })
+      const res  = await fetch(`${API_BASE}/payments/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ amount: numericPrice, serviceSlug: svc.slug || '', serviceTitle: svc.title })
+      })
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Failed to create order')
+
       if (!window.Razorpay) {
-        await new Promise((resolve, reject) => { const s = document.createElement('script'); s.src='https://checkout.razorpay.com/v1/checkout.js'; s.onload=resolve; s.onerror=reject; document.body.appendChild(s) })
+        await new Promise((resolve, reject) => {
+          const s = document.createElement('script')
+          s.src = 'https://checkout.razorpay.com/v1/checkout.js'
+          s.onload = resolve; s.onerror = reject
+          document.body.appendChild(s)
+        })
       }
+
       await new Promise((resolve) => {
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
@@ -243,27 +273,74 @@ function BuyNowButton({ svc, priceCard }) {
           theme: { color: '#1D6FE0' },
           handler: async (response) => {
             try {
-              const vRes  = await fetch(`${API_BASE}/payments/verify`, { method:'POST', headers:{'Content-Type':'application/json',Authorization:`Bearer ${token}`}, body: JSON.stringify({ razorpay_order_id:response.razorpay_order_id, razorpay_payment_id:response.razorpay_payment_id, razorpay_signature:response.razorpay_signature, serviceSlug:svc.slug||'', serviceTitle:svc.title }) })
+              const vRes  = await fetch(`${API_BASE}/payments/verify`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({
+                  razorpay_order_id:   response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature:  response.razorpay_signature,
+                  serviceSlug:  svc.slug || '',
+                  serviceTitle: svc.title
+                })
+              })
               const vData = await vRes.json()
-              setMsg(vData.success ? '✅ Payment successful! Our team will contact you within 1 business day.' : '⚠️ Payment received but verification pending. Contact support@launcherdesk.com')
-            } catch { setMsg('Payment received. Contact support@launcherdesk.com to confirm.') }
+              setMsg(vData.success
+                ? '✅ Payment successful! Our team will contact you within 1 business day.'
+                : '⚠️ Payment received but verification pending. Contact support@launcherdesk.com')
+            } catch {
+              setMsg('Payment received. Contact support@launcherdesk.com to confirm.')
+            }
             resolve()
           },
           modal: { ondismiss: () => { setLoading(false); resolve() } },
         })
         rzp.open()
       })
-    } catch (err) { setMsg(`❌ ${err.message || 'Something went wrong. Please try again.'}`) }
-    finally { setLoading(false) }
+    } catch (err) {
+      setMsg(`❌ ${err.message || 'Something went wrong. Please try again.'}`)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const isSuccess = msg.startsWith('✅'), isFail = msg.startsWith('❌')
+  const isSuccess = msg.startsWith('✅')
+  const isFail    = msg.startsWith('❌')
+
   return (
-    <div style={{marginTop:10}}>
-      <button onClick={handleBuy} disabled={loading} aria-busy={loading} style={{display:'block',width:'100%',textAlign:'center',padding:'12px',borderRadius:10,background:loading?'#94A3B8':'rgba(255,255,255,.15)',color:'#fff',fontWeight:700,fontSize:14,border:'1px solid rgba(255,255,255,.3)',cursor:loading?'not-allowed':'pointer',fontFamily:'inherit',transition:'background .15s'}}>
-        {loading ? 'Processing…' : isLoggedIn ? `Pay ₹${numericPrice.toLocaleString('en-IN')} →` : '🔒 Login to Pay'}
+    <div style={{ marginTop: 10 }}>
+      <button
+        onClick={handleBuy}
+        disabled={loading}
+        aria-busy={loading}
+        style={{
+          display: 'block', width: '100%', textAlign: 'center',
+          padding: '12px', borderRadius: 10,
+          background: loading ? '#94A3B8' : 'rgba(255,255,255,.15)',
+          color: '#fff', fontWeight: 700, fontSize: 14,
+          border: '1px solid rgba(255,255,255,.3)',
+          cursor: loading ? 'not-allowed' : 'pointer',
+          fontFamily: 'inherit', transition: 'background .15s'
+        }}
+      >
+        {btnLabel}
       </button>
-      {msg && <div role="status" aria-live="polite" style={{marginTop:10,padding:'10px 12px',borderRadius:8,background:isSuccess?'#DCFCE7':isFail?'#FEF2F2':'#FEF9C3',border:`1px solid ${isSuccess?'#BBF7D0':isFail?'#FECACA':'#FDE68A'}`,fontSize:12.5,color:isSuccess?'#166534':isFail?'#DC2626':'#854D0E',lineHeight:1.5}}>{msg}</div>}
+      {msg && (
+        <div
+          role="status"
+          aria-live="polite"
+          style={{
+            marginTop: 10, padding: '10px 12px', borderRadius: 8,
+            background: isSuccess ? '#DCFCE7' : isFail ? '#FEF2F2' : '#FEF9C3',
+            border: `1px solid ${isSuccess ? '#BBF7D0' : isFail ? '#FECACA' : '#FDE68A'}`,
+            fontSize: 12.5,
+            color: isSuccess ? '#166534' : isFail ? '#DC2626' : '#854D0E',
+            lineHeight: 1.5
+          }}
+        >
+          {msg}
+        </div>
+      )}
     </div>
   )
 }
