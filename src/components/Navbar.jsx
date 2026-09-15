@@ -189,7 +189,7 @@ function MegaIT() {
         <div className="mp-left">
           <button className="mp-cat mp-cat--active" data-mp-cat="web"><span className="mp-cat-label">Website Development</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg></button>
           <button className="mp-cat" data-mp-cat="mob"><span className="mp-cat-label">Mobile Solutions</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg></button>
-          <button className="mp-cat" data-mp-cat="mkt"><span className="mp-cat-label">Marketing &amp; Sales</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg></button>
+          <button className="mp-cat" data-mp-cat="mkt"><span className="mp-cat-label">AI Automation</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg></button>
           <button className="mp-cat" data-mp-cat="s30"><span className="mp-cat-label">Digital Marketing</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg></button>
         </div>
         <div className="mp-right">
@@ -210,52 +210,33 @@ function MegaIT() {
             </div>
           </div>
           <div className="mp-panel" data-mp-panel="mkt">
-            <div className="mp-panel-head">Marketing &amp; Sales</div>
+            <div className="mp-panel-head">AI Automation</div>
             <div className="mp-grp-grid">
               {[
-                ['Branding &amp; Creative', [
-                  { name: 'Brand Identity &amp; Strategy', href: '/services/branding-logo-design' },
-                  { name: 'Logo &amp; Visual Design', href: '/services/branding-logo-design' },
-                  { name: 'Marketing Creatives', href: '/services/branding-logo-design' },
-                  { name: 'Presentation &amp; Sales Deck Design', href: '/services/branding-logo-design' },
+                ['AI Assistants & Chatbots', [
+                  { name: 'WhatsApp Chatbot', href: '/services/whatsapp-chatbot' },
+                  { name: 'AI Voice Agent', href: '/services/ai-voice-agent' },
+                  { name: 'AI-Powered CRM', href: '/services/ai-powered-crm' },
+                  { name: 'LLM Visibility & Citations', href: '/services/llm-visibility-citations' },
                 ]],
-                ['Digital Marketing', [
-                  { name: 'SEO &amp; Search Marketing', href: '/services/seo-marketing' },
-                  { name: 'Social Media Marketing', href: '/services/social-media-management' },
-                  { name: 'Performance Marketing', href: '/services/google-ads-paid-marketing' },
-                  { name: 'Content Marketing', href: '/services/content-marketing' },
-                  { name: 'Influencer Marketing', href: '/services/digital-marketing' },
-                ]],
-                ['WhatsApp &amp; Customer Engagement', [
+                ['Messaging Automation', [
+                  { name: 'SMS Blasting & Bulk SMS', href: '/services/sms-blasting' },
+                  { name: 'Email Blasting & Campaigns', href: '/services/email-blasting' },
                   { name: 'WhatsApp Business API', href: '/services/whatsapp-business-api' },
                   { name: 'WhatsApp Automation', href: '/services/whatsapp-business-api' },
-                  { name: 'WhatsApp Campaigns', href: '/services/whatsapp-business-api' },
-                  { name: 'Email Marketing', href: '/services/email-marketing' },
-                  { name: 'SMS Marketing', href: '/services/digital-marketing' },
                 ]],
-                ['CRM &amp; Marketing Automation', [
-                  { name: 'CRM Setup &amp; Integration', href: '/services/crm-setup-lead-management' },
-                  { name: 'Lead Management', href: '/services/crm-setup-lead-management' },
-                  { name: 'Marketing Automation', href: '/services/business-automation' },
+                ['AI-Powered Marketing', [
+                  { name: 'AI Search Optimization', href: '/services/ai-search-optimization' },
+                  { name: 'Content Strategy & AI Creation', href: '/services/content-marketing' },
+                  { name: 'Technical SEO Audits', href: '/services/technical-seo-audits' },
+                  { name: 'Local & International SEO', href: '/services/local-international-seo' },
+                ]],
+                ['Workflow & CRM Automation', [
+                  { name: 'CRM Setup & Integration', href: '/services/crm-setup-lead-management' },
                   { name: 'Workflow Automation', href: '/services/business-automation' },
-                  { name: 'Analytics &amp; Reporting', href: '/services/digital-marketing' },
+                  { name: 'Lead Management', href: '/services/crm-setup-lead-management' },
+                  { name: 'Business Automation', href: '/services/business-automation' },
                 ]],
-              ].map(([group, items]) => (
-                <div key={group} className="mp-grp">
-                  <div className="mp-grp-h" dangerouslySetInnerHTML={{ __html: group }} />
-                  {items.map(item => <SvcLink key={item.name} href={item.href} title={item.name} />)}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="mp-panel" data-mp-panel="s30">
-            <div className="mp-panel-head">Digital Marketing</div>
-            <div className="mp-grp-grid">
-              {[
-                ['AI-Powered SEO', [{ name: 'AI Search Optimization', href: '/services/ai-search-optimization' }, { name: 'LLM Visibility & Citations', href: '/services/llm-visibility-citations' }, { name: 'Technical SEO Audits', href: '/services/technical-seo-audits' }, { name: 'Content Strategy & Creation', href: '/services/content-marketing' }, { name: 'Local & International SEO', href: '/services/local-international-seo' }]],
-                ['Lead Generation', [{ name: 'Google Ads Management', href: '/services/google-ads-paid-marketing' }, { name: 'Meta & Instagram Ads', href: '/services/meta-instagram-ads' }, { name: 'LinkedIn B2B Campaigns', href: '/services/linkedin-b2b-campaigns' }, { name: 'YouTube Advertising', href: '/services/youtube-advertising' }, { name: 'Remarketing & Retargeting', href: '/services/remarketing-retargeting' }]],
-                ['Social Media', [{ name: 'Social Media Strategy', href: '/services/social-media-management' }, { name: 'Content Calendar & Posting', href: '/services/content-calendar-posting' }, { name: 'Community Management', href: '/services/community-management' }, { name: 'Ad Creative Design', href: '/services/ad-creative-design' }, { name: 'Reels & Short-Form Video', href: '/services/reels-short-form-video' }]],
-                ['Design & Branding', [{ name: 'Brand Identity Design', href: '/services/branding-logo-design' }, { name: 'Logo & Visual Identity', href: '/services/branding-logo-design' }, { name: 'Marketing Collaterals', href: '/services/marketing-collaterals' }, { name: 'Packaging Design', href: '/services/packaging-design' }, { name: 'Social Media Design', href: '/services/social-media-design' }]],
               ].map(([group, items]) => (
                 <div key={group} className="mp-grp">
                   <div className="mp-grp-h">{group}</div>
@@ -263,8 +244,45 @@ function MegaIT() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
+          </div>    <div className="mp-panel" data-mp-panel="s30">
+            <div className="mp-panel-head">Digital Marketing</div>
+            <div className="mp-grp-grid">
+              {[
+                ['SEO & Content', [
+                  { name: 'SEO & Search Marketing', href: '/services/seo-marketing' },
+                  { name: 'Content Marketing', href: '/services/content-marketing' },
+                  { name: 'Technical SEO Audits', href: '/services/technical-seo-audits' },
+                  { name: 'Local & International SEO', href: '/services/local-international-seo' },
+                  { name: 'AI Search Optimization', href: '/services/ai-search-optimization' },
+                ]],
+                ['Paid Advertising', [
+                  { name: 'Google Ads Management', href: '/services/google-ads-paid-marketing' },
+                  { name: 'Meta & Instagram Ads', href: '/services/meta-instagram-ads' },
+                  { name: 'LinkedIn B2B Campaigns', href: '/services/linkedin-b2b-campaigns' },
+                  { name: 'YouTube Advertising', href: '/services/youtube-advertising' },
+                  { name: 'Remarketing & Retargeting', href: '/services/remarketing-retargeting' },
+                ]],
+                ['Social Media', [
+                  { name: 'Social Media Management', href: '/services/social-media-management' },
+                  { name: 'Content Calendar & Posting', href: '/services/content-calendar-posting' },
+                  { name: 'Community Management', href: '/services/community-management' },
+                  { name: 'Reels & Short-Form Video', href: '/services/reels-short-form-video' },
+                ]],
+                ['Design & Branding', [
+                  { name: 'Branding & Logo Design', href: '/services/branding-logo-design' },
+                  { name: 'Ad Creative Design', href: '/services/ad-creative-design' },
+                  { name: 'Social Media Design', href: '/services/social-media-design' },
+                  { name: 'Marketing Collaterals', href: '/services/marketing-collaterals' },
+                  { name: 'Packaging Design', href: '/services/packaging-design' },
+                ]],
+              ].map(([group, items]) => (
+                <div key={group} className="mp-grp">
+                  <div className="mp-grp-h">{group}</div>
+                  {items.map(item => <SvcLink key={item.name} href={item.href} title={item.name} />)}
+                </div>
+              ))}
+            </div>
+          </div>  </div>
       </div>
       <div className="mp-foot-wrap"><div className="mp-footer"><a href="/services">View all IT services →</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/digital-marketing">View Digital Marketing →</a></div></div>
     </div>

@@ -3473,4 +3473,346 @@ export const SERVICES = {
       { href: '/services/ad-creative-design', label: 'Ad Creative Design', note: 'Extend your social designs to paid ad campaigns.' },
     ]
   },
+
+  // ── AI Automation — new services ────────────────────────────────────────────
+
+  'whatsapp-chatbot': {
+    title: 'WhatsApp Chatbot',
+    metaTitle: 'WhatsApp Chatbot Development India | LauncherDesk',
+    metaDesc: 'AI-powered WhatsApp chatbots for Indian businesses — automated customer support, lead qualification, appointment booking and order tracking on WhatsApp.',
+    eyebrow: 'AUTOMATE — AI',
+    crumbCategory: 'AUTOMATE',
+    lead: 'Deploy an intelligent WhatsApp chatbot that handles customer queries, qualifies leads and books appointments 24/7 — without a human agent.',
+    priceCard: { label: 'Setup from', price: '₹24,999', sub: '+ monthly retainer + taxes' },
+    helpCard: { title: 'Want a bot on WhatsApp?', body: 'Tell us your use case — support, sales or booking — and we will design the right flow.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>WhatsApp has over 500 million users in India and is the primary communication channel for most customers. A WhatsApp chatbot lets you automate conversations at scale — answering FAQs, qualifying leads, collecting contact details, booking appointments and sending order updates — all without a human agent.</p><p>LauncherDesk builds AI-powered WhatsApp chatbots on the official Meta WhatsApp Business API — reliable, scalable and compliant with WhatsApp policies.</p>' },
+      who: {
+        heading: "Who it's for", items: [
+          'Service businesses receiving high volumes of repetitive customer queries',
+          'E-commerce businesses needing automated order tracking and support',
+          'Education and healthcare businesses needing appointment scheduling',
+          'Real estate and financial services needing lead qualification at scale',
+        ]
+      },
+      included: {
+        heading: "What's included", items: [
+          'WhatsApp Business API setup and verification',
+          'Chatbot flow design (conversation maps for your use cases)',
+          'AI-powered natural language understanding',
+          'Lead capture and CRM integration',
+          'Appointment booking flow (optional)',
+          'Handover to human agent when needed',
+          'Analytics dashboard — messages, leads, resolution rate',
+        ]
+      },
+      process: {
+        heading: 'Step-by-step process', steps: [
+          { title: 'Use case definition', body: 'Map the exact conversations the bot needs to handle.' },
+          { title: 'Flow design', body: 'Design conversation flows with decision trees and AI fallbacks.' },
+          { title: 'Build and integrate', body: 'Build the bot and integrate with your CRM and systems.' },
+          { title: 'Testing', body: 'Comprehensive testing across all conversation paths.' },
+          { title: 'Launch and monitor', body: 'Go live with ongoing monitoring and optimisation.' },
+        ]
+      },
+      pricing: {
+        heading: 'Transparent pricing', rows: [
+          ['Setup (bot build + API)', 'From ₹24,999 one-time'],
+          ['Monthly retainer', 'From ₹8,999/month — hosting, monitoring, updates'],
+          ['WhatsApp conversation fees', 'Passed through at Meta rates (approx ₹0.58–₹0.89 per conversation)'],
+          ['Taxes', 'GST shown separately'],
+        ]
+      },
+      faq: {
+        heading: 'Frequently asked questions', items: [
+          { q: 'Does this use the official WhatsApp API?', a: 'Yes — we use the official Meta WhatsApp Business API. No unofficial tools that risk account bans.' },
+          { q: 'Can the bot hand over to a human?', a: 'Yes — when the bot cannot handle a query, it escalates to a live agent seamlessly.' },
+          { q: 'What languages does the bot support?', a: 'English and Hindi by default. Regional languages (Kannada, Tamil, Telugu) available as add-ons.' },
+        ]
+      }
+    },
+    related: [
+      { href: '/services/whatsapp-business-api', label: 'WhatsApp Business API', note: 'The API foundation the chatbot runs on.' },
+      { href: '/services/ai-powered-crm', label: 'AI-Powered CRM', note: 'Connect chatbot leads directly to your CRM.' },
+      { href: '/services/crm-setup-lead-management', label: 'CRM Setup', note: 'Manage chatbot-generated leads.' },
+    ]
+  },
+
+  'ai-voice-agent': {
+    title: 'AI Voice Agent',
+    metaTitle: 'AI Voice Agent for Business India | LauncherDesk',
+    metaDesc: 'AI-powered voice agents that handle inbound and outbound calls for Indian businesses — customer support, appointment booking, lead qualification and reminders.',
+    eyebrow: 'AUTOMATE — AI',
+    crumbCategory: 'AUTOMATE',
+    lead: 'An AI voice agent that answers calls, books appointments, qualifies leads and handles customer queries — available 24/7, in English and Hindi, at a fraction of the cost of a human agent.',
+    priceCard: { label: 'Setup from', price: '₹34,999', sub: '+ per-minute usage + taxes' },
+    helpCard: { title: 'Want AI on your phone lines?', body: 'Tell us your call volume and use case — we will design the right voice agent.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>AI voice agents are replacing traditional IVR systems and call centre agents for routine calls. They understand natural language, handle complex conversations, book appointments, qualify leads and transfer to human agents when needed — all in real time.</p><p>LauncherDesk deploys AI voice agents for inbound support, outbound lead follow-up, appointment reminders and payment reminders — with Indian language support and seamless CRM integration.</p>' },
+      who: {
+        heading: "Who it's for", items: [
+          'Healthcare clinics needing appointment scheduling and reminders',
+          'Real estate and financial services for lead follow-up calls',
+          'E-commerce businesses for order tracking and support',
+          'Service businesses receiving high inbound call volumes',
+        ]
+      },
+      included: {
+        heading: "What's included", items: [
+          'Voice agent design and script development',
+          'Natural language understanding in English and Hindi',
+          'Inbound call handling (24/7 availability)',
+          'Outbound call campaigns (lead follow-up, reminders)',
+          'CRM and calendar integration',
+          'Call recording and transcription',
+          'Analytics — call volume, resolution rate, transfer rate',
+        ]
+      },
+      process: {
+        heading: 'Step-by-step process', steps: [
+          { title: 'Call flow design', body: 'Map all inbound and outbound conversation scenarios.' },
+          { title: 'Voice and language setup', body: 'Configure voice, language and accent preferences.' },
+          { title: 'Integration', body: 'Connect to your phone system, CRM and calendar.' },
+          { title: 'Testing', body: 'Extensive testing with real call scenarios.' },
+          { title: 'Launch', body: 'Go live with monitoring and continuous improvement.' },
+        ]
+      },
+      pricing: {
+        heading: 'Transparent pricing', rows: [
+          ['Setup', 'From ₹34,999 one-time'],
+          ['Monthly retainer', 'From ₹12,999/month — hosting and monitoring'],
+          ['Usage', 'Per-minute pricing — quoted based on volume'],
+          ['Taxes', 'GST shown separately'],
+        ]
+      },
+      faq: {
+        heading: 'Frequently asked questions', items: [
+          { q: 'Does it sound like a real person?', a: 'Modern AI voice agents are highly natural-sounding. We use premium text-to-speech engines with Indian English accents.' },
+          { q: 'Can it handle complex queries?', a: 'Simple to moderately complex queries — yes. For complex issues it escalates to a human agent.' },
+          { q: 'Which languages does it support?', a: 'English and Hindi. Regional language support (Kannada, Tamil, Telugu) available.' },
+        ]
+      }
+    },
+    related: [
+      { href: '/services/whatsapp-chatbot', label: 'WhatsApp Chatbot', note: 'Complement voice with WhatsApp automation.' },
+      { href: '/services/crm-setup-lead-management', label: 'CRM Setup', note: 'Capture every call as a CRM lead.' },
+      { href: '/services/business-automation', label: 'Workflow Automation', note: 'Automate follow-ups after calls.' },
+    ]
+  },
+
+  'sms-blasting': {
+    title: 'SMS Blasting & Bulk SMS',
+    metaTitle: 'Bulk SMS Service India | LauncherDesk',
+    metaDesc: 'Bulk SMS and SMS blasting service for Indian businesses — promotional SMS, transactional alerts, OTPs and DLT-compliant messaging across India.',
+    eyebrow: 'AUTOMATE — Messaging',
+    crumbCategory: 'AUTOMATE',
+    lead: 'Reach thousands of customers instantly with targeted bulk SMS campaigns — DLT-registered, TRAI-compliant and delivered with 98% open rates.',
+    priceCard: { label: 'Per SMS from', price: '₹0.12', sub: '+ DLT registration + taxes' },
+    helpCard: { title: 'Need bulk SMS?', body: 'Tell us your monthly volume and use case — we will set up your DLT account and campaigns.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>SMS has a 98% open rate — higher than email, WhatsApp or any other channel. Bulk SMS is one of the most cost-effective ways to reach customers with promotions, appointment reminders, OTPs, payment alerts and event notifications.</p><p>LauncherDesk provides end-to-end bulk SMS services — DLT registration, sender ID setup, template approval and campaign management — fully compliant with TRAI regulations.</p>' },
+      who: {
+        heading: "Who it's for", items: [
+          'Retail and e-commerce businesses running promotional campaigns',
+          'Healthcare providers sending appointment reminders',
+          'Financial services sending payment and account alerts',
+          'Any business needing high-delivery transactional notifications',
+        ]
+      },
+      included: {
+        heading: "What's included", items: [
+          'DLT registration (mandatory for Indian SMS)',
+          'Sender ID and template approval',
+          'Bulk SMS platform setup and access',
+          'Contact list management and segmentation',
+          'Promotional and transactional SMS campaigns',
+          'Delivery reports and analytics',
+          'API integration for automated triggers',
+        ]
+      },
+      process: {
+        heading: 'Step-by-step process', steps: [
+          { title: 'DLT registration', body: 'Register your business on the DLT platform (mandatory for all commercial SMS in India).' },
+          { title: 'Sender ID and templates', body: 'Set up your brand sender ID and get message templates approved.' },
+          { title: 'Platform setup', body: 'Configure the bulk SMS platform and upload your contact lists.' },
+          { title: 'Campaign launch', body: 'Schedule and send your first campaign with real-time delivery tracking.' },
+          { title: 'Reporting', body: 'Detailed delivery reports — sent, delivered, failed — per campaign.' },
+        ]
+      },
+      pricing: {
+        heading: 'Transparent pricing', rows: [
+          ['Transactional SMS', 'From ₹0.12/SMS'],
+          ['Promotional SMS', 'From ₹0.10/SMS'],
+          ['DLT registration', '₹4,999 one-time (mandatory)'],
+          ['Platform setup', '₹2,999 one-time'],
+          ['Taxes', 'GST shown separately'],
+        ]
+      },
+      faq: {
+        heading: 'Frequently asked questions', items: [
+          { q: 'What is DLT registration and why do I need it?', a: 'DLT (Distributed Ledger Technology) registration is mandatory for all commercial SMS in India as per TRAI regulations. Without it, messages will be blocked.' },
+          { q: 'What is the difference between promotional and transactional SMS?', a: 'Promotional SMS are marketing messages (restricted to non-DND numbers, 9am–9pm). Transactional SMS are service alerts (OTPs, booking confirmations) — can be sent anytime.' },
+          { q: 'How fast is delivery?', a: 'Transactional SMS are typically delivered within 3–5 seconds. Promotional campaigns depend on volume but usually within minutes.' },
+        ]
+      }
+    },
+    related: [
+      { href: '/services/email-blasting', label: 'Email Blasting', note: 'Combine SMS with email for multi-channel campaigns.' },
+      { href: '/services/whatsapp-chatbot', label: 'WhatsApp Chatbot', note: 'Add WhatsApp automation alongside SMS.' },
+      { href: '/services/whatsapp-business-api', label: 'WhatsApp Business API', note: 'Higher engagement than SMS with WhatsApp.' },
+    ]
+  },
+
+  'email-blasting': {
+    title: 'Email Blasting & Email Campaigns',
+    metaTitle: 'Bulk Email Marketing Service India | LauncherDesk',
+    metaDesc: 'Professional email blasting and email marketing campaigns for Indian businesses — newsletters, promotional emails, drip campaigns and transactional emails.',
+    eyebrow: 'AUTOMATE — Messaging',
+    crumbCategory: 'AUTOMATE',
+    lead: 'Send thousands of targeted emails with professional designs, automated drip sequences and detailed analytics — all managed by LauncherDesk.',
+    priceCard: { label: 'Monthly from', price: '₹4,999/mo', sub: '+ taxes, based on list size' },
+    helpCard: { title: 'Have an email list?', body: 'Share your list size and campaign goals — we will design the right email strategy.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>Email marketing delivers the highest ROI of any digital marketing channel — an average of ₹3,600 returned for every ₹100 spent. Whether you need bulk promotional blasts, automated drip sequences or transactional emails, email marketing is an essential revenue channel.</p><p>LauncherDesk manages the entire email marketing operation — list management, template design, sending infrastructure, deliverability and analytics.</p>' },
+      who: {
+        heading: "Who it's for", items: [
+          'E-commerce businesses nurturing customers with promotions and updates',
+          'B2B companies running drip campaigns to prospects',
+          'SaaS and subscription businesses sending onboarding and retention emails',
+          'Any business with an email list that is not being fully utilized',
+        ]
+      },
+      included: {
+        heading: "What's included", items: [
+          'Email platform setup (Brevo / Mailchimp / SendGrid)',
+          'List cleaning and segmentation',
+          'HTML email template design (mobile-responsive)',
+          'Campaign copywriting',
+          'Bulk email blasting with delivery optimization',
+          'Automated drip sequence setup',
+          'Open rate, click rate and conversion analytics',
+          'Spam score testing and deliverability optimization',
+        ]
+      },
+      process: {
+        heading: 'Step-by-step process', steps: [
+          { title: 'List audit and cleanup', body: 'Clean your email list — remove invalid addresses, duplicates and unsubscribes.' },
+          { title: 'Platform and domain setup', body: 'Configure your email platform with proper DNS (SPF, DKIM, DMARC) for maximum deliverability.' },
+          { title: 'Template design', body: 'Design mobile-responsive email templates matching your brand.' },
+          { title: 'Campaign planning', body: 'Plan your campaign calendar — blasts, drip sequences, triggers.' },
+          { title: 'Send and optimize', body: 'Send campaigns and optimize based on open rates, click rates and conversions.' },
+        ]
+      },
+      pricing: {
+        heading: 'Transparent pricing', rows: [
+          ['Up to 5,000 subscribers', 'From ₹4,999/month'],
+          ['5,000–25,000 subscribers', 'From ₹8,999/month'],
+          ['25,000–100,000 subscribers', 'From ₹14,999/month'],
+          ['Template design', 'From ₹4,999 one-time per template'],
+          ['Taxes', 'GST shown separately'],
+        ]
+      },
+      faq: {
+        heading: 'Frequently asked questions', items: [
+          { q: 'What email platform do you use?', a: 'We work with Brevo (formerly Sendinblue), Mailchimp, SendGrid and others — whichever fits your needs and budget.' },
+          { q: 'How do you ensure emails do not go to spam?', a: 'We set up proper authentication (SPF, DKIM, DMARC), warm up sending domains, clean lists regularly and follow best practices.' },
+          { q: 'Can you build automated sequences?', a: 'Yes — welcome sequences, abandoned cart flows, re-engagement campaigns and custom drip sequences are all included.' },
+        ]
+      }
+    },
+    related: [
+      { href: '/services/sms-blasting', label: 'SMS Blasting', note: 'Combine email with SMS for multi-channel reach.' },
+      { href: '/services/whatsapp-chatbot', label: 'WhatsApp Chatbot', note: 'Add WhatsApp to your messaging mix.' },
+      { href: '/services/content-marketing', label: 'Content Marketing', note: 'Create the content that fills your email campaigns.' },
+    ]
+  },
+
+  'ai-powered-crm': {
+    title: 'AI-Powered CRM',
+    metaTitle: 'AI-Powered CRM Setup India | LauncherDesk',
+    metaDesc: 'AI-powered CRM implementation for Indian businesses — smart lead scoring, automated follow-ups, pipeline forecasting and AI insights built into your CRM.',
+    eyebrow: 'AUTOMATE — AI',
+    crumbCategory: 'AUTOMATE',
+    lead: 'A CRM that works for you — with AI lead scoring, automated follow-up sequences, deal forecasting and intelligent insights that help your team close more deals.',
+    priceCard: { label: 'Setup from', price: '₹29,999', sub: '+ CRM subscription + taxes' },
+    helpCard: { title: 'Want an AI-powered CRM?', body: 'Share your sales process and team size — we will recommend and implement the right CRM.' },
+    toc: [
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: '<p>Traditional CRMs store data. AI-powered CRMs act on it — scoring leads by likelihood to convert, recommending the next best action, automating follow-up sequences and forecasting revenue with machine learning accuracy.</p><p>LauncherDesk implements and configures AI-powered CRM systems (HubSpot, Zoho CRM, Salesforce) with AI features enabled — so your sales team spends time selling, not on data entry.</p>' },
+      who: {
+        heading: "Who it's for", items: [
+          'Sales teams that generate more leads than they can manually follow up',
+          'Businesses with long sales cycles needing intelligent nurturing',
+          'Companies with existing CRMs that are not being used to full potential',
+          'Startups building a scalable sales operation from day one',
+        ]
+      },
+      included: {
+        heading: "What's included", items: [
+          'CRM platform selection and setup (HubSpot / Zoho / Salesforce)',
+          'AI lead scoring configuration',
+          'Automated follow-up sequence setup',
+          'Pipeline and deal stage customization',
+          'Email and WhatsApp integration',
+          'AI-powered revenue forecasting setup',
+          'Team training and onboarding',
+          'Dashboard and reporting configuration',
+        ]
+      },
+      process: {
+        heading: 'Step-by-step process', steps: [
+          { title: 'Sales process audit', body: 'Map your current lead-to-close process and identify automation opportunities.' },
+          { title: 'CRM selection', body: 'Recommend the right CRM platform based on team size, budget and requirements.' },
+          { title: 'Setup and configuration', body: 'Configure pipelines, stages, AI scoring models and automation rules.' },
+          { title: 'Integration', body: 'Connect your website, WhatsApp, email and existing tools.' },
+          { title: 'Training and handover', body: 'Train your team and hand over a fully operational AI CRM.' },
+        ]
+      },
+      pricing: {
+        heading: 'Transparent pricing', rows: [
+          ['Setup and configuration', 'From ₹29,999 one-time'],
+          ['CRM subscription', 'HubSpot / Zoho / Salesforce — passed through at platform rates'],
+          ['Monthly support', 'From ₹6,999/month — ongoing optimization and support'],
+          ['Taxes', 'GST shown separately'],
+        ]
+      },
+      faq: {
+        heading: 'Frequently asked questions', items: [
+          { q: 'Which CRM do you recommend?', a: 'For most Indian SMBs: Zoho CRM (best value). For growth-stage startups: HubSpot. For enterprise: Salesforce. We recommend after understanding your needs.' },
+          { q: 'Can you migrate data from our existing CRM?', a: 'Yes — data migration from spreadsheets or other CRM systems is included in the setup.' },
+          { q: 'How is AI lead scoring set up?', a: 'We define scoring criteria based on your historical data and ideal customer profile — the AI then scores every new lead automatically.' },
+        ]
+      }
+    },
+    related: [
+      { href: '/services/crm-setup-lead-management', label: 'CRM Setup & Lead Management', note: 'Standard CRM setup without AI features.' },
+      { href: '/services/whatsapp-chatbot', label: 'WhatsApp Chatbot', note: 'Feed chatbot leads directly into your CRM.' },
+      { href: '/services/business-automation', label: 'Workflow Automation', note: 'Automate beyond the CRM with full workflow automation.' },
+    ]
+  }
+
 }
