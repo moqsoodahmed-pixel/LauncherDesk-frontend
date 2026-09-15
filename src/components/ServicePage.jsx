@@ -441,7 +441,9 @@ export default function ServicePage({ svc }) {
             <span>{crumbCategory}</span><ChevSvg />
             <span className="cur" aria-current="page">{title}</span>
           </nav>
-          <span className="eyebrow reveal-up in" style={{ marginTop: 16, display: 'block' }}>{eyebrow}</span>
+          <div style={{ marginTop: 18 }}>
+            <span className="eyebrow reveal-up in">{eyebrow}</span>
+          </div>
           <h1 className="reveal-up in">{title}</h1>
           <p className="lead reveal-up in">{lead}</p>
           <div className="hero-cta reveal-up in">
@@ -449,6 +451,18 @@ export default function ServicePage({ svc }) {
               Talk to an Expert{' '}
               <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={ARROW} /></svg>
             </Link>
+            <a href={`https://wa.me/918548854859?text=${encodeURIComponent(`Hi, I'm interested in ${title}`)}`} target="_blank" rel="noopener noreferrer" className="btn" style={{ background: '#25D366', color: '#fff', fontWeight: 700, boxShadow: '0 4px 14px rgba(37,211,102,.3)' }}>
+              <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" aria-hidden="true"><path d={WA_PATH} /></svg>
+              WhatsApp Us
+            </a>
+          </div>
+          <div className="hp-trust-pills reveal-up in" style={{ marginTop: 22, maxWidth: 640, marginLeft: 0 }}>
+            {['100% Digital Process', 'Dedicated Relationship Manager', 'Transparent Pricing', 'Prompt MCA & Govt Compliance'].map(t => (
+              <div key={t} className="hp-trust-pill" style={{ background: '#fff' }}>
+                <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="var(--blue)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                {t}
+              </div>
+            ))}
           </div>
         </div>
       </header>

@@ -308,8 +308,8 @@ export default function ServicesIndex() {
             <h2 style={{ fontSize: 'clamp(24px,3vw,34px)' }}>Browse every service</h2>
           </div>
           <div className="grid-3" id="allSvcList" style={{ marginTop: 28 }}>
-            {ALL_SERVICES.map(svc => (
-              <a key={svc.href} className="card reveal-up" data-allsvc={`${svc.title.toLowerCase()} ${svc.desc.toLowerCase()}`} href={svc.href}>
+            {ALL_SERVICES.map((svc, i) => (
+              <a key={`${svc.href}-${i}`} className="card reveal-up" data-allsvc={`${svc.title.toLowerCase()} ${svc.desc.toLowerCase()}`} href={svc.href}>
                 <h3>{svc.title}</h3>
                 <p>{svc.desc}</p>
                 <span className="arrow">View</span>
