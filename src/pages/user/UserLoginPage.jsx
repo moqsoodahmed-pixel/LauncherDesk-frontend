@@ -218,7 +218,16 @@ export default function UserLoginPage() {
   const { login, register, loginWithToken, error, setError, loading, isLoggedIn } = useUserAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const from = location.state?.from?.startsWith('/user') ? location.state.from : '/user/dashboard'
+  // Accept any internal path as a return destination.
+  // Reject external URLs, empty strings, and bare /user/login to avoid loops.
+  // Fallback is /user/dashboard for direct logins with no prior context.
+  const rawFrom  = location.state?.from
+  const isValidInternalPath = typeof rawFrom === 'string' &&
+    rawFrom.startsWith('/') &&
+    !rawFrom.startsWith('//') &&
+    rawFrom !== '/user/login' &&
+    rawFrom !== '/user/register'
+  const from = isValidInternalPath ? rawFrom : '/user/dashboard'
 
   const [tab, setTab] = useState(location.state?.tab || 'login')
   const [view, setView] = useState('main')   // 'main' | 'forgot'
