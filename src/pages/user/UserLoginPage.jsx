@@ -249,24 +249,58 @@ export default function UserLoginPage() {
 
   useEffect(() => { if (isLoggedIn) navigate(from, { replace: true }) }, [isLoggedIn, from, navigate])
 
-  const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
+  const set = k => e => {
+    let val = e.target.value
+    if (k === 'phone') {
+      // Allow only digits and limit to maximum 10 digits
+      val = val.replace(/\D/g, '').slice(0, 10)
+    }
+    setForm(f => ({ ...f, [k]: val }))
+  }
 
   /* ── Email / password submit ─────────────────────────────────────────────── */
   async function handleSubmit(e) {
     e.preventDefault()
     setLocalErr('')
     if (setError) setError('')
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
     if (tab === 'login') {
-      const res = await login(form.email, form.password)
+      const emailVal = form.email.trim()
+      if (!emailVal) return setLocalErr('Please enter your email address')
+      if (!emailRegex.test(emailVal)) return setLocalErr('Please enter a valid email address (e.g. name@domain.com)')
+      if (!form.password) return setLocalErr('Please enter your password')
+
+      const res = await login(emailVal, form.password)
       if (!res?.success) setLocalErr(res?.message || 'Invalid credentials')
     } else {
       if (!form.name.trim()) return setLocalErr('Please enter your full name')
-      if (!form.email.trim() && !form.phone.trim()) return setLocalErr('Please provide an email address or phone number')
+
+      const emailVal = form.email.trim()
+      const phoneVal = form.phone.trim()
+
+      if (!emailVal) {
+        return setLocalErr('Please enter your email address')
+      }
+      if (!emailRegex.test(emailVal)) {
+        return setLocalErr('Please enter a valid email address (e.g. name@domain.com)')
+      }
+
+      if (!phoneVal) {
+        return setLocalErr('Please enter your 10-digit phone number')
+      }
+      const cleanDigits = phoneVal.replace(/\D/g, '')
+      if (cleanDigits.length !== 10) {
+        return setLocalErr('Please enter a valid 10-digit phone number')
+      }
+
+      if (!form.password) return setLocalErr('Please enter a password')
       if (form.password.length < 6) return setLocalErr('Password must be at least 6 characters')
+      if (!form.confirmPassword) return setLocalErr('Please confirm your password')
       if (form.password !== form.confirmPassword) return setLocalErr('Passwords do not match')
       if (!form.agreedToTerms) return setLocalErr('Please agree to the Terms and Conditions and Privacy Policy')
-      const regEmail = form.email.trim() || `${form.phone.replace(/[^0-9]/g, '')}@launcherdesk.user`
-      const res = await register(form.name.trim(), regEmail, form.password, form.phone.trim())
+
+      const res = await register(form.name.trim(), emailVal, form.password, phoneVal)
       if (!res?.success) setLocalErr(res?.message || 'Registration failed')
     }
   }
@@ -275,12 +309,15 @@ export default function UserLoginPage() {
   async function handleForgotPassword(e) {
     e.preventDefault()
     setFpErr('')
-    if (!fpEmail.trim()) return setFpErr('Please enter your email address')
+    const emailVal = fpEmail.trim()
+    if (!emailVal) return setFpErr('Please enter your email address')
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(emailVal)) return setFpErr('Please enter a valid email address (e.g. you@example.com)')
     setFpLoading(true)
     try {
       const res = await fetch(`${API}/auth/forgot-password`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: fpEmail.trim() }),
+        body: JSON.stringify({ email: emailVal }),
       })
       const data = await res.json()
       if (!data.success) { setFpErr(data.message || 'Something went wrong. Please try again.'); return }
@@ -463,12 +500,12 @@ export default function UserLoginPage() {
               <input id="reg-name" type="text" value={form.name} onChange={set('name')} placeholder="Your full name" required aria-required="true" autoComplete="name" />
             </div>
             <div className="ul-field">
-              <label htmlFor="reg-email">EMAIL ADDRESS<span className="ul-opt-text">(Optional if phone provided)</span></label>
-              <input id="reg-email" type="email" value={form.email} onChange={set('email')} placeholder="you@example.com" autoComplete="email" />
+              <label htmlFor="reg-email">EMAIL ADDRESS</label>
+              <input id="reg-email" type="email" value={form.email} onChange={set('email')} placeholder="you@example.com" required aria-required="true" autoComplete="email" />
             </div>
             <div className="ul-field">
-              <label htmlFor="reg-phone">PHONE NUMBER<span className="ul-opt-text">(Optional if email provided)</span></label>
-              <input id="reg-phone" type="tel" value={form.phone} onChange={set('phone')} placeholder="+91 98765 43210" autoComplete="tel" />
+              <label htmlFor="reg-phone">PHONE NUMBER</label>
+              <input id="reg-phone" type="tel" inputMode="numeric" pattern="[0-9]{10}" maxLength={10} value={form.phone} onChange={set('phone')} placeholder="Enter 10-digit mobile number" required aria-required="true" autoComplete="tel" />
             </div>
             <div className="ul-field">
               <label htmlFor="reg-password">PASSWORD</label>
@@ -548,6 +585,7 @@ export default function UserLoginPage() {
                   }
                 </button>
 
+                {/* Temporarily hidden: Microsoft login
                 <button type="button" className="ul-social-icon-btn" onClick={handleMicrosoftLogin} disabled={!!socialLoading} aria-label="Continue with Microsoft" title="Continue with Microsoft">
                   {socialLoading === 'microsoft'
                     ? <span style={{ width: 18, height: 18, border: '2px solid #E2E8F0', borderTopColor: '#05a6f0', borderRadius: '50%', display: 'inline-block', animation: 'spin .7s linear infinite' }} />
@@ -559,6 +597,7 @@ export default function UserLoginPage() {
                     </svg><span>Microsoft</span></>
                   }
                 </button>
+                */}
               </div>
             </div>
 
