@@ -152,19 +152,19 @@ function ServiceFinder() {
                 onClick={() => {
                   try {
                     sessionStorage.setItem('ld_finder_roadmap', JSON.stringify({ plan, answers: ans }))
-                  } catch(e) {}
+                  } catch (e) { }
                   window.location.href = '/company/contact'
                 }}
               >
                 Get this plan actioned
               </button>
               <a href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services." target="_blank" rel="noopener noreferrer" className="btn btn-wa btn-sm" style={{ justifyContent: 'center' }}>
-                <svg className="ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={WA}/></svg> WhatsApp
+                <svg className="ico-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={WA} /></svg> WhatsApp
               </a>
               <button className="finder-back" onClick={handleStartOver}>Start over</button>
             </div>
             <div className="rm-disc">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={SHIELD}/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={SHIELD} /></svg>
               General guidance based on your answers. A qualified LauncherDesk professional confirms specifics before anything is filed.
             </div>
           </div>
@@ -202,7 +202,7 @@ function ServiceFinder() {
                   {cur.opts.map(o => (
                     <button key={o} className="opt" onClick={() => handleSelect(o)}>
                       {o}
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6 9 17l-5-5"/></svg>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6 9 17l-5-5" /></svg>
                     </button>
                   ))}
                 </div>
@@ -255,7 +255,7 @@ export default function ServicesIndex() {
         <div className="wrap">
           <nav className="crumb reveal-up in">
             <a href="/">Home</a>
-            <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+            <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg>
             <span className="cur">Services</span>
           </nav>
           <span className="eyebrow reveal-up in" style={{ marginTop: 16, display: 'block' }}>Service catalog</span>
@@ -284,7 +284,7 @@ export default function ServicesIndex() {
               <a key={cat.href} className="card reveal-up" data-svc={cat.keywords} href={cat.href}>
                 <div className="ci">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d={cat.icon}/>
+                    <path d={cat.icon} />
                   </svg>
                 </div>
                 <h3>{cat.title}</h3>
@@ -339,7 +339,7 @@ export default function ServicesIndex() {
             <p>Tell us about your business. We'll understand your requirement and guide you on the right starting point — no obligation.</p>
             <div className="row">
               <a href="/company/contact" className="btn btn-light">Talk to an Expert</a>
-              <button className="btn btn-ghost-d" data-open-ai="true">Ask LauncherDesk AI</button>
+              <button className="btn btn-ghost-d" data-open-ai="true">Ask Sneha</button>
             </div>
           </div>
         </div>

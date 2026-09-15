@@ -933,7 +933,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Marketing',
     crumbCategory: 'GROW',
     lead: 'Get found on Google by the people searching for exactly what you offer. We build and execute SEO strategies that drive organic traffic and qualified leads.',
-    priceCard: { label: 'Monthly retainer from', price: '₹14,999/mo', sub: '+ taxes' },
+    priceCard: { label: 'Monthly retainer from', price: '₹14,999/month', sub: '+ taxes' },
     helpCard: { title: 'Want to rank higher on Google?', body: 'Share your website and target keywords — we will audit and recommend.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -998,7 +998,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Marketing',
     crumbCategory: 'GROW',
     lead: 'Build authority, drive organic traffic and generate leads with a strategic content marketing plan — blog posts, articles, case studies and thought leadership executed consistently.',
-    priceCard: { label: 'Monthly retainer from', price: '₹12,999/mo', sub: '+ taxes' },
+    priceCard: { label: 'Monthly retainer from', price: '₹12,999/month', sub: '+ taxes' },
     helpCard: { title: 'Need a content strategy?', body: 'Tell us about your business and target audience — we will propose a plan.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -1060,7 +1060,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Marketing',
     crumbCategory: 'GROW',
     lead: 'Reach your audience directly in their inbox. We set up email marketing systems, design templates, create drip campaigns and help you nurture leads at scale.',
-    priceCard: { label: 'Monthly retainer from', price: '₹7,999/mo', sub: '+ tool costs & taxes' },
+    priceCard: { label: 'Monthly retainer from', price: '₹7,999/month', sub: '+ tool costs & taxes' },
     helpCard: { title: 'Want to start email marketing?', body: 'Tell us your audience size and goals — we will recommend the right setup.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -2474,7 +2474,7 @@ export const SERVICES = {
     eyebrow: 'GROW — SEO',
     crumbCategory: 'GROW',
     lead: 'Get your business found in AI-generated search results — Google SGE, Bing Copilot and ChatGPT search. We optimize your content to appear as a cited source in AI answers.',
-    priceCard: { label: 'Monthly retainer from', price: '₹18,999/mo', sub: '+ taxes' },
+    priceCard: { label: 'Monthly retainer from', price: '₹18,999/month', sub: '+ taxes' },
     helpCard: { title: 'Want to appear in AI search?', body: 'Share your website URL and we will audit your AI search visibility.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -2539,7 +2539,7 @@ export const SERVICES = {
     eyebrow: 'GROW — SEO',
     crumbCategory: 'GROW',
     lead: 'When users ask ChatGPT, Claude or Gemini for recommendations, does your business come up? We build the signals that make LLMs choose your brand.',
-    priceCard: { label: 'Monthly retainer from', price: '₹22,999/mo', sub: '+ taxes' },
+    priceCard: { label: 'Monthly retainer from', price: '₹22,999/month', sub: '+ taxes' },
     helpCard: { title: 'Ask an AI about your brand', body: 'Test it yourself — ask ChatGPT about your service category. If you don\'t appear, we can fix that.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -2672,7 +2672,7 @@ export const SERVICES = {
     eyebrow: 'GROW — SEO',
     crumbCategory: 'GROW',
     lead: 'Rank #1 in your city or expand globally — our local and international SEO strategies put your business in front of customers wherever they are searching.',
-    priceCard: { label: 'Monthly retainer from', price: '₹16,999/mo', sub: '+ taxes' },
+    priceCard: { label: 'Monthly retainer from', price: '₹16,999/month', sub: '+ taxes' },
     helpCard: { title: 'Where are your customers?', body: 'Tell us your target locations and we will map an SEO strategy to reach them.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -2741,7 +2741,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Paid Ads',
     crumbCategory: 'GROW',
     lead: 'Reach your ideal customers on Facebook and Instagram with precision-targeted Meta Ads campaigns — awareness, leads, retargeting and sales, all managed by certified experts.',
-    priceCard: { label: 'Management fee from', price: '₹14,999/mo', sub: '+ ad spend + taxes' },
+    priceCard: { label: 'Management fee from', price: '₹14,999/month', sub: '+ ad spend + taxes' },
     helpCard: { title: 'Ready to advertise on Meta?', body: 'Share your business goals and budget — we will propose a campaign structure.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -2808,7 +2808,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Paid Ads',
     crumbCategory: 'GROW',
     lead: 'Reach CEOs, founders and procurement managers directly on LinkedIn with B2B campaigns that generate qualified leads from India\'s professional network.',
-    priceCard: { label: 'Management fee from', price: '₹18,999/mo', sub: '+ ad spend + taxes' },
+    priceCard: { label: 'Management fee from', price: '₹18,999/month', sub: '+ ad spend + taxes' },
     helpCard: { title: 'Targeting B2B decision-makers?', body: 'Tell us your ICP — we will show you exactly how to reach them on LinkedIn.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -2874,7 +2874,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Paid Ads',
     crumbCategory: 'GROW',
     lead: 'Reach India\'s 500 million YouTube viewers with targeted video ads — from skippable TrueView campaigns to YouTube Shorts ads — all managed by LauncherDesk.',
-    priceCard: { label: 'Management fee from', price: '₹12,999/mo', sub: '+ ad spend + taxes' },
+    priceCard: { label: 'Management fee from', price: '₹12,999/month', sub: '+ ad spend + taxes' },
     helpCard: { title: 'Have a video ready to promote?', body: 'Share it and we will set up a YouTube campaign targeting your ideal audience.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -2941,7 +2941,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Paid Ads',
     crumbCategory: 'GROW',
     lead: 'Most visitors leave without converting. Remarketing brings them back — targeting people who already know you with the right message at the right time.',
-    priceCard: { label: 'Management fee from', price: '₹10,999/mo', sub: '+ ad spend + taxes' },
+    priceCard: { label: 'Management fee from', price: '₹10,999/month', sub: '+ ad spend + taxes' },
     helpCard: { title: 'Losing visitors who don\'t convert?', body: 'We set up remarketing campaigns that follow up with warm prospects across platforms.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -3009,7 +3009,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Social Media',
     crumbCategory: 'GROW',
     lead: 'Never run out of things to post. We build your monthly content calendar, write the captions, design the visuals and publish on schedule — consistently, every month.',
-    priceCard: { label: 'Monthly retainer from', price: '₹11,999/mo', sub: '+ taxes' },
+    priceCard: { label: 'Monthly retainer from', price: '₹11,999/month', sub: '+ taxes' },
     helpCard: { title: 'Inconsistent posting?', body: 'We handle your entire content calendar end-to-end. Tell us your platforms.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -3076,7 +3076,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Social Media',
     crumbCategory: 'GROW',
     lead: 'Never miss a customer comment or DM again. We monitor and respond to your social media community on your behalf — building relationships and protecting your brand reputation.',
-    priceCard: { label: 'Monthly retainer from', price: '₹8,999/mo', sub: '+ taxes' },
+    priceCard: { label: 'Monthly retainer from', price: '₹8,999/month', sub: '+ taxes' },
     helpCard: { title: 'Missing customer messages?', body: 'Tell us your platforms and response expectations — we\'ll handle it.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -3142,7 +3142,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Design',
     crumbCategory: 'GROW',
     lead: 'Great targeting with poor creative wastes your ad budget. We design high-converting ad creatives that stop the scroll, communicate clearly and drive clicks.',
-    priceCard: { label: 'Monthly package from', price: '₹9,999/mo', sub: '+ taxes' },
+    priceCard: { label: 'Monthly package from', price: '₹9,999/month', sub: '+ taxes' },
     helpCard: { title: 'Need ad creatives?', body: 'Share your brand guidelines and campaign objectives — we\'ll design for your platforms.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -3209,7 +3209,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Social Media',
     crumbCategory: 'GROW',
     lead: 'Short-form video is the highest-reach content format on every platform. We produce Instagram Reels, YouTube Shorts and TikTok-style videos that grow your audience organically.',
-    priceCard: { label: 'Monthly package from', price: '₹14,999/mo', sub: '+ taxes' },
+    priceCard: { label: 'Monthly package from', price: '₹14,999/month', sub: '+ taxes' },
     helpCard: { title: 'Ready to start making Reels?', body: 'Tell us your brand and goals — we\'ll plan a short-form video strategy for you.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -3415,7 +3415,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Design',
     crumbCategory: 'GROW',
     lead: 'Visually consistent, professionally designed social media graphics that make your brand look premium across Instagram, LinkedIn, Facebook and X.',
-    priceCard: { label: 'Monthly package from', price: '₹8,999/mo', sub: '+ taxes' },
+    priceCard: { label: 'Monthly package from', price: '₹8,999/month', sub: '+ taxes' },
     helpCard: { title: 'Want better-looking social media?', body: 'Share your profiles and brand colours — we\'ll show you what\'s possible.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -3685,7 +3685,7 @@ export const SERVICES = {
     eyebrow: 'AUTOMATE — Messaging',
     crumbCategory: 'AUTOMATE',
     lead: 'Send thousands of targeted emails with professional designs, automated drip sequences and detailed analytics — all managed by LauncherDesk.',
-    priceCard: { label: 'Monthly from', price: '₹4,999/mo', sub: '+ taxes, based on list size' },
+    priceCard: { label: 'Monthly from', price: '₹4,999/month', sub: '+ taxes, based on list size' },
     helpCard: { title: 'Have an email list?', body: 'Share your list size and campaign goals — we will design the right email strategy.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },

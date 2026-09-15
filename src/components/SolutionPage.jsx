@@ -59,7 +59,7 @@ export default function SolutionPage({ sol }) {
             <p>{cta.p}</p>
             <div className="row">
               <a href="/company/contact" className="btn btn-light">Talk to an Expert</a>
-              <button className="btn btn-ghost-d" data-open-ai="true">Ask LauncherDesk AI</button>
+              <button className="btn btn-ghost-d" data-open-ai="true">Ask Sneha</button>
             </div>
           </div>
         </div>
