@@ -345,9 +345,43 @@ function BuyNowButton({ svc, priceCard }) {
   )
 }
 
+// Registration and government filing services where statutory/government fees apply
+const REGISTRATION_SLUGS = new Set([
+  'private-limited-company-registration',
+  'llp-registration',
+  'opc-registration',
+  'partnership-registration',
+  'startup-india-dpiit',
+  'msme-registration',
+  'iso-certification',
+  'gst-registration',
+  'fssai-registration',
+  'trademark-registration',
+  'trademark-objection',
+  'patent-registration',
+  'copyright-registration',
+  'ip-trademark-management',
+  'roc-compliance',
+  'income-tax-filing',
+  'uae-business-setup',
+])
+
+function isRegistrationService(svc) {
+  if (!svc) return false
+  if (REGISTRATION_SLUGS.has(svc.slug)) return true
+  const eyebrow = (svc.eyebrow || '').toLowerCase()
+  const crumb = (svc.crumbCategory || '').toLowerCase()
+  const title = (svc.title || '').toLowerCase()
+  if (eyebrow.includes('start your business') || eyebrow.includes('registrations') || eyebrow.includes('ipr & trademark') || eyebrow.includes('certifications')) return true
+  if (crumb.includes('start your business') || crumb.includes('registrations') || crumb.includes('legal & ip') || crumb.includes('ipr & trademark')) return true
+  if (title.includes('registration') || title.includes('incorporation') || title.includes('trademark') || title.includes('patent') || title.includes('copyright')) return true
+  return false
+}
+
 function ServiceAside({ priceCard, helpCard, svc }) {
   const hasPrice = priceCard.price && priceCard.price !== 'Custom quote'
   const waMsg = encodeURIComponent(`Hi, I'm interested in ${svc.title}`)
+  const showGovtFeeBadge = isRegistrationService(svc)
   return (
     <aside className="svc-aside">
       <div style={{ background: 'linear-gradient(135deg,#1A2F4E 0%,#1D6FE0 100%)', borderRadius: 16, padding: '24px 20px', color: '#fff', marginBottom: 16, boxShadow: '0 8px 32px rgba(29,111,224,.25)' }}>
@@ -355,8 +389,10 @@ function ServiceAside({ priceCard, helpCard, svc }) {
         {hasPrice ? (
           <>
             <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: 4, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{priceCard.price}</div>
-            <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{priceCard.sub}</div>
-            <div style={{ background: 'rgba(255,255,255,.1)', borderRadius: 8, padding: '8px 12px', fontSize: 12, color: 'rgba(255,255,255,.8)', marginBottom: 16 }}>⚡ Govt. fees billed separately &amp; shown upfront</div>
+            <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: showGovtFeeBadge ? 16 : 20 }}>{priceCard.sub}</div>
+            {showGovtFeeBadge && (
+              <div style={{ background: 'rgba(255,255,255,.1)', borderRadius: 8, padding: '8px 12px', fontSize: 12, color: 'rgba(255,255,255,.8)', marginBottom: 16 }}>⚡ Govt. fees billed separately &amp; shown upfront</div>
+            )}
           </>
         ) : (
           <>
@@ -422,9 +458,11 @@ export default function ServicePage({ svc }) {
             <div className="svc-toc-col"><Toc items={toc} /></div>
             <main className="svc-body">
               {sectionOrder.map(id => id === 'faq' ? <FaqSection key="faq" data={sections.faq} /> : <SectionContent key={id} id={id} data={sections[id]} />)}
-              <div style={{ marginTop: 32, padding: '14px 16px', borderRadius: 10, background: '#F8FAFC', border: '1px solid var(--line)', fontSize: 12.5, color: 'var(--text-3)', lineHeight: 1.6 }}>
-                <strong style={{ color: 'var(--text-2)' }}>Please note:</strong> LauncherDesk assists with preparation and submission of applications. Final approval and processing timelines are determined by the relevant government authority and may vary based on document completeness and authority workload. We do not guarantee approvals or specific government processing timelines.
-              </div>
+              {isRegistrationService(svc) && (
+                <div style={{ marginTop: 32, padding: '14px 16px', borderRadius: 10, background: '#F8FAFC', border: '1px solid var(--line)', fontSize: 12.5, color: 'var(--text-3)', lineHeight: 1.6 }}>
+                  <strong style={{ color: 'var(--text-2)' }}>Please note:</strong> LauncherDesk assists with preparation and submission of applications. Final approval and processing timelines are determined by the relevant government authority and may vary based on document completeness and authority workload. We do not guarantee approvals or specific government processing timelines.
+                </div>
+              )}
             </main>
             <div className="svc-aside-col"><ServiceAside priceCard={priceCard} helpCard={helpCard} svc={svc} /></div>
           </div>
