@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 const CHEV = 'm9 18 6-6-6-6'
 
 const PLANS = [
@@ -68,6 +70,15 @@ const PRICING_FAQS = [
 ]
 
 export default function PricingPage() {
+  useEffect(() => {
+    if (window.location.hash) {
+      const el = document.querySelector(window.location.hash)
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 50)
+      }
+    }
+  }, [])
+
   return (
     <>
       <header className="page-hero">
@@ -83,21 +94,22 @@ export default function PricingPage() {
       </header>
 
       {/* Plans */}
-      <section className="section-sm">
+      <section id="plans" className="section-sm" style={{ scrollMarginTop: 105 }}>
         <div className="wrap">
-          <div className="sec-head reveal-up">
+          <div className="sec-head reveal-up in">
             <span className="eyebrow">Choose your plan</span>
             <h2 style={{fontSize:'clamp(26px,3vw,38px)'}}>Three plans for every business stage</h2>
           </div>
           <div className="grid-3" style={{marginTop:32}}>
             {PLANS.map(plan => (
-              <div key={plan.name} className="card reveal-up" style={{
+              <div key={plan.name} className="card reveal-up in" style={{
                 border: plan.primary ? '1.5px solid var(--blue)' : undefined,
                 position:'relative',
+                overflow: 'visible',
                 transform: plan.primary ? 'translateY(-8px)' : undefined,
                 boxShadow: plan.primary ? '0 20px 48px rgba(29,93,184,.16), 0 4px 16px rgba(15,28,46,.05)' : undefined,
               }}>
-                {plan.primary && <div style={{position:'absolute',top:-14,left:'50%',transform:'translateX(-50%)',background:'var(--grad)',color:'#fff',fontSize:11,fontFamily:'var(--font)',fontWeight:700,padding:'4px 14px',borderRadius:99,letterSpacing:'.06em',whiteSpace:'nowrap',boxShadow:'0 4px 14px rgba(29,93,184,.3)'}}>MOST POPULAR</div>}
+                {plan.primary && <div style={{position:'absolute',top:-14,left:'50%',transform:'translateX(-50%)',background:'var(--grad)',color:'#fff',fontSize:11,fontFamily:'var(--font)',fontWeight:700,padding:'4px 14px',borderRadius:99,letterSpacing:'.06em',whiteSpace:'nowrap',boxShadow:'0 4px 14px rgba(29,93,184,.3)',zIndex:2}}>MOST POPULAR</div>}
                 <div style={{display:'inline-block',fontSize:10.5,fontFamily:'var(--font)',fontWeight:800,letterSpacing:'.14em',textTransform:'uppercase',color:'var(--blue)',marginBottom:8}}>{plan.name}</div>
                 <h3 style={{fontSize:20,marginBottom:6}}>{plan.subtitle}</h3>
                 <p style={{fontSize:13.5,color:'var(--text-2)',marginBottom:18,borderBottom:'1px solid var(--line)',paddingBottom:14}}>Best for: {plan.best}</p>

@@ -26,8 +26,12 @@ export default function Layout() {
   const location = useLocation()
   const activePage = getActivePage(location.pathname)
 
-  /* Scroll to top on navigation */
-  useEffect(() => { window.scrollTo(0, 0) }, [location.pathname])
+  /* Scroll to top on navigation unless a hash anchor is present */
+  useEffect(() => {
+    if (!location.hash) {
+      window.scrollTo(0, 0)
+    }
+  }, [location.pathname, location.hash])
 
   /* Reveal-up scroll animation (mirrors launcherdesk.js IntersectionObserver) */
   useEffect(() => {
@@ -47,10 +51,28 @@ export default function Layout() {
           io.unobserve(en.target)
         }
       })
-    }, { threshold: 0.15 })
+    }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' })
     document.querySelectorAll('.reveal-up,.cc-panel,.dash').forEach(e => io.observe(e))
-    return () => io.disconnect()
-  }, [location.pathname])
+
+    // Fallback: Ensure elements already visible in viewport have .in class added
+    const checkVisible = () => {
+      const vh = window.innerHeight
+      document.querySelectorAll('.reveal-up:not(.in)').forEach(el => {
+        const rect = el.getBoundingClientRect()
+        if (rect.top < vh && rect.bottom > 0) {
+          el.classList.add('in')
+        }
+      })
+    }
+    const t1 = setTimeout(checkVisible, 100)
+    const t2 = setTimeout(checkVisible, 400)
+
+    return () => {
+      io.disconnect()
+      clearTimeout(t1)
+      clearTimeout(t2)
+    }
+  }, [location.pathname, location.hash])
 
   /* FAQ accordion */
   useEffect(() => {
