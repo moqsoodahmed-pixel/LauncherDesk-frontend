@@ -671,25 +671,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
   )
 }
 
-/* ── Homepage-style stat pills shown on hero, tailored per service category ── */
-function getTrustPills(svc) {
-  if (svc?.slug === 'iso-certification') {
-    return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Globally Certified']
-  }
-  if (EXCLUDED_GOVT_SERVICES.has(svc?.slug)) {
-    return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Verified Experts']
-  }
-  if (isRegistrationService(svc)) {
-    return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Govt. Compliant']
-  }
-  if (isITService(svc)) {
-    return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Production Ready']
-  }
-  if (isDigitalMarketingService(svc)) {
-    return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'ROI Driven']
-  }
-  return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Verified Experts']
-}
+
 
 /* ── Dynamic Category Icon Selector for Service Subsections ── */
 function getServiceSubIcon(category = '', title = '') {
@@ -892,7 +874,7 @@ export default function ServicePage({ svc }) {
               <p className="reveal-up in" style={{ fontSize: 'clamp(14px,1.5vw,16px)', color: 'var(--text-2)', lineHeight: 1.7, maxWidth: 560, marginBottom: 24 }}>
                 {lead}
               </p>
-              <div className="hero-cta reveal-up in" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 20 }}>
+              <div className="hero-cta reveal-up in" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 0 }}>
                 <Link to="/company/contact" className="btn btn-primary">
                   Talk to an Expert{' '}
                   <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={ARROW} /></svg>
@@ -901,14 +883,6 @@ export default function ServicePage({ svc }) {
                   <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" aria-hidden="true"><path d={WA_PATH} /></svg>
                   WhatsApp Us
                 </a>
-              </div>
-              <div className="svc-trust-pills reveal-up in">
-                {getTrustPills(svc).map(t => (
-                  <div key={t} className="svc-trust-pill">
-                    <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="var(--blue)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={CHECK} /></svg>
-                    <span>{t}</span>
-                  </div>
-                ))}
               </div>
             </div>
             <div className="svc-hero-visual-col">
