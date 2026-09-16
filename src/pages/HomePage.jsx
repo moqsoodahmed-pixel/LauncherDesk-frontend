@@ -357,7 +357,7 @@ const S = `
 /* ── WHY LAUNCHERDESK ── */
 /* ── WHY LAUNCHERDESK ── */
 .hp-why {
-  padding:80px 0;background:var(--sec-b);
+  padding:80px 0;background:var(--brand-50);
   position:relative;overflow:hidden;
 }
 .hp-why::before {
@@ -866,14 +866,6 @@ const SVC_CATS = [
     ]
   },
   {
-    name:'Finance & Accounts', icon:'M4 21V10M10 21V4M16 21v-8M22 21H2', count:3,
-    services:[
-      {href:'/services/accounting',icon:'M4 21V10M10 21V4M16 21v-8M22 21H2',name:'Accounting & Bookkeeping',desc:'Monthly books that stay tax-ready — not scrambled at year-end.'},
-      {href:'/services/payroll',icon:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',name:'Payroll Management',desc:'Salary processing, PF, ESI, TDS and payslips — every month.'},
-      {href:'/services/roc-compliance',icon:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z',name:'ITR & Tax Filing',desc:'Income tax returns backed by accurate, up-to-date books.'},
-    ]
-  },
-  {
     name:'Technology & IT', icon:'M2 3h20v14H2zM8 21h8M12 17v4', count:4,
     services:[
       {href:'/services/website-development',icon:'M2 3h20v14H2zM8 21h8M12 17v4',name:'Website Development',desc:'Mobile-first business websites, e-commerce stores and portals.'},
@@ -882,15 +874,6 @@ const SVC_CATS = [
       {href:'/services/whatsapp-business-api',icon:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',name:'WhatsApp Business API',desc:'Official Meta API for bulk messaging and automation.'},
     ]
   },
-]
-
-const BIZ_TYPES = [
-  {icon:'M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18|M16 10a4 4 0 0 1-8 0',name:'E-commerce',desc:'Sell online with the right structure, GST, trademark and a converting storefront.',href:'/business-types/ecommerce',tags:['Pvt Ltd','GST','Trademark','Website']},
-  {icon:'M18 8h1a4 4 0 0 1 0 8h-1|M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z|M6 1v3|M10 1v3|M14 1v3',name:'Restaurant & Food',desc:'FSSAI, GST and entity setup before you open — not after the inspector visits.',href:'/business-types/restaurant',tags:['FSSAI','Entity Setup','GST','Payroll']},
-  {icon:'M2 3h20v14H2z|M8 21h8|M12 17v4',name:'Technology / SaaS',desc:'Investor-ready structure, IP protection and the clean compliance record funding rounds require.',href:'/business-types/technology',tags:['Pvt Ltd','Trademark','ROC','Accounting']},
-  {icon:'M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z|M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16',name:'Consulting',desc:'Lightweight structure, clean invoicing and GST handled from day one.',href:'/business-types/consulting',tags:['OPC / LLP','GST','MSME','Trademark']},
-  {icon:'M2 20h20|M6 20V10|M12 20V4|M18 20v-6|M6 10l6-6 6 6',name:'Manufacturing',desc:'Entity, GST, MSME and payroll for production businesses with real compliance layers.',href:'/business-types/manufacturing',tags:['Pvt Ltd','GST','MSME','ROC']},
-  {icon:'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10',name:'Retail',desc:'Shop registration, GST and inventory-aware accounting for single or multi-location stores.',href:'/business-types/retail',tags:['Entity Setup','GST','Accounting','Trademark']},
 ]
 
 const WHY_FEATURES = [
@@ -1263,35 +1246,6 @@ export default function HomePage() {
                   <div className="lc2-prog"><div className="lc2-prog-bar" data-prog={s.id}/></div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ BUSINESS TYPES ══════════════════════════════════ */}
-      <section className="hp-types">
-        <div style={{maxWidth:1200,margin:'0 auto',padding:'0 28px'}}>
-          <div className="hp-section-head">
-            <div className="hp-section-eyebrow" style={{color:'var(--blue)'}}>Business Types</div>
-            <h2>Built for your kind of business.</h2>
-            <p>Every business type has a different compliance and growth journey. LauncherDesk knows the path for each one.</p>
-          </div>
-          <div className="hp-types-grid">
-            {BIZ_TYPES.map(b=>(
-              <Link key={b.name} to={b.href} className="hp-type-card">
-                <div className="hp-type-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-                    {b.icon.split('|').map((p,i)=><path key={i} d={p}/>)}
-                  </svg>
-                </div>
-                <div className="hp-type-name">{b.name}</div>
-                <div className="hp-type-desc">{b.desc}</div>
-                <div className="hp-type-tags">{b.tags.map(t=><span key={t} className="hp-type-tag">{t}</span>)}</div>
-                <div className="hp-type-arrow">
-                  See the journey
-                  <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </div>
-              </Link>
             ))}
           </div>
         </div>
