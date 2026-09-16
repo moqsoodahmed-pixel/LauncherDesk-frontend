@@ -428,18 +428,78 @@ function isRegistrationService(svc) {
   return false
 }
 
+const DIGITAL_MARKETING_SLUGS = new Set([
+  'seo-marketing',
+  'content-marketing',
+  'technical-seo-audits',
+  'local-international-seo',
+  'ai-search-optimization',
+  'google-ads-paid-marketing',
+  'meta-instagram-ads',
+  'linkedin-b2b-campaigns',
+  'youtube-advertising',
+  'remarketing-retargeting',
+  'social-media-management',
+  'content-calendar-posting',
+  'community-management',
+  'reels-short-form-video',
+  'branding-logo-design',
+  'ad-creative-design',
+  'social-media-design',
+  'marketing-collaterals',
+  'packaging-design',
+  'digital-marketing',
+])
+
+function isDigitalMarketingService(svc) {
+  if (!svc) return false
+  if (DIGITAL_MARKETING_SLUGS.has(svc.slug)) return true
+  const eyebrow = (svc.eyebrow || '').toLowerCase()
+  const crumb = (svc.crumbCategory || '').toLowerCase()
+  if (eyebrow.includes('digital marketing') || crumb.includes('digital marketing')) return true
+  return false
+}
+
+function formatDigitalMarketingPrice(rawPrice) {
+  if (!rawPrice || rawPrice.toLowerCase().includes('custom')) return 'Custom quote'
+  let clean = rawPrice.trim()
+  clean = clean.replace(/\/month$/i, '/mo').replace(/\/mo$/i, '/mo')
+  if (!clean.toLowerCase().includes('/mo')) {
+    clean = `${clean}/mo`
+  }
+  return clean
+}
+
 function ServiceAside({ priceCard, helpCard, svc }) {
+  const navigate = useNavigate()
+  const isDM = isDigitalMarketingService(svc)
   const hasPrice = priceCard.price && priceCard.price !== 'Custom quote'
   const waMsg = encodeURIComponent(`Hi, I'm interested in ${svc.title}`)
-  const showGovtFeeBadge = isRegistrationService(svc)
+  const showGovtFeeBadge = !isDM && isRegistrationService(svc)
+
+  // Label: "CHOOSE YOUR PLAN" for Digital Marketing, else existing priceCard.label
+  const boxLabel = isDM ? 'CHOOSE YOUR PLAN' : priceCard.label
+
+  // Price: formatted with "/mo" for Digital Marketing when applicable, else existing priceCard.price
+  const displayedPrice = isDM ? formatDigitalMarketingPrice(priceCard.price) : priceCard.price
+
+  function handleMonthlyPlansClick() {
+    const pricingEl = document.getElementById('pricing')
+    if (pricingEl) {
+      pricingEl.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      navigate('/pricing#plans')
+    }
+  }
+
   return (
     <aside className="svc-aside">
       {/* Blue pricing card */}
       <div style={{ background: 'linear-gradient(135deg,#1A2F4E 0%,#1D6FE0 100%)', borderRadius: 16, padding: '24px 20px', color: '#fff', marginBottom: 16, boxShadow: '0 8px 32px rgba(29,111,224,.25)' }}>
-        <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,.6)', marginBottom: 8 }}>{priceCard.label}</div>
+        <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,.6)', marginBottom: 8 }}>{boxLabel}</div>
         {hasPrice ? (
           <>
-            <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: 4, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{priceCard.price}</div>
+            <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: 4, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{displayedPrice}</div>
             <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: showGovtFeeBadge ? 16 : 20 }}>{priceCard.sub}</div>
             {showGovtFeeBadge && (
               <div style={{ background: 'rgba(255,255,255,.1)', borderRadius: 8, padding: '8px 12px', fontSize: 12, color: 'rgba(255,255,255,.8)', marginBottom: 16 }}>⚡ Govt. fees billed separately &amp; shown upfront</div>
@@ -458,7 +518,28 @@ function ServiceAside({ priceCard, helpCard, svc }) {
           <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" aria-hidden="true"><path d={WA_PATH} /></svg>
           WhatsApp Us
         </a>
-        <BuyNowButton svc={svc} priceCard={priceCard} />
+        {isDM ? (
+          <div style={{ marginTop: 10 }}>
+            <button
+              onClick={handleMonthlyPlansClick}
+              style={{
+                display: 'block', width: '100%', textAlign: 'center',
+                padding: '12px', borderRadius: 10,
+                background: 'rgba(255,255,255,.15)',
+                color: '#fff', fontWeight: 700, fontSize: 14,
+                border: '1px solid rgba(255,255,255,.3)',
+                cursor: 'pointer', fontFamily: 'inherit',
+                transition: 'background .15s'
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,.25)' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.15)' }}
+            >
+              Monthly Plans
+            </button>
+          </div>
+        ) : (
+          <BuyNowButton svc={svc} priceCard={priceCard} />
+        )}
       </div>
       <div style={{ marginBottom: 16 }}><QuoteForm svc={svc} /></div>
       <div className="help-card">
