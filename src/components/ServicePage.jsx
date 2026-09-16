@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useUserAuth } from '../context/UserAuthContext'
 import SEO, { serviceSchema, breadcrumbSchema, faqSchema } from './SEO'
+import RegistrationPricingPlans from './RegistrationPricingPlans'
+import { REGISTRATION_PLANS } from '../data/registrationPlans'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 const CHEV = 'm9 18 6-6-6-6'
@@ -523,9 +525,17 @@ const EXCLUDED_GOVT_SERVICES = new Set([
 function ServiceAside({ priceCard, helpCard, svc }) {
   const navigate = useNavigate()
   const isDM = isDigitalMarketingService(svc)
-  const hasPrice = priceCard.price && priceCard.price !== 'Custom quote'
+  const hasTieredPlans = !!(svc?.slug && REGISTRATION_PLANS[svc.slug])
+  const hasPrice = priceCard.price && priceCard.price !== 'Custom quote' && !hasTieredPlans
   const waMsg = encodeURIComponent(`Hi, I'm interested in ${svc.title}`)
-  const showGovtFeeBadge = !isDM && isRegistrationService(svc) && !EXCLUDED_GOVT_SERVICES.has(svc?.slug)
+  // Clean any specified fee/tax disclaimer text requested to be removed
+  const rawSub = priceCard?.sub || ''
+  const cleanSub = rawSub
+    .replace(/\+?\s*Govt\.?\s*fees?\s*\(depends on state\)\s*\+?\s*GST/gi, '')
+    .replace(/\+?\s*Govt\.?\s*fee\s*\(depends on state\)\s*\+?\s*GST/gi, '')
+    .replace(/\+?\s*government fee & taxes,\s*shown separately/gi, '')
+    .replace(/\+?\s*taxes,\s*shown separately/gi, '')
+    .trim()
 
   // Label: "CHOOSE PLAN" for Digital Marketing, else existing priceCard.label
   const boxLabel = isDM ? 'CHOOSE PLAN' : priceCard.label
@@ -541,7 +551,11 @@ function ServiceAside({ priceCard, helpCard, svc }) {
 
   return (
     <aside className="svc-aside">
-      {/* Blue pricing card */}
+      {/* Blue pricing card — skipped for tiered-plan services (Pvt Ltd/LLP/OPC):
+          their pricing + "Get Started" CTA already live in the plan cards above,
+          so repeating it here would just be duplicate "paying" content taking
+          up space in this column. */}
+      {!hasTieredPlans && (
       <div style={{ background: 'linear-gradient(135deg,#1A2F4E 0%,#1D6FE0 100%)', borderRadius: 16, padding: '24px 20px', color: '#fff', marginBottom: 16, boxShadow: '0 8px 32px rgba(29,111,224,.25)' }}>
         {isDM ? (
           <div style={{ marginBottom: 16 }}>
@@ -555,16 +569,17 @@ function ServiceAside({ priceCard, helpCard, svc }) {
             <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,.6)', marginBottom: 8 }}>{boxLabel}</div>
             {hasPrice ? (
               <>
-                <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: 4, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{displayedPrice}</div>
-                <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: showGovtFeeBadge ? 16 : 20 }}>{priceCard.sub}</div>
-                {showGovtFeeBadge && (
-                  <div style={{ background: 'rgba(255,255,255,.1)', borderRadius: 8, padding: '8px 12px', fontSize: 12, color: 'rgba(255,255,255,.8)', marginBottom: 16 }}>⚡ Govt. fees billed separately &amp; shown upfront</div>
-                )}
+                <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: cleanSub ? 4 : 16, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{displayedPrice}</div>
+                {cleanSub ? (
+                  <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{cleanSub}</div>
+                ) : null}
               </>
             ) : (
               <>
-                <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: 4 }}>Custom Quote</div>
-                <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{priceCard.sub}</div>
+                <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: cleanSub ? 4 : 16 }}>Custom Quote</div>
+                {cleanSub ? (
+                  <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{cleanSub}</div>
+                ) : null}
               </>
             )}
           </>
@@ -644,6 +659,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
           <BuyNowButton svc={svc} priceCard={priceCard} />
         )}
       </div>
+      )}
       <div style={{ marginBottom: 16 }}><QuoteForm svc={svc} /></div>
       <div className="help-card">
         <h4>{helpCard.title}</h4>
@@ -901,6 +917,15 @@ export default function ServicePage({ svc }) {
           </div>
         </div>
       </header>
+
+      {/* ── Pricing plans (Basic/Standard/Premium) — shown first, full width, before Overview ── */}
+      {REGISTRATION_PLANS[svc?.slug] && (
+        <section className="section-sm" style={{ overflow: 'visible', paddingBottom: 0 }}>
+          <div className="wrap" style={{ overflow: 'visible' }}>
+            <RegistrationPricingPlans svc={svc} />
+          </div>
+        </section>
+      )}
 
       {/* ── Body — 3-column layout ── */}
       <section className="section-sm" style={{ overflow: 'visible' }}>

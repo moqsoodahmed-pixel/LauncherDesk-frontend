@@ -9,7 +9,7 @@ const svc = {
   crumbCategory: 'Build',
   slug: 'digital-marketing',
   lead: 'Grow your business online with data-driven marketing — SEO, paid ads, social media and brand design all managed under one roof by LauncherDesk.',
-  priceCard: { label: 'Professional fee from', price: 'Custom quote', sub: '+ taxes, shown separately' },
+  priceCard: { label: 'Professional fee from', price: 'Custom quote', sub: '' },
   helpCard: { title: 'Not sure where to start?', body: 'Tell us your business goals and we will recommend the right channels and budget.' },
   toc: [
     { href: '#overview',    label: 'Overview' },

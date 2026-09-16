@@ -145,7 +145,6 @@ function MegaRegistrations() {
         <div className="mp-left">
           <button className="mp-cat mp-cat--active" data-mp-cat="inc"><span className="mp-cat-label">Business Incorporation</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg></button>
           <button className="mp-cat" data-mp-cat="cert"><span className="mp-cat-label">Certifications</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg></button>
-          <button className="mp-cat" data-mp-cat="ipr"><span className="mp-cat-label">IPR &amp; Trademark</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg></button>
         </div>
         <div className="mp-right">
           <div className="mp-panel mp-panel--active" data-mp-panel="inc">
@@ -163,16 +162,7 @@ function MegaRegistrations() {
               <SvcLink href="/services/msme-registration" title="MSME Udyam Registration" desc="Credit access &amp; government benefits" />
               <SvcLink href="/services/iso-certification" title="ISO Certification" desc="International quality standards" />
               <SvcLink href="/services/gst-registration" title="GST Registration" desc="Goods &amp; Services Tax number" />
-            </div>
-          </div>
-          <div className="mp-panel" data-mp-panel="ipr">
-            <div className="mp-panel-head">IPR &amp; Trademark</div>
-            <div className="mp-svc-grid">
               <SvcLink href="/services/trademark-registration" title="Trademark Registration" desc="Protect your brand name &amp; logo" />
-              <SvcLink href="/services/trademark-objection" title="Trademark Objection" desc="Respond to objection notices" />
-              <SvcLink href="/services/patent-registration" title="Patent Registration" desc="Protect your invention" />
-              <SvcLink href="/services/copyright-registration" title="Copyright Registration" desc="Protect creative works" />
-              <SvcLink href="/services/ip-trademark-management" title="IP &amp; Trademark Management" desc="Ongoing IP portfolio management" />
             </div>
           </div>
         </div>
@@ -217,19 +207,12 @@ function MegaIT() {
                   { name: 'WhatsApp Chatbot', href: '/services/whatsapp-chatbot' },
                   { name: 'AI Voice Agent', href: '/services/ai-voice-agent' },
                   { name: 'AI-Powered CRM', href: '/services/ai-powered-crm' },
-                  { name: 'LLM Visibility & Citations', href: '/services/llm-visibility-citations' },
                 ]],
                 ['Messaging Automation', [
                   { name: 'SMS Blasting & Bulk SMS', href: '/services/sms-blasting' },
                   { name: 'Email Blasting & Campaigns', href: '/services/email-blasting' },
                   { name: 'WhatsApp Business API', href: '/services/whatsapp-business-api' },
                   { name: 'WhatsApp Automation', href: '/services/whatsapp-business-api' },
-                ]],
-                ['AI-Powered Marketing', [
-                  { name: 'AI Search Optimization', href: '/services/ai-search-optimization' },
-                  { name: 'Content Strategy & AI Creation', href: '/services/content-marketing' },
-                  { name: 'Technical SEO Audits', href: '/services/technical-seo-audits' },
-                  { name: 'Local & International SEO', href: '/services/local-international-seo' },
                 ]],
                 ['Workflow & CRM Automation', [
                   { name: 'CRM Setup & Integration', href: '/services/crm-setup-lead-management' },
@@ -251,29 +234,15 @@ function MegaIT() {
                 ['SEO & Content', [
                   { name: 'SEO & Search Marketing', href: '/services/seo-marketing' },
                   { name: 'Content Marketing', href: '/services/content-marketing' },
-                  { name: 'Technical SEO Audits', href: '/services/technical-seo-audits' },
-                  { name: 'Local & International SEO', href: '/services/local-international-seo' },
                   { name: 'AI Search Optimization', href: '/services/ai-search-optimization' },
                 ]],
-                ['Paid Advertising', [
+                ['Paid Advertising & Branding', [
                   { name: 'Google Ads Management', href: '/services/google-ads-paid-marketing' },
                   { name: 'Meta & Instagram Ads', href: '/services/meta-instagram-ads' },
-                  { name: 'LinkedIn B2B Campaigns', href: '/services/linkedin-b2b-campaigns' },
                   { name: 'YouTube Advertising', href: '/services/youtube-advertising' },
-                  { name: 'Remarketing & Retargeting', href: '/services/remarketing-retargeting' },
-                ]],
-                ['Social Media', [
-                  { name: 'Social Media Management', href: '/services/social-media-management' },
-                  { name: 'Content Calendar & Posting', href: '/services/content-calendar-posting' },
-                  { name: 'Community Management', href: '/services/community-management' },
-                  { name: 'Reels & Short-Form Video', href: '/services/reels-short-form-video' },
-                ]],
-                ['Design & Branding', [
                   { name: 'Branding & Logo Design', href: '/services/branding-logo-design' },
                   { name: 'Ad Creative Design', href: '/services/ad-creative-design' },
-                  { name: 'Social Media Design', href: '/services/social-media-design' },
                   { name: 'Marketing Collaterals', href: '/services/marketing-collaterals' },
-                  { name: 'Packaging Design', href: '/services/packaging-design' },
                 ]],
               ].map(([group, items]) => (
                 <div key={group} className="mp-grp">

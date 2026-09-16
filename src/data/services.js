@@ -8,7 +8,7 @@ export const SERVICES = {
     eyebrow: 'Start your business',
     crumbCategory: 'Start your business',
     lead: "The standard structure for startups that want limited liability, credibility and the ability to raise investment. We handle the entire MCA process end to end.",
-    priceCard: { label: 'Starts from', price: '₹4,500*', sub: '+ Govt. fee (depends on state) + GST' },
+    priceCard: { label: 'Starts from', price: '₹4,500*', sub: '' },
     helpCard: { title: 'Need help deciding?', body: "Not sure if Pvt Ltd is right for you? Get a personalised recommendation." },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -210,7 +210,7 @@ export const SERVICES = {
     eyebrow: 'Start your business',
     crumbCategory: 'Start your business',
     lead: "Built for solo founders. An OPC gives you the limited liability and credibility of a company structure without needing a second shareholder.",
-    priceCard: { label: 'Starts from', price: '₹4,500*', sub: '+ Govt. fee (depends on state) + GST' },
+    priceCard: { label: 'Starts from', price: '₹4,500*', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -258,7 +258,7 @@ export const SERVICES = {
     eyebrow: 'Start your business',
     crumbCategory: 'Start your business',
     lead: "The simplest way to formalise a business owned by two or more people, with minimal setup and lower ongoing compliance than a company or LLP.",
-    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '+ government fee & taxes, shown separately' },
+    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -354,7 +354,7 @@ export const SERVICES = {
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "Mandatory for any food business — from a home kitchen to a restaurant chain. We identify the right licence tier and file it for you.",
-    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '+ government fee & taxes, shown separately' },
+    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -693,7 +693,7 @@ export const SERVICES = {
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "Every registered company and LLP has mandatory annual filings — miss them and penalties compound daily. We track deadlines and file on your behalf.",
-    priceCard: { label: 'Starts from', price: '₹14,000/year*', sub: '+ GST' },
+    priceCard: { label: 'Total (incl. GST)', price: '₹17,700', sub: 'Professional fee ₹15,000 + GST' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -789,7 +789,7 @@ export const SERVICES = {
     eyebrow: 'Manage your business',
     crumbCategory: 'Manage your business',
     lead: "From your first hire onward, payroll compliance gets complex fast. We handle salary processing and the statutory filings that come with it.",
-    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '+ government fee & taxes, shown separately' },
+    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -837,7 +837,7 @@ export const SERVICES = {
     eyebrow: 'Protect & grow',
     crumbCategory: 'Protect & grow',
     lead: "As you grow, manual processes start costing more than they save. We set up the systems — website, CRM and automation — that scale with you.",
-    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '+ government fee & taxes, shown separately' },
+    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -885,7 +885,7 @@ export const SERVICES = {
     eyebrow: 'Protect & grow',
     crumbCategory: 'Protect & grow',
     lead: "Registration and compliance get you legally ready. Digital marketing gets you actually found — website, branding, and demand generation that fits your stage.",
-    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '+ government fee & taxes, shown separately' },
+    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -1214,7 +1214,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'A clean, fast, lightweight website that presents your business professionally — perfect for service businesses, consultants and professionals who need a credible online presence without complexity.',
-    priceCard: { label: 'Starts from', price: '₹4,999*', sub: '+ taxes, shown separately' },
+    priceCard: { label: 'Starts from', price: '₹4,999*', sub: '' },
     helpCard: { title: 'Not sure if static is right for you?', body: 'Static sites work best when your content doesn\'t change frequently.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -1279,7 +1279,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'A CMS-powered website you can update yourself — add blog posts, edit pages, upload images and manage content without touching code. Built for businesses that need ongoing content flexibility.',
-    priceCard: { label: 'Starts from', price: '₹25,000*', sub: '+ taxes, shown separately' },
+    priceCard: { label: 'Starts from', price: '₹25,000*', sub: '' },
     helpCard: { title: 'Need ongoing content updates?', body: 'Dynamic is the right choice if you blog, add case studies or update offerings regularly.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -1346,7 +1346,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'Get a fully-functional online store — product catalogue, cart, payment gateway and mobile-first design — built for Indian businesses and ready to sell from day one.',
-    priceCard: { label: 'Starts from', price: '₹20,000*', sub: '+ taxes, shown separately' },
+    priceCard: { label: 'Starts from', price: '₹20,000*', sub: '' },
     helpCard: { title: 'Selling on Amazon or Flipkart too?', body: 'We can build your own storefront alongside marketplace presence.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -1983,7 +1983,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Marketing',
     crumbCategory: 'GROW',
     lead: 'Stop losing leads in spreadsheets. Get a working CRM that tracks every enquiry, manages follow-ups and shows you exactly where your sales pipeline stands.',
-    priceCard: { label: 'Starts from', price: '₹25,000*', sub: '+ taxes, shown separately' },
+    priceCard: { label: 'Starts from', price: '₹25,000*', sub: '' },
     helpCard: { title: 'Using spreadsheets to track leads?', body: 'A properly set-up CRM pays for itself quickly in recovered leads.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2267,7 +2267,7 @@ export const SERVICES = {
     eyebrow: 'EXPAND — Fundraising',
     crumbCategory: 'EXPAND',
     lead: 'Prepare the documentation investors expect — pitch deck, financial projections, cap table and data room — coordinated through one team that understands early-stage fundraising.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹14,000', sub: 'Including GST' },
+    priceCard: { label: 'Total (incl. GST)', price: '₹14,160', sub: 'Professional fee ₹12,000 + GST' },
     helpCard: { title: 'Preparing for an investor meeting?', body: 'A well-prepared pitch deck and data room makes the difference.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2335,7 +2335,7 @@ export const SERVICES = {
     eyebrow: 'EXPAND — Strategy',
     crumbCategory: 'EXPAND',
     lead: 'Get strategic clarity on your business — with an honest review, specific recommendations and an action plan you can actually execute.',
-    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '+ taxes, shown separately' },
+    priceCard: { label: 'Starts from', price: 'Custom quote', sub: '' },
     helpCard: { title: 'Facing a big business decision?', body: 'A structured consultation helps you think it through with experienced support.' },
     toc: [
       { href: '#overview', label: 'Overview' },

@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import AIAssistant from './AIAssistant'
-import CursorFX from './CursorFX'
 
 /* Map path prefixes to data-page values */
 function getActivePage(pathname) {
@@ -98,7 +97,6 @@ export default function Layout() {
       </main>
       <Footer />
       <AIAssistant />
-      <CursorFX />
     </div>
   )
 }
