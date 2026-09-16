@@ -470,6 +470,23 @@ function formatDigitalMarketingPrice(rawPrice) {
   return clean
 }
 
+function getServiceHighlights(svc) {
+  if (!svc) return []
+  // Try to grab items from sections.included or sections.benefits or sections.pricing
+  if (svc.sections?.included?.items && svc.sections.included.items.length > 0) {
+    return svc.sections.included.items.slice(0, 4).map(it => it.replace(/<[^>]*>?/gm, '').split(/[\(\—\-]/)[0].trim())
+  }
+  if (svc.sections?.benefits?.items && svc.sections.benefits.items.length > 0) {
+    return svc.sections.benefits.items.slice(0, 4).map(it => it.replace(/<[^>]*>?/gm, '').split(/[\(\—\-]/)[0].trim())
+  }
+  return [
+    'Dedicated Account Manager',
+    'Custom Growth Strategy',
+    'Transparent Monthly Reporting',
+    '100% Performance-Driven'
+  ]
+}
+
 function ServiceAside({ priceCard, helpCard, svc }) {
   const navigate = useNavigate()
   const isDM = isDigitalMarketingService(svc)
@@ -477,38 +494,46 @@ function ServiceAside({ priceCard, helpCard, svc }) {
   const waMsg = encodeURIComponent(`Hi, I'm interested in ${svc.title}`)
   const showGovtFeeBadge = !isDM && isRegistrationService(svc)
 
-  // Label: "CHOOSE YOUR PLAN" for Digital Marketing, else existing priceCard.label
-  const boxLabel = isDM ? 'CHOOSE YOUR PLAN' : priceCard.label
+  // Label: "CHOOSE PLAN" for Digital Marketing, else existing priceCard.label
+  const boxLabel = isDM ? 'CHOOSE PLAN' : priceCard.label
 
-  // Price: formatted with "/mo" for Digital Marketing when applicable, else existing priceCard.price
-  const displayedPrice = isDM ? formatDigitalMarketingPrice(priceCard.price) : priceCard.price
+  const displayedPrice = priceCard.price
 
   function handleMonthlyPlansClick() {
-    const pricingEl = document.getElementById('pricing')
-    if (pricingEl) {
-      pricingEl.scrollIntoView({ behavior: 'smooth' })
-    } else {
-      navigate('/pricing#plans')
-    }
+    const targetService = svc?.slug || ''
+    navigate(`/pricing?cat=dm&service=${encodeURIComponent(targetService)}#plans`)
   }
+
+  const dmHighlights = isDM ? getServiceHighlights(svc) : []
 
   return (
     <aside className="svc-aside">
       {/* Blue pricing card */}
       <div style={{ background: 'linear-gradient(135deg,#1A2F4E 0%,#1D6FE0 100%)', borderRadius: 16, padding: '24px 20px', color: '#fff', marginBottom: 16, boxShadow: '0 8px 32px rgba(29,111,224,.25)' }}>
-        <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,.6)', marginBottom: 8 }}>{boxLabel}</div>
-        {hasPrice ? (
-          <>
-            <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: 4, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{displayedPrice}</div>
-            <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: showGovtFeeBadge ? 16 : 20 }}>{priceCard.sub}</div>
-            {showGovtFeeBadge && (
-              <div style={{ background: 'rgba(255,255,255,.1)', borderRadius: 8, padding: '8px 12px', fontSize: 12, color: 'rgba(255,255,255,.8)', marginBottom: 16 }}>⚡ Govt. fees billed separately &amp; shown upfront</div>
-            )}
-          </>
+        {isDM ? (
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#93C5FD', marginBottom: 4 }}>CHOOSE PLAN</div>
+            <div style={{ fontSize: 'clamp(20px,3.8vw,28px)', fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>
+              Choose your monthly plan below
+            </div>
+          </div>
         ) : (
           <>
-            <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: 4 }}>Custom Quote</div>
-            <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{priceCard.sub}</div>
+            <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,.6)', marginBottom: 8 }}>{boxLabel}</div>
+            {hasPrice ? (
+              <>
+                <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: 4, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{displayedPrice}</div>
+                <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: showGovtFeeBadge ? 16 : 20 }}>{priceCard.sub}</div>
+                {showGovtFeeBadge && (
+                  <div style={{ background: 'rgba(255,255,255,.1)', borderRadius: 8, padding: '8px 12px', fontSize: 12, color: 'rgba(255,255,255,.8)', marginBottom: 16 }}>⚡ Govt. fees billed separately &amp; shown upfront</div>
+                )}
+              </>
+            ) : (
+              <>
+                <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: 4 }}>Custom Quote</div>
+                <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{priceCard.sub}</div>
+              </>
+            )}
           </>
         )}
         <Link to="/company/contact" style={{ display: 'block', textAlign: 'center', padding: '12px', borderRadius: 10, background: '#F97316', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 10 }}>
@@ -536,6 +561,51 @@ function ServiceAside({ priceCard, helpCard, svc }) {
             >
               Monthly Plans
             </button>
+
+            {/* Service points according to price/plan below monthly plans */}
+            {dmHighlights.length > 0 && (
+              <div style={{
+                marginTop: 16,
+                paddingTop: 14,
+                borderTop: '1px solid rgba(255,255,255,.18)'
+              }}>
+                <div style={{
+                  fontSize: 11,
+                  fontFamily: 'var(--font)',
+                  fontWeight: 800,
+                  letterSpacing: '.12em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,.7)',
+                  marginBottom: 10
+                }}>
+                  Key Service Highlights:
+                </div>
+                <ul style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 8
+                }}>
+                  {dmHighlights.map((pt, idx) => (
+                    <li key={idx} style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: 8,
+                      fontSize: 12.5,
+                      color: 'rgba(255,255,255,.9)',
+                      lineHeight: 1.45
+                    }}>
+                      <svg style={{ width: 14, height: 14, stroke: '#38BDF8', fill: 'none', strokeWidth: 2.5, flex: 'none', marginTop: 2 }} viewBox="0 0 24 24">
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         ) : (
           <BuyNowButton svc={svc} priceCard={priceCard} />
