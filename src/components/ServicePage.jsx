@@ -428,6 +428,32 @@ function isRegistrationService(svc) {
   return false
 }
 
+const IT_SLUGS = new Set([
+  'website-development',
+  'static-website',
+  'dynamic-website',
+  'ecommerce-website',
+  'business-email-hosting',
+  'software-saas-development',
+  'mobile-app-development',
+  'whatsapp-chatbot',
+  'ai-voice-agent',
+  'sms-blasting',
+  'email-blasting',
+  'ai-powered-crm',
+  'business-automation',
+])
+
+function isITService(svc) {
+  if (!svc) return false
+  if (IT_SLUGS.has(svc.slug)) return true
+  const eyebrow = (svc.eyebrow || '').toLowerCase()
+  const crumb = (svc.crumbCategory || '').toLowerCase()
+  if (eyebrow.includes('technology') || eyebrow.includes('automate') || eyebrow.includes('ai') || eyebrow.includes('messaging')) return true
+  if (crumb.includes('build') || crumb.includes('automate')) return true
+  return false
+}
+
 const DIGITAL_MARKETING_SLUGS = new Set([
   'seo-marketing',
   'content-marketing',
@@ -622,8 +648,19 @@ function ServiceAside({ priceCard, helpCard, svc }) {
   )
 }
 
-/* ── Homepage-style stat pills shown on hero ── */
-const TRUST_PILLS = ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Govt. Compliant']
+/* ── Homepage-style stat pills shown on hero, tailored per service category ── */
+function getTrustPills(svc) {
+  if (isRegistrationService(svc)) {
+    return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Govt. Compliant']
+  }
+  if (isITService(svc)) {
+    return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Production Ready']
+  }
+  if (isDigitalMarketingService(svc)) {
+    return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'ROI Driven']
+  }
+  return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Verified Experts']
+}
 
 /* ── Dynamic Category Icon Selector for Service Subsections ── */
 function getServiceSubIcon(category = '', title = '') {
@@ -746,8 +783,27 @@ function ServiceHeroVisual({ svc }) {
 
       {/* Floating accent badge bottom-left */}
       <div className="svc-float-badge svc-float-badge--bot">
-        <span style={{ color: '#10B981' }}>🛡️</span>
-        <span>100% Compliant & Secure</span>
+        {isRegistrationService(svc) ? (
+          <>
+            <span style={{ color: '#10B981' }}>🛡️</span>
+            <span>100% Compliant & Secure</span>
+          </>
+        ) : isITService(svc) ? (
+          <>
+            <span style={{ color: '#10B981' }}>⚡</span>
+            <span>Modern & High Performance</span>
+          </>
+        ) : isDigitalMarketingService(svc) ? (
+          <>
+            <span style={{ color: '#10B981' }}>📈</span>
+            <span>Targeted & Results Driven</span>
+          </>
+        ) : (
+          <>
+            <span style={{ color: '#10B981' }}>🛡️</span>
+            <span>Verified & Reliable</span>
+          </>
+        )}
       </div>
     </div>
   )
@@ -808,7 +864,7 @@ export default function ServicePage({ svc }) {
                 </a>
               </div>
               <div className="svc-trust-pills reveal-up in">
-                {TRUST_PILLS.map(t => (
+                {getTrustPills(svc).map(t => (
                   <div key={t} className="svc-trust-pill">
                     <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="var(--blue)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={CHECK} /></svg>
                     <span>{t}</span>
