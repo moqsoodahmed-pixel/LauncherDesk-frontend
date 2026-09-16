@@ -518,7 +518,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
   const isDM = isDigitalMarketingService(svc)
   const hasPrice = priceCard.price && priceCard.price !== 'Custom quote'
   const waMsg = encodeURIComponent(`Hi, I'm interested in ${svc.title}`)
-  const showGovtFeeBadge = !isDM && isRegistrationService(svc)
+  const showGovtFeeBadge = !isDM && isRegistrationService(svc) && svc?.slug !== 'iso-certification'
 
   // Label: "CHOOSE PLAN" for Digital Marketing, else existing priceCard.label
   const boxLabel = isDM ? 'CHOOSE PLAN' : priceCard.label
@@ -650,6 +650,9 @@ function ServiceAside({ priceCard, helpCard, svc }) {
 
 /* ── Homepage-style stat pills shown on hero, tailored per service category ── */
 function getTrustPills(svc) {
+  if (svc?.slug === 'iso-certification') {
+    return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Globally Certified']
+  }
   if (isRegistrationService(svc)) {
     return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Govt. Compliant']
   }
@@ -783,7 +786,12 @@ function ServiceHeroVisual({ svc }) {
 
       {/* Floating accent badge bottom-left */}
       <div className="svc-float-badge svc-float-badge--bot">
-        {isRegistrationService(svc) ? (
+        {svc?.slug === 'iso-certification' ? (
+          <>
+            <span style={{ color: '#10B981' }}>🛡️</span>
+            <span>Accredited & ISO Certified</span>
+          </>
+        ) : isRegistrationService(svc) ? (
           <>
             <span style={{ color: '#10B981' }}>🛡️</span>
             <span>100% Compliant & Secure</span>
@@ -890,7 +898,7 @@ export default function ServicePage({ svc }) {
                   ? <FaqSection key="faq" data={sections.faq} />
                   : <SectionContent key={id} id={id} data={sections[id]} />
               )}
-              {isRegistrationService(svc) && (
+              {isRegistrationService(svc) && svc?.slug !== 'iso-certification' && (
                 <div style={{ marginTop: 28, padding: '12px 16px', borderRadius: 10, background: '#F8FAFC', border: '1px solid var(--line)', fontSize: 12.5, color: 'var(--text-3)', lineHeight: 1.6 }}>
                   <strong style={{ color: 'var(--text-2)' }}>Please note:</strong> LauncherDesk assists with preparation and submission. Final approval depends on the government authority and may vary by document completeness and workload.
                 </div>
