@@ -19,18 +19,19 @@ const FLOATING_SERVICES = [
     mobile: true,
   },
   {
-    id: 'gst',
-    title: 'GST & Tax Filing',
-    subtitle: 'Monthly & Annual Filings',
+    id: 'market',
+    title: 'Marketplace',
+    subtitle: 'Software & SaaS Tools',
     icon: (
       <svg viewBox="0 0 24 24" width={17} height={17} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" />
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <path d="M16 10a4 4 0 0 1-8 0" />
       </svg>
     ),
-    badge: '100% On-Time',
+    badge: 'Curated Tools',
     badgeColor: '#3B82F6',
-    link: '/services/gst-registration',
+    link: '/market',
     className: 'hv-card--top-right',
     depth: 1.14,
     mobile: true,
@@ -53,18 +54,19 @@ const FLOATING_SERVICES = [
     mobile: true,
   },
   {
-    id: 'payroll',
-    title: 'Payroll & HR',
-    subtitle: 'Salaries, PF & ESI',
+    id: 'estamp',
+    title: 'E-Stamp',
+    subtitle: 'Digital Stamp Paper',
     icon: (
       <svg viewBox="0 0 24 24" width={17} height={17} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-        <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
-        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <path d="m9 15 2 2 4-4" />
       </svg>
     ),
-    badge: 'Automated',
+    badge: '100% Legal',
     badgeColor: '#F59E0B',
-    link: '/company/contact',
+    link: '/estamp',
     className: 'hv-card--mid-right',
     depth: 1.1,
     mobile: true,
