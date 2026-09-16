@@ -513,12 +513,19 @@ function getServiceHighlights(svc) {
   ]
 }
 
+const EXCLUDED_GOVT_SERVICES = new Set([
+  'iso-certification',
+  'msme-registration',
+  'private-limited-company-registration',
+  'gst-registration',
+])
+
 function ServiceAside({ priceCard, helpCard, svc }) {
   const navigate = useNavigate()
   const isDM = isDigitalMarketingService(svc)
   const hasPrice = priceCard.price && priceCard.price !== 'Custom quote'
   const waMsg = encodeURIComponent(`Hi, I'm interested in ${svc.title}`)
-  const showGovtFeeBadge = !isDM && isRegistrationService(svc) && svc?.slug !== 'iso-certification'
+  const showGovtFeeBadge = !isDM && isRegistrationService(svc) && !EXCLUDED_GOVT_SERVICES.has(svc?.slug)
 
   // Label: "CHOOSE PLAN" for Digital Marketing, else existing priceCard.label
   const boxLabel = isDM ? 'CHOOSE PLAN' : priceCard.label
@@ -652,6 +659,9 @@ function ServiceAside({ priceCard, helpCard, svc }) {
 function getTrustPills(svc) {
   if (svc?.slug === 'iso-certification') {
     return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Globally Certified']
+  }
+  if (EXCLUDED_GOVT_SERVICES.has(svc?.slug)) {
+    return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Verified Experts']
   }
   if (isRegistrationService(svc)) {
     return ['100% Digital', 'Dedicated Manager', 'Transparent Pricing', 'Govt. Compliant']
@@ -790,6 +800,11 @@ function ServiceHeroVisual({ svc }) {
           <>
             <span style={{ color: '#10B981' }}>🛡️</span>
             <span>Accredited & ISO Certified</span>
+          </>
+        ) : EXCLUDED_GOVT_SERVICES.has(svc?.slug) ? (
+          <>
+            <span style={{ color: '#10B981' }}>🛡️</span>
+            <span>100% Verified & Secure</span>
           </>
         ) : isRegistrationService(svc) ? (
           <>
