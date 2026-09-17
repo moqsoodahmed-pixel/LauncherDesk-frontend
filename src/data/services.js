@@ -118,7 +118,7 @@ export const SERVICES = {
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "Register for GST and keep monthly, quarterly and annual returns filed on time — so a missed deadline never becomes a penalty or a blocked input credit.",
-    priceCard: { label: 'Total (incl. GST)', price: '₹1,769', sub: 'Professional fee ₹1,499 + GST' },
+    priceCard: { label: 'Price', price: '₹1,499 + GST', sub: '' },
     helpCard: { title: 'Not sure if you need GST yet?', body: "It depends on turnover, state and channel — we'll tell you plainly." },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -205,7 +205,7 @@ export const SERVICES = {
     eyebrow: 'Start your business',
     crumbCategory: 'Start your business',
     lead: "A partner-owned structure that combines limited liability with lower compliance than a Private Limited Company. Popular with professional and services firms.",
-    priceCard: { label: 'Total (incl. GST)', price: '₹10,030', sub: 'Professional fee ₹8,500 + GST' },
+    priceCard: { label: 'Price', price: '₹8,500 + GST', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -434,7 +434,7 @@ export const SERVICES = {
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "A quick registration that unlocks collateral-free loans, subsidies, delayed-payment protection and priority in government tenders.",
-    priceCard: { label: 'Total (incl. GST)', price: '₹589', sub: 'Professional fee ₹499 + GST' },
+    priceCard: { label: 'Price', price: '₹499 + GST', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -583,7 +583,7 @@ export const SERVICES = {
     eyebrow: 'Protect & grow',
     crumbCategory: 'Legal & IP',
     lead: "Your brand name is one of your most valuable assets — and one of the easiest to lose if you don't register it. We search, file and track your trademark through to registration.",
-    priceCard: { label: 'Total (incl. GST)', price: '₹4,720', sub: 'Professional fee ₹4,000 + GST' },
+    priceCard: { label: 'Price', price: '₹4,000 + GST', sub: '' },
     helpCard: { title: "Not sure your name is free?", body: "We run a proper search before you file anything." },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: 'Who can register' }, { href: '#benefits', label: 'Advantages' },
@@ -677,7 +677,7 @@ export const SERVICES = {
     eyebrow: 'IPR & Trademark',
     crumbCategory: 'IPR & Trademark',
     lead: 'If your trademark application has been objected to by the Registrar, you need to file a well-drafted response within 30 days. We handle the entire objection response process.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹9,440', sub: 'Professional fee ₹8,000 + GST' },
+    priceCard: { label: 'Price', price: '₹8,000 + GST', sub: '' },
     helpCard: { title: 'Got an objection notice?', body: 'Share the examination report with us and we will assess your case.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -918,7 +918,7 @@ export const SERVICES = {
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "Every registered company and LLP has mandatory annual filings — miss them and penalties compound daily. We track deadlines and file on your behalf.",
-    priceCard: { label: 'Total (incl. GST)', price: '₹17,700', sub: 'Professional fee ₹15,000 + GST' },
+    priceCard: { label: 'Price', price: '₹15,000 + GST', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -1641,7 +1641,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Branding',
     crumbCategory: 'BUILD',
     lead: 'Build a brand identity that represents your business correctly — with a professional logo, consistent visual language and a brand guide your team can use.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹4,130', sub: 'Professional fee ₹3,500 + GST' },
+    priceCard: { label: 'Price', price: '₹3,500 + GST', sub: '' },
     helpCard: { title: 'Already have a logo?', body: 'We can refresh and extend an existing identity, or start from scratch.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -1778,7 +1778,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'Build the software your business needs — from a custom internal tool to a full SaaS product — with a clear process, honest timelines and experienced development support.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹10,619', sub: 'Professional fee ₹8,999 + GST' },
+    priceCard: { label: 'Price', price: '₹8,999 + GST', sub: '' },
     helpCard: { title: 'Have a software idea?', body: 'Start with a scoping conversation — no commitment required.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -1848,7 +1848,7 @@ export const SERVICES = {
     eyebrow: 'START — Certifications',
     crumbCategory: 'START',
     lead: 'Get your startup officially recognised by DPIIT — unlocking income tax benefits, government scheme access, patent fee rebates and investor credibility.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹4,956', sub: 'Professional fee ₹4,200 + GST' },
+    priceCard: { label: 'Price', price: '₹4,200 + GST', sub: '' },
     helpCard: { title: 'Not sure if you qualify?', body: 'We check eligibility before you apply — free assessment.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -1937,7 +1937,7 @@ export const SERVICES = {
     eyebrow: 'START — Certifications',
     crumbCategory: 'START',
     lead: 'Get your business ISO certified — with guidance on the right standard, documentation support and certification body coordination.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹2,950', sub: 'Professional fee ₹2,500 + GST' },
+    priceCard: { label: 'Price', price: '₹2,500 + GST', sub: '' },
     helpCard: { title: 'Not sure which ISO standard you need?', body: 'We help you identify the right standard for your business and sector.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2013,7 +2013,7 @@ export const SERVICES = {
     eyebrow: 'MANAGE — Compliance',
     crumbCategory: 'MANAGE',
     lead: 'File your business income tax return accurately and on time — with CA-reviewed preparation, tax planning guidance and end-to-end support.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹17,700', sub: 'Professional fee ₹15,000 + GST' },
+    priceCard: { label: 'Price', price: '₹15,000 + GST', sub: '' },
     helpCard: { title: 'Missed a previous filing?', body: 'We can help you file backlogged returns and get compliant.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2150,7 +2150,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Marketing',
     crumbCategory: 'GROW',
     lead: 'Use WhatsApp to reach and communicate with your customers at scale — through the official WhatsApp Business API, properly configured for your business.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹3,540', sub: 'Professional fee ₹3,000 + GST' },
+    priceCard: { label: 'Price', price: '₹3,000 + GST', sub: '' },
     helpCard: { title: 'Using the free WhatsApp Business App?', body: 'The API unlocks bulk messaging, automation and CRM integration the app cannot do.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2290,7 +2290,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Marketing',
     crumbCategory: 'GROW',
     lead: 'Build a consistent, professional social media presence that represents your brand, reaches your audience and grows over time — without you managing it yourself.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹9,440', sub: 'Professional fee ₹8,000 + GST' },
+    priceCard: { label: 'Price', price: '₹8,000 + GST', sub: '' },
     helpCard: { title: 'Not sure which platforms to be on?', body: 'We help you identify the right platforms for your business and audience.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2504,7 +2504,7 @@ export const SERVICES = {
     eyebrow: 'EXPAND — Fundraising',
     crumbCategory: 'EXPAND',
     lead: 'Prepare the documentation investors expect — pitch deck, financial projections, cap table and data room — coordinated through one team that understands early-stage fundraising.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹14,160', sub: 'Professional fee ₹12,000 + GST' },
+    priceCard: { label: 'Price', price: '₹12,000 + GST', sub: '' },
     helpCard: { title: 'Preparing for an investor meeting?', body: 'A well-prepared pitch deck and data room makes the difference.' },
     toc: [
       { href: '#overview', label: 'Overview' },

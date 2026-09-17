@@ -569,7 +569,19 @@ function ServiceAside({ priceCard, helpCard, svc }) {
             <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,.6)', marginBottom: 8 }}>{boxLabel}</div>
             {hasPrice ? (
               <>
-                <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: cleanSub ? 4 : 16, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{displayedPrice}</div>
+                <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: cleanSub ? 4 : 16, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
+                  {(() => {
+                    const m = displayedPrice.match(/^(.*?)(\s*\+\s*.+)?$/)
+                    const main = m?.[1] || displayedPrice
+                    const suffix = m?.[2]?.trim()
+                    return (
+                      <>
+                        {main}
+                        {suffix ? <span style={{ fontSize: '0.42em', fontWeight: 700, color: 'rgba(255,255,255,.72)', marginLeft: 6 }}>{suffix}</span> : null}
+                      </>
+                    )
+                  })()}
+                </div>
                 {cleanSub ? (
                   <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{cleanSub}</div>
                 ) : null}
