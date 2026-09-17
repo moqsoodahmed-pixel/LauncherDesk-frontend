@@ -580,6 +580,7 @@ export default function AIAssistant() {
             <DraSubSection id="mob" label="Mobile Solutions">
               <Link to="/services/mobile-app-development" onClick={closeDrawer}>Mobile Application Development</Link>
               <Link to="/services/software-saas-development" onClick={closeDrawer}>Custom Software Development</Link>
+              <Link to="/services/hrms" onClick={closeDrawer}>HRMS</Link>
             </DraSubSection>
             <DraSubSection id="mkt" label="Marketing & Sales">
               <Link to="/services/seo-marketing" onClick={closeDrawer}>SEO & Search Marketing</Link>

@@ -444,6 +444,7 @@ const IT_SLUGS = new Set([
   'email-blasting',
   'ai-powered-crm',
   'business-automation',
+  'hrms',
 ])
 
 function isITService(svc) {
@@ -556,121 +557,109 @@ function ServiceAside({ priceCard, helpCard, svc }) {
           so repeating it here would just be duplicate "paying" content taking
           up space in this column. */}
       {!hasTieredPlans && (
-      <div style={{ background: 'linear-gradient(135deg,#1A2F4E 0%,#1D6FE0 100%)', borderRadius: 16, padding: '24px 20px', color: '#fff', marginBottom: 16, boxShadow: '0 8px 32px rgba(29,111,224,.25)' }}>
-        {isDM ? (
-          <div style={{ marginBottom: 16 }}>
-            <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#93C5FD', marginBottom: 4 }}>CHOOSE PLAN</div>
-            <div style={{ fontSize: 'clamp(20px,3.8vw,28px)', fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>
-              Choose your monthly plan below
-            </div>
-          </div>
-        ) : (
-          <>
-            <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,.6)', marginBottom: 8 }}>{boxLabel}</div>
-            {hasPrice ? (
-              <>
-                <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: cleanSub ? 4 : 16, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
-                  {(() => {
-                    const m = displayedPrice.match(/^(.*?)(\s*\+\s*.+)?$/)
-                    const main = m?.[1] || displayedPrice
-                    const suffix = m?.[2]?.trim()
-                    return (
-                      <>
-                        {main}
-                        {suffix ? <span style={{ fontSize: '0.42em', fontWeight: 700, color: 'rgba(255,255,255,.72)', marginLeft: 6 }}>{suffix}</span> : null}
-                      </>
-                    )
-                  })()}
-                </div>
-                {cleanSub ? (
-                  <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{cleanSub}</div>
-                ) : null}
-              </>
-            ) : (
-              <>
-                <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: cleanSub ? 4 : 16 }}>Custom Quote</div>
-                {cleanSub ? (
-                  <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{cleanSub}</div>
-                ) : null}
-              </>
-            )}
-          </>
-        )}
-        <Link to="/company/contact" style={{ display: 'block', textAlign: 'center', padding: '12px', borderRadius: 10, background: '#F97316', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 10 }}>
-          Talk to an Expert →
-        </Link>
-        <a href={`https://wa.me/918548854859?text=${waMsg}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp us about ${svc.title}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '11px', borderRadius: 10, background: '#25D366', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 4 }}>
-          <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" aria-hidden="true"><path d={WA_PATH} /></svg>
-          WhatsApp Us
-        </a>
-        {isDM ? (
-          <div style={{ marginTop: 10 }}>
-            <button
-              onClick={handleMonthlyPlansClick}
-              style={{
-                display: 'block', width: '100%', textAlign: 'center',
-                padding: '12px', borderRadius: 10,
-                background: 'rgba(255,255,255,.15)',
-                color: '#fff', fontWeight: 700, fontSize: 14,
-                border: '1px solid rgba(255,255,255,.3)',
-                cursor: 'pointer', fontFamily: 'inherit',
-                transition: 'background .15s'
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,.25)' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.15)' }}
-            >
-              Monthly Plans
-            </button>
-
-            {/* Service points according to price/plan below monthly plans */}
-            {dmHighlights.length > 0 && (
-              <div style={{
-                marginTop: 16,
-                paddingTop: 14,
-                borderTop: '1px solid rgba(255,255,255,.18)'
-              }}>
-                <div style={{
-                  fontSize: 11,
-                  fontFamily: 'var(--font)',
-                  fontWeight: 800,
-                  letterSpacing: '.12em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,.7)',
-                  marginBottom: 10
-                }}>
-                  Key Service Highlights:
-                </div>
-                <ul style={{
-                  listStyle: 'none',
-                  padding: 0,
-                  margin: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 8
-                }}>
-                  {dmHighlights.map((pt, idx) => (
-                    <li key={idx} style={{
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: 8,
-                      fontSize: 12.5,
-                      color: 'rgba(255,255,255,.9)',
-                      lineHeight: 1.45
-                    }}>
-                      <svg style={{ width: 14, height: 14, stroke: '#38BDF8', fill: 'none', strokeWidth: 2.5, flex: 'none', marginTop: 2 }} viewBox="0 0 24 24">
-                        <path d="M20 6 9 17l-5-5" />
-                      </svg>
-                      <span>{pt}</span>
-                    </li>
-                  ))}
-                </ul>
+        <div style={{ background: 'linear-gradient(135deg,#1A2F4E 0%,#1D6FE0 100%)', borderRadius: 16, padding: '24px 20px', color: '#fff', marginBottom: 16, boxShadow: '0 8px 32px rgba(29,111,224,.25)' }}>
+          {isDM ? (
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#93C5FD', marginBottom: 4 }}>CHOOSE PLAN</div>
+              <div style={{ fontSize: 'clamp(20px,3.8vw,28px)', fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>
+                Choose your monthly plan below
               </div>
-            )}
-          </div>
-        ) : (
-          <BuyNowButton svc={svc} priceCard={priceCard} />
-        )}
-      </div>
+            </div>
+          ) : (
+            <>
+              <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,.6)', marginBottom: 8 }}>{boxLabel}</div>
+              {hasPrice ? (
+                <>
+                  <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: cleanSub ? 4 : 16, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>{displayedPrice}</div>
+                  {cleanSub ? (
+                    <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{cleanSub}</div>
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', lineHeight: 1, marginBottom: cleanSub ? 4 : 16 }}>Custom Quote</div>
+                  {cleanSub ? (
+                    <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{cleanSub}</div>
+                  ) : null}
+                </>
+              )}
+            </>
+          )}
+          <Link to="/company/contact" style={{ display: 'block', textAlign: 'center', padding: '12px', borderRadius: 10, background: '#F97316', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 10 }}>
+            Talk to an Expert →
+          </Link>
+          <a href={`https://wa.me/918548854859?text=${waMsg}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp us about ${svc.title}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '11px', borderRadius: 10, background: '#25D366', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 4 }}>
+            <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" aria-hidden="true"><path d={WA_PATH} /></svg>
+            WhatsApp Us
+          </a>
+          {isDM ? (
+            <div style={{ marginTop: 10 }}>
+              <button
+                onClick={handleMonthlyPlansClick}
+                style={{
+                  display: 'block', width: '100%', textAlign: 'center',
+                  padding: '12px', borderRadius: 10,
+                  background: 'rgba(255,255,255,.15)',
+                  color: '#fff', fontWeight: 700, fontSize: 14,
+                  border: '1px solid rgba(255,255,255,.3)',
+                  cursor: 'pointer', fontFamily: 'inherit',
+                  transition: 'background .15s'
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,.25)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.15)' }}
+              >
+                Monthly Plans
+              </button>
+
+              {/* Service points according to price/plan below monthly plans */}
+              {dmHighlights.length > 0 && (
+                <div style={{
+                  marginTop: 16,
+                  paddingTop: 14,
+                  borderTop: '1px solid rgba(255,255,255,.18)'
+                }}>
+                  <div style={{
+                    fontSize: 11,
+                    fontFamily: 'var(--font)',
+                    fontWeight: 800,
+                    letterSpacing: '.12em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,.7)',
+                    marginBottom: 10
+                  }}>
+                    Key Service Highlights:
+                  </div>
+                  <ul style={{
+                    listStyle: 'none',
+                    padding: 0,
+                    margin: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 8
+                  }}>
+                    {dmHighlights.map((pt, idx) => (
+                      <li key={idx} style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: 8,
+                        fontSize: 12.5,
+                        color: 'rgba(255,255,255,.9)',
+                        lineHeight: 1.45
+                      }}>
+                        <svg style={{ width: 14, height: 14, stroke: '#38BDF8', fill: 'none', strokeWidth: 2.5, flex: 'none', marginTop: 2 }} viewBox="0 0 24 24">
+                          <path d="M20 6 9 17l-5-5" />
+                        </svg>
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            <BuyNowButton svc={svc} priceCard={priceCard} />
+          )}
+        </div>
       )}
       <div style={{ marginBottom: 16 }}><QuoteForm svc={svc} /></div>
       <div className="help-card">
@@ -736,7 +725,7 @@ function getServiceSubIcon(category = '', title = '') {
 
 /* ── Service-specific animated related content showcase ── */
 function ServiceHeroVisual({ svc }) {
-  const { title, eyebrow, crumbCategory, related, sections } = svc
+  const { title, eyebrow, crumbCategory, related, sections, priceCard } = svc
   const relItems = related && related.length > 0 ? related.slice(0, 3) : []
 
   // Extract clean deliverable highlight pills from service data or sensible defaults
@@ -744,9 +733,19 @@ function ServiceHeroVisual({ svc }) {
     ? sections.included.items.slice(0, 3).map(it => it.replace(/<[^>]*>?/gm, '').split(/[\(\—\-]/)[0].trim())
     : ['Dedicated RM', '100% Digital Process', 'Transparent SLA']
 
+  // Clean concise top floating price badge text
+  const shortPrice = priceCard?.price ? priceCard.price.split(/[\+\*\(]/)[0].trim() : null
+  const floatTopText = shortPrice ? `From ${shortPrice}` : 'Fast-Track SLA'
+
   return (
     <div className="svc-hero-visual reveal-up in" aria-label={`${title} related ecosystem`}>
       <div className="svc-visual-glow" aria-hidden="true" />
+
+      {/* Floating accent badge top-right */}
+      <div className="svc-float-badge svc-float-badge--top">
+        <span style={{ color: '#F59E0B' }} aria-hidden="true">⚡</span>
+        <span>{floatTopText}</span>
+      </div>
 
       <div className="svc-visual-card">
         {/* Header with live pulse */}
