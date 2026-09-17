@@ -197,7 +197,7 @@ function MegaIT() {
             <div className="mp-svc-grid">
               <SvcLink href="/services/mobile-app-development" title="Mobile Application Development" desc="iOS &amp; Android native or hybrid apps" />
               <SvcLink href="/services/software-saas-development" title="Custom Software Development" desc="Bespoke systems &amp; platforms" />
-              <SvcLink href="/services/hrms" title="HRMS" desc="HR, attendance, leave &amp; payroll in one system" />
+              <SvcLink href="/services/hrms" title="HRMS Software Development" desc="HR, attendance, leave &amp; payroll in one system" />
             </div>
           </div>
           <div className="mp-panel" data-mp-panel="mkt">
