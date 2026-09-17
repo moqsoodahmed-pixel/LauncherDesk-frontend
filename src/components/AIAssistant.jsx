@@ -549,7 +549,7 @@ export default function AIAssistant() {
         </div>
 
         <nav className="d-nav">
-          <DraSection id="reg" label="Registrations">
+          <DraSection id="reg" label="Start a Business">
             <DraSubSection id="inc" label="Business Incorporation">
               <Link to="/services/private-limited-company-registration" onClick={closeDrawer}>Private Limited Company Registration</Link>
               <Link to="/services/llp-registration" onClick={closeDrawer}>LLP Registration</Link>
