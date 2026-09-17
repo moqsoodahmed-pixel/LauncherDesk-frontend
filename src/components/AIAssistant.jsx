@@ -561,13 +561,7 @@ export default function AIAssistant() {
               <Link to="/services/iso-certification" onClick={closeDrawer}>ISO Certification</Link>
               <Link to="/services/gst-registration" onClick={closeDrawer}>GST Registration</Link>
               <Link to="/services" onClick={closeDrawer}>PAN / TAN Application</Link>
-            </DraSubSection>
-            <DraSubSection id="ipr" label="IPR & Trademark">
               <Link to="/services/trademark-registration" onClick={closeDrawer}>Trademark Registration</Link>
-              <Link to="/services/trademark-objection" onClick={closeDrawer}>Trademark Objection</Link>
-              <Link to="/services/patent-registration" onClick={closeDrawer}>Patent Registration</Link>
-              <Link to="/services/copyright-registration" onClick={closeDrawer}>Copyright Registration</Link>
-              <Link to="/services/ip-trademark-management" onClick={closeDrawer}>IP & Trademark Management</Link>
             </DraSubSection>
             <div style={{ padding: '4px 10px 6px' }}>
               <Link to="/services" onClick={closeDrawer} style={{ fontSize: 13, fontWeight: 700, color: 'var(--blue)', textDecoration: 'none', display: 'inline-block' }}>
@@ -597,7 +591,7 @@ export default function AIAssistant() {
             <DraSubSection id="digital" label="Digital Marketing">
               <Link to="/digital-marketing" onClick={closeDrawer}>AI Search Optimization</Link>
               <Link to="/digital-marketing" onClick={closeDrawer}>Google Ads & Meta Campaigns</Link>
-              <Link to="/digital-marketing" onClick={closeDrawer}>Social Media & Creative Design</Link>
+              <Link to="/digital-marketing" onClick={closeDrawer}>Branding & Creative Design</Link>
             </DraSubSection>
             <div style={{ padding: '4px 10px 6px' }}>
               <Link to="/services" onClick={closeDrawer} style={{ fontSize: 13, fontWeight: 700, color: 'var(--blue)', textDecoration: 'none', display: 'inline-block' }}>
