@@ -1057,8 +1057,7 @@ export default function HomePage() {
                 <em>Run it all from one desk.</em>
               </h1>
               <p className="hp-hero-desc">
-                From Private Limited and LLP registration to GST, compliance, IT and finance —
-                LauncherDesk handles everything through a single point of contact.
+                From starting your business to managing compliance, technology, finance and growth, LauncherDesk brings every essential service together in one place.
               </p>
               <div className="hp-cta-row">
                 <a href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services." className="hp-btn-wa" target="_blank" rel="noopener noreferrer">
