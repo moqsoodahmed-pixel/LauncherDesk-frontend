@@ -118,7 +118,7 @@ export const SERVICES = {
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "Register for GST and keep monthly, quarterly and annual returns filed on time — so a missed deadline never becomes a penalty or a blocked input credit.",
-    priceCard: { label: 'Total (incl. GST)', price: '₹1,769', sub: 'Professional fee ₹1,499 + GST' },
+    priceCard: { label: 'Price', price: '₹1,499 + GST', sub: '' },
     helpCard: { title: 'Not sure if you need GST yet?', body: "It depends on turnover, state and channel — we'll tell you plainly." },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -205,7 +205,7 @@ export const SERVICES = {
     eyebrow: 'Start your business',
     crumbCategory: 'Start your business',
     lead: "A partner-owned structure that combines limited liability with lower compliance than a Private Limited Company. Popular with professional and services firms.",
-    priceCard: { label: 'Total (incl. GST)', price: '₹10,030', sub: 'Professional fee ₹8,500 + GST' },
+    priceCard: { label: 'Price', price: '₹8,500 + GST', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -434,7 +434,7 @@ export const SERVICES = {
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "A quick registration that unlocks collateral-free loans, subsidies, delayed-payment protection and priority in government tenders.",
-    priceCard: { label: 'Total (incl. GST)', price: '₹589', sub: 'Professional fee ₹499 + GST' },
+    priceCard: { label: 'Price', price: '₹499 + GST', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -583,7 +583,7 @@ export const SERVICES = {
     eyebrow: 'Protect & grow',
     crumbCategory: 'Legal & IP',
     lead: "Your brand name is one of your most valuable assets — and one of the easiest to lose if you don't register it. We search, file and track your trademark through to registration.",
-    priceCard: { label: 'Total (incl. GST)', price: '₹4,720', sub: 'Professional fee ₹4,000 + GST' },
+    priceCard: { label: 'Price', price: '₹4,000 + GST', sub: '' },
     helpCard: { title: "Not sure your name is free?", body: "We run a proper search before you file anything." },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: 'Who can register' }, { href: '#benefits', label: 'Advantages' },
@@ -677,7 +677,7 @@ export const SERVICES = {
     eyebrow: 'IPR & Trademark',
     crumbCategory: 'IPR & Trademark',
     lead: 'If your trademark application has been objected to by the Registrar, you need to file a well-drafted response within 30 days. We handle the entire objection response process.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹9,440', sub: 'Professional fee ₹8,000 + GST' },
+    priceCard: { label: 'Price', price: '₹8,000 + GST', sub: '' },
     helpCard: { title: 'Got an objection notice?', body: 'Share the examination report with us and we will assess your case.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -918,7 +918,7 @@ export const SERVICES = {
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "Every registered company and LLP has mandatory annual filings — miss them and penalties compound daily. We track deadlines and file on your behalf.",
-    priceCard: { label: 'Total (incl. GST)', price: '₹17,700', sub: 'Professional fee ₹15,000 + GST' },
+    priceCard: { label: 'Price', price: '₹15,000 + GST', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
@@ -1348,7 +1348,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'Get a professional, fast, mobile-first website that represents your business correctly — designed for conversion, not just aesthetics.',
-    priceCard: { label: 'Starts from', price: '₹5,999*', sub: '+ GST' },
+    priceCard: { label: 'Starts from', price: '₹5,999 + GST', sub: '' },
     helpCard: { title: 'Not sure what type of site you need?', body: 'Tell us about your business and we will recommend the right approach.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -1439,7 +1439,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'A clean, fast, lightweight website that presents your business professionally — perfect for service businesses, consultants and professionals who need a credible online presence without complexity.',
-    priceCard: { label: 'Starts from', price: '₹4,999*', sub: '' },
+    priceCard: { label: 'Starts from', price: '₹4,999 + GST', sub: '' },
     helpCard: { title: 'Not sure if static is right for you?', body: 'Static sites work best when your content doesn\'t change frequently.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -1504,7 +1504,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'A CMS-powered website you can update yourself — add blog posts, edit pages, upload images and manage content without touching code. Built for businesses that need ongoing content flexibility.',
-    priceCard: { label: 'Starts from', price: '₹25,000*', sub: '' },
+    priceCard: { label: 'Starts from', price: '₹25,000 + GST', sub: '' },
     helpCard: { title: 'Need ongoing content updates?', body: 'Dynamic is the right choice if you blog, add case studies or update offerings regularly.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
@@ -1571,7 +1571,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'Get a fully-functional online store — product catalogue, cart, payment gateway and mobile-first design — built for Indian businesses and ready to sell from day one.',
-    priceCard: { label: 'Starts from', price: '₹20,000*', sub: '' },
+    priceCard: { label: 'Starts from', price: '₹20,000 + GST', sub: '' },
     helpCard: { title: 'Selling on Amazon or Flipkart too?', body: 'We can build your own storefront alongside marketplace presence.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -1641,7 +1641,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Branding',
     crumbCategory: 'BUILD',
     lead: 'Build a brand identity that represents your business correctly — with a professional logo, consistent visual language and a brand guide your team can use.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹4,130', sub: 'Professional fee ₹3,500 + GST' },
+    priceCard: { label: 'Price', price: '₹3,500 + GST', sub: '' },
     helpCard: { title: 'Already have a logo?', body: 'We can refresh and extend an existing identity, or start from scratch.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -1778,7 +1778,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'Build the software your business needs — from a custom internal tool to a full SaaS product — with a clear process, honest timelines and experienced development support.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹10,619', sub: 'Professional fee ₹8,999 + GST' },
+    priceCard: { label: 'Price', price: '₹8,999 + GST', sub: '' },
     helpCard: { title: 'Have a software idea?', body: 'Start with a scoping conversation — no commitment required.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -1841,77 +1841,6 @@ export const SERVICES = {
     ]
   },
 
-  'hrms': {
-    title: 'HRMS — HR Management System',
-    metaTitle: 'HRMS Software for Startups & SMEs | Payroll, Attendance & Leave | LauncherDesk',
-    metaDesc: 'Get a complete HR Management System set up for your business — employee database, attendance, leave, payroll and self-service, all in one platform.',
-    eyebrow: 'BUILD — Technology',
-    crumbCategory: 'BUILD',
-    lead: 'Run HR from one place instead of spreadsheets and WhatsApp groups — employee records, attendance, leave, payroll and self-service, set up and configured for how your team actually works.',
-    priceCard: { label: 'Price', price: '₹18,000', sub: '+ GST' },
-    helpCard: { title: 'Not sure what you need yet?', body: 'Tell us your team size and current process — we\'ll recommend the right setup.' },
-    toc: [
-      { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
-      { href: '#included', label: "What's included" },
-      { href: '#process', label: 'Process' },
-      { href: '#pricing', label: 'Pricing' },
-      { href: '#faq', label: 'FAQs' },
-    ],
-    sections: {
-      overview: { heading: 'Overview', content: `<p>An HRMS (HR Management System) brings employee records, attendance, leave and payroll into one platform — replacing scattered spreadsheets, chat-group approvals and manual salary calculations. As a team grows past a handful of people, HR run informally starts costing real time every month and creates compliance risk around PF, ESI and TDS.</p><p>LauncherDesk sets up and configures an HRMS suited to your team size and processes — employee onboarding, attendance and leave policies, payroll rules and a self-service portal — so HR runs on a system rather than on memory.</p>` },
-      who: {
-        heading: "Who it's for", items: [
-          'Startups and SMEs moving off spreadsheets for HR and payroll',
-          'Businesses with 10+ employees where manual attendance/leave tracking has become unreliable',
-          'Companies that want employees to self-serve payslips, leave requests and documents',
-          'Founders who want PF, ESI and TDS calculated correctly and on time, every month',
-        ]
-      },
-      included: {
-        heading: "What's included", items: [
-          'Employee database and document storage',
-          'Attendance and leave management, with policy configuration',
-          'Payroll processing — salary structures, payslips, PF/ESI/TDS',
-          'Employee self-service portal (leave, payslips, documents)',
-          'Onboarding and offboarding workflows',
-          'Reports and dashboards for HR and management',
-          'Setup, data migration and admin training',
-        ]
-      },
-      process: {
-        heading: 'Step-by-step process', steps: [
-          { title: 'Requirement call', body: 'We understand your team size, current HR process and what you want automated first.' },
-          { title: 'Platform setup', body: 'We configure the HRMS — company structure, departments, roles and access.' },
-          { title: 'Policy configuration', body: 'Attendance, leave and payroll rules are set up to match your actual policies.' },
-          { title: 'Data migration', body: 'Existing employee and payroll data is migrated in, checked and validated.' },
-          { title: 'Training and go-live', body: 'We train your HR team and employees on self-service, then go live.' },
-          { title: 'Ongoing support', body: 'Support for configuration changes as your team and policies evolve.' },
-        ]
-      },
-      pricing: {
-        heading: 'Transparent pricing', intro: 'One flat setup fee covers configuration for your team — ongoing platform costs, if any, are shown separately.', rows: [
-          ['Professional fee', 'HRMS setup, configuration, data migration and training'],
-          ['Platform cost', 'Any per-user software subscription, passed through at cost'],
-          ['Taxes', 'GST on the professional fee, shown separately'],
-        ], outro: `<a href="/pricing" style="color:var(--blue-dark);font-weight:600">See how pricing works →</a>`
-      },
-      faq: {
-        heading: 'Frequently asked questions', items: [
-          { q: 'How long does HRMS setup take?', a: 'Typically 1–2 weeks depending on team size and how much historical data needs migrating.' },
-          { q: 'Does this include payroll processing every month, or just the setup?', a: 'This covers the setup and configuration. Ongoing monthly payroll processing is available separately — see our Payroll Management service.' },
-          { q: 'Can it handle PF, ESI and TDS correctly?', a: 'Yes — payroll rules are configured for statutory compliance (PF, ESI, TDS) based on your team\'s structure.' },
-          { q: 'Will my employees be able to see their own payslips and apply for leave?', a: 'Yes, the self-service portal lets employees view payslips, apply for leave and access their documents directly.' },
-        ]
-      }
-    },
-    related: [
-      { href: '/services/payroll', label: 'Payroll Management', note: 'Ongoing monthly payroll processing.' },
-      { href: '/services/business-automation', label: 'Business Automation', note: 'Automate workflows beyond HR.' },
-      { href: '/services/crm-setup-lead-management', label: 'CRM Setup & Integration', note: 'Bring the same discipline to sales.' },
-    ]
-  },
-
   'startup-india-dpiit': {
     title: 'Startup India / DPIIT Recognition',
     metaTitle: 'Startup India DPIIT Recognition | Tax Benefits & Schemes | LauncherDesk',
@@ -1919,7 +1848,7 @@ export const SERVICES = {
     eyebrow: 'START — Certifications',
     crumbCategory: 'START',
     lead: 'Get your startup officially recognised by DPIIT — unlocking income tax benefits, government scheme access, patent fee rebates and investor credibility.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹4,956', sub: 'Professional fee ₹4,200 + GST' },
+    priceCard: { label: 'Price', price: '₹4,200 + GST', sub: '' },
     helpCard: { title: 'Not sure if you qualify?', body: 'We check eligibility before you apply — free assessment.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2008,7 +1937,7 @@ export const SERVICES = {
     eyebrow: 'START — Certifications',
     crumbCategory: 'START',
     lead: 'Get your business ISO certified — with guidance on the right standard, documentation support and certification body coordination.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹2,950', sub: 'Professional fee ₹2,500 + GST' },
+    priceCard: { label: 'Price', price: '₹2,500 + GST', sub: '' },
     helpCard: { title: 'Not sure which ISO standard you need?', body: 'We help you identify the right standard for your business and sector.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2084,7 +2013,7 @@ export const SERVICES = {
     eyebrow: 'MANAGE — Compliance',
     crumbCategory: 'MANAGE',
     lead: 'File your business income tax return accurately and on time — with CA-reviewed preparation, tax planning guidance and end-to-end support.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹17,700', sub: 'Professional fee ₹15,000 + GST' },
+    priceCard: { label: 'Price', price: '₹15,000 + GST', sub: '' },
     helpCard: { title: 'Missed a previous filing?', body: 'We can help you file backlogged returns and get compliant.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2221,7 +2150,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Marketing',
     crumbCategory: 'GROW',
     lead: 'Use WhatsApp to reach and communicate with your customers at scale — through the official WhatsApp Business API, properly configured for your business.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹3,540', sub: 'Professional fee ₹3,000 + GST' },
+    priceCard: { label: 'Price', price: '₹3,000 + GST', sub: '' },
     helpCard: { title: 'Using the free WhatsApp Business App?', body: 'The API unlocks bulk messaging, automation and CRM integration the app cannot do.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2291,7 +2220,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Marketing',
     crumbCategory: 'GROW',
     lead: 'Stop losing leads in spreadsheets. Get a working CRM that tracks every enquiry, manages follow-ups and shows you exactly where your sales pipeline stands.',
-    priceCard: { label: 'Starts from', price: '₹25,000*', sub: '' },
+    priceCard: { label: 'Starts from', price: '₹25,000 + GST', sub: '' },
     helpCard: { title: 'Using spreadsheets to track leads?', body: 'A properly set-up CRM pays for itself quickly in recovered leads.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2361,7 +2290,7 @@ export const SERVICES = {
     eyebrow: 'GROW — Marketing',
     crumbCategory: 'GROW',
     lead: 'Build a consistent, professional social media presence that represents your brand, reaches your audience and grows over time — without you managing it yourself.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹9,440', sub: 'Professional fee ₹8,000 + GST' },
+    priceCard: { label: 'Price', price: '₹8,000 + GST', sub: '' },
     helpCard: { title: 'Not sure which platforms to be on?', body: 'We help you identify the right platforms for your business and audience.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2575,7 +2504,7 @@ export const SERVICES = {
     eyebrow: 'EXPAND — Fundraising',
     crumbCategory: 'EXPAND',
     lead: 'Prepare the documentation investors expect — pitch deck, financial projections, cap table and data room — coordinated through one team that understands early-stage fundraising.',
-    priceCard: { label: 'Total (incl. GST)', price: '₹14,160', sub: 'Professional fee ₹12,000 + GST' },
+    priceCard: { label: 'Price', price: '₹12,000 + GST', sub: '' },
     helpCard: { title: 'Preparing for an investor meeting?', body: 'A well-prepared pitch deck and data room makes the difference.' },
     toc: [
       { href: '#overview', label: 'Overview' },
