@@ -736,7 +736,7 @@ function getServiceSubIcon(category = '', title = '') {
 
 /* ── Service-specific animated related content showcase ── */
 function ServiceHeroVisual({ svc }) {
-  const { title, eyebrow, crumbCategory, related, sections, priceCard } = svc
+  const { title, eyebrow, crumbCategory, related, sections } = svc
   const relItems = related && related.length > 0 ? related.slice(0, 3) : []
 
   // Extract clean deliverable highlight pills from service data or sensible defaults
@@ -744,19 +744,9 @@ function ServiceHeroVisual({ svc }) {
     ? sections.included.items.slice(0, 3).map(it => it.replace(/<[^>]*>?/gm, '').split(/[\(\—\-]/)[0].trim())
     : ['Dedicated RM', '100% Digital Process', 'Transparent SLA']
 
-  // Clean concise top floating price badge text
-  const shortPrice = priceCard?.price ? priceCard.price.split(/[\+\*\(]/)[0].trim() : null
-  const floatTopText = shortPrice ? `From ${shortPrice}` : 'Fast-Track SLA'
-
   return (
     <div className="svc-hero-visual reveal-up in" aria-label={`${title} related ecosystem`}>
       <div className="svc-visual-glow" aria-hidden="true" />
-
-      {/* Floating accent badge top-right */}
-      <div className="svc-float-badge svc-float-badge--top">
-        <span style={{ color: '#F59E0B' }} aria-hidden="true">⚡</span>
-        <span>{floatTopText}</span>
-      </div>
 
       <div className="svc-visual-card">
         {/* Header with live pulse */}
