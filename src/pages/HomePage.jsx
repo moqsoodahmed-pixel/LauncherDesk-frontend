@@ -659,7 +659,7 @@ const S = `
 .hp-marquee-wrap::after{right:0;background:linear-gradient(to left,#fff,transparent)}
 .hp-marquee-track {
   display:flex;gap:0;width:max-content;
-  animation:marquee-scroll 30s linear infinite;
+  animation:marquee-scroll 60s linear infinite;
 }
 .hp-marquee-wrap:hover .hp-marquee-track { animation-play-state:paused }
 @keyframes marquee-scroll {
@@ -673,6 +673,60 @@ const S = `
 }
 .hp-marquee-dot {
   width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;opacity:.5;
+}
+
+/* ── RECENTLY PARTNERED ── */
+.hp-partners { padding:44px 0 40px;background:var(--sec-b); }
+.hp-partners-label {
+  text-align:center;font-size:11.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text-3, #94A3B8);margin-bottom:26px;
+}
+.hp-partners-row {
+  width:100%;margin:0;padding:0 28px;box-sizing:border-box;
+  display:flex;align-items:stretch;justify-content:center;flex-wrap:nowrap;
+  gap:16px;
+}
+.hp-partners-row::-webkit-scrollbar { display:none; }.hp-partners-row::-webkit-scrollbar { display:none; }
+.hp-partners-card {
+  display:flex;align-items:center;gap:12px;
+  background:#fff;border:1.5px solid var(--line);border-radius:14px;
+  padding:12px 16px;flex:0 0 200px;width:200px;min-width:0;box-sizing:border-box;text-decoration:none;cursor:pointer;
+  outline:none;-webkit-tap-highlight-color:transparent;
+  transition:border-color .2s,box-shadow .2s,transform .2s;
+}
+.hp-partners-card:focus-visible { border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,111,224,.18); }
+.hp-partners-card:hover { border-color:var(--blue);box-shadow:var(--sh-xs);transform:translateY(-2px); }
+.hp-partners-logo {
+  display:flex;align-items:center;justify-content:center;
+  height:32px;width:32px;flex:none;
+}
+.hp-partners-logo img { height:100%;width:100%;object-fit:contain; }
+.hp-partners-logo-text {
+  font-size:15px;font-weight:800;letter-spacing:-.02em;color:var(--navy);
+  white-space:nowrap;
+}
+.hp-partners-info { display:flex;flex-direction:column;gap:3px;min-width:0; }
+.hp-partners-name { font-size:13.5px;font-weight:800;color:var(--navy);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.hp-partners-cat {
+  display:inline-flex;align-items:center;gap:5px;width:fit-content;white-space:nowrap;
+  font-size:9.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  color:var(--blue);background:var(--brand-50);border-radius:999px;padding:2px 8px;
+}
+.hp-partners-card.hp-partners-soon {
+  border-style:dashed;border-color:var(--line);cursor:default;
+}
+.hp-partners-card.hp-partners-soon:hover { border-color:var(--line);box-shadow:none;transform:none; }
+.hp-partners-soon-icon {
+  display:flex;align-items:center;justify-content:center;
+  height:32px;width:32px;flex:none;border-radius:9px;
+  background:var(--brand-50);color:var(--blue);
+}
+.hp-partners-soon-icon svg { width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2; }
+.hp-partners-cat.muted { color:var(--text-3, #94A3B8);background:var(--sec-b); }
+.hp-partners-more {
+  display:flex;align-items:center;justify-content:center;
+  font-size:13.5px;font-weight:700;color:var(--text-2);
+  width:100%;text-align:center;margin-top:22px;
 }
 .hp-faq { padding:76px 0;background:var(--sec-b); }
 .hp-faq-inner { max-width:800px;margin:0 auto;padding:0 28px; }
@@ -780,6 +834,15 @@ const S = `
   .hp-vs-col     { padding:14px 12px }
   .hp-why-grid   { gap:28px }
   .lc2-inner     { gap:28px }
+  .hp-partners   { padding:32px 0 }
+  .hp-partners-row {
+    justify-content:flex-start;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;padding:6px 20px;
+  }
+  .hp-partners-card:hover,.hp-partners-card:active { transform:none; }
+  .hp-partners-card { flex:0 0 188px;width:188px;padding:12px 14px;gap:11px }
+  .hp-partners-name { font-size:13.5px;white-space:nowrap;overflow:visible;text-overflow:clip }
+  .hp-partners-cat  { font-size:9px;padding:2px 7px }
 }
 @media(max-width:640px){
   .hp-hero       { padding:30px 0 36px }
@@ -804,6 +867,11 @@ const S = `
   .hp-section-head h2 { font-size:clamp(24px,7vw,36px) }
   .hp-vs-cell    { padding:10px 10px;font-size:11.5px }
   .hp-vs-col-label { font-size:10px }
+  .hp-partners-card { flex:0 0 168px;width:168px;padding:11px 13px;gap:10px }
+  .hp-partners-logo,.hp-partners-soon-icon { height:28px;width:28px }
+  .hp-partners-name { font-size:12.5px }
+  .hp-partners-cat { font-size:8.5px;padding:2px 6px }
+  .hp-partners-label { font-size:10.5px;margin-bottom:18px }
 }
 @media(prefers-reduced-motion:reduce){
   .lc2-prog-bar  { transition:none!important }
@@ -1045,26 +1113,30 @@ export default function HomePage() {
       {/* ═══ SERVICES MARQUEE ════════════════════════════════ */}
       {(() => {
         const items = [
+          // Start your business
           {label:'Private Limited Registration', href:'/services/private-limited-company-registration'},
-          {label:'GST Registration', href:'/services/gst-registration'},
-          {label:'Trademark Filing', href:'/services/trademark-registration'},
           {label:'LLP Registration', href:'/services/llp-registration'},
-          {label:'Website Development', href:'/services/website-development'},
+          {label:'One Person Company', href:'/services/opc-registration'},
+          {label:'Startup India', href:'/services/startup-india-dpiit'},
+          {label:'ISO Certification', href:'/services/iso-certification'},
+          // Registrations & compliance / Legal & IP
+          {label:'GST Registration', href:'/services/gst-registration'},
           {label:'MSME / Udyam', href:'/services/msme-registration'},
           {label:'ROC Compliance', href:'/services/roc-compliance'},
+          {label:'Trademark Filing', href:'/services/trademark-registration'},
+          {label:'Income Tax Filing', href:'/services/income-tax-filing'},
+          // Manage your business
           {label:'Accounting & Bookkeeping', href:'/services/accounting'},
-          {label:'ISO Certification', href:'/services/iso-certification'},
-          {label:'Digital Marketing', href:'/services/digital-marketing'},
           {label:'Payroll Management', href:'/services/payroll'},
           {label:'E-Stamp Services', href:'/estamp'},
-          {label:'Income Tax Filing', href:'/services/income-tax-filing'},
+          // Build
+          {label:'Website Development', href:'/services/website-development'},
           {label:'Brand Identity Design', href:'/services/branding-logo-design'},
-          {label:'WhatsApp Business API', href:'/services/whatsapp-business-api'},
-          {label:'Startup India', href:'/services/startup-india-dpiit'},
-          {label:'One Person Company', href:'/services/opc-registration'},
-          {label:'Social Media Management', href:'/services/social-media-management'},
           {label:'Mobile App Development', href:'/services/mobile-app-development'},
-          {label:'OPC Registration', href:'/services/opc-registration'},
+          // Grow
+          {label:'WhatsApp Business API', href:'/services/whatsapp-business-api'},
+          {label:'Social Media Management', href:'/services/social-media-management'},
+          {label:'Digital Marketing', href:'/services/digital-marketing'},
         ]
         const all = [...items, ...items]
         return (
@@ -1083,6 +1155,42 @@ export default function HomePage() {
           </div>
         )
       })()}
+
+      {/* ═══ RECENTLY PARTNERED ═══════════════════════════════ */}
+      <section className="hp-partners">
+        <div className="hp-partners-label">Recently Partnered</div>
+        <div className="hp-partners-row">
+          {[
+            { name: 'Doqfy', category: 'CLM Software', img: '/doqfy-logo.png', href: '/market/category?cat=clm' },
+          ].map(p => (
+            <Link key={p.name} to={p.href} className="hp-partners-card">
+              <div className="hp-partners-logo" title={p.name}>
+                {p.img
+                  ? <img src={p.img} alt={`${p.name} logo`} />
+                  : <span className="hp-partners-logo-text">{p.name}</span>}
+              </div>
+              <div className="hp-partners-info">
+                <div className="hp-partners-name">{p.name}</div>
+                <div className="hp-partners-cat">{p.category}</div>
+              </div>
+            </Link>
+          ))}
+
+          {/* Demo placeholder cards for upcoming partners */}
+          {[1, 2, 3, 4].map(i => (
+            <div key={`soon-${i}`} className="hp-partners-card hp-partners-soon">
+              <div className="hp-partners-soon-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 8v4m0 4h.01M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/></svg>
+              </div>
+              <div className="hp-partners-info">
+                <div className="hp-partners-name">Coming Soon</div>
+                <div className="hp-partners-cat muted">New Category</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="hp-partners-more">Many more partners coming soon →</div>
+      </section>
 
       {/* ═══ SERVICES ═══════════════════════════════════════ */}
       <section className="hp-services">

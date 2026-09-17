@@ -16,7 +16,9 @@ export const SERVICES = {
       { href: '#benefits', label: 'Benefits' },
       { href: '#eligibility', label: 'Eligibility' },
       { href: '#documents', label: 'Documents' },
+      { href: '#deliverables', label: 'Deliverables' },
       { href: '#process', label: 'Process' },
+      { href: '#timeline', label: 'Timeline' },
       { href: '#pricing', label: 'Pricing' },
       { href: '#compare', label: 'Pvt Ltd vs LLP' },
       { href: '#faq', label: 'FAQs' },
@@ -24,7 +26,7 @@ export const SERVICES = {
     sections: {
       overview: {
         heading: 'Overview',
-        content: `<p>A Private Limited Company is a separate legal entity registered under the Companies Act, 2013 and incorporated through the MCA's SPICe+ process. It gives founders limited liability, a distinct legal identity, and the structure investors expect — which is why it's the default choice for funded startups.</p><p>LauncherDesk manages every step: name approval, digital signatures, director identification, drafting the MOA and AOA, and filing for incorporation, along with PAN and TAN.</p>`
+        content: `<p>A Private Limited Company is one of the preferred business structures in India, as it is held privately. Pvt Ltd companies are registered with the Registrar of Companies (RoC) under the Companies Act, 2013, and can be started with a minimum of 2 members, scaling up to 200 shareholders. A Private Limited Company restricts shareholders from publicly trading shares, but still offers multiple benefits over other structures.</p><p>LauncherDesk manages every step: name approval, digital signatures, director identification, drafting the MOA and AOA, and filing for incorporation, along with PAN and TAN.</p>`
       },
       who: {
         heading: 'Who should choose it',
@@ -39,10 +41,12 @@ export const SERVICES = {
       benefits: {
         heading: 'Key benefits',
         items: [
-          '<b>Limited liability</b> — founders\' personal assets stay protected.',
-          '<b>Fundraising-ready</b> — the structure investors require to hold equity.',
-          '<b>Credibility</b> — a registered company builds trust with clients and banks.',
-          '<b>Perpetual succession</b> — the company continues independent of its owners.',
+          '<b>No minimum capital requirement</b> — start your business with any amount, as there is no minimum investment required to register a Private Limited Company.',
+          '<b>Separate legal entity</b> — the company can own property, enter into contracts, and face legal proceedings by itself, independent of its owners.',
+          '<b>Limited liability protection</b> — your personal assets are not liable for the company\'s liabilities under a Private Limited Company.',
+          '<b>Tax benefits</b> — enjoy a reduced corporate tax rate of 25% on turnover below ₹250 crores, compared to 30% for other business structures.',
+          '<b>Only 2 members required</b> — start with just 2 members and scale up to a maximum of 200 shareholders as your business grows.',
+          '<b>Easier access to funding</b> — raise capital easily by issuing shares or taking loans, as Private Limited Companies are viewed more favourably by investors and financial institutions.',
         ]
       },
       eligibility: {
@@ -56,17 +60,25 @@ export const SERVICES = {
       },
       documents: {
         heading: 'Documents required',
-        content: `<h3>For every director / shareholder</h3><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> PAN card and Aadhaar</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Identity proof (passport / voter ID / driving licence)</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Address proof (recent bank statement / utility bill)</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Passport-size photograph</li></ul><h3>For the registered office</h3><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Latest utility bill for the premises</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Rent agreement and a No-Objection Certificate from the owner</li></ul>`
+        content: `<h3>For every director / shareholder</h3><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> PAN of all directors &amp; shareholders</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Identity proof of all directors &amp; shareholders</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Directors' address proof</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Latest passport-size photographs of all directors &amp; shareholders</li></ul><h3>For the registered office</h3><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Business address proof</li></ul>`
+      },
+      deliverables: {
+        heading: "Final deliverables you'll get",
+        content: `<ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Company's Name Approval Letter</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Incorporation Certificate</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> DIN Approval Letter</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Digital Signature Token</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> PAN Card of the Company</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Company Stamp, MOA + AOA</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> TAN/TDS Letter of the Company</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Incorporation kit to help you open a current bank account</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Filing of INC 20A for Commencement of Business</li></ul>`
       },
       process: {
-        heading: 'Step-by-step process',
+        heading: 'Private Limited Company Registration in 5 easy steps',
         steps: [
-          { title: 'Digital Signature Certificates (DSC)', body: 'We obtain DSCs for all directors via quick online verification.' },
-          { title: 'Name approval', body: 'We check availability and reserve your company name with the MCA.' },
-          { title: 'Drafting MOA & AOA', body: 'We prepare your constitutional documents around your business objectives.' },
-          { title: 'SPICe+ filing', body: 'We file incorporation forms along with DIN, PAN and TAN applications.' },
-          { title: 'Certificate of Incorporation', body: 'The MCA issues your CIN — your company is officially registered.' },
+          { title: 'Fill up the form', body: 'Once you fill up the enquiry form, one of our advisors will connect with you to understand your requirements.' },
+          { title: 'Document collection', body: 'After the detailed call/meeting discussion, you submit the required documents for your company registration procedure, as per the checklist shared by our team.' },
+          { title: 'Company name reservation', body: "We proceed with the company's name reservation process — the name should be unique and not already registered with the MCA." },
+          { title: 'Professional fees payment', body: 'After reserving your name, you pay the professional fee and our team proceeds with the company registration filing work.' },
+          { title: 'Get Certificate of Incorporation', body: 'The MCA reviews your application and provides the Certificate of Incorporation on final approval. Note: the MCA can ask for resubmission or reject the application if any detail is unsatisfactory.' },
         ]
+      },
+      timeline: {
+        heading: 'Time required to register a Private Limited Company',
+        content: `<p>Registering a Private Limited Company in India usually takes <b>7–10 days</b>. Here is the detailed time division:</p><table class="tbl"><tr><th>S. No.</th><th>Particulars</th><th>Time Required</th></tr><tr><td>1</td><td>Enquiry &amp; Advisor Call</td><td>1 Day</td></tr><tr><td>2</td><td>Document Collection</td><td>1–2 Days</td></tr><tr><td>3</td><td>Name Reservation</td><td>2–3 Hrs</td></tr><tr><td>4</td><td>Name Approval</td><td>1–2 Days</td></tr><tr><td>5</td><td>Form Filing</td><td>1–2 Days</td></tr><tr><td>6</td><td>MCA Approval</td><td>2–3 Days</td></tr></table>`
       },
       pricing: {
         heading: 'Transparent pricing',
@@ -114,22 +126,54 @@ export const SERVICES = {
       { href: '#benefits', label: 'Benefits' },
       { href: '#eligibility', label: 'Eligibility' },
       { href: '#documents', label: 'Documents' },
+      { href: '#types', label: 'Registration types' },
       { href: '#process', label: 'Process' },
+      { href: '#approach', label: 'Our approach' },
       { href: '#pricing', label: 'Pricing' },
       { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>GST (Goods and Services Tax) registration gives your business a GSTIN — the identifier you need to legally collect tax, claim input credit, and sell across state lines or online. LauncherDesk handles both the one-time registration and the ongoing monthly/quarterly return filing that keeps it in good standing.</p>` },
       who: { heading: 'Who needs it', items: ['Businesses crossing the turnover threshold (₹20–40 lakh depending on state and category)', 'Anyone selling on e-commerce marketplaces (Amazon, Flipkart, etc.)', 'Businesses that sell across state borders, regardless of turnover', 'Anyone who wants to claim input tax credit on purchases'] },
-      benefits: { heading: 'Key benefits', items: ['<b>Legally sell online and inter-state</b> without restriction.', '<b>Input tax credit</b> — recover GST paid on business purchases.', '<b>Vendor eligibility</b> — many B2B clients only work with GST-registered vendors.'] },
+      benefits: {
+        heading: 'Why register for GST',
+        items: [
+          '<b>Gaining legal identity &amp; tax structure</b> — registering under GST gives your business a formal identity, essential for operating legally, opening bank accounts, and maintaining credibility.',
+          '<b>Collect GST from customers</b> — with a valid GSTIN, you can issue GST-compliant invoices and lawfully collect GST from your clients or customers.',
+          '<b>Claim Input Tax Credit (ITC)</b> — GST registration allows you to claim credit for taxes paid on purchases, reducing your overall tax burden and increasing profitability.',
+          '<b>Sell across India &amp; platforms</b> — planning to go pan-India or sell via Amazon, Flipkart, Meesho, etc.? GST registration is mandatory for e-commerce operations and interstate trade.',
+          '<b>Eligible for tenders &amp; investors</b> — public tenders and institutional investors often require GST-registered businesses. It\'s a compliance badge that unlocks trust and funding.',
+          '<b>Trusted by clients &amp; vendors</b> — GST registration signals professionalism and transparency, making it easier to onboard corporate clients, collaborate with vendors, and close bigger deals confidently.',
+        ]
+      },
       eligibility: { heading: 'Eligibility', items: ['Any registered business entity — Pvt Ltd, LLP, OPC, Partnership or Proprietorship', 'A valid business address and bank account', 'No minimum turnover required for voluntary registration'] },
-      documents: { heading: 'Documents required', items: ['PAN of the business and applicant', 'Proof of business registration (Certificate of Incorporation, Partnership Deed, etc.)', 'Address proof for the principal place of business', 'Bank account statement or cancelled cheque', 'Digital signature (for companies and LLPs)'] },
+      documents: {
+        heading: 'Must-have documents for GST registration',
+        content: `<p>Keep these documents ready for a smooth and speedy GST registration process.</p><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> PAN of business and promoter</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Aadhaar of directors/owners</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Address proof of business (rent agreement / electricity bill)</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Cancelled cheque / bank statement</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Passport photo</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Business registration proof (if applicable)</li></ul>`
+      },
+      types: {
+        heading: 'All GST registration types, covered',
+        content: `<p>We help you choose and apply for the correct GST registration — fast, accurate, and fully compliant.</p><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Regular Taxpayer</b> — businesses with turnover above ₹20/₹40 lakh</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Composition Scheme</b> — small traders or manufacturers with turnover below ₹1.5 crore</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Casual Taxable Person</b> — pop-up shops, exhibition sellers, seasonal vendors</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Non-Resident Taxable Person</b> — foreign entities supplying goods/services in India</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>GST Practitioner</b></li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>E-commerce Sellers</b> — anyone selling on marketplaces like Amazon, Flipkart, Shopify</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Input Service Distributor (ISD)</b> — companies with multiple branches distributing ITC</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>TDS / TCS Deductors</b> — government departments or e-commerce operators deducting/collecting tax</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>UIN Holders</b> — embassies, UN bodies, eligible for GST refunds</li></ul>`
+      },
       process: {
-        heading: 'Step-by-step process', steps: [
-          { title: 'Application on the GST portal', body: 'We prepare and submit Form REG-01 with supporting documents.' },
-          { title: 'ARN generation & verification', body: 'An Application Reference Number is issued; officer verification may follow.' },
-          { title: 'GSTIN issued', body: 'Your 15-digit GST Identification Number is generated on approval.' },
-          { title: 'Ongoing return filing', body: 'We take over monthly/quarterly GSTR filing so nothing is missed.' },
+        heading: 'Get GST registration done in 5 simple steps',
+        steps: [
+          { title: 'Speak to our GST experts', body: "No confusing forms, no delays — just expert-led guidance from the start." },
+          { title: 'Document collection & preparation', body: 'We help you gather and prepare every required document correctly the first time.' },
+          { title: 'Filing application online', body: 'We file your GST registration application on the GST portal.' },
+          { title: 'Responding to notices', body: 'If the department raises a query or notice, we handle the response on your behalf.' },
+          { title: 'GSTIN number issued', body: 'Your GSTIN is issued and your business is officially GST-registered.' },
+        ]
+      },
+      approach: {
+        heading: 'The Startup Movers approach to GST registration',
+        steps: [
+          { title: 'We understand your business first', body: 'We assess your business model, turnover, and goals to recommend the right GST registration type — no guesswork.' },
+          { title: 'Tailored checklist & filing support', body: 'You get a smart checklist, tailored to your entity type, with clear format rules, and handholding till upload is perfect.' },
+          { title: 'Dept. notice handling included', body: 'We pre-verify everything, track approvals, and handle departmental queries or REG-03 notices, before you even know they came.' },
+          { title: 'Real-time status tracking', body: "You'll know exactly where your GSTIN stands — no chasing, no surprises." },
+          { title: 'Post-registration setup & login help', body: 'From getting your GSTIN certificate to setting up your login credentials, e-way bill access, and first-time compliance calendar.' },
+          { title: 'Not a bot. But a dedicated partner.', body: "With us, you get expert support, not just automated systems. We're here whenever you need us." },
         ]
       },
       pricing: {
@@ -165,20 +209,61 @@ export const SERVICES = {
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
-      { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+      { href: '#eligibility', label: 'Prerequisites' }, { href: '#documents', label: 'Documents' }, { href: '#deliverables', label: 'Deliverables' },
+      { href: '#process', label: 'Process' }, { href: '#whyus', label: 'Why LauncherDesk' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
-      overview: { heading: 'Overview', content: `<p>A Limited Liability Partnership (LLP) is a hybrid structure: partners get limited liability like a company, but the compliance and cost burden is lighter than a Private Limited Company. It's registered with the MCA under the LLP Act, 2008.</p><p>LauncherDesk handles DSC, DPIN, name approval, drafting the LLP Agreement, and filing incorporation.</p>` },
+      overview: { heading: 'Overview', content: `<p>A Limited Liability Partnership (LLP) is another popular business structure in India, combining the benefits of both a company and a partnership firm. With the flexibility of a partnership, partners in an LLP enjoy limited liability just like shareholders in a Private Limited Company. LLPs in India are recognised under the Limited Liability Partnership Act, 2008.</p><p>LauncherDesk handles DSC, DPIN, name approval, drafting the LLP Agreement, and filing incorporation.</p>` },
       who: { heading: "Who it's for", items: ['Two or more partners running a services or professional firm', 'Businesses that want limited liability but don\'t plan to raise VC funding', 'Founders who want lower annual compliance than a Pvt Ltd company'] },
-      benefits: { heading: 'Key benefits', items: ['<b>Limited liability</b> — partners\' personal assets are protected.', '<b>Lower compliance</b> — fewer mandatory filings than a company.', '<b>Flexible structure</b> — partners can define profit-sharing in the LLP Agreement.'] },
-      documents: { heading: 'Documents / information required', items: ['PAN and Aadhaar of all partners', 'Identity and address proof for each partner', 'Registered office address proof and NOC from the owner', 'Digital Signature Certificate for designated partners'] },
+      benefits: {
+        heading: 'Benefits of Limited Liability Partnership',
+        items: [
+          '<b>No minimum capital requirement</b> — start your business with any amount, as there\'s no minimum capital required to register an LLP.',
+          '<b>Lower registration costs</b> — LLP offers affordable registration at the bare minimum cost in India, so you get legal protections at a low rate.',
+          '<b>Limited liability protection</b> — your personal assets/wealth are safe and not liable beyond the contribution you made in the business.',
+          '<b>Eliminates double taxation</b> — business profits are taxed only at the partner level, unlike corporations, which face double taxation at both corporate and dividend levels.',
+          '<b>Flexibility in management</b> — manage your business directly and efficiently without needing a board of directors.',
+          '<b>Fewer compliance requirements</b> — easier to set up and maintain compared to private limited companies.',
+        ]
+      },
+      eligibility: {
+        heading: 'Essential prerequisites for LLP',
+        items: [
+          'Minimum two partners allowed (individual or body corporate)',
+          'At least two designated partners are required, with one being an Indian resident',
+          'LLP Agreement',
+          'LLP Name',
+          'Registered Office Address',
+          'Digital Signature Certificate',
+        ]
+      },
+      documents: {
+        heading: 'Documents required for LLP registration',
+        content: `<ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> PAN card or passport (foreign nationals &amp; NRIs)</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Identity proof of all partners</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Partner's address proof</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Business address proof</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Latest passport-size photographs of all partners</li></ul>`
+      },
+      deliverables: {
+        heading: "Final deliverables you'll get",
+        content: `<ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> LLP Name Approval Letter</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Incorporation Certificate</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> DIN Approval Letter &amp; Digital Signature Token</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> PAN Card of the LLP &amp; LLP Stamp</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> LLP Agreement</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> TAN/TDS Letter of the LLP</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Incorporation kit to help you open a current bank account</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Filing of Form 3 within 30 days of the LLP being registered</li></ul>`
+      },
       process: {
-        heading: 'Step-by-step process', steps: [
-          { title: 'DSC & DPIN', body: 'We obtain digital signatures and Designated Partner Identification Numbers.' },
-          { title: 'Name approval', body: 'We reserve your LLP name with the MCA via RUN-LLP.' },
-          { title: 'Incorporation filing', body: 'We file FiLLiP along with subscriber and consent documents.' },
-          { title: 'LLP Agreement', body: 'We draft and file the partnership agreement within 30 days of incorporation.' },
-          { title: 'Certificate of Incorporation', body: 'The MCA issues your LLPIN — registration is complete.' },
+        heading: 'LLP registration in 5 easy steps — get registered in just 10 days',
+        steps: [
+          { title: 'Fill up the form', body: 'To register your LLP, first fill up the enquiry form and one of our business advisors will contact you to understand your requirements.' },
+          { title: 'Submit the documents', body: 'After understanding your requirements, you submit the documents required for your LLP registration process, as per the checklist shared by our team.' },
+          { title: "Reserve your LLP's name", body: "After verifying your documents, our team reserves the name for your LLP. Depending on availability, your name gets approved." },
+          { title: 'Pay professional fees', body: "After successfully reserving your LLP's name, you pay the professional fees. Our team fills out the registration form for your LLP on the MCA portal." },
+          { title: 'Get your LLP registered', body: 'The MCA reviews the application, and on final approval, your LLP gets registered.' },
+        ]
+      },
+      whyus: {
+        heading: 'Why choose LauncherDesk?',
+        items: [
+          '<b>Expert guidance</b> — 12+ years of experience with 150+ experts guiding you every step of the way.',
+          '<b>Transparent pricing</b> — all-inclusive pricing with no hidden fees.',
+          '<b>Quick turnaround</b> — get your LLP registered in just 10 days.',
+          '<b>Comprehensive support</b> — from documents to compliance, we handle it all.',
+          '<b>Trusted by 5000+ startups</b> — join a large community of successful businesses.',
+          '<b>3+ unicorns produced</b> — we\'ve helped startups grow into billion-dollar businesses.',
         ]
       },
       pricing: {
@@ -214,19 +299,61 @@ export const SERVICES = {
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
-      { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+      { href: '#eligibility', label: 'Eligibility' }, { href: '#documents', label: 'Documents' }, { href: '#deliverables', label: 'Deliverables' },
+      { href: '#process', label: 'Process' }, { href: '#whyus', label: 'Why LauncherDesk' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
-      overview: { heading: 'Overview', content: `<p>A One Person Company (OPC) lets a single founder register a company with limited liability — something a proprietorship can't offer. It's a good middle ground between a proprietorship and a full Private Limited Company.</p><p>LauncherDesk manages the nominee appointment, DSC, name approval and incorporation filing.</p>` },
+      overview: { heading: 'Overview', content: `<p>OPC or One Person Company is another business structure registered under the Companies Act, 2013, introduced by the Government. As the name suggests, a One Person Company is established by a single person. This structure offers the benefits of both a Sole Proprietorship and a well-structured Company, and was introduced to promote entrepreneurship and Micro, Small &amp; Medium Enterprises (MSMEs) in India.</p><p>LauncherDesk manages the nominee appointment, DSC, name approval and incorporation filing.</p>` },
       who: { heading: "Who it's for", items: ['Solo founders who want limited liability from day one', 'Freelancers and consultants formalising into a company', 'Founders not yet ready to bring in co-founders or investors'] },
-      benefits: { heading: 'Key benefits', items: ['<b>Limited liability</b> — your personal assets stay protected.', '<b>Single ownership</b> — full control, no need for a co-founder.', '<b>Easier conversion</b> — can convert to a Private Limited Company later as you grow.'] },
-      documents: { heading: 'Documents / information required', items: ['PAN and Aadhaar of the sole member and nominee', 'Identity and address proof', 'Registered office address proof and NOC', 'Nominee\'s consent (Form INC-3)'] },
+      benefits: {
+        heading: 'Benefits of One Person Company Registration',
+        items: [
+          '<b>Easy availability of funds</b> — attract investment and loans more easily than sole proprietorships, as they are recognized as a separate legal entity.',
+          '<b>Simple business structure</b> — unlike other company formats, an OPC requires only a single director and shareholder.',
+          '<b>Limited liability protection</b> — your personal liability is limited to the contribution you make, keeping your personal wealth safe.',
+          '<b>Continuity in business</b> — the company continues to exist even in the event of the owner\'s demise; ownership can be transferred as per legal provisions.',
+          '<b>Flexibility in management</b> — control and manage your business directly and efficiently without needing a board of directors.',
+          '<b>Fewer compliance requirements</b> — easier to set up and maintain compared to private limited companies.',
+        ]
+      },
+      eligibility: {
+        heading: 'Primary criteria for One Person Company registration',
+        items: [
+          '<b>One Director</b> — there must be at least one director to register an OPC in India.',
+          '<b>Digital Signature Certificate &amp; DIN</b> — it is mandatory to have a DSC and Director Identification Number for the company\'s director.',
+          '<b>Appointment of Nominee</b> — a nominee must be appointed to take over the organisation after the promoter\'s incapacity.',
+          '<b>No minimum capital</b> — there is no minimum required capital to register an OPC in India.',
+          '<b>Registered office address</b> — a registered office address is required, where all mandatory formalities or documents can be delivered.',
+          '<b>OPC Name</b> — the name is treated as a business name and must be unique from other registered companies.',
+        ]
+      },
+      documents: {
+        heading: 'Documents required for OPC registration',
+        content: `<ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> PAN card or passport (foreign nationals &amp; NRIs)</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Owner's identity proof</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Owner's address proof</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Business address proof</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Latest passport-size photographs</li></ul>`
+      },
+      deliverables: {
+        heading: "Final deliverables you'll get",
+        content: `<ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> OPC Name Approval Letter</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Incorporation Certificate</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> DIN Approval Letter &amp; Digital Signature Token</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> PAN Card of the OPC &amp; OPC Stamp</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Draft MOA and AOA</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> TAN/TDS Letter of the OPC</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Incorporation kit to help you open a current bank account</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Filing of Form INC-20A within 180 days of incorporation of the OPC</li></ul>`
+      },
       process: {
-        heading: 'Step-by-step process', steps: [
-          { title: 'Nominee appointment', body: 'A nominee is named to take over if the sole member is unable to continue.' },
-          { title: 'DSC & name approval', body: 'We obtain your digital signature and reserve the company name.' },
-          { title: 'SPICe+ filing', body: 'We file incorporation along with PAN and TAN applications.' },
-          { title: 'Certificate of Incorporation', body: 'The MCA issues your CIN and the OPC is registered.' },
+        heading: 'OPC registration process in 5 simple steps — get registered in just 10 days',
+        steps: [
+          { title: 'Fill up the form', body: 'To register a one-person company, fill up the enquiry form first; one of our business advisors will then connect with you via call or virtual meeting to understand your requirements.' },
+          { title: 'Submit documents', body: 'After a detailed discussion, you submit the documents as per the checklist shared by our team.' },
+          { title: "Reserve your company's name", body: "After successfully submitting the documents, our team proceeds with your company's name reservation process." },
+          { title: 'Pay professional fees', body: 'Once the name is approved, you pay the professional fees and our team completes the filing process for your company registration.' },
+          { title: 'Get your company registered', body: "On successful verification by the concerned authority, you'll receive your One Person Company's Incorporation Certificate." },
+        ]
+      },
+      whyus: {
+        heading: 'Why choose LauncherDesk?',
+        items: [
+          '<b>Expert guidance</b> — 11+ years of experience with 120+ experts guiding you every step of the way.',
+          '<b>Transparent pricing</b> — all-inclusive pricing with no hidden fees.',
+          '<b>Quick turnaround</b> — get your OPC registered in just 10 days.',
+          '<b>Comprehensive support</b> — from documents to compliance, we handle it all.',
+          '<b>Trusted by 5000+ startups</b> — join a large community of successful businesses.',
+          '<b>3+ unicorns produced</b> — we\'ve helped startups grow into billion-dollar businesses.',
         ]
       },
       pricing: {
@@ -311,18 +438,43 @@ export const SERVICES = {
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#whyregister', label: 'Why register' }, { href: '#classification', label: 'Classification' }, { href: '#included', label: 'How we help' },
       { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>MSME (Udyam) registration classifies your business as a Micro, Small or Medium Enterprise based on investment and turnover, unlocking a range of government benefits designed to support smaller businesses.</p><p>It's one of the fastest registrations we handle — often same-day once documents are ready.</p>` },
-      who: { heading: "Who it's for", items: ['Any registered business within the MSME investment/turnover limits', 'Businesses looking for easier, cheaper access to credit', 'Vendors who supply to larger companies or government bodies'] },
-      benefits: { heading: 'Key benefits', items: ['<b>Collateral-free loans</b> under priority-sector lending schemes.', '<b>Delayed payment protection</b> — legal recourse if buyers pay late.', '<b>Tender preference</b> and subsidy eligibility on various government schemes.'] },
-      documents: { heading: 'Documents / information required', items: ['Aadhaar of the proprietor/partner/director', 'PAN of the business', 'Bank account details', 'Basic business activity details'] },
+      who: {
+        heading: "Who should get this registration", content: `<p>Any and every type of business enterprise — from private limited company, public limited company, sole proprietorship, partnership firm to limited liability partnership, Hindu Undivided Family, one-person company, co-operative society and association of persons — can obtain MSME/Udyam Registration.</p>`
+      },
+      benefits: {
+        heading: 'Advantages of MSME registration',
+        content: `<ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Subsidies</b> — the Government of India provides various incentives &amp; subsidies to the MSME sector; only registered entities are eligible for government subsidies.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Bank loans</b> — the MSME sector gets ease in applying for government micro business loans and other related schemes, with collateral-free loans and reduced interest rates from banks.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Financial support</b> — the government provides financial support for participating in foreign expos to showcase products of registered entities.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Govt. tenders</b> — MSMEs get exemptions while applying for government tenders and are even given preference in allocation of government tenders.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>ISO registration</b> — the government provides reimbursement of the consultation fee paid for obtaining ISO registration.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>License</b> — various relaxations are provided to MSME while obtaining registrations under different laws and approvals to obtain licenses.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Waiver</b> — stamp duty and registration fees are waived in many cases for MSME entities, with subsidy for patent registration, NSIC performance and credit ratings.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Payments</b> — the government provides protection against delayed payments to MSME; companies must intimate ROC where payment outstanding to MSME suppliers exceeds 45 days, with a faster dispute-resolution mechanism for MSME.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> <b>Reservation</b> — various products are reserved for exclusive manufacturing by MSME, and can only be procured from MSME.</li></ul>`
+      },
+      whyregister: {
+        heading: 'Why should you get this registration?',
+        content: `<p>MSME/Udyam Registration comes with numerous benefits and various relaxations to take away some burden from growing enterprises, and all eligible enterprises should get themselves registered under MSME/Udyam.</p>`
+      },
+      classification: {
+        heading: 'Your organisation may fall in one of the classifications depending on the below criteria',
+        tableHtml: `<table class="tbl"><tr><th>Classification</th><th>Enterprise</th></tr><tr><td>Micro Enterprise</td><td>Up to ₹1 crore of investment in plant &amp; machinery or equipment AND up to ₹5 crore of turnover</td></tr><tr><td>Small Enterprise</td><td>More than ₹1 crore but up to ₹10 crores of investment in plant &amp; machinery AND more than ₹5 crore but up to ₹50 crores of turnover</td></tr><tr><td>Medium Enterprise</td><td>More than ₹10 crore but up to ₹50 crores of investment in plant &amp; machinery AND more than ₹50 crore but up to ₹250 crores of turnover</td></tr></table><h3>Re-registration of existing enterprises</h3><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> All existing enterprises registered under EM-Part-II or UAM shall register again on the Udyam Registration portal on or after 1 July 2020 till 31 March 2021.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> All enterprises registered till 30 June 2020 shall be re-classified in accordance with this notification.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Existing enterprises registered prior to 30 June 2020 shall continue to be valid only for a period up to 31 March 2021.</li></ul><h3>Update of information &amp; transition period in classification</h3><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> An enterprise having a Udyam Registration Number shall update its information online on the portal, including details of the ITR and GST return for the previous financial year, and such other information as required, on a self-declaration basis.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Failure to update the relevant information within the prescribed period on the online Udyam Registration portal will render the enterprise liable for suspension of its status.</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Based on the information furnished or gathered from Government sources, including ITR or GST return, the classification of the enterprise will be updated and a communication will be sent to the enterprise about the change in status, if any.</li></ul>`
+      },
+      included: {
+        heading: 'How Startup Movers can help you',
+        items: [
+          'Obtaining MSME Registration Certificate',
+          'Availment of various benefits provided to MSME',
+        ]
+      },
+      documents: {
+        heading: 'Documents / details required for MSME registration',
+        content: `<h3>Copy of Aadhaar card</h3><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> In case of Proprietorship — Aadhaar card of the individual</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> In case of Partnership Firm — Aadhaar card of the managing partner</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> In case of HUF — Aadhaar card of the Karta</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> In case of Company/LLP/Cooperative Society/Society/Trust — GSTIN and PAN of the organisation and Aadhaar card of the authorised signatory</li></ul><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Mobile number &amp; email ID</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> PAN number</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Bank account details &amp; IFSC code</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Business information — partnership deed/MOA &amp; AOA, and a note on business activity of the entity</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Copy of sale &amp; purchase bill</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Details of number of employees</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Details of investment in plant &amp; machinery</li></ul>`
+      },
       process: {
-        heading: 'Step-by-step process', steps: [
-          { title: 'Udyam portal application', body: 'We file your application on the Udyam Registration portal.' },
-          { title: 'Aadhaar-based verification', body: 'Identity is verified electronically — no physical paperwork.' },
-          { title: 'Udyam Certificate issued', body: 'Your registration number and certificate are generated instantly.' },
+        heading: 'Process of MSME registration — there is an online process for MSME registration', steps: [
+          { title: 'Register on portal', body: 'The application is filed on the Udyam Registration portal.' },
+          { title: 'Fill application form', body: 'Basic business details are filled on the portal for MSME registration.' },
+          { title: 'Submission of application', body: 'After filling the necessary details, the application is submitted on the portal.' },
+          { title: 'Issuance of certificate', body: 'On successful verification, your MSME/Udyam Registration Certificate is issued.' },
         ]
       },
       pricing: {
@@ -358,19 +510,48 @@ export const SERVICES = {
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#whyregister', label: 'Why register' }, { href: '#included', label: 'How we help' },
       { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>The FSSAI licence is a legal requirement for anyone manufacturing, processing, storing, distributing or selling food, including cloud kitchens and home-based food businesses. The tier you need (Basic, State, or Central) depends on your turnover and scale.</p>` },
-      who: { heading: "Who it's for", items: ['Restaurants, cafes and cloud kitchens', 'Packaged food manufacturers and distributors', 'Home bakers and food businesses selling online'] },
-      benefits: { heading: 'Key benefits', items: ['<b>Legal requirement</b> — operating without it risks fines and closure.', '<b>Customer trust</b> — the FSSAI logo signals safety compliance.', '<b>Marketplace eligibility</b> — most food delivery and e-commerce platforms require it.'] },
-      documents: { heading: 'Documents / information required', items: ['Identity and address proof of the proprietor/partners/directors', 'Proof of premises (rental agreement or ownership document)', 'List of food products/categories', 'Water testing report (for manufacturing units, where applicable)'] },
+      who: { heading: "Who should get this registration", items: ['FSSAI registration is required for everyone starting a food business.', 'It is required for all petty food business operators.'] },
+      benefits: {
+        heading: 'Advantages of FSSAI registration',
+        items: [
+          '<b>Ensures quality</b> — it is regarded as a permit which ensures good quality of food in the business.',
+          '<b>Customer base</b> — it helps to increase the customer base by giving surety about the quality of food offered; consumers have taken food standards more seriously since the Maggi controversy.',
+          '<b>Marketing</b> — it can be used for publicity of a food business\'s superior quality over others, giving an edge over competitors, i.e. food operators operating without a licence.',
+          '<b>Validity</b> — the FSSAI logo is seen as a mark of validity; the FSSAI licence helps establish the reputation and qualification of the business.',
+          '<b>Expansion of business</b> — businesses can be easily expanded into other areas or outlets using the FSSAI licence.',
+          '<b>Bank loans</b> — an FSSAI licence makes it easier for a food operator to get bank loans.',
+        ]
+      },
+      whyregister: {
+        heading: 'Why should you get this registration?',
+        content: `<p>FSSAI registration offers numerous benefits. It is a legal mandate for all kinds of food businesses, and if they are caught operating a food business without an FSSAI licence, heavy penalties are attracted.</p>`
+      },
+      included: {
+        heading: 'How Startup Movers can help you',
+        items: [
+          'Eligibility checking',
+          'Filing of application',
+          'Payment of government fee',
+          'Follow up with authorities',
+          'Obtaining licence',
+        ]
+      },
+      documents: {
+        heading: 'Documents / details required for FSSAI registration',
+        content: `<ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Declaration Form</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Authority Letter</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Copy of Purchase Deed (in case of owned property); Copy of Rent Agreement (in case of rented property)</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Food Safety Management System Plan/Certificate</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Copy of Utility Bill (electricity/telephone bill of the premises)</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Copy of Aadhaar Card/Voter ID Card of Proprietor/Partners/Directors</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Nomination Form of persons by the company, along with a copy of the Board Resolution</li></ul><h3>Additional documents required by the manufacturer</h3><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Details of employees</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Blueprint/layout plan of the processing unit</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> List of equipment and machinery</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> List of food category desired to be manufactured</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Pesticide residues report of water</li></ul>`
+      },
       process: {
-        heading: 'Step-by-step process', steps: [
-          { title: 'Tier assessment', body: 'We determine whether you need Basic, State or Central licensing based on turnover.' },
-          { title: 'Application filing', body: 'We prepare and submit your application with supporting documents.' },
-          { title: 'Inspection (if applicable)', body: 'Some categories require a premises inspection before approval.' },
-          { title: 'Licence issued', body: 'Your FSSAI licence number and certificate are issued.' },
+        heading: 'Process of FSSAI registration', steps: [
+          { title: 'Filing of Form A', body: 'Visit the FSSAI website and fill Form A.' },
+          { title: 'Payment of fee', body: 'Pay the applicable government fee for your licence tier.' },
+          { title: 'Filing of Form B', body: 'Submit Form B along with the required supporting documents.' },
+          { title: 'Follow up with authorities', body: 'We track your application and respond to any queries raised by the department.' },
+          { title: 'Issuance of certificate', body: 'On approval, your FSSAI licence/certificate is issued.' },
         ]
       },
       pricing: {
@@ -405,22 +586,66 @@ export const SERVICES = {
     priceCard: { label: 'Total (incl. GST)', price: '₹4,720', sub: 'Professional fee ₹4,000 + GST' },
     helpCard: { title: "Not sure your name is free?", body: "We run a proper search before you file anything." },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: 'Who should register' }, { href: '#benefits', label: 'Benefits' },
-      { href: '#classes', label: 'Trademark classes' }, { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: 'Who can register' }, { href: '#benefits', label: 'Advantages' },
+      { href: '#whyregister', label: 'Why register' }, { href: '#howwehelp', label: 'How we help' }, { href: '#classes', label: 'Trademark classes' },
+      { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>A registered trademark gives you exclusive legal rights to your brand name, logo or tagline within its class — and the ability to act against anyone who copies it. We start every engagement with a proper search so you're not filing on a name you can't defend or won't get.</p>` },
-      who: { heading: 'Who should register', items: ['Any business with a name, logo or tagline it plans to build on long-term', 'E-commerce and D2C brands, where copycats are common', 'Startups approaching investors, who often check IP protection'] },
-      benefits: { heading: 'Key benefits', items: ['<b>Exclusive rights</b> to use the mark in your registered class nationally.', '<b>Legal recourse</b> against infringement and copycats.', '<b>Brand asset</b> — a registered mark can be licensed, franchised or sold.'] },
+      who: {
+        heading: 'Who can register',
+        items: [
+          'A sole proprietor',
+          'Partnership firm',
+          'Limited Liability Partnership',
+          'Any Company',
+          'Trust or Society',
+          'Any Body Corporate',
+        ]
+      },
+      benefits: {
+        heading: 'Advantages of trademark registration',
+        items: [
+          '<b>Guards the commercial goodwill</b> — a registered owner has the right to create, establish and protect the goodwill of their products or services, and can stop other traders from using the trademark unlawfully.',
+          '<b>Legal protection</b> — a registered trademark gives its owner a legal right in case of infringement; not registering may leave the owner without any remedy.',
+          '<b>Advertises goods &amp; services</b> — registering a trademark creates a face for the company and its goods and services, helping distinguish the brand and increase brand value.',
+          '<b>Creation of an asset</b> — trademark registration creates an intangible asset that can be sold, assigned, franchised or commercially contracted for benefit.',
+          '<b>Business expansion</b> — a trademark establishes a connection between customers and your products, helping you build a loyal customer base.',
+          '<b>Product differentiation</b> — trademark registrations are distinct to the goods or services they represent, enabling differentiation from competitors\' products.',
+        ]
+      },
+      whyregister: {
+        heading: 'Why should you get your trademark registered?',
+        items: [
+          '<b>Legal ownership of your brand</b> — you need to register your trademark to have solid legal ownership of your brand.',
+          '<b>Freedom to operate</b> — if you don\'t register your trademark, it\'s possible (or even likely) that somebody in another country will register a similar name.',
+          '<b>Put others on notice of your rights</b> — registering your trademark reduces the likelihood of somebody infringing your rights.',
+          '<b>Increase the value of your brand</b> — registered trademarks increase the value of your brand.',
+          '<b>Investors value protected IP</b> — investors value companies more highly when they\'ve protected their intellectual property.',
+          '<b>Leveraging revenue resources</b> — trademark protection is essential for licensing.',
+        ]
+      },
+      howwehelp: {
+        heading: 'How LauncherDesk can help you',
+        items: [
+          'Search reports',
+          'Drafting and filing of trademark application',
+          'Dealing with trademark objection and opposition',
+        ]
+      },
       classes: { heading: 'Trademark classes', content: `<p>Trademarks are registered under one or more of 45 classes based on your goods or services — for example Class 25 for clothing, Class 35 for retail and advertising, Class 42 for software. We identify the right class(es) for your business as part of the search.</p>` },
-      documents: { heading: 'Documents required', items: ['Logo file (if registering a device mark)', 'Business PAN and registration proof (or identity proof for individuals)', 'Proof of use, if already using the mark (invoices, website, packaging)', 'Signed authorisation (Form TM-48)'] },
+      documents: {
+        heading: 'Documents / details required for trademark registration',
+        content: `<ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Nature of business of the applicant</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> The trademark to be applied for — i.e. wordmark, device mark, etc. — along with the logo</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Translation or transliteration of the trademark, if in any language other than English</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> User detail of the trademark — i.e. proposed to be used, or the date of first use (dd/mm/yyyy) if already commercially used</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Brochure of the entity</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Legal status of the applicant — i.e. proprietorship, partnership, individual, HUF, or body corporate</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Name and address of the proprietor/partnership, individual, HUF, or other body corporate</li></ul><h3>Charter documents</h3><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> For a company — Certificate of Incorporation, MOA and AOA</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> For an LLP — details of partners along with the LLP Agreement</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> For a partnership — the Partnership Deed</li></ul>`
+      },
       process: {
-        heading: 'Step-by-step process', steps: [
-          { title: 'Trademark search', body: 'We check availability and conflicts before you commit to filing.' },
-          { title: 'Class selection & filing', body: 'We prepare and file the application under the correct class(es).' },
-          { title: 'Examination', body: 'The Registry reviews the application and may raise objections we respond to.' },
-          { title: 'Publication & opposition period', body: 'The mark is published in the Trademark Journal for 4 months.' },
-          { title: 'Registration', body: 'If unopposed, the registration certificate is issued.' },
+        heading: 'Process of issue of trademark',
+        steps: [
+          { title: 'Collection of basic information', body: 'We collect the details needed to identify the appropriate class for your mark.' },
+          { title: 'Trademark search & availability check', body: 'We run a search and prepare a search report for your review, to reduce the chances of the application being objected to, opposed or refused.' },
+          { title: 'Filing of trademark application', body: 'We prepare and file the application under the correct class(es).' },
+          { title: 'Publication', body: 'The mark is published in the Trademark Journal for the opposition period.' },
+          { title: 'Receipt of registration certificate', body: 'If unopposed, the registration certificate is issued.' },
         ]
       },
       pricing: {
@@ -1629,46 +1854,58 @@ export const SERVICES = {
       { href: '#overview', label: 'Overview' },
       { href: '#who', label: "Who it's for" },
       { href: '#benefits', label: 'Key benefits' },
+      { href: '#whyregister', label: 'Why register' },
       { href: '#included', label: "What's included" },
+      { href: '#documents', label: 'Documents' },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
       { href: '#faq', label: 'FAQs' },
     ],
     sections: {
-      overview: { heading: 'Overview', content: `<p>DPIIT (Department for Promotion of Industry and Internal Trade) recognition under the Startup India programme gives eligible startups access to significant government benefits — including income tax exemptions, patent fee rebates, and access to government schemes and funding.</p><p>LauncherDesk handles the eligibility check, Startup India portal setup, documentation and application filing.</p>` },
+      overview: { heading: 'Overview', content: `<p>A startup is an entity in the first stages of its operations — a business model that aims to meet a marketplace need by offering an innovative product, process or service. Under the Startup India Action Plan, a startup that meets the definition prescribed under the relevant notification is eligible to apply for recognition under the programme.</p><p>LauncherDesk handles the eligibility check, Startup India portal setup, documentation and application filing.</p>` },
       who: {
-        heading: "Who it's for", items: [
-          'Startups incorporated as a Private Limited Company, LLP or Partnership Firm',
-          'Companies less than 10 years old with annual turnover not exceeding ₹100 crores',
-          'Startups working toward innovation, development or improvement of products or services',
-          'Founders who want tax exemptions, faster patent processing and government scheme access',
+        heading: "Who should get this registration", items: [
+          'Registered as a Private Limited Company, Partnership Firm or LLP',
+          'Turnover should be less than ₹100 crores in any of the previous financial years',
+          'An entity is considered a startup up to 10 years from the date of its incorporation',
+          'Should be working towards innovation/improvement of existing products, services and processes, with the potential to generate employment/create wealth — an entity formed by splitting up or reconstruction of an existing business shall not be considered a "startup"',
         ]
       },
       benefits: {
-        heading: 'Key benefits of DPIIT recognition', items: [
-          'Income tax exemption for 3 consecutive years out of the first 10 years (subject to conditions)',
-          'Tax exemption on investments above fair market value',
-          '80% rebate on patent filing fees',
-          'Self-certification for 6 labour and 3 environmental laws',
-          'Access to SIDBI Fund of Funds and government startup schemes',
-          'Credibility with investors and enterprise customers',
+        heading: 'Advantages of startup registration', items: [
+          '<b>Self-certification</b> — startups are allowed to self-certify compliance for 6 Labour Laws and 3 Environmental Laws through a simple online procedure.',
+          '<b>Patent filing</b> — startups get an 80% rebate on filing patents vis-à-vis other companies, helping pare costs in the initial formative years.',
+          '<b>Income-tax exemption</b> — eligible startups can be exempted from paying income tax for 3 consecutive financial years out of their first ten years since incorporation.',
+          '<b>Angel tax exemption</b> — startups are eligible for tax exemption under Section 56(2)(viib) of the Income Tax Act.',
+          '<b>Easy winding up</b> — startups with a simple debt structure, or those meeting certain specified income criteria, can be wound up within 90 days of filing an application for insolvency under the Insolvency and Bankruptcy Code, 2016.',
+          '<b>Exemption from EMD</b> — DPIIT-recognised startups are exempted from submitting Earnest Money Deposit (EMD) or bid security while filing government tenders.',
+        ]
+      },
+      whyregister: {
+        heading: 'Why should you get this registration?',
+        items: [
+          'Self-certification',
+          'Exemption from income-tax, angel tax',
+          'Reduced fee for patent &amp; trademark, etc.',
         ]
       },
       included: {
-        heading: "What's included", items: [
-          'Eligibility check and guidance',
-          'Startup India portal profile setup',
-          'DPIIT recognition application filing and documentation',
-          'Certificate of Recognition (issued by DPIIT on approval)',
+        heading: "How LauncherDesk can help you", items: [
+          'Recognition under the Startup India Scheme',
+          'Availing tax exemption under Section 80-IAC',
+          'Availing tax exemption under Section 56 (Angel Tax)',
         ]
       },
+      documents: {
+        heading: 'Documents / details required for startup registration',
+        content: `<ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Self-certified copy of audited statements since inception of the entity</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Self-certified copy of income tax returns</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Copy of PAN card of the entity</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Note on business model</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Copy of COI, MOA &amp; AOA</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> PAN &amp; Aadhaar of directors</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> MSME Registration Certificate, if any</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Details of number of employees</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Details of IPR, if any</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Details of funding received by the entity</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Email ID &amp; mobile number for registration</li></ul>`
+      },
       process: {
-        heading: 'Step-by-step process', steps: [
-          { title: 'Eligibility assessment', body: 'We confirm whether your startup qualifies for DPIIT recognition.' },
-          { title: 'Portal setup', body: 'We set up your profile on the Startup India portal.' },
-          { title: 'Application and documentation', body: 'We prepare and file the recognition application with supporting documents.' },
-          { title: 'DPIIT review', body: 'DPIIT reviews and processes the application.' },
-          { title: 'Certificate of Recognition', body: 'Recognition certificate issued and delivered.' },
+        heading: 'Process of startup registration', steps: [
+          { title: 'Register on the portal', body: 'The startup is required to register by creating an account on the Startup India portal.' },
+          { title: 'Filing of application', body: 'Basic details need to be filled on the portal for applying for recognition under the Startup India scheme.' },
+          { title: 'Submission of application', body: 'After filling in the necessary details, the application needs to be submitted on the portal.' },
+          { title: 'Issuance of certificate', body: 'On satisfying the requirements, the recognition certificate is issued by the DPIIT.' },
         ]
       },
       pricing: {
