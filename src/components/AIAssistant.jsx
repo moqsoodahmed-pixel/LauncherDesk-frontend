@@ -583,7 +583,6 @@ export default function AIAssistant() {
             </DraSubSection>
             <DraSubSection id="mkt" label="Marketing & Sales">
               <Link to="/services/seo-marketing" onClick={closeDrawer}>SEO & Search Marketing</Link>
-              <Link to="/services/social-media-management" onClick={closeDrawer}>Social Media Marketing</Link>
               <Link to="/services/google-ads-paid-marketing" onClick={closeDrawer}>Performance Marketing</Link>
               <Link to="/services/branding-logo-design" onClick={closeDrawer}>Brand Identity & Logo Design</Link>
               <Link to="/services/whatsapp-business-api" onClick={closeDrawer}>WhatsApp Business API & Automation</Link>
