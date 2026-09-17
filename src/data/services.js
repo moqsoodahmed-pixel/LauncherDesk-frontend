@@ -1841,6 +1841,77 @@ export const SERVICES = {
     ]
   },
 
+  'hrms': {
+    title: 'HRMS — HR Management System',
+    metaTitle: 'HRMS Software for Startups & SMEs | Payroll, Attendance & Leave | LauncherDesk',
+    metaDesc: 'Get a complete HR Management System set up for your business — employee database, attendance, leave, payroll and self-service, all in one platform.',
+    eyebrow: 'BUILD — Technology',
+    crumbCategory: 'BUILD',
+    lead: 'Run HR from one place instead of spreadsheets and WhatsApp groups — employee records, attendance, leave, payroll and self-service, set up and configured for how your team actually works.',
+    priceCard: { label: 'Price', price: '₹18,000 + GST', sub: '' },
+    helpCard: { title: 'Not sure what you need yet?', body: 'Tell us your team size and current process — we\'ll recommend the right setup.' },
+    toc: [
+      { href: '#overview', label: 'Overview' },
+      { href: '#who', label: "Who it's for" },
+      { href: '#included', label: "What's included" },
+      { href: '#process', label: 'Process' },
+      { href: '#pricing', label: 'Pricing' },
+      { href: '#faq', label: 'FAQs' },
+    ],
+    sections: {
+      overview: { heading: 'Overview', content: `<p>An HRMS (HR Management System) brings employee records, attendance, leave and payroll into one platform — replacing scattered spreadsheets, chat-group approvals and manual salary calculations. As a team grows past a handful of people, HR run informally starts costing real time every month and creates compliance risk around PF, ESI and TDS.</p><p>LauncherDesk sets up and configures an HRMS suited to your team size and processes — employee onboarding, attendance and leave policies, payroll rules and a self-service portal — so HR runs on a system rather than on memory.</p>` },
+      who: {
+        heading: "Who it's for", items: [
+          'Startups and SMEs moving off spreadsheets for HR and payroll',
+          'Businesses with 10+ employees where manual attendance/leave tracking has become unreliable',
+          'Companies that want employees to self-serve payslips, leave requests and documents',
+          'Founders who want PF, ESI and TDS calculated correctly and on time, every month',
+        ]
+      },
+      included: {
+        heading: "What's included", items: [
+          'Employee database and document storage',
+          'Attendance and leave management, with policy configuration',
+          'Payroll processing — salary structures, payslips, PF/ESI/TDS',
+          'Employee self-service portal (leave, payslips, documents)',
+          'Onboarding and offboarding workflows',
+          'Reports and dashboards for HR and management',
+          'Setup, data migration and admin training',
+        ]
+      },
+      process: {
+        heading: 'Step-by-step process', steps: [
+          { title: 'Requirement call', body: 'We understand your team size, current HR process and what you want automated first.' },
+          { title: 'Platform setup', body: 'We configure the HRMS — company structure, departments, roles and access.' },
+          { title: 'Policy configuration', body: 'Attendance, leave and payroll rules are set up to match your actual policies.' },
+          { title: 'Data migration', body: 'Existing employee and payroll data is migrated in, checked and validated.' },
+          { title: 'Training and go-live', body: 'We train your HR team and employees on self-service, then go live.' },
+          { title: 'Ongoing support', body: 'Support for configuration changes as your team and policies evolve.' },
+        ]
+      },
+      pricing: {
+        heading: 'Transparent pricing', intro: 'One flat setup fee covers configuration for your team — ongoing platform costs, if any, are shown separately.', rows: [
+          ['Professional fee', 'HRMS setup, configuration, data migration and training'],
+          ['Platform cost', 'Any per-user software subscription, passed through at cost'],
+          ['Taxes', 'GST on the professional fee, shown separately'],
+        ], outro: `<a href="/pricing" style="color:var(--blue-dark);font-weight:600">See how pricing works →</a>`
+      },
+      faq: {
+        heading: 'Frequently asked questions', items: [
+          { q: 'How long does HRMS setup take?', a: 'Typically 1–2 weeks depending on team size and how much historical data needs migrating.' },
+          { q: 'Does this include payroll processing every month, or just the setup?', a: 'This covers the setup and configuration. Ongoing monthly payroll processing is available separately — see our Payroll Management service.' },
+          { q: 'Can it handle PF, ESI and TDS correctly?', a: 'Yes — payroll rules are configured for statutory compliance (PF, ESI, TDS) based on your team\'s structure.' },
+          { q: 'Will my employees be able to see their own payslips and apply for leave?', a: 'Yes, the self-service portal lets employees view payslips, apply for leave and access their documents directly.' },
+        ]
+      }
+    },
+    related: [
+      { href: '/services/payroll', label: 'Payroll Management', note: 'Ongoing monthly payroll processing.' },
+      { href: '/services/business-automation', label: 'Business Automation', note: 'Automate workflows beyond HR.' },
+      { href: '/services/crm-setup-lead-management', label: 'CRM Setup & Integration', note: 'Bring the same discipline to sales.' },
+    ]
+  },
+
   'startup-india-dpiit': {
     title: 'Startup India / DPIIT Recognition',
     metaTitle: 'Startup India DPIIT Recognition | Tax Benefits & Schemes | LauncherDesk',

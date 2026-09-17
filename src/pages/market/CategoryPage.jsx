@@ -9,10 +9,10 @@ const CHEV = 'm9 18 6-6-6-6'
 export default function CategoryPage() {
   const [searchParams] = useSearchParams()
   const slug = searchParams.get('cat') || 'crm'
-  const cat  = catBy(slug) || CATS[0]
+  const cat = catBy(slug) || CATS[0]
 
-  const [query, setQuery]   = useState('')
-  const [sort, setSort]     = useState('az')
+  const [query, setQuery] = useState('')
+  const [sort, setSort] = useState('az')
 
   /* Reset search when category changes */
   useEffect(() => { setQuery(''); setSort('az') }, [slug])
@@ -24,7 +24,7 @@ export default function CategoryPage() {
     let list = inCat(cat.slug)
     const q = query.toLowerCase().trim()
     if (q) list = list.filter(p => (p.name + ' ' + p.tagline + ' ' + p.desc).toLowerCase().includes(q))
-    if (sort === 'az')      list = [...list].sort((a, b) => (a.soon - b.soon) || a.name.localeCompare(b.name))
+    if (sort === 'az') list = [...list].sort((a, b) => (a.soon - b.soon) || a.name.localeCompare(b.name))
     return list
   }, [cat.slug, query, sort])
 
@@ -34,14 +34,14 @@ export default function CategoryPage() {
       <header className="page-hero">
         <div className="wrap">
           <nav className="crumb reveal-up in">
-            <a href="/">Home</a><svg viewBox="0 0 24 24"><path d={CHEV}/></svg>
-            <a href="/market">Marketplace</a><svg viewBox="0 0 24 24"><path d={CHEV}/></svg>
+            <a href="/">Home</a><svg viewBox="0 0 24 24"><path d={CHEV} /></svg>
+            <a href="/market">Marketplace</a><svg viewBox="0 0 24 24"><path d={CHEV} /></svg>
             <span className="cur">{cat.name}</span>
           </nav>
           <div className="mk-cat-head reveal-up in" style={{ marginTop: 18 }}>
             <div className="mk-cathero-ic">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d={MI[cat.icon]}/>
+                <path d={MI[cat.icon]} />
               </svg>
             </div>
             <div>
@@ -65,7 +65,7 @@ export default function CategoryPage() {
                 href={`/market/category?cat=${c.slug}`}
               >
                 <svg className="mk-ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d={MI[c.icon]}/>
+                  <path d={MI[c.icon]} />
                 </svg>
                 {c.name}
               </a>
@@ -75,8 +75,8 @@ export default function CategoryPage() {
           {/* Toolbar */}
           <div className="mk-toolbar">
             <div className="mk-search">
-              <svg viewBox="0 0 24 24">
-                <path d={MI.search}/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d={MI.search} />
               </svg>
               <input
                 type="text"
