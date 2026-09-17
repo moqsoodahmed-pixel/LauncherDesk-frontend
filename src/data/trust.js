@@ -33,7 +33,7 @@ export const FEATURED_PARTNERS = [
     name:     'Doqfy',
     tagline:  'India-ready contract platform — our collab partner',
     category: 'CLM',
-    url:      'https://www.doqfy.com/',
+    url:      'https://doqfy.in/',
     logo:     '/doqfy-logo.png',
     badge:    'Partner',
   },
