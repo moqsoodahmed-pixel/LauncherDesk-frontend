@@ -539,7 +539,7 @@ export default function Navbar({ activePage = '' }) {
           <nav className="main-nav" id="mainNav" ref={mainNavRef} onMouseOver={onNavMouseOver} onMouseLeave={restorePill}>
             <span className="nav-pill" style={{ transform: `translateX(${pill.left}px)`, width: pill.width, opacity: pill.opacity }} aria-hidden="true" />
             <div className={`nav-item${activePage === 'registrations' ? ' active' : ''} nav-item--reg`} data-drop="true">
-              <button>Registrations <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg></button>
+              <button>Start a Business <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg></button>
               <MegaRegistrations />
             </div>
             <div className={`nav-item${activePage === 'it-services' ? ' active' : ''} nav-item--wide`} data-drop="true">
