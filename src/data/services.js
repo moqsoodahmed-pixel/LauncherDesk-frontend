@@ -39,7 +39,7 @@ export const SERVICES = {
         extra: `<p>If you're a solo founder testing an idea, an <a href="/services/opc-registration" style="color:var(--blue-dark);font-weight:600">OPC or Proprietorship</a> may fit better — our AI or an expert can help you decide.</p>`
       },
       benefits: {
-        heading: 'Key benefits',
+        heading: 'Our Benefits',
         items: [
           '<b>No minimum capital requirement</b> — start your business with any amount, as there is no minimum investment required to register a Private Limited Company.',
           '<b>Separate legal entity</b> — the company can own property, enter into contracts, and face legal proceedings by itself, independent of its owners.',
@@ -394,7 +394,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>A Partnership Firm is governed by the Indian Partnership Act, 1932. It's quick to set up and suits small, trust-based businesses where partners are comfortable with unlimited personal liability in exchange for simplicity.</p><p>LauncherDesk drafts your Partnership Deed and handles registration with the Registrar of Firms.</p>` },
       who: { heading: "Who it's for", items: ['Small, owner-operated businesses with two or more partners', 'Family businesses and local trades', 'Founders who want the simplest, lowest-cost registration route'] },
-      benefits: { heading: 'Key benefits', items: ['<b>Fast and low-cost</b> to set up compared to a company or LLP.', '<b>Minimal ongoing compliance</b> — no mandatory annual filings with the MCA.', '<b>Flexible</b> — partners define terms freely in the Partnership Deed.'] },
+      benefits: { heading: 'Our Benefits', items: ['<b>Fast and low-cost</b> to set up compared to a company or LLP.', '<b>Minimal ongoing compliance</b> — no mandatory annual filings with the MCA.', '<b>Flexible</b> — partners define terms freely in the Partnership Deed.'] },
       documents: { heading: 'Documents / information required', items: ['PAN and Aadhaar of all partners', 'Identity and address proof for each partner', 'Proof of business address', 'Partnership Deed on stamp paper'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -927,7 +927,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Registrar of Companies (ROC) compliance covers the mandatory annual filings every Private Limited Company and LLP must complete — annual returns, financial statements, board resolutions and more. Penalties for missing these accrue per day, so proactive tracking matters.</p>` },
       who: { heading: "Who it's for", items: ['Every registered Private Limited Company', 'Every registered LLP', "Founders who've been managing this manually and want it off their plate"] },
-      benefits: { heading: 'Key benefits', items: ["<b>Penalty-free</b> — nothing gets missed once it's on our tracker.", '<b>Good standing</b> — keeps your company eligible for loans, tenders and funding rounds.', '<b>One less thing to remember</b> — we notify you ahead of every deadline.'] },
+      benefits: { heading: 'Our Benefits', items: ["<b>Penalty-free</b> — nothing gets missed once it's on our tracker.", '<b>Good standing</b> — keeps your company eligible for loans, tenders and funding rounds.', '<b>One less thing to remember</b> — we notify you ahead of every deadline.'] },
       documents: { heading: 'Documents / information required', items: ['Financial statements for the year', 'Board resolutions and meeting minutes', 'Basic company/LLP registration details', 'Digital Signature Certificate for filing'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -975,7 +975,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>LauncherDesk's accounting service keeps your books current every month — not scrambled together once a year. That means your GST returns, tax filings and ROC compliance are always backed by accurate numbers, and you can pull a financial snapshot whenever you need one.</p>` },
       who: { heading: "Who it's for", items: ['Any registered business that needs monthly bookkeeping', 'Founders who currently manage accounts in spreadsheets or not at all', 'Businesses preparing for fundraising, where clean books matter'] },
-      benefits: { heading: 'Key benefits', items: ['<b>Always tax-ready</b> — books stay current, not reconstructed at deadline time.', '<b>Real visibility</b> — know your numbers, not just guess at them.', '<b>Audit-ready</b> — organised records save time and stress at year-end.'] },
+      benefits: { heading: 'Our Benefits', items: ['<b>Always tax-ready</b> — books stay current, not reconstructed at deadline time.', '<b>Real visibility</b> — know your numbers, not just guess at them.', '<b>Audit-ready</b> — organised records save time and stress at year-end.'] },
       documents: { heading: 'Documents / information required', items: ['Bank statements for the period', 'Sales and purchase invoices', 'Expense receipts', 'Payroll records, if applicable'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -1023,7 +1023,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Payroll isn't just paying salaries — it's TDS deduction, PF and ESI contributions, professional tax and payslip generation, all on strict monthly deadlines. LauncherDesk runs this end to end so employment compliance never becomes a liability.</p>` },
       who: { heading: "Who it's for", items: ['Businesses making their first hire', 'Growing teams that have outgrown manual salary spreadsheets', 'Founders who want statutory compliance handled correctly from day one'] },
-      benefits: { heading: 'Key benefits', items: ['<b>Accurate, on-time salaries</b> every month.', '<b>Statutory compliance</b> — PF, ESI, TDS and professional tax handled correctly.', '<b>Payslips & records</b> generated automatically for every employee.'] },
+      benefits: { heading: 'Our Benefits', items: ['<b>Accurate, on-time salaries</b> every month.', '<b>Statutory compliance</b> — PF, ESI, TDS and professional tax handled correctly.', '<b>Payslips & records</b> generated automatically for every employee.'] },
       documents: { heading: 'Documents / information required', items: ['Employee master data (salary structure, PAN, bank details)', 'Attendance and leave records', 'PF/ESI registration details, if already registered', 'Prior payroll history, if switching providers'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -1071,7 +1071,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Business automation covers the operational backbone most growing businesses eventually need: a proper website, a CRM to track leads and customers, and automated workflows that remove repetitive manual work — invoicing, follow-ups, reporting and more.</p>` },
       who: { heading: "Who it's for", items: ['Businesses still running operations out of spreadsheets and WhatsApp', 'Teams spending too much time on repetitive manual tasks', 'Founders ready to formalise sales, support or operations workflows'] },
-      benefits: { heading: 'Key benefits', items: ['<b>Time back</b> — automate the repetitive work eating into your week.', '<b>Fewer dropped leads</b> — a CRM means nothing falls through the cracks.', '<b>Scalable systems</b> — built to handle growth, not just today\'s volume.'] },
+      benefits: { heading: 'Our Benefits', items: ['<b>Time back</b> — automate the repetitive work eating into your week.', '<b>Fewer dropped leads</b> — a CRM means nothing falls through the cracks.', '<b>Scalable systems</b> — built to handle growth, not just today\'s volume.'] },
       documents: { heading: 'Documents / information required', items: ['Overview of your current tools and processes', 'Access to relevant existing systems, where applicable', 'Business goals and priority workflows to automate'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -1119,7 +1119,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Once the legal and compliance foundation is in place, growth is the next problem. Our digital marketing service covers website design, brand identity and demand generation — scoped to where your business actually is, not a one-size-fits-all package.</p>` },
       who: { heading: "Who it's for", items: ['New businesses that need a website and brand identity from scratch', 'Businesses with a website that isn\'t generating leads', 'Founders who want marketing handled by people who also understand their compliance stage'] },
-      benefits: { heading: 'Key benefits', items: ['<b>A website that converts</b>, not just exists.', '<b>Consistent branding</b> across your website, social and marketing materials.', '<b>Lead generation</b> — campaigns built around your actual growth goals.'] },
+      benefits: { heading: 'Our Benefits', items: ['<b>A website that converts</b>, not just exists.', '<b>Consistent branding</b> across your website, social and marketing materials.', '<b>Lead generation</b> — campaigns built around your actual growth goals.'] },
       documents: { heading: 'Documents / information required', items: ['Any existing brand assets (logo, colours, prior materials)', 'Target customer and market details', 'Current website or marketing channels, if any'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -1924,7 +1924,7 @@ export const SERVICES = {
     toc: [
       { href: '#overview', label: 'Overview' },
       { href: '#who', label: "Who it's for" },
-      { href: '#benefits', label: 'Key benefits' },
+      { href: '#benefits', label: 'Our Benefits' },
       { href: '#whyregister', label: 'Why register' },
       { href: '#included', label: "What's included" },
       { href: '#documents', label: 'Documents' },
