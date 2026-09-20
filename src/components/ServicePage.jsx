@@ -4,6 +4,10 @@ import { useUserAuth } from '../context/UserAuthContext'
 import SEO, { serviceSchema, breadcrumbSchema, faqSchema } from './SEO'
 import RegistrationPricingPlans from './RegistrationPricingPlans'
 import { REGISTRATION_PLANS } from '../data/registrationPlans'
+import StickyServiceCta from './trust/StickyServiceCta'
+import WhyChooseGrid from './trust/WhyChooseGrid'
+import ContextualCta from './trust/ContextualCta'
+import { CTA_EVENTS } from '../data/cta'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 const CHEV = 'm9 18 6-6-6-6'
@@ -551,7 +555,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
   const dmHighlights = isDM ? getServiceHighlights(svc) : []
 
   return (
-    <aside className="svc-aside">
+    <aside id="quote-form" className="svc-aside">
       {/* Blue pricing card — skipped for tiered-plan services (Pvt Ltd/LLP/OPC):
           their pricing + "Get Started" CTA already live in the plan cards above,
           so repeating it here would just be duplicate "paying" content taking
@@ -838,6 +842,16 @@ export default function ServicePage({ svc }) {
   /* Filter pricing section from TOC and section order */
   const filteredToc = toc.filter(t => t.href !== '#pricing')
   const sectionOrder = filteredToc.map(t => t.href.replace('#', ''))
+
+  // Sticky CTA price: on pages with Basic/Standard/Premium tiers (Pvt Ltd,
+  // LLP, OPC registration) the entry price is the Basic tier, not the
+  // priceCard's default (Standard) figure — so the sticky bar always shows
+  // what the visitor actually pays to get started.
+  const tieredPlans = REGISTRATION_PLANS[slug]?.plans
+  const basicPlan = tieredPlans?.find(p => p.tier === 'Basic')
+  const stickyPriceLabel = basicPlan
+    ? `From ${basicPlan.price}${basicPlan.priceNote ? ` ${basicPlan.priceNote}` : ''}`
+    : (priceCard?.price && priceCard.price !== 'Custom quote' ? `Starting from ${priceCard.price}` : undefined)
   const schemas = [
     serviceSchema(svc, slug),
     breadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: crumbCategory, url: '/services' }, { name: title, url: `/services/${slug}` }]),
@@ -897,9 +911,18 @@ export default function ServicePage({ svc }) {
 
       {/* ── Pricing plans (Basic/Standard/Premium) — shown first, full width, before Overview ── */}
       {REGISTRATION_PLANS[svc?.slug] && (
-        <section className="section-sm" style={{ overflow: 'visible', paddingBottom: 0 }}>
+        <section id="pricing-cta" className="section-sm" style={{ overflow: 'visible', paddingBottom: 0 }}>
           <div className="wrap" style={{ overflow: 'visible' }}>
             <RegistrationPricingPlans svc={svc} />
+            <ContextualCta
+              prompt="Want to know your exact cost?"
+              label="Get Exact Quote"
+              href="#quote-form"
+              intent="high"
+              event={CTA_EVENTS.getExactQuote}
+              secondaryLabel="WhatsApp Us"
+              secondaryHref={`https://wa.me/918548854859?text=${encodeURIComponent(`Hi, I'd like an exact quote for ${title}`)}`}
+            />
           </div>
         </section>
       )}
@@ -910,16 +933,51 @@ export default function ServicePage({ svc }) {
           <div className="svc-layout" style={{ overflow: 'visible' }}>
             <div className="svc-toc-col"><Toc items={filteredToc} /></div>
             <main className="svc-body">
-              {sectionOrder.map(id =>
-                id === 'faq'
+              {sectionOrder.map(id => {
+                const rendered = id === 'faq'
                   ? <FaqSection key="faq" data={sections.faq} />
                   : <SectionContent key={id} id={id} data={sections[id]} />
-              )}
+                // Phase 16 — a contextual CTA right where hesitation is highest:
+                // immediately after the documents checklist ("have your
+                // documents ready?") and immediately after the FAQ.
+                if (id === 'documents' && sections.documents) {
+                  return (
+                    <div key={`${id}-wrap`}>
+                      {rendered}
+                      <ContextualCta
+                        prompt="Have your documents ready?"
+                        label="Start Registration"
+                        href="#quote-form"
+                        intent="high"
+                        event={CTA_EVENTS.startRegistration}
+                      />
+                    </div>
+                  )
+                }
+                if (id === 'faq') {
+                  return (
+                    <div key="faq-wrap">
+                      {rendered}
+                      <ContextualCta
+                        prompt="Still have questions?"
+                        label="Ask Sneha"
+                        askSneha
+                        intent="low"
+                        event={CTA_EVENTS.faqAskSneha}
+                        secondaryLabel="Talk to an Expert"
+                        secondaryTo="/company/contact"
+                      />
+                    </div>
+                  )
+                }
+                return rendered
+              })}
               {isRegistrationService(svc) && svc?.slug !== 'iso-certification' && (
                 <div style={{ marginTop: 28, padding: '12px 16px', borderRadius: 10, background: '#F8FAFC', border: '1px solid var(--line)', fontSize: 12.5, color: 'var(--text-3)', lineHeight: 1.6 }}>
                   <strong style={{ color: 'var(--text-2)' }}>Please note:</strong> LauncherDesk assists with preparation and submission. Final approval depends on the government authority and may vary by document completeness and workload.
                 </div>
               )}
+              <WhyChooseGrid />
             </main>
             <div className="svc-aside-col"><ServiceAside priceCard={priceCard} helpCard={helpCard} svc={svc} /></div>
           </div>
@@ -927,6 +985,12 @@ export default function ServicePage({ svc }) {
       </section>
 
       {related && related.length > 0 && <RelatedServices items={related} />}
+
+      <StickyServiceCta
+        title={title}
+        priceLabel={stickyPriceLabel}
+        waMessage={`Hi, I'm interested in ${title}`}
+      />
     </>
   )
 }

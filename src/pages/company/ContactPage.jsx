@@ -278,6 +278,17 @@ export default function ContactPage() {
                   <span style={{ fontSize: 12.5, color: 'var(--text-3)', display: 'block', marginTop: 4 }}>DutyLaunch Solutions Private Limited</span>
                 </div>
               </div>
+
+              {/* Phase 18 — reassurance flow before/around the form */}
+              <div className="ctx-cta" style={{ display: 'block', marginTop: 8 }}>
+                <span className="ctx-cta-prompt" style={{ display: 'block', marginBottom: 10 }}>What happens after you submit?</span>
+                <ol style={{ margin: 0, paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 6, fontSize: 13.5, color: 'var(--text-2)' }}>
+                  <li>We review your requirement.</li>
+                  <li>We explain the next steps that apply to your business.</li>
+                  <li>You receive a clear, itemised quote.</li>
+                  <li>We coordinate the service once you're ready to proceed.</li>
+                </ol>
+              </div>
             </div>
             <ContactForm roadmap={roadmap} />
           </div>

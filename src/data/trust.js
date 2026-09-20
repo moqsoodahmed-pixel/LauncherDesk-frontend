@@ -27,6 +27,45 @@ export const CLIENT_LOGOS = [
   // Required fields: id, name, logo, url, permission
 ]
 
+/**
+ * WHY_CHOOSE_LAUNCHERDESK — Phase 5/14 differentiator content.
+ * Every line here must be a claim already true of how LauncherDesk actually
+ * operates (see ServicePage/QuoteForm/Ask Sneha functionality) — no numeric
+ * guarantees, no "best in India" style claims.
+ */
+export const WHY_CHOOSE_LAUNCHERDESK = [
+  {
+    id: 'contact', num: '01', title: 'One Point of Contact',
+    desc: 'Registration, compliance, finance, technology and growth coordinated through one team.',
+    cta: 'See How It Works', href: '/#how-it-works',
+  },
+  {
+    id: 'pricing', num: '02', title: 'Transparent Pricing',
+    desc: 'Professional fees, government fees and GST clearly presented where applicable.',
+    cta: 'View Pricing', href: '/pricing',
+  },
+  {
+    id: 'execution', num: '03', title: 'End-to-End Execution',
+    desc: 'From documents and filing through coordination and follow-up.',
+    cta: 'See Our Process', href: '/#how-it-works',
+  },
+  {
+    id: 'support', num: '04', title: 'Ongoing Support',
+    desc: "Support doesn't have to stop after registration.",
+    cta: 'Explore Compliance', href: '/solutions/compliance-management',
+  },
+  {
+    id: 'digital', num: '05', title: 'Digital-First Process',
+    desc: 'Simple digital interaction and service coordination.',
+    cta: 'Explore Services', href: '/services',
+  },
+  {
+    id: 'growth', num: '06', title: 'Business Growth Support',
+    desc: 'Technology, marketing and business services under one ecosystem.',
+    cta: 'Explore Growth Services', href: '/solutions/business-growth',
+  },
+]
+
 export const FEATURED_PARTNERS = [
   {
     id:       'doqfy',

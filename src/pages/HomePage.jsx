@@ -3,6 +3,10 @@ import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import { Link } from 'react-router-dom'
 import SEO, { organizationSchema, websiteSchema } from '../components/SEO'
 import HeroVisual from '../components/HeroVisual'
+import TrustBar from '../components/trust/TrustBar'
+import { CaseStudiesSection, TestimonialsSection } from '../components/trust/ProofSection'
+import ContextualCta from '../components/trust/ContextualCta'
+import { CTA_EVENTS, trackCta } from '../data/cta'
 
 /* ─── Inline styles for the redesigned homepage ──────────────────────── */
 const S = `
@@ -493,6 +497,8 @@ const S = `
 .hp-why-feat-icon svg { width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2; }
 .hp-why-feat h4 { font-size:15.5px;font-weight:700;color:var(--navy);margin-bottom:6px;letter-spacing:-.01em; }
 .hp-why-feat p  { font-size:13.5px;color:var(--text-2);line-height:1.62; }
+.hp-why-feat-link { display:inline-flex;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--blue);text-decoration:none; }
+.hp-why-feat-link:hover { text-decoration:underline; }
 
 /* comparison right card */
 .hp-vs-card {
@@ -592,6 +598,30 @@ const S = `
 }
 .hp-type-arrow { margin-top:16px;display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--blue); }
 .hp-type-arrow svg { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5; }
+
+/* ── SERVICE FINDER / ROADMAP ── */
+.hp-roadmap { padding:64px 0; background:#fff; }
+.hp-roadmap-card {
+  display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;
+  background:linear-gradient(135deg,#0A2540 0%,#1D6FE0 100%);
+  border-radius:24px;padding:clamp(32px,4vw,52px);color:#fff;
+  box-shadow:0 24px 60px rgba(10,37,64,.25);
+}
+.hp-roadmap-text{max-width:560px}
+.hp-roadmap-text h2{font-size:clamp(22px,3vw,32px);font-weight:900;margin:8px 0 12px;color:#fff}
+.hp-roadmap-text p{font-size:15px;color:rgba(255,255,255,.82);line-height:1.65;margin-bottom:18px}
+.hp-roadmap-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.hp-roadmap-list li{display:flex;align-items:center;gap:8px;font-size:13.5px;color:rgba(255,255,255,.92);font-weight:600}
+.hp-roadmap-list li::before{content:'✓';color:#4ADE80;font-weight:900}
+.hp-roadmap-btns{display:flex;flex-direction:column;gap:12px;flex:none;min-width:220px}
+.hp-roadmap-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 26px;background:#F97316;color:#fff;font-weight:800;font-size:14.5px;border-radius:12px;text-decoration:none;box-shadow:0 8px 24px rgba(249,115,22,.35);transition:transform .15s}
+.hp-roadmap-btn-primary:hover{transform:translateY(-2px)}
+.hp-roadmap-btn-secondary{display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 26px;background:rgba(255,255,255,.12);color:#fff;font-weight:700;font-size:14.5px;border-radius:12px;border:1.5px solid rgba(255,255,255,.35);cursor:pointer;font-family:inherit;transition:background .15s}
+.hp-roadmap-btn-secondary:hover{background:rgba(255,255,255,.22)}
+@media (max-width:760px){
+  .hp-roadmap-card{flex-direction:column;align-items:stretch;text-align:left}
+  .hp-roadmap-btns{width:100%}
+}
 
 /* ── HOW IT WORKS ── */
 .hp-how { padding:76px 0;background:var(--brand-50); position:relative; overflow:hidden; }
@@ -783,6 +813,14 @@ const S = `
   text-decoration:none;transition:background .15s,transform .15s,border-color .15s;
 }
 .hp-cta-btn-exp:hover { background:var(--brand-50);color:var(--blue-dark);border-color:var(--blue); }
+.hp-cta-btn-ai {
+  display:inline-flex;align-items:center;gap:8px;height:54px;padding:0 26px;
+  background:transparent;color:var(--blue);font-weight:700;font-size:15px;border-radius:12px;border:1.5px dashed var(--blue);
+  cursor:pointer;font-family:inherit;transition:background .15s;
+}
+.hp-cta-btn-ai:hover { background:var(--brand-50); }
+.hp-cta-microcopy{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px;font-size:12.5px;font-weight:600;color:var(--text-3,#94A3B8);position:relative}
+.hp-cta-trustbar{max-width:520px;margin-left:auto;margin-right:auto;position:relative}
 
 /* ── LIFECYCLE ACCORDION (reused from original) ── */
 .lc2-section{background:var(--sec-b);padding:96px 0}
@@ -812,6 +850,10 @@ const S = `
 .lc2-chip:hover{border-color:var(--blue);color:var(--blue-dark);background:rgba(29,111,224,.06);transform:translateY(-1px);box-shadow:0 4px 12px rgba(29,111,224,.15)}
 .lc2-prog{height:2px;background:transparent;position:relative;margin:0 4px}
 .lc2-prog-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue-dark),var(--blue-bright));border-radius:2px;transition:width linear}
+.lc2-cta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.lc2-cta span{font-size:13px;font-weight:700;color:var(--navy)}
+.lc2-cta-btn{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#fff;background:var(--blue);border-radius:999px;padding:6px 14px;text-decoration:none}
+.lc2-cta-btn:hover{background:var(--blue-dark)}
 
 /* ── RESPONSIVE ── */
 @media(max-width:960px){
@@ -857,7 +899,7 @@ const S = `
   .hp-how-connector { display:none }
   .hp-cta-inner  { border-radius:16px;padding:36px 20px }
   .hp-cta-btns   { flex-direction:column;align-items:center }
-  .hp-cta-btn-wa,.hp-cta-btn-exp { width:100%;justify-content:center }
+  .hp-cta-btn-wa,.hp-cta-btn-exp,.hp-cta-btn-ai { width:100%;justify-content:center }
   .lc2-body-inner{ padding:0 4px 18px 44px }
   .lc2-trigger   { grid-template-columns:36px 1fr 24px;gap:8px }
 }
@@ -884,27 +926,32 @@ const STAGES = [
   {
     id: 'idea', num: '01', name: 'Idea & Research',
     desc: 'Turn your idea into a validated business concept. We help you choose the right structure before you file anything.',
-    chips: [{ l: 'Entity Comparison', h: '/services/private-limited-company-registration' }, { l: 'Service Finder', h: '/services' }, { l: 'LauncherDesk AI', h: '/ai' }]
+    chips: [{ l: 'Entity Comparison', h: '/services/private-limited-company-registration' }, { l: 'Service Finder', h: '/services' }, { l: 'LauncherDesk AI', h: '/ai' }],
+    ctaPrompt: 'Not sure which structure fits?', ctaLabel: 'Find My Structure', ctaHref: '/services#finder',
   },
   {
     id: 'start', num: '02', name: 'Register & Incorporate',
     desc: 'Get your business legally registered with the right entity — Private Limited, LLP, OPC or Partnership.',
-    chips: [{ l: 'Pvt Ltd Registration', h: '/services/private-limited-company-registration' }, { l: 'LLP Registration', h: '/services/llp-registration' }, { l: 'OPC Registration', h: '/services/opc-registration' }, { l: 'Partnership Firm', h: '/services/partnership-registration' }]
+    chips: [{ l: 'Pvt Ltd Registration', h: '/services/private-limited-company-registration' }, { l: 'LLP Registration', h: '/services/llp-registration' }, { l: 'OPC Registration', h: '/services/opc-registration' }, { l: 'Partnership Firm', h: '/services/partnership-registration' }],
+    ctaPrompt: 'Ready to start?', ctaLabel: 'Start Registration', ctaHref: '/services/private-limited-company-registration',
   },
   {
     id: 'build', num: '03', name: 'Licences & Compliance',
     desc: 'Get GST, MSME, FSSAI, trademark and every licence you need — without chasing government portals yourself.',
-    chips: [{ l: 'GST Registration', h: '/services/gst-registration' }, { l: 'Trademark', h: '/services/trademark-registration' }, { l: 'MSME / Udyam', h: '/services/msme-registration' }, { l: 'FSSAI', h: '/services/fssai-registration' }]
+    chips: [{ l: 'GST Registration', h: '/services/gst-registration' }, { l: 'Trademark', h: '/services/trademark-registration' }, { l: 'MSME / Udyam', h: '/services/msme-registration' }, { l: 'FSSAI', h: '/services/fssai-registration' }],
+    ctaPrompt: 'Already registered?', ctaLabel: 'Explore Compliance', ctaHref: '/solutions/compliance-management',
   },
   {
     id: 'grow', num: '04', name: 'Technology & Growth',
     desc: 'Website, CRM, automation, digital marketing and brand identity — everything you need to get found and grow.',
-    chips: [{ l: 'Website Development', h: '/services/website-development' }, { l: 'Digital Marketing', h: '/services/digital-marketing' }, { l: 'Business Automation', h: '/services/business-automation' }]
+    chips: [{ l: 'Website Development', h: '/services/website-development' }, { l: 'Digital Marketing', h: '/services/digital-marketing' }, { l: 'Business Automation', h: '/services/business-automation' }],
+    ctaPrompt: 'Ready to grow?', ctaLabel: 'Explore Technology & Growth', ctaHref: '/solutions/business-growth',
   },
   {
     id: 'expand', num: '05', name: 'International Expansion',
     desc: 'UAE setup, fundraising documentation and business consulting for businesses ready to go beyond India.',
-    chips: [{ l: 'UAE Business Setup', h: '/services/uae-business-setup' }, { l: 'Fundraising Docs', h: '/services/fundraising-documentation' }, { l: 'Business Consulting', h: '/services/business-consulting' }]
+    chips: [{ l: 'UAE Business Setup', h: '/services/uae-business-setup' }, { l: 'Fundraising Docs', h: '/services/fundraising-documentation' }, { l: 'Business Consulting', h: '/services/business-consulting' }],
+    ctaPrompt: 'Planning your next market?', ctaLabel: 'Explore Expansion', ctaHref: '/solutions/advisory',
   },
 ]
 
@@ -940,10 +987,10 @@ const SVC_CATS = [
 ]
 
 const WHY_FEATURES = [
-  { icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10', title: 'One point of contact', desc: 'Tell us once. We coordinate every service — no repeating your story to five different vendors.' },
-  { icon: 'M9 11l3 3L22 4|M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11', title: 'We own it start to finish', desc: 'From first call to final filing — LauncherDesk takes accountability for the outcome, not just the paperwork.' },
-  { icon: 'M12 2v20|M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', title: 'Transparent pricing', desc: 'No padded bundles. Every quote separates professional fee, government fee and taxes — shown clearly upfront.' },
-  { icon: 'M23 6l-9.5 9.5-5-5L1 18', title: 'Proactive reminders', desc: 'We track your deadlines and notify you before they become penalties. Nothing falls through the cracks.' },
+  { icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10', title: 'One point of contact', desc: 'Tell us once. We coordinate every service — no repeating your story to five different vendors.', cta: 'See how it works', href: '/#how-it-works' },
+  { icon: 'M9 11l3 3L22 4|M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11', title: 'We own it start to finish', desc: 'From first call to final filing — LauncherDesk takes accountability for the outcome, not just the paperwork.', cta: 'See our process', href: '/#how-it-works' },
+  { icon: 'M12 2v20|M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', title: 'Transparent pricing', desc: 'No padded bundles. Every quote separates professional fee, government fee and taxes — shown clearly upfront.', cta: 'View pricing', href: '/pricing' },
+  { icon: 'M23 6l-9.5 9.5-5-5L1 18', title: 'Proactive reminders', desc: 'We track your deadlines and notify you before they become penalties. Nothing falls through the cracks.', cta: 'Explore compliance', href: '/solutions/compliance-management' },
 ]
 
 const VS_ROWS = [
@@ -1072,13 +1119,14 @@ export default function HomePage() {
                 </Link>
               </div>
               <div className="hp-trust-pills">
-                {['20+ Businesses Launched', '15+ Service Categories', 'One Point of Contact', 'Bengaluru-based'].map(t => (
+                {['15+ Service Categories', 'One Point of Contact', 'Bengaluru-based', 'MSME Registered'].map(t => (
                   <div key={t} className="hp-trust-pill">
                     <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></svg>
                     {t}
                   </div>
                 ))}
               </div>
+              <TrustBar />
             </div>
 
             {/* Hero right — animated platform ecosystem visual */}
@@ -1087,14 +1135,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ STATS STRIP ════════════════════════════════════ */}
+      {/* ═══ STATS STRIP ════════════════════════════════════
+          Only verified figures from data/company.js (COMPANY_METRICS) are
+          shown here — unverified counts (e.g. total businesses launched)
+          stay out until approved, per the site's trust-data-consistency rule. ═══ */}
       <section className="hp-stats">
         <div className="hp-stats-grid">
           {[
-            { num: '20+', label: 'Businesses launched across India' },
             { num: '15+', label: 'Service categories covered' },
             { num: '360°', label: 'Complete business solutions' },
             { num: '1', label: 'Single point of contact' },
+            { num: '🇮🇳', label: 'Made in India' },
           ].map(s => (
             <div key={s.num} className="hp-stats-item">
               <div className="hp-stats-num">{s.num}</div>
@@ -1150,9 +1201,13 @@ export default function HomePage() {
         )
       })()}
 
-      {/* ═══ RECENTLY PARTNERED ═══════════════════════════════ */}
+      {/* ═══ TRUSTED TECHNOLOGY & SERVICE PARTNERS ═══════════════════════════
+          Phase 4: this section lists actual technology/service PARTNERS
+          LauncherDesk works with — it is never presented as customer social
+          proof, and does not pad itself with "Coming Soon" filler cards
+          styled to look like real partners. ═══ */}
       <section className="hp-partners">
-        <div className="hp-partners-label">Recently Partnered</div>
+        <div className="hp-partners-label">Trusted Technology &amp; Service Partners</div>
         <div className="hp-partners-row">
           {[
             { name: 'Doqfy', category: 'CLM Software', img: '/doqfy-logo.png', href: '/market/category?cat=clm' },
@@ -1169,21 +1224,10 @@ export default function HomePage() {
               </div>
             </Link>
           ))}
-
-          {/* Demo placeholder cards for upcoming partners */}
-          {[1, 2, 3, 4].map(i => (
-            <div key={`soon-${i}`} className="hp-partners-card hp-partners-soon">
-              <div className="hp-partners-soon-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 8v4m0 4h.01M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z" /></svg>
-              </div>
-              <div className="hp-partners-info">
-                <div className="hp-partners-name">Coming Soon</div>
-                <div className="hp-partners-cat muted">New Category</div>
-              </div>
-            </div>
-          ))}
         </div>
-        <div className="hp-partners-more">Many more partners coming soon →</div>
+        <div className="hp-partners-more">
+          <Link to="/market" style={{ color: 'inherit', textDecoration: 'none' }}>More partner categories launching on the marketplace →</Link>
+        </div>
       </section>
 
       {/* ═══ SERVICES ═══════════════════════════════════════ */}
@@ -1283,6 +1327,18 @@ export default function HomePage() {
                   <div>
                     <h4>{f.title}</h4>
                     <p>{f.desc}</p>
+                    {f.href && (
+                      f.href.includes('#') ? (
+                        // Plain <a> for hash anchors: <Link> only changes the
+                        // route, it never scrolls to the fragment, so a
+                        // client-side nav to "/#how-it-works" would look
+                        // like the button does nothing (site-wide convention
+                        // — see Navbar's "Get Started" for the same pattern).
+                        <a href={f.href} className="hp-why-feat-link">{f.cta} →</a>
+                      ) : (
+                        <Link to={f.href} className="hp-why-feat-link">{f.cta} →</Link>
+                      )
+                    )}
                   </div>
                 </div>
               ))}
@@ -1314,8 +1370,14 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══ REAL BUSINESSES / TESTIMONIALS ══════════════════
+          Phase 6/7 — reads only from data/trust.js (REVIEWS, CASE_STUDIES),
+          which ship empty until the business team adds verified entries. ═══ */}
+      <CaseStudiesSection />
+      <TestimonialsSection />
+
       {/* ═══ LIFECYCLE ACCORDION ════════════════════════════ */}
-      <section className="lc2-section">
+      <section className="lc2-section" id="how-it-works">
         <div className="lc2-inner">
           <div className="lc2-left">
             <span className="eyebrow" style={{ color: 'var(--blue)' }}>Your business journey</span>
@@ -1344,11 +1406,59 @@ export default function HomePage() {
                     <div className="lc2-chips">
                       {s.chips.map(c => <Link key={c.l} to={c.h} className="lc2-chip">{c.l}</Link>)}
                     </div>
+                    {s.ctaLabel && (
+                      <div className="lc2-cta">
+                        <span>{s.ctaPrompt}</span>
+                        {s.ctaHref.includes('#') ? (
+                          <a href={s.ctaHref} className="lc2-cta-btn">
+                            {s.ctaLabel}
+                            <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                          </a>
+                        ) : (
+                          <Link to={s.ctaHref} className="lc2-cta-btn">
+                            {s.ctaLabel}
+                            <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                          </Link>
+                        )}
+                      </div>
+                    )}
                   </div>
                   <div className="lc2-prog"><div className="lc2-prog-bar" data-prog={s.id} /></div>
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ SERVICE FINDER / PERSONALISED ROADMAP ═══════════
+          Phase 10 — promotes the existing Service Finder as a major CTA
+          instead of a small link buried in the nav. No new logic: both
+          buttons route to the site's existing Service Finder and Ask Sneha. ═══ */}
+      <section className="hp-roadmap">
+        <div className="wrap">
+          <div className="hp-roadmap-card">
+            <div className="hp-roadmap-text">
+              <div className="hp-section-eyebrow" style={{ color: 'var(--blue)' }}>Service Finder</div>
+              <h2>Get Your Personalised Business Roadmap</h2>
+              <p>Answer a few quick questions and discover the services your business may need.</p>
+              <ul className="hp-roadmap-list">
+                <li>What you may need now</li>
+                <li>What you may need later</li>
+                <li>Recommended registrations</li>
+                <li>Compliance requirements</li>
+                <li>Technology and growth options</li>
+              </ul>
+            </div>
+            <div className="hp-roadmap-btns">
+              <a href="/services#finder" className="hp-roadmap-btn-primary" onClick={() => trackCta(CTA_EVENTS.buildRoadmap)}>
+                Build My Roadmap
+                <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              </a>
+              <button type="button" data-open-ai="true" className="hp-roadmap-btn-secondary" onClick={() => trackCta(CTA_EVENTS.askSneha)}>
+                Ask Sneha
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -1436,6 +1546,16 @@ export default function HomePage() {
               <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </Link>
           </div>
+          <ContextualCta
+            className="hp-faq-ctx-cta"
+            prompt="Still have questions?"
+            label="Ask Sneha"
+            askSneha
+            intent="low"
+            event={CTA_EVENTS.faqAskSneha}
+            secondaryLabel="Talk to an Expert"
+            secondaryTo="/company/contact"
+          />
         </div>
       </section>
 
@@ -1456,7 +1576,18 @@ export default function HomePage() {
                 </svg>
                 Book a consultation
               </Link>
+              <button type="button" data-open-ai="true" className="hp-cta-btn-ai">
+                Ask Sneha
+              </button>
             </div>
+            <div className="hp-cta-microcopy">
+              <span>Free initial guidance</span>
+              <span aria-hidden="true">·</span>
+              <span>No obligation</span>
+              <span aria-hidden="true">·</span>
+              <span>Transparent pricing</span>
+            </div>
+            <TrustBar className="hp-cta-trustbar" />
           </div>
         </div>
       </section>
