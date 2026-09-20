@@ -338,7 +338,7 @@ export default function ServicesIndex() {
             <h2>Not sure where to start?</h2>
             <p>Tell us about your business. We'll understand your requirement and guide you on the right starting point — no obligation.</p>
             <div className="row">
-              <a href="/company/contact" className="btn btn-light">Talk to an Expert</a>
+              <a href="/company/contact" className="btn btn-light">Talk to Our Expert</a>
               <button className="btn btn-ghost-d" data-open-ai="true">Ask Sneha</button>
             </div>
           </div>

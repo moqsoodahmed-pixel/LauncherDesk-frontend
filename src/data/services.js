@@ -12,7 +12,7 @@ export const SERVICES = {
     helpCard: { title: 'Need help deciding?', body: "Not sure if Pvt Ltd is right for you? Get a personalised recommendation." },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#benefits', label: 'Benefits' },
       { href: '#eligibility', label: 'Eligibility' },
       { href: '#documents', label: 'Documents' },
@@ -39,7 +39,7 @@ export const SERVICES = {
         extra: `<p>If you're a solo founder testing an idea, an <a href="/services/opc-registration" style="color:var(--blue-dark);font-weight:600">OPC or Proprietorship</a> may fit better — our AI or an expert can help you decide.</p>`
       },
       benefits: {
-        heading: 'Our Benefits',
+        heading: 'What we offer',
         items: [
           '<b>No minimum capital requirement</b> — start your business with any amount, as there is no minimum investment required to register a Private Limited Company.',
           '<b>Separate legal entity</b> — the company can own property, enter into contracts, and face legal proceedings by itself, independent of its owners.',
@@ -208,13 +208,13 @@ export const SERVICES = {
     priceCard: { label: 'Price', price: '₹8,500 + GST', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" }, { href: '#benefits', label: 'Benefits' },
       { href: '#eligibility', label: 'Prerequisites' }, { href: '#documents', label: 'Documents' }, { href: '#deliverables', label: 'Deliverables' },
       { href: '#process', label: 'Process' }, { href: '#whyus', label: 'Why LauncherDesk' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>A Limited Liability Partnership (LLP) is another popular business structure in India, combining the benefits of both a company and a partnership firm. With the flexibility of a partnership, partners in an LLP enjoy limited liability just like shareholders in a Private Limited Company. LLPs in India are recognised under the Limited Liability Partnership Act, 2008.</p><p>LauncherDesk handles DSC, DPIN, name approval, drafting the LLP Agreement, and filing incorporation.</p>` },
-      who: { heading: "Who it's for", items: ['Two or more partners running a services or professional firm', 'Businesses that want limited liability but don\'t plan to raise VC funding', 'Founders who want lower annual compliance than a Pvt Ltd company'] },
+      who: { heading: "Who we serve", items: ['Two or more partners running a services or professional firm', 'Businesses that want limited liability but don\'t plan to raise VC funding', 'Founders who want lower annual compliance than a Pvt Ltd company'] },
       benefits: {
         heading: 'Benefits of Limited Liability Partnership',
         items: [
@@ -298,13 +298,13 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: '₹4,500*', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" }, { href: '#benefits', label: 'Benefits' },
       { href: '#eligibility', label: 'Eligibility' }, { href: '#documents', label: 'Documents' }, { href: '#deliverables', label: 'Deliverables' },
       { href: '#process', label: 'Process' }, { href: '#whyus', label: 'Why LauncherDesk' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>OPC or One Person Company is another business structure registered under the Companies Act, 2013, introduced by the Government. As the name suggests, a One Person Company is established by a single person. This structure offers the benefits of both a Sole Proprietorship and a well-structured Company, and was introduced to promote entrepreneurship and Micro, Small &amp; Medium Enterprises (MSMEs) in India.</p><p>LauncherDesk manages the nominee appointment, DSC, name approval and incorporation filing.</p>` },
-      who: { heading: "Who it's for", items: ['Solo founders who want limited liability from day one', 'Freelancers and consultants formalising into a company', 'Founders not yet ready to bring in co-founders or investors'] },
+      who: { heading: "Who we serve", items: ['Solo founders who want limited liability from day one', 'Freelancers and consultants formalising into a company', 'Founders not yet ready to bring in co-founders or investors'] },
       benefits: {
         heading: 'Benefits of One Person Company Registration',
         items: [
@@ -388,13 +388,13 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: 'Custom quote', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" }, { href: '#benefits', label: 'Benefits' },
       { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>A Partnership Firm is governed by the Indian Partnership Act, 1932. It's quick to set up and suits small, trust-based businesses where partners are comfortable with unlimited personal liability in exchange for simplicity.</p><p>LauncherDesk drafts your Partnership Deed and handles registration with the Registrar of Firms.</p>` },
-      who: { heading: "Who it's for", items: ['Small, owner-operated businesses with two or more partners', 'Family businesses and local trades', 'Founders who want the simplest, lowest-cost registration route'] },
-      benefits: { heading: 'Our Benefits', items: ['<b>Fast and low-cost</b> to set up compared to a company or LLP.', '<b>Minimal ongoing compliance</b> — no mandatory annual filings with the MCA.', '<b>Flexible</b> — partners define terms freely in the Partnership Deed.'] },
+      who: { heading: "Who we serve", items: ['Small, owner-operated businesses with two or more partners', 'Family businesses and local trades', 'Founders who want the simplest, lowest-cost registration route'] },
+      benefits: { heading: 'What we offer', items: ['<b>Fast and low-cost</b> to set up compared to a company or LLP.', '<b>Minimal ongoing compliance</b> — no mandatory annual filings with the MCA.', '<b>Flexible</b> — partners define terms freely in the Partnership Deed.'] },
       documents: { heading: 'Documents / information required', items: ['PAN and Aadhaar of all partners', 'Identity and address proof for each partner', 'Proof of business address', 'Partnership Deed on stamp paper'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -437,7 +437,7 @@ export const SERVICES = {
     priceCard: { label: 'Price', price: '₹499 + GST', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" }, { href: '#benefits', label: 'Benefits' },
       { href: '#whyregister', label: 'Why register' }, { href: '#classification', label: 'Classification' }, { href: '#included', label: 'How we help' },
       { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
@@ -509,7 +509,7 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: 'Custom quote', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" }, { href: '#benefits', label: 'Benefits' },
       { href: '#whyregister', label: 'Why register' }, { href: '#included', label: 'How we help' },
       { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
@@ -680,13 +680,13 @@ export const SERVICES = {
     priceCard: { label: 'Price', price: '₹8,000 + GST', sub: '' },
     helpCard: { title: 'Got an objection notice?', body: 'Share the examination report with us and we will assess your case.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>A trademark objection is raised by the Examiner when they find issues with your application — such as similarity to existing marks, lack of distinctiveness or incorrect classification. You have 30 days to file a response. A well-crafted response backed by evidence significantly increases your chances of acceptance.</p><p>LauncherDesk reviews the objection, drafts a legally sound response and files it on your behalf — so your brand stays protected.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses that received a trademark examination report with objections',
           'Applicants whose trademark was marked as "Objected" on the IP India portal',
           'Brands whose marks were challenged for similarity or descriptiveness',
@@ -731,14 +731,14 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: 'Custom quote', sub: 'Depends on requirement' },
     helpCard: { title: 'Not sure if your idea is patentable?', body: 'Share your invention concept and we will assess patentability.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>A patent gives you exclusive rights to your invention for 20 years — preventing others from making, using or selling it without your permission. In India, patents are granted by the Indian Patent Office under the Patents Act, 1970.</p><p>LauncherDesk works with registered patent agents to handle the entire process — from prior art search and drafting to filing and prosecution.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Inventors and innovators with a new product, process or technology',
           'Startups building proprietary technology or algorithms',
           'Manufacturers with unique production methods or designs',
@@ -794,14 +794,14 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: 'Custom quote', sub: 'Depends on requirement' },
     helpCard: { title: 'Need to protect your creative work?', body: 'Tell us what you have created and we will guide you.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Copyright is an automatic right that comes into existence when you create an original work — but registration provides legal evidence of ownership that is essential for enforcement. In India, copyright is registered under the Copyright Act, 1957.</p><p>LauncherDesk handles the full copyright registration process including documentation, filing and follow-up with the Copyright Office.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Authors, writers and content creators',
           'Musicians, composers and filmmakers',
           'Software developers and SaaS companies',
@@ -858,14 +858,14 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: '₹1,999*', sub: 'Per class + Govt. fees' },
     helpCard: { title: 'Have multiple trademarks to manage?', body: 'Tell us about your portfolio and we will create a management plan.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Filing a trademark or patent is only the beginning. IP assets need active management — timely renewals, infringement monitoring, opposition responses and strategic portfolio decisions. Missing a renewal deadline can void your protection entirely.</p><p>LauncherDesk provides ongoing IP management for businesses with one or more registered trademarks, patents or copyrights — so nothing slips through.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses with registered trademarks that need renewal tracking',
           'Companies with multiple IP assets across different classes or jurisdictions',
           'Brands experiencing infringement or counterfeit issues',
@@ -921,13 +921,13 @@ export const SERVICES = {
     priceCard: { label: 'Price', price: '₹15,000 + GST', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" }, { href: '#benefits', label: 'Benefits' },
       { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>Registrar of Companies (ROC) compliance covers the mandatory annual filings every Private Limited Company and LLP must complete — annual returns, financial statements, board resolutions and more. Penalties for missing these accrue per day, so proactive tracking matters.</p>` },
-      who: { heading: "Who it's for", items: ['Every registered Private Limited Company', 'Every registered LLP', "Founders who've been managing this manually and want it off their plate"] },
-      benefits: { heading: 'Our Benefits', items: ["<b>Penalty-free</b> — nothing gets missed once it's on our tracker.", '<b>Good standing</b> — keeps your company eligible for loans, tenders and funding rounds.', '<b>One less thing to remember</b> — we notify you ahead of every deadline.'] },
+      who: { heading: "Who we serve", items: ['Every registered Private Limited Company', 'Every registered LLP', "Founders who've been managing this manually and want it off their plate"] },
+      benefits: { heading: 'What we offer', items: ["<b>Penalty-free</b> — nothing gets missed once it's on our tracker.", '<b>Good standing</b> — keeps your company eligible for loans, tenders and funding rounds.', '<b>One less thing to remember</b> — we notify you ahead of every deadline.'] },
       documents: { heading: 'Documents / information required', items: ['Financial statements for the year', 'Board resolutions and meeting minutes', 'Basic company/LLP registration details', 'Digital Signature Certificate for filing'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -969,13 +969,13 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: 'Custom quote', sub: 'Depends on requirement' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" }, { href: '#benefits', label: 'Benefits' },
       { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>LauncherDesk's accounting service keeps your books current every month — not scrambled together once a year. That means your GST returns, tax filings and ROC compliance are always backed by accurate numbers, and you can pull a financial snapshot whenever you need one.</p>` },
-      who: { heading: "Who it's for", items: ['Any registered business that needs monthly bookkeeping', 'Founders who currently manage accounts in spreadsheets or not at all', 'Businesses preparing for fundraising, where clean books matter'] },
-      benefits: { heading: 'Our Benefits', items: ['<b>Always tax-ready</b> — books stay current, not reconstructed at deadline time.', '<b>Real visibility</b> — know your numbers, not just guess at them.', '<b>Audit-ready</b> — organised records save time and stress at year-end.'] },
+      who: { heading: "Who we serve", items: ['Any registered business that needs monthly bookkeeping', 'Founders who currently manage accounts in spreadsheets or not at all', 'Businesses preparing for fundraising, where clean books matter'] },
+      benefits: { heading: 'What we offer', items: ['<b>Always tax-ready</b> — books stay current, not reconstructed at deadline time.', '<b>Real visibility</b> — know your numbers, not just guess at them.', '<b>Audit-ready</b> — organised records save time and stress at year-end.'] },
       documents: { heading: 'Documents / information required', items: ['Bank statements for the period', 'Sales and purchase invoices', 'Expense receipts', 'Payroll records, if applicable'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -1017,13 +1017,13 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: 'Custom quote', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" }, { href: '#benefits', label: 'Benefits' },
       { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>Payroll isn't just paying salaries — it's TDS deduction, PF and ESI contributions, professional tax and payslip generation, all on strict monthly deadlines. LauncherDesk runs this end to end so employment compliance never becomes a liability.</p>` },
-      who: { heading: "Who it's for", items: ['Businesses making their first hire', 'Growing teams that have outgrown manual salary spreadsheets', 'Founders who want statutory compliance handled correctly from day one'] },
-      benefits: { heading: 'Our Benefits', items: ['<b>Accurate, on-time salaries</b> every month.', '<b>Statutory compliance</b> — PF, ESI, TDS and professional tax handled correctly.', '<b>Payslips & records</b> generated automatically for every employee.'] },
+      who: { heading: "Who we serve", items: ['Businesses making their first hire', 'Growing teams that have outgrown manual salary spreadsheets', 'Founders who want statutory compliance handled correctly from day one'] },
+      benefits: { heading: 'What we offer', items: ['<b>Accurate, on-time salaries</b> every month.', '<b>Statutory compliance</b> — PF, ESI, TDS and professional tax handled correctly.', '<b>Payslips & records</b> generated automatically for every employee.'] },
       documents: { heading: 'Documents / information required', items: ['Employee master data (salary structure, PAN, bank details)', 'Attendance and leave records', 'PF/ESI registration details, if already registered', 'Prior payroll history, if switching providers'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -1065,13 +1065,13 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: 'Custom quote', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" }, { href: '#benefits', label: 'Benefits' },
       { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>Business automation covers the operational backbone most growing businesses eventually need: a proper website, a CRM to track leads and customers, and automated workflows that remove repetitive manual work — invoicing, follow-ups, reporting and more.</p>` },
-      who: { heading: "Who it's for", items: ['Businesses still running operations out of spreadsheets and WhatsApp', 'Teams spending too much time on repetitive manual tasks', 'Founders ready to formalise sales, support or operations workflows'] },
-      benefits: { heading: 'Our Benefits', items: ['<b>Time back</b> — automate the repetitive work eating into your week.', '<b>Fewer dropped leads</b> — a CRM means nothing falls through the cracks.', '<b>Scalable systems</b> — built to handle growth, not just today\'s volume.'] },
+      who: { heading: "Who we serve", items: ['Businesses still running operations out of spreadsheets and WhatsApp', 'Teams spending too much time on repetitive manual tasks', 'Founders ready to formalise sales, support or operations workflows'] },
+      benefits: { heading: 'What we offer', items: ['<b>Time back</b> — automate the repetitive work eating into your week.', '<b>Fewer dropped leads</b> — a CRM means nothing falls through the cracks.', '<b>Scalable systems</b> — built to handle growth, not just today\'s volume.'] },
       documents: { heading: 'Documents / information required', items: ['Overview of your current tools and processes', 'Access to relevant existing systems, where applicable', 'Business goals and priority workflows to automate'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -1113,13 +1113,13 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: 'Custom quote', sub: '' },
     helpCard: { title: 'Need help deciding?', body: 'Get a personalised recommendation based on your business.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" }, { href: '#benefits', label: 'Benefits' },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" }, { href: '#benefits', label: 'Benefits' },
       { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: `<p>Once the legal and compliance foundation is in place, growth is the next problem. Our digital marketing service covers website design, brand identity and demand generation — scoped to where your business actually is, not a one-size-fits-all package.</p>` },
-      who: { heading: "Who it's for", items: ['New businesses that need a website and brand identity from scratch', 'Businesses with a website that isn\'t generating leads', 'Founders who want marketing handled by people who also understand their compliance stage'] },
-      benefits: { heading: 'Our Benefits', items: ['<b>A website that converts</b>, not just exists.', '<b>Consistent branding</b> across your website, social and marketing materials.', '<b>Lead generation</b> — campaigns built around your actual growth goals.'] },
+      who: { heading: "Who we serve", items: ['New businesses that need a website and brand identity from scratch', 'Businesses with a website that isn\'t generating leads', 'Founders who want marketing handled by people who also understand their compliance stage'] },
+      benefits: { heading: 'What we offer', items: ['<b>A website that converts</b>, not just exists.', '<b>Consistent branding</b> across your website, social and marketing materials.', '<b>Lead generation</b> — campaigns built around your actual growth goals.'] },
       documents: { heading: 'Documents / information required', items: ['Any existing brand assets (logo, colours, prior materials)', 'Target customer and market details', 'Current website or marketing channels, if any'] },
       process: {
         heading: 'Step-by-step process', steps: [
@@ -1161,14 +1161,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly retainer from', price: '₹14,999/month', sub: '+ taxes' },
     helpCard: { title: 'Want to rank higher on Google?', body: 'Share your website and target keywords — we will audit and recommend.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Search Engine Optimisation (SEO) is the process of improving your website\'s visibility on Google and other search engines. When done right, it becomes the most cost-effective customer acquisition channel — bringing in qualified leads who are actively searching for what you sell.</p><p>LauncherDesk provides technical SEO, on-page optimisation, content strategy and link building tailored for Indian businesses.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses with a website that isn\'t generating enough organic traffic',
           'Companies in competitive markets that need to outrank competitors',
           'E-commerce stores that want organic product visibility',
@@ -1226,14 +1226,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly retainer from', price: '₹12,999/month', sub: '+ taxes' },
     helpCard: { title: 'Need a content strategy?', body: 'Tell us about your business and target audience — we will propose a plan.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Content marketing is the practice of creating and distributing valuable, relevant content to attract and retain your target audience. It builds brand authority, improves SEO and generates leads over time — at a fraction of the cost of paid advertising.</p><p>LauncherDesk creates content strategies and executes them consistently — from keyword-driven blog posts to industry thought leadership.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'B2B companies that need to build thought leadership',
           'Startups that want to educate their market',
           'E-commerce brands that need product-focused content',
@@ -1288,14 +1288,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly retainer from', price: '₹7,999/month', sub: '+ tool costs & taxes' },
     helpCard: { title: 'Want to start email marketing?', body: 'Tell us your audience size and goals — we will recommend the right setup.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Email marketing remains one of the highest-ROI channels for businesses. It lets you communicate directly with leads and customers — promoting offers, sharing content, nurturing relationships and driving repeat purchases.</p><p>LauncherDesk handles the full stack: platform setup, template design, list management, automation flows and campaign execution.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'E-commerce businesses that need to drive repeat purchases',
           'B2B companies nurturing leads through long sales cycles',
           'Service businesses communicating with existing clients',
@@ -1352,7 +1352,7 @@ export const SERVICES = {
     helpCard: { title: 'Not sure what type of site you need?', body: 'Tell us about your business and we will recommend the right approach.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#types', label: 'Types of websites' },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
@@ -1362,7 +1362,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>A professional website is the foundation of your business's online presence. LauncherDesk delivers mobile-first, fast-loading websites built for real business goals — enquiries, leads and conversions — not just visual design.</p><p>We handle everything from content structure and design to development, SEO setup and launch — so you can focus on running your business.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Newly registered companies that need a business website',
           'Startups launching a product or service and needing a credible online presence',
           'Small businesses with an outdated or non-existent website',
@@ -1442,14 +1442,14 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: '₹4,999 + GST', sub: '' },
     helpCard: { title: 'Not sure if static is right for you?', body: 'Static sites work best when your content doesn\'t change frequently.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>A static website is a fixed-content site that loads extremely fast and costs very little to host. It doesn\'t require a database or CMS — every page is pre-built and served directly to the visitor. This makes it ideal for businesses that need a professional online presence without frequent content updates.</p><p>LauncherDesk builds static websites that are mobile-first, SEO-optimised and designed for conversion — not just aesthetics.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Consultants, freelancers and professionals who need a credibility-building website',
           'Service businesses with a fixed set of offerings',
           'New businesses that need an online presence quickly',
@@ -1507,14 +1507,14 @@ export const SERVICES = {
     priceCard: { label: 'Starts from', price: '₹25,000 + GST', sub: '' },
     helpCard: { title: 'Need ongoing content updates?', body: 'Dynamic is the right choice if you blog, add case studies or update offerings regularly.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>A dynamic website is powered by a Content Management System (CMS) like WordPress or a custom-built admin panel. This means you can log in, edit text, add new pages, publish blog posts and upload images — all without developer help.</p><p>LauncherDesk builds dynamic websites that are fast, mobile-first, SEO-friendly and easy for you to manage. We set up the CMS, design the front end, and train you to use it.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses that publish blogs, news or case studies regularly',
           'Companies with growing service catalogues or portfolios',
           'Teams that need to update content without waiting for a developer',
@@ -1575,7 +1575,7 @@ export const SERVICES = {
     helpCard: { title: 'Selling on Amazon or Flipkart too?', body: 'We can build your own storefront alongside marketplace presence.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -1584,7 +1584,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>An e-commerce website lets you sell products directly to customers online — with full control over your brand, pricing and customer relationship. LauncherDesk builds e-commerce stores that are fast, mobile-first and connected to Indian payment gateways.</p><p>We handle the entire process: product structure, design, development, payment gateway integration and launch — including GST-compliant invoice setup where required.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses wanting to sell products directly online',
           'D2C brands looking for their own storefront beyond Amazon and Flipkart',
           'Physical retailers adding an online sales channel',
@@ -1645,7 +1645,7 @@ export const SERVICES = {
     helpCard: { title: 'Already have a logo?', body: 'We can refresh and extend an existing identity, or start from scratch.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -1654,7 +1654,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Your brand identity is how your business looks and feels to the world — logo, colours, typography and the visual language across all touchpoints. A strong brand builds credibility, trust and recognition from day one.</p><p>LauncherDesk delivers complete brand identity packages: from the logo concept through to colour palette, typography, brand guide and key collateral.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Newly registered businesses that need a professional brand identity',
           'Startups with a name but no visual brand',
           'Existing businesses with an outdated logo or inconsistent branding',
@@ -1714,7 +1714,7 @@ export const SERVICES = {
     helpCard: { title: 'Still using Gmail for business?', body: 'A professional email builds trust with clients and suppliers immediately.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -1723,7 +1723,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>A professional business email — name@yourbusiness.com — is one of the simplest credibility signals for any company. Paired with reliable hosting, it forms the foundation of your online presence.</p><p>LauncherDesk sets up your domain, configures Google Workspace or equivalent business email, and ensures your hosting is correctly configured and connected.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Newly registered businesses that need professional email addresses',
           'Founders who want to stop using personal Gmail accounts for business',
           'Companies setting up a new website and needing hosting',
@@ -1782,7 +1782,7 @@ export const SERVICES = {
     helpCard: { title: 'Have a software idea?', body: 'Start with a scoping conversation — no commitment required.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -1791,7 +1791,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Custom software is the difference between a business that runs on workarounds and one that runs on systems built for it. Whether you need a customer portal, an internal operations tool or a full SaaS platform, LauncherDesk coordinates the design, development and delivery.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Startups building a software product or SaaS platform',
           'Businesses that need a custom internal tool, portal or application',
           'Founders who have a software idea but no technical co-founder',
@@ -1852,7 +1852,7 @@ export const SERVICES = {
     helpCard: { title: 'Not sure what you need yet?', body: 'Tell us your team size and current process — we\'ll recommend the right setup.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -1861,7 +1861,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>An HRMS (HR Management System) brings employee records, attendance, leave and payroll into one platform — replacing scattered spreadsheets, chat-group approvals and manual salary calculations. As a team grows past a handful of people, HR run informally starts costing real time every month and creates compliance risk around PF, ESI and TDS.</p><p>LauncherDesk sets up and configures an HRMS suited to your team size and processes — employee onboarding, attendance and leave policies, payroll rules and a self-service portal — so HR runs on a system rather than on memory.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Startups and SMEs moving off spreadsheets for HR and payroll',
           'Businesses with 10+ employees where manual attendance/leave tracking has become unreliable',
           'Companies that want employees to self-serve payslips, leave requests and documents',
@@ -1923,8 +1923,8 @@ export const SERVICES = {
     helpCard: { title: 'Not sure if you qualify?', body: 'We check eligibility before you apply — free assessment.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
-      { href: '#benefits', label: 'Our Benefits' },
+      { href: '#who', label: "Who we serve" },
+      { href: '#benefits', label: 'What we offer' },
       { href: '#whyregister', label: 'Why register' },
       { href: '#included', label: "What's included" },
       { href: '#documents', label: 'Documents' },
@@ -2012,7 +2012,7 @@ export const SERVICES = {
     helpCard: { title: 'Not sure which ISO standard you need?', body: 'We help you identify the right standard for your business and sector.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#standards', label: 'Standards we support' },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
@@ -2022,7 +2022,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>ISO certification demonstrates that your business meets internationally recognised standards for quality, security, environmental management or other operational areas. It is often required for enterprise contracts, government tenders and international business.</p><p>LauncherDesk coordinates the documentation, gap analysis, pre-audit preparation and certification body engagement — so you achieve certification with clear guidance throughout.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses that need ISO certification for B2B contracts or government tenders',
           'Companies wanting to demonstrate quality management to enterprise clients',
           'Businesses in manufacturing, technology, healthcare or services sectors',
@@ -2088,7 +2088,7 @@ export const SERVICES = {
     helpCard: { title: 'Missed a previous filing?', body: 'We can help you file backlogged returns and get compliant.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -2097,7 +2097,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Every registered company and LLP in India must file an annual income tax return — regardless of whether the business made a profit. Late filing attracts penalties and interest; missing it creates problems for future compliance and fundraising.</p><p>LauncherDesk coordinates CA-reviewed income tax preparation and filing, including tax computation, TDS reconciliation and form selection.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Private Limited Companies, LLPs and OPCs that need annual ITR filing',
           'Businesses that want a CA to prepare and file their income tax return',
           'Founders who want basic tax planning guidance alongside their ITR',
@@ -2157,7 +2157,7 @@ export const SERVICES = {
     helpCard: { title: 'Need a specific agreement?', body: 'Tell us what you need — we can coordinate most standard business documents.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#documents', label: 'Documents we cover' },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -2166,7 +2166,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Running a business without proper legal documentation creates risk — from unprotected intellectual property to disputed agreements and employee disputes. LauncherDesk coordinates legal document drafting and review through qualified professionals, covering the agreements most businesses need at each stage of growth.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'New companies needing founder and shareholder agreements',
           'Businesses onboarding employees and needing employment contracts',
           'Startups raising funding who need investment and convertible note agreements',
@@ -2225,7 +2225,7 @@ export const SERVICES = {
     helpCard: { title: 'Using the free WhatsApp Business App?', body: 'The API unlocks bulk messaging, automation and CRM integration the app cannot do.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -2234,7 +2234,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>The WhatsApp Business API is the official, scalable version of WhatsApp for businesses — allowing you to send transactional messages, marketing broadcasts, automated notifications and customer support messages to thousands of contacts, integrated with your CRM or helpdesk.</p><p>LauncherDesk handles the Meta Business Manager setup, API account verification, phone number registration and basic automation configuration.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses that want to send transactional or marketing messages via WhatsApp at scale',
           'E-commerce businesses that want to send order updates, shipping notifications and promotions',
           'Startups that want to automate customer communication and lead follow-up on WhatsApp',
@@ -2295,7 +2295,7 @@ export const SERVICES = {
     helpCard: { title: 'Using spreadsheets to track leads?', body: 'A properly set-up CRM pays for itself quickly in recovered leads.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -2304,7 +2304,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>A CRM (Customer Relationship Management) system is the backbone of any business that generates leads and needs to convert them into customers. Without a CRM, leads fall through the cracks, follow-ups are missed and there is no visibility on sales performance.</p><p>LauncherDesk sets up the right CRM for your business size and sales process — configured, populated with your leads and integrated with your website and WhatsApp.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses receiving leads but losing track of follow-ups and conversions',
           'Sales teams that want a structured pipeline management system',
           'Startups moving from spreadsheets to a proper CRM for the first time',
@@ -2365,7 +2365,7 @@ export const SERVICES = {
     helpCard: { title: 'Not sure which platforms to be on?', body: 'We help you identify the right platforms for your business and audience.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#platforms', label: 'Platforms' },
       { href: '#process', label: 'Process' },
@@ -2375,7 +2375,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Social media is where your potential customers spend time — and a professional, consistent presence builds brand trust before they ever visit your website. LauncherDesk manages your social media end to end: strategy, content creation, scheduling, posting and basic community management.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses that have social media accounts but no consistent content strategy',
           'Startups that want to build brand awareness on Instagram or LinkedIn',
           'Founders who want to outsource social media to a team that understands business',
@@ -2441,7 +2441,7 @@ export const SERVICES = {
     helpCard: { title: 'Running Google Ads yourself?', body: 'Poorly managed campaigns spend budget without results — let us take it over.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -2450,7 +2450,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Google Ads puts your business at the top of search results when potential customers are actively looking for what you offer. Unlike SEO, results are immediate — but poorly managed campaigns can burn budget without delivering leads.</p><p>LauncherDesk sets up, manages and continuously optimises your Google Ads campaigns — targeting the right keywords, writing effective ads and making data-driven adjustments each month.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses that want immediate visibility on Google for their services',
           'Startups that want to test a market quickly without waiting for SEO results',
           'Companies running Google Ads that are not performing and want expert management',
@@ -2510,7 +2510,7 @@ export const SERVICES = {
     helpCard: { title: 'Not sure which UAE free zone is right?', body: 'We recommend based on your business activity, budget and visa needs.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -2519,7 +2519,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>The UAE is one of the most popular international destinations for Indian entrepreneurs — offering 100% foreign ownership in free zones, strategic access to Middle East and global markets, and a well-established business infrastructure.</p><p>LauncherDesk coordinates UAE company setup from India — free zone or mainland, trade licence, visa guidance and bank account opening support — through our UAE partner network.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Indian entrepreneurs and businesses that want a UAE presence',
           'Founders who want to access Middle East and global markets through a UAE entity',
           'Businesses in e-commerce, consulting, technology or trading looking for a UAE base',
@@ -2579,7 +2579,7 @@ export const SERVICES = {
     helpCard: { title: 'Preparing for an investor meeting?', body: 'A well-prepared pitch deck and data room makes the difference.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -2588,7 +2588,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Raising funding requires more than a great idea — investors expect a structured pitch deck, credible financial projections, a clean cap table and an organised data room. Poorly prepared fundraising documentation signals inexperience and slows down deals.</p><p>LauncherDesk coordinates investor-ready fundraising documentation through experienced professionals who understand what early-stage investors look for.</p><p><strong>Disclaimer:</strong> LauncherDesk does not provide SEBI-regulated investment banking or securities advisory services. This service covers documentation and preparation support only. Fundraising outcomes and investor decisions are outside LauncherDesk's control.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Startups raising their first angel round or seed funding',
           'Founders who need a professional pitch deck and financial model for investor conversations',
           'Companies preparing for VC conversations and needing a proper data room',
@@ -2647,7 +2647,7 @@ export const SERVICES = {
     helpCard: { title: 'Facing a big business decision?', body: 'A structured consultation helps you think it through with experienced support.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -2656,7 +2656,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>Every founder hits moments where an outside perspective is more valuable than another internal meeting — a fundraising decision, a new market entry, an operational problem that keeps recurring. LauncherDesk's business consulting service gives you structured thinking time with experienced advisors who understand the Indian startup and SME environment.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Founders who want a structured review of their business and honest advice',
           'Small businesses looking for a growth strategy or operational improvement plan',
           'Startups preparing for fundraising, expansion or a major business decision',
@@ -2715,7 +2715,7 @@ export const SERVICES = {
     helpCard: { title: 'Have a mobile app idea?', body: 'Start with a scoping conversation — we help you understand what is actually needed.' },
     toc: [
       { href: '#overview', label: 'Overview' },
-      { href: '#who', label: "Who it's for" },
+      { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" },
       { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' },
@@ -2724,7 +2724,7 @@ export const SERVICES = {
     sections: {
       overview: { heading: 'Overview', content: `<p>A well-built mobile application can be the difference between a business that is hard to reach and one that is always in your customer's pocket. LauncherDesk coordinates mobile app development — from requirement scoping and UI design through to development, testing and App Store/Play Store submission.</p>` },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses that need a customer-facing mobile application',
           'Startups building an app-first product or service',
           'Companies that need an internal mobile tool for their team or field staff',
@@ -2785,14 +2785,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly retainer from', price: '₹18,999/month', sub: '+ taxes' },
     helpCard: { title: 'Want to appear in AI search?', body: 'Share your website URL and we will audit your AI search visibility.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Artificial intelligence is changing how people search for information. Google\'s Search Generative Experience (SGE), Bing Copilot and ChatGPT now answer questions directly — and they cite sources. If your website isn\'t structured to be cited by AI, you\'re invisible to the next generation of search.</p><p>LauncherDesk\'s AI Search Optimization service restructures your content, technical setup and authority signals so AI search engines choose your website as a trusted source.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses whose customers use AI assistants to research products and services',
           'Companies in competitive niches where traditional SEO is saturated',
           'B2B brands that want to appear when buyers research solutions',
@@ -2850,14 +2850,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly retainer from', price: '₹22,999/month', sub: '+ taxes' },
     helpCard: { title: 'Ask an AI about your brand', body: 'Test it yourself — ask ChatGPT about your service category. If you don\'t appear, we can fix that.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Large Language Models (LLMs) like ChatGPT, Claude and Gemini are trained on web data and increasingly used as recommendation engines. When someone asks "what is the best company registration service in India?" — LLMs generate an answer. Your goal is to be in that answer.</p><p>LauncherDesk builds the citation footprint, authority signals and brand mentions across the web that LLMs use to identify and recommend businesses.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses in service industries where buyers use AI for recommendations',
           'B2B companies where decision-makers research vendors via AI assistants',
           'Brands wanting to build AI-era authority ahead of competitors',
@@ -2915,14 +2915,14 @@ export const SERVICES = {
     priceCard: { label: 'One-time audit from', price: '₹12,999', sub: '+ taxes' },
     helpCard: { title: 'Not sure if your site has issues?', body: 'Share your URL and we will run a free mini-audit within 24 hours.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Technical SEO is the foundation that makes everything else work. You can have the best content in the world, but if Google can\'t crawl your pages, your site loads slowly, or you have duplicate content issues — none of that content will rank.</p><p>LauncherDesk conducts comprehensive technical SEO audits covering over 150 checkpoints and delivers a prioritized action plan your development team can execute immediately.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses whose SEO results have plateaued despite good content',
           'Companies that recently launched or redesigned a website',
           'E-commerce stores with large product catalogues and indexation issues',
@@ -2983,14 +2983,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly retainer from', price: '₹16,999/month', sub: '+ taxes' },
     helpCard: { title: 'Where are your customers?', body: 'Tell us your target locations and we will map an SEO strategy to reach them.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Local SEO helps businesses appear in location-based searches — "CA firm in Koramangala" or "company registration in Bangalore". International SEO expands your presence to target customers across cities, states or countries.</p><p>LauncherDesk builds and executes both local and international SEO strategies — from Google Business Profile management to multi-language, multi-region site structures.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Service businesses targeting customers in specific cities or areas',
           'Retail and restaurant businesses that depend on local discovery',
           'Companies expanding from one city to multiple cities across India',
@@ -3052,14 +3052,14 @@ export const SERVICES = {
     priceCard: { label: 'Management fee from', price: '₹14,999/month', sub: '+ ad spend + taxes' },
     helpCard: { title: 'Ready to advertise on Meta?', body: 'Share your business goals and budget — we will propose a campaign structure.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>With over 450 million users in India, Facebook and Instagram are among the most powerful advertising platforms available to Indian businesses. Meta\'s advertising platform allows precise targeting by interest, behavior, location, demographics and lookalike audiences.</p><p>LauncherDesk manages your Meta Ads campaigns end-to-end — from creative strategy and audience building to campaign optimization and monthly reporting.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'B2C businesses looking to generate leads and sales',
           'E-commerce brands wanting to drive product sales and retarget visitors',
           'Service businesses targeting specific demographics in specific cities',
@@ -3119,14 +3119,14 @@ export const SERVICES = {
     priceCard: { label: 'Management fee from', price: '₹18,999/month', sub: '+ ad spend + taxes' },
     helpCard: { title: 'Targeting B2B decision-makers?', body: 'Tell us your ICP — we will show you exactly how to reach them on LinkedIn.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>LinkedIn is the only platform where you can target professionals specifically by job title, company size, industry and seniority. For B2B businesses, this precision targeting makes LinkedIn the highest-quality lead generation channel — even if costs per click are higher than other platforms.</p><p>LauncherDesk manages LinkedIn ad campaigns with a focus on cost-per-lead efficiency — from sponsored content and lead gen forms to InMail and retargeting campaigns.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'B2B software and SaaS companies targeting businesses in India',
           'Professional services firms (CA, legal, consulting, HR) targeting companies',
           'IT services and outsourcing companies reaching decision-makers',
@@ -3185,14 +3185,14 @@ export const SERVICES = {
     priceCard: { label: 'Management fee from', price: '₹12,999/month', sub: '+ ad spend + taxes' },
     helpCard: { title: 'Have a video ready to promote?', body: 'Share it and we will set up a YouTube campaign targeting your ideal audience.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>YouTube is India\'s largest video platform and the second largest search engine globally. Video advertising on YouTube allows you to reach highly targeted audiences — by interest, search behavior, demographics and even competitor channels.</p><p>LauncherDesk manages YouTube advertising campaigns across all formats — skippable in-stream, non-skippable, bumper ads and YouTube Shorts — with full setup, optimization and reporting.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses with video content ready to promote',
           'Brands wanting to build awareness at lower CPMs than television',
           'E-commerce companies showcasing products through video demos',
@@ -3252,14 +3252,14 @@ export const SERVICES = {
     priceCard: { label: 'Management fee from', price: '₹10,999/month', sub: '+ ad spend + taxes' },
     helpCard: { title: 'Losing visitors who don\'t convert?', body: 'We set up remarketing campaigns that follow up with warm prospects across platforms.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>The average website converts only 2–3% of visitors. Remarketing lets you re-engage the other 97% — people who have already visited your website, viewed a product, or engaged with your ads — with targeted messages designed to bring them back and convert.</p><p>LauncherDesk sets up and manages remarketing campaigns across Google Display, Meta, LinkedIn and YouTube — with audience segmentation, creative tailored to each stage and frequency capping to avoid ad fatigue.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Any business running paid or organic traffic to their website',
           'E-commerce stores with cart abandonment issues',
           'Service businesses with long consideration cycles',
@@ -3320,14 +3320,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly retainer from', price: '₹11,999/month', sub: '+ taxes' },
     helpCard: { title: 'Inconsistent posting?', body: 'We handle your entire content calendar end-to-end. Tell us your platforms.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Consistent social media presence builds trust, grows followers and keeps your brand top-of-mind. The biggest challenge for most businesses is consistency — coming up with ideas, creating content and posting regularly across multiple platforms.</p><p>LauncherDesk takes this entirely off your plate. We plan, create and post content on your behalf — with a monthly content calendar you approve in advance.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Small businesses and startups that want a professional social presence',
           'Founders who know they should post but don\'t have time',
           'Companies with inconsistent posting histories',
@@ -3387,14 +3387,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly retainer from', price: '₹8,999/month', sub: '+ taxes' },
     helpCard: { title: 'Missing customer messages?', body: 'Tell us your platforms and response expectations — we\'ll handle it.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Social media community management is the practice of actively monitoring and engaging with your audience across all platforms — responding to comments, handling DMs, addressing negative reviews and fostering positive conversations.</p><p>LauncherDesk provides professional community managers who respond on your behalf within agreed timelines, in your brand voice, across Instagram, LinkedIn, Facebook and Google Reviews.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses with active social media accounts that are struggling to keep up with engagement',
           'Brands that have received negative reviews or comments needing professional handling',
           'E-commerce businesses with high volumes of customer queries via social media',
@@ -3453,14 +3453,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly package from', price: '₹9,999/month', sub: '+ taxes' },
     helpCard: { title: 'Need ad creatives?', body: 'Share your brand guidelines and campaign objectives — we\'ll design for your platforms.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Ad creative is the single biggest lever in paid advertising performance. The same audience targeted with different creatives can produce wildly different results. Strong creative communicates your value proposition instantly, creates emotional connection and drives action.</p><p>LauncherDesk designs ad creatives for all digital platforms — Meta, Google Display, LinkedIn, YouTube thumbnails — with A/B testing variations built in from the start.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses running paid campaigns who need professional creative',
           'Marketing teams that lack in-house design resources',
           'Companies whose ads are underperforming due to poor creative quality',
@@ -3520,14 +3520,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly package from', price: '₹14,999/month', sub: '+ taxes' },
     helpCard: { title: 'Ready to start making Reels?', body: 'Tell us your brand and goals — we\'ll plan a short-form video strategy for you.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Instagram Reels and YouTube Shorts consistently get 3–5x more organic reach than static posts. Short-form video is the most powerful free growth channel available to businesses today — if you use it consistently with high-quality content.</p><p>LauncherDesk handles the entire short-form video production process — from scriptwriting and shot lists to editing, captions, music and publishing — so you can focus on appearing on camera (or not, if you prefer faceless content).</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Brands wanting to grow their Instagram or YouTube audience organically',
           'Founders who want to build personal brand through short-form video',
           'E-commerce businesses showcasing products through video',
@@ -3589,14 +3589,14 @@ export const SERVICES = {
     priceCard: { label: 'Project from', price: '₹7,999', sub: '+ taxes, based on scope' },
     helpCard: { title: 'Need marketing materials?', body: 'Share what you need and we will quote within 24 hours.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Every physical and digital touchpoint is an opportunity to reinforce your brand. Professional marketing collaterals — brochures, pitch decks, one-pagers, letterheads — signal credibility and consistency to prospects, clients and investors.</p><p>LauncherDesk designs marketing collaterals that are consistent with your brand identity, print-ready and designed for their specific purpose — whether that\'s closing a sales deal or leaving an impression at a trade show.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses that need professional marketing materials for sales and pitching',
           'Startups preparing for investor meetings and fundraising',
           'Companies attending trade shows, events or exhibitions',
@@ -3658,14 +3658,14 @@ export const SERVICES = {
     priceCard: { label: 'Project from', price: '₹14,999', sub: '+ taxes, based on scope' },
     helpCard: { title: 'Launching a physical product?', body: 'Share your product details and we will design packaging that sells.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>In a retail environment — physical or online — packaging is the first thing a customer sees. Great packaging communicates brand values, builds trust, and can be the deciding factor between your product and a competitor\'s.</p><p>LauncherDesk designs packaging for physical products across all categories — food and beverage, cosmetics, electronics accessories, apparel and more — delivering print-ready artwork compliant with Indian regulatory requirements.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'D2C brands launching physical products for the first time',
           'FMCG brands redesigning or refreshing existing packaging',
           'E-commerce sellers who want premium unboxing experiences',
@@ -3726,14 +3726,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly package from', price: '₹8,999/month', sub: '+ taxes' },
     helpCard: { title: 'Want better-looking social media?', body: 'Share your profiles and brand colours — we\'ll show you what\'s possible.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Visual consistency across social media builds brand recognition and trust. When every post looks like it belongs to the same brand — same colours, typography, style — your profile looks professional and credible.</p><p>LauncherDesk creates social media design templates and monthly content graphics that keep your brand visually consistent across all platforms, without you needing to open a design tool.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Businesses whose social media looks inconsistent or unprofessional',
           'Marketing teams that need a steady supply of designed graphics',
           'Founders who want their Instagram or LinkedIn to look premium',
@@ -3794,14 +3794,14 @@ export const SERVICES = {
     priceCard: { label: 'Setup from', price: '₹24,999', sub: '+ monthly retainer + taxes' },
     helpCard: { title: 'Want a bot on WhatsApp?', body: 'Tell us your use case — support, sales or booking — and we will design the right flow.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>WhatsApp has over 500 million users in India and is the primary communication channel for most customers. A WhatsApp chatbot lets you automate conversations at scale — answering FAQs, qualifying leads, collecting contact details, booking appointments and sending order updates — all without a human agent.</p><p>LauncherDesk builds AI-powered WhatsApp chatbots on the official Meta WhatsApp Business API — reliable, scalable and compliant with WhatsApp policies.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Service businesses receiving high volumes of repetitive customer queries',
           'E-commerce businesses needing automated order tracking and support',
           'Education and healthcare businesses needing appointment scheduling',
@@ -3861,14 +3861,14 @@ export const SERVICES = {
     priceCard: { label: 'Setup from', price: '₹34,999', sub: '+ per-minute usage + taxes' },
     helpCard: { title: 'Want AI on your phone lines?', body: 'Tell us your call volume and use case — we will design the right voice agent.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>AI voice agents are replacing traditional IVR systems and call centre agents for routine calls. They understand natural language, handle complex conversations, book appointments, qualify leads and transfer to human agents when needed — all in real time.</p><p>LauncherDesk deploys AI voice agents for inbound support, outbound lead follow-up, appointment reminders and payment reminders — with Indian language support and seamless CRM integration.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Healthcare clinics needing appointment scheduling and reminders',
           'Real estate and financial services for lead follow-up calls',
           'E-commerce businesses for order tracking and support',
@@ -3928,14 +3928,14 @@ export const SERVICES = {
     priceCard: { label: 'Per SMS from', price: '₹0.12', sub: '+ DLT registration + taxes' },
     helpCard: { title: 'Need bulk SMS?', body: 'Tell us your monthly volume and use case — we will set up your DLT account and campaigns.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>SMS has a 98% open rate — higher than email, WhatsApp or any other channel. Bulk SMS is one of the most cost-effective ways to reach customers with promotions, appointment reminders, OTPs, payment alerts and event notifications.</p><p>LauncherDesk provides end-to-end bulk SMS services — DLT registration, sender ID setup, template approval and campaign management — fully compliant with TRAI regulations.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Retail and e-commerce businesses running promotional campaigns',
           'Healthcare providers sending appointment reminders',
           'Financial services sending payment and account alerts',
@@ -3996,14 +3996,14 @@ export const SERVICES = {
     priceCard: { label: 'Monthly from', price: '₹4,999/month', sub: '+ taxes, based on list size' },
     helpCard: { title: 'Have an email list?', body: 'Share your list size and campaign goals — we will design the right email strategy.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Email marketing delivers the highest ROI of any digital marketing channel — an average of ₹3,600 returned for every ₹100 spent. Whether you need bulk promotional blasts, automated drip sequences or transactional emails, email marketing is an essential revenue channel.</p><p>LauncherDesk manages the entire email marketing operation — list management, template design, sending infrastructure, deliverability and analytics.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'E-commerce businesses nurturing customers with promotions and updates',
           'B2B companies running drip campaigns to prospects',
           'SaaS and subscription businesses sending onboarding and retention emails',
@@ -4065,14 +4065,14 @@ export const SERVICES = {
     priceCard: { label: 'Setup from', price: '₹29,999', sub: '+ CRM subscription + taxes' },
     helpCard: { title: 'Want an AI-powered CRM?', body: 'Share your sales process and team size — we will recommend and implement the right CRM.' },
     toc: [
-      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who it's for" },
+      { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
       { href: '#included', label: "What's included" }, { href: '#process', label: 'Process' },
       { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
       overview: { heading: 'Overview', content: '<p>Traditional CRMs store data. AI-powered CRMs act on it — scoring leads by likelihood to convert, recommending the next best action, automating follow-up sequences and forecasting revenue with machine learning accuracy.</p><p>LauncherDesk implements and configures AI-powered CRM systems (HubSpot, Zoho CRM, Salesforce) with AI features enabled — so your sales team spends time selling, not on data entry.</p>' },
       who: {
-        heading: "Who it's for", items: [
+        heading: "Who we serve", items: [
           'Sales teams that generate more leads than they can manually follow up',
           'Businesses with long sales cycles needing intelligent nurturing',
           'Companies with existing CRMs that are not being used to full potential',

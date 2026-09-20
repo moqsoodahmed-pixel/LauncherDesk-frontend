@@ -375,7 +375,7 @@ export default function PartnerDashboard() {
 
                 {/* Help card */}
                 <div className="pd-card" style={{ background: 'linear-gradient(135deg,#1E3A6A,#264D8C)', border: 0 }}>
-                  <div style={{ color: '#fff', fontWeight: 800, fontSize: 15, marginBottom: 8 }}>Need help?</div>
+                  <div style={{ color: '#fff', fontWeight: 800, fontSize: 15, marginBottom: 8 }}>Looking for support?</div>
                   <div style={{ color: '#9ab5d4', fontSize: 13, lineHeight: 1.6, marginBottom: 16 }}>
                     Contact our partner success team for any questions about your listing or leads.
                   </div>

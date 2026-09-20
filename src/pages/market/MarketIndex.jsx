@@ -67,7 +67,7 @@ export default function MarketIndex() {
               <h3 style={{ color: '#fff', fontSize: 24 }}>Not sure which tool fits?</h3>
               <p style={{ color: '#9ab5d4', marginTop: 8, maxWidth: 520 }}>Tell us how you work and we'll recommend the right stack — then set it up, migrate your data and train your team.</p>
             </div>
-            <a className="btn btn-light" href="/company/contact">Talk to an Expert</a>
+            <a className="btn btn-light" href="/company/contact">Talk to Our Expert</a>
           </div>
         </div>
       </section>

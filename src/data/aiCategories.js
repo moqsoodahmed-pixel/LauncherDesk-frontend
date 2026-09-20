@@ -1,7 +1,7 @@
 /* Top-level service categories Sneha guides users through.
    Labels, ordering and `body` description text are reconciled against the
    real LauncherDesk WhatsApp bot (src/config/categories.js in the bot repo) —
-   the first 7 + "Talk to an Expert" match the bot's MENU_ROWS/CATEGORIES
+   the first 7 + "Talk to Our Expert" match the bot's MENU_ROWS/CATEGORIES
    exactly. Digital Marketing, Marketplace and E-Stamp are website-only
    sections the bot doesn't define — kept because they're real site
    services, routed through the same generic bot-style capture flow.
@@ -71,9 +71,9 @@ export const CATEGORIES = [
   },
   {
     id: 'expert',
-    label: 'Talk to an Expert',
+    label: 'Talk to Our Expert',
     body: 'Connect directly with our team',
-    keywords: ['talk to an expert', 'speak to someone', 'human', 'call me', 'expert help'],
+    keywords: ['talk to our expert', 'speak to someone', 'human', 'call me', 'expert help'],
   },
 ]
 

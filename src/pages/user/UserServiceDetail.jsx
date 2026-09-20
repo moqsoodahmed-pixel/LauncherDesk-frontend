@@ -116,7 +116,7 @@ export default function UserServiceDetail() {
             </div>
           )}
           <div style={{background:'linear-gradient(135deg,#1A2F4E,#1D6FE0)',borderRadius:14,padding:'20px',color:'#fff'}}>
-            <h3 style={{fontSize:13.5,fontWeight:700,color:'#fff',marginBottom:8}}>Need help?</h3>
+            <h3 style={{fontSize:13.5,fontWeight:700,color:'#fff',marginBottom:8}}>Looking for support?</h3>
             <p style={{fontSize:12.5,color:'rgba(255,255,255,.7)',marginBottom:14,lineHeight:1.5}}>Contact us anytime for updates.</p>
             <a href={`https://wa.me/918548854859?text=Hi, regarding my service: ${order.serviceTitle}`} target="_blank" rel="noopener noreferrer" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:7,padding:'10px',borderRadius:9,background:'#25D366',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none',marginBottom:8}}>WhatsApp Us</a>
             <Link to="/company/contact" style={{display:'flex',alignItems:'center',justifyContent:'center',padding:'10px',borderRadius:9,background:'rgba(255,255,255,.12)',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none',border:'1px solid rgba(255,255,255,.2)'}}>Contact Us</Link>

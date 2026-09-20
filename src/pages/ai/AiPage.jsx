@@ -156,7 +156,7 @@ export default function AiPage() {
             <p>It's free, it's fast, and it hands you to a human the moment you need one.</p>
             <div className="row">
               <button className="btn btn-light" data-open-ai="true">Start a conversation</button>
-              <a href="/company/contact" className="btn btn-ghost-d">Talk to an Expert instead</a>
+              <a href="/company/contact" className="btn btn-ghost-d">Talk to Our Expert instead</a>
             </div>
           </div>
         </div>

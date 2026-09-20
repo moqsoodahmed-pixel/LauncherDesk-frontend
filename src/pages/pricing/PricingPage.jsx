@@ -442,7 +442,7 @@ export default function PricingPage() {
             <h2>Get a custom quote.</h2>
             <p>Tell us about your business and we'll send an itemised quote — no obligation.</p>
             <div className="row">
-              <a href="/company/contact" className="btn btn-light">Talk to an Expert</a>
+              <a href="/company/contact" className="btn btn-light">Talk to Our Expert</a>
               <a href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I'd%20like%20a%20quote%20for%20my%20business." className="btn btn-ghost-d">Chat on WhatsApp</a>
             </div>
           </div>

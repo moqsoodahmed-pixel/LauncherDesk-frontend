@@ -40,7 +40,7 @@ export default function UserProfile() {
             ))}
           </div>
           <div style={{background:'#fff',borderRadius:16,border:'1px solid #E8EEF6',padding:'20px 24px'}}>
-            <h2 style={{fontSize:14,fontWeight:700,color:'#1A2F4E',marginBottom:14}}>Need help?</h2>
+            <h2 style={{fontSize:14,fontWeight:700,color:'#1A2F4E',marginBottom:14}}>Looking for support?</h2>
             <p style={{fontSize:13,color:'#64748B',marginBottom:16,lineHeight:1.6}}>To update your profile details or for account queries, contact our support team.</p>
             <div style={{display:'flex',gap:10,flexWrap:'wrap'}}>
               <a href="mailto:support@launcherdesk.com" style={{display:'inline-flex',alignItems:'center',padding:'0 18px',height:40,borderRadius:9,background:'#EEF2FF',color:'#1D6FE0',fontWeight:700,fontSize:13,textDecoration:'none'}}>Email Support</a>

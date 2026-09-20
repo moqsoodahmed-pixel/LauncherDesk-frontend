@@ -602,7 +602,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
             </>
           )}
           <Link to="/company/contact" style={{ display: 'block', textAlign: 'center', padding: '12px', borderRadius: 10, background: '#F97316', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 10 }}>
-            Talk to an Expert →
+            Talk to Our Expert →
           </Link>
           <a href={`https://wa.me/918548854859?text=${waMsg}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp us about ${svc.title}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '11px', borderRadius: 10, background: '#25D366', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 4 }}>
             <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" aria-hidden="true"><path d={WA_PATH} /></svg>
@@ -682,7 +682,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
         <h4>{helpCard.title}</h4>
         <p>{helpCard.body}</p>
         <button className="btn btn-soft" data-open-ai="true" style={{ width: '100%', marginBottom: 8, justifyContent: 'center' }}>Ask Sneha</button>
-        <Link to="/company/contact" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Talk to an Expert</Link>
+        <Link to="/company/contact" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Talk to Our Expert</Link>
       </div>
     </aside>
   )
@@ -893,7 +893,7 @@ export default function ServicePage({ svc }) {
               </p>
               <div className="hero-cta reveal-up in" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 0 }}>
                 <Link to="/company/contact" className="btn btn-primary">
-                  Talk to an Expert{' '}
+                  Talk to Our Expert{' '}
                   <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={ARROW} /></svg>
                 </Link>
                 <a href={`https://wa.me/918548854859?text=${encodeURIComponent(`Hi, I'm interested in ${title}`)}`} target="_blank" rel="noopener noreferrer" className="btn btn-wa" style={{ fontWeight: 700, boxShadow: '0 4px 14px rgba(37,211,102,.3)' }}>
@@ -945,7 +945,7 @@ export default function ServicePage({ svc }) {
                     <div key={`${id}-wrap`}>
                       {rendered}
                       <ContextualCta
-                        prompt="Have your documents ready?"
+                        prompt="Keep your documents ready"
                         label="Start Registration"
                         href="#quote-form"
                         intent="high"
@@ -959,12 +959,12 @@ export default function ServicePage({ svc }) {
                     <div key="faq-wrap">
                       {rendered}
                       <ContextualCta
-                        prompt="Still have questions?"
+                        prompt="Have more to ask?"
                         label="Ask Sneha"
                         askSneha
                         intent="low"
                         event={CTA_EVENTS.faqAskSneha}
-                        secondaryLabel="Talk to an Expert"
+                        secondaryLabel="Talk to Our Expert"
                         secondaryTo="/company/contact"
                       />
                     </div>

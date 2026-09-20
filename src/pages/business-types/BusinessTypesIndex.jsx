@@ -49,7 +49,7 @@ export default function BusinessTypesIndex() {
             <p>Every business is different — talk to us or use the Service Finder and we'll build your roadmap directly.</p>
             <div className="row">
               <a href="/services#finder" className="btn btn-light">Use the Service Finder</a>
-              <a href="/company/contact" className="btn btn-ghost-d">Talk to an Expert</a>
+              <a href="/company/contact" className="btn btn-ghost-d">Talk to Our Expert</a>
             </div>
           </div>
         </div>

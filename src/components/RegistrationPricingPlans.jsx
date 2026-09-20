@@ -35,7 +35,7 @@ const TIER_EMOJI = { Basic: '📦', Standard: '⭐', Premium: '🚀' }
 const S = `
 .rpp-wrap { margin: clamp(40px, 6vw, 64px) 0; }
 .rpp-head { text-align:center; max-width:700px; margin:0 auto 16px; }
-.rpp-eyebrow { display:inline-block; font-size:12.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); margin-bottom:14px; }
+.rpp-eyebrow { display:inline-block; font-size:23px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--blue); margin-bottom:14px; }
 .rpp-head h2 { font-size:clamp(24px,3.6vw,36px); font-weight:900; color:var(--navy); letter-spacing:-.025em; line-height:1.25; }
 .rpp-head p { font-size:15.5px; color:var(--text-2); line-height:1.7; margin-top:14px; }
 .rpp-divider { width:56px; height:4px; border-radius:99px; background:var(--grad); margin:26px auto clamp(32px,5vw,52px); }

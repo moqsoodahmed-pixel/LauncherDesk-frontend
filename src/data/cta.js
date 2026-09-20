@@ -2,7 +2,7 @@
  * cta.js — LauncherDesk CTA design system
  *
  * Centralizes CTA copy, intent tiers and analytics event names so the same
- * "Get Exact Quote" / "Talk to an Expert" / "Ask Sneha" vocabulary is reused
+ * "Get Exact Quote" / "Talk to Our Expert" / "Ask Sneha" vocabulary is reused
  * everywhere instead of ad-hoc button labels.
  *
  * Intent tiers (Phase 16 — contextual CTA system):
@@ -18,7 +18,7 @@ export const CTA_LABELS = {
   payOrLogin:        'Pay / Login to Pay',
 
   // Medium intent
-  talkToExpert:      'Talk to an Expert',
+  talkToExpert:      'Talk to Our Expert',
   bookConsultation:  'Book a Consultation',
 
   // Low intent

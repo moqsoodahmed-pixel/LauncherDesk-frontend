@@ -89,7 +89,7 @@ export default function SolutionsIndex() {
             <p style={{color:'var(--text-2)',marginBottom:20}}>Use our service finder and we'll point you to the right starting point — free, no obligation.</p>
             <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
               <a href="/services#finder" className="btn btn-primary">Find My Solutions</a>
-              <a href="/company/contact" className="btn btn-soft">Talk to an Expert</a>
+              <a href="/company/contact" className="btn btn-soft">Talk to Our Expert</a>
             </div>
           </div>
         </div>

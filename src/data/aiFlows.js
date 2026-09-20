@@ -251,13 +251,13 @@ const estamp = {
   },
 }
 
-/* ── Talk to an Expert ────────────────────────────────────────────
+/* ── Talk to Our Expert ────────────────────────────────────────────
    The bot hands this straight to a human with zero questions — the
    website still needs a name + number to have someone follow up with,
    which the bot gets for free from the WhatsApp session. */
 const expert = {
   id: 'expert',
-  label: 'Talk to an Expert',
+  label: 'Talk to Our Expert',
   entry: 'name',
   isExpert: true,
   summaryFields: [{ label: '👤 Name', field: 'name' }, { label: '📱 Mobile', field: 'mobile' }],

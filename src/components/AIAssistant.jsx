@@ -20,7 +20,7 @@ const WA_QUICK_REPLIES = [
   { label: 'Website Development', emoji: '🌐', text: 'Hi LauncherDesk, I want to know about Website Development.' },
   { label: 'Compliance & Tax', emoji: '📊', text: 'Hi LauncherDesk, I want to know about Compliance & Tax.' },
   { label: 'Virtual Office', emoji: '🏠', text: 'Hi LauncherDesk, I want to know about Virtual Office.' },
-  { label: 'Talk to an Expert', emoji: '💬', text: 'Hi LauncherDesk, I want to talk to an expert.' },
+  { label: 'Talk to Our Expert', emoji: '💬', text: 'Hi LauncherDesk, I want to talk to our expert.' },
 ]
 
 export default function AIAssistant() {

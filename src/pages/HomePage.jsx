@@ -180,7 +180,7 @@ const S = `
 .hp-services { padding:76px 0;background:var(--sec-b); }
 .hp-section-head { text-align:center;margin-bottom:40px; }
 .hp-section-eyebrow {
-  display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;
+  display:inline-block;font-size:26px;font-weight:700;letter-spacing:.16em;
   text-transform:uppercase;color:var(--blue);margin-bottom:14px;
 }
 .hp-section-head h2 {
@@ -1548,12 +1548,12 @@ export default function HomePage() {
           </div>
           <ContextualCta
             className="hp-faq-ctx-cta"
-            prompt="Still have questions?"
+            prompt="Have more to ask?"
             label="Ask Sneha"
             askSneha
             intent="low"
             event={CTA_EVENTS.faqAskSneha}
-            secondaryLabel="Talk to an Expert"
+            secondaryLabel="Talk to Our Expert"
             secondaryTo="/company/contact"
           />
         </div>

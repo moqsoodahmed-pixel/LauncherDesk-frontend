@@ -13,7 +13,7 @@ const svc = {
   helpCard: { title: 'Not sure where to start?', body: 'Tell us your business goals and we will recommend the right channels and budget.' },
   toc: [
     { href: '#overview',    label: 'Overview' },
-    { href: '#who',         label: "Who it's for" },
+    { href: '#who',         label: "Who we serve" },
     { href: '#included',    label: "What's included" },
     { href: '#process',     label: 'Process' },
     { href: '#pricing',     label: 'Pricing' },
@@ -27,7 +27,7 @@ const svc = {
 <p>Whether you are a startup building your first online presence or an established business scaling up leads, we have a plan that fits your stage and budget.</p>`,
     },
     who: {
-      heading: "Who it's for",
+      heading: "Who we serve",
       items: [
         'Newly registered businesses that need a professional brand identity and online presence',
         'Startups looking to generate leads and drive qualified traffic from day one',

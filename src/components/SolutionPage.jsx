@@ -22,7 +22,7 @@ export default function SolutionPage({ sol }) {
           <p className="lead reveal-up in">{lead}</p>
           <div className="hero-cta reveal-up in">
             <a href="/company/contact" className="btn btn-primary">Get Started</a>
-            <a href="/company/contact" className="btn btn-soft">Talk to an Expert</a>
+            <a href="/company/contact" className="btn btn-soft">Talk to Our Expert</a>
           </div>
         </div>
       </header>
@@ -58,7 +58,7 @@ export default function SolutionPage({ sol }) {
             <h2>{cta.h2}</h2>
             <p>{cta.p}</p>
             <div className="row">
-              <a href="/company/contact" className="btn btn-light">Talk to an Expert</a>
+              <a href="/company/contact" className="btn btn-light">Talk to Our Expert</a>
               <button className="btn btn-ghost-d" data-open-ai="true">Ask Sneha</button>
             </div>
           </div>

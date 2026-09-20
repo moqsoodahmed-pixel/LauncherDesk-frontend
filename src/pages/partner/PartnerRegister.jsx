@@ -529,7 +529,7 @@ export default function PartnerRegister() {
                 </div>
                 <div className="pr-field full">
                   <label className="pr-label">Product Description *</label>
-                  <textarea className="pr-textarea" required placeholder="Describe what your product does, who it's for and what makes it different (100–300 words)."
+                  <textarea className="pr-textarea" required placeholder="Describe what your product does, who you serve and what makes it different (100–300 words)."
                     value={form.description} onChange={e=>set('description',e.target.value)} rows={4}/>
                 </div>
                 <div className="pr-field full">
