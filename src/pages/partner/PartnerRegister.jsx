@@ -1,0 +1,628 @@
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { usePartnerAuth } from '../../context/PartnerAuthContext'
+
+const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+
+const CATEGORIES = [
+  'CRM','ERP','Project Management','HR & Payroll','Inventory Management',
+  'WhatsApp Automation','CLM / Contract Management','Accounting & Finance',
+  'E-commerce Tools','Cybersecurity','Cloud & Hosting','Marketing Tools',
+  'Legal Tech','EdTech','HealthTech','Other',
+]
+
+const S = `
+.pr-bg { background: var(--bg); min-height: 100vh; }
+
+/* Hero */
+.pr-hero {
+  background: linear-gradient(180deg, #FBFDFF 0%, #F3F8FF 55%, #EDF4FF 100%);
+  padding: clamp(56px,7vw,88px) 0 clamp(44px,5vw,68px);
+  position: relative; overflow: hidden; text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+.pr-hero::before {
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(760px 520px at 50% -14%,rgba(29,93,184,.10),transparent 62%);
+  animation: prHeroGlow 22s ease-in-out infinite alternate;
+}
+@keyframes prHeroGlow {
+  from { transform: translate3d(0,0,0) scale(1); }
+  to   { transform: translate3d(0, 1.5%, 0) scale(1.03); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pr-hero::before { animation: none; }
+}
+.pr-hero-inner { max-width:700px;margin:0 auto;padding:0 28px;position:relative;z-index:1; }
+.pr-badge {
+  display:inline-flex;align-items:center;gap:8px;background:var(--brand-50);
+  border:1px solid var(--brand-100);border-radius:99px;padding:5px 14px;
+  font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blue-dark);margin-bottom:20px;
+}
+.pr-hero h1 { font-size:clamp(30px,4.5vw,54px);font-weight:900;color:var(--navy);letter-spacing:-.04em;line-height:1.04;margin-bottom:16px; }
+.pr-hero p  { font-size:16px;color:var(--text-2);line-height:1.7; }
+
+/* Benefits strip */
+.pr-benefits { background:#fff;border-bottom:1px solid var(--line);padding:28px 0; }
+.pr-benefits-inner { max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px; }
+.pr-benefit { display:flex;align-items:flex-start;gap:12px; }
+.pr-benefit-icon { width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#EEF2FF,#DBEAFE);display:grid;place-items:center;flex:none; }
+.pr-benefit-icon svg { width:20px;height:20px;stroke:#1D6FE0;fill:none;stroke-width:2; }
+.pr-benefit h4 { font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px; }
+.pr-benefit p  { font-size:12.5px;color:var(--text-2);line-height:1.5; }
+
+/* Form section */
+.pr-form-section { padding:64px 0 80px; }
+.pr-form-inner   { max-width:760px;margin:0 auto;padding:0 28px; }
+.pr-form-card    { background:#fff;border-radius:20px;border:1.5px solid var(--line);padding:40px 44px;box-shadow:0 4px 24px rgba(13,31,60,.07); }
+.pr-form-title   { font-size:22px;font-weight:800;color:var(--navy);margin-bottom:6px; }
+.pr-form-sub     { font-size:14px;color:var(--text-2);margin-bottom:32px; }
+
+.pr-form { display:flex;flex-direction:column;gap:20px; }
+.pr-section-head { font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:-4px;margin-top:8px;padding-bottom:8px;border-bottom:1px solid var(--line); }
+.pr-row    { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+.pr-field  { display:flex;flex-direction:column;gap:6px; }
+.pr-field.full { grid-column:1/-1; }
+.pr-label  { font-size:12.5px;font-weight:600;color:#374151; }
+.pr-input  {
+  height:44px;border:1.5px solid #E2E8F0;border-radius:9px;padding:0 14px;
+  font-size:14px;color:var(--navy);outline:none;font-family:inherit;
+  transition:border-color .15s;background:#F8FAFC;width:100%;box-sizing:border-box;
+}
+.pr-input:focus { border-color:#1D6FE0;background:#fff;box-shadow:0 0 0 3px rgba(29,111,224,.1); }
+.pr-input.error { border-color:#DC2626; }
+.pr-select {
+  height:44px;border:1.5px solid #E2E8F0;border-radius:9px;padding:0 14px;
+  font-size:14px;color:var(--navy);outline:none;font-family:inherit;
+  transition:border-color .15s;background:#F8FAFC;cursor:pointer;width:100%;box-sizing:border-box;
+}
+.pr-select:focus { border-color:#1D6FE0;background:#fff; }
+.pr-textarea {
+  border:1.5px solid #E2E8F0;border-radius:9px;padding:12px 14px;
+  font-size:14px;color:var(--navy);outline:none;font-family:inherit;
+  transition:border-color .15s;background:#F8FAFC;resize:vertical;min-height:90px;width:100%;box-sizing:border-box;
+}
+.pr-textarea:focus { border-color:#1D6FE0;background:#fff;box-shadow:0 0 0 3px rgba(29,111,224,.1); }
+
+/* Password field wrapper */
+.pr-pw-wrap { position:relative; }
+.pr-pw-wrap .pr-input { padding-right:44px; }
+.pr-pw-eye {
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:none;border:0;cursor:pointer;display:flex;align-items:center;
+  color:#94A3B8;padding:0;
+}
+.pr-pw-eye:hover { color:#1D6FE0; }
+.pr-pw-hint { font-size:11.5px;color:#94A3B8;margin-top:4px; }
+.pr-pw-hint.ok  { color:#059669; }
+.pr-pw-hint.bad { color:#DC2626; }
+
+/* Password strength bar */
+.pr-pw-bar { height:4px;border-radius:2px;background:#E2E8F0;margin-top:6px;overflow:hidden; }
+.pr-pw-bar-fill { height:100%;border-radius:2px;transition:width .2s,background .2s; }
+
+/* Info tip */
+.pr-tip {
+  display:flex;align-items:flex-start;gap:10px;background:#EFF6FF;
+  border:1px solid #BFDBFE;border-radius:10px;padding:12px 16px;font-size:13px;color:#1E40AF;
+}
+.pr-tip svg { flex:none;margin-top:1px; }
+
+/* Cat checkboxes */
+.pr-cats { display:flex;flex-wrap:wrap;gap:8px;margin-top:4px; }
+.pr-cat  {
+  display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:99px;
+  border:1.5px solid #E2E8F0;background:#F8FAFC;cursor:pointer;
+  font-size:13px;font-weight:600;color:var(--text-2);transition:all .13s;user-select:none;
+}
+.pr-cat input { display:none; }
+.pr-cat.checked { border-color:#1D6FE0;background:#EEF2FF;color:#1D6FE0; }
+.pr-cat:hover:not(.checked) { border-color:#93C5FD;background:#F0F7FF; }
+
+/* Submit */
+.pr-submit {
+  height:52px;border-radius:11px;background:#1D6FE0;color:#fff;
+  font-weight:800;font-size:15.5px;border:0;cursor:pointer;font-family:inherit;
+  transition:all .15s;box-shadow:0 6px 20px rgba(29,111,224,.35);
+}
+.pr-submit:hover { background:#0F52C0;transform:translateY(-2px);box-shadow:0 10px 28px rgba(29,111,224,.45); }
+.pr-submit:disabled { opacity:.6;cursor:not-allowed;transform:none; }
+
+/* Success */
+.pr-success { text-align:center;padding:48px 32px; }
+.pr-success-icon { font-size:56px;margin-bottom:18px; }
+.pr-success h2   { font-size:26px;font-weight:900;color:var(--navy);margin-bottom:10px; }
+.pr-success p    { font-size:15px;color:var(--text-2);line-height:1.7;max-width:480px;margin:0 auto; }
+.pr-success-cta  { margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap; }
+.pr-redirect-bar {
+  background:#EFF6FF;border:1px solid #BFDBFE;border-radius:9px;
+  padding:12px 18px;font-size:13.5px;color:#1E40AF;font-weight:600;
+  display:flex;align-items:center;gap:10px;margin-top:16px;justify-content:center;
+}
+
+/* Existing partners strip */
+.pr-partners { background:#fff;padding:56px 0; }
+.pr-partners-inner { max-width:1100px;margin:0 auto;padding:0 28px; }
+.pr-partners h2 { font-size:22px;font-weight:800;color:var(--navy);margin-bottom:24px; }
+.pr-partner-card {
+  display:flex;align-items:center;gap:16px;padding:18px 22px;
+  border:1.5px solid var(--line);border-radius:14px;background:#F8FAFC;
+}
+.pr-partner-logo {
+  width:52px;height:52px;border-radius:12px;font-size:17px;font-weight:800;
+  color:#fff;display:grid;place-items:center;flex:none;background:#6B21A8;
+}
+.pr-partner-name { font-size:17px;font-weight:800;color:var(--navy);margin-bottom:3px; }
+.pr-partner-cat  { font-size:12px;font-weight:600;color:var(--blue);background:var(--bg-2);padding:2px 9px;border-radius:99px;display:inline-block; }
+.pr-partner-desc { font-size:13px;color:var(--text-2);margin-top:4px; }
+.pr-partner-badge{ font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:rgba(107,33,168,.12);color:#6B21A8;border:1px solid rgba(107,33,168,.2);margin-left:auto;flex:none; }
+
+@media(max-width:768px){
+  .pr-benefits-inner { grid-template-columns:1fr 1fr }
+  .pr-form-card { padding:28px 20px }
+  .pr-row { grid-template-columns:1fr }
+}
+@media(max-width:640px){
+  .pr-partner-card { flex-wrap:wrap; padding:16px; gap:12px; }
+  .pr-partner-badge { margin-left:0; }
+}
+@media(max-width:480px){
+  .pr-hero-inner, .pr-benefits-inner, .pr-form-inner, .pr-partners-inner { padding:0 16px; }
+  .pr-benefits-inner { grid-template-columns:1fr; }
+  .pr-form-card { padding:24px 16px; }
+}
+`
+
+function EyeIcon({ open }) {
+  return open ? (
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+    </svg>
+  ) : (
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>
+    </svg>
+  )
+}
+
+function pwStrength(pw) {
+  if (!pw) return { score: 0, label: '', color: '#E2E8F0', width: '0%' }
+  let score = 0
+  if (pw.length >= 8)  score++
+  if (/[A-Z]/.test(pw)) score++
+  if (/[0-9]/.test(pw)) score++
+  if (/[^A-Za-z0-9]/.test(pw)) score++
+  const map = [
+    { label: '',        color: '#E2E8F0', width: '0%'   },
+    { label: 'Weak',    color: '#EF4444', width: '25%'  },
+    { label: 'Fair',    color: 'var(--blue)', width: '50%'  },
+    { label: 'Good',    color: '#EAB308', width: '75%'  },
+    { label: 'Strong',  color: '#22C55E', width: '100%' },
+  ]
+  return { score, ...map[score] }
+}
+
+export default function PartnerRegister() {
+  const navigate = useNavigate()
+  const { loginWithToken } = usePartnerAuth()
+
+  const [form, setForm] = useState({
+    companyName:'', contactName:'', email:'', mobile:'', website:'',
+    city:'', state:'', foundedYear:'',
+    categories:[], productName:'', tagline:'', description:'',
+    pricing:'', integrations:'', whyPartner:'',
+    password:'', confirmPassword:'',
+  })
+  const [showPw,    setShowPw]    = useState(false)
+  const [showCpw,   setShowCpw]   = useState(false)
+  const [saving,    setSaving]    = useState(false)
+  const [done,      setDone]      = useState(false)
+  const [countdown, setCountdown] = useState(3)
+  const [error,     setError]     = useState('')
+
+  // Close categories dropdown on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      const dd = document.getElementById('pr-cat-dropdown')
+      if (dd && dd.style.display === 'block' && !e.target.closest('.pr-field')) {
+        dd.style.display = 'none'
+      }
+    }
+    document.addEventListener('click', handler)
+    return () => document.removeEventListener('click', handler)
+  }, [])
+
+  const set = (k, v) => setForm(f => ({...f, [k]:v}))
+
+  const toggleCat = (cat) => {
+    setForm(f => ({
+      ...f,
+      categories: f.categories.includes(cat)
+        ? f.categories.filter(c => c !== cat)
+        : [...f.categories, cat],
+    }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+
+    // Validations
+    if (form.categories.length === 0) {
+      setError('Please select at least one service category.')
+      return
+    }
+    if (form.password.length < 6) {
+      setError('Password must be at least 6 characters.')
+      return
+    }
+    if (form.password !== form.confirmPassword) {
+      setError('Passwords do not match.')
+      return
+    }
+
+    setSaving(true)
+    try {
+      const res = await fetch(`${API}/partners`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          companyName:  form.companyName,
+          contactName:  form.contactName,
+          email:        form.email,
+          mobile:       form.mobile,
+          website:      form.website,
+          city:         form.city,
+          state:        form.state,
+          foundedYear:  form.foundedYear,
+          categories:   form.categories,
+          productName:  form.productName,
+          tagline:      form.tagline,
+          description:  form.description,
+          pricing:      form.pricing,
+          integrations: form.integrations,
+          whyPartner:   form.whyPartner,
+          password:     form.password,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.message || 'Submission failed')
+
+      // Auto-login the partner with the returned token
+      if (data.token && data.partner) {
+        loginWithToken(data.token, data.partner)
+      }
+
+      setDone(true)
+
+      // Countdown then redirect to dashboard
+      let n = 3
+      const timer = setInterval(() => {
+        n--
+        setCountdown(n)
+        if (n <= 0) {
+          clearInterval(timer)
+          navigate('/partner/dashboard')
+        }
+      }, 1000)
+
+    } catch (err) {
+      setError(err.message || 'Something went wrong. Please try again.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const STATES = ['Karnataka','Maharashtra','Delhi','Tamil Nadu','Telangana','Gujarat','Rajasthan','Uttar Pradesh','West Bengal','Andhra Pradesh','Kerala','Punjab','Haryana','Other']
+
+  const strength = pwStrength(form.password)
+  const pwMatch  = form.confirmPassword && form.password === form.confirmPassword
+
+  return (
+    <div className="pr-bg">
+      <style>{S}</style>
+
+      {/* Hero */}
+      <section className="pr-hero">
+        <div className="pr-hero-inner">
+          <div className="pr-badge">
+            <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5}><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Partner Programme
+          </div>
+          <h1>List your product on LauncherDesk Marketplace.</h1>
+          <p>Join India's most trusted business services platform. Get discovered by 10,000+ founders and businesses across India — actively searching for software to run their operations.</p>
+        </div>
+      </section>
+
+      {/* Benefits strip */}
+      <div className="pr-benefits">
+        <div className="pr-benefits-inner">
+          {[
+            {icon:'M18 20V10|M12 20V4|M6 20v-6',title:'Qualified Leads',desc:'Reach founders already set up by LauncherDesk — the highest-intent buyers.'},
+            {icon:'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',title:'Trusted Placement',desc:'Get listed beside India\'s most-used business tools. Our endorsement matters.'},
+            {icon:'M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0',title:'Vetted & Verified',desc:'We verify every partner — so your listing carries our quality badge.'},
+            {icon:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',title:'Co-marketing',desc:'Joint content, WhatsApp campaigns and expert recommendations to your ideal customers.'},
+          ].map(b=>(
+            <div key={b.title} className="pr-benefit">
+              <div className="pr-benefit-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  {b.icon.split('|').map((p,i)=><path key={i} d={p}/>)}
+                </svg>
+              </div>
+              <div>
+                <h4>{b.title}</h4>
+                <p>{b.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Existing partners */}
+      <div className="pr-partners">
+        <div className="pr-partners-inner">
+          <h2>Current Partners</h2>
+          <div className="pr-partner-card">
+            <div className="pr-partner-logo">DQ</div>
+            <div style={{flex:1}}>
+              <div className="pr-partner-name">Doqfy</div>
+              <span className="pr-partner-cat">CLM / Contract Management</span>
+              <div className="pr-partner-desc">India-ready contract lifecycle platform — fast creation, negotiation, Aadhaar e-sign and real-time collaboration.</div>
+            </div>
+            <span className="pr-partner-badge">Active Partner</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Form */}
+      <section className="pr-form-section">
+        <div className="pr-form-inner">
+          {done ? (
+            <div className="pr-form-card">
+              <div className="pr-success">
+                <div className="pr-success-icon">🎉</div>
+                <h2>Application received!</h2>
+                <p>
+                  Thank you for applying to partner with LauncherDesk. Our team will review your application and get back to you within <strong>2–3 business days</strong>.<br/><br/>
+                  Your account has been created — you can track your application status and leads from your partner dashboard.
+                </p>
+                <div className="pr-redirect-bar">
+                  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                  Redirecting to your dashboard in {countdown}s…
+                </div>
+                <div className="pr-success-cta">
+                  <button onClick={() => navigate('/partner/dashboard')} style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 22px',height:46,borderRadius:9,background:'var(--blue)',color:'#fff',fontWeight:700,fontSize:14,border:0,cursor:'pointer',fontFamily:'inherit'}}>
+                    Go to Dashboard →
+                  </button>
+                  <a href="/market" style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 22px',height:46,borderRadius:9,border:'1.5px solid var(--line)',color:'var(--text)',fontWeight:600,fontSize:14,textDecoration:'none'}}>
+                    View Marketplace
+                  </a>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="pr-form-card">
+              <div className="pr-form-title">Partner Application</div>
+              <div className="pr-form-sub">Fill in your details and we'll review your application within 2–3 business days.</div>
+
+              <form className="pr-form" onSubmit={handleSubmit}>
+
+                {/* Company info */}
+                <div className="pr-section-head">Company Information</div>
+                <div className="pr-row">
+                  <div className="pr-field">
+                    <label className="pr-label">Company Name *</label>
+                    <input className="pr-input" required placeholder="Acme Technologies Pvt Ltd" value={form.companyName} onChange={e=>set('companyName',e.target.value)}/>
+                  </div>
+                  <div className="pr-field">
+                    <label className="pr-label">Website URL *</label>
+                    <input className="pr-input" required type="url" placeholder="https://yourproduct.com" value={form.website} onChange={e=>set('website',e.target.value)}/>
+                  </div>
+                </div>
+                <div className="pr-row">
+                  <div className="pr-field">
+                    <label className="pr-label">City *</label>
+                    <input className="pr-input" required placeholder="Bengaluru" value={form.city} onChange={e=>set('city',e.target.value)}/>
+                  </div>
+                  <div className="pr-field">
+                    <label className="pr-label">State *</label>
+                    <select className="pr-select" required value={form.state} onChange={e=>set('state',e.target.value)}>
+                      <option value="">Select state</option>
+                      {STATES.map(s=><option key={s} value={s}>{s}</option>)}
+                    </select>
+                  </div>
+                </div>
+                <div className="pr-row">
+                  <div className="pr-field">
+                    <label className="pr-label">Founded Year</label>
+                    <input className="pr-input" placeholder="e.g. 2019" value={form.foundedYear} onChange={e=>set('foundedYear',e.target.value)}/>
+                  </div>
+                </div>
+
+                {/* Contact */}
+                <div className="pr-section-head">Point of Contact</div>
+                <div className="pr-row">
+                  <div className="pr-field">
+                    <label className="pr-label">Contact Name *</label>
+                    <input className="pr-input" required placeholder="Rahul Sharma" value={form.contactName} onChange={e=>set('contactName',e.target.value)}/>
+                  </div>
+                  <div className="pr-field">
+                    <label className="pr-label">Mobile *</label>
+                    <input className="pr-input" required type="tel" placeholder="+91 98765 43210" value={form.mobile} onChange={e=>set('mobile',e.target.value)}/>
+                  </div>
+                </div>
+                <div className="pr-field full">
+                  <label className="pr-label">Business Email *</label>
+                  <input className="pr-input" required type="email" placeholder="rahul@yourcompany.com" value={form.email} onChange={e=>set('email',e.target.value)}/>
+                </div>
+
+                {/* Account password */}
+                <div className="pr-section-head">Create Your Account Password</div>
+                <div className="pr-tip">
+                  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  <span>This password will be used to log in to your partner dashboard and track your leads after your application is approved.</span>
+                </div>
+                <div className="pr-row">
+                  <div className="pr-field">
+                    <label className="pr-label">Password *</label>
+                    <div className="pr-pw-wrap">
+                      <input
+                        className={`pr-input${form.password && form.password.length < 6 ? ' error' : ''}`}
+                        type={showPw ? 'text' : 'password'}
+                        required
+                        placeholder="Minimum 6 characters"
+                        value={form.password}
+                        onChange={e => set('password', e.target.value)}
+                        autoComplete="new-password"
+                      />
+                      <button type="button" className="pr-pw-eye" onClick={() => setShowPw(v => !v)} tabIndex={-1}>
+                        <EyeIcon open={showPw} />
+                      </button>
+                    </div>
+                    {form.password && (
+                      <>
+                        <div className="pr-pw-bar">
+                          <div className="pr-pw-bar-fill" style={{ width: strength.width, background: strength.color }} />
+                        </div>
+                        <span className={`pr-pw-hint ${strength.score >= 3 ? 'ok' : strength.score >= 2 ? '' : 'bad'}`}>
+                          {strength.label} password
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <div className="pr-field">
+                    <label className="pr-label">Confirm Password *</label>
+                    <div className="pr-pw-wrap">
+                      <input
+                        className={`pr-input${form.confirmPassword && !pwMatch ? ' error' : ''}`}
+                        type={showCpw ? 'text' : 'password'}
+                        required
+                        placeholder="Re-enter your password"
+                        value={form.confirmPassword}
+                        onChange={e => set('confirmPassword', e.target.value)}
+                        autoComplete="new-password"
+                      />
+                      <button type="button" className="pr-pw-eye" onClick={() => setShowCpw(v => !v)} tabIndex={-1}>
+                        <EyeIcon open={showCpw} />
+                      </button>
+                    </div>
+                    {form.confirmPassword && (
+                      <span className={`pr-pw-hint ${pwMatch ? 'ok' : 'bad'}`}>
+                        {pwMatch ? '✓ Passwords match' : '✗ Passwords do not match'}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Product */}
+                <div className="pr-section-head">Your Product</div>
+                <div className="pr-row">
+                  <div className="pr-field">
+                    <label className="pr-label">Product / Tool Name *</label>
+                    <input className="pr-input" required placeholder="e.g. Doqfy" value={form.productName} onChange={e=>set('productName',e.target.value)}/>
+                  </div>
+                  <div className="pr-field">
+                    <label className="pr-label">Tagline *</label>
+                    <input className="pr-input" required placeholder="e.g. India-ready contract platform" value={form.tagline} onChange={e=>set('tagline',e.target.value)}/>
+                  </div>
+                </div>
+                <div className="pr-field full">
+                  <label className="pr-label">Product Description *</label>
+                  <textarea className="pr-textarea" required placeholder="Describe what your product does, who it's for and what makes it different (100–300 words)."
+                    value={form.description} onChange={e=>set('description',e.target.value)} rows={4}/>
+                </div>
+                <div className="pr-field full">
+                  <label className="pr-label">Service Categories * <span style={{fontWeight:400,color:'#94A3B8'}}>(select all that apply)</span></label>
+                  <div style={{position:'relative'}}>
+                    <div
+                      className="pr-input"
+                      style={{height:'auto',minHeight:44,display:'flex',flexWrap:'wrap',gap:6,padding:'8px 14px',cursor:'pointer',alignItems:'center'}}
+                      onClick={() => {
+                        const el = document.getElementById('pr-cat-dropdown')
+                        if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block'
+                      }}
+                    >
+                      {form.categories.length === 0 && <span style={{color:'#94A3B8',fontSize:14}}>Select categories...</span>}
+                      {form.categories.map(cat => (
+                        <span key={cat} style={{
+                          display:'inline-flex',alignItems:'center',gap:4,padding:'3px 10px',
+                          borderRadius:99,background:'#EEF2FF',color:'#1D6FE0',fontSize:12,fontWeight:600,
+                          border:'1px solid rgba(29,111,224,.2)',
+                        }}>
+                          {cat}
+                          <span
+                            style={{cursor:'pointer',fontWeight:700,fontSize:14,lineHeight:1,marginLeft:2}}
+                            onClick={(e) => { e.stopPropagation(); toggleCat(cat) }}
+                          >×</span>
+                        </span>
+                      ))}
+                      <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="#94A3B8" strokeWidth={2.5} style={{marginLeft:'auto',flexShrink:0}}><path d="m6 9 6 6 6-6"/></svg>
+                    </div>
+                    <div
+                      id="pr-cat-dropdown"
+                      style={{
+                        display:'none',position:'absolute',top:'calc(100% + 4px)',left:0,right:0,
+                        background:'#fff',border:'1.5px solid #E2E8F0',borderRadius:12,
+                        boxShadow:'0 8px 30px rgba(13,31,60,.12)',zIndex:10,maxHeight:220,overflowY:'auto',
+                        padding:'6px 0',
+                      }}
+                    >
+                      {CATEGORIES.map(cat => (
+                        <label
+                          key={cat}
+                          style={{
+                            display:'flex',alignItems:'center',gap:10,padding:'9px 16px',
+                            cursor:'pointer',fontSize:13.5,fontWeight:500,color:'var(--navy)',
+                            transition:'background .1s',
+                          }}
+                          onMouseEnter={e => e.currentTarget.style.background='#F0F7FF'}
+                          onMouseLeave={e => e.currentTarget.style.background='transparent'}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={form.categories.includes(cat)}
+                            onChange={() => toggleCat(cat)}
+                            style={{accentColor:'#1D6FE0',width:16,height:16}}
+                          />
+                          {cat}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  {error && error.includes('category') && <span style={{fontSize:12.5,color:'#DC2626',marginTop:4}}>{error}</span>}
+                </div>
+                <div className="pr-row">
+                  <div className="pr-field">
+                    <label className="pr-label">Pricing Model</label>
+                    <input className="pr-input" placeholder="e.g. SaaS, ₹999/mo · Free trial · Custom" value={form.pricing} onChange={e=>set('pricing',e.target.value)}/>
+                  </div>
+                  <div className="pr-field">
+                    <label className="pr-label">Key Integrations</label>
+                    <input className="pr-input" placeholder="e.g. Zoho, Slack, WhatsApp" value={form.integrations} onChange={e=>set('integrations',e.target.value)}/>
+                  </div>
+                </div>
+                <div className="pr-field full">
+                  <label className="pr-label">Why do you want to partner with LauncherDesk?</label>
+                  <textarea className="pr-textarea" placeholder="Tell us your goals, target customers and how this partnership would work." rows={3}
+                    value={form.whyPartner} onChange={e=>set('whyPartner',e.target.value)}/>
+                </div>
+
+                {error && !error.includes('category') && (
+                  <div style={{background:'#FEF2F2',border:'1px solid #FECACA',borderRadius:9,padding:'12px 16px',fontSize:13.5,color:'#DC2626'}}>{error}</div>
+                )}
+
+                <button type="submit" className="pr-submit" disabled={saving}>
+                  {saving ? 'Submitting…' : 'Submit Partner Application →'}
+                </button>
+                <p style={{fontSize:12,color:'var(--text-3)',textAlign:'center',marginTop:-8}}>
+                  We review every application within 2–3 business days. No spam, ever.
+                </p>
+              </form>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  )
+}

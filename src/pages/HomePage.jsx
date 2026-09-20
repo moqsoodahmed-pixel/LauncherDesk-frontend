@@ -1,0 +1,1596 @@
+import { useEffect, useRef, useState } from 'react'
+import logoImg from '../assets/launcherdesk-logo-transparent.png'
+import { Link } from 'react-router-dom'
+import SEO, { organizationSchema, websiteSchema } from '../components/SEO'
+import HeroVisual from '../components/HeroVisual'
+import TrustBar from '../components/trust/TrustBar'
+import { CaseStudiesSection, TestimonialsSection } from '../components/trust/ProofSection'
+import ContextualCta from '../components/trust/ContextualCta'
+import { CTA_EVENTS, trackCta } from '../data/cta'
+
+/* ─── Inline styles for the redesigned homepage ──────────────────────── */
+const S = `
+
+/* ── HERO ── */
+.hp-hero {
+  background: linear-gradient(180deg, #FBFDFF 0%, #F3F8FF 55%, #EEF5FF 100%);
+  padding: clamp(24px, 3.2vw, 42px) 0 clamp(28px, 3.5vw, 46px);
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+.hp-hero::before {
+  content: '';position:absolute;inset:0;pointer-events:none;
+  background: radial-gradient(900px 620px at 78% -12%, rgba(43,114,212,.10), transparent 62%),
+              radial-gradient(500px 420px at 6% 105%, rgba(43,114,212,.07), transparent 60%);
+  animation: heroGlowDrift 22s ease-in-out infinite alternate;
+}
+.hp-hero::after {
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    linear-gradient(rgba(29,93,184,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29,93,184,.035) 1px, transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image: radial-gradient(760px 480px at 72% 0%, #000, transparent 72%);
+  mask-image: radial-gradient(760px 480px at 72% 0%, #000, transparent 72%);
+}
+@keyframes heroGlowDrift {
+  from { transform: translate3d(0,0,0) scale(1); }
+  to   { transform: translate3d(-1.5%, 1.5%, 0) scale(1.03); }
+}
+.hp-hero-inner { max-width:1200px;margin:0 auto;padding:0 28px;position:relative;z-index:1; }
+.hp-hero-grid  { display:grid;grid-template-columns:46% 54%;gap:36px;align-items:center; }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .hp-hero-grid { grid-template-columns: 47% 53%; gap: 20px; }
+  .hp-hero h1 { font-size: clamp(32px, 3.8vw, 46px) !important; margin-bottom: 16px !important; }
+  .hp-hero-desc { font-size: 15px !important; margin-bottom: 20px !important; }
+  .hp-cta-row { margin-bottom: 20px !important; }
+}
+
+@media (max-width: 991px) {
+  .hp-hero-inner { text-align: center; }
+  .hp-hero-grid { grid-template-columns: 1fr; gap: 14px; }
+  .hp-hero-grid > div:first-child { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .hp-eyebrow { margin-left: auto; margin-right: auto; justify-content: center; margin-bottom: 14px; }
+  .hp-hero h1 { font-size: clamp(28px, 5.2vw, 44px); text-align: center; margin-bottom: 14px; }
+  .hp-hero-desc { font-size: 15px; margin-bottom: 16px; text-align: center; margin-left: auto; margin-right: auto; }
+  .hp-cta-row { margin-bottom: 16px; justify-content: center; }
+  .hp-trust-pills {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 380px !important;
+    margin: 0 auto 12px !important;
+    padding: 0 !important;
+  }
+  .hp-trust-pill {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: 11px !important;
+    padding: 6px 10px !important;
+    gap: 5px !important;
+    white-space: nowrap !important;
+    border-radius: 99px !important;
+    background: #fff !important;
+    border: 1px solid var(--line) !important;
+    box-shadow: var(--sh-xs) !important;
+  }
+  .hp-trust-pill svg {
+    width: 12px !important;
+    height: 12px !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hp-hero-inner { padding: 0 14px !important; }
+  .hp-hero-grid { gap: 10px !important; }
+  .hp-hero h1 { font-size: clamp(25px, 6.8vw, 32px); margin-bottom: 12px; }
+  .hp-hero-desc { font-size: 13.5px; margin-bottom: 14px; line-height: 1.55; }
+  .hp-cta-row { margin-bottom: 14px; gap: 8px; }
+  .hp-btn-wa, .hp-btn-secondary { height: 44px; padding: 0 16px; font-size: 13.5px; }
+  .hp-trust-pills {
+    max-width: 350px !important;
+    gap: 6px !important;
+    margin: 0 auto 10px !important;
+  }
+  .hp-trust-pill {
+    font-size: 10px !important;
+    padding: 5px 8px !important;
+    gap: 4px !important;
+  }
+  .hp-trust-pill svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+}
+
+.hp-eyebrow {
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--blue-dark);margin-bottom:22px;
+}
+.hp-eyebrow-dot { width:6px;height:6px;border-radius:50%;background:var(--blue);flex:none;box-shadow:0 0 0 4px rgba(29,93,184,.14); }
+.hp-hero h1 {
+  font-size: clamp(34px, 4.8vw, 64px);
+  font-weight: 900; letter-spacing: -.04em; line-height: 1.02; color:var(--navy); margin-bottom:22px;
+}
+.hp-hero h1 em {
+  font-style:normal;
+  background: linear-gradient(118deg,var(--blue-dark),var(--blue-bright));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hp-hero-desc { font-size:17px;color:var(--text-2);line-height:1.7;max-width:500px;margin-bottom:36px; }
+.hp-cta-row   { display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px; }
+.hp-btn-primary {
+  display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 28px;
+  background:#1D6FE0;color:#fff;font-weight:700;font-size:15px;border-radius:10px;
+  transition:background .15s,transform .15s,box-shadow .15s;text-decoration:none;
+  box-shadow:0 8px 24px rgba(29,111,224,.35);
+}
+.hp-btn-primary:hover { background:#0F52C0;transform:translateY(-2px);box-shadow:0 12px 32px rgba(15,82,192,.45); }
+.hp-btn-wa { display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 28px;background:#25D366;color:#fff;font-weight:700;font-size:15px;border-radius:10px;transition:background .15s,transform .15s;text-decoration:none;box-shadow:0 8px 24px rgba(37,211,102,.35); }
+.hp-btn-wa:hover { background:#1da851;transform:translateY(-2px); }
+.hp-btn-secondary {
+  display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;
+  background:#fff;color:var(--blue-dark);font-weight:700;font-size:15px;border-radius:10px;
+  border:1.5px solid var(--line-strong);transition:background .15s,transform .15s,border-color .15s;text-decoration:none;
+}
+.hp-btn-secondary:hover { background:var(--brand-50);color:var(--blue-dark);border-color:var(--blue); }
+.hp-trust-pills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 530px;
+}
+.hp-trust-pill  {
+  display:flex;align-items:center;justify-content:center;text-align:center;gap:6px;font-size:11.5px;font-weight:600;
+  color:var(--text-2);background:#fff;border:1px solid var(--line);
+  border-radius:99px;padding:6px 8px;box-shadow:var(--sh-xs);white-space:nowrap;
+}
+.hp-trust-pill svg { width:13px;height:13px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-hero::before { animation: none; }
+}
+
+/* ── STATS STRIP ── */
+.hp-stats {
+  background:#fff;border-bottom:1px solid rgba(13,31,60,.06);
+  padding:32px 0;
+}
+.hp-stats-grid {
+  max-width:1200px;margin:0 auto;padding:0 28px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+}
+.hp-stats-item { text-align:center; }
+.hp-stats-num {
+  font-size:clamp(32px,4vw,52px);font-weight:900;letter-spacing:-.04em;color:var(--navy);line-height:1;
+  background:linear-gradient(135deg,#0F52C0,#1D6FE0);-webkit-background-clip:text;
+  background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hp-stats-label { font-size:14px;color:var(--text-2);margin-top:6px;font-weight:500; }
+.hp-stats-divider { width:1px;background:var(--line);align-self:stretch;display:none; }
+
+/* ── SERVICES SECTION ── */
+.hp-services { padding:76px 0;background:var(--sec-b); }
+.hp-section-head { text-align:center;margin-bottom:40px; }
+.hp-section-eyebrow {
+  display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--blue);margin-bottom:14px;
+}
+.hp-section-head h2 {
+  font-size:clamp(28px,3.8vw,50px);font-weight:900;letter-spacing:-.04em;color:var(--navy);
+  margin-bottom:16px;line-height:1.06;
+}
+.hp-section-head p { font-size:16px;color:var(--text-2);max-width:560px;margin:0 auto;line-height:1.7; }
+/* ── Category list ── */
+.hp-svc-cats { display:flex;flex-direction:column;gap:12px;max-width:1200px;margin:0 auto;padding:0 28px; }
+
+/* ── Outer category container ── */
+.hp-svc-cat {
+  background:#fff;
+  border:1.5px solid var(--line);
+  border-radius:18px;
+  transition:border-color .22s, box-shadow .22s;
+  overflow:hidden;
+}
+.hp-svc-cat:hover { border-color:rgba(29,93,184,.18);box-shadow:0 4px 18px rgba(29,93,184,.07); }
+.hp-svc-cat.open  {
+  border-color:rgba(29,93,184,.28);
+  box-shadow:0 6px 28px rgba(29,93,184,.09);
+}
+
+/* ── Category header row ── */
+.hp-svc-cat-head {
+  display:flex;align-items:center;gap:14px;
+  padding:clamp(14px,1.6vw,20px) clamp(16px,2vw,24px);
+  cursor:pointer;
+  border-bottom:1px solid transparent;
+  transition:background .15s, border-color .22s;
+}
+.hp-svc-cat-head:hover { background:rgba(239,246,255,.6); }
+.hp-svc-cat.open .hp-svc-cat-head {
+  border-bottom-color:rgba(29,93,184,.1);
+  background:rgba(239,246,255,.5);
+}
+
+/* ── Category icon ── */
+.hp-svc-cat-icon {
+  width:44px;height:44px;border-radius:11px;background:#FED7AA;
+  display:grid;place-items:center;flex:none;
+  transition:transform .24s cubic-bezier(.175,.885,.32,1.275),background .18s;
+}
+.hp-svc-cat-head:hover .hp-svc-cat-icon { transform:scale(1.07) rotate(-4deg);background:#FDBA74; }
+.hp-svc-cat-icon svg { width:20px;height:20px;stroke:#C2410C;fill:none;stroke-width:2;flex:none; }
+.hp-svc-cat-name { font-size:clamp(15px,1.8vw,17px);font-weight:700;color:var(--navy);flex:1; }
+.hp-svc-cat-count {
+  font-size:12px;font-weight:700;padding:4px 12px;border-radius:99px;
+  background:#FED7AA;color:#C2410C;flex:none;white-space:nowrap;
+}
+.hp-svc-cat-chev {
+  width:20px;height:20px;stroke:var(--text-3);fill:none;stroke-width:2;
+  transition:transform .28s cubic-bezier(.2,.7,.3,1),stroke .18s;flex:none;
+}
+.hp-svc-cat.open .hp-svc-cat-chev { transform:rotate(90deg);stroke:var(--blue); }
+
+/* ── Expandable body ── */
+.hp-svc-cat-body {
+  max-height:0;overflow:hidden;
+  opacity:0;
+  transition:max-height .44s cubic-bezier(.25,.46,.45,.94), opacity .32s ease;
+}
+.hp-svc-cat-body.open { max-height:1400px;opacity:1; }
+
+/* ── Inner card grid ── */
+.hp-svc-cards {
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0,1fr));
+  gap:clamp(12px,1.4vw,18px);
+  padding:clamp(18px,2vw,26px) clamp(16px,2vw,24px) clamp(18px,2vw,26px);
+}
+
+/* ── Individual service card ── */
+.hp-svc-card {
+  display:flex;
+  flex-direction:column;
+  padding:clamp(18px,1.8vw,24px);
+  border-radius:14px;
+  border:1px solid rgba(15,28,46,.1);
+  background:#fff;
+  text-decoration:none;
+  min-height:180px;
+  transition:border-color .2s, background .2s,
+             transform .22s cubic-bezier(.175,.885,.32,1.275),
+             box-shadow .22s;
+  position:relative;overflow:hidden;
+}
+.hp-svc-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--blue-dark),var(--blue-bright));
+  opacity:0;transition:opacity .22s;
+}
+.hp-svc-card:hover {
+  border-color:rgba(29,93,184,.3);
+  background:#f6faff;
+  box-shadow:0 8px 24px rgba(29,93,184,.12);
+  transform:translateY(-3px);
+}
+.hp-svc-card:hover::before { opacity:1; }
+
+/* ── Icon ── */
+.hp-svc-card-icon {
+  width:40px;height:40px;border-radius:10px;
+  background:#FED7AA;display:grid;place-items:center;flex:none;
+  margin-bottom:14px;
+  transition:transform .24s cubic-bezier(.175,.885,.32,1.275),background .18s;
+}
+.hp-svc-card:hover .hp-svc-card-icon { transform:scale(1.1) rotate(-5deg);background:#FDBA74; }
+.hp-svc-card-icon svg { width:18px;height:18px;stroke:#C2410C;fill:none;stroke-width:2; }
+
+/* ── Title ── */
+.hp-svc-card-name {
+  font-size:14px;font-weight:700;color:var(--navy);line-height:1.35;
+  margin-bottom:8px;
+}
+
+/* ── Description ── */
+.hp-svc-card-desc {
+  font-size:13px;color:var(--text-2);line-height:1.6;
+  flex:1;
+}
+
+/* ── Learn more link — pinned to bottom ── */
+.hp-svc-card-arrow {
+  display:flex;align-items:center;gap:5px;
+  font-size:12.5px;font-weight:700;color:var(--blue);
+  margin-top:16px;
+  transition:gap .18s,color .15s;
+}
+.hp-svc-card:hover .hp-svc-card-arrow { gap:8px;color:var(--blue-dark); }
+.hp-svc-card-arrow svg {
+  width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;
+  transition:transform .18s;flex:none;
+}
+.hp-svc-card:hover .hp-svc-card-arrow svg { transform:translateX(3px); }
+
+/* ── View all button ── */
+.hp-svc-all-btn { text-align:center;margin-top:40px; }
+.hp-svc-all-btn a {
+  display:inline-flex;align-items:center;gap:8px;
+  padding:0 28px;height:48px;border-radius:10px;
+  border:1.5px solid var(--blue);color:var(--blue);
+  font-weight:700;font-size:14.5px;text-decoration:none;
+  transition:background .15s,color .15s,transform .15s,box-shadow .15s;
+}
+.hp-svc-all-btn a:hover {
+  background:var(--blue);color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(29,93,184,.25);
+}
+
+/* ── Responsive ── */
+@media(max-width:1024px) {
+  .hp-svc-cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:820px) {
+  .hp-svc-cards { grid-template-columns:repeat(2,minmax(0,1fr));gap:12px; }
+  .hp-svc-cat-head { padding:14px 18px; }
+}
+@media(max-width:600px) {
+  .hp-svc-cards { grid-template-columns:1fr;gap:10px;padding:14px 14px 16px; }
+  .hp-svc-card { min-height:unset;padding:16px; }
+  .hp-svc-card-icon { margin-bottom:10px; }
+}
+@media(max-width:430px) {
+  .hp-svc-cats { padding:0 16px; }
+  .hp-svc-cat-head { padding:12px 14px;gap:10px; }
+  .hp-svc-cat-name { font-size:14px; }
+  .hp-svc-cat-icon { width:38px;height:38px;border-radius:9px; }
+  .hp-svc-cards { padding:12px 12px 14px;gap:8px; }
+  .hp-svc-card { padding:14px; }
+  .hp-svc-card-name { font-size:13.5px; }
+  .hp-svc-card-desc { font-size:12.5px; }
+}
+
+
+/* ── WHY LAUNCHERDESK ── */
+/* ── WHY LAUNCHERDESK ── */
+.hp-why {
+  padding:80px 0;background:var(--brand-50);
+  position:relative;overflow:hidden;
+}
+.hp-why::before {
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(620px 420px at 90% 4%, rgba(43,114,212,.11), transparent 60%),
+    radial-gradient(460px 380px at 6% 30%, rgba(43,114,212,.055), transparent 62%);
+  background-size:140% 140%,140% 140%;
+  animation:hpWhyBgDrift 22s ease-in-out infinite alternate;
+}
+@keyframes hpWhyBgDrift {
+  0%   { background-position:100% 0%, 0% 0%; }
+  100% { background-position:80% 20%, 20% 20%; }
+}
+
+/* ── Centered intro block (eyebrow + heading + paragraph) ── */
+.hp-why-intro {
+  max-width:1200px;margin:0 auto;padding:0 28px;
+  position:relative;z-index:1;
+  text-align:center;
+  margin-bottom:52px;
+}
+.hp-why-intro .hp-section-eyebrow {
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  color:#059669;margin-bottom:20px;
+}
+/* Two decorative lines flanking the eyebrow label */
+.hp-why-eyebrow-line {
+  height:1px;width:48px;flex:none;
+  background:linear-gradient(90deg, rgba(5,150,105,.55), transparent);
+  position:relative;overflow:hidden;
+}
+/* Mirror the right-side line */
+.hp-why-eyebrow-line--right {
+  background:linear-gradient(270deg, rgba(5,150,105,.55), transparent);
+}
+.hp-why-eyebrow-line::after {
+  content:'';position:absolute;inset:0;width:40%;
+  background:linear-gradient(90deg, transparent, rgba(5,150,105,.9), transparent);
+  animation:hpEyebrowLine 3.2s ease-in-out infinite;
+}
+@keyframes hpEyebrowLine { 0%{transform:translateX(-100%);} 60%,100%{transform:translateX(280%);} }
+
+.hp-why-intro h2 {
+  font-size:clamp(30px,3.8vw,54px);
+  font-weight:800;letter-spacing:-.035em;color:var(--navy);
+  line-height:1.08;margin-bottom:20px;
+  max-width:720px;margin-left:auto;margin-right:auto;
+}
+.hp-why-intro p {
+  font-size:clamp(15px,1.6vw,17px);color:var(--text-2);
+  line-height:1.75;
+  max-width:560px;margin:0 auto;
+}
+
+/* ── Two-column content grid (feature cards + comparison) ── */
+.hp-why-grid {
+  max-width:1200px;margin:0 auto;padding:0 28px;position:relative;z-index:1;
+  display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:start;
+}
+
+/* faint connective thread */
+.hp-why-connector {
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(1200px,calc(100% - 56px));height:1px;z-index:0;pointer-events:none;
+}
+.hp-why-connector-dot {
+  position:absolute;top:50%;width:5px;height:5px;border-radius:50%;
+  background:var(--blue);box-shadow:0 0 0 5px rgba(43,114,212,.14),0 0 14px rgba(43,114,212,.5);
+  animation:hpConnectorPulse 3.6s ease-in-out infinite;
+}
+.hp-why-connector-dot--a { left:calc(50% - 2px); animation-delay:0s; }
+.hp-why-connector-dot--b { left:calc(50% - 2px); animation-delay:1.8s; }
+@keyframes hpConnectorPulse {
+  0%,100% { opacity:0; transform:translateY(-50%) scale(.6); }
+  50%     { opacity:1; transform:translateY(-50%) scale(1.6); }
+}
+
+.hp-why-accent {
+  background:linear-gradient(100deg,var(--blue-dark),var(--blue),var(--blue-bright));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hp-why-features { display:flex;flex-direction:column;gap:16px; }
+.hp-why-feat {
+  --mx:50%;--my:50%;
+  position:relative;isolation:isolate;overflow:hidden;
+  display:flex;gap:16px;align-items:flex-start;padding:20px 22px;border-radius:18px;
+  border:1px solid var(--line);
+  background:linear-gradient(165deg,rgba(255,255,255,.92),rgba(247,251,255,.8));
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 1px 2px rgba(15,28,46,.03), 0 14px 30px -20px rgba(15,28,46,.18);
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1),border-color .35s;
+}
+.hp-why-feat::before {
+  /* cursor-follow highlight */
+  content:'';position:absolute;inset:0;z-index:-1;opacity:0;
+  background:radial-gradient(220px circle at var(--mx) var(--my), rgba(43,114,212,.16), transparent 68%);
+  transition:opacity .35s ease;
+}
+.hp-why-feat-glow {
+  position:absolute;top:-30px;right:-30px;width:90px;height:90px;border-radius:50%;z-index:-1;
+  background:radial-gradient(circle, rgba(43,114,212,.16), transparent 70%);
+  filter:blur(2px);opacity:.7;
+  animation:hpFeatGlowDrift 7s ease-in-out infinite;
+}
+.hp-why-feat:nth-child(2) .hp-why-feat-glow { animation-delay:1.2s; }
+.hp-why-feat:nth-child(3) .hp-why-feat-glow { animation-delay:2.4s; }
+.hp-why-feat:nth-child(4) .hp-why-feat-glow { animation-delay:3.6s; }
+@keyframes hpFeatGlowDrift {
+  0%,100% { transform:translate(0,0) scale(1); }
+  50%     { transform:translate(-8px,8px) scale(1.15); }
+}
+.hp-why-feat::after {
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:1;
+  background:linear-gradient(90deg,transparent,var(--blue),transparent);
+  transform:scaleX(0);transform-origin:0 50%;transition:transform .45s cubic-bezier(.16,1,.3,1);
+}
+.hp-why-feat:hover {
+  transform:translateY(-6px);border-color:rgba(43,114,212,.36);
+  box-shadow:0 1px 2px rgba(15,28,46,.04), 0 26px 44px -20px rgba(29,93,184,.3);
+}
+.hp-why-feat:hover::before { opacity:1; }
+.hp-why-feat:hover::after { transform:scaleX(1); }
+.hp-why-feat-icon {
+  width:46px;height:46px;border-radius:12px;flex:none;
+  background:linear-gradient(160deg,var(--brand-50) 0%,#fff 60%,var(--brand-100) 130%);
+  border:1px solid rgba(43,114,212,.16);
+  display:grid;place-items:center;position:relative;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+}
+.hp-why-feat:hover .hp-why-feat-icon { transform:scale(1.05) rotate(-3deg);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 14px -4px rgba(43,114,212,.35); }
+.hp-why-feat-icon svg { width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2; }
+.hp-why-feat h4 { font-size:15.5px;font-weight:700;color:var(--navy);margin-bottom:6px;letter-spacing:-.01em; }
+.hp-why-feat p  { font-size:13.5px;color:var(--text-2);line-height:1.62; }
+.hp-why-feat-link { display:inline-flex;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--blue);text-decoration:none; }
+.hp-why-feat-link:hover { text-decoration:underline; }
+
+/* comparison right card */
+.hp-vs-card {
+  position:relative;background:linear-gradient(165deg,var(--navy-3),var(--navy));
+  border-radius:24px;overflow:hidden;color:#fff;
+  box-shadow:0 10px 20px -10px rgba(13,31,60,.3), 0 40px 70px -24px rgba(13,31,60,.4);
+  border:1px solid rgba(255,255,255,.06);
+}
+.hp-vs-card::before {
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:.55;z-index:0;
+  background:linear-gradient(100deg, transparent 20%, rgba(255,255,255,.06) 35%, transparent 50%);
+  background-size:220% 100%;animation:hpVsSheen 9s ease-in-out infinite;
+}
+@keyframes hpVsSheen { 0%{background-position:130% 0;} 50%{background-position:-30% 0;} 100%{background-position:130% 0;} }
+.hp-vs-glow {
+  position:absolute;top:-10%;right:0;width:52%;height:120%;z-index:0;pointer-events:none;
+  background:radial-gradient(closest-side, rgba(43,114,212,.30), transparent 72%);
+  filter:blur(6px);animation:hpVsGlowDrift 8s ease-in-out infinite;
+}
+@keyframes hpVsGlowDrift { 0%,100%{transform:translateY(-4%);opacity:.85;} 50%{transform:translateY(4%);opacity:1;} }
+.hp-vs-head {
+  display:grid;grid-template-columns:1fr 1fr;position:relative;z-index:1;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.hp-vs-col { padding:18px 22px;text-align:center;position:relative; }
+.hp-vs-col.bad { background:rgba(239,68,68,.07); }
+.hp-vs-col.good { background:rgba(29,111,224,.16); }
+.hp-vs-col.good::after {
+  content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(126,206,244,.6),transparent);
+}
+.hp-vs-col-label { font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase; }
+.hp-vs-col.bad  .hp-vs-col-label { color:#FCA5A5; }
+.hp-vs-col.good .hp-vs-col-label { color:#8fd4fb; }
+.hp-vs-rows { padding:8px 0;position:relative;z-index:1; }
+.hp-vs-row  {
+  display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(255,255,255,.05);
+  padding:0;transition:background .25s ease;
+}
+.hp-vs-row:hover { background:rgba(255,255,255,.04); }
+.hp-vs-row:hover .hp-vs-cell.good { text-shadow:0 0 16px rgba(94,193,255,.55); }
+.hp-vs-row:last-child { border-bottom:0; }
+.hp-vs-cell { padding:14px 22px;font-size:13.5px;display:flex;align-items:center;gap:9px;overflow-wrap:anywhere;transition:text-shadow .25s ease; }
+.hp-vs-cell.bad  { color:#f0b3b3; }
+.hp-vs-cell.good { color:#c9def2;font-weight:600; }
+.hp-vs-cell svg  { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;flex:none; }
+.hp-vs-cell.good svg { color:#5ec1ff; }
+
+/* scroll-reveal for this section (reuses site-wide .reveal-up mechanism) */
+.hp-why .reveal-up { opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1); }
+.hp-why .reveal-up.in { opacity:1;transform:none; }
+.hp-why-vs-wrap.reveal-up { transform:translateX(16px) translateY(6px) scale(.96); }
+.hp-why-vs-wrap.reveal-up.in { transform:none; }
+.hp-why-features.reveal-up > * { opacity:0; }
+.hp-why-features.reveal-up.in > * {
+  /* static end-state as a safety net, in case the entrance animation is
+     skipped/interrupted — cards must never get stuck invisible */
+  opacity:1;animation:hpWhyCardIn .6s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes hpWhyCardIn { from{opacity:0;transform:translateY(18px);} to{opacity:1;transform:none;} }
+@media (prefers-reduced-motion: reduce) {
+  .hp-vs-card::before { animation:none; }
+  .hp-why-feat, .hp-why-feat-icon { transition:none; }
+  .hp-why .reveal-up, .hp-why-features.reveal-up > * { transition:none!important;animation:none!important; }
+  .hp-why .reveal-up.in, .hp-why-features.reveal-up.in > * { opacity:1!important;transform:none!important; }
+}
+
+/* ── BUSINESS TYPES ── */
+.hp-types { padding:76px 0;background:var(--sec-b); }
+.hp-types-grid {
+  max-width:1200px;margin:0 auto;padding:0 28px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;
+}
+.hp-type-card {
+  border-radius:18px;padding:28px 24px;text-decoration:none;
+  border:1.5px solid var(--sec-purple-border);background:#fff;
+  transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden;
+}
+.hp-type-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:var(--grad);opacity:0;transition:opacity .2s;
+}
+.hp-type-card:hover { border-color:var(--blue);box-shadow:0 10px 28px rgba(29,93,184,.12);transform:translateY(-3px); }
+.hp-type-card:hover::before { opacity:1; }
+.hp-type-icon {
+  width:48px;height:48px;border-radius:12px;
+  background:var(--brand-50);
+  display:grid;place-items:center;margin-bottom:16px;
+}
+.hp-type-icon svg { width:24px;height:24px;stroke:var(--blue); }
+.hp-type-name { font-size:17px;font-weight:800;color:var(--navy);margin-bottom:8px; }
+.hp-type-desc { font-size:13.5px;color:var(--text-2);line-height:1.6;margin-bottom:14px; }
+.hp-type-tags { display:flex;flex-wrap:wrap;gap:6px; }
+.hp-type-tag  {
+  font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;
+  background:var(--brand-50);color:var(--blue);
+}
+.hp-type-arrow { margin-top:16px;display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--blue); }
+.hp-type-arrow svg { width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5; }
+
+/* ── SERVICE FINDER / ROADMAP ── */
+.hp-roadmap { padding:64px 0; background:#fff; }
+.hp-roadmap-card {
+  display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;
+  background:linear-gradient(135deg,#0A2540 0%,#1D6FE0 100%);
+  border-radius:24px;padding:clamp(32px,4vw,52px);color:#fff;
+  box-shadow:0 24px 60px rgba(10,37,64,.25);
+}
+.hp-roadmap-text{max-width:560px}
+.hp-roadmap-text h2{font-size:clamp(22px,3vw,32px);font-weight:900;margin:8px 0 12px;color:#fff}
+.hp-roadmap-text p{font-size:15px;color:rgba(255,255,255,.82);line-height:1.65;margin-bottom:18px}
+.hp-roadmap-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.hp-roadmap-list li{display:flex;align-items:center;gap:8px;font-size:13.5px;color:rgba(255,255,255,.92);font-weight:600}
+.hp-roadmap-list li::before{content:'✓';color:#4ADE80;font-weight:900}
+.hp-roadmap-btns{display:flex;flex-direction:column;gap:12px;flex:none;min-width:220px}
+.hp-roadmap-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 26px;background:#F97316;color:#fff;font-weight:800;font-size:14.5px;border-radius:12px;text-decoration:none;box-shadow:0 8px 24px rgba(249,115,22,.35);transition:transform .15s}
+.hp-roadmap-btn-primary:hover{transform:translateY(-2px)}
+.hp-roadmap-btn-secondary{display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 26px;background:rgba(255,255,255,.12);color:#fff;font-weight:700;font-size:14.5px;border-radius:12px;border:1.5px solid rgba(255,255,255,.35);cursor:pointer;font-family:inherit;transition:background .15s}
+.hp-roadmap-btn-secondary:hover{background:rgba(255,255,255,.22)}
+@media (max-width:760px){
+  .hp-roadmap-card{flex-direction:column;align-items:stretch;text-align:left}
+  .hp-roadmap-btns{width:100%}
+}
+
+/* ── HOW IT WORKS ── */
+.hp-how { padding:76px 0;background:var(--brand-50); position:relative; overflow:hidden; }
+.hp-how::before {
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(700px 400px at 90% 0%, rgba(43,114,212,.08), transparent 65%);
+}
+.hp-how > * { position:relative; z-index:1; }
+.hp-how-steps {
+  max-width:1200px;margin:0 auto;padding:0 28px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px;
+}
+.hp-how-step {
+  padding:28px;border-radius:18px;border:1.5px solid var(--line);
+  background:#fff;position:relative;box-shadow:var(--sh-xs);
+  transition:border-color .2s,box-shadow .2s,transform .2s;
+}
+.hp-how-step:hover { border-color:var(--blue);box-shadow:var(--sh);transform:translateY(-3px); }
+.hp-how-num {
+  font-size:clamp(42px,5vw,64px);font-weight:900;letter-spacing:-.04em;
+  line-height:1;margin-bottom:16px;
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue-bright));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hp-how-step h4 { font-size:16px;font-weight:800;color:var(--navy);margin-bottom:8px; }
+.hp-how-step p  { font-size:13.5px;color:var(--text-2);line-height:1.6; }
+.hp-how-connector {
+  position:absolute;top:50%;right:-12px;width:24px;height:2px;
+  background:linear-gradient(90deg,var(--blue),rgba(43,114,212,.15));z-index:1;
+}
+
+/* ── RESOURCES ── */
+.hp-resources { padding:76px 0;background:var(--sec-b); }
+.hp-res-grid {
+  max-width:1200px;margin:0 auto;padding:0 28px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;
+}
+.hp-res-card {
+  background:#fff;border-radius:16px;border:1.5px solid var(--line);overflow:hidden;
+  text-decoration:none;transition:border-color .2s,box-shadow .2s,transform .2s;display:flex;flex-direction:column;
+}
+.hp-res-card:hover { border-color:var(--blue);box-shadow:0 10px 30px rgba(29,111,224,.12);transform:translateY(-3px); }
+.hp-res-card-thumb { height:7px;background:linear-gradient(90deg,var(--brand-700),var(--brand-400)); }
+.hp-res-card-body { padding:24px;flex:1;display:flex;flex-direction:column; }
+.hp-res-cat {
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:10px;
+}
+.hp-res-title { font-size:16px;font-weight:800;color:var(--navy);margin-bottom:8px;line-height:1.3; }
+.hp-res-desc  { font-size:13.5px;color:var(--text-2);line-height:1.6;flex:1; }
+.hp-res-link  {
+  display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--blue);margin-top:16px;
+}
+.hp-res-link svg { width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5; }
+
+/* ── MARQUEE ── */
+.hp-marquee-wrap {
+  background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:14px 0;overflow:hidden;position:relative;
+}
+.hp-marquee-wrap::before,.hp-marquee-wrap::after {
+  content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;
+}
+.hp-marquee-wrap::before{left:0;background:linear-gradient(to right,#fff,transparent)}
+.hp-marquee-wrap::after{right:0;background:linear-gradient(to left,#fff,transparent)}
+.hp-marquee-track {
+  display:flex;gap:0;width:max-content;
+  animation:marquee-scroll 60s linear infinite;
+}
+.hp-marquee-wrap:hover .hp-marquee-track { animation-play-state:paused }
+@keyframes marquee-scroll {
+  from { transform:translateX(0) }
+  to   { transform:translateX(-50%) }
+}
+.hp-marquee-item {
+  display:inline-flex;align-items:center;gap:10px;
+  padding:0 28px;white-space:nowrap;
+  font-size:13.5px;font-weight:600;color:var(--navy);
+}
+.hp-marquee-dot {
+  width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;opacity:.5;
+}
+
+/* ── RECENTLY PARTNERED ── */
+.hp-partners { padding:44px 0 40px;background:var(--sec-b); }
+.hp-partners-label {
+  text-align:center;font-size:11.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text-3, #94A3B8);margin-bottom:26px;
+}
+.hp-partners-row {
+  width:100%;margin:0;padding:0 28px;box-sizing:border-box;
+  display:flex;align-items:stretch;justify-content:center;flex-wrap:nowrap;
+  gap:16px;
+}
+.hp-partners-row::-webkit-scrollbar { display:none; }.hp-partners-row::-webkit-scrollbar { display:none; }
+.hp-partners-card {
+  display:flex;align-items:center;gap:12px;
+  background:#fff;border:1.5px solid var(--line);border-radius:14px;
+  padding:12px 16px;flex:0 0 200px;width:200px;min-width:0;box-sizing:border-box;text-decoration:none;cursor:pointer;
+  outline:none;-webkit-tap-highlight-color:transparent;
+  transition:border-color .2s,box-shadow .2s,transform .2s;
+}
+.hp-partners-card:focus-visible { border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,111,224,.18); }
+.hp-partners-card:hover { border-color:var(--blue);box-shadow:var(--sh-xs);transform:translateY(-2px); }
+.hp-partners-logo {
+  display:flex;align-items:center;justify-content:center;
+  height:32px;width:32px;flex:none;
+}
+.hp-partners-logo img { height:100%;width:100%;object-fit:contain; }
+.hp-partners-logo-text {
+  font-size:15px;font-weight:800;letter-spacing:-.02em;color:var(--navy);
+  white-space:nowrap;
+}
+.hp-partners-info { display:flex;flex-direction:column;gap:3px;min-width:0; }
+.hp-partners-name { font-size:13.5px;font-weight:800;color:var(--navy);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.hp-partners-cat {
+  display:inline-flex;align-items:center;gap:5px;width:fit-content;white-space:nowrap;
+  font-size:9.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  color:var(--blue);background:var(--brand-50);border-radius:999px;padding:2px 8px;
+}
+.hp-partners-card.hp-partners-soon {
+  border-style:dashed;border-color:var(--line);cursor:default;
+}
+.hp-partners-card.hp-partners-soon:hover { border-color:var(--line);box-shadow:none;transform:none; }
+.hp-partners-soon-icon {
+  display:flex;align-items:center;justify-content:center;
+  height:32px;width:32px;flex:none;border-radius:9px;
+  background:var(--brand-50);color:var(--blue);
+}
+.hp-partners-soon-icon svg { width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2; }
+.hp-partners-cat.muted { color:var(--text-3, #94A3B8);background:var(--sec-b); }
+.hp-partners-more {
+  display:flex;align-items:center;justify-content:center;
+  font-size:13.5px;font-weight:700;color:var(--text-2);
+  width:100%;text-align:center;margin-top:22px;
+}
+.hp-faq { padding:76px 0;background:var(--sec-b); }
+.hp-faq-inner { max-width:800px;margin:0 auto;padding:0 28px; }
+.hp-faq-list  { display:flex;flex-direction:column;margin-top:40px; }
+.hp-faq-item  { border-bottom:1px solid var(--line); }
+.hp-faq-item:first-child { border-top:1px solid var(--line); }
+.hp-faq-q {
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:20px 0;cursor:pointer;transition:color .15s;
+}
+.hp-faq-q:hover .hp-faq-q-text { color:var(--blue); }
+.hp-faq-q-text { font-size:16.5px;font-weight:700;color:var(--navy);line-height:1.4;flex:1; }
+.hp-faq-icon  { width:24px;height:24px;border-radius:6px;background:var(--brand-50);display:grid;place-items:center;flex:none; }
+.hp-faq-icon svg { width:14px;height:14px;stroke:var(--blue);fill:none;stroke-width:2.5;transition:transform .25s; }
+.hp-faq-item:hover .hp-faq-a { max-height:320px; }
+.hp-faq-item:hover .hp-faq-icon svg { transform:rotate(45deg); }
+.hp-faq-a     { max-height:0;overflow:hidden;transition:max-height .55s cubic-bezier(.2,.7,.3,1); }
+.hp-faq-a-inner { padding:0 0 20px;font-size:14.5px;color:var(--text-2);line-height:1.72; }
+
+/* ── FINAL CTA ── */
+.hp-cta-section { padding:76px 0;background:linear-gradient(180deg,#fff 0%,#F3F8FF 100%); }
+.hp-cta-card {
+  max-width:1200px;margin:0 auto;padding:0 28px;
+}
+.hp-cta-inner {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:24px;padding:clamp(48px,6vw,80px);text-align:center;
+  box-shadow:0 32px 72px rgba(15,28,46,.10), 0 4px 16px rgba(15,28,46,.05);position:relative;overflow:hidden;
+}
+.hp-cta-inner::before {
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(700px 400px at 50% -20%,rgba(43,114,212,.10),transparent 60%);
+  pointer-events:none;
+}
+.hp-cta-inner h2 {
+  font-size:clamp(28px,4vw,52px);font-weight:900;letter-spacing:-.04em;color:var(--navy);
+  margin-bottom:16px;position:relative;
+}
+.hp-cta-inner p {
+  font-size:clamp(15px,1.8vw,18px);color:var(--text-2);max-width:540px;
+  margin:0 auto 40px;line-height:1.7;position:relative;
+}
+.hp-cta-btns { display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative; }
+.hp-cta-btn-wa {
+  display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 32px;
+  background:#25D366;color:#fff;font-weight:700;font-size:15.5px;border-radius:12px;
+  text-decoration:none;transition:background .15s,transform .15s;box-shadow:0 8px 24px rgba(37,211,102,.28);
+}
+.hp-cta-btn-wa:hover { background:#1da851;transform:translateY(-2px); }
+.hp-cta-btn-exp {
+  display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 28px;
+  background:#fff;color:var(--blue-dark);font-weight:700;font-size:15px;border-radius:12px;border:1.5px solid var(--line-strong);
+  text-decoration:none;transition:background .15s,transform .15s,border-color .15s;
+}
+.hp-cta-btn-exp:hover { background:var(--brand-50);color:var(--blue-dark);border-color:var(--blue); }
+.hp-cta-btn-ai {
+  display:inline-flex;align-items:center;gap:8px;height:54px;padding:0 26px;
+  background:transparent;color:var(--blue);font-weight:700;font-size:15px;border-radius:12px;border:1.5px dashed var(--blue);
+  cursor:pointer;font-family:inherit;transition:background .15s;
+}
+.hp-cta-btn-ai:hover { background:var(--brand-50); }
+.hp-cta-microcopy{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px;font-size:12.5px;font-weight:600;color:var(--text-3,#94A3B8);position:relative}
+.hp-cta-trustbar{max-width:520px;margin-left:auto;margin-right:auto;position:relative}
+
+/* ── LIFECYCLE ACCORDION (reused from original) ── */
+.lc2-section{background:var(--sec-b);padding:96px 0}
+.lc2-inner{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:start;max-width:1200px;margin:0 auto;padding:0 28px}
+.lc2-left{position:sticky;top:92px}
+.lc2-left .eyebrow{margin-bottom:14px;display:block}
+.lc2-heading{font-size:clamp(26px,3.4vw,44px);font-weight:900;letter-spacing:-.04em;line-height:1.06;margin-bottom:18px}
+.lc2-desc{font-size:16px;color:var(--text-2);line-height:1.7;max-width:360px;margin-bottom:28px}
+.lc2-list{display:flex;flex-direction:column}
+.lc2-item{border-top:1px solid var(--line);overflow:hidden}
+.lc2-item:last-child{border-bottom:1px solid var(--line)}
+.lc2-trigger{width:100%;background:none;border:0;cursor:pointer;display:grid;grid-template-columns:44px 1fr 28px;align-items:center;gap:12px;padding:20px 4px;text-align:left;transition:background .15s;border-radius:0}
+.lc2-trigger:hover{background:rgba(5,150,105,.06)}
+.lc2-num{font-family:var(--font);font-weight:800;font-size:14px;color:var(--blue);opacity:.45;transition:opacity .25s,color .25s;line-height:1}
+.lc2-name{font-family:var(--font);font-weight:700;font-size:clamp(17px,2vw,21px);color:var(--navy);transition:color .25s;line-height:1}
+.lc2-chevron{width:20px;height:20px;stroke:var(--text-3);fill:none;stroke-width:2;transition:transform .28s cubic-bezier(.2,.7,.3,1),stroke .2s;flex:none}
+.lc2-item.lc2-open .lc2-trigger{background:rgba(5,150,105,.06)}
+.lc2-item.lc2-open .lc2-num{opacity:1;color:var(--blue)}
+.lc2-item.lc2-open .lc2-name{color:var(--blue)}
+.lc2-item.lc2-open .lc2-chevron{transform:rotate(90deg);stroke:var(--blue)}
+.lc2-body{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(.2,.7,.3,1),opacity .3s;opacity:0}
+.lc2-item.lc2-open .lc2-body{opacity:1}
+.lc2-body-inner{padding:0 4px 22px 56px;display:flex;flex-direction:column;gap:10px}
+.lc2-body-desc{font-size:14px;color:var(--text-2);line-height:1.65;margin-bottom:4px}
+.lc2-chips{display:flex;flex-wrap:wrap;gap:8px}
+.lc2-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--font);font-weight:600;font-size:13px;color:var(--navy);background:#fff;border:1.5px solid var(--line);border-radius:99px;padding:7px 14px;text-decoration:none;transition:border-color .14s,background .14s,color .14s,transform .14s,box-shadow .14s}
+.lc2-chip:hover{border-color:var(--blue);color:var(--blue-dark);background:rgba(29,111,224,.06);transform:translateY(-1px);box-shadow:0 4px 12px rgba(29,111,224,.15)}
+.lc2-prog{height:2px;background:transparent;position:relative;margin:0 4px}
+.lc2-prog-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue-dark),var(--blue-bright));border-radius:2px;transition:width linear}
+.lc2-cta{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.lc2-cta span{font-size:13px;font-weight:700;color:var(--navy)}
+.lc2-cta-btn{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#fff;background:var(--blue);border-radius:999px;padding:6px 14px;text-decoration:none}
+.lc2-cta-btn:hover{background:var(--blue-dark)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .hp-hero-grid  { grid-template-columns:1fr;gap:36px }
+  .hp-why-grid   { grid-template-columns:1fr;gap:36px }
+  .hp-why-intro  { margin-bottom:36px; }
+  .hp-why-connector { display:none }
+  .hp-types-grid { grid-template-columns:1fr 1fr }
+  .hp-how-steps  { grid-template-columns:1fr 1fr;gap:20px }
+  .hp-res-grid   { grid-template-columns:1fr 1fr }
+  .lc2-inner     { grid-template-columns:1fr;gap:36px }
+  .lc2-left      { position:static }
+}
+@media(max-width:768px){
+  .hp-stats-grid { grid-template-columns:1fr 1fr;gap:24px }
+  .hp-types-grid { grid-template-columns:1fr 1fr }
+  .hp-how-steps  { grid-template-columns:1fr 1fr }
+  .hp-res-grid   { grid-template-columns:1fr }
+  .hp-vs-cell    { padding:12px 14px;font-size:12.5px;gap:6px }
+  .hp-vs-col     { padding:14px 12px }
+  .hp-why-grid   { gap:28px }
+  .lc2-inner     { gap:28px }
+  .hp-partners   { padding:32px 0 }
+  .hp-partners-row {
+    justify-content:flex-start;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;padding:6px 20px;
+  }
+  .hp-partners-card:hover,.hp-partners-card:active { transform:none; }
+  .hp-partners-card { flex:0 0 188px;width:188px;padding:12px 14px;gap:11px }
+  .hp-partners-name { font-size:13.5px;white-space:nowrap;overflow:visible;text-overflow:clip }
+  .hp-partners-cat  { font-size:9px;padding:2px 7px }
+}
+@media(max-width:640px){
+  .hp-hero       { padding:30px 0 36px }
+  .hp-hero h1    { font-size:clamp(30px,8vw,44px) }
+  .hp-cta-row    { flex-direction:column;align-items:stretch }
+  .hp-btn-primary,.hp-btn-secondary { width:100%;justify-content:center }
+  .hp-stats      { padding:24px 0 }
+  .hp-stats-grid { grid-template-columns:1fr 1fr; gap:18px }
+  .hp-stats-num  { font-size:clamp(28px,7vw,40px) }
+  .hp-services,.hp-why,.hp-types,.hp-how,.hp-resources,.hp-faq,.hp-cta-section,.lc2-section { padding:48px 0 }
+  .hp-types-grid,.hp-how-steps { grid-template-columns:1fr; margin-top:28px }
+  .hp-how-connector { display:none }
+  .hp-cta-inner  { border-radius:16px;padding:36px 20px }
+  .hp-cta-btns   { flex-direction:column;align-items:center }
+  .hp-cta-btn-wa,.hp-cta-btn-exp,.hp-cta-btn-ai { width:100%;justify-content:center }
+  .lc2-body-inner{ padding:0 4px 18px 44px }
+  .lc2-trigger   { grid-template-columns:36px 1fr 24px;gap:8px }
+}
+@media(max-width:480px){
+  .hp-stats-grid { grid-template-columns:1fr 1fr }
+  .lc2-inner     { padding:0 16px }
+  .hp-section-head h2 { font-size:clamp(24px,7vw,36px) }
+  .hp-vs-cell    { padding:10px 10px;font-size:11.5px }
+  .hp-vs-col-label { font-size:10px }
+  .hp-partners-card { flex:0 0 168px;width:168px;padding:11px 13px;gap:10px }
+  .hp-partners-logo,.hp-partners-soon-icon { height:28px;width:28px }
+  .hp-partners-name { font-size:12.5px }
+  .hp-partners-cat { font-size:8.5px;padding:2px 6px }
+  .hp-partners-label { font-size:10.5px;margin-bottom:18px }
+}
+@media(prefers-reduced-motion:reduce){
+  .lc2-prog-bar  { transition:none!important }
+  .hp-why-connector-dot,.hp-vs-card::before,.hp-vs-glow,.hp-why::before,.hp-why-eyebrow-line,.hp-why-feat-glow { animation:none!important; }
+}
+`
+
+/* ── DATA ─────────────────────────────────────────────────── */
+const STAGES = [
+  {
+    id: 'idea', num: '01', name: 'Idea & Research',
+    desc: 'Turn your idea into a validated business concept. We help you choose the right structure before you file anything.',
+    chips: [{ l: 'Entity Comparison', h: '/services/private-limited-company-registration' }, { l: 'Service Finder', h: '/services' }, { l: 'LauncherDesk AI', h: '/ai' }],
+    ctaPrompt: 'Not sure which structure fits?', ctaLabel: 'Find My Structure', ctaHref: '/services#finder',
+  },
+  {
+    id: 'start', num: '02', name: 'Register & Incorporate',
+    desc: 'Get your business legally registered with the right entity — Private Limited, LLP, OPC or Partnership.',
+    chips: [{ l: 'Pvt Ltd Registration', h: '/services/private-limited-company-registration' }, { l: 'LLP Registration', h: '/services/llp-registration' }, { l: 'OPC Registration', h: '/services/opc-registration' }, { l: 'Partnership Firm', h: '/services/partnership-registration' }],
+    ctaPrompt: 'Ready to start?', ctaLabel: 'Start Registration', ctaHref: '/services/private-limited-company-registration',
+  },
+  {
+    id: 'build', num: '03', name: 'Licences & Compliance',
+    desc: 'Get GST, MSME, FSSAI, trademark and every licence you need — without chasing government portals yourself.',
+    chips: [{ l: 'GST Registration', h: '/services/gst-registration' }, { l: 'Trademark', h: '/services/trademark-registration' }, { l: 'MSME / Udyam', h: '/services/msme-registration' }, { l: 'FSSAI', h: '/services/fssai-registration' }],
+    ctaPrompt: 'Already registered?', ctaLabel: 'Explore Compliance', ctaHref: '/solutions/compliance-management',
+  },
+  {
+    id: 'grow', num: '04', name: 'Technology & Growth',
+    desc: 'Website, CRM, automation, digital marketing and brand identity — everything you need to get found and grow.',
+    chips: [{ l: 'Website Development', h: '/services/website-development' }, { l: 'Digital Marketing', h: '/services/digital-marketing' }, { l: 'Business Automation', h: '/services/business-automation' }],
+    ctaPrompt: 'Ready to grow?', ctaLabel: 'Explore Technology & Growth', ctaHref: '/solutions/business-growth',
+  },
+  {
+    id: 'expand', num: '05', name: 'International Expansion',
+    desc: 'UAE setup, fundraising documentation and business consulting for businesses ready to go beyond India.',
+    chips: [{ l: 'UAE Business Setup', h: '/services/uae-business-setup' }, { l: 'Fundraising Docs', h: '/services/fundraising-documentation' }, { l: 'Business Consulting', h: '/services/business-consulting' }],
+    ctaPrompt: 'Planning your next market?', ctaLabel: 'Explore Expansion', ctaHref: '/solutions/advisory',
+  },
+]
+
+const SVC_CATS = [
+  {
+    name: 'Company Registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14', count: 4,
+    services: [
+      { href: '/services/private-limited-company-registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14', name: 'Private Limited Company', desc: 'The standard for funded startups — limited liability, fundraising-ready.' },
+      { href: '/services/llp-registration', icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', name: 'LLP Registration', desc: 'Partner-run firms wanting limited liability with lighter compliance.' },
+      { href: '/services/opc-registration', icon: 'M12 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21v-1a6 6 0 0 1 12 0v1', name: 'OPC Registration', desc: 'One-person companies with limited liability for solo founders.' },
+      { href: '/services/partnership-registration', icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87', name: 'Partnership Firm', desc: 'Simple, lowest-cost registration for small owner-operated businesses.' },
+    ]
+  },
+  {
+    name: 'Licences & Registrations', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6', count: 5,
+    services: [
+      { href: '/services/gst-registration', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z', name: 'GST Registration & Filing', desc: 'GSTIN + ongoing return filing so you never miss a deadline.' },
+      { href: '/services/msme-registration', icon: 'M9 11l3 3L22 4', name: 'MSME / Udyam Registration', desc: 'Unlock collateral-free loans, subsidies and payment protection.' },
+      { href: '/services/fssai-registration', icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', name: 'FSSAI Registration', desc: 'Mandatory for all food businesses — we identify the right tier.' },
+      { href: '/services/trademark-registration', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', name: 'Trademark Registration', desc: 'Protect your brand name, logo and tagline across the right classes.' },
+      { href: '/services/roc-compliance', icon: 'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11', name: 'ROC & Annual Compliance', desc: 'Annual filings for companies and LLPs — tracked proactively.' },
+    ]
+  },
+  {
+    name: 'Technology & IT', icon: 'M2 3h20v14H2zM8 21h8M12 17v4', count: 4,
+    services: [
+      { href: '/services/website-development', icon: 'M2 3h20v14H2zM8 21h8M12 17v4', name: 'Website Development', desc: 'Mobile-first business websites, e-commerce stores and portals.' },
+      { href: '/services/business-automation', icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5', name: 'Business Automation', desc: 'CRM setup, workflow automation and operational systems.' },
+      { href: '/services/digital-marketing', icon: 'M23 6l-9.5 9.5-5-5L1 18', name: 'Digital Marketing', desc: 'SEO, Google Ads, social media and branding for real growth.' },
+      { href: '/services/whatsapp-business-api', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', name: 'WhatsApp Business API', desc: 'Official Meta API for bulk messaging and automation.' },
+    ]
+  },
+]
+
+const WHY_FEATURES = [
+  { icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10', title: 'One point of contact', desc: 'Tell us once. We coordinate every service — no repeating your story to five different vendors.', cta: 'See how it works', href: '/#how-it-works' },
+  { icon: 'M9 11l3 3L22 4|M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11', title: 'We own it start to finish', desc: 'From first call to final filing — LauncherDesk takes accountability for the outcome, not just the paperwork.', cta: 'See our process', href: '/#how-it-works' },
+  { icon: 'M12 2v20|M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', title: 'Transparent pricing', desc: 'No padded bundles. Every quote separates professional fee, government fee and taxes — shown clearly upfront.', cta: 'View pricing', href: '/pricing' },
+  { icon: 'M23 6l-9.5 9.5-5-5L1 18', title: 'Proactive reminders', desc: 'We track your deadlines and notify you before they become penalties. Nothing falls through the cracks.', cta: 'Explore compliance', href: '/solutions/compliance-management' },
+]
+
+const VS_ROWS = [
+  { bad: 'Five vendors, five invoices', good: 'One team, one invoice' },
+  { bad: 'Nobody owns the outcome', good: 'We own it start to finish' },
+  { bad: 'Repeat your story every time', good: 'Tell us once, we coordinate' },
+  { bad: 'Deadlines slip through the cracks', good: 'Proactive reminders — nothing missed' },
+  { bad: 'Discover problems after the fact', good: 'Proactive advice at every step' },
+]
+
+const FAQS = [
+  { q: 'How quickly can LauncherDesk register my company?', a: 'Private Limited and LLP registration typically takes 7–14 working days once all documents are in order, subject to MCA processing times. Some licences like MSME/Udyam can be same-day. We give you realistic timelines upfront — not optimistic guesses.' },
+  { q: 'Do I need to visit your office to get started?', a: 'No. Everything is handled digitally — document collection, verification and filing. Most founders complete their entire registration without visiting any office.' },
+  { q: 'How is LauncherDesk different from doing it myself or using a CA?', a: 'A CA typically handles one function (tax or compliance). LauncherDesk coordinates across registration, compliance, technology and growth — through one point of contact. No handoffs, no gaps.' },
+  { q: 'What does "transparent pricing" actually mean?', a: 'Every quote we send separates the professional fee (what LauncherDesk charges), the government fee (MCA, stamp duty, etc.) and taxes (GST on the professional fee). We never bundle these into a single headline number.' },
+  { q: 'Can LauncherDesk help after registration too?', a: 'Yes — that\'s the core of what we do. Registration is just the beginning. We support ongoing compliance, accounting, payroll, IT and growth as your business scales.' },
+  { q: 'I already have a company but need help with compliance. Can you help?', a: 'Absolutely. We regularly onboard businesses mid-journey — taking over backlogged filings, compliance catch-up, accounting and ongoing support. You don\'t need to have started with us.' },
+]
+
+const HOW_STEPS = [
+  { num: '01', title: 'Tell us what you need', desc: 'One conversation with a single point of contact — no call centres, no runaround.' },
+  { num: '02', title: 'Get a clear plan & quote', desc: 'Honest timelines and upfront pricing, broken down so you always know what you\'re paying for.' },
+  { num: '03', title: 'We handle the paperwork', desc: 'Filings, follow-ups and coordination across every service — done for you.' },
+  { num: '04', title: 'Stay supported as you grow', desc: 'Ongoing compliance and support so nothing slips through the cracks.' },
+]
+
+const RESOURCES = [
+  { cat: 'Guide', title: 'Which company structure is right for you?', desc: 'Private Limited, LLP, OPC or Proprietorship — a plain-English breakdown of what each means for your business.', href: '/resources/guides' },
+  { cat: 'Blog', title: 'GST registration: everything a new business owner needs to know', desc: 'Who needs it, what it costs, how long it takes, and what happens if you miss the threshold.', href: '/resources/blog' },
+  { cat: 'Tools', title: 'Service Finder', desc: 'Answer five questions and get a personalised list of the registrations and services your business actually needs.', href: '/services' },
+]
+
+/* ── COMPONENT ────────────────────────────────────────────── */
+export default function HomePage() {
+
+  // Lifecycle accordion
+  const STAGE_IDS = STAGES.map(s => s.id)
+  const DURATION = 4000  // ms each stage stays open
+  const [openStage, setOpenStage] = useState('start')
+  const [paused, setPaused] = useState(false)
+  const timerRef = useRef(null)
+  const rafRef = useRef(null)
+
+  const advanceTo = (id) => {
+    setOpenStage(id)
+    setPaused(false)
+  }
+
+  const toggleStage = (id) => {
+    if (openStage === id) {
+      setPaused(p => !p)          // clicking active stage pauses/resumes
+    } else {
+      setOpenStage(id)
+      setPaused(false)
+    }
+  }
+
+  // Auto-advance: when a stage opens and is not paused, run timer then go next
+  useEffect(() => {
+    // Animate the progress bar for the open stage
+    STAGE_IDS.forEach(id => {
+      const el = document.querySelector(`[data-prog="${id}"]`)
+      if (!el) return
+      if (id === openStage && !paused) {
+        el.style.transition = `width ${DURATION}ms linear`
+        requestAnimationFrame(() => { el.style.width = '100%' })
+      } else {
+        el.style.transition = 'none'
+        el.style.width = '0%'
+      }
+    })
+
+    if (paused || !openStage) return
+
+    // Advance to next stage after DURATION
+    timerRef.current = setTimeout(() => {
+      const idx = STAGE_IDS.indexOf(openStage)
+      const next = STAGE_IDS[(idx + 1) % STAGE_IDS.length]
+      setOpenStage(next)
+    }, DURATION)
+
+    return () => {
+      clearTimeout(timerRef.current)
+    }
+  }, [openStage, paused])
+
+  // Service category accordion
+  const [openCat, setOpenCat] = useState(0)
+
+  return (
+    <>
+      <SEO
+        title="Your Business HQ | Launch. Manage. Grow."
+        description="LauncherDesk helps founders and businesses with company registration, GST, compliance, trademark, accounting, website development and growth — one platform, one point of contact."
+        canonical="/"
+        jsonLd={[organizationSchema, websiteSchema]}
+      />
+      <style>{S}</style>
+
+      {/* ═══ HERO ═══════════════════════════════════════════ */}
+      <section className="hp-hero">
+        <div className="hp-hero-inner">
+          <div className="hp-hero-grid">
+            <div>
+              <div className="hp-eyebrow">
+                <span className="hp-eyebrow-dot" />
+                India's 360° Business Platform
+              </div>
+              <h1>
+                Register your company.<br />
+                <em>Run it all from one desk.</em>
+              </h1>
+              <p className="hp-hero-desc">
+                From starting your business to managing compliance, technology, finance and growth, LauncherDesk brings every essential service together in one place.
+              </p>
+              <div className="hp-cta-row">
+                <a href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services." className="hp-btn-wa" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{ flexShrink: 0 }}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z" /></svg>
+                  Chat on WhatsApp
+                </a>
+                <Link to="/services" className="hp-btn-secondary">
+                  Explore Services
+                  <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+              <div className="hp-trust-pills">
+                {['15+ Service Categories', 'One Point of Contact', 'Bengaluru-based', 'MSME Registered'].map(t => (
+                  <div key={t} className="hp-trust-pill">
+                    <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></svg>
+                    {t}
+                  </div>
+                ))}
+              </div>
+              <TrustBar />
+            </div>
+
+            {/* Hero right — animated platform ecosystem visual */}
+            <HeroVisual />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ STATS STRIP ════════════════════════════════════
+          Only verified figures from data/company.js (COMPANY_METRICS) are
+          shown here — unverified counts (e.g. total businesses launched)
+          stay out until approved, per the site's trust-data-consistency rule. ═══ */}
+      <section className="hp-stats">
+        <div className="hp-stats-grid">
+          {[
+            { num: '15+', label: 'Service categories covered' },
+            { num: '360°', label: 'Complete business solutions' },
+            { num: '1', label: 'Single point of contact' },
+            { num: '🇮🇳', label: 'Made in India' },
+          ].map(s => (
+            <div key={s.num} className="hp-stats-item">
+              <div className="hp-stats-num">{s.num}</div>
+              <div className="hp-stats-label">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══ SERVICES MARQUEE ════════════════════════════════ */}
+      {(() => {
+        const items = [
+          // Start your business
+          { label: 'Private Limited Registration', href: '/services/private-limited-company-registration' },
+          { label: 'LLP Registration', href: '/services/llp-registration' },
+          { label: 'One Person Company', href: '/services/opc-registration' },
+          { label: 'Startup India', href: '/services/startup-india-dpiit' },
+          { label: 'ISO Certification', href: '/services/iso-certification' },
+          // Registrations & compliance / Legal & IP
+          { label: 'GST Registration', href: '/services/gst-registration' },
+          { label: 'MSME / Udyam', href: '/services/msme-registration' },
+          { label: 'ROC Compliance', href: '/services/roc-compliance' },
+          { label: 'Trademark Filing', href: '/services/trademark-registration' },
+          { label: 'Income Tax Filing', href: '/services/income-tax-filing' },
+          // Manage your business
+          { label: 'Accounting & Bookkeeping', href: '/services/accounting' },
+          { label: 'Payroll Management', href: '/services/payroll' },
+          { label: 'E-Stamp Services', href: '/estamp' },
+          // Build
+          { label: 'Website Development', href: '/services/website-development' },
+          { label: 'Brand Identity Design', href: '/services/branding-logo-design' },
+          { label: 'Mobile App Development', href: '/services/mobile-app-development' },
+          // Grow
+          { label: 'WhatsApp Business API', href: '/services/whatsapp-business-api' },
+          { label: 'Social Media Management', href: '/services/social-media-management' },
+          { label: 'Digital Marketing', href: '/services/digital-marketing' },
+        ]
+        const all = [...items, ...items]
+        return (
+          <div className="hp-marquee-wrap">
+            <div className="hp-marquee-track">
+              {all.map((s, i) => (
+                <a key={i} className="hp-marquee-item" href={s.href}
+                  style={{ textDecoration: 'none', cursor: 'pointer' }}
+                  onMouseEnter={e => e.currentTarget.style.color = '#1D6FE0'}
+                  onMouseLeave={e => e.currentTarget.style.color = ''}>
+                  <span className="hp-marquee-dot" />
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        )
+      })()}
+
+      {/* ═══ TRUSTED TECHNOLOGY & SERVICE PARTNERS ═══════════════════════════
+          Phase 4: this section lists actual technology/service PARTNERS
+          LauncherDesk works with — it is never presented as customer social
+          proof, and does not pad itself with "Coming Soon" filler cards
+          styled to look like real partners. ═══ */}
+      <section className="hp-partners">
+        <div className="hp-partners-label">Trusted Technology &amp; Service Partners</div>
+        <div className="hp-partners-row">
+          {[
+            { name: 'Doqfy', category: 'CLM Software', img: '/doqfy-logo.png', href: '/market/category?cat=clm' },
+          ].map(p => (
+            <Link key={p.name} to={p.href} className="hp-partners-card">
+              <div className="hp-partners-logo" title={p.name}>
+                {p.img
+                  ? <img src={p.img} alt={`${p.name} logo`} />
+                  : <span className="hp-partners-logo-text">{p.name}</span>}
+              </div>
+              <div className="hp-partners-info">
+                <div className="hp-partners-name">{p.name}</div>
+                <div className="hp-partners-cat">{p.category}</div>
+              </div>
+            </Link>
+          ))}
+        </div>
+        <div className="hp-partners-more">
+          <Link to="/market" style={{ color: 'inherit', textDecoration: 'none' }}>More partner categories launching on the marketplace →</Link>
+        </div>
+      </section>
+
+      {/* ═══ SERVICES ═══════════════════════════════════════ */}
+      <section className="hp-services">
+        <div className="hp-section-head">
+          <div className="hp-section-eyebrow" style={{ color: 'var(--blue)' }}>Our Services</div>
+          <h2>Everything your business needs,<br />in one place.</h2>
+          <p>From the first filing to ongoing compliance, technology and growth — all coordinated through LauncherDesk.</p>
+        </div>
+        <div className="hp-svc-cats">
+          {SVC_CATS.map((cat, ci) => (
+            <div key={cat.name} className={`hp-svc-cat${openCat === ci ? ' open' : ''}`}>
+              <div className="hp-svc-cat-head" onClick={() => setOpenCat(openCat === ci ? -1 : ci)}>
+                <div className="hp-svc-cat-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    {cat.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                  </svg>
+                </div>
+                <div className="hp-svc-cat-name">{cat.name}</div>
+                <span className="hp-svc-cat-count">{cat.count} services</span>
+                <svg className="hp-svc-cat-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </div>
+              <div className={`hp-svc-cat-body${openCat === ci ? ' open' : ''}`}>
+                <div className="hp-svc-cards">
+                  {cat.services.map(svc => (
+                    <Link key={svc.name} to={svc.href} className="hp-svc-card">
+                      <div className="hp-svc-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                          {svc.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                        </svg>
+                      </div>
+                      <div className="hp-svc-card-name">{svc.name}</div>
+                      <div className="hp-svc-card-desc">{svc.desc}</div>
+                      <div className="hp-svc-card-arrow">
+                        Learn more
+                        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="hp-svc-all-btn">
+          <Link to="/services">
+            View all services
+            <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
+      </section>
+
+      {/* ═══ WHY LAUNCHERDESK ════════════════════════════════ */}
+      <section className="hp-why">
+        <div className="hp-why-connector" aria-hidden="true">
+          <span className="hp-why-connector-dot hp-why-connector-dot--a" />
+          <span className="hp-why-connector-dot hp-why-connector-dot--b" />
+        </div>
+
+        {/* ── Centered intro: eyebrow + heading + paragraph ── */}
+        <div className="hp-why-intro">
+          <div className="hp-section-eyebrow reveal-up" style={{ transitionDelay: '0ms' }}>
+            <span className="hp-why-eyebrow-line" aria-hidden="true" />
+            Why LauncherDesk
+            <span className="hp-why-eyebrow-line hp-why-eyebrow-line--right" aria-hidden="true" />
+          </div>
+          <h2 className="reveal-up" style={{ transitionDelay: '80ms' }}>
+            <span className="hp-why-accent">One desk</span> beats multiple vendors.
+          </h2>
+          <p className="reveal-up" style={{ transitionDelay: '160ms' }}>
+            Most founders waste months juggling CAs, lawyers, web agencies and consultants — each one solving only their piece. LauncherDesk coordinates the whole picture.
+          </p>
+        </div>
+
+        {/* ── Two-column: feature cards + comparison table ── */}
+        <div className="hp-why-grid">
+          <div className="hp-why-left">
+            <div className="hp-why-features reveal-up">
+              {WHY_FEATURES.map((f, i) => (
+                <div key={f.title} className="hp-why-feat" style={{ animationDelay: `${300 + i * 100}ms` }}
+                  onMouseMove={e => {
+                    const r = e.currentTarget.getBoundingClientRect();
+                    e.currentTarget.style.setProperty('--mx', `${((e.clientX - r.left) / r.width * 100).toFixed(1)}%`);
+                    e.currentTarget.style.setProperty('--my', `${((e.clientY - r.top) / r.height * 100).toFixed(1)}%`);
+                  }}
+                >
+                  <span className="hp-why-feat-glow" aria-hidden="true" />
+                  <div className="hp-why-feat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                      {f.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                    </svg>
+                  </div>
+                  <div>
+                    <h4>{f.title}</h4>
+                    <p>{f.desc}</p>
+                    {f.href && (
+                      f.href.includes('#') ? (
+                        // Plain <a> for hash anchors: <Link> only changes the
+                        // route, it never scrolls to the fragment, so a
+                        // client-side nav to "/#how-it-works" would look
+                        // like the button does nothing (site-wide convention
+                        // — see Navbar's "Get Started" for the same pattern).
+                        <a href={f.href} className="hp-why-feat-link">{f.cta} →</a>
+                      ) : (
+                        <Link to={f.href} className="hp-why-feat-link">{f.cta} →</Link>
+                      )
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="hp-why-vs-wrap reveal-up" style={{ transitionDelay: '350ms' }}>
+            <div className="hp-vs-card">
+              <span className="hp-vs-glow" aria-hidden="true" />
+              <div className="hp-vs-head">
+                <div className="hp-vs-col bad"><div className="hp-vs-col-label">The Usual Way</div></div>
+                <div className="hp-vs-col good"><div className="hp-vs-col-label">The LauncherDesk Way</div></div>
+              </div>
+              <div className="hp-vs-rows">
+                {VS_ROWS.map((r, i) => (
+                  <div key={i} className="hp-vs-row">
+                    <div className="hp-vs-cell bad">
+                      <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+                      {r.bad}
+                    </div>
+                    <div className="hp-vs-cell good">
+                      <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></svg>
+                      {r.good}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ REAL BUSINESSES / TESTIMONIALS ══════════════════
+          Phase 6/7 — reads only from data/trust.js (REVIEWS, CASE_STUDIES),
+          which ship empty until the business team adds verified entries. ═══ */}
+      <CaseStudiesSection />
+      <TestimonialsSection />
+
+      {/* ═══ LIFECYCLE ACCORDION ════════════════════════════ */}
+      <section className="lc2-section" id="how-it-works">
+        <div className="lc2-inner">
+          <div className="lc2-left">
+            <span className="eyebrow" style={{ color: 'var(--blue)' }}>Your business journey</span>
+            <h2 className="lc2-heading">Incorporation is just the start.<br />We run the whole business.</h2>
+            <p className="lc2-desc">Building and scaling a company takes expertise across registrations, compliance, IT, finance, legal and marketing. LauncherDesk replaces multiple vendors with a single integrated platform.</p>
+            <Link to="/services" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 22px', borderRadius: 9, background: 'var(--blue)', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
+              Explore all services
+              <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+            </Link>
+          </div>
+          <div className="lc2-list">
+            {STAGES.map(s => (
+              <div key={s.id} className={`lc2-item${openStage === s.id ? ' lc2-open' : ''}`}>
+                <button className="lc2-trigger" onClick={() => toggleStage(s.id)}
+                  title={openStage === s.id ? (paused ? 'Click to resume' : 'Click to pause') : 'Click to open'}>
+                  <span className="lc2-num">{s.num}</span>
+                  <span className="lc2-name">{s.name}</span>
+                  {openStage === s.id && paused
+                    ? <svg className="lc2-chevron" viewBox="0 0 24 24" style={{ stroke: 'var(--blue)' }}><path d="M10 9v6m4-6v6" /></svg>
+                    : <svg className="lc2-chevron" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" /></svg>
+                  }
+                </button>
+                <div className="lc2-body" style={{ maxHeight: openStage === s.id ? '400px' : '0' }}>
+                  <div className="lc2-body-inner">
+                    <p className="lc2-body-desc">{s.desc}</p>
+                    <div className="lc2-chips">
+                      {s.chips.map(c => <Link key={c.l} to={c.h} className="lc2-chip">{c.l}</Link>)}
+                    </div>
+                    {s.ctaLabel && (
+                      <div className="lc2-cta">
+                        <span>{s.ctaPrompt}</span>
+                        {s.ctaHref.includes('#') ? (
+                          <a href={s.ctaHref} className="lc2-cta-btn">
+                            {s.ctaLabel}
+                            <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                          </a>
+                        ) : (
+                          <Link to={s.ctaHref} className="lc2-cta-btn">
+                            {s.ctaLabel}
+                            <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                          </Link>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  <div className="lc2-prog"><div className="lc2-prog-bar" data-prog={s.id} /></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ SERVICE FINDER / PERSONALISED ROADMAP ═══════════
+          Phase 10 — promotes the existing Service Finder as a major CTA
+          instead of a small link buried in the nav. No new logic: both
+          buttons route to the site's existing Service Finder and Ask Sneha. ═══ */}
+      <section className="hp-roadmap">
+        <div className="wrap">
+          <div className="hp-roadmap-card">
+            <div className="hp-roadmap-text">
+              <div className="hp-section-eyebrow" style={{ color: 'var(--blue)' }}>Service Finder</div>
+              <h2>Get Your Personalised Business Roadmap</h2>
+              <p>Answer a few quick questions and discover the services your business may need.</p>
+              <ul className="hp-roadmap-list">
+                <li>What you may need now</li>
+                <li>What you may need later</li>
+                <li>Recommended registrations</li>
+                <li>Compliance requirements</li>
+                <li>Technology and growth options</li>
+              </ul>
+            </div>
+            <div className="hp-roadmap-btns">
+              <a href="/services#finder" className="hp-roadmap-btn-primary" onClick={() => trackCta(CTA_EVENTS.buildRoadmap)}>
+                Build My Roadmap
+                <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              </a>
+              <button type="button" data-open-ai="true" className="hp-roadmap-btn-secondary" onClick={() => trackCta(CTA_EVENTS.askSneha)}>
+                Ask Sneha
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ HOW IT WORKS ════════════════════════════════════ */}
+      <section className="hp-how">
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 28px' }}>
+          <div className="hp-section-head">
+            <div className="hp-section-eyebrow" style={{ color: 'var(--blue)' }}>How it works</div>
+            <h2>One conversation.<br />We take it from there.</h2>
+            <p>No portals to navigate, no consultants to chase. Tell us what you need and LauncherDesk handles the rest.</p>
+          </div>
+          <div className="hp-how-steps">
+            {HOW_STEPS.map((s, i) => (
+              <div key={s.num} className="hp-how-step">
+                <div className="hp-how-num">{s.num}</div>
+                <h4>{s.title}</h4>
+                <p>{s.desc}</p>
+                {i < HOW_STEPS.length - 1 && <div className="hp-how-connector" />}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ RESOURCES ═══════════════════════════════════════ */}
+      <section className="hp-resources">
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 28px' }}>
+          <div className="hp-section-head">
+            <div className="hp-section-eyebrow" style={{ color: 'var(--blue)' }}>Resources</div>
+            <h2>Know more. Decide better.</h2>
+            <p>Practical guides and tools for founders and business owners across India.</p>
+          </div>
+          <div className="hp-res-grid">
+            {RESOURCES.map(r => (
+              <Link key={r.title} to={r.href} className="hp-res-card">
+                <div className="hp-res-card-thumb" />
+                <div className="hp-res-card-body">
+                  <div className="hp-res-cat">{r.cat}</div>
+                  <div className="hp-res-title">{r.title}</div>
+                  <div className="hp-res-desc">{r.desc}</div>
+                  <div className="hp-res-link">
+                    Read more
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 36 }}>
+            <Link to="/resources" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '0 28px', height: 48, borderRadius: 10, border: '1.5px solid var(--blue)', color: 'var(--blue)', fontWeight: 700, fontSize: 14.5, textDecoration: 'none' }}>
+              View all resources
+              <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FAQ ══════════════════════════════════════════════ */}
+      <section className="hp-faq">
+        <div className="hp-faq-inner">
+          <div className="hp-section-head">
+            <div className="hp-section-eyebrow" style={{ color: '#0284C7' }}>FAQ</div>
+            <h2>Frequently asked questions.</h2>
+            <p>Answers to the questions founders ask us every day.</p>
+          </div>
+          <div className="hp-faq-list">
+            {FAQS.slice(0, 4).map((f, i) => (
+              <div key={i} className="hp-faq-item">
+                <div className="hp-faq-q">
+                  <div className="hp-faq-q-text">{f.q}</div>
+                  <div className="hp-faq-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg>
+                  </div>
+                </div>
+                <div className="hp-faq-a">
+                  <div className="hp-faq-a-inner">{f.a}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 36 }}>
+            <Link to="/resources/faq" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '0 28px', height: 48, borderRadius: 10, background: 'var(--blue)', color: '#fff', fontWeight: 700, fontSize: 14.5, textDecoration: 'none', boxShadow: '0 6px 20px rgba(29,111,224,.3)' }}>
+              View more
+              <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+            </Link>
+          </div>
+          <ContextualCta
+            className="hp-faq-ctx-cta"
+            prompt="Still have questions?"
+            label="Ask Sneha"
+            askSneha
+            intent="low"
+            event={CTA_EVENTS.faqAskSneha}
+            secondaryLabel="Talk to an Expert"
+            secondaryTo="/company/contact"
+          />
+        </div>
+      </section>
+
+      {/* ═══ FINAL CTA ════════════════════════════════════════ */}
+      <section className="hp-cta-section">
+        <div className="hp-cta-card">
+          <div className="hp-cta-inner">
+            <h2>Ready to get everything under one roof?</h2>
+            <p>One chat is all it takes. Tell us what your business needs and we'll handle the rest — honestly, and on time.</p>
+            <div className="hp-cta-btns">
+              <a href="https://wa.me/918548854859?text=Hi%20LauncherDesk%2C%20I%20would%20like%20to%20discuss%20my%20business%20requirements." className="hp-cta-btn-wa" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{ flexShrink: 0 }}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z" /></svg>
+                Chat on WhatsApp
+              </a>
+              <Link to="/company/contact" className="hp-cta-btn-exp">
+                <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Book a consultation
+              </Link>
+              <button type="button" data-open-ai="true" className="hp-cta-btn-ai">
+                Ask Sneha
+              </button>
+            </div>
+            <div className="hp-cta-microcopy">
+              <span>Free initial guidance</span>
+              <span aria-hidden="true">·</span>
+              <span>No obligation</span>
+              <span aria-hidden="true">·</span>
+              <span>Transparent pricing</span>
+            </div>
+            <TrustBar className="hp-cta-trustbar" />
+          </div>
+        </div>
+      </section>
+    </>
+ )
+}
