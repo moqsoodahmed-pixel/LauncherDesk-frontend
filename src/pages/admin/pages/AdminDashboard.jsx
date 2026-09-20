@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useAdminAuth } from '../../../context/AdminAuthContext'
 import { Card, CardHead, StatCard, StatusBadge, Spinner, Ic } from '../AdminUI'
-import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
+import { AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
+import TrafficAndGrowth from '../components/TrafficAndGrowth'
 
 // Monthly data is now fetched from /api/admin/stats (monthlyContacts)
 const PIE = [
@@ -173,6 +174,11 @@ export default function AdminDashboard() {
             ))}
           </div>
         </Card>
+      </div>
+
+      {/* Website traffic (Cloudflare) + social media growth */}
+      <div style={{ marginTop:20 }}>
+        <TrafficAndGrowth />
       </div>
     </div>
   )
