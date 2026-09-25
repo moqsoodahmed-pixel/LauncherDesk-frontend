@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import estampSample from '../../assets/e-stamp-sample.jpeg'
 
 const API = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-production.up.railway.app/api'
 
@@ -31,7 +32,11 @@ const S = `
 @media (prefers-reduced-motion: reduce) {
   .es-hero::before { animation: none; }
 }
-.es-hero-inner { max-width:1100px;margin:0 auto;padding:0 28px;position:relative;z-index:1;text-align:center; }
+.es-hero-inner {
+  max-width:1180px;margin:0 auto;padding:0 28px;position:relative;z-index:1;
+  display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:start;text-align:left;
+}
+.es-hero-text { max-width:560px;padding-top:6px; }
 .es-badge {
   display:inline-flex;align-items:center;gap:8px;background:var(--brand-50);
   border:1px solid var(--brand-100);border-radius:99px;padding:6px 16px;
@@ -39,8 +44,8 @@ const S = `
 }
 .es-hero h1 { font-size:clamp(34px,5vw,62px);font-weight:900;color:var(--navy);letter-spacing:-.04em;line-height:1.04;margin-bottom:18px; }
 .es-hero h1 span { background:linear-gradient(118deg,var(--blue-dark),var(--blue-bright));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent; }
-.es-hero p { font-size:clamp(15px,1.8vw,18px);color:var(--text-2);max-width:580px;margin:0 auto 36px;line-height:1.7; }
-.es-hero-cta { display:flex;gap:14px;justify-content:center;flex-wrap:wrap; }
+.es-hero p { font-size:clamp(15px,1.8vw,18px);color:var(--text-2);margin:0 0 32px;line-height:1.7; }
+.es-hero-cta { display:flex;gap:14px;justify-content:flex-start;flex-wrap:wrap; }
 .es-btn-primary {
   display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 28px;
   background:#1D6FE0;color:#fff;font-weight:700;font-size:15px;border-radius:10px;
@@ -53,6 +58,45 @@ const S = `
   border:1.5px solid var(--line-strong);text-decoration:none;transition:all .15s;cursor:pointer;font-family:inherit;
 }
 .es-btn-secondary:hover { background:var(--brand-50);border-color:var(--blue); }
+
+/* Hero visual — sample certificate card (styled like a "document preview" card:
+   full-width header strip, watermarked certificate image, full-width CTA,
+   full-width trust strip) */
+.es-hero-visual { position:relative;max-width:400px;margin-left:auto;width:100%; }
+.es-doc-card {
+  background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  box-shadow:0 30px 70px -20px rgba(13,43,92,.30),0 8px 24px rgba(13,43,92,.08);
+}
+.es-doc-card-head {
+  background:var(--brand-50);border-bottom:1px solid var(--brand-100);
+  padding:13px 16px;text-align:center;
+  font-size:13.5px;font-weight:800;color:var(--blue-dark);letter-spacing:.01em;
+}
+.es-doc-card-body { padding:18px 18px 0; }
+.es-doc-img-wrap {
+  position:relative;border-radius:12px;overflow:hidden;
+  border:1px solid var(--line);background:var(--sec-b);
+}
+.es-doc-img-wrap img { display:block;width:100%;height:auto; }
+.es-doc-watermark {
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-30deg);
+  font-size:16px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  color:rgba(29,111,224,.4);white-space:nowrap;pointer-events:none;user-select:none;
+  text-shadow:0 1px 0 rgba(255,255,255,.6);
+}
+.es-doc-cta {
+  display:flex;align-items:center;justify-content:center;gap:8px;height:50px;width:100%;
+  background:#1D6FE0;color:#fff;font-weight:700;font-size:14.5px;border-radius:10px;
+  text-decoration:none;transition:all .15s;box-shadow:0 8px 20px rgba(29,111,224,.3);
+  border:0;cursor:pointer;font-family:inherit;margin:16px 0 18px;
+}
+.es-doc-cta:hover { background:#0F52C0;transform:translateY(-1px); }
+.es-doc-card-note {
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:#FEFCE8;border-top:1px solid #FDE68A;padding:11px 16px;
+  font-size:12.5px;font-weight:600;color:#92660A;
+}
+.es-doc-card-note svg { flex:none;stroke:#B45309; }
 
 /* What is E-Stamp */
 .es-what { padding:80px 0;background:var(--sec-b); }
@@ -127,6 +171,11 @@ const S = `
 
 /* Responsive */
 @media(max-width:900px){
+  .es-hero-inner{ grid-template-columns:1fr;text-align:center;gap:40px }
+  .es-hero-text{ max-width:640px;margin:0 auto }
+  .es-hero p{ max-width:580px;margin:0 auto 32px }
+  .es-hero-cta{ justify-content:center }
+  .es-hero-visual{ max-width:380px;margin:0 auto;width:100% }
   .es-what-grid,.es-form-grid{ grid-template-columns:1fr }
   .es-steps{ grid-template-columns:1fr 1fr }
   .es-steps::before{ display:none }
@@ -188,24 +237,46 @@ export default function EStampPage() {
       {/* Hero */}
       <section className="es-hero">
         <div className="es-hero-inner">
-          <div className="es-badge">
-            <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5}><path d="M9 12h6m-6 4h6M12 2v4M4.22 4.22l2.83 2.83M2 12h4M4.22 19.78l2.83-2.83M12 18v4M19.78 19.78l-2.83-2.83M22 12h-4M19.78 4.22l-2.83 2.83"/></svg>
-            Official E-Stamp Service
+          <div className="es-hero-text">
+            <div className="es-badge">
+              <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5}><path d="M9 12h6m-6 4h6M12 2v4M4.22 4.22l2.83 2.83M2 12h4M4.22 19.78l2.83-2.83M12 18v4M19.78 19.78l-2.83-2.83M22 12h-4M19.78 4.22l-2.83 2.83"/></svg>
+              Official E-Stamp Service
+            </div>
+            <h1>
+              We help you to get<br/>
+              <span>Pan India E-stamps</span>
+            </h1>
+            <p>Get legally valid e-stamped documents for property, business and personal needs — handled end to end by LauncherDesk. No government portal visits required.</p>
+            <div className="es-hero-cta">
+              <a href="#get-stamp" className="es-btn-primary">
+                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M9 12h6m-6 4h6M12 2v4M4.22 4.22l2.83 2.83"/></svg>
+                Get Your E-Stamp
+              </a>
+              <a href="https://wa.me/918548854859?text=Hi%2C%20I%20need%20assistance%20with%20E-Stamp%20services." target="_blank" rel="noopener noreferrer" className="es-btn-secondary">
+                <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{flexShrink:0}}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>
+                Ask on WhatsApp
+              </a>
+            </div>
           </div>
-          <h1>
-            We help you to get<br/>
-            <span>Pan India E-stamps</span>
-          </h1>
-          <p>Get legally valid e-stamped documents for property, business and personal needs — handled end to end by LauncherDesk. No government portal visits required.</p>
-          <div className="es-hero-cta">
-            <a href="#get-stamp" className="es-btn-primary">
-              <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M9 12h6m-6 4h6M12 2v4M4.22 4.22l2.83 2.83"/></svg>
-              Get Your E-Stamp
-            </a>
-            <a href="https://wa.me/918548854859?text=Hi%2C%20I%20need%20assistance%20with%20E-Stamp%20services." target="_blank" rel="noopener noreferrer" className="es-btn-secondary">
-              <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{flexShrink:0}}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>
-              Ask on WhatsApp
-            </a>
+
+          <div className="es-hero-visual">
+            <div className="es-doc-card">
+              <div className="es-doc-card-head">Sample E-Stamp — Karnataka</div>
+              <div className="es-doc-card-body">
+                <div className="es-doc-img-wrap">
+                  <img src={estampSample} alt="Sample government e-stamp certificate for a rental agreement" loading="lazy" />
+                  <span className="es-doc-watermark">Sample Certificate</span>
+                </div>
+                <a href="#get-stamp" className="es-doc-cta">
+                  Get Your E-Stamp
+                  <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+                </a>
+              </div>
+              <div className="es-doc-card-note">
+                <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5}><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0"/></svg>
+                Government-verified &amp; digitally signed certificate
+              </div>
+            </div>
           </div>
         </div>
       </section>
