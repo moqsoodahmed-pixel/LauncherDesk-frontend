@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import logoImg from '../assets/launcherdesk-logo-transparent.png'
+import logoImg from '../assets/launcherdesk-logo-animated.gif'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useUserAuth } from '../context/UserAuthContext'
 import { searchWebsite } from '../data/searchIndex'
@@ -220,6 +220,7 @@ function MegaIT() {
                   { name: 'Workflow Automation', href: '/services/business-automation' },
                   { name: 'Lead Management', href: '/services/crm-setup-lead-management' },
                   { name: 'Business Automation', href: '/services/business-automation' },
+                  { name: 'Sales Quotation', href: '/salesQuotation' },
                 ]],
               ].map(([group, items]) => (
                 <div key={group} className="mp-grp">

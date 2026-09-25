@@ -51,6 +51,7 @@ import RefundPage from './pages/legal/RefundPage'
 import DisclaimerPage from './pages/legal/DisclaimerPage'
 import VirtualOfficePage from './pages/virtual-office/VirtualOfficePage'
 import PartnerRegister from './pages/partner/PartnerRegister'
+import SalesQuotationRedirect from './pages/SalesQuotationRedirect'
 import MarketIndex from './pages/market/MarketIndex'
 import CategoryPage from './pages/market/CategoryPage'
 import ProductPage from './pages/market/ProductPage'
@@ -119,6 +120,7 @@ export default function App() {
                   <Route path="/market" element={<MarketIndex />} />
                   <Route path="/market/category" element={<CategoryPage />} />
                   <Route path="/market/product" element={<ProductPage />} />
+                  <Route path="/salesQuotation" element={<SalesQuotationRedirect />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>
 
