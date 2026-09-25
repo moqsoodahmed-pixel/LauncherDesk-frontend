@@ -71,21 +71,6 @@ const S = `
 .es-point h4 { font-size:14.5px;font-weight:700;color:var(--navy);margin-bottom:3px; }
 .es-point p  { font-size:13px;color:var(--text-2);line-height:1.5; }
 
-/* Services grid */
-.es-services { padding:80px 0;background:var(--sec-b); }
-.es-services h2 { font-size:clamp(26px,3.4vw,42px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:8px; }
-.es-svc-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px; }
-.es-svc-card {
-  background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:28px;
-  transition:border-color .2s,box-shadow .2s,transform .2s;cursor:pointer;
-}
-.es-svc-card:hover { border-color:var(--blue);box-shadow:0 12px 36px rgba(29,111,224,.14);transform:translateY(-3px); }
-.es-svc-icon { width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#EEF2FF,#DBEAFE);display:grid;place-items:center;margin-bottom:16px; }
-.es-svc-icon svg { width:26px;height:26px;stroke:#1D6FE0;fill:none;stroke-width:2; }
-.es-svc-name { font-size:17px;font-weight:800;color:var(--navy);margin-bottom:8px; }
-.es-svc-desc { font-size:13.5px;color:var(--text-2);line-height:1.6;margin-bottom:14px; }
-.es-svc-price { font-size:13px;font-weight:700;color:var(--blue);background:var(--bg-2);padding:4px 12px;border-radius:99px;display:inline-block; }
-
 /* How it works */
 .es-how { padding:80px 0;background:var(--sec-b); }
 .es-how h2 { font-size:clamp(26px,3.4vw,42px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:8px; }
@@ -143,55 +128,15 @@ const S = `
 /* Responsive */
 @media(max-width:900px){
   .es-what-grid,.es-form-grid{ grid-template-columns:1fr }
-  .es-svc-grid{ grid-template-columns:1fr 1fr }
   .es-steps{ grid-template-columns:1fr 1fr }
   .es-steps::before{ display:none }
 }
 @media(max-width:640px){
-  .es-svc-grid,.es-steps{ grid-template-columns:1fr }
+  .es-steps{ grid-template-columns:1fr }
   .es-form-row{ grid-template-columns:1fr }
   .es-hero-cta{ flex-direction:column;align-items:center }
 }
 `
-
-const SERVICES = [
-  {
-    icon:'M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z',
-    name:'Rental Agreement',
-    desc:'Legally stamped rental/lease agreements for residential and commercial properties across all states.',
-    price:'From ₹499',
-  },
-  {
-    icon:'M3 21h18M6 21V7l6-4 6 4v14|M9 22V12h6v10',
-    name:'Property Sale Deed',
-    desc:'E-stamped sale deeds for property transactions. We handle the stamp duty calculation and franking.',
-    price:'From ₹999',
-  },
-  {
-    icon:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2|M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z|M23 21v-2a4 4 0 0 0-3-3.87',
-    name:'Partnership Deed',
-    desc:'Properly stamped partnership deeds for firm registrations — state-specific stamp duty applied.',
-    price:'From ₹799',
-  },
-  {
-    icon:'M9 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-3|M14 2H6a2 2 0 0 0-2 2v4',
-    name:'Loan Agreement',
-    desc:'Stamped loan agreements between individuals or entities — legally enforceable across India.',
-    price:'From ₹599',
-  },
-  {
-    icon:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
-    name:'Affidavit & Indemnity',
-    desc:'Notarised and e-stamped affidavits, indemnity bonds and declarations for legal proceedings.',
-    price:'From ₹299',
-  },
-  {
-    icon:'M12 2v20|M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6',
-    name:'MOU & Agreement',
-    desc:'Memoranda of Understanding, service agreements and business contracts — properly stamped.',
-    price:'From ₹699',
-  },
-]
 
 const STEPS = [
   {num:'01',title:'Share Document',desc:'Upload your document or describe what you need.'},
@@ -290,28 +235,6 @@ export default function EStampPage() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services */}
-      <section className="es-services">
-        <div className="es-inner">
-          <span className="es-section-label">What We Stamp</span>
-          <h2>Documents we handle.</h2>
-          <div className="es-svc-grid">
-            {SERVICES.map(s=>(
-              <div key={s.name} className="es-svc-card">
-                <div className="es-svc-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-                    {s.icon.split('|').map((p,i)=><path key={i} d={p}/>)}
-                  </svg>
-                </div>
-                <div className="es-svc-name">{s.name}</div>
-                <div className="es-svc-desc">{s.desc}</div>
-                <span className="es-svc-price">{s.price}</span>
-              </div>
-            ))}
           </div>
         </div>
       </section>
