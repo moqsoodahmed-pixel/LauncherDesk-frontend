@@ -62,7 +62,7 @@ const S = `
 /* Hero visual — sample certificate card (styled like a "document preview" card:
    full-width header strip, watermarked certificate image, full-width CTA,
    full-width trust strip) */
-.es-hero-visual { position:relative;max-width:400px;margin-left:auto;width:100%; }
+.es-hero-visual { position:relative;max-width:360px;margin-left:auto;width:100%; }
 .es-doc-card {
   background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;
   box-shadow:0 30px 70px -20px rgba(13,43,92,.30),0 8px 24px rgba(13,43,92,.08);
@@ -74,10 +74,14 @@ const S = `
 }
 .es-doc-card-body { padding:18px 18px 0; }
 .es-doc-img-wrap {
-  position:relative;border-radius:12px;overflow:hidden;
-  border:1px solid var(--line);background:var(--sec-b);
+  position:relative;border-radius:12px;overflow-y:auto;overflow-x:hidden;
+  border:1px solid var(--line);background:var(--sec-b);max-height:460px;
 }
 .es-doc-img-wrap img { display:block;width:100%;height:auto; }
+.es-doc-img-wrap::-webkit-scrollbar { width:6px; }
+.es-doc-img-wrap::-webkit-scrollbar-track { background:transparent; }
+.es-doc-img-wrap::-webkit-scrollbar-thumb { background:rgba(29,111,224,.35);border-radius:99px; }
+.es-doc-scroll-hint { display:flex;align-items:center;justify-content:center;gap:5px;font-size:11.5px;color:var(--text-2);margin-top:8px; }
 .es-doc-watermark {
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-30deg);
   font-size:16px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
@@ -266,6 +270,10 @@ export default function EStampPage() {
                 <div className="es-doc-img-wrap">
                   <img src={estampSample} alt="Sample government e-stamp certificate for a rental agreement" loading="lazy" />
                   <span className="es-doc-watermark">Sample Certificate</span>
+                </div>
+                <div className="es-doc-scroll-hint">
+                  <svg viewBox="0 0 24 24" width={12} height={12} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+                  Scroll to view the full certificate
                 </div>
                 <a href="#get-stamp" className="es-doc-cta">
                   Get Your E-Stamp
