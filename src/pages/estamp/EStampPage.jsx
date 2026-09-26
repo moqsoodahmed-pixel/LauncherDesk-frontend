@@ -137,17 +137,36 @@ const S = `
 
 /* How it works */
 .es-how { padding:80px 0;background:var(--sec-b); }
-.es-how h2 { font-size:clamp(26px,3.4vw,42px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:8px; }
-.es-steps { display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px;position:relative; }
-.es-steps::before { content:'';position:absolute;top:32px;left:48px;right:48px;height:2px;background:linear-gradient(90deg,var(--blue-dark),var(--blue));z-index:0; }
-.es-step { text-align:center;position:relative;z-index:1; }
-.es-step-num {
-  width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#0F52C0,#1D6FE0);
-  display:grid;place-items:center;margin:0 auto 16px;
-  font-size:20px;font-weight:900;color:#fff;box-shadow:0 8px 24px rgba(29,111,224,.35);
+.es-how .es-section-label { text-align:center; }
+.es-how h2 { font-size:clamp(26px,3.4vw,42px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:8px;text-align:center; }
+
+/* Vertical timeline — icon node + speech-bubble card, per-step */
+.es-steps-v { position:relative;margin:44px auto 0;display:flex;flex-direction:column;gap:30px;max-width:640px; }
+.es-step-v { display:flex;align-items:flex-start;gap:22px;position:relative;z-index:1; }
+.es-step-v:not(:last-child)::after {
+  content:'';position:absolute;top:64px;left:31px;width:2px;
+  height:calc(100% - 64px + 30px);
+  background:linear-gradient(180deg,var(--blue-dark),var(--blue));z-index:0;
 }
-.es-step h4 { font-size:15px;font-weight:800;color:var(--navy);margin-bottom:6px; }
-.es-step p  { font-size:13px;color:var(--text-2);line-height:1.5; }
+.es-step-v-node {
+  flex:none;width:64px;height:64px;border-radius:50%;
+  background:linear-gradient(135deg,#0F52C0,#1D6FE0);
+  display:grid;place-items:center;box-shadow:0 8px 24px rgba(29,111,224,.35);
+}
+.es-step-v-node svg { width:26px;height:26px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round; }
+.es-step-v-card {
+  position:relative;flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:16px 20px;margin-top:6px;box-shadow:0 4px 18px rgba(13,43,92,.06);
+  transition:transform .2s,box-shadow .2s;
+}
+.es-step-v-card:hover { transform:translateY(-2px);box-shadow:0 14px 30px rgba(13,43,92,.10); }
+.es-step-v-card::before {
+  content:'';position:absolute;left:-8px;top:20px;width:15px;height:15px;background:#fff;
+  border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg);
+}
+.es-step-v-tag { display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:4px; }
+.es-step-v-card h4 { font-size:16px;font-weight:800;color:var(--navy);margin-bottom:5px; }
+.es-step-v-card p  { font-size:13.5px;color:var(--text-2);line-height:1.6; }
 
 /* Form / CTA */
 .es-form-section { padding:80px 0;background:var(--sec-b); }
@@ -197,22 +216,27 @@ const S = `
   .es-hero-cta{ justify-content:center }
   .es-hero-visual{ max-width:380px;margin:0 auto;width:100% }
   .es-what-grid,.es-form-grid{ grid-template-columns:1fr }
-  .es-steps{ grid-template-columns:1fr 1fr }
-  .es-steps::before{ display:none }
 }
 @media(max-width:640px){
-  .es-steps{ grid-template-columns:1fr }
   .es-form-row{ grid-template-columns:1fr }
   .es-hero-cta{ flex-direction:column;align-items:center }
   .es-hero-features{ grid-template-columns:1fr;max-width:340px;margin:24px auto 0 }
+  .es-steps-v{ gap:22px }
+  .es-step-v:not(:last-child)::after{ left:25px;height:calc(100% - 52px + 22px) }
+  .es-step-v{ gap:16px }
+  .es-step-v-node{ width:52px;height:52px }
+  .es-step-v-node svg{ width:22px;height:22px }
+  .es-step-v-card{ padding:14px 16px }
 }
 `
 
 const STEPS = [
-  {num:'01',title:'Share Document',desc:'Upload your document or describe what you need.'},
-  {num:'02',title:'We Calculate Duty',desc:'Our team identifies the correct stamp duty for your state.'},
-  {num:'03',title:'E-Stamp Applied',desc:'Official e-stamp is generated via SHCIL/state portal.'},
-  {num:'04',title:'Delivered to You',desc:'Stamped document delivered digitally — ready to sign.'},
+  {num:'01',title:'Fill the Form',desc:'Just fill the required form online on our website.',
+   icon:<><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></>},
+  {num:'02',title:'Confirmation Call',desc:'Get a confirmation call from LauncherDesk.',
+   icon:<><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></>},
+  {num:'03',title:'Delivered to You',desc:'Stamped document delivered to your mail — ready to sign.',
+   icon:<><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></>},
 ]
 
 export default function EStampPage() {
@@ -355,12 +379,17 @@ export default function EStampPage() {
         <div className="es-inner">
           <span className="es-section-label">The Process</span>
           <h2>How it works.</h2>
-          <div className="es-steps">
+          <div className="es-steps-v">
             {STEPS.map(s=>(
-              <div key={s.num} className="es-step">
-                <div className="es-step-num">{s.num}</div>
-                <h4>{s.title}</h4>
-                <p>{s.desc}</p>
+              <div key={s.num} className="es-step-v">
+                <div className="es-step-v-node">
+                  <svg viewBox="0 0 24 24">{s.icon}</svg>
+                </div>
+                <div className="es-step-v-card">
+                  <span className="es-step-v-tag">Step {s.num}</span>
+                  <h4>{s.title}</h4>
+                  <p>{s.desc}</p>
+                </div>
               </div>
             ))}
           </div>
