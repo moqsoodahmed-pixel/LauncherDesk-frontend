@@ -46,12 +46,13 @@ const S = `
 .es-hero h1 span { background:linear-gradient(118deg,var(--blue-dark),var(--blue-bright));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent; }
 .es-hero p { font-size:clamp(15px,1.8vw,18px);color:var(--text-2);margin:0 0 32px;line-height:1.7; }
 .es-hero-cta { display:flex;gap:14px;justify-content:flex-start;flex-wrap:wrap; }
-.es-btn-primary {
-  display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 28px;
-  background:#1D6FE0;color:#fff;font-weight:700;font-size:15px;border-radius:10px;
-  text-decoration:none;transition:all .15s;box-shadow:0 8px 24px rgba(29,111,224,.35);border:0;cursor:pointer;font-family:inherit;
+.es-hero-features { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px;max-width:480px; }
+.es-hero-feature {
+  display:flex;align-items:center;gap:10px;padding:12px 14px;
+  background:var(--brand-50);border:1px solid var(--brand-100);border-radius:12px;
+  font-size:13.5px;font-weight:700;color:var(--navy);line-height:1.3;
 }
-.es-btn-primary:hover { background:#0F52C0;transform:translateY(-2px); }
+.es-hero-feature svg { flex:none;stroke:#1D6FE0; }
 .es-btn-secondary {
   display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;
   background:#fff;color:var(--blue-dark);font-weight:600;font-size:15px;border-radius:10px;
@@ -62,8 +63,23 @@ const S = `
 /* Hero visual — sample certificate card (styled like a "document preview" card:
    full-width header strip, watermarked certificate image, full-width CTA,
    full-width trust strip) */
-.es-hero-visual { position:relative;max-width:360px;margin-left:auto;width:100%; }
+.es-hero-visual {
+  position:relative;max-width:360px;margin-left:auto;width:100%;
+  animation:esFloat 5s ease-in-out infinite;
+}
+.es-hero-visual::before {
+  content:'';position:absolute;inset:-36px -28px;z-index:0;
+  background:radial-gradient(circle,rgba(29,111,224,.24),rgba(29,111,224,0) 70%);
+  filter:blur(6px);pointer-events:none;
+  animation:esGlowPulse 6s ease-in-out infinite;
+}
+@keyframes esFloat { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-9px) } }
+@keyframes esGlowPulse { 0%,100%{ opacity:.55;transform:scale(1) } 50%{ opacity:1;transform:scale(1.05) } }
+@media (prefers-reduced-motion: reduce) {
+  .es-hero-visual, .es-hero-visual::before { animation:none !important; }
+}
 .es-doc-card {
+  position:relative;z-index:1;
   background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;
   box-shadow:0 30px 70px -20px rgba(13,43,92,.30),0 8px 24px rgba(13,43,92,.08);
 }
@@ -75,7 +91,7 @@ const S = `
 .es-doc-card-body { padding:18px 18px 0; }
 .es-doc-img-wrap {
   position:relative;border-radius:12px;overflow-y:auto;overflow-x:hidden;
-  border:1px solid var(--line);background:var(--sec-b);max-height:460px;
+  border:1px solid var(--line);background:var(--sec-b);max-height:390px;
 }
 .es-doc-img-wrap img { display:block;width:100%;height:auto; }
 .es-doc-img-wrap::-webkit-scrollbar { width:6px; }
@@ -188,6 +204,7 @@ const S = `
   .es-steps{ grid-template-columns:1fr }
   .es-form-row{ grid-template-columns:1fr }
   .es-hero-cta{ flex-direction:column;align-items:center }
+  .es-hero-features{ grid-template-columns:1fr;max-width:340px;margin:24px auto 0 }
 }
 `
 
@@ -252,14 +269,29 @@ export default function EStampPage() {
             </h1>
             <p>Get legally valid e-stamped documents for property, business and personal needs — handled end to end by LauncherDesk. No government portal visits required.</p>
             <div className="es-hero-cta">
-              <a href="#get-stamp" className="es-btn-primary">
-                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M9 12h6m-6 4h6M12 2v4M4.22 4.22l2.83 2.83"/></svg>
-                Get Your E-Stamp
-              </a>
               <a href="https://wa.me/918548854859?text=Hi%2C%20I%20need%20assistance%20with%20E-Stamp%20services." target="_blank" rel="noopener noreferrer" className="es-btn-secondary">
                 <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{flexShrink:0}}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>
                 Ask on WhatsApp
               </a>
+            </div>
+
+            <div className="es-hero-features">
+              <div className="es-hero-feature">
+                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M12 21s7-5.44 7-11a7 7 0 1 0-14 0c0 5.56 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+                Pan-India coverage
+              </div>
+              <div className="es-hero-feature">
+                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-5H9v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>
+                No portal visits
+              </div>
+              <div className="es-hero-feature">
+                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.9 8 11 4.6-2.1 8-6 8-11V5z"/><path d="m9.5 12 1.8 1.8L15 10"/></svg>
+                Legally valid, govt-issued
+              </div>
+              <div className="es-hero-feature">
+                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg>
+                Property, business &amp; personal docs
+              </div>
             </div>
           </div>
 
