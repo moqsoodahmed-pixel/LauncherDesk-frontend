@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useUserAuth } from '../context/UserAuthContext'
 import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import snehaImg from '../assets/sneha-ai.png'
@@ -10,7 +10,7 @@ const ROCKET = 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a
 const WA = 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z'
 
 const CONTACT_BASE = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-production.up.railway.app/api'
-const GREETING = "Hi, I'm Sneha, your LauncherDesk business assistant."
+const SNEHA_PENDING_KEY = 'ld_open_sneha_after_login'
 
 const WA_QUICK_REPLIES = [
   { label: 'Company Registration', emoji: '🏢', text: 'Hi LauncherDesk, I want to know about Company Registration.' },
@@ -24,7 +24,8 @@ const WA_QUICK_REPLIES = [
 ]
 
 export default function AIAssistant() {
-  const { isLoggedIn, user, logout } = useUserAuth()
+  const { isLoggedIn, user, token, logout } = useUserAuth()
+  const location = useLocation()
   const [aiOpen, setAiOpen] = useState(false)
   const [waOpen, setWaOpen] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -135,14 +136,40 @@ export default function AIAssistant() {
     setWaOpen(false)
     setAiOpen(true)
     setTimeout(() => inputRef.current?.focus(), 250)
-    if (!launchedRef.current) {
-      launchedRef.current = true
-      const fresh = initState()
-      setEngineState(fresh)
-      setActiveOptions({ kind: 'none', options: [] })
-      showTyping()
-      addBotMsg("Hi! I'm Sneha, your LauncherDesk business assistant. How can I help you today?")
-    }
+  }
+
+  // Greet the user once they're logged in and the chat is open
+  useEffect(() => {
+    if (!aiOpen || !isLoggedIn || launchedRef.current) return
+    launchedRef.current = true
+    const fresh = initState()
+    setEngineState(fresh)
+    setActiveOptions({ kind: 'none', options: [] })
+    const firstName = (user?.name || '').trim().split(/\s+/)[0]
+    showTyping()
+    addBotMsg(`Hi${firstName ? ' ' + firstName : ''}! I'm Sneha, your LauncherDesk business assistant. How can I help you today?`)
+  }, [aiOpen, isLoggedIn])
+
+  // Reset the conversation when the user logs out
+  useEffect(() => {
+    if (isLoggedIn) return
+    launchedRef.current = false
+    setMessages([])
+    setInput('')
+    setActiveOptions({ kind: 'none', options: [] })
+  }, [isLoggedIn])
+
+  // Re-open Sneha automatically after the user comes back from the login page
+  useEffect(() => {
+    if (!isLoggedIn) return
+    let pending = false
+    try { pending = sessionStorage.getItem(SNEHA_PENDING_KEY) === '1'; sessionStorage.removeItem(SNEHA_PENDING_KEY) } catch { /* ignore */ }
+    if (pending) setTimeout(() => openAI(), 400)
+  }, [isLoggedIn])
+
+  function rememberSnehaForAfterLogin() {
+    try { sessionStorage.setItem(SNEHA_PENDING_KEY, '1') } catch { /* ignore */ }
+    setAiOpen(false)
   }
   function closeAI() { setAiOpen(false) }
   function openWA() { setAiOpen(false); setWaOpen(true) }
@@ -183,6 +210,7 @@ export default function AIAssistant() {
   async function sendText(text) {
     const t = (text || '').trim()
     if (!t || sending) return
+    if (!isLoggedIn) { setAiOpen(true); return }
     setMessages(m => [...m, { role: 'u', text: t }])
 
     // If we're inside a guided flow step waiting for a specific text input (like name, mobile, email, city)
@@ -202,16 +230,18 @@ export default function AIAssistant() {
     try {
       const res = await fetch(`${CONTACT_BASE}/voiceflow/interact`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({
-          userId: user?.id || 'guest-' + (window.sessionStorage.getItem('ld_ai_uid') || (() => {
-            const uid = Math.random().toString(36).substring(2, 9)
-            window.sessionStorage.setItem('ld_ai_uid', uid)
-            return uid
-          })()),
+          userId: user?._id || user?.id,
           action: { type: 'text', payload: t }
         })
       })
+      if (res.status === 401) {
+        // Session expired — ask the user to log in again
+        setMessages(m => m.filter(x => x.role !== 'typing' && x.role !== 'typing-exit'))
+        logout()
+        return
+      }
       const data = await res.json()
       const reply = data?.traces?.[0]?.payload?.message
       if (reply) {
@@ -430,6 +460,34 @@ export default function AIAssistant() {
           </button>
         </div>
 
+        {!isLoggedIn ? (
+          <div className="as-body as-login-gate" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '32px 24px', gap: 14 }}>
+            <img src={snehaImg} alt="Sneha" style={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover', boxShadow: '0 6px 20px rgba(29,111,224,.25)' }} />
+            <div>
+              <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>Log in to chat with Sneha</h3>
+              <p style={{ margin: '8px 0 0', fontSize: 14, lineHeight: 1.5, opacity: .75 }}>
+                Sneha is LauncherDesk's AI business assistant. Log in or create a free account to ask about registrations, compliance, tax and more.
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: 10, width: '100%', maxWidth: 300, marginTop: 6 }}>
+              <Link
+                to="/user/login"
+                state={{ from: location.pathname + location.search, tab: 'login' }}
+                onClick={rememberSnehaForAfterLogin}
+                className="btn btn-primary"
+                style={{ flex: 1, justifyContent: 'center', display: 'inline-flex' }}
+              >Log In</Link>
+              <Link
+                to="/user/login"
+                state={{ from: location.pathname + location.search, tab: 'register' }}
+                onClick={rememberSnehaForAfterLogin}
+                className="btn"
+                style={{ flex: 1, justifyContent: 'center', display: 'inline-flex', border: '1.5px solid var(--blue)', color: 'var(--blue)' }}
+              >Sign Up</Link>
+            </div>
+            <small style={{ fontSize: 12, opacity: .6 }}>You'll come right back here after logging in.</small>
+          </div>
+        ) : (<>
         <div className="as-body" id="asBody" ref={bodyRef}>
           {messages.map((msg, i) =>
             msg.role === 'typing' || msg.role === 'typing-exit' ? (
@@ -499,6 +557,7 @@ export default function AIAssistant() {
             <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z" /></svg>
           </button>
         </form>
+        </>)}
         <div className="as-disc">General information only · not a substitute for professional legal or tax advice</div>
       </div>
 
