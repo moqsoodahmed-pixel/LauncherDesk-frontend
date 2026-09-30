@@ -19,6 +19,7 @@ const NAV = [
   { label:'Applications', path:'/admin/applications', icon:'M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z|M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16' },
   { label:'Office Setup', path:'/admin/office',       icon:'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10' },
   { label:'Partners',     path:'/admin/partners',     icon:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2|M23 21v-2a4 4 0 0 0-3-3.87|M16 3.13a4 4 0 0 1 0 7.75' },
+  { label:'Chat History', path:'/admin/chats',        icon:'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z' },
   { label:'Settings',     path:'/admin/settings',     icon:'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z|M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' },
 ]
 
@@ -61,7 +62,7 @@ export default function AdminLayout() {
       {/* Nav items */}
       <div className="adm-nav-list">
         {(!collapsed || isMobile) && <div className="adm-section-label">MENU</div>}
-        {NAV.slice(0, 6).map(n => {
+        {NAV.slice(0, 7).map(n => {
           const active = location.pathname === n.path
           return (
             <NavLink key={n.path} to={n.path} style={{ textDecoration: 'none' }}>
@@ -81,7 +82,7 @@ export default function AdminLayout() {
         <NavLink to="/admin/settings" style={{ textDecoration: 'none' }}>
           <div className={`adm-nav-item${location.pathname === '/admin/settings' ? ' active' : ''}`}
             style={{ justifyContent: collapsed && !isMobile ? 'center' : 'flex-start' }}>
-            <Ic d={NAV[6].icon} size={17} />
+            <Ic d={NAV[7].icon} size={17} />
             {(!collapsed || isMobile) && <span>Settings</span>}
           </div>
         </NavLink>

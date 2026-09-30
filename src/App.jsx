@@ -66,6 +66,7 @@ import AdminApplications from './pages/admin/pages/AdminApplications'
 import AdminOffice from './pages/admin/pages/AdminOffice'
 import AdminSettings from './pages/admin/pages/AdminSettings'
 import AdminPartners from './pages/admin/pages/AdminPartners'
+import AdminChats from './pages/admin/pages/AdminChats'
 
 function NotFound() {
   return (
@@ -154,6 +155,7 @@ export default function App() {
                   <Route path="office" element={<AdminOffice />} />
                   <Route path="settings" element={<AdminSettings />} />
                   <Route path="partners" element={<AdminPartners />} />
+                  <Route path="chats" element={<AdminChats />} />
                   <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
                 </Route>
 
