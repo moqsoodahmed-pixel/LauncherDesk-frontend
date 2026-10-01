@@ -8,6 +8,7 @@ import StickyServiceCta from './trust/StickyServiceCta'
 import WhyChooseGrid from './trust/WhyChooseGrid'
 import ContextualCta from './trust/ContextualCta'
 import { CTA_EVENTS } from '../data/cta'
+import { openRazorpayCheckout, fetchPaymentConfig } from '../lib/razorpay'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 const CHEV = 'm9 18 6-6-6-6'
@@ -366,10 +367,7 @@ function BuyNowButton({ svc, priceCard }) {
 
   useEffect(() => {
     if (!hasPrice) return
-    fetch(`${API_BASE}/payments/config`)
-      .then(r => r.json())
-      .then(d => setPayEnabled(d.enabled))
-      .catch(() => setPayEnabled(false))
+    fetchPaymentConfig().then(setPayEnabled)
   }, [hasPrice])
 
   if (!hasPrice) return null
@@ -381,32 +379,15 @@ function BuyNowButton({ svc, priceCard }) {
     if (payEnabled === null) return
     if (!payEnabled) { navigate('/company/contact'); return }
     setLoading(true); setMsg('')
-    try {
-      const res = await fetch(`${API_BASE}/payments/create-order`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ amount: numericPrice, serviceSlug: svc.slug || '', serviceTitle: svc.title }) })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.message || 'Failed to create order')
-      if (!window.Razorpay) {
-        await new Promise((resolve, reject) => { const s = document.createElement('script'); s.src = 'https://checkout.razorpay.com/v1/checkout.js'; s.onload = resolve; s.onerror = reject; document.body.appendChild(s) })
-      }
-      await new Promise((resolve) => {
-        const rzp = new window.Razorpay({
-          key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
-          name: 'LauncherDesk', description: svc.title, image: '/launcherdesk-logo-transparent.png',
-          theme: { color: '#1D6FE0' },
-          handler: async (response) => {
-            try {
-              const vRes = await fetch(`${API_BASE}/payments/verify`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ razorpay_order_id: response.razorpay_order_id, razorpay_payment_id: response.razorpay_payment_id, razorpay_signature: response.razorpay_signature, serviceSlug: svc.slug || '', serviceTitle: svc.title }) })
-              const vData = await vRes.json()
-              setMsg(vData.success ? '✅ Payment successful! Our team will contact you within 1 business day.' : '⚠️ Payment received but verification pending. Contact support@launcherdesk.com')
-            } catch { setMsg('Payment received. Contact support@launcherdesk.com to confirm.') }
-            resolve()
-          },
-          modal: { ondismiss: () => { setLoading(false); resolve() } },
-        })
-        rzp.open()
-      })
-    } catch (err) { setMsg(`❌ ${err.message || 'Something went wrong. Please try again.'}`) }
-    finally { setLoading(false) }
+    await openRazorpayCheckout({
+      amount: numericPrice,
+      serviceSlug: svc.slug || '',
+      serviceTitle: svc.title,
+      token,
+      onSuccess: setMsg,
+      onError: setMsg,
+    })
+    setLoading(false)
   }
 
   const isSuccess = msg.startsWith('✅'), isFail = msg.startsWith('❌')
@@ -527,8 +508,70 @@ const EXCLUDED_GOVT_SERVICES = new Set([
   'gst-registration',
 ])
 
-function ServiceAside({ priceCard, helpCard, svc }) {
+const DM_PLANS = [
+  { key: 'starter', name: 'Starter', amount: 4999 },
+  { key: 'growth',  name: 'Growth',  amount: 6999 },
+]
+
+// Digital Marketing services are sold as monthly plans rather than a single
+// fixed price, so instead of one "Pay ₹X" button (BuyNowButton) we show a
+// Pay button per plan. Clicking one opens the Razorpay modal directly —
+// no navigating to a separate pricing page first.
+function DMPlanButtons({ svc }) {
+  const { isLoggedIn, token } = useUserAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const [loadingKey, setLoadingKey] = useState(null)
+  const [msg, setMsg] = useState('')
+
+  async function handlePay(plan) {
+    if (!isLoggedIn) {
+      navigate('/user/login', { state: { from: location.pathname, tab: 'login' } })
+      return
+    }
+    setLoadingKey(plan.key); setMsg('')
+    await openRazorpayCheckout({
+      amount: plan.amount,
+      serviceSlug: svc.slug || '',
+      serviceTitle: svc.title,
+      planLabel: plan.name,
+      token,
+      onSuccess: setMsg,
+      onError: setMsg,
+    })
+    setLoadingKey(null)
+  }
+
+  const isSuccess = msg.startsWith('✅'), isFail = msg.startsWith('❌')
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {DM_PLANS.map(plan => (
+        <button
+          key={plan.key}
+          onClick={() => handlePay(plan)}
+          disabled={loadingKey !== null}
+          aria-busy={loadingKey === plan.key}
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%',
+            padding: '12px 14px', borderRadius: 10,
+            background: loadingKey === plan.key ? '#94A3B8' : 'rgba(255,255,255,.15)',
+            color: '#fff', fontWeight: 700, fontSize: 14,
+            border: '1px solid rgba(255,255,255,.3)',
+            cursor: loadingKey !== null ? 'not-allowed' : 'pointer', fontFamily: 'inherit',
+            transition: 'background .15s'
+          }}
+        >
+          <span>{plan.name}</span>
+          <span>{loadingKey === plan.key ? 'Processing…' : isLoggedIn ? `Pay ₹${plan.amount.toLocaleString('en-IN')} →` : 'Login to Pay →'}</span>
+        </button>
+      ))}
+      {msg && <div role="status" aria-live="polite" style={{ marginTop: 2, padding: '10px 12px', borderRadius: 8, background: isSuccess ? '#DCFCE7' : isFail ? '#FEF2F2' : '#FEF9C3', border: `1px solid ${isSuccess ? '#BBF7D0' : isFail ? '#FECACA' : '#FDE68A'}`, fontSize: 12.5, color: isSuccess ? '#166534' : isFail ? '#DC2626' : '#854D0E', lineHeight: 1.5 }}>{msg}</div>}
+    </div>
+  )
+}
+
+function ServiceAside({ priceCard, helpCard, svc }) {
   const isDM = isDigitalMarketingService(svc)
   const hasTieredPlans = !!(svc?.slug && REGISTRATION_PLANS[svc.slug])
   const hasPrice = priceCard.price && priceCard.price !== 'Custom quote' && !hasTieredPlans
@@ -546,11 +589,6 @@ function ServiceAside({ priceCard, helpCard, svc }) {
   const boxLabel = isDM ? 'CHOOSE PLAN' : priceCard.label
 
   const displayedPrice = priceCard.price
-
-  function handleMonthlyPlansClick() {
-    const targetService = svc?.slug || ''
-    navigate(`/pricing?cat=dm&service=${encodeURIComponent(targetService)}#plans`)
-  }
 
   const dmHighlights = isDM ? getServiceHighlights(svc) : []
 
@@ -610,22 +648,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
           </a>
           {isDM ? (
             <div style={{ marginTop: 10 }}>
-              <button
-                onClick={handleMonthlyPlansClick}
-                style={{
-                  display: 'block', width: '100%', textAlign: 'center',
-                  padding: '12px', borderRadius: 10,
-                  background: 'rgba(255,255,255,.15)',
-                  color: '#fff', fontWeight: 700, fontSize: 14,
-                  border: '1px solid rgba(255,255,255,.3)',
-                  cursor: 'pointer', fontFamily: 'inherit',
-                  transition: 'background .15s'
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,.25)' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.15)' }}
-              >
-                Monthly Plans
-              </button>
+              <DMPlanButtons svc={svc} />
 
               {/* Service points according to price/plan below monthly plans */}
               {dmHighlights.length > 0 && (

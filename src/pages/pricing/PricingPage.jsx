@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom'
 import { useUserAuth } from '../../context/UserAuthContext'
 import { SERVICES } from '../../data/services'
+import { openRazorpayCheckout } from '../../lib/razorpay'
 
 const CHEV = 'm9 18 6-6-6-6'
 
@@ -150,10 +151,14 @@ export default function PricingPage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const location = useLocation()
-  const { isLoggedIn } = useUserAuth()
+  const { isLoggedIn, token } = useUserAuth()
+  const [payingKey, setPayingKey] = useState(null)
+  const [payResult, setPayResult] = useState(null) // { planName, msg }
 
   const isDM = searchParams.get('cat') === 'dm'
   const serviceSlug = searchParams.get('service') || ''
+  const svc = SERVICES[serviceSlug]
+  const serviceTitle = svc?.title || 'Digital Marketing'
 
   const activePlans = isDM ? getDigitalMarketingPlans(serviceSlug) : DEFAULT_PLANS
   const gridClass = isDM ? 'grid-2' : 'grid-3'
@@ -179,12 +184,29 @@ export default function PricingPage() {
     }
   }, [isDM])
 
-  function handlePlanAction(plan) {
+  async function handlePlanAction(plan) {
     if (!isLoggedIn) {
       navigate('/user/login', { state: { from: `${location.pathname}${location.search}${location.hash}`, tab: 'login' } })
-    } else {
-      navigate(plan.ctaHref || '/company/contact')
+      return
     }
+    // Digital Marketing plans have a fixed monthly amount — pay directly via
+    // Razorpay instead of bouncing to the contact page. Other plans (Startup/
+    // Growth/Scale) are custom-quoted, so those still go to contact/sales.
+    if (isDM && plan.amount) {
+      setPayingKey(plan.name); setPayResult(null)
+      await openRazorpayCheckout({
+        amount: plan.amount,
+        serviceSlug,
+        serviceTitle,
+        planLabel: plan.name,
+        token,
+        onSuccess: (msg) => setPayResult({ planName: plan.name, msg }),
+        onError: (msg) => setPayResult({ planName: plan.name, msg }),
+      })
+      setPayingKey(null)
+      return
+    }
+    navigate(plan.ctaHref || '/company/contact')
   }
 
   return (
@@ -237,7 +259,10 @@ export default function PricingPage() {
             alignItems: 'stretch',
           }}>
             {activePlans.map(plan => {
-              const buttonText = !isLoggedIn ? 'Login to Pay' : (plan.cta || `Pay ₹${plan.amount?.toLocaleString('en-IN') || plan.name}`)
+              const isPaying = payingKey === plan.name
+              const buttonText = isPaying
+                ? 'Processing…'
+                : !isLoggedIn ? 'Login to Pay' : (plan.cta || `Pay ₹${plan.amount?.toLocaleString('en-IN') || plan.name}`)
 
               return (
                 <div key={plan.name} className="card reveal-up in" style={{
@@ -345,12 +370,15 @@ export default function PricingPage() {
                     <button
                       type="button"
                       onClick={() => handlePlanAction(plan)}
+                      disabled={payingKey !== null}
+                      aria-busy={isPaying}
                       className="btn btn-primary"
                       style={{
                         width: '100%',
                         justifyContent: 'center',
                         fontWeight: 700,
-                        cursor: 'pointer',
+                        cursor: payingKey !== null ? 'not-allowed' : 'pointer',
+                        opacity: payingKey !== null && !isPaying ? .7 : 1,
                         fontSize: 14.5,
                         padding: '13px 16px',
                         borderRadius: 10,
@@ -361,6 +389,9 @@ export default function PricingPage() {
                       {buttonText}
                     </button>
                   </div>
+                  {isDM && payResult?.planName === plan.name && (
+                    <div role="status" aria-live="polite" style={{ marginTop: 10, padding: '10px 12px', borderRadius: 8, background: payResult.msg.startsWith('✅') ? '#DCFCE7' : payResult.msg.startsWith('❌') ? '#FEF2F2' : '#FEF9C3', border: `1px solid ${payResult.msg.startsWith('✅') ? '#BBF7D0' : payResult.msg.startsWith('❌') ? '#FECACA' : '#FDE68A'}`, fontSize: 12.5, color: payResult.msg.startsWith('✅') ? '#166534' : payResult.msg.startsWith('❌') ? '#DC2626' : '#854D0E', lineHeight: 1.5 }}>{payResult.msg}</div>
+                  )}
                 </div>
               )
             })}
