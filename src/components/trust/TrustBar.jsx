@@ -37,7 +37,8 @@ export default function TrustBar({ className = '' }) {
   // this is simply how the service is delivered).
   items.push({ id: 'contact', value: '1', label: 'Single point of contact' })
 
-  const badges = (TRUST_BADGES || []).filter(b => b.verified)
+  // 'Made in India' is already shown (with the flag) in the homepage stats strip.
+  const badges = (TRUST_BADGES || []).filter(b => b.verified && b.id !== 'india')
 
   if (items.length <= 1 && badges.length === 0) return null
 

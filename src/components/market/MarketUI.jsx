@@ -266,9 +266,9 @@ export function ProductCard({ p }) {
         <span className="mk-price">{p.price}</span>
       </div>
       <span className="mk-explore">
-        Explore{' '}
+        Get Free Demo{' '}
         <svg className="mk-ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d={MI.ext}/>
+          <path d="M5 12h14M13 6l6 6-6 6"/>
         </svg>
       </span>
     </a>

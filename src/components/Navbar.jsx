@@ -186,9 +186,7 @@ function MegaIT() {
           <div className="mp-panel mp-panel--active" data-mp-panel="web">
             <div className="mp-panel-head">Website Development</div>
             <div className="mp-svc-grid">
-              <SvcLink href="/services/static-website" title="Static Website Development" desc="Fast, lightweight brochure sites" />
-              <SvcLink href="/services/dynamic-website" title="Dynamic Website Development" desc="CMS-powered, updatable sites" />
-              <SvcLink href="/services/ecommerce-website" title="E-commerce Website Development" desc="Online store with payment &amp; catalogue" />
+              <SvcLink href="/services/website-development" title="Website Development Packages" desc="Static, dynamic &amp; e-commerce websites" />
               <SvcLink href="/services/crm-setup-lead-management" title="CRM Website or Portal Development" desc="Customer portals &amp; dashboards" />
             </div>
           </div>
@@ -557,9 +555,9 @@ export default function Navbar({ activePage = '' }) {
               <div className="mega" style={{ minWidth: 300, padding: '8px 0' }}>
                 <div style={{ padding: '6px 8px' }}>
                   <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text-3)', padding: '4px 10px 8px' }}>Office Setup</div>
-                  <SvcLink href="/office-restore" title="Office Furniture & Setup" desc="Custom furniture manufactured & installed" />
-                  <SvcLink href="/office-restore/individual" title="Private Office Space" desc="Rent a furnished private office in Bangalore" />
-                  <SvcLink href="/office-restore/coworking" title="Co-working Space" desc="Hot desks, cabins & meeting rooms" />
+                  <SvcLink href="/office-restore" title="Office Furniture" desc="Custom furniture manufactured & installed" />
+                  <SvcLink href="/office-restore/individual" title="Private Office" desc="Rent a furnished private office in Bangalore" />
+                  <SvcLink href="/office-restore/coworking" title="Co-working" desc="Hot desks, cabins & meeting rooms" />
                 </div>
               </div>
             </div>

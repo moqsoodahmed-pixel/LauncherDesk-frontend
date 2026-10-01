@@ -8,7 +8,7 @@ import StickyServiceCta from './trust/StickyServiceCta'
 import WhyChooseGrid from './trust/WhyChooseGrid'
 import ContextualCta from './trust/ContextualCta'
 import { CTA_EVENTS } from '../data/cta'
-import { openRazorpayCheckout, fetchPaymentConfig } from '../lib/razorpay'
+import { openRazorpayCheckout } from '../lib/razorpay'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 const CHEV = 'm9 18 6-6-6-6'
@@ -367,7 +367,10 @@ function BuyNowButton({ svc, priceCard }) {
 
   useEffect(() => {
     if (!hasPrice) return
-    fetchPaymentConfig().then(setPayEnabled)
+    fetch(`${API_BASE}/payments/config`)
+      .then(r => r.json())
+      .then(d => setPayEnabled(d.enabled))
+      .catch(() => setPayEnabled(false))
   }, [hasPrice])
 
   if (!hasPrice) return null
@@ -379,15 +382,32 @@ function BuyNowButton({ svc, priceCard }) {
     if (payEnabled === null) return
     if (!payEnabled) { navigate('/company/contact'); return }
     setLoading(true); setMsg('')
-    await openRazorpayCheckout({
-      amount: numericPrice,
-      serviceSlug: svc.slug || '',
-      serviceTitle: svc.title,
-      token,
-      onSuccess: setMsg,
-      onError: setMsg,
-    })
-    setLoading(false)
+    try {
+      const res = await fetch(`${API_BASE}/payments/create-order`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ amount: numericPrice, serviceSlug: svc.slug || '', serviceTitle: svc.title }) })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.message || 'Failed to create order')
+      if (!window.Razorpay) {
+        await new Promise((resolve, reject) => { const s = document.createElement('script'); s.src = 'https://checkout.razorpay.com/v1/checkout.js'; s.onload = resolve; s.onerror = reject; document.body.appendChild(s) })
+      }
+      await new Promise((resolve) => {
+        const rzp = new window.Razorpay({
+          key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
+          name: 'LauncherDesk', description: svc.title, image: '/launcherdesk-logo-transparent.png',
+          theme: { color: '#1D6FE0' },
+          handler: async (response) => {
+            try {
+              const vRes = await fetch(`${API_BASE}/payments/verify`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ razorpay_order_id: response.razorpay_order_id, razorpay_payment_id: response.razorpay_payment_id, razorpay_signature: response.razorpay_signature, serviceSlug: svc.slug || '', serviceTitle: svc.title }) })
+              const vData = await vRes.json()
+              setMsg(vData.success ? '✅ Payment successful! Our team will contact you within 1 business day.' : '⚠️ Payment received but verification pending. Contact support@launcherdesk.com')
+            } catch { setMsg('Payment received. Contact support@launcherdesk.com to confirm.') }
+            resolve()
+          },
+          modal: { ondismiss: () => { setLoading(false); resolve() } },
+        })
+        rzp.open()
+      })
+    } catch (err) { setMsg(`❌ ${err.message || 'Something went wrong. Please try again.'}`) }
+    finally { setLoading(false) }
   }
 
   const isSuccess = msg.startsWith('✅'), isFail = msg.startsWith('❌')
@@ -508,72 +528,119 @@ const EXCLUDED_GOVT_SERVICES = new Set([
   'gst-registration',
 ])
 
-const DM_PLANS = [
-  { key: 'starter', name: 'Starter', amount: 4999 },
-  { key: 'growth',  name: 'Growth',  amount: 6999 },
+/* ── Website Development packages (Static / Dynamic / E-commerce on one page) ── */
+const WEBSITE_PACKAGES = [
+  { slug: 'static-website',    title: 'Static Website Development',     desc: 'Fast, lightweight brochure sites for businesses whose content rarely changes.', amount: 4999 },
+  { slug: 'dynamic-website',   title: 'Dynamic Website Development',    desc: 'CMS-powered sites you can update yourself — blogs, case studies, new offerings.', amount: 25000 },
+  { slug: 'ecommerce-website', title: 'E-commerce Website Development', desc: 'Your own online store with catalogue, cart and payment gateway.', amount: 20000 },
 ]
+const PACKAGE_PAGES = { 'website-development': WEBSITE_PACKAGES }
 
-// Digital Marketing services are sold as monthly plans rather than a single
-// fixed price, so instead of one "Pay ₹X" button (BuyNowButton) we show a
-// Pay button per plan. Clicking one opens the Razorpay modal directly —
-// no navigating to a separate pricing page first.
-function DMPlanButtons({ svc }) {
+function parsePrice(raw) {
+  const n = parseFloat(String(raw || '').replace(/[₹,*]/g, ''))
+  return !isNaN(n) && n > 0 ? n : null
+}
+
+/* Does this service page show a fixed amount the customer can pay? */
+function hasPayableAmount(svc) {
+  if (!svc) return false
+  if (REGISTRATION_PLANS[svc.slug] || PACKAGE_PAGES[svc.slug]) return true
+  return parsePrice(svc.priceCard?.price) !== null
+}
+
+function PayMsg({ msg }) {
+  if (!msg) return null
+  const ok = msg.startsWith('✅'), bad = msg.startsWith('❌')
+  return (
+    <div role="status" aria-live="polite" style={{ marginTop: 10, padding: '10px 12px', borderRadius: 8, background: ok ? '#DCFCE7' : bad ? '#FEF2F2' : '#FEF9C3', border: `1px solid ${ok ? '#BBF7D0' : bad ? '#FECACA' : '#FDE68A'}`, fontSize: 12.5, color: ok ? '#166534' : bad ? '#DC2626' : '#854D0E', lineHeight: 1.5 }}>{msg}</div>
+  )
+}
+
+function WebsitePackages({ packages }) {
   const { isLoggedIn, token } = useUserAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const [loadingKey, setLoadingKey] = useState(null)
-  const [msg, setMsg] = useState('')
+  const [msg, setMsg] = useState({ key: null, text: '' })
 
-  async function handlePay(plan) {
-    if (!isLoggedIn) {
-      navigate('/user/login', { state: { from: location.pathname, tab: 'login' } })
-      return
-    }
-    setLoadingKey(plan.key); setMsg('')
-    await openRazorpayCheckout({
-      amount: plan.amount,
-      serviceSlug: svc.slug || '',
-      serviceTitle: svc.title,
-      planLabel: plan.name,
-      token,
-      onSuccess: setMsg,
-      onError: setMsg,
-    })
+  async function pay(pkg) {
+    if (!isLoggedIn) { navigate('/user/login', { state: { from: location.pathname, tab: 'login' } }); return }
+    setLoadingKey(pkg.slug); setMsg({ key: null, text: '' })
+    const report = text => setMsg({ key: pkg.slug, text })
+    await openRazorpayCheckout({ amount: pkg.amount, serviceSlug: pkg.slug, serviceTitle: pkg.title, token, onSuccess: report, onError: report })
     setLoadingKey(null)
   }
 
-  const isSuccess = msg.startsWith('✅'), isFail = msg.startsWith('❌')
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      {DM_PLANS.map(plan => (
-        <button
-          key={plan.key}
-          onClick={() => handlePay(plan)}
-          disabled={loadingKey !== null}
-          aria-busy={loadingKey === plan.key}
-          style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%',
-            padding: '12px 14px', borderRadius: 10,
-            background: loadingKey === plan.key ? '#94A3B8' : 'rgba(255,255,255,.15)',
-            color: '#fff', fontWeight: 700, fontSize: 14,
-            border: '1px solid rgba(255,255,255,.3)',
-            cursor: loadingKey !== null ? 'not-allowed' : 'pointer', fontFamily: 'inherit',
-            transition: 'background .15s'
-          }}
-        >
-          <span>{plan.name}</span>
-          <span>{loadingKey === plan.key ? 'Processing…' : isLoggedIn ? `Pay ₹${plan.amount.toLocaleString('en-IN')} →` : 'Login to Pay →'}</span>
-        </button>
-      ))}
-      {msg && <div role="status" aria-live="polite" style={{ marginTop: 2, padding: '10px 12px', borderRadius: 8, background: isSuccess ? '#DCFCE7' : isFail ? '#FEF2F2' : '#FEF9C3', border: `1px solid ${isSuccess ? '#BBF7D0' : isFail ? '#FECACA' : '#FDE68A'}`, fontSize: 12.5, color: isSuccess ? '#166534' : isFail ? '#DC2626' : '#854D0E', lineHeight: 1.5 }}>{msg}</div>}
-    </div>
+    <section id="packages" className="section-sm" style={{ paddingBottom: 0 }}>
+      <div className="wrap">
+        <SectionHeading>Choose your website</SectionHeading>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          {packages.map(pkg => (
+            <div key={pkg.slug} style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: 14, padding: '18px 20px', boxShadow: '0 2px 10px rgba(15,28,46,.05)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
+                <div style={{ flex: '1 1 300px', minWidth: 0 }}>
+                  <h3 style={{ fontSize: 18, fontWeight: 800, color: 'var(--navy)', margin: '0 0 4px' }}>{pkg.title}</h3>
+                  <p style={{ fontSize: 14, color: 'var(--text-2)', margin: '0 0 6px', lineHeight: 1.6 }}>{pkg.desc}</p>
+                  <Link to={`/services/${pkg.slug}`} style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--blue)' }}>View details →</Link>
+                </div>
+                <div style={{ textAlign: 'right', flex: '0 0 auto' }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '.08em' }}>Starts from</div>
+                  <div style={{ fontSize: 26, fontWeight: 900, color: 'var(--navy)', lineHeight: 1.2 }}>₹{pkg.amount.toLocaleString('en-IN')}</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-3)' }}>+ GST</div>
+                </div>
+                <button type="button" onClick={() => pay(pkg)} disabled={loadingKey !== null} aria-busy={loadingKey === pkg.slug}
+                  className="btn btn-primary" style={{ flex: '0 0 auto', minWidth: 170, justifyContent: 'center', opacity: loadingKey !== null && loadingKey !== pkg.slug ? .7 : 1, cursor: loadingKey !== null ? 'not-allowed' : 'pointer' }}>
+                  {loadingKey === pkg.slug ? 'Processing…' : isLoggedIn ? `Pay ₹${pkg.amount.toLocaleString('en-IN')} →` : 'Login to Pay →'}
+                </button>
+              </div>
+              {msg.key === pkg.slug && <PayMsg msg={msg.text} />}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* Hero "Pay" button for registration services — only shown to logged-in users. */
+function HeroPayButton({ svc }) {
+  const { isLoggedIn, token } = useUserAuth()
+  const [loading, setLoading] = useState(false)
+  const [msg, setMsg] = useState('')
+  if (!isLoggedIn || !isRegistrationService(svc)) return null
+
+  if (REGISTRATION_PLANS[svc.slug]) {
+    const basic = REGISTRATION_PLANS[svc.slug].plans?.find(p => p.tier === 'Basic')
+    return (
+      <a href="#pricing-plans" className="btn btn-primary" style={{ fontWeight: 700 }}>
+        {basic ? `Pay from ${basic.price} →` : 'Choose plan & Pay →'}
+      </a>
+    )
+  }
+  const amount = parsePrice(svc.priceCard?.price)
+  if (!amount) return null
+  async function pay() {
+    setLoading(true); setMsg('')
+    await openRazorpayCheckout({ amount, serviceSlug: svc.slug || '', serviceTitle: svc.title, token, onSuccess: setMsg, onError: setMsg })
+    setLoading(false)
+  }
+  return (
+    <>
+      <button type="button" onClick={pay} disabled={loading} aria-busy={loading} className="btn btn-primary" style={{ fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer' }}>
+        {loading ? 'Processing…' : `Pay ₹${amount.toLocaleString('en-IN')} →`}
+      </button>
+      {msg && <div style={{ flexBasis: '100%' }}><PayMsg msg={msg} /></div>}
+    </>
   )
 }
 
 function ServiceAside({ priceCard, helpCard, svc }) {
+  const navigate = useNavigate()
   const isDM = isDigitalMarketingService(svc)
-  const hasTieredPlans = !!(svc?.slug && REGISTRATION_PLANS[svc.slug])
+  const hasTieredPlans = !!(svc?.slug && (REGISTRATION_PLANS[svc.slug] || PACKAGE_PAGES[svc.slug]))
+  // Registration & IT services that already show an amount don't need a "Request Quote" form.
+  const hideQuoteForm = (isRegistrationService(svc) || isITService(svc)) && hasPayableAmount(svc)
   const hasPrice = priceCard.price && priceCard.price !== 'Custom quote' && !hasTieredPlans
   const waMsg = encodeURIComponent(`Hi, I'm interested in ${svc.title}`)
   // Clean any specified fee/tax disclaimer text requested to be removed
@@ -589,6 +656,11 @@ function ServiceAside({ priceCard, helpCard, svc }) {
   const boxLabel = isDM ? 'CHOOSE PLAN' : priceCard.label
 
   const displayedPrice = priceCard.price
+
+  function handleMonthlyPlansClick() {
+    const targetService = svc?.slug || ''
+    navigate(`/pricing?cat=dm&service=${encodeURIComponent(targetService)}#plans`)
+  }
 
   const dmHighlights = isDM ? getServiceHighlights(svc) : []
 
@@ -612,7 +684,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
               <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,.6)', marginBottom: 8 }}>{boxLabel}</div>
               {hasPrice ? (
                 <>
-                  <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: cleanSub ? 4 : 16, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
+                  <div style={{ fontSize: 'clamp(24px,4.5vw,38px)', fontWeight: 900, color: '#fff', lineHeight: 1.15, marginBottom: (cleanSub || priceCard.govtFee) ? 4 : 16, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
                     {(() => {
                       const m = displayedPrice.match(/^(.*?)(\s*\+\s*.+)?$/)
                       const main = m?.[1] || displayedPrice
@@ -627,6 +699,19 @@ function ServiceAside({ priceCard, helpCard, svc }) {
                   </div>
                   {cleanSub ? (
                     <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{cleanSub}</div>
+                  ) : null}
+                  {/* Govt fee — informational only. The Pay button above/below charges the
+                      professional fee only; this just tells the customer what else to expect. */}
+                  {priceCard.govtFee ? (
+                    <div style={{ margin: '10px 0 16px', padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,.10)', border: '1px solid rgba(255,255,255,.18)' }}>
+                      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 }}>
+                        <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,.9)' }}>+ Govt fee</span>
+                        <span style={{ fontSize: 18, fontWeight: 800, color: '#fff' }}>{priceCard.govtFee.amount}</span>
+                      </div>
+                      {priceCard.govtFee.note ? (
+                        <div style={{ fontSize: 12, lineHeight: 1.5, color: 'rgba(255,255,255,.7)', marginTop: 4 }}>{priceCard.govtFee.note}</div>
+                      ) : null}
+                    </div>
                   ) : null}
                 </>
               ) : (
@@ -648,7 +733,22 @@ function ServiceAside({ priceCard, helpCard, svc }) {
           </a>
           {isDM ? (
             <div style={{ marginTop: 10 }}>
-              <DMPlanButtons svc={svc} />
+              <button
+                onClick={handleMonthlyPlansClick}
+                style={{
+                  display: 'block', width: '100%', textAlign: 'center',
+                  padding: '12px', borderRadius: 10,
+                  background: 'rgba(255,255,255,.15)',
+                  color: '#fff', fontWeight: 700, fontSize: 14,
+                  border: '1px solid rgba(255,255,255,.3)',
+                  cursor: 'pointer', fontFamily: 'inherit',
+                  transition: 'background .15s'
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,.25)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.15)' }}
+              >
+                Monthly Plans
+              </button>
 
               {/* Service points according to price/plan below monthly plans */}
               {dmHighlights.length > 0 && (
@@ -700,7 +800,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
           )}
         </div>
       )}
-      <div style={{ marginBottom: 16 }}><QuoteForm svc={svc} /></div>
+      {!hideQuoteForm && <div style={{ marginBottom: 16 }}><QuoteForm svc={svc} /></div>}
       <div className="help-card">
         <h4>{helpCard.title}</h4>
         <p>{helpCard.body}</p>
@@ -923,6 +1023,7 @@ export default function ServicePage({ svc }) {
                   <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" aria-hidden="true"><path d={WA_PATH} /></svg>
                   WhatsApp Us
                 </a>
+                <HeroPayButton svc={svc} />
               </div>
             </div>
             <div className="svc-hero-visual-col">
@@ -931,6 +1032,8 @@ export default function ServicePage({ svc }) {
           </div>
         </div>
       </header>
+
+      {PACKAGE_PAGES[svc?.slug] && <WebsitePackages packages={PACKAGE_PAGES[svc.slug]} />}
 
       {/* ── Pricing plans (Basic/Standard/Premium) — shown first, full width, before Overview ── */}
       {REGISTRATION_PLANS[svc?.slug] && (

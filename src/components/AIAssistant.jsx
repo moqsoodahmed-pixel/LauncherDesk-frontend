@@ -631,9 +631,7 @@ export default function AIAssistant() {
 
           <DraSection id="it" label="IT Services">
             <DraSubSection id="web" label="Website Development">
-              <Link to="/services/static-website" onClick={closeDrawer}>Static Website Development</Link>
-              <Link to="/services/dynamic-website" onClick={closeDrawer}>Dynamic Website Development</Link>
-              <Link to="/services/ecommerce-website" onClick={closeDrawer}>E-commerce Website Development</Link>
+              <Link to="/services/website-development" onClick={closeDrawer}>Website Development Packages</Link>
               <Link to="/services/crm-setup-lead-management" onClick={closeDrawer}>CRM Website / Portal Development</Link>
             </DraSubSection>
             <DraSubSection id="mob" label="Mobile Solutions">
@@ -661,9 +659,9 @@ export default function AIAssistant() {
 
           <Link className="d-link" to="/market" onClick={closeDrawer}>Marketplace</Link>
           <DraSection id="office" label="Office Setup">
-            <Link to="/office-restore" onClick={closeDrawer}>Office Furniture & Setup</Link>
-            <Link to="/office-restore/individual" onClick={closeDrawer}>Private Office Space</Link>
-            <Link to="/office-restore/coworking" onClick={closeDrawer}>Co-working Space</Link>
+            <Link to="/office-restore" onClick={closeDrawer}>Office Furniture</Link>
+            <Link to="/office-restore/individual" onClick={closeDrawer}>Private Office</Link>
+            <Link to="/office-restore/coworking" onClick={closeDrawer}>Co-working</Link>
           </DraSection>
           <Link className="d-link" to="/virtual-office" onClick={closeDrawer}>Virtual Office</Link>
           <Link className="d-link" to="/estamp" onClick={closeDrawer}>E-Stamp</Link>

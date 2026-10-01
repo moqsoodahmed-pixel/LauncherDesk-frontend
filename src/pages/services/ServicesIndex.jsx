@@ -230,7 +230,7 @@ export default function ServicesIndex() {
     const handler = () => {
       const q = s.value.toLowerCase().trim()
       let shown = 0
-      list.querySelectorAll('[data-svc]').forEach(c => {
+      list?.querySelectorAll('[data-svc]').forEach(c => {
         const m = q === '' || c.dataset.svc.includes(q) || c.textContent.toLowerCase().includes(q)
         c.style.display = m ? '' : 'none'
         if (m) shown++
@@ -272,33 +272,6 @@ export default function ServicesIndex() {
         </div>
       </header>
 
-      {/* By category */}
-      <section className="section-sm">
-        <div className="wrap">
-          <div className="sec-head reveal-up">
-            <span className="eyebrow">Organised by stage</span>
-            <h2 style={{ fontSize: 'clamp(26px,3vw,38px)' }}>START · BUILD · MANAGE · GROW · EXPAND</h2>
-          </div>
-          <div className="grid-3" id="svcList" style={{ marginTop: 32 }}>
-            {CATEGORIES.map(cat => (
-              <a key={cat.href} className="card reveal-up" data-svc={cat.keywords} href={cat.href}>
-                <div className="ci">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d={cat.icon} />
-                  </svg>
-                </div>
-                <h3>{cat.title}</h3>
-                <p>{cat.desc}</p>
-                <span className="arrow">View</span>
-              </a>
-            ))}
-          </div>
-          <p id="noRes" className="mut center" style={{ display: 'none', marginTop: 24 }}>
-            No services match that search. Try a broader term, or{' '}
-            <a href="/company/contact" style={{ color: 'var(--blue-dark)', fontWeight: 600 }}>ask an expert</a>.
-          </p>
-        </div>
-      </section>
 
       {/* Browse all */}
       <section className="section-2">

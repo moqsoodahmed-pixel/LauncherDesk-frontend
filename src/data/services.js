@@ -118,7 +118,7 @@ export const SERVICES = {
     eyebrow: 'Registrations & compliance',
     crumbCategory: 'Registrations & compliance',
     lead: "Register for GST and keep monthly, quarterly and annual returns filed on time — so a missed deadline never becomes a penalty or a blocked input credit.",
-    priceCard: { label: 'Price', price: '₹1,499 + GST', sub: '' },
+    priceCard: { label: 'Price', price: '₹1,999 + GST', sub: '' },
     helpCard: { title: 'Not sure if you need GST yet?', body: "It depends on turnover, state and channel — we'll tell you plainly." },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -583,7 +583,7 @@ export const SERVICES = {
     eyebrow: 'Protect & grow',
     crumbCategory: 'Legal & IP',
     lead: "Your brand name is one of your most valuable assets — and one of the easiest to lose if you don't register it. We search, file and track your trademark through to registration.",
-    priceCard: { label: 'Price', price: '₹4,000 + GST', sub: '' },
+    priceCard: { label: 'Price', price: '₹4,000 + GST', sub: '', govtFee: { amount: '₹4,500' } },
     helpCard: { title: "Not sure your name is free?", body: "We run a proper search before you file anything." },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: 'Who can register' }, { href: '#benefits', label: 'Advantages' },
@@ -1919,7 +1919,7 @@ export const SERVICES = {
     eyebrow: 'START — Certifications',
     crumbCategory: 'START',
     lead: 'Get your startup officially recognised by DPIIT — unlocking income tax benefits, government scheme access, patent fee rebates and investor credibility.',
-    priceCard: { label: 'Price', price: '₹4,200 + GST', sub: '' },
+    priceCard: { label: 'Price', price: '₹4,200 + GST + Org DSC', sub: '' },
     helpCard: { title: 'Not sure if you qualify?', body: 'We check eligibility before you apply — free assessment.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2008,7 +2008,7 @@ export const SERVICES = {
     eyebrow: 'START — Certifications',
     crumbCategory: 'START',
     lead: 'Get your business ISO certified — with guidance on the right standard, documentation support and certification body coordination.',
-    priceCard: { label: 'Price', price: '₹2,500 + GST', sub: '' },
+    priceCard: { label: 'Price', price: '₹3,499 + GST', sub: 'ISO 9001:2015' },
     helpCard: { title: 'Not sure which ISO standard you need?', body: 'We help you identify the right standard for your business and sector.' },
     toc: [
       { href: '#overview', label: 'Overview' },

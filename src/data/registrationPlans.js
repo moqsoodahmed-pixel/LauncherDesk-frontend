@@ -11,8 +11,9 @@ export const REGISTRATION_PLANS = {
     plans: [
       {
         tier: 'Basic',
-        price: '₹2,999',
-        priceNote: '+ Govt Fees',
+        price: '₹4,999',
+        priceNote: '+ Govt fee',
+        taxNote: '+ GST',
         features: [
           { text: 'Company name help', included: true },
           { text: 'SPICe+ form in 2–3 working days', included: true },
@@ -33,8 +34,9 @@ export const REGISTRATION_PLANS = {
       },
       {
         tier: 'Standard',
-        price: '₹4,999',
-        priceNote: '+ Govt Fees',
+        price: '₹6,499',
+        priceNote: '+ Govt fee',
+        taxNote: '+ GST',
         primary: true,
         features: [
           { text: 'Company name help', included: true },
@@ -56,8 +58,9 @@ export const REGISTRATION_PLANS = {
       },
       {
         tier: 'Premium',
-        price: '₹7,999',
-        priceNote: '+ Govt Fees',
+        price: '₹11,499',
+        priceNote: '+ Govt fee',
+        taxNote: '+ GST',
         features: [
           { text: 'Company name help', included: true },
           { text: 'SPICe+ form in 2–3 working days', included: true },
@@ -84,8 +87,9 @@ export const REGISTRATION_PLANS = {
     plans: [
       {
         tier: 'Basic',
-        price: '₹2,999',
-        priceNote: '+ Govt Fees',
+        price: '₹4,999',
+        priceNote: '+ Govt fee',
+        taxNote: '+ GST',
         features: [
           { text: 'Company name help', included: true },
           { text: 'SPICe+ form in 2–3 working days', included: true },
@@ -106,8 +110,9 @@ export const REGISTRATION_PLANS = {
       },
       {
         tier: 'Standard',
-        price: '₹4,500',
-        priceNote: '+ Govt Fees',
+        price: '₹6,499',
+        priceNote: '+ Govt fee',
+        taxNote: '+ GST',
         primary: true,
         features: [
           { text: 'Company name help', included: true },
@@ -129,8 +134,9 @@ export const REGISTRATION_PLANS = {
       },
       {
         tier: 'Premium',
-        price: '₹7,999',
-        priceNote: '+ Govt Fees',
+        price: '₹11,499',
+        priceNote: '+ Govt fee',
+        taxNote: '+ GST',
         features: [
           { text: 'Company name help', included: true },
           { text: 'SPICe+ form in 2–3 working days', included: true },
@@ -157,8 +163,9 @@ export const REGISTRATION_PLANS = {
     plans: [
       {
         tier: 'Basic',
-        price: '₹1,999',
-        priceNote: '+ Govt Fees',
+        price: '₹4,999',
+        priceNote: '+ Govt fee',
+        taxNote: '+ GST',
         features: [
           { text: 'LLP name help', included: true },
           { text: 'FiLLiP form in 2–3 working days', included: true },
@@ -179,8 +186,9 @@ export const REGISTRATION_PLANS = {
       },
       {
         tier: 'Standard',
-        price: '₹6,999',
-        priceNote: '+ Govt Fees',
+        price: '₹6,499',
+        priceNote: '+ Govt fee',
+        taxNote: '+ GST',
         primary: true,
         features: [
           { text: 'LLP name help', included: true },
@@ -202,8 +210,9 @@ export const REGISTRATION_PLANS = {
       },
       {
         tier: 'Premium',
-        price: '₹8,999',
-        priceNote: '+ Govt Fees',
+        price: '₹11,499',
+        priceNote: '+ Govt fee',
+        taxNote: '+ GST',
         features: [
           { text: 'LLP name help', included: true },
           { text: 'FiLLiP form in 2–3 working days', included: true },
@@ -225,3 +234,42 @@ export const REGISTRATION_PLANS = {
     ],
   },
 }
+
+/* ── Government fee breakdown ─────────────────────────────────────────────
+   Shown in the popup when a customer clicks "Govt fee" on a plan card.
+   These are paid to the government (via us) and are NOT part of the plan
+   price the customer pays online. Amounts vary by state — edit `rows`
+   below. A row with `amount: null` shows "At actual". `total` is optional. */
+export const GOVT_FEE_BREAKDOWN = {
+  'private-limited-company-registration': {
+    state: 'Karnataka',
+    rows: [
+      { label: '2 DSC price', sub: 'Inclusive of taxes', amount: 4720 },
+      { label: 'RUN + PAN/TAN', sub: 'Inclusive of taxes', amount: 1456 },
+      { label: 'State filing fee', sub: 'Auth. capital up to ₹1 Lakh', amount: 10020 },
+    ],
+  },
+  'opc-registration': {
+    state: 'Karnataka',
+    rows: [
+      { label: 'DSC price', sub: 'Inclusive of taxes', amount: null },
+      { label: 'RUN + PAN/TAN', sub: 'Inclusive of taxes', amount: null },
+      { label: 'State filing fee', sub: 'Depends on authorised capital', amount: null },
+    ],
+  },
+  'llp-registration': {
+    state: 'Karnataka',
+    rows: [
+      { label: '2 DSC price', sub: 'Inclusive of taxes', amount: null },
+      { label: 'RUN-LLP name reservation', sub: 'MCA fee', amount: null },
+      { label: 'FiLLiP filing fee', sub: 'Depends on capital contribution', amount: null },
+    ],
+  },
+}
+
+export const GOVT_FEE_TERMS = [
+  'Government fee, DSC and courier charges are extra and are collected after expert consultation.',
+  'GST at 18% applies to the LauncherDesk professional fee only.',
+  'Government fees vary by state and are charged at actual.',
+  'Filing timelines depend on MCA portal availability.',
+]

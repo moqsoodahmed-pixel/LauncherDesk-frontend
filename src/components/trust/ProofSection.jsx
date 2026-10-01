@@ -12,6 +12,9 @@ import { REVIEWS, CASE_STUDIES } from '../../data/trust'
  * "coming soon" state rather than fake content or an awkward blank gap.
  */
 
+/* Clients shown in "Real Businesses. Real Work." until full case studies are added to data/trust.js */
+const CLIENT_NAMES = ['AL Baraqa', 'Officerestore', 'Ocean Premium Construction']
+
 function Stars({ rating }) {
   const n = Math.round(rating || 5)
   return (
@@ -101,10 +104,16 @@ export function CaseStudiesSection() {
             {items.map(item => <CaseStudyCard key={item.id} item={item} />)}
           </div>
         ) : (
-          <EmptyProofState
-            heading="Client stories are being verified for publishing"
-            body="We only publish case studies our clients have reviewed and approved. This section will fill in as those approvals come through."
-          />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, maxWidth: 960, margin: '0 auto' }}>
+            {CLIENT_NAMES.map(name => (
+              <div key={name} className="reveal-up" style={{ display: 'flex', alignItems: 'center', gap: 14, background: '#fff', border: '1px solid var(--line)', borderRadius: 14, padding: '20px 22px', boxShadow: '0 2px 10px rgba(15,28,46,.05)' }}>
+                <span aria-hidden="true" style={{ width: 46, height: 46, borderRadius: 12, flexShrink: 0, display: 'grid', placeItems: 'center', background: 'var(--brand-50, #EEF4FF)', color: 'var(--blue)', fontWeight: 900, fontSize: 16 }}>
+                  {name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()}
+                </span>
+                <span style={{ fontSize: 16.5, fontWeight: 800, color: 'var(--navy)', lineHeight: 1.3 }}>{name}</span>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </section>

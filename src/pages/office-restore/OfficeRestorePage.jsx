@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react'
 
 const API = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-production.up.railway.app/api'
 
-const imgChair        = '/product-ergonomic-chair.jpg'
-const imgNormalTable  = '/product-normal-table.jpg'
+// NOTE: the two image files are named the wrong way round —
+// product-normal-table.jpg is the chair photo and product-ergonomic-chair.jpg is the table photo.
+const imgChair        = '/product-normal-table.jpg'
+const imgNormalTable  = '/product-ergonomic-chair.jpg'
 const imgElectricTable = '/product-electric-table.jpg'
 
 const CHEV = 'm9 18 6-6-6-6'
@@ -137,9 +139,9 @@ const DELIVERABLES = ['Floor Mats / Carpet Tiles','Mobile Drawer Pedestals','Cup
 const STATES = ['Andhra Pradesh','Assam','Bihar','Chhattisgarh','Delhi','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Odisha','Punjab','Rajasthan','Tamil Nadu','Telangana','Uttar Pradesh','Uttarakhand','West Bengal','Other']
 
 const CATS = [
-  { label:'Seating', img: null, imgKey:'chair', title:'Ergonomic High-Back Office Chair', desc:'Premium high-back mesh office chair with adjustable headrest, lumbar support and pneumatic height adjustment. Designed for all-day comfort in professional work environments.', specs:['Ergonomic mesh back & headrest','Adjustable height & tilt mechanism','3D adjustable armrests','5-star caster base'] },
-  { label:'Workstations', img: null, imgKey:'normal', title:'Standard Office Workstation Table', desc:'Clean, minimal white office table with a durable pre-laminated board surface and powder-coated metal frame. Ideal for individual workstations and compact office setups.', specs:['Durable pre-lam white board top','Powder-coated metal frame','Modular, easy to configure','Available in multiple sizes'] },
-  { label:'Height-Adjust', img: null, imgKey:'electric', title:'Electric Height-Adjustable Standing Desk', desc:'Motorised sit-stand desk with a digital control panel. Effortlessly adjusts from sitting to standing height to promote better posture and wellbeing throughout the workday.', specs:['Electric motor with digital control','Memory presets for height positions','Wide white surface top','Anti-collision safety system'] },
+  { label:'Seating', img: null, imgKey:'chair', price:3200, mrp:3400, title:'Ergonomic High-Back Office Chair', desc:'Premium high-back mesh office chair with adjustable headrest, lumbar support and pneumatic height adjustment. Designed for all-day comfort in professional work environments.', specs:['Ergonomic mesh back & headrest','Adjustable height & tilt mechanism','3D adjustable armrests','5-star caster base'] },
+  { label:'Workstations', img: null, imgKey:'normal', price:3800, mrp:4000, title:'Standard Office Workstation Table', desc:'Clean, minimal white office table with a durable pre-laminated board surface and powder-coated metal frame. Ideal for individual workstations and compact office setups.', specs:['Durable pre-lam white board top','Powder-coated metal frame','Modular, easy to configure','Available in multiple sizes'] },
+  { label:'Height-Adjust', img: null, imgKey:'electric', price:14999, mrp:15999, title:'Electric Height-Adjustable Standing Desk', desc:'Motorised sit-stand desk with a digital control panel. Effortlessly adjusts from sitting to standing height to promote better posture and wellbeing throughout the workday.', specs:['Electric motor with digital control','Memory presets for height positions','Wide white surface top','Anti-collision safety system'] },
 ]
 
 const FAQS = [
@@ -324,6 +326,15 @@ export default function OfficeRestorePage() {
                 </div>
                 <div className="or-cat-body">
                   <h3>{cat.title}</h3>
+                  {cat.price && (
+                    <div style={{ display:'flex', alignItems:'baseline', gap:8, flexWrap:'wrap', margin:'2px 0 10px' }}>
+                      <span style={{ fontSize:22, fontWeight:900, color:'var(--navy)' }}>₹{cat.price.toLocaleString('en-IN')}</span>
+                      {cat.mrp > cat.price && <>
+                        <span style={{ fontSize:14, color:'var(--text-3)', textDecoration:'line-through' }}>₹{cat.mrp.toLocaleString('en-IN')}</span>
+                        <span style={{ fontSize:11.5, fontWeight:800, color:'#fff', background:'#DC2626', borderRadius:6, padding:'2px 7px' }}>{Math.floor((1 - cat.price / cat.mrp) * 100)}% OFF</span>
+                      </>}
+                    </div>
+                  )}
                   <p>{cat.desc}</p>
                   <div className="or-cat-specs">
                     {cat.specs.map(s => (

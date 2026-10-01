@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import SEO, { organizationSchema, websiteSchema } from '../components/SEO'
 import HeroVisual from '../components/HeroVisual'
 import TrustBar from '../components/trust/TrustBar'
-import { CaseStudiesSection, TestimonialsSection } from '../components/trust/ProofSection'
+import { CaseStudiesSection } from '../components/trust/ProofSection'
 import ContextualCta from '../components/trust/ContextualCta'
 import { CTA_EVENTS, trackCta } from '../data/cta'
 
@@ -947,12 +947,6 @@ const STAGES = [
     chips: [{ l: 'Website Development', h: '/services/website-development' }, { l: 'Digital Marketing', h: '/services/digital-marketing' }, { l: 'Business Automation', h: '/services/business-automation' }],
     ctaPrompt: 'Ready to grow?', ctaLabel: 'Explore Technology & Growth', ctaHref: '/solutions/business-growth',
   },
-  {
-    id: 'expand', num: '05', name: 'International Expansion',
-    desc: 'UAE setup, fundraising documentation and business consulting for businesses ready to go beyond India.',
-    chips: [{ l: 'UAE Business Setup', h: '/services/uae-business-setup' }, { l: 'Fundraising Docs', h: '/services/fundraising-documentation' }, { l: 'Business Consulting', h: '/services/business-consulting' }],
-    ctaPrompt: 'Planning your next market?', ctaLabel: 'Explore Expansion', ctaHref: '/solutions/advisory',
-  },
 ]
 
 const SVC_CATS = [
@@ -966,13 +960,11 @@ const SVC_CATS = [
     ]
   },
   {
-    name: 'Licences & Registrations', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6', count: 5,
+    name: 'Licences & Registrations', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6', count: 3,
     services: [
       { href: '/services/gst-registration', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z', name: 'GST Registration & Filing', desc: 'GSTIN + ongoing return filing so you never miss a deadline.' },
       { href: '/services/msme-registration', icon: 'M9 11l3 3L22 4', name: 'MSME / Udyam Registration', desc: 'Unlock collateral-free loans, subsidies and payment protection.' },
-      { href: '/services/fssai-registration', icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', name: 'FSSAI Registration', desc: 'Mandatory for all food businesses — we identify the right tier.' },
       { href: '/services/trademark-registration', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', name: 'Trademark Registration', desc: 'Protect your brand name, logo and tagline across the right classes.' },
-      { href: '/services/roc-compliance', icon: 'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11', name: 'ROC & Annual Compliance', desc: 'Annual filings for companies and LLPs — tracked proactively.' },
     ]
   },
   {
@@ -1022,6 +1014,24 @@ const RESOURCES = [
   { cat: 'Blog', title: 'GST registration: everything a new business owner needs to know', desc: 'Who needs it, what it costs, how long it takes, and what happens if you miss the threshold.', href: '/resources/blog' },
   { cat: 'Tools', title: 'Service Finder', desc: 'Answer five questions and get a personalised list of the registrations and services your business actually needs.', href: '/services' },
 ]
+
+function IndiaFlagIcon() {
+  const spokes = Array.from({ length: 24 }, (_, i) => {
+    const a = (i * 15 * Math.PI) / 180
+    return <line key={i} x1="45" y1="30" x2={45 + 8.5 * Math.cos(a)} y2={30 + 8.5 * Math.sin(a)} stroke="#000080" strokeWidth="0.7" />
+  })
+  return (
+    <svg viewBox="0 0 90 60" width="72" height="48" role="img" aria-label="Flag of India"
+      style={{ display: 'inline-block', borderRadius: 4, boxShadow: '0 2px 8px rgba(15,28,46,.18)', border: '1px solid rgba(15,28,46,.12)' }}>
+      <rect width="90" height="20" fill="#FF9933" />
+      <rect y="20" width="90" height="20" fill="#FFFFFF" />
+      <rect y="40" width="90" height="20" fill="#138808" />
+      <circle cx="45" cy="30" r="9" fill="none" stroke="#000080" strokeWidth="1.2" />
+      <circle cx="45" cy="30" r="1.6" fill="#000080" />
+      {spokes}
+    </svg>
+  )
+}
 
 /* ── COMPONENT ────────────────────────────────────────────── */
 export default function HomePage() {
@@ -1145,10 +1155,12 @@ export default function HomePage() {
             { num: '15+', label: 'Service categories covered' },
             { num: '360°', label: 'Complete business solutions' },
             { num: '1', label: 'Single point of contact' },
-            { num: '🇮🇳', label: 'Made in India' },
+            { num: 'flag', label: 'Made in India' },
           ].map(s => (
             <div key={s.num} className="hp-stats-item">
-              <div className="hp-stats-num">{s.num}</div>
+              {s.num === 'flag'
+                ? <div style={{ height: 'clamp(32px,4vw,52px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IndiaFlagIcon /></div>
+                : <div className="hp-stats-num">{s.num}</div>}
               <div className="hp-stats-label">{s.label}</div>
             </div>
           ))}
@@ -1274,14 +1286,6 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-        <div className="hp-svc-all-btn">
-          <Link to="/services">
-            View all services
-            <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </Link>
-        </div>
       </section>
 
       {/* ═══ WHY LAUNCHERDESK ════════════════════════════════ */}
@@ -1307,7 +1311,7 @@ export default function HomePage() {
         </div>
 
         {/* ── Two-column: feature cards + comparison table ── */}
-        <div className="hp-why-grid">
+        <div className="hp-why-grid" style={{ gridTemplateColumns: '1fr', maxWidth: 820 }}>
           <div className="hp-why-left">
             <div className="hp-why-features reveal-up">
               {WHY_FEATURES.map((f, i) => (
@@ -1344,29 +1348,6 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-          <div className="hp-why-vs-wrap reveal-up" style={{ transitionDelay: '350ms' }}>
-            <div className="hp-vs-card">
-              <span className="hp-vs-glow" aria-hidden="true" />
-              <div className="hp-vs-head">
-                <div className="hp-vs-col bad"><div className="hp-vs-col-label">The Usual Way</div></div>
-                <div className="hp-vs-col good"><div className="hp-vs-col-label">The LauncherDesk Way</div></div>
-              </div>
-              <div className="hp-vs-rows">
-                {VS_ROWS.map((r, i) => (
-                  <div key={i} className="hp-vs-row">
-                    <div className="hp-vs-cell bad">
-                      <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
-                      {r.bad}
-                    </div>
-                    <div className="hp-vs-cell good">
-                      <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></svg>
-                      {r.good}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -1374,7 +1355,6 @@ export default function HomePage() {
           Phase 6/7 — reads only from data/trust.js (REVIEWS, CASE_STUDIES),
           which ship empty until the business team adds verified entries. ═══ */}
       <CaseStudiesSection />
-      <TestimonialsSection />
 
       {/* ═══ LIFECYCLE ACCORDION ════════════════════════════ */}
       <section className="lc2-section" id="how-it-works">
@@ -1431,91 +1411,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ SERVICE FINDER / PERSONALISED ROADMAP ═══════════
-          Phase 10 — promotes the existing Service Finder as a major CTA
-          instead of a small link buried in the nav. No new logic: both
-          buttons route to the site's existing Service Finder and Ask Sneha. ═══ */}
-      <section className="hp-roadmap">
-        <div className="wrap">
-          <div className="hp-roadmap-card">
-            <div className="hp-roadmap-text">
-              <div className="hp-section-eyebrow" style={{ color: 'var(--blue)' }}>Service Finder</div>
-              <h2>Get Your Personalised Business Roadmap</h2>
-              <p>Answer a few quick questions and discover the services your business may need.</p>
-              <ul className="hp-roadmap-list">
-                <li>What you may need now</li>
-                <li>What you may need later</li>
-                <li>Recommended registrations</li>
-                <li>Compliance requirements</li>
-                <li>Technology and growth options</li>
-              </ul>
-            </div>
-            <div className="hp-roadmap-btns">
-              <a href="/services#finder" className="hp-roadmap-btn-primary" onClick={() => trackCta(CTA_EVENTS.buildRoadmap)}>
-                Build My Roadmap
-                <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-              </a>
-              <button type="button" data-open-ai="true" className="hp-roadmap-btn-secondary" onClick={() => trackCta(CTA_EVENTS.askSneha)}>
-                Ask Sneha
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ═══ HOW IT WORKS ════════════════════════════════════ */}
-      <section className="hp-how">
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 28px' }}>
-          <div className="hp-section-head">
-            <div className="hp-section-eyebrow" style={{ color: 'var(--blue)' }}>How it works</div>
-            <h2>One conversation.<br />We take it from there.</h2>
-            <p>No portals to navigate, no consultants to chase. Tell us what you need and LauncherDesk handles the rest.</p>
-          </div>
-          <div className="hp-how-steps">
-            {HOW_STEPS.map((s, i) => (
-              <div key={s.num} className="hp-how-step">
-                <div className="hp-how-num">{s.num}</div>
-                <h4>{s.title}</h4>
-                <p>{s.desc}</p>
-                {i < HOW_STEPS.length - 1 && <div className="hp-how-connector" />}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ═══ RESOURCES ═══════════════════════════════════════ */}
-      <section className="hp-resources">
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 28px' }}>
-          <div className="hp-section-head">
-            <div className="hp-section-eyebrow" style={{ color: 'var(--blue)' }}>Resources</div>
-            <h2>Know more. Decide better.</h2>
-            <p>Practical guides and tools for founders and business owners across India.</p>
-          </div>
-          <div className="hp-res-grid">
-            {RESOURCES.map(r => (
-              <Link key={r.title} to={r.href} className="hp-res-card">
-                <div className="hp-res-card-thumb" />
-                <div className="hp-res-card-body">
-                  <div className="hp-res-cat">{r.cat}</div>
-                  <div className="hp-res-title">{r.title}</div>
-                  <div className="hp-res-desc">{r.desc}</div>
-                  <div className="hp-res-link">
-                    Read more
-                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 36 }}>
-            <Link to="/resources" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '0 28px', height: 48, borderRadius: 10, border: '1.5px solid var(--blue)', color: 'var(--blue)', fontWeight: 700, fontSize: 14.5, textDecoration: 'none' }}>
-              View all resources
-              <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* ═══ FAQ ══════════════════════════════════════════════ */}
       <section className="hp-faq">
@@ -1526,7 +1423,7 @@ export default function HomePage() {
             <p>Answers to the questions founders ask us every day.</p>
           </div>
           <div className="hp-faq-list">
-            {FAQS.slice(0, 4).map((f, i) => (
+            {FAQS.map((f, i) => (
               <div key={i} className="hp-faq-item">
                 <div className="hp-faq-q">
                   <div className="hp-faq-q-text">{f.q}</div>
@@ -1540,22 +1437,6 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          <div style={{ textAlign: 'center', marginTop: 36 }}>
-            <Link to="/resources/faq" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '0 28px', height: 48, borderRadius: 10, background: 'var(--blue)', color: '#fff', fontWeight: 700, fontSize: 14.5, textDecoration: 'none', boxShadow: '0 6px 20px rgba(29,111,224,.3)' }}>
-              View more
-              <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-            </Link>
-          </div>
-          <ContextualCta
-            className="hp-faq-ctx-cta"
-            prompt="Have more to ask?"
-            label="Ask Sneha"
-            askSneha
-            intent="low"
-            event={CTA_EVENTS.faqAskSneha}
-            secondaryLabel="Talk to Our Expert"
-            secondaryTo="/company/contact"
-          />
         </div>
       </section>
 
