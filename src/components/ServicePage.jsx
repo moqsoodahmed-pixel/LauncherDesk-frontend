@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useUserAuth } from '../context/UserAuthContext'
 import SEO, { serviceSchema, breadcrumbSchema, faqSchema } from './SEO'
-import RegistrationPricingPlans, { GovtFeeModal } from './RegistrationPricingPlans'
+import RegistrationPricingPlans from './RegistrationPricingPlans'
 import TrademarkCheckoutModal from './TrademarkCheckoutModal'
 import { REGISTRATION_PLANS, GOVT_FEE_BREAKDOWN } from '../data/registrationPlans'
 import StickyServiceCta from './trust/StickyServiceCta'
@@ -614,6 +614,8 @@ function HeroPayButton({ svc }) {
   // Services with Basic/Standard/Premium plans (Pvt Ltd, OPC, LLP) show their
   // prices in the plan cards below, so no "Pay from ₹X" button in the hero.
   if (REGISTRATION_PLANS[svc.slug]) return null
+  // Trademark pays through the "Proceed to Pay" popup in the price card instead.
+  if (svc.priceCard?.hideBuyNow) return null
   const amount = parsePrice(svc.priceCard?.price)
   if (!amount) return null
   async function pay() {
@@ -634,7 +636,9 @@ function HeroPayButton({ svc }) {
 function ServiceAside({ priceCard, helpCard, svc }) {
   const navigate = useNavigate()
   const [showFeeModal, setShowFeeModal] = useState(false)
-  const hasFeeBreakdown = !!(svc?.slug && GOVT_FEE_BREAKDOWN[svc.slug])
+  // Trademark has its own payment popup (applicant type, classes, details -> Razorpay).
+  const hasCheckoutPortal = svc?.slug === 'trademark-registration'
+  const otherGovtFee = GOVT_FEE_BREAKDOWN[svc?.slug]?.categories?.find(c => c.key === 'other')?.rows?.[0]?.amount
   const isDM = isDigitalMarketingService(svc)
   const hasTieredPlans = !!(svc?.slug && (REGISTRATION_PLANS[svc.slug] || PACKAGE_PAGES[svc.slug]))
   // Registration & IT services that already show an amount don't need a "Request Quote" form.
@@ -698,21 +702,19 @@ function ServiceAside({ priceCard, helpCard, svc }) {
                   {cleanSub ? (
                     <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginBottom: 16 }}>{cleanSub}</div>
                   ) : null}
-                  {/* Govt fee — informational only. The Pay button above/below charges the
-                      professional fee only; this just tells the customer what else to expect. */}
+                  {/* Government fee: a quiet line under the price (trademark), so the card stays clean. */}
                   {priceCard.govtFee ? (
-                    hasFeeBreakdown ? (
-                      <button
-                        type="button"
-                        onClick={() => setShowFeeModal(true)}
-                        aria-haspopup="dialog"
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, width: '100%', margin: '10px 0 16px', padding: '12px 14px', borderRadius: 10, background: 'rgba(255,255,255,.10)', border: '1px solid rgba(255,255,255,.18)', color: '#fff', font: 'inherit', cursor: 'pointer', textAlign: 'left', transition: 'background .15s' }}
-                        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,.18)' }}
-                        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.10)' }}
-                      >
-                        <span style={{ fontSize: 14, fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 3 }}>+ Govt fee</span>
-                        <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" /></svg>
-                      </button>
+                    hasCheckoutPortal ? (
+                      <div style={{ margin: '0 0 18px', paddingBottom: 16, borderBottom: '1px solid rgba(255,255,255,.18)' }}>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,.92)' }}>
+                          + Govt fee {priceCard.govtFee.amount} <span style={{ fontWeight: 600, color: 'rgba(255,255,255,.68)' }}>per class</span>
+                        </div>
+                        {otherGovtFee ? (
+                          <div style={{ fontSize: 12, color: 'rgba(255,255,255,.62)', marginTop: 2 }}>
+                            ₹{otherGovtFee.toLocaleString('en-IN')} per class for other applicants
+                          </div>
+                        ) : null}
+                      </div>
                     ) : (
                       <div style={{ margin: '10px 0 16px', padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,.10)', border: '1px solid rgba(255,255,255,.18)' }}>
                         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 }}>
@@ -807,15 +809,25 @@ function ServiceAside({ priceCard, helpCard, svc }) {
                 </div>
               )}
             </div>
+          ) : hasCheckoutPortal ? (
+            <button
+              type="button"
+              onClick={() => setShowFeeModal(true)}
+              aria-haspopup="dialog"
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%', marginTop: 10, padding: '12px', borderRadius: 10, background: '#fff', color: '#1A2F4E', fontWeight: 800, fontSize: 14, border: 0, cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 16px rgba(10,37,64,.25)', transition: 'transform .15s' }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'none' }}
+            >
+              <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>
+              Proceed to Pay →
+            </button>
           ) : priceCard.hideBuyNow ? null : (
             <BuyNowButton svc={svc} priceCard={priceCard} />
           )}
         </div>
       )}
-      {showFeeModal && (
-        svc.slug === 'trademark-registration'
-          ? <TrademarkCheckoutModal svc={svc} onClose={() => setShowFeeModal(false)} />
-          : <GovtFeeModal slug={svc.slug} plan={{ price: priceCard.price.split('+')[0].trim() }} onClose={() => setShowFeeModal(false)} />
+      {showFeeModal && hasCheckoutPortal && (
+        <TrademarkCheckoutModal svc={svc} onClose={() => setShowFeeModal(false)} />
       )}
       {!hideQuoteForm && <div style={{ marginBottom: 16 }}><QuoteForm svc={svc} /></div>}
       <div className="help-card">
