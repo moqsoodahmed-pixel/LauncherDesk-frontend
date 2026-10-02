@@ -587,11 +587,11 @@ export const SERVICES = {
     helpCard: { title: "Not sure your name is free?", body: "We run a proper search before you file anything." },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: 'Who can register' }, { href: '#benefits', label: 'Advantages' },
-      { href: '#whyregister', label: 'Why register' }, { href: '#howwehelp', label: 'How we help' }, { href: '#classes', label: 'Trademark classes' },
+      { href: '#whyregister', label: 'Why register' }, { href: '#howwehelp', label: 'How we help' },
       { href: '#documents', label: 'Documents' }, { href: '#process', label: 'Process' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQs' },
     ],
     sections: {
-      overview: { heading: 'Overview', content: `<p>A registered trademark gives you exclusive legal rights to your brand name, logo or tagline within its class — and the ability to act against anyone who copies it. We start every engagement with a proper search so you're not filing on a name you can't defend or won't get.</p>` },
+      overview: { heading: 'Overview', content: `<p>Protect your brand name, logo, tagline, or symbol with trademark registration under India’s Trade Marks Act, 1999.</p><p>LauncherDesk helps you file Form TM-A and complete the registration process. A registered trademark is valid for 10 years and can be renewed for further 10-year periods.</p><p><b>Government fee:</b> ₹4,500 per class for individuals, startups and small enterprises, and ₹9,000 for other applicants.</p>` },
       who: {
         heading: 'Who can register',
         items: [
@@ -633,7 +633,6 @@ export const SERVICES = {
           'Dealing with trademark objection and opposition',
         ]
       },
-      classes: { heading: 'Trademark classes', content: `<p>Trademarks are registered under one or more of 45 classes based on your goods or services — for example Class 25 for clothing, Class 35 for retail and advertising, Class 42 for software. We identify the right class(es) for your business as part of the search.</p>` },
       documents: {
         heading: 'Documents / details required for trademark registration',
         content: `<ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Nature of business of the applicant</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> The trademark to be applied for — i.e. wordmark, device mark, etc. — along with the logo</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Translation or transliteration of the trademark, if in any language other than English</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> User detail of the trademark — i.e. proposed to be used, or the date of first use (dd/mm/yyyy) if already commercially used</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Brochure of the entity</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Legal status of the applicant — i.e. proprietorship, partnership, individual, HUF, or body corporate</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> Name and address of the proprietor/partnership, individual, HUF, or other body corporate</li></ul><h3>Charter documents</h3><ul><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> For a company — Certificate of Incorporation, MOA and AOA</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> For an LLP — details of partners along with the LLP Agreement</li><li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5"/></svg> For a partnership — the Partnership Deed</li></ul>`
