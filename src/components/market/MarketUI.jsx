@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { catBy, initials, nfmt, inCat } from '../../data/market'
+import FreeDemoModal from './FreeDemoModal'
 
 /* ── Icon paths ────────────────────────────────────────────── */
 export const MI = {
@@ -246,32 +247,53 @@ export function ProductCard({ p }) {
     )
   }
 
+  return <LiveProductCard p={p} cat={cat} iconPath={iconPath} firstSentence={firstSentence} />
+}
+
+/* Techjockey-style card: details + "Read more" link, a call button and a
+   "Get Free Demo" button that opens the demo request form right here. */
+const LD_PHONE = '+918548854859'
+function LiveProductCard({ p, cat, iconPath, firstSentence }) {
+  const [demo, setDemo] = useState(false)
+  const href = `/market/product?id=${p.id}`
   return (
-    <a className="mk-card reveal-up" href={`/market/product?id=${p.id}`}>
-      <div className="mk-card-top">
-        <Tile p={p} />
-        <Badge p={p} />
-      </div>
-      <div className="mk-cat-chip">
-        <svg className="mk-ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d={iconPath}/>
-        </svg>
-        {cat ? cat.name : ''}
-      </div>
-      <h3>{p.name}</h3>
-      <p className="mk-tag">{p.tagline}</p>
-      <p className="mk-desc">{firstSentence}</p>
+    <div className="mk-card reveal-up" style={{ display: 'flex', flexDirection: 'column' }}>
+      <a href={href} style={{ color: 'inherit', textDecoration: 'none', display: 'block' }}>
+        <div className="mk-card-top">
+          <Tile p={p} />
+          <Badge p={p} />
+        </div>
+        <div className="mk-cat-chip">
+          <svg className="mk-ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d={iconPath}/>
+          </svg>
+          {cat ? cat.name : ''}
+        </div>
+        <h3>{p.name}</h3>
+        <p className="mk-tag">{p.tagline}</p>
+        <p className="mk-desc">{firstSentence}</p>
+      </a>
+      <a href={href} style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--navy, #1E3A6A)', textDecoration: 'none', margin: '2px 0 12px' }}>
+        Read more about {p.name} ›
+      </a>
       <div className="mk-card-foot">
         <RateLine p={p} />
         <span className="mk-price">{p.price}</span>
       </div>
-      <span className="mk-explore">
-        Get Free Demo{' '}
-        <svg className="mk-ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M5 12h14M13 6l6 6-6 6"/>
-        </svg>
-      </span>
-    </a>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 14 }}>
+        <a href={`tel:${LD_PHONE}`} aria-label={`Call LauncherDesk about ${p.name}`} title="Call us"
+          style={{ width: 44, height: 44, flexShrink: 0, borderRadius: '50%', display: 'grid', placeItems: 'center', background: '#F1F5F9', color: '#1E293B', textDecoration: 'none' }}>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </a>
+        <button type="button" onClick={() => setDemo(true)} aria-haspopup="dialog"
+          style={{ flex: 1, height: 44, borderRadius: 999, border: 0, background: 'var(--blue, #2F6FE4)', color: '#fff', fontWeight: 700, fontSize: 14.5, cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 14px rgba(29,93,184,.25)' }}>
+          Get Free Demo
+        </button>
+      </div>
+      {demo && <FreeDemoModal product={p.name} onClose={() => setDemo(false)} />}
+    </div>
   )
 }
 

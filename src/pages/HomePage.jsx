@@ -3,7 +3,6 @@ import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import { Link } from 'react-router-dom'
 import SEO, { organizationSchema, websiteSchema } from '../components/SEO'
 import HeroVisual from '../components/HeroVisual'
-import TrustBar from '../components/trust/TrustBar'
 import { CaseStudiesSection } from '../components/trust/ProofSection'
 import ContextualCta from '../components/trust/ContextualCta'
 import { CTA_EVENTS, trackCta } from '../data/cta'
@@ -1136,7 +1135,6 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <TrustBar />
             </div>
 
             {/* Hero right — animated platform ecosystem visual */}
@@ -1468,7 +1466,6 @@ export default function HomePage() {
               <span aria-hidden="true">·</span>
               <span>Transparent pricing</span>
             </div>
-            <TrustBar className="hp-cta-trustbar" />
           </div>
         </div>
       </section>
