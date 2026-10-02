@@ -83,6 +83,7 @@ const S = `
 .rpp-price-block .rpp-price-row { margin-bottom:4px; padding-bottom:0; border-bottom:0; }
 .rpp-fee-link { display:inline-flex; align-items:center; gap:4px; background:none; border:0; padding:0; font:inherit; font-size:14px; font-weight:700; color:var(--blue); text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
 .rpp-fee-link:hover { color:var(--blue-dark, #1D4E9A); }
+.rpp-fee-label { font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin-bottom:6px; }
 .rpp-tax-note { font-size:13.5px; color:var(--text-3); font-weight:600; }
 .gfm-overlay { position:fixed; inset:0; z-index:9999; background:rgba(15,28,46,.55); display:flex; align-items:center; justify-content:center; padding:16px; }
 .gfm-box { position:relative; background:#fff; border-radius:16px; width:100%; max-width:760px; max-height:90vh; overflow-y:auto; padding:28px 26px 24px; box-shadow:0 30px 80px rgba(15,28,46,.35); }
@@ -369,6 +370,7 @@ export default function RegistrationPricingPlans({ svc }) {
                     <span className="rpp-tier">{plan.tier}</span>
                   </div>
                   <div className="rpp-price-block">
+                    <div className="rpp-fee-label">Professional fees</div>
                     <div className="rpp-price-row">
                       <span className="rpp-price">{plan.price}</span>
                       {plan.priceNote && (GOVT_FEE_BREAKDOWN[svc.slug] ? (

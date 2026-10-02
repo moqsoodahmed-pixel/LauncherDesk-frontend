@@ -583,7 +583,7 @@ export const SERVICES = {
     eyebrow: 'Protect & grow',
     crumbCategory: 'Legal & IP',
     lead: "Your brand name is one of your most valuable assets — and one of the easiest to lose if you don't register it. We search, file and track your trademark through to registration.",
-    priceCard: { label: 'Price', price: '₹4,000 + GST', sub: '', govtFee: { amount: '₹4,500' } },
+    priceCard: { label: 'Professional fees', price: '₹1,999 + GST', sub: '', govtFee: { amount: '₹4,500' } },
     helpCard: { title: "Not sure your name is free?", body: "We run a proper search before you file anything." },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: 'Who can register' }, { href: '#benefits', label: 'Advantages' },
