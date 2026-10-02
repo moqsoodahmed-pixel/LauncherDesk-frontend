@@ -121,7 +121,7 @@ export default function Footer() {
               <div>
                 <div style={{ fontSize:11.5,fontWeight:700,letterSpacing:'.04em' }}>
                   <span style={{ color:'#D9720A' }}>Proudly </span>
-                  <span style={{ color:C.ink }}>Made in </span>
+                  <span style={{ color:'#06038D' }}>Made in </span>
                   <span style={{ color:'#0E7A2E' }}>India</span>
                 </div>
                 <div style={{ fontSize:11,color:C.muted }}>Built for Indian founders</div>

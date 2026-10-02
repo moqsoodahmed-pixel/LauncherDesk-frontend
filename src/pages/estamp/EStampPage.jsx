@@ -49,16 +49,17 @@ const S = `
 .es-hero-features { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px;max-width:480px; }
 .es-hero-feature {
   display:flex;align-items:center;gap:10px;padding:12px 14px;
-  background:var(--brand-50);border:1px solid var(--brand-100);border-radius:12px;
-  font-size:13.5px;font-weight:700;color:var(--navy);line-height:1.3;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);border:1px solid rgba(255,255,255,.14);border-radius:12px;
+  font-size:13.5px;font-weight:700;color:#fff;line-height:1.3;box-shadow:0 6px 16px rgba(29,93,184,.22);
 }
-.es-hero-feature svg { flex:none;stroke:#1D6FE0; }
+.es-hero-feature svg { flex:none;stroke:#fff; }
 .es-btn-secondary {
   display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;
-  background:#fff;color:var(--blue-dark);font-weight:600;font-size:15px;border-radius:10px;
-  border:1.5px solid var(--line-strong);text-decoration:none;transition:all .15s;cursor:pointer;font-family:inherit;
+  background:#25D366;color:#fff;font-weight:700;font-size:15px;border-radius:10px;
+  border:1.5px solid #25D366;text-decoration:none;transition:all .15s;cursor:pointer;font-family:inherit;
+  box-shadow:0 6px 16px rgba(37,211,102,.28);
 }
-.es-btn-secondary:hover { background:var(--brand-50);border-color:var(--blue); }
+.es-btn-secondary:hover { background:#1EBE5A;border-color:#1EBE5A;transform:translateY(-1px); }
 
 /* Hero visual — sample certificate card (styled like a "document preview" card:
    full-width header strip, watermarked certificate image, full-width CTA,

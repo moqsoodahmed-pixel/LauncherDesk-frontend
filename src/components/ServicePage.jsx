@@ -1003,7 +1003,7 @@ export default function ServicePage({ svc }) {
   const basicPlan = tieredPlans?.find(p => p.tier === 'Basic')
   const stickyPriceLabel = basicPlan
     ? `From ${basicPlan.price}${basicPlan.priceNote ? ` ${basicPlan.priceNote}` : ''}`
-    : (priceCard?.price && priceCard.price !== 'Custom quote' ? `Starting from ${priceCard.price}` : undefined)
+    : (priceCard?.price && priceCard.price !== 'Custom quote' ? (priceCard.govtFee ? `From ${priceCard.price} + Govt fee` : `Starting from ${priceCard.price}`) : undefined)
   const schemas = [
     serviceSchema(svc, slug),
     breadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: crumbCategory, url: '/services' }, { name: title, url: `/services/${slug}` }]),
