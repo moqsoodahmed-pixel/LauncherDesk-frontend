@@ -41,7 +41,7 @@ const DOQFY_DEMO_DATA = {
     { step: 'Renew / Expire', desc: 'Renew the contract or close it at the end of its term.' },
   ],
   partnership: [
-    { icon: 'M11 11a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm10 10-4.3-4.3', title: 'Discover', desc: 'LauncherDesk helps you find the right CLM solution for your business — without the guesswork.' },
+    { icon: 'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm10 2-4.35-4.35', title: 'Discover', desc: 'LauncherDesk helps you find the right CLM solution for your business — without the guesswork.' },
     { icon: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z', title: 'Configure', desc: 'We help configure Doqfy around your specific workflows, teams and contract types.' },
     { icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 1-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', title: 'Onboard', desc: 'Our team supports you during setup and adoption — so your team gets up to speed quickly.' },
     { icon: 'M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5', title: 'Scale', desc: 'As your contract volumes grow, LauncherDesk can help you expand workflows and add more users.' },

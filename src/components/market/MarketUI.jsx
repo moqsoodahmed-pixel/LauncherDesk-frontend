@@ -16,7 +16,7 @@ export const MI = {
   check:   'M20 6 9 17l-5-5',
   shield:  'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
   spark:   'M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z',
-  search:  'M11 11a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm10 10-4.3-4.3',
+  search:  'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm10 2-4.35-4.35',
 }
 
 export function Icon({ d, className, style }) {

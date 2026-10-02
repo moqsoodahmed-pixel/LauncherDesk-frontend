@@ -5,7 +5,7 @@ const ARROW = 'M5 12h14M13 6l6 6-6 6'
 const CHEV  = 'm9 18 6-6-6-6'
 
 const CARDS = [
-  { icon: 'M11 11a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm10 10-4.3-4.3', title: 'Answers in plain language',  desc: "Ask about GST, structures, trademarks or compliance the way you'd ask a person — no jargon required." },
+  { icon: 'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm10 2-4.35-4.35', title: 'Answers in plain language',  desc: "Ask about GST, structures, trademarks or compliance the way you'd ask a person — no jargon required." },
   { icon: 'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11', title: 'Builds a real roadmap', desc: 'Not just an answer — a prioritised sequence of what your specific business needs next.' },
   { icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', title: 'Hands off to an expert', desc: 'The moment your question needs professional judgment, it routes you to a qualified LauncherDesk expert.' },
 ]
