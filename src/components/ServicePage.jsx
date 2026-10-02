@@ -610,14 +610,9 @@ function HeroPayButton({ svc }) {
   const [msg, setMsg] = useState('')
   if (!isLoggedIn || !isRegistrationService(svc)) return null
 
-  if (REGISTRATION_PLANS[svc.slug]) {
-    const basic = REGISTRATION_PLANS[svc.slug].plans?.find(p => p.tier === 'Basic')
-    return (
-      <a href="#pricing-plans" className="btn btn-primary" style={{ fontWeight: 700 }}>
-        {basic ? `Pay from ${basic.price} →` : 'Choose plan & Pay →'}
-      </a>
-    )
-  }
+  // Services with Basic/Standard/Premium plans (Pvt Ltd, OPC, LLP) show their
+  // prices in the plan cards below, so no "Pay from ₹X" button in the hero.
+  if (REGISTRATION_PLANS[svc.slug]) return null
   const amount = parsePrice(svc.priceCard?.price)
   if (!amount) return null
   async function pay() {
