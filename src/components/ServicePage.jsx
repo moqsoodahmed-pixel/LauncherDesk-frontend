@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useUserAuth } from '../context/UserAuthContext'
 import SEO, { serviceSchema, breadcrumbSchema, faqSchema } from './SEO'
-import RegistrationPricingPlans from './RegistrationPricingPlans'
-import { REGISTRATION_PLANS } from '../data/registrationPlans'
+import RegistrationPricingPlans, { GovtFeeModal } from './RegistrationPricingPlans'
+import { REGISTRATION_PLANS, GOVT_FEE_BREAKDOWN } from '../data/registrationPlans'
 import StickyServiceCta from './trust/StickyServiceCta'
 import WhyChooseGrid from './trust/WhyChooseGrid'
 import ContextualCta from './trust/ContextualCta'
@@ -637,6 +637,8 @@ function HeroPayButton({ svc }) {
 
 function ServiceAside({ priceCard, helpCard, svc }) {
   const navigate = useNavigate()
+  const [showFeeModal, setShowFeeModal] = useState(false)
+  const hasFeeBreakdown = !!(svc?.slug && GOVT_FEE_BREAKDOWN[svc.slug])
   const isDM = isDigitalMarketingService(svc)
   const hasTieredPlans = !!(svc?.slug && (REGISTRATION_PLANS[svc.slug] || PACKAGE_PAGES[svc.slug]))
   // Registration & IT services that already show an amount don't need a "Request Quote" form.
@@ -703,15 +705,29 @@ function ServiceAside({ priceCard, helpCard, svc }) {
                   {/* Govt fee — informational only. The Pay button above/below charges the
                       professional fee only; this just tells the customer what else to expect. */}
                   {priceCard.govtFee ? (
-                    <div style={{ margin: '10px 0 16px', padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,.10)', border: '1px solid rgba(255,255,255,.18)' }}>
-                      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 }}>
-                        <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,.9)' }}>+ Govt fee</span>
-                        <span style={{ fontSize: 18, fontWeight: 800, color: '#fff' }}>{priceCard.govtFee.amount}</span>
+                    hasFeeBreakdown ? (
+                      <button
+                        type="button"
+                        onClick={() => setShowFeeModal(true)}
+                        aria-haspopup="dialog"
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, width: '100%', margin: '10px 0 16px', padding: '12px 14px', borderRadius: 10, background: 'rgba(255,255,255,.10)', border: '1px solid rgba(255,255,255,.18)', color: '#fff', font: 'inherit', cursor: 'pointer', textAlign: 'left', transition: 'background .15s' }}
+                        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,.18)' }}
+                        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.10)' }}
+                      >
+                        <span style={{ fontSize: 14, fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 3 }}>+ Govt fee</span>
+                        <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" /></svg>
+                      </button>
+                    ) : (
+                      <div style={{ margin: '10px 0 16px', padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,.10)', border: '1px solid rgba(255,255,255,.18)' }}>
+                        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 }}>
+                          <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,.9)' }}>+ Govt fee</span>
+                          <span style={{ fontSize: 18, fontWeight: 800, color: '#fff' }}>{priceCard.govtFee.amount}</span>
+                        </div>
+                        {priceCard.govtFee.note ? (
+                          <div style={{ fontSize: 12, lineHeight: 1.5, color: 'rgba(255,255,255,.7)', marginTop: 4 }}>{priceCard.govtFee.note}</div>
+                        ) : null}
                       </div>
-                      {priceCard.govtFee.note ? (
-                        <div style={{ fontSize: 12, lineHeight: 1.5, color: 'rgba(255,255,255,.7)', marginTop: 4 }}>{priceCard.govtFee.note}</div>
-                      ) : null}
-                    </div>
+                    )
                   ) : null}
                 </>
               ) : (
@@ -795,10 +811,13 @@ function ServiceAside({ priceCard, helpCard, svc }) {
                 </div>
               )}
             </div>
-          ) : (
+          ) : priceCard.hideBuyNow ? null : (
             <BuyNowButton svc={svc} priceCard={priceCard} />
           )}
         </div>
+      )}
+      {showFeeModal && (
+        <GovtFeeModal slug={svc.slug} plan={{ price: priceCard.price.split('+')[0].trim() }} onClose={() => setShowFeeModal(false)} />
       )}
       {!hideQuoteForm && <div style={{ marginBottom: 16 }}><QuoteForm svc={svc} /></div>}
       <div className="help-card">

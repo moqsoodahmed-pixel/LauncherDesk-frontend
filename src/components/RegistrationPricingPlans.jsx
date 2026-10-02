@@ -85,22 +85,6 @@ const S = `
 .rpp-fee-link:hover { color:var(--blue-dark, #1D4E9A); }
 .rpp-fee-label { font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin-bottom:6px; }
 .rpp-tax-note { font-size:13.5px; color:var(--text-3); font-weight:600; }
-.gfm-overlay { position:fixed; inset:0; z-index:9999; background:rgba(15,28,46,.55); display:flex; align-items:center; justify-content:center; padding:16px; }
-.gfm-box { position:relative; background:#fff; border-radius:16px; width:100%; max-width:760px; max-height:90vh; overflow-y:auto; padding:28px 26px 24px; box-shadow:0 30px 80px rgba(15,28,46,.35); }
-.gfm-close { position:absolute; top:12px; right:12px; width:36px; height:36px; border-radius:50%; border:0; background:#F1F5F9; color:#334155; font-size:20px; line-height:1; cursor:pointer; }
-.gfm-title { font-size:22px; font-weight:800; color:var(--navy); text-align:center; margin:0 0 4px; }
-.gfm-sub { font-size:13.5px; color:var(--text-3); text-align:center; margin:0 0 20px; }
-.gfm-table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; }
-.gfm-table { width:100%; border-collapse:collapse; font-size:14px; min-width:420px; }
-.gfm-table th, .gfm-table td { padding:12px 14px; border-bottom:1px solid var(--line); text-align:left; }
-.gfm-table th { background:#F8FAFC; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-3); font-weight:700; }
-.gfm-table td.amt { text-align:right; font-weight:700; color:var(--navy); white-space:nowrap; }
-.gfm-table .gfm-row-sub { display:block; font-size:12px; color:var(--text-3); margin-top:2px; }
-.gfm-table tr.gfm-group td { background:#EEF4FF; font-size:12px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--blue); }
-.gfm-table tr.gfm-total td { background:#EAF2FF; font-weight:800; color:var(--navy); font-size:15px; border-bottom:0; }
-.gfm-terms { margin-top:20px; }
-.gfm-terms h4 { font-size:14px; font-weight:800; color:var(--navy); margin:0 0 8px; }
-.gfm-terms ul { margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-2); line-height:1.55; }
 
 .rpp-features-h { font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin-bottom:18px; }
 .rpp-features { list-style:none; display:flex; flex-direction:column; gap:16px; margin-bottom:32px; flex:1; }
@@ -245,13 +229,37 @@ function PlanGetStartedButton({ svc, plan }) {
   )
 }
 
+const GFM_CSS = `
+.gfm-overlay { position:fixed; inset:0; z-index:9999; background:rgba(15,28,46,.55); display:flex; align-items:center; justify-content:center; padding:16px; }
+.gfm-box { position:relative; background:#fff; border-radius:16px; width:100%; max-width:760px; max-height:90vh; overflow-y:auto; padding:28px 26px 24px; box-shadow:0 30px 80px rgba(15,28,46,.35); }
+.gfm-close { position:absolute; top:12px; right:12px; width:36px; height:36px; border-radius:50%; border:0; background:#F1F5F9; color:#334155; font-size:20px; line-height:1; cursor:pointer; }
+.gfm-title { font-size:22px; font-weight:800; color:var(--navy); text-align:center; margin:0 0 4px; }
+.gfm-sub { font-size:13.5px; color:var(--text-3); text-align:center; margin:0 0 20px; }
+.gfm-table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; }
+.gfm-table { width:100%; border-collapse:collapse; font-size:14px; min-width:420px; }
+.gfm-table th, .gfm-table td { padding:12px 14px; border-bottom:1px solid var(--line); text-align:left; }
+.gfm-table th { background:#F8FAFC; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-3); font-weight:700; }
+.gfm-table td.amt { text-align:right; font-weight:700; color:var(--navy); white-space:nowrap; }
+.gfm-table .gfm-row-sub { display:block; font-size:12px; color:var(--text-3); margin-top:2px; }
+.gfm-table tr.gfm-group td { background:#EEF4FF; font-size:12px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--blue); }
+.gfm-table tr.gfm-total td { background:#EAF2FF; font-weight:800; color:var(--navy); font-size:15px; border-bottom:0; }
+.gfm-terms { margin-top:20px; }
+.gfm-terms h4 { font-size:14px; font-weight:800; color:var(--navy); margin:0 0 8px; }
+.gfm-terms ul { margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text-2); line-height:1.55; }
+.gfm-cats { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:0 0 16px; }
+.gfm-cat { border:1px solid var(--line); background:#fff; color:var(--text-2); border-radius:999px; padding:8px 14px; font:inherit; font-size:13px; font-weight:700; cursor:pointer; }
+.gfm-cat[aria-pressed="true"] { background:var(--blue); border-color:var(--blue); color:#fff; }
+`
+
 const inr = n => '₹' + Math.round(n).toLocaleString('en-IN')
 
 /* Popup that explains the government fee — what is LauncherDesk's fee
    (the plan price + GST) and what goes to the government. Rendered in a
    portal so the card hover transforms never affect its position. */
-function GovtFeeModal({ slug, plan, onClose }) {
+export function GovtFeeModal({ slug, plan, onClose }) {
   const fee = GOVT_FEE_BREAKDOWN[slug]
+  const cats = fee?.categories || null
+  const [catKey, setCatKey] = useState(cats?.[0]?.key)
   useEffect(() => {
     const onKey = e => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', onKey)
@@ -262,23 +270,35 @@ function GovtFeeModal({ slug, plan, onClose }) {
 
   const ourFee = parseFloat(String(plan.price || '').replace(/[₹,*]/g, '')) || 0
   const gst = ourFee * 0.18
-  const rows = fee?.rows || []
+  const activeCat = cats ? (cats.find(c => c.key === catKey) || cats[0]) : null
+  const rows = (activeCat ? activeCat.rows : fee?.rows) || []
   const allKnown = rows.length > 0 && rows.every(r => typeof r.amount === 'number')
   const govtTotal = rows.reduce((a, r) => a + (r.amount || 0), 0)
+  const terms = fee?.terms || GOVT_FEE_TERMS
+  const subParts = [plan.tier ? `${plan.tier} plan` : null, fee?.subtitle, fee?.state ? `State of registration: ${fee.state}` : null].filter(Boolean)
 
   return createPortal(
     <div className="gfm-overlay" onClick={onClose} role="presentation">
+      <style>{GFM_CSS}</style>
       <div className="gfm-box" role="dialog" aria-modal="true" aria-labelledby="gfm-title" onClick={e => e.stopPropagation()}>
         <button type="button" className="gfm-close" onClick={onClose} aria-label="Close">×</button>
-        <h3 id="gfm-title" className="gfm-title">Breakdown of Government fee</h3>
-        <p className="gfm-sub">{plan.tier} plan{fee?.state ? ` · State of registration: ${fee.state}` : ''}</p>
+        <h3 id="gfm-title" className="gfm-title">{fee?.title || 'Breakdown of Government fee'}</h3>
+        <p className="gfm-sub">{subParts.join(' · ')}</p>
+        {cats && (
+          <div className="gfm-cats" role="group" aria-label="Applicant category">
+            {cats.map(c => (
+              <button key={c.key} type="button" className="gfm-cat" aria-pressed={c.key === activeCat.key} onClick={() => setCatKey(c.key)}>{c.label}</button>
+            ))}
+          </div>
+        )}
         <div className="gfm-table-wrap">
           <table className="gfm-table">
             <thead><tr><th>Item</th><th style={{ textAlign: 'right' }}>Amount</th></tr></thead>
             <tbody>
               <tr className="gfm-group"><td colSpan={2}>Paid to LauncherDesk</td></tr>
-              <tr><td>Professional fee ({plan.tier} plan)</td><td className="amt">{inr(ourFee)}</td></tr>
+              <tr><td>Professional fee{plan.tier ? ` (${plan.tier} plan)` : ''}</td><td className="amt">{inr(ourFee)}</td></tr>
               <tr><td>GST @ 18%<span className="gfm-row-sub">On professional fee only</span></td><td className="amt">{inr(gst)}</td></tr>
+              <tr><td>Subtotal<span className="gfm-row-sub">Professional fee + GST</span></td><td className="amt">{inr(ourFee + gst)}</td></tr>
               <tr className="gfm-group"><td colSpan={2}>Government fee</td></tr>
               {rows.map(r => (
                 <tr key={r.label}>
@@ -296,7 +316,7 @@ function GovtFeeModal({ slug, plan, onClose }) {
         </div>
         <div className="gfm-terms">
           <h4>Terms &amp; Conditions</h4>
-          <ul>{GOVT_FEE_TERMS.map(t => <li key={t}>{t}</li>)}</ul>
+          <ul>{terms.map(t => <li key={t}>{t}</li>)}</ul>
         </div>
       </div>
     </div>,

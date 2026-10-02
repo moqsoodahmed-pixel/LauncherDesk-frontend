@@ -265,6 +265,32 @@ export const GOVT_FEE_BREAKDOWN = {
       { label: 'FiLLiP filing fee', sub: 'Depends on capital contribution', amount: null },
     ],
   },
+  /* Trademark: the government fee depends on who is applying, so the popup
+     shows a toggle between the two IP India applicant categories. Fees are
+     per class, per mark, for e-filing of Form TM-A. */
+  'trademark-registration': {
+    title: 'Trademark registration fee breakdown',
+    subtitle: 'Per class · E-filing of Form TM-A',
+    categories: [
+      {
+        key: 'small',
+        label: 'Individual / Startup / Small enterprise',
+        rows: [{ label: 'TM-A filing fee (1 class)', sub: 'Paid to IP India · e-filing', amount: 4500 }],
+      },
+      {
+        key: 'other',
+        label: 'Other applicants',
+        rows: [{ label: 'TM-A filing fee (1 class)', sub: 'Paid to IP India · e-filing', amount: 9000 }],
+      },
+    ],
+    terms: [
+      'Government fee is charged per class. Filing in more than one class adds the fee for each class.',
+      'Startups and small enterprises need a valid DPIIT / Udyam (MSME) certificate to get the lower ₹4,500 fee.',
+      'GST at 18% applies to the LauncherDesk professional fee only, not to the government fee.',
+      'Physical (offline) filing costs more: ₹5,000 or ₹10,000 per class.',
+      'Objection replies, hearings and opposition proceedings are not included and are quoted separately.',
+    ],
+  },
 }
 
 export const GOVT_FEE_TERMS = [
