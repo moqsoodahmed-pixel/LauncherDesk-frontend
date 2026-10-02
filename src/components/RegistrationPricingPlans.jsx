@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { useUserAuth } from '../context/UserAuthContext'
+import { useNavigate } from 'react-router-dom'
 import { REGISTRATION_PLANS, GOVT_FEE_BREAKDOWN, GOVT_FEE_TERMS } from '../data/registrationPlans'
+import CheckoutModal from './CheckoutModal'
+import { calcBreakdown, fmtPaise, parseRupees } from '../lib/pricing'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 const CHECK_D = 'M20 6 9 17l-5-5'
@@ -120,15 +121,12 @@ function tierClass(tier) {
 }
 
 function PlanGetStartedButton({ svc, plan }) {
-  const { isLoggedIn, token } = useUserAuth()
   const navigate = useNavigate()
-  const location = useLocation()
-  const [loading, setLoading] = useState(false)
-  const [msg, setMsg] = useState('')
+  const [open, setOpen] = useState(false)
   const [payEnabled, setPayEnabled] = useState(null)
 
-  const numericPrice = parseFloat(String(plan.price || '').replace(/[₹,*]/g, ''))
-  const hasPrice = !isNaN(numericPrice) && numericPrice > 0
+  const numericPrice = parseRupees(plan.price)
+  const hasPrice = numericPrice > 0
 
   useEffect(() => {
     if (!hasPrice) return
@@ -138,93 +136,23 @@ function PlanGetStartedButton({ svc, plan }) {
       .catch(() => setPayEnabled(false))
   }, [hasPrice])
 
-  async function handleClick() {
-    // Not logged in → send to the login page, then back here afterwards.
-    if (!isLoggedIn) {
-      navigate('/user/login', { state: { from: location.pathname, tab: 'login' } })
-      return
-    }
-    // Logged in → go straight into the payment flow for this specific plan.
-    if (!hasPrice) { navigate('/company/contact'); return }
+  // No login needed: the popup collects name, email, mobile and city, then opens Razorpay.
+  function handleClick() {
+    if (!hasPrice || payEnabled === false) { navigate('/company/contact'); return }
     if (payEnabled === null) return
-    if (!payEnabled) { navigate('/company/contact'); return }
-
-    setLoading(true); setMsg('')
-    try {
-      const res = await fetch(`${API_BASE}/payments/create-order`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({
-          amount: numericPrice,
-          serviceSlug: `${svc.slug}-${plan.tier.toLowerCase()}`,
-          serviceTitle: `${svc.title} — ${plan.tier} Plan`,
-        }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.message || 'Failed to create order')
-      if (!window.Razorpay) {
-        await new Promise((resolve, reject) => {
-          const s = document.createElement('script')
-          s.src = 'https://checkout.razorpay.com/v1/checkout.js'
-          s.onload = resolve; s.onerror = reject
-          document.body.appendChild(s)
-        })
-      }
-      await new Promise((resolve) => {
-        const rzp = new window.Razorpay({
-          key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
-          name: 'LauncherDesk', description: `${svc.title} — ${plan.tier} Plan`, image: '/launcherdesk-logo-transparent.png',
-          theme: { color: '#1D6FE0' },
-          handler: async (response) => {
-            try {
-              const vRes = await fetch(`${API_BASE}/payments/verify`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                body: JSON.stringify({
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_signature: response.razorpay_signature,
-                  serviceSlug: `${svc.slug}-${plan.tier.toLowerCase()}`,
-                  serviceTitle: `${svc.title} — ${plan.tier} Plan`,
-                }),
-              })
-              const vData = await vRes.json()
-              setMsg(vData.success ? '✅ Payment successful! Our team will contact you within 1 business day.' : '⚠️ Payment received but verification pending. Contact support@launcherdesk.com')
-            } catch { setMsg('Payment received. Contact support@launcherdesk.com to confirm.') }
-            resolve()
-          },
-          modal: { ondismiss: () => { setLoading(false); resolve() } },
-        })
-        rzp.open()
-      })
-    } catch (err) {
-      setMsg(`❌ ${err.message || 'Something went wrong. Please try again.'}`)
-    } finally {
-      setLoading(false)
-    }
+    setOpen(true)
   }
-
-  const isSuccess = msg.startsWith('✅'), isFail = msg.startsWith('❌')
-  const label = loading ? 'Processing…' : isLoggedIn ? `Pay ${plan.price} →` : 'Get Started'
 
   return (
     <div style={{ marginTop: 'auto' }}>
       <button
         type="button"
         onClick={handleClick}
-        disabled={loading}
-        aria-busy={loading}
         className={`rpp-cta rpp-cta--${tierClass(plan.tier)}`}
       >
-        {label}
+        {hasPrice ? `Pay ${plan.price} + GST →` : 'Talk to our expert →'}
       </button>
-      {msg && (
-        <div role="status" aria-live="polite" className="rpp-cta-msg" style={{
-          background: isSuccess ? '#DCFCE7' : isFail ? '#FEF2F2' : '#FEF9C3',
-          border: `1px solid ${isSuccess ? '#BBF7D0' : isFail ? '#FECACA' : '#FDE68A'}`,
-          color: isSuccess ? '#166534' : isFail ? '#DC2626' : '#854D0E',
-        }}>{msg}</div>
-      )}
+      {open && <CheckoutModal svc={svc} plan={plan} onClose={() => setOpen(false)} />}
     </div>
   )
 }
@@ -251,7 +179,7 @@ const GFM_CSS = `
 .gfm-cat[aria-pressed="true"] { background:var(--blue); border-color:var(--blue); color:#fff; }
 `
 
-const inr = n => '₹' + Math.round(n).toLocaleString('en-IN')
+const inr = n => fmtPaise(Math.round(n * 100))
 
 /* Popup that explains the government fee — what is LauncherDesk's fee
    (the plan price + GST) and what goes to the government. Rendered in a
@@ -268,8 +196,9 @@ export function GovtFeeModal({ slug, plan, onClose }) {
     return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = prev }
   }, [onClose])
 
-  const ourFee = parseFloat(String(plan.price || '').replace(/[₹,*]/g, '')) || 0
-  const gst = ourFee * 0.18
+  const bd = calcBreakdown(parseRupees(plan.price))
+  const ourFee = bd.feePaise / 100
+  const gst = bd.gstPaise / 100
   const activeCat = cats ? (cats.find(c => c.key === catKey) || cats[0]) : null
   const rows = (activeCat ? activeCat.rows : fee?.rows) || []
   const allKnown = rows.length > 0 && rows.every(r => typeof r.amount === 'number')

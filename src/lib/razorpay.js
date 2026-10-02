@@ -8,7 +8,7 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 let scriptPromise = null
 
-function loadRazorpayScript() {
+export function loadRazorpayScript() {
   if (window.Razorpay) return Promise.resolve()
   if (scriptPromise) return scriptPromise
   scriptPromise = new Promise((resolve, reject) => {
