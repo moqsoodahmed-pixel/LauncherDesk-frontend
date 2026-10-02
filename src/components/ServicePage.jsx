@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useUserAuth } from '../context/UserAuthContext'
 import SEO, { serviceSchema, breadcrumbSchema, faqSchema } from './SEO'
 import RegistrationPricingPlans, { GovtFeeModal } from './RegistrationPricingPlans'
+import TrademarkCheckoutModal from './TrademarkCheckoutModal'
 import { REGISTRATION_PLANS, GOVT_FEE_BREAKDOWN } from '../data/registrationPlans'
 import StickyServiceCta from './trust/StickyServiceCta'
 import WhyChooseGrid from './trust/WhyChooseGrid'
@@ -812,7 +813,9 @@ function ServiceAside({ priceCard, helpCard, svc }) {
         </div>
       )}
       {showFeeModal && (
-        <GovtFeeModal slug={svc.slug} plan={{ price: priceCard.price.split('+')[0].trim() }} onClose={() => setShowFeeModal(false)} />
+        svc.slug === 'trademark-registration'
+          ? <TrademarkCheckoutModal svc={svc} onClose={() => setShowFeeModal(false)} />
+          : <GovtFeeModal slug={svc.slug} plan={{ price: priceCard.price.split('+')[0].trim() }} onClose={() => setShowFeeModal(false)} />
       )}
       {!hideQuoteForm && <div style={{ marginBottom: 16 }}><QuoteForm svc={svc} /></div>}
       <div className="help-card">
