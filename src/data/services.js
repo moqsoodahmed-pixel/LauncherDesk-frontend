@@ -1347,7 +1347,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'Get a professional, fast, mobile-first website that represents your business correctly — designed for conversion, not just aesthetics.',
-    priceCard: { label: 'Starts from', price: '₹5,999 + GST', sub: '' },
+    priceCard: { label: 'Starts from', price: '₹4,999 + GST', sub: '' },
     helpCard: { title: 'Not sure what type of site you need?', body: 'Tell us about your business and we will recommend the right approach.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -1503,7 +1503,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'A CMS-powered website you can update yourself — add blog posts, edit pages, upload images and manage content without touching code. Built for businesses that need ongoing content flexibility.',
-    priceCard: { label: 'Starts from', price: '₹25,000 + GST', sub: '' },
+    priceCard: { label: 'Starts from', price: '₹24,999 + GST', sub: '' },
     helpCard: { title: 'Need ongoing content updates?', body: 'Dynamic is the right choice if you blog, add case studies or update offerings regularly.' },
     toc: [
       { href: '#overview', label: 'Overview' }, { href: '#who', label: "Who we serve" },
@@ -1570,7 +1570,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'Get a fully-functional online store — product catalogue, cart, payment gateway and mobile-first design — built for Indian businesses and ready to sell from day one.',
-    priceCard: { label: 'Starts from', price: '₹35,000 + GST', sub: '' },
+    priceCard: { label: 'Starts from', price: '₹34,999 + GST', sub: '' },
     helpCard: { title: 'Selling on Amazon or Flipkart too?', body: 'We can build your own storefront alongside marketplace presence.' },
     toc: [
       { href: '#overview', label: 'Overview' },
