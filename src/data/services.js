@@ -1570,7 +1570,7 @@ export const SERVICES = {
     eyebrow: 'BUILD — Technology',
     crumbCategory: 'BUILD',
     lead: 'Get a fully-functional online store — product catalogue, cart, payment gateway and mobile-first design — built for Indian businesses and ready to sell from day one.',
-    priceCard: { label: 'Starts from', price: '₹20,000 + GST', sub: '' },
+    priceCard: { label: 'Starts from', price: '₹35,000 + GST', sub: '' },
     helpCard: { title: 'Selling on Amazon or Flipkart too?', body: 'We can build your own storefront alongside marketplace presence.' },
     toc: [
       { href: '#overview', label: 'Overview' },

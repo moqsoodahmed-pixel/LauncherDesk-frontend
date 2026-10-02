@@ -533,7 +533,7 @@ const EXCLUDED_GOVT_SERVICES = new Set([
 const WEBSITE_PACKAGES = [
   { slug: 'static-website',    title: 'Static Website Development',     desc: 'Fast, lightweight brochure sites for businesses whose content rarely changes.', amount: 4999 },
   { slug: 'dynamic-website',   title: 'Dynamic Website Development',    desc: 'CMS-powered sites you can update yourself — blogs, case studies, new offerings.', amount: 25000 },
-  { slug: 'ecommerce-website', title: 'E-commerce Website Development', desc: 'Your own online store with catalogue, cart and payment gateway.', amount: 20000 },
+  { slug: 'ecommerce-website', title: 'E-commerce Website Development', desc: 'Your own online store with catalogue, cart and payment gateway.', amount: 35000 },
 ]
 const PACKAGE_PAGES = { 'website-development': WEBSITE_PACKAGES }
 
