@@ -3,10 +3,12 @@ import { createPortal } from 'react-dom'
 import { GOVT_FEE_BREAKDOWN } from '../data/registrationPlans'
 import { calcBreakdown, fmtPaise, parseRupees, GST_RATE } from '../lib/pricing'
 import { loadRazorpayScript } from '../lib/razorpay'
+import { TRADEMARK_CLASSES, POPULAR_CLASSES } from '../data/trademarkClasses'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 const SLUG = 'trademark-registration'
-const MAX_CLASSES = 10
+// Must match the server (backend: src/config/planPrices.js → TRADEMARK.maxClasses).
+const MAX_CLASSES = 45
 // Must match the server (backend: src/config/planPrices.js → TRADEMARK.professionalFeePerClass).
 const PROFESSIONAL_FEE_PER_CLASS = false
 // Must match the server (backend: src/config/planPrices.js → TRADEMARK.collectGovtFeeOnline).
@@ -73,6 +75,33 @@ const CSS = `
 .tmk-terms summary { cursor:pointer; font-weight:800; color:var(--navy); font-size:13px; }
 .tmk-terms ul { margin:8px 0 0; padding-left:18px; display:flex; flex-direction:column; gap:5px; line-height:1.5; }
 .tmk-done { padding:44px 28px; text-align:center; }
+.tmk-picker { border:1.5px solid #D5DEEC; border-radius:12px; overflow:hidden; background:#fff; }
+.tmk-picker.tmk-bad { border-color:#DC2626; }
+.tmk-pk-top { padding:10px; border-bottom:1px solid #E3EAF6; background:#FAFCFF; }
+.tmk-pk-top .tmk-input { padding:10px 12px; font-size:14px; }
+.tmk-tabs { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.tmk-tab { border:1.5px solid #D5DEEC; background:#fff; color:var(--text-2); border-radius:999px; padding:5px 11px; font:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+.tmk-tab[aria-pressed="true"] { background:var(--navy); border-color:var(--navy); color:#fff; }
+.tmk-pop { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:8px; font-size:12px; color:var(--text-3); }
+.tmk-pop button { border:0; background:#EEF4FF; color:var(--blue); border-radius:6px; padding:4px 8px; font:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+.tmk-pop button[aria-pressed="true"] { background:var(--blue); color:#fff; }
+.tmk-cls-list { max-height:260px; overflow-y:auto; display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:8px; }
+.tmk-cls { display:flex; gap:9px; align-items:flex-start; text-align:left; padding:8px 9px; border:1.5px solid #E3EAF6; border-radius:9px; background:#fff; font:inherit; color:var(--navy); cursor:pointer; }
+.tmk-cls:hover { border-color:#B9C8E6; }
+.tmk-cls[aria-pressed="true"] { border-color:var(--blue); background:#F2F7FF; }
+.tmk-cls-n { flex:none; width:28px; height:28px; border-radius:7px; background:#EEF2F8; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; }
+.tmk-cls[aria-pressed="true"] .tmk-cls-n { background:var(--blue); color:#fff; }
+.tmk-cls-t { font-size:12.5px; font-weight:700; line-height:1.35; }
+.tmk-cls-k { display:block; font-size:11px; font-weight:500; color:var(--text-3); margin-top:2px; }
+.tmk-cls-empty { grid-column:1/-1; padding:16px; text-align:center; font-size:13px; color:var(--text-3); }
+.tmk-chosen { padding:10px 12px; border-top:1px solid #E3EAF6; background:#FAFCFF; font-size:13px; color:var(--text-2); }
+.tmk-chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+.tmk-chip { display:inline-flex; align-items:center; gap:4px; background:#EEF4FF; color:var(--navy); border-radius:999px; padding:3px 4px 3px 10px; font-size:12px; font-weight:700; }
+.tmk-chip button { border:0; background:transparent; color:var(--navy); font-size:15px; line-height:1; padding:0 5px; cursor:pointer; }
+.tmk-chosen .tmk-check { margin:8px 0 0; font-size:12.5px; }
+.tmk-gst-row { background:#FFF7E6; margin:0 -8px; padding:9px 8px; border-radius:8px; border-bottom-color:transparent; }
+.tmk-incl { margin:4px 0 0; font-size:12.5px; font-weight:700; color:#15803D; }
+.tmk-pay small { display:block; font-size:12px; font-weight:600; opacity:.9; margin-top:2px; }
 .tmk-tick { width:56px; height:56px; border-radius:50%; background:#DCFCE7; color:#16A34A; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:28px; }
 .tmk-order { display:inline-block; margin:10px 0 16px; padding:8px 14px; border-radius:8px; background:#EEF4FF; color:var(--navy); font-weight:800; font-size:14px; }
 @media (max-width: 760px) {
@@ -80,6 +109,7 @@ const CSS = `
   .tmk-summary { order:-1; border-left:0; border-bottom:1px solid var(--line); border-radius:18px 18px 0 0; padding:24px 22px 18px; }
   .tmk-form { padding:22px; }
   .tmk-row2 { grid-template-columns:1fr; }
+  .tmk-cls-list { grid-template-columns:1fr; }
 }
 `
 
@@ -100,9 +130,9 @@ function validate(f) {
 }
 
 /*
-  Opens from "+ Govt fee" on the trademark page. The customer picks the applicant
-  type and number of classes (this sets the government fee), enters their details
-  and city, then pays in one go through Razorpay:
+  Opens from "Proceed to Pay" on the trademark page. The customer picks the
+  applicant type and chooses their classes from all 45 (this sets the government
+  fee), enters their details and city, then pays in one go through Razorpay:
   professional fee + 18% GST (on the fee only) + government fee.
 */
 export default function TrademarkCheckoutModal({ svc, onClose }) {
@@ -113,12 +143,37 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
 
   const [f, setF] = useState({ name: '', email: '', mobile: '', city: '', brand: '', whatsapp: false })
   const [applicant, setApplicant] = useState(categories[0]?.key || 'small')
-  const [classes, setClasses] = useState(1)
+  const [picked, setPicked] = useState([])          // chosen class numbers, e.g. [9, 25, 35]
+  const [unsure, setUnsure] = useState(false)       // "let the expert choose" = billed as 1 class
+  const [clsFilter, setClsFilter] = useState('all') // all | goods | services | selected
+  const [clsQuery, setClsQuery] = useState('')
+  const classes = picked.length || (unsure ? 1 : 0)
   const [errs, setErrs] = useState({})
   const [busy, setBusy] = useState(false)
   const [alert, setAlert] = useState('')
   const [done, setDone] = useState(null)
   const firstRef = useRef(null)
+
+  const visibleClasses = useMemo(() => {
+    const q = clsQuery.trim().toLowerCase()
+    return TRADEMARK_CLASSES.filter(c => {
+      if (clsFilter === 'goods' && c.n > 34) return false
+      if (clsFilter === 'services' && c.n < 35) return false
+      if (clsFilter === 'selected' && !picked.includes(c.n)) return false
+      if (!q) return true
+      return String(c.n) === q || `${c.t} ${c.k}`.toLowerCase().includes(q)
+    })
+  }, [clsQuery, clsFilter, picked])
+
+  function toggleClass(n) {
+    setPicked(p => {
+      if (p.includes(n)) return p.filter(x => x !== n)
+      if (p.length >= MAX_CLASSES) return p
+      return [...p, n].sort((a, b) => a - b)
+    })
+    setUnsure(false)
+    if (errs.classes) setErrs(p => ({ ...p, classes: undefined }))
+  }
 
   const cat = categories.find(c => c.key === applicant) || categories[0]
   const perClass = cat?.rows?.[0]?.amount || 0
@@ -148,6 +203,7 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
   async function pay(e) {
     e.preventDefault()
     const v = validate(f)
+    if (classes < 1) v.classes = 'Choose at least one class, or tick "Not sure" below the list'
     setErrs(v); setAlert('')
     if (Object.keys(v).length) return
     setBusy(true)
@@ -158,7 +214,8 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: f.name.trim(), email: f.email.trim(), mobile, city: f.city.trim(),
-          applicantType: applicant, classes, brandName: f.brand.trim(), whatsappOptIn: f.whatsapp,
+          applicantType: applicant, classes, classNumbers: picked, expertToChoose: unsure && !picked.length,
+          brandName: f.brand.trim(), whatsappOptIn: f.whatsapp,
         }),
       })
       const data = await res.json()
@@ -174,10 +231,11 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
       await new Promise(resolve => {
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
-          name: 'LauncherDesk', description: `${svc.title} — ${classes} ${classes === 1 ? 'class' : 'classes'}`,
+          name: 'LauncherDesk',
+          description: `${svc.title} — ${classes} ${classes === 1 ? 'class' : 'classes'} · total incl. ${fmtPaise(gstPaise)} GST (18%)`,
           image: '/launcherdesk-logo-transparent.png',
           prefill: { name: f.name.trim(), email: f.email.trim(), contact: mobile },
-          notes: { city: f.city.trim() },
+          notes: { city: f.city.trim(), classes: picked.join(', ') || 'expert to choose', gstIncluded: fmtPaise(gstPaise) },
           theme: { color: '#1D6FE0' },
           handler: async response => {
             try {
@@ -230,7 +288,7 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
             {done.orderNumber && <div className="tmk-order">Order {done.orderNumber}</div>}
             <p className="tmk-sub" style={{ maxWidth: 440, margin: '0 auto 18px' }}>
               {done.ok
-                ? `Thank you! A confirmation will be sent to ${f.email}. Our team will call you on +91 ${cleanPhone(f.mobile)} within 1 business day to confirm your brand and class.`
+                ? `Thank you! A confirmation will be sent to ${f.email}. Our team will call you on +91 ${cleanPhone(f.mobile)} within 1 business day to confirm your brand and ${picked.length > 1 ? 'classes' : 'class'}.`
                 : 'We got your payment but could not confirm it on screen. Please contact support@launcherdesk.com with your email and we will confirm it for you.'}
             </p>
             <button type="button" className="tmk-pay" style={{ maxWidth: 220 }} onClick={onClose}>Done</button>
@@ -254,13 +312,62 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
               </div>
 
               <div className="tmk-field">
-                <span className="tmk-label" id="tmk-cls-l">Number of classes</span>
-                <div className="tmk-step" role="group" aria-labelledby="tmk-cls-l">
-                  <button type="button" onClick={() => setClasses(c => Math.max(1, c - 1))} disabled={classes <= 1} aria-label="Fewer classes">−</button>
-                  <output aria-live="polite">{classes}</output>
-                  <button type="button" onClick={() => setClasses(c => Math.min(MAX_CLASSES, c + 1))} disabled={classes >= MAX_CLASSES} aria-label="More classes">+</button>
+                <span className="tmk-label" id="tmk-cls-l">
+                  Choose your trademark classes <span className="tmk-opt">(45 classes: 1–34 goods, 35–45 services)</span>
+                </span>
+                <div className={`tmk-picker${errs.classes ? ' tmk-bad' : ''}`} role="group" aria-labelledby="tmk-cls-l">
+                  <div className="tmk-pk-top">
+                    <input className="tmk-input" type="search" value={clsQuery} onChange={e => setClsQuery(e.target.value)}
+                      placeholder="Search by product or service, e.g. clothing, software, restaurant" aria-label="Search classes" />
+                    <div className="tmk-tabs">
+                      {[['all', 'All 45'], ['goods', 'Goods (1–34)'], ['services', 'Services (35–45)'], ['selected', `Selected (${picked.length})`]].map(([k, l]) => (
+                        <button key={k} type="button" className="tmk-tab" aria-pressed={clsFilter === k} onClick={() => setClsFilter(k)}>{l}</button>
+                      ))}
+                    </div>
+                    <div className="tmk-pop">
+                      <span>Popular:</span>
+                      {POPULAR_CLASSES.map(({ n, label }) => (
+                        <button key={n} type="button" aria-pressed={picked.includes(n)} onClick={() => toggleClass(n)}>{n} · {label}</button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="tmk-cls-list">
+                    {visibleClasses.length ? visibleClasses.map(c => (
+                      <button key={c.n} type="button" className="tmk-cls" aria-pressed={picked.includes(c.n)} onClick={() => toggleClass(c.n)}>
+                        <span className="tmk-cls-n">{c.n}</span>
+                        <span className="tmk-cls-t">{c.t}<span className="tmk-cls-k">{c.k}</span></span>
+                      </button>
+                    )) : (
+                      <div className="tmk-cls-empty">
+                        {clsFilter === 'selected' ? 'You have not chosen any class yet.' : `No class matches "${clsQuery}". Try another word, or tick "Not sure" below.`}
+                      </div>
+                    )}
+                  </div>
+                  <div className="tmk-chosen">
+                    {picked.length
+                      ? `${picked.length} ${picked.length === 1 ? 'class' : 'classes'} selected`
+                      : unsure ? 'Our expert will pick the right class for you.' : 'No class selected yet.'}
+                    {picked.length > 0 && (
+                      <div className="tmk-chips">
+                        {picked.map(n => (
+                          <span key={n} className="tmk-chip">
+                            Class {n}
+                            <button type="button" onClick={() => toggleClass(n)} aria-label={`Remove class ${n}`}>×</button>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <label className="tmk-check">
+                      <input type="checkbox" checked={unsure} onChange={e => {
+                        setUnsure(e.target.checked)
+                        if (e.target.checked) setPicked([])
+                        if (errs.classes) setErrs(p => ({ ...p, classes: undefined }))
+                      }} />
+                      <span>Not sure which class? Let our expert choose during the search (billed as 1 class).</span>
+                    </label>
+                  </div>
                 </div>
-                <div className="tmk-hint">Not sure? Keep 1 — we check the right class(es) for your business during the search.</div>
+                {errs.classes && <div className="tmk-err">{errs.classes}</div>}
               </div>
 
               {input('name', 'Full name', { ref: firstRef, type: 'text', autoComplete: 'name', placeholder: 'As on your PAN / ID' })}
@@ -293,7 +400,9 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
               </label>
 
               <button type="submit" className="tmk-pay" disabled={busy} aria-busy={busy}>
-                {busy ? 'Opening secure payment…' : `Pay ${fmtPaise(totalPaise)} securely`}
+                {busy ? 'Opening secure payment…' : classes < 1 ? 'Choose a class to continue' : (
+                  <>Pay {fmtPaise(totalPaise)} securely<small>Includes {fmtPaise(gstPaise)} GST (18%) · opens Razorpay</small></>
+                )}
               </button>
               <div className="tmk-secure">🔒 Payments are processed by Razorpay — UPI, cards, net banking &amp; wallets</div>
             </form>
@@ -301,15 +410,20 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
             <aside className="tmk-summary" aria-label="Order summary">
               <p className="tmk-s-title">Order summary</p>
               <p className="tmk-s-plan">{svc.title}</p>
-              <p className="tmk-s-meta">{classes} {classes === 1 ? 'class' : 'classes'} · {cat?.label}</p>
+              <p className="tmk-s-meta">
+                {classes} {classes === 1 ? 'class' : 'classes'}
+                {picked.length > 0 && ` (${picked.join(', ')})`}
+                {!picked.length && unsure && ' (expert to choose)'} · {cat?.label}
+              </p>
 
               <div className="tmk-row"><span>Professional fee</span><b>{fmtPaise(feePaise)}</b></div>
-              <div className="tmk-row"><span>GST @ {Math.round(GST_RATE * 100)}%<small>On professional fee only</small></span><b>{fmtPaise(gstPaise)}</b></div>
+              <div className="tmk-row tmk-gst-row"><span>GST @ {Math.round(GST_RATE * 100)}%<small>Added on professional fee only</small></span><b>{fmtPaise(gstPaise)}</b></div>
               <div className="tmk-row">
                 <span>Government fee<small>{fmtPaise(perClass * 100)} × {classes} {classes === 1 ? 'class' : 'classes'} · IP India, Form TM-A e-filing · no GST</small></span>
                 <b>{fmtPaise(govtPaise)}</b>
               </div>
               <div className="tmk-total"><span>Total payable</span><span>{fmtPaise(totalPaise)}</span></div>
+              <p className="tmk-incl">✓ Includes {fmtPaise(gstPaise)} GST (18%)</p>
               <p className="tmk-hint" style={{ marginTop: 6 }}>
                 {COLLECT_GOVT_FEE_ONLINE
                   ? 'Includes all taxes and the government fee. You pay once, securely, on the next step.'

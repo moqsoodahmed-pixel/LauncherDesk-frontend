@@ -84,7 +84,7 @@ const S = `
 .rpp-price-block .rpp-price-row { margin-bottom:4px; padding-bottom:0; border-bottom:0; }
 .rpp-fee-link { display:inline-flex; align-items:center; gap:4px; background:none; border:0; padding:0; font:inherit; font-size:14px; font-weight:700; color:var(--blue); text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
 .rpp-fee-link:hover { color:var(--blue-dark, #1D4E9A); }
-.rpp-fee-label { font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin-bottom:6px; }
+.rpp-fee-label { font-size:12px; font-weight:700; letter-spacing:.08em; word-spacing:.35em; text-transform:uppercase; color:var(--text-3); margin-bottom:6px; }
 .rpp-tax-note { font-size:13.5px; color:var(--text-3); font-weight:600; }
 
 .rpp-features-h { font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin-bottom:18px; }

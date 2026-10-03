@@ -4,6 +4,8 @@
 // backend, open the Razorpay modal, verify the signature — is identical
 // everywhere instead of being re-implemented (and silently skipped) per page.
 
+import { fmtPaise } from './pricing'
+
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 let scriptPromise = null
@@ -32,6 +34,8 @@ export function loadRazorpayScript() {
  * @param {string} opts.serviceTitle
  * @param {string} opts.token         JWT from useUserAuth().
  * @param {string} [opts.planLabel]   Optional plan name shown in the Razorpay modal description.
+ * @param {boolean} [opts.addGst]     true = charge amount + 18% GST (worked out on the server)
+ *                                    and show the GST in the Razorpay description.
  * @param {(msg: string) => void} [opts.onSuccess]
  * @param {(msg: string) => void} [opts.onError]
  * @param {() => void} [opts.onDismiss]  Called if the user closes the modal without paying.
@@ -42,6 +46,7 @@ export async function openRazorpayCheckout({
   serviceTitle,
   token,
   planLabel,
+  addGst = false,
   onSuccess = () => {},
   onError = () => {},
   onDismiss = () => {},
@@ -54,7 +59,7 @@ export async function openRazorpayCheckout({
     const res = await fetch(`${API_BASE}/payments/create-order`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ amount, serviceSlug: serviceSlug || '', serviceTitle: serviceTitle || '' }),
+      body: JSON.stringify({ amount, addGst: !!addGst, serviceSlug: serviceSlug || '', serviceTitle: serviceTitle || '' }),
     })
     const data = await res.json()
     if (!res.ok) throw new Error(data.message || 'Failed to create order')
@@ -68,7 +73,10 @@ export async function openRazorpayCheckout({
         currency: data.currency,
         order_id: data.orderId,
         name: 'LauncherDesk',
-        description: planLabel ? `${serviceTitle} — ${planLabel}` : serviceTitle,
+        description: [
+          planLabel ? `${serviceTitle} — ${planLabel}` : serviceTitle,
+          data.breakdown?.gstPaise ? `total incl. ${fmtPaise(data.breakdown.gstPaise)} GST (18%)` : '',
+        ].filter(Boolean).join(' · '),
         image: '/launcherdesk-logo-transparent.png',
         theme: { color: '#1D6FE0' },
         handler: async (response) => {

@@ -10,6 +10,10 @@ import WhyChooseGrid from './trust/WhyChooseGrid'
 import ContextualCta from './trust/ContextualCta'
 import { CTA_EVENTS } from '../data/cta'
 import { openRazorpayCheckout } from '../lib/razorpay'
+import { calcBreakdown, fmtPaise } from '../lib/pricing'
+
+// A price shown as "₹4,200 + GST" (or "+ taxes") is charged with 18% GST added on top.
+const priceAddsGst = pc => /gst|tax/i.test(`${pc?.price || ''} ${pc?.sub || ''}`)
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 const CHEV = 'm9 18 6-6-6-6'
@@ -384,16 +388,25 @@ function BuyNowButton({ svc, priceCard }) {
     if (!payEnabled) { navigate('/company/contact'); return }
     setLoading(true); setMsg('')
     try {
-      const res = await fetch(`${API_BASE}/payments/create-order`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ amount: numericPrice, serviceSlug: svc.slug || '', serviceTitle: svc.title }) })
+      const addGst = priceAddsGst(priceCard)
+      const { gstPaise, totalPaise } = calcBreakdown(numericPrice)
+      const res = await fetch(`${API_BASE}/payments/create-order`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ amount: numericPrice, addGst, serviceSlug: svc.slug || '', serviceTitle: svc.title }) })
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Failed to create order')
+      // Safety net: never open payment for a different amount than the price + GST shown here.
+      if (addGst && data.amount !== totalPaise) throw new Error('The price on this page is out of date. Please refresh the page and try again.')
       if (!window.Razorpay) {
         await new Promise((resolve, reject) => { const s = document.createElement('script'); s.src = 'https://checkout.razorpay.com/v1/checkout.js'; s.onload = resolve; s.onerror = reject; document.body.appendChild(s) })
       }
       await new Promise((resolve) => {
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
-          name: 'LauncherDesk', description: svc.title, image: '/launcherdesk-logo-transparent.png',
+          name: 'LauncherDesk',
+          description: addGst
+            ? `${svc.title} — ${fmtPaise(numericPrice * 100)} + ${fmtPaise(gstPaise)} GST (18%) = ${fmtPaise(totalPaise)}`
+            : svc.title,
+          image: '/launcherdesk-logo-transparent.png',
+          notes: addGst ? { gstIncluded: fmtPaise(gstPaise) } : undefined,
           theme: { color: '#1D6FE0' },
           handler: async (response) => {
             try {
@@ -620,7 +633,7 @@ function HeroPayButton({ svc }) {
   if (!amount) return null
   async function pay() {
     setLoading(true); setMsg('')
-    await openRazorpayCheckout({ amount, serviceSlug: svc.slug || '', serviceTitle: svc.title, token, onSuccess: setMsg, onError: setMsg })
+    await openRazorpayCheckout({ amount, addGst: priceAddsGst(svc.priceCard), serviceSlug: svc.slug || '', serviceTitle: svc.title, token, onSuccess: setMsg, onError: setMsg })
     setLoading(false)
   }
   return (
