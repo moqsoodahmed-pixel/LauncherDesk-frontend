@@ -1,111 +1,138 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import SEO from '../../components/SEO'
 import { useUserAuth } from '../../context/UserAuthContext'
 import { loadRazorpayScript } from '../../lib/razorpay'
+import StampCertificate, { CERT_CSS } from './StampCertificate'
 import { stateBySlug, DOC_TYPES, DENOMINATIONS, MAX_DUTY, ESTAMP_FEES, GST_RATE, LD_WA } from '../../data/estamp'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 const CSS = `
-.ess { background:linear-gradient(180deg,#F7FAFF 0%,#EEF4FC 100%); min-height:80vh; padding:clamp(28px,4vw,48px) 0 72px; }
-.ess-wrap { max-width:1180px; margin:0 auto; padding:0 24px; }
-.ess-crumb { display:flex; gap:8px; align-items:center; font-size:13.5px; color:var(--text-3); margin-bottom:18px; flex-wrap:wrap; }
-.ess-crumb a { color:var(--text-3); text-decoration:none; } .ess-crumb a:hover { color:var(--blue); }
-.ess-head { text-align:center; margin-bottom:10px; }
-.ess-head h1 { font-size:clamp(26px,3.6vw,40px); font-weight:900; color:var(--navy); letter-spacing:-.03em; margin:0; }
-.ess-head .script { font-size:clamp(18px,2.4vw,26px); font-weight:700; color:var(--navy); margin-top:4px; }
-.ess-guide { text-align:center; font-size:14.5px; color:var(--text-2); margin:12px auto 28px; max-width:760px; line-height:1.6; }
-.ess-guide b { color:var(--navy); }
-.ess-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:24px; align-items:start;
-  background:#fff; border:1px solid var(--line); border-radius:22px; padding:18px; box-shadow:0 24px 60px -24px rgba(15,28,46,.18); }
-.ess-card { border:1px solid var(--line); border-radius:16px; padding:clamp(18px,3vw,28px); background:#FCFDFF; }
-.ess-step-label { font-size:14px; color:var(--text-2); margin-bottom:10px; }
-.ess-step-label b { color:var(--navy); }
-.ess-bar { height:24px; border-radius:8px; background:#EEF2F7; overflow:hidden; margin-bottom:24px; }
-.ess-bar span { display:flex; align-items:center; justify-content:flex-end; height:100%; padding-right:10px; box-sizing:border-box;
-  background:linear-gradient(90deg,var(--blue-dark),var(--blue)); color:#fff; font-size:12px; font-weight:700; transition:width .35s ease; }
-.ess-field { margin-bottom:18px; }
-.ess-field label { display:block; font-size:14.5px; font-weight:600; color:var(--navy); margin-bottom:7px; letter-spacing:.01em; }
-.ess-field label i { color:#DC2626; font-style:normal; margin-left:3px; }
-.ess-field label small { font-weight:400; color:var(--text-3); }
-.ess-in { width:100%; height:48px; box-sizing:border-box; border:1.5px solid var(--line-strong,#CBD5E1); border-radius:10px; padding:0 14px;
-  font-size:15px; font-family:inherit; background:#fff; color:var(--navy); outline:none; transition:border-color .15s, box-shadow .15s; }
-textarea.ess-in { height:auto; min-height:84px; padding:12px 14px; resize:vertical; }
-.ess-in:focus { border-color:var(--blue); box-shadow:0 0 0 4px rgba(29,111,224,.12); }
-.ess-in.bad { border-color:#DC2626; }
-.ess-err { color:#DC2626; font-size:12.5px; margin-top:5px; }
-.ess-chips { display:flex; flex-wrap:wrap; gap:8px; }
-.ess-chip { height:40px; padding:0 14px; border-radius:10px; border:1.5px solid var(--line-strong,#CBD5E1); background:#fff; font-weight:700;
-  font-size:14px; color:var(--navy); cursor:pointer; font-family:inherit; }
-.ess-chip.on { border-color:var(--blue); background:var(--brand-50); color:var(--blue-dark); }
-.ess-radio { display:grid; gap:10px; }
-.ess-radio label { display:flex; gap:12px; align-items:flex-start; border:1.5px solid var(--line-strong,#CBD5E1); border-radius:12px; padding:12px 14px;
-  cursor:pointer; font-weight:600; color:var(--navy); font-size:14.5px; margin:0; background:#fff; }
-.ess-radio label.on { border-color:var(--blue); background:var(--brand-50); }
-.ess-radio input { margin-top:3px; accent-color:var(--blue); }
-.ess-radio small { display:block; font-weight:400; color:var(--text-3); margin-top:2px; }
-.ess-check { display:flex; gap:10px; align-items:flex-start; font-size:14.5px; color:var(--navy); cursor:pointer; }
-.ess-check input { margin-top:3px; width:17px; height:17px; accent-color:var(--blue); }
-.ess-row2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-.ess-nav { display:flex; justify-content:space-between; gap:12px; margin-top:8px; }
-.ess-btn { height:50px; padding:0 26px; border-radius:11px; font-weight:700; font-size:15.5px; font-family:inherit; cursor:pointer; border:0;
+.lds { background:var(--sec-b, #F8FAFC); min-height:80vh; padding-bottom:80px; }
+.lds-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+.lds-head { background:#fff; border-bottom:1px solid var(--line); padding:22px 0 24px; margin-bottom:28px; }
+.lds-crumb { font-size:13.5px; color:var(--text-3); margin-bottom:10px; }
+.lds-crumb a { color:var(--text-3); text-decoration:none; } .lds-crumb a:hover { color:var(--blue); }
+.lds-head-row { display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; }
+.lds-head h1 { margin:0; font-size:clamp(26px,3.4vw,38px); letter-spacing:-.03em; color:var(--navy); font-weight:800; }
+.lds-script { margin-top:4px; font-size:18px; color:var(--text-2); font-weight:600; }
+.lds-change { font-size:14.5px; font-weight:700; color:var(--blue); text-decoration:none; border:1.5px solid var(--brand-100);
+  border-radius:10px; padding:9px 14px; background:var(--brand-50); }
+
+.lds-grid { display:grid; grid-template-columns:190px minmax(0,1fr) 380px; gap:28px; align-items:start; }
+
+/* Step rail */
+.lds-rail { position:sticky; top:100px; margin:0; padding:0; list-style:none; }
+.lds-rail li { position:relative; padding:0 0 26px 40px; }
+.lds-rail li:last-child { padding-bottom:0; }
+.lds-rail li::after { content:''; position:absolute; left:14px; top:30px; bottom:2px; width:2px; background:var(--line-strong); }
+.lds-rail li:last-child::after { display:none; }
+.lds-rail li.done::after { background:var(--blue); }
+.lds-rail button { all:unset; cursor:pointer; display:block; }
+.lds-rail button:disabled { cursor:default; }
+.lds-rail button:focus-visible { outline:3px solid var(--brand-200); outline-offset:4px; border-radius:6px; }
+.lds-dot { position:absolute; left:0; top:0; width:30px; height:30px; border-radius:50%; display:grid; place-items:center; font-weight:800; font-size:13px;
+  background:#fff; border:2px solid var(--line-strong); color:var(--text-3); }
+.lds-rail li.now .lds-dot { border-color:var(--blue); color:var(--blue); box-shadow:0 0 0 5px var(--brand-50); }
+.lds-rail li.done .lds-dot { background:var(--blue); border-color:var(--blue); color:#fff; }
+.lds-rail b { display:block; font-size:14.5px; color:var(--navy); padding-top:4px; }
+.lds-rail small { display:block; font-size:12.5px; color:var(--text-3); margin-top:2px; line-height:1.4; }
+.lds-rail li:not(.now):not(.done) b { color:var(--text-3); }
+
+/* Form */
+.lds-form { background:#fff; border:1px solid var(--line); border-radius:18px; padding:clamp(20px,3vw,32px); }
+.lds-form h2 { margin:0 0 4px; font-size:22px; color:var(--navy); letter-spacing:-.02em; }
+.lds-form .lead { margin:0 0 24px; color:var(--text-2); font-size:15px; line-height:1.55; }
+.lds-f { margin-bottom:20px; }
+.lds-f > label, .lds-f > .lbl { display:block; font-size:14.5px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+.lds-f .lds-optional { font-weight:500; color:var(--text-3); }
+.lds-in { width:100%; height:50px; box-sizing:border-box; border:1.5px solid var(--line-strong); border-radius:11px; padding:0 14px;
+  font-size:15.5px; font-family:inherit; background:#fff; color:var(--navy); outline:none; transition:border-color .15s, box-shadow .15s; }
+textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertical; line-height:1.5; }
+.lds-in:focus { border-color:var(--blue); box-shadow:0 0 0 4px rgba(29,93,184,.12); }
+.lds-in.bad { border-color:var(--error); }
+.lds-err { color:var(--error); font-size:13px; margin-top:6px; }
+.lds-help { color:var(--text-3); font-size:13px; margin-top:6px; line-height:1.5; }
+.lds-two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.lds-seg { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.lds-seg label, .lds-card label { display:flex; gap:10px; align-items:flex-start; border:1.5px solid var(--line-strong); border-radius:12px; padding:13px 14px;
+  cursor:pointer; font-weight:700; color:var(--navy); font-size:15px; background:#fff; margin:0; }
+.lds-seg label:has(input:checked), .lds-card label:has(input:checked) { border-color:var(--blue); background:var(--brand-50); }
+.lds-seg input, .lds-card input { margin-top:3px; accent-color:var(--blue); }
+.lds-card { display:grid; gap:10px; }
+.lds-card small { display:block; font-weight:500; color:var(--text-3); margin-top:3px; line-height:1.45; }
+.lds-duty { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.lds-duty button { height:46px; border-radius:10px; border:1.5px solid var(--line-strong); background:#fff; font-family:inherit; font-weight:800;
+  font-size:15px; color:var(--navy); cursor:pointer; }
+.lds-duty button[aria-pressed="true"] { border-color:var(--blue); background:var(--blue); color:#fff; }
+.lds-duty button:focus-visible { outline:3px solid var(--brand-200); outline-offset:2px; }
+.lds-print { display:flex; gap:12px; align-items:flex-start; border:1.5px dashed var(--brand-200); border-radius:12px; padding:14px; cursor:pointer;
+  background:linear-gradient(180deg,#fff,var(--brand-50)); }
+.lds-print input { margin-top:3px; width:18px; height:18px; accent-color:var(--blue); flex:none; }
+.lds-print b { color:var(--navy); }
+.lds-print span { font-size:14px; color:var(--text-2); line-height:1.5; }
+.lds-actions { display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:26px; padding-top:20px; border-top:1px solid var(--line); }
+.lds-btn { height:52px; padding:0 26px; border-radius:12px; font-family:inherit; font-weight:800; font-size:16px; cursor:pointer; border:0;
   display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; }
-.ess-btn-primary { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); color:#fff; box-shadow:0 8px 20px rgba(29,93,184,.25); margin-left:auto; }
-.ess-btn-primary:disabled { opacity:.65; cursor:not-allowed; }
-.ess-btn-ghost { background:#fff; color:var(--navy); border:1.5px solid var(--line-strong,#CBD5E1); }
-.ess-summary { border:1px solid var(--line); border-radius:12px; overflow:hidden; margin:6px 0 18px; }
-.ess-summary div { display:flex; justify-content:space-between; gap:12px; padding:10px 14px; font-size:14px; color:var(--text-2); border-top:1px solid var(--line); }
-.ess-summary div:first-child { border-top:0; }
-.ess-summary div b { color:var(--navy); text-align:right; }
-.ess-summary .total { background:var(--brand-50); font-size:16px; color:var(--navy); font-weight:800; }
-.ess-msg { margin-top:12px; padding:10px 12px; border-radius:8px; font-size:13.5px; line-height:1.5; }
-.ess-msg.err { background:#FEF2F2; border:1px solid #FECACA; color:#B91C1C; }
-.ess-done { text-align:center; padding:12px 4px; }
-.ess-done .tick { width:64px; height:64px; border-radius:50%; margin:0 auto 14px; display:grid; place-items:center; background:#DCFCE7; }
-.ess-done h2 { color:var(--navy); margin:0 0 8px; font-size:24px; }
-.ess-done p { color:var(--text-2); line-height:1.65; margin:0 0 18px; }
+.lds-btn.primary { background:var(--blue); color:#fff; margin-left:auto; }
+.lds-btn.primary:hover { background:var(--blue-dark); }
+.lds-btn.primary:disabled { opacity:.6; cursor:not-allowed; }
+.lds-btn.plain { background:none; color:var(--text-2); padding:0 8px; }
+.lds-btn:focus-visible { outline:3px solid var(--brand-200); outline-offset:2px; }
+.lds-note { display:flex; gap:10px; align-items:flex-start; background:var(--warn-bg, #FFFBEB); border:1px solid #FDE68A; color:#92400E;
+  border-radius:12px; padding:12px 14px; font-size:14px; line-height:1.5; margin-bottom:20px; }
+.lds-alert { margin-top:14px; padding:12px 14px; border-radius:10px; font-size:14px; background:var(--error-bg); border:1px solid #FECACA; color:#991B1B; }
 
-.ess-side { border:2px solid rgba(29,111,224,.35); border-radius:16px; padding:clamp(18px,3vw,26px); background:#fff; display:flex; flex-direction:column; gap:14px; }
-.ess-side-btn { display:flex; align-items:center; justify-content:center; text-align:center; gap:8px; min-height:52px; padding:10px 18px; border-radius:12px;
-  color:#fff; font-weight:700; font-size:15px; text-decoration:none; line-height:1.35; }
-.ess-side-btn.orange { background:linear-gradient(135deg,#F97316,#FB923C); }
-.ess-side-btn.blue { background:linear-gradient(135deg,var(--blue-dark),#4F46E5); }
-.ess-side h4 { text-align:center; margin:10px 0 2px; font-size:13px; letter-spacing:.14em; color:var(--text-3); font-weight:700; }
-.ess-side h3 { text-align:center; margin:0 0 6px; font-size:21px; color:var(--navy); font-weight:900; }
-.ess-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-.ess-3 div { text-align:center; font-size:12.5px; color:var(--text-2); line-height:1.4; }
-.ess-3 span { width:56px; height:56px; border-radius:50%; margin:0 auto 8px; display:grid; place-items:center; color:#fff; }
-.ess-3 div:nth-child(1) span { background:linear-gradient(135deg,#1E3A8A,#2563EB); }
-.ess-3 div:nth-child(2) span { background:linear-gradient(135deg,#D97706,#FBBF24); }
-.ess-3 div:nth-child(3) span { background:linear-gradient(135deg,#1D4ED8,#3B82F6); }
-.ess-3 svg { width:26px; height:26px; stroke:#fff; }
-.ess-side-note { background:var(--brand-50); border:1px solid var(--brand-100); border-radius:12px; padding:12px 14px; font-size:13.5px; color:var(--text-2); line-height:1.6; }
-.ess-side-note b { color:var(--navy); }
+/* Aside */
+.lds-aside { position:sticky; top:100px; display:grid; gap:16px; }
+.lds-price { background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px 18px 16px; }
+.lds-price h3 { margin:0 0 12px; font-size:15px; color:var(--navy); }
+.lds-price dl { margin:0; display:grid; grid-template-columns:1fr auto; gap:8px 12px; font-size:14.5px; }
+.lds-price dt { color:var(--text-2); } .lds-price dd { margin:0; text-align:right; font-weight:700; color:var(--navy); }
+.lds-price .total { border-top:1px solid var(--line); padding-top:10px; font-size:17px; font-weight:800; color:var(--navy); }
+.lds-price p { margin:12px 0 0; font-size:12.5px; color:var(--text-3); line-height:1.5; }
+.lds-help-card { border-radius:16px; padding:16px 18px; background:var(--navy); color:#fff; font-size:14px; line-height:1.55; }
+.lds-help-card a { color:#fff; font-weight:800; }
 
-.ess-gate { position:fixed; inset:0; z-index:9999; background:rgba(15,28,46,.45); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
-  display:flex; align-items:center; justify-content:center; padding:16px; }
-.ess-gate-box { width:100%; max-width:460px; background:rgba(255,255,255,.96); border:1px solid rgba(255,255,255,.7); border-radius:24px;
-  padding:28px 26px 22px; box-shadow:0 40px 90px rgba(15,28,46,.35); }
-.ess-gate-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
-.ess-gate-top img { height:34px; }
-.ess-gate-tag { font-size:12.5px; font-weight:600; color:var(--text-2); border:1px solid var(--line); border-radius:99px; padding:6px 12px; background:#fff; }
-.ess-gate h2 { margin:0 0 6px; font-size:24px; color:var(--navy); font-weight:900; letter-spacing:-.02em; }
-.ess-gate p { margin:0 0 20px; color:var(--text-2); font-size:15px; }
-.ess-gate .ess-btn { width:100%; margin:0 0 10px; }
-.ess-gate-back { display:block; text-align:center; margin-top:8px; font-size:14px; color:var(--text-3); text-decoration:none; }
+/* Done */
+.lds-done { text-align:center; padding:12px 0; }
+.lds-done .tick { width:68px; height:68px; margin:0 auto 16px; border-radius:50%; background:var(--success-bg); display:grid; place-items:center; }
+.lds-done h2 { font-size:26px; }
+.lds-done p { color:var(--text-2); line-height:1.65; max-width:52ch; margin:0 auto 22px; }
 
-@media (max-width:900px) { .ess-grid { grid-template-columns:1fr; } }
-@media (max-width:520px) { .ess-row2 { grid-template-columns:1fr; } .ess-nav { flex-direction:column-reverse; } .ess-btn { width:100%; } }
+/* Login side panel */
+.lds-scrim { position:fixed; inset:0; background:rgba(11,31,72,.45); z-index:9998; }
+.lds-panel { position:fixed; top:0; right:0; bottom:0; width:min(420px,100%); background:#fff; z-index:9999; padding:28px 26px;
+  box-shadow:-20px 0 60px rgba(11,31,72,.25); display:flex; flex-direction:column; animation:ldsIn .25s ease; }
+@keyframes ldsIn { from { transform:translateX(30px); opacity:0; } to { transform:none; opacity:1; } }
+@media (prefers-reduced-motion: reduce) { .lds-panel { animation:none; } }
+.lds-panel img { height:34px; align-self:flex-start; margin-bottom:28px; }
+.lds-panel h2 { margin:0 0 8px; font-size:24px; color:var(--navy); letter-spacing:-.02em; }
+.lds-panel p { margin:0 0 22px; color:var(--text-2); line-height:1.6; }
+.lds-panel .lds-btn { width:100%; margin:0 0 10px; }
+.lds-panel .lds-btn.ghost { background:#fff; color:var(--navy); border:1.5px solid var(--line-strong); }
+.lds-panel .close { position:absolute; top:16px; right:16px; width:38px; height:38px; border-radius:50%; border:0; background:var(--bg-2); font-size:22px; cursor:pointer; }
+.lds-saved { display:flex; gap:10px; align-items:center; margin-top:auto; background:var(--success-bg); color:#065F46; border-radius:12px; padding:12px 14px; font-size:14px; }
+
+@media (max-width:1100px) { .lds-grid { grid-template-columns:minmax(0,1fr) 340px; } .lds-rail { display:none; } }
+@media (max-width:860px) { .lds-grid { grid-template-columns:1fr; } .lds-aside { position:static; } }
+@media (max-width:520px) { .lds-two, .lds-seg { grid-template-columns:1fr; } .lds-duty { grid-template-columns:repeat(3,1fr); }
+  .lds-actions { flex-direction:column-reverse; } .lds-btn.primary { width:100%; } }
 `
 
 const DRAFT_KEY = slug => `ld_estamp_draft_${slug}`
-const inr = n => `₹${Number(n || 0).toLocaleString('en-IN')}`
+const inr = n => `₹${Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`
 const EMPTY = {
   firstParty: '', secondParty: '', payer: '',
   docType: '', purpose: '', consideration: '', duty: '', customDuty: '', print: false,
   delivery: 'email', name: '', mobile: '', email: '', address: '', city: '', pincode: '',
 }
+const STEPS = [
+  { t: 'The parties', s: 'Who the stamp is for' },
+  { t: 'The stamp', s: 'Document and value' },
+  { t: 'Delivery and pay', s: 'Where we send it' },
+]
 
 function loadDraft(slug) {
   try { const d = JSON.parse(localStorage.getItem(DRAFT_KEY(slug)) || 'null'); return d && typeof d === 'object' ? { ...EMPTY, ...d } : null } catch { return null }
@@ -118,26 +145,42 @@ export default function EStampStatePage() {
   const { isLoggedIn, token, user } = useUserAuth()
   const navigate = useNavigate()
   const location = useLocation()
+  const formRef = useRef(null)
 
-  const [f, setF] = useState(() => ({ ...EMPTY, print: params.get('print') === '1', ...(loadDraft(slug) || {}) }))
-  const [step, setStep] = useState(1)
+  const [f, setF] = useState(() => {
+    const d = loadDraft(slug) || {}
+    return { ...EMPTY, ...d, print: params.get('print') === '1' ? true : !!d.print }
+  })
+  const savedStep = (() => { try { return Number(sessionStorage.getItem(`${DRAFT_KEY(slug)}_step`)) || 1 } catch { return 1 } })()
+  const [step, setStep] = useState(savedStep)
+  const [maxStep, setMaxStep] = useState(savedStep)
   const [errs, setErrs] = useState({})
   const [paying, setPaying] = useState(false)
   const [payErr, setPayErr] = useState('')
   const [done, setDone] = useState(null)
+  const [askLogin, setAskLogin] = useState(false)
 
-  // keep the draft so nothing is lost when the customer goes to log in
+  // keep a draft so nothing is lost while the customer logs in
   useEffect(() => { try { localStorage.setItem(DRAFT_KEY(slug), JSON.stringify(f)) } catch { /* storage unavailable */ } }, [f, slug])
-  // prefill contact details from the account
+  useEffect(() => { try { sessionStorage.setItem(`${DRAFT_KEY(slug)}_step`, String(maxStep)) } catch { /* ignore */ } }, [maxStep, slug])
   useEffect(() => {
     if (!user) return
     setF(v => ({ ...v, name: v.name || user.name || '', email: v.email || user.email || '', mobile: v.mobile || user.phone || '' }))
   }, [user])
+  useEffect(() => { if (isLoggedIn) setAskLogin(false) }, [isLoggedIn])
+  useEffect(() => {
+    if (!askLogin) return
+    const onKey = e => { if (e.key === 'Escape') setAskLogin(false) }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [askLogin])
 
   const duty = f.duty === 'custom' ? Number(f.customDuty) : Number(f.duty)
+  const validDuty = Number.isInteger(duty) && duty >= 1 && duty <= MAX_DUTY
   const courier = f.delivery === 'courier' ? ESTAMP_FEES.courier : 0
-  const gst = Math.round((ESTAMP_FEES.service + courier) * GST_RATE * 100) / 100
-  const total = useMemo(() => Math.round(((Number.isFinite(duty) ? duty : 0) + ESTAMP_FEES.service + courier + gst) * 100) / 100, [duty, courier, gst])
+  const fees = ESTAMP_FEES.service + courier
+  const gst = Math.round(fees * GST_RATE * 100) / 100
+  const total = useMemo(() => Math.round(((validDuty ? duty : 0) + fees + gst) * 100) / 100, [validDuty, duty, fees, gst])
 
   if (!st) return <Navigate to="/estamp" replace />
 
@@ -147,39 +190,39 @@ export default function EStampStatePage() {
   function validate(s) {
     const e = {}
     if (s === 1) {
-      if (!f.firstParty.trim()) e.firstParty = 'Enter the first party name'
-      if (!f.secondParty.trim()) e.secondParty = 'Enter the second party name, or NIL'
-      if (!f.payer) e.payer = 'Select who pays the stamp duty'
+      if (!f.firstParty.trim()) e.firstParty = 'Enter the first party’s name.'
+      if (!f.secondParty.trim()) e.secondParty = 'Enter the second party’s name, or NIL if there isn’t one.'
+      if (!f.payer) e.payer = 'Choose who pays the stamp duty.'
     }
     if (s === 2) {
-      if (!f.docType) e.docType = 'Select the document type'
-      if (!f.purpose.trim()) e.purpose = 'Briefly describe the purpose'
-      if (!f.duty) e.duty = 'Choose the stamp duty value'
-      else if (!(duty >= 1 && duty <= MAX_DUTY && Number.isInteger(duty))) e.duty = `Enter a whole amount between ₹1 and ${inr(MAX_DUTY)}`
-      if (f.consideration && !(Number(f.consideration) >= 0)) e.consideration = 'Enter a valid amount'
+      if (!f.docType) e.docType = 'Choose the document type.'
+      if (!f.purpose.trim()) e.purpose = 'Describe what the stamp is for.'
+      if (!f.duty) e.duty = 'Choose a stamp duty value.'
+      else if (!validDuty) e.duty = `Enter a whole amount from ₹1 to ${inr(MAX_DUTY)}.`
+      if (f.consideration && !(Number(f.consideration) >= 0)) e.consideration = 'Enter the amount in rupees, numbers only.'
     }
     if (s === 3) {
-      if (!f.name.trim()) e.name = 'Enter your name'
-      if (!/^\+?[0-9\s-]{10,14}$/.test(f.mobile.trim())) e.mobile = 'Enter a valid mobile number'
-      if (!/^\S+@\S+\.\S+$/.test(f.email.trim())) e.email = 'Enter a valid email'
+      if (!f.name.trim()) e.name = 'Enter your name.'
+      if (!/^\+?[0-9\s-]{10,14}$/.test(f.mobile.trim())) e.mobile = 'Enter a 10-digit mobile number.'
+      if (!/^\S+@\S+\.\S+$/.test(f.email.trim())) e.email = 'Enter a valid email address.'
       if (f.delivery === 'courier') {
-        if (!f.address.trim()) e.address = 'Enter the delivery address'
-        if (!f.city.trim()) e.city = 'Enter the city'
-        if (!/^\d{6}$/.test(f.pincode.trim())) e.pincode = 'Enter a 6-digit PIN code'
+        if (!f.address.trim()) e.address = 'Enter the delivery address.'
+        if (!f.city.trim()) e.city = 'Enter the city.'
+        if (!/^\d{6}$/.test(f.pincode.trim())) e.pincode = 'Enter the 6-digit PIN code.'
       }
     }
     setErrs(e)
     return !Object.keys(e).length
   }
-  const next = () => { if (validate(step)) { setStep(s => s + 1); window.scrollTo({ top: 0, behavior: 'smooth' }) } }
-  const back = () => { setErrs({}); setStep(s => s - 1) }
+  const goTo = n => { setErrs({}); setStep(n); formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
+  const next = () => { if (validate(step)) { setMaxStep(m => Math.max(m, step + 1)); goTo(step + 1) } }
 
   async function pay() {
     if (!validate(3)) return
-    if (!isLoggedIn) { goLogin('login'); return }
+    if (!isLoggedIn) { setAskLogin(true); return }
     setPaying(true); setPayErr('')
     try {
-      // 1. Ask the server to price the order (it recalculates everything) and create it
+      // 1. The server prices and creates the order (it recalculates everything)
       const res = await fetch(`${API_BASE}/payments/checkout/estamp/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
@@ -193,22 +236,18 @@ export default function EStampStatePage() {
         }),
       })
       const data = await res.json()
-      if (res.status === 401) { goLogin('login'); return }
-      if (!res.ok) {
-        const fieldMsg = data.fields ? Object.values(data.fields)[0] : ''
-        throw new Error(fieldMsg || data.message || 'Could not create your order')
-      }
+      if (res.status === 401) { setAskLogin(true); return }
+      if (!res.ok) throw new Error((data.fields && Object.values(data.fields)[0]) || data.message || 'We couldn’t create your order. Check the details and try again.')
 
-      // 2. Open Razorpay with the server's amount
+      // 2. Razorpay opens with the server’s amount
       await loadRazorpayScript()
       await new Promise(resolve => {
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
-          name: 'LauncherDesk', description: `e-Stamp Paper — ${st.name}`, image: '/launcherdesk-logo-transparent.png',
-          prefill: { name: f.name, email: f.email, contact: f.mobile },
-          theme: { color: '#1D6FE0' },
+          name: 'LauncherDesk', description: `e-Stamp paper, ${st.name}`, image: '/launcherdesk-logo-transparent.png',
+          prefill: { name: f.name, email: f.email, contact: f.mobile }, theme: { color: '#1D5DB8' },
           handler: async response => {
-            // 3. Confirm the payment with the server
+            // 3. The server confirms the payment
             try {
               const v = await fetch(`${API_BASE}/payments/verify`, {
                 method: 'POST',
@@ -216,235 +255,250 @@ export default function EStampStatePage() {
                 body: JSON.stringify(response),
               }).then(r => r.json())
               if (v.success) {
-                try { localStorage.removeItem(DRAFT_KEY(slug)) } catch { /* ignore */ }
+                try { localStorage.removeItem(DRAFT_KEY(slug)); sessionStorage.removeItem(`${DRAFT_KEY(slug)}_step`) } catch { /* ignore */ }
                 setDone({ orderNumber: v.orderNumber || data.orderNumber, ldOrderId: v.ldOrderId || data.ldOrderId })
-              } else setPayErr(v.message || 'Payment received but verification is pending. Our team will confirm shortly.')
+              } else setPayErr(v.message || 'Payment received. We’re confirming it and will email you shortly.')
             } catch {
-              setPayErr('Payment received. Our team will confirm it shortly — you don’t need to pay again.')
+              setPayErr('Payment received. We’re confirming it and will email you shortly. You don’t need to pay again.')
             }
             resolve()
           },
           modal: { ondismiss: resolve },
         })
-        rzp.on?.('payment.failed', r => setPayErr(r?.error?.description || 'Payment failed. Please try again.'))
+        rzp.on?.('payment.failed', r => setPayErr(r?.error?.description || 'The payment didn’t go through. No money was taken; you can try again.'))
         rzp.open()
       })
     } catch (err) {
-      setPayErr(err.message || 'Something went wrong. Please try again.')
+      setPayErr(err.message)
     } finally {
       setPaying(false)
     }
   }
 
-  const pct = Math.round((step / 3) * 100)
-  const Err = ({ k }) => errs[k] ? <div className="ess-err" role="alert">{errs[k]}</div> : null
+  const Err = ({ k }) => (errs[k] ? <div className="lds-err" role="alert">{errs[k]}</div> : null)
+  const inCls = k => `lds-in${errs[k] ? ' bad' : ''}`
 
   return (
     <>
-      <SEO title={`e-Stamp Paper ${st.name} — Buy Online`} description={`Buy non-judicial e-Stamp paper for ${st.name} online. Fill the form, pay securely and get the scan copy by email, with doorstep delivery available.`} canonical={`/estamp/${st.slug}`} />
-      <style>{CSS}</style>
+      <SEO title={`${st.name} e-Stamp Paper — Order Online`} description={`Order non-judicial e-Stamp paper for ${st.name} online. Fill in the details, pay securely and get the scan copy by email, with doorstep delivery available.`} canonical={`/estamp/${st.slug}`} />
+      <style>{CERT_CSS + CSS}</style>
 
-      <section className="ess">
-        <div className="ess-wrap">
-          <nav className="ess-crumb" aria-label="Breadcrumb">
-            <Link to="/">Home</Link> › <Link to="/estamp">E-Stamp</Link> › <span>{st.name}</span>
-          </nav>
-          <div className="ess-head">
-            <h1>e-Stamp Paper of {st.name}</h1>
-            {st.script && <div className="script" lang="und">{st.script}</div>}
+      <div className="lds">
+        <header className="lds-head">
+          <div className="lds-wrap">
+            <nav className="lds-crumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/estamp">e-Stamp</Link> / {st.name}</nav>
+            <div className="lds-head-row">
+              <div>
+                <h1>{st.name} e-Stamp paper</h1>
+                {st.script && <div className="lds-script" lang="und">{st.script}</div>}
+              </div>
+              <Link to="/estamp#all-states" className="lds-change">Change state</Link>
+            </div>
           </div>
-          <p className="ess-guide">
-            Choose the stamp duty value as per <b>{st.name} Government guidelines</b>. Not sure of the right amount?
-            Our team checks every order before purchase and will call you if anything needs changing.
-          </p>
+        </header>
 
-          <div className="ess-grid">
-            {/* ── Form ── */}
-            <div className="ess-card">
-              {done ? (
-                <div className="ess-done" role="status">
-                  <div className="tick"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#16A34A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg></div>
-                  <h2>Payment successful!</h2>
-                  <p>Your e-Stamp order {done.orderNumber ? <b>{done.orderNumber}</b> : null} has been placed. We’ve emailed your payment confirmation and invoice.
-                    Our team will verify the details and email you the scan copy{f.delivery === 'courier' ? ', then courier the original to you' : ''}.</p>
-                  <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
-                    {done.ldOrderId && <Link to={`/user/services/${done.ldOrderId}`} className="ess-btn ess-btn-primary" style={{ marginLeft: 0 }}>Track my order</Link>}
-                    <Link to="/estamp" className="ess-btn ess-btn-ghost">Buy another e-Stamp</Link>
-                  </div>
+        <div className="lds-wrap lds-grid">
+          {/* Step rail */}
+          <ol className="lds-rail" aria-label="Order steps">
+            {STEPS.map((s, i) => {
+              const n = i + 1
+              const cls = done || n < step ? 'done' : n === step ? 'now' : ''
+              return (
+                <li key={s.t} className={cls}>
+                  <button type="button" disabled={!!done || n > maxStep} onClick={() => goTo(n)} aria-current={n === step ? 'step' : undefined}>
+                    <span className="lds-dot">{cls === 'done' ? '✓' : n}</span>
+                    <b>{s.t}</b><small>{s.s}</small>
+                  </button>
+                </li>
+              )
+            })}
+          </ol>
+
+          {/* Form */}
+          <section className="lds-form" ref={formRef} style={{ scrollMarginTop: 100 }} aria-live="polite">
+            {done ? (
+              <div className="lds-done">
+                <div className="tick"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg></div>
+                <h2>Order placed</h2>
+                <p>
+                  {done.orderNumber && <>Your order number is <b>{done.orderNumber}</b>. </>}
+                  We’ve emailed your receipt and tax invoice. Our team will check the details and email you the scan copy
+                  {f.delivery === 'courier' ? ', then courier the original to you' : ''}.
+                  {f.print ? ' Upload the document you want printed from your order page.' : ''}
+                </p>
+                <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
+                  {done.ldOrderId && <Link to={`/user/services/${done.ldOrderId}`} className="lds-btn primary" style={{ marginLeft: 0 }}>View my order</Link>}
+                  <Link to="/estamp" className="lds-btn plain">Order another e-Stamp</Link>
                 </div>
-              ) : (
-                <>
-                  <div className="ess-step-label">Step {step} of 3 — <b>{['', 'Party details', 'e-Stamp details', 'Delivery & payment'][step]}</b></div>
-                  <div className="ess-bar" aria-hidden="true"><span style={{ width: `${pct}%` }}>{pct}%</span></div>
+              </div>
+            ) : (
+              <>
+                {step === 1 && (
+                  <>
+                    <h2>Who is the stamp for?</h2>
+                    <p className="lead">These names are printed on the certificate exactly as you type them.</p>
+                    <div className="lds-f">
+                      <label htmlFor="fp">First party</label>
+                      <input id="fp" className={inCls('firstParty')} value={f.firstParty} onChange={set('firstParty')} placeholder="e.g. landlord or person giving the affidavit" autoComplete="name" />
+                      <Err k="firstParty" />
+                    </div>
+                    <div className="lds-f">
+                      <label htmlFor="sp">Second party</label>
+                      <input id="sp" className={inCls('secondParty')} value={f.secondParty} onChange={set('secondParty')} placeholder="e.g. tenant — or NIL" />
+                      <div className="lds-help">For an affidavit or declaration with no second party, write NIL.</div>
+                      <Err k="secondParty" />
+                    </div>
+                    <div className="lds-f" role="radiogroup" aria-labelledby="payer-l">
+                      <div className="lbl" id="payer-l">Who pays the stamp duty?</div>
+                      <div className="lds-seg">
+                        {['First Party', 'Second Party'].map(p => (
+                          <label key={p}><input type="radio" name="payer" value={p} checked={f.payer === p} onChange={set('payer')} />{p === 'First Party' ? 'First party' : 'Second party'}</label>
+                        ))}
+                      </div>
+                      <Err k="payer" />
+                    </div>
+                  </>
+                )}
 
-                  {step === 1 && (
-                    <>
-                      <div className="ess-field">
-                        <label htmlFor="fp">First Party Name<i>*</i></label>
-                        <input id="fp" className={`ess-in${errs.firstParty ? ' bad' : ''}`} value={f.firstParty} onChange={set('firstParty')} placeholder="Enter the name of the First Party" />
-                        <Err k="firstParty" />
+                {step === 2 && (
+                  <>
+                    <h2>What is it for?</h2>
+                    <p className="lead">Choose the value set by {st.name}’s rules for your document. Not sure? Pick your best guess — we check every order before buying the stamp and call you if it needs to change.</p>
+                    <div className="lds-f">
+                      <label htmlFor="dt">Document type</label>
+                      <select id="dt" className={inCls('docType')} value={f.docType} onChange={set('docType')}>
+                        <option value="">Choose…</option>
+                        {DOC_TYPES.map(d => <option key={d} value={d}>{d}</option>)}
+                      </select>
+                      <Err k="docType" />
+                    </div>
+                    <div className="lds-f">
+                      <label htmlFor="pu">Purpose</label>
+                      <textarea id="pu" className={inCls('purpose')} value={f.purpose} onChange={set('purpose')} maxLength={500}
+                        placeholder="e.g. Rent agreement for flat 12, 4th Cross, Koramangala, Bengaluru" />
+                      <Err k="purpose" />
+                    </div>
+                    <div className="lds-f">
+                      <div className="lbl" id="duty-l">Stamp duty value</div>
+                      <div className="lds-duty" role="group" aria-labelledby="duty-l">
+                        {DENOMINATIONS.map(d => (
+                          <button type="button" key={d} aria-pressed={String(f.duty) === String(d)} onClick={() => setF(v => ({ ...v, duty: String(d) }))}>{inr(d)}</button>
+                        ))}
+                        <button type="button" aria-pressed={f.duty === 'custom'} onClick={() => setF(v => ({ ...v, duty: 'custom' }))}>Other</button>
                       </div>
-                      <div className="ess-field">
-                        <label htmlFor="sp">Second Party Name<i>*</i></label>
-                        <input id="sp" className={`ess-in${errs.secondParty ? ' bad' : ''}`} value={f.secondParty} onChange={set('secondParty')} placeholder="If there is no Second Party then write NIL" />
-                        <Err k="secondParty" />
-                      </div>
-                      <div className="ess-field">
-                        <label htmlFor="payer">Select who pays stamp duty<i>*</i></label>
-                        <select id="payer" className={`ess-in${errs.payer ? ' bad' : ''}`} value={f.payer} onChange={set('payer')}>
-                          <option value="">— Select —</option>
-                          <option value="First Party">First Party</option>
-                          <option value="Second Party">Second Party</option>
-                        </select>
-                        <Err k="payer" />
-                      </div>
-                    </>
-                  )}
-
-                  {step === 2 && (
-                    <>
-                      <div className="ess-field">
-                        <label htmlFor="dt">Document type<i>*</i></label>
-                        <select id="dt" className={`ess-in${errs.docType ? ' bad' : ''}`} value={f.docType} onChange={set('docType')}>
-                          <option value="">— Select —</option>
-                          {DOC_TYPES.map(d => <option key={d} value={d}>{d}</option>)}
-                        </select>
-                        <Err k="docType" />
-                      </div>
-                      <div className="ess-field">
-                        <label htmlFor="pu">Purpose / description<i>*</i></label>
-                        <textarea id="pu" className={`ess-in${errs.purpose ? ' bad' : ''}`} value={f.purpose} onChange={set('purpose')} placeholder="e.g. Rent agreement for flat no. 12, Koramangala, Bengaluru" maxLength={500} />
-                        <Err k="purpose" />
-                      </div>
-                      <div className="ess-field">
-                        <label>Stamp duty value<i>*</i></label>
-                        <div className="ess-chips">
-                          {DENOMINATIONS.map(d => (
-                            <button type="button" key={d} className={`ess-chip${String(f.duty) === String(d) ? ' on' : ''}`} onClick={() => setF(v => ({ ...v, duty: String(d) }))}>{inr(d)}</button>
-                          ))}
-                          <button type="button" className={`ess-chip${f.duty === 'custom' ? ' on' : ''}`} onClick={() => setF(v => ({ ...v, duty: 'custom' }))}>Other amount</button>
-                        </div>
-                        {f.duty === 'custom' && (
-                          <input className={`ess-in${errs.duty ? ' bad' : ''}`} style={{ marginTop: 10 }} type="number" min="1" max={MAX_DUTY} step="1" inputMode="numeric"
-                            value={f.customDuty} onChange={set('customDuty')} placeholder="Enter stamp duty amount (₹)" aria-label="Custom stamp duty amount" />
-                        )}
-                        <Err k="duty" />
-                      </div>
-                      <div className="ess-field">
-                        <label htmlFor="cp">Consideration amount <small>(optional — e.g. deposit or deal value, ₹)</small></label>
-                        <input id="cp" className={`ess-in${errs.consideration ? ' bad' : ''}`} type="number" min="0" inputMode="numeric" value={f.consideration} onChange={set('consideration')} placeholder="0" />
-                        <Err k="consideration" />
-                      </div>
-                      <div className="ess-field">
-                        <label className="ess-check">
-                          <input type="checkbox" checked={f.print} onChange={set('print')} />
-                          <span><b>Print my document on this e-Stamp paper</b><br /><small style={{ color: 'var(--text-3)' }}>After payment, you’ll upload your document from your dashboard and we print it on the stamp.</small></span>
-                        </label>
-                      </div>
-                    </>
-                  )}
-
-                  {step === 3 && (
-                    <>
-                      <div className="ess-field">
-                        <label>Delivery<i>*</i></label>
-                        <div className="ess-radio">
-                          <label className={f.delivery === 'email' ? 'on' : ''}>
-                            <input type="radio" name="dl" value="email" checked={f.delivery === 'email'} onChange={set('delivery')} />
-                            <span>Scan copy on email<small>Fastest — usually within a few hours</small></span>
-                          </label>
-                          <label className={f.delivery === 'courier' ? 'on' : ''}>
-                            <input type="radio" name="dl" value="courier" checked={f.delivery === 'courier'} onChange={set('delivery')} />
-                            <span>Scan copy on email + original by courier{ESTAMP_FEES.courier ? ` (+${inr(ESTAMP_FEES.courier)})` : ''}<small>Delivered to your doorstep</small></span>
-                          </label>
-                        </div>
-                      </div>
-                      {f.delivery === 'courier' && (
-                        <>
-                          <div className="ess-field">
-                            <label htmlFor="ad">Delivery address<i>*</i></label>
-                            <textarea id="ad" className={`ess-in${errs.address ? ' bad' : ''}`} value={f.address} onChange={set('address')} placeholder="House / flat, street, area" maxLength={300} />
-                            <Err k="address" />
-                          </div>
-                          <div className="ess-row2">
-                            <div className="ess-field"><label htmlFor="ci">City<i>*</i></label>
-                              <input id="ci" className={`ess-in${errs.city ? ' bad' : ''}`} value={f.city} onChange={set('city')} /><Err k="city" /></div>
-                            <div className="ess-field"><label htmlFor="pin">PIN code<i>*</i></label>
-                              <input id="pin" className={`ess-in${errs.pincode ? ' bad' : ''}`} inputMode="numeric" maxLength={6} value={f.pincode} onChange={set('pincode')} /><Err k="pincode" /></div>
-                          </div>
-                        </>
+                      {f.duty === 'custom' && (
+                        <input className={inCls('duty')} style={{ marginTop: 10 }} type="number" min="1" max={MAX_DUTY} step="1" inputMode="numeric"
+                          value={f.customDuty} onChange={set('customDuty')} placeholder="Amount in rupees" aria-label="Stamp duty amount in rupees" autoFocus />
                       )}
-                      <div className="ess-row2">
-                        <div className="ess-field"><label htmlFor="nm">Your name<i>*</i></label>
-                          <input id="nm" className={`ess-in${errs.name ? ' bad' : ''}`} value={f.name} onChange={set('name')} /><Err k="name" /></div>
-                        <div className="ess-field"><label htmlFor="mb">Mobile<i>*</i></label>
-                          <input id="mb" className={`ess-in${errs.mobile ? ' bad' : ''}`} type="tel" value={f.mobile} onChange={set('mobile')} placeholder="+91 98765 43210" /><Err k="mobile" /></div>
-                      </div>
-                      <div className="ess-field"><label htmlFor="em">Email for the scan copy<i>*</i></label>
-                        <input id="em" className={`ess-in${errs.email ? ' bad' : ''}`} type="email" value={f.email} onChange={set('email')} /><Err k="email" /></div>
+                      <Err k="duty" />
+                    </div>
+                    <div className="lds-f">
+                      <label htmlFor="cp">Consideration amount <span className="lds-optional">(optional)</span></label>
+                      <input id="cp" className={inCls('consideration')} type="number" min="0" inputMode="numeric" value={f.consideration} onChange={set('consideration')} placeholder="e.g. security deposit or deal value, in ₹" />
+                      <Err k="consideration" />
+                    </div>
+                    <label className="lds-print">
+                      <input type="checkbox" checked={f.print} onChange={set('print')} />
+                      <span><b>Print my document on this e-Stamp.</b> After paying, upload your agreement or affidavit from your order page and we print it on the stamp.</span>
+                    </label>
+                  </>
+                )}
 
-                      <div className="ess-summary" aria-label="Order summary">
-                        <div><span>State</span><b>{st.name}</b></div>
-                        <div><span>Document</span><b>{f.docType}</b></div>
-                        <div><span>Parties</span><b>{f.firstParty} / {f.secondParty}</b></div>
-                        <div><span>Stamp duty</span><b>{inr(duty)}</b></div>
-                        {ESTAMP_FEES.service > 0 && <div><span>Service fee</span><b>{inr(ESTAMP_FEES.service)}</b></div>}
-                        {courier > 0 && <div><span>Courier</span><b>{inr(courier)}</b></div>}
-                        {gst > 0 && <div><span>GST (18% on fees)</span><b>{inr(gst)}</b></div>}
-                        <div className="total"><span>Total payable</span><b>{inr(total)}</b></div>
-                      </div>
-                    </>
-                  )}
+                {step === 3 && (
+                  <>
+                    <h2>Where should we send it?</h2>
+                    <p className="lead">The scan copy goes to your email. Choose courier if you also need the original.</p>
+                    {!isLoggedIn && (
+                      <div className="lds-note">You’ll be asked to log in before paying. Everything you’ve entered is saved.</div>
+                    )}
+                    <div className="lds-f lds-card" role="radiogroup" aria-label="Delivery">
+                      <label>
+                        <input type="radio" name="dl" value="email" checked={f.delivery === 'email'} onChange={set('delivery')} />
+                        <span>Email only<small>Scan copy by email, usually within a few hours on working days.</small></span>
+                      </label>
+                      <label>
+                        <input type="radio" name="dl" value="courier" checked={f.delivery === 'courier'} onChange={set('delivery')} />
+                        <span>Email and courier{ESTAMP_FEES.courier ? ` (+${inr(ESTAMP_FEES.courier)})` : ''}<small>Scan copy by email, original stamp paper delivered to your door.</small></span>
+                      </label>
+                    </div>
+                    {f.delivery === 'courier' && (
+                      <>
+                        <div className="lds-f">
+                          <label htmlFor="ad">Delivery address</label>
+                          <textarea id="ad" className={inCls('address')} value={f.address} onChange={set('address')} maxLength={300} placeholder="House or flat, street, area" autoComplete="street-address" />
+                          <Err k="address" />
+                        </div>
+                        <div className="lds-two">
+                          <div className="lds-f"><label htmlFor="ci">City</label>
+                            <input id="ci" className={inCls('city')} value={f.city} onChange={set('city')} autoComplete="address-level2" /><Err k="city" /></div>
+                          <div className="lds-f"><label htmlFor="pin">PIN code</label>
+                            <input id="pin" className={inCls('pincode')} inputMode="numeric" maxLength={6} value={f.pincode} onChange={set('pincode')} autoComplete="postal-code" /><Err k="pincode" /></div>
+                        </div>
+                      </>
+                    )}
+                    <div className="lds-two">
+                      <div className="lds-f"><label htmlFor="nm">Your name</label>
+                        <input id="nm" className={inCls('name')} value={f.name} onChange={set('name')} autoComplete="name" /><Err k="name" /></div>
+                      <div className="lds-f"><label htmlFor="mb">Mobile</label>
+                        <input id="mb" className={inCls('mobile')} type="tel" value={f.mobile} onChange={set('mobile')} placeholder="98765 43210" autoComplete="tel" /><Err k="mobile" /></div>
+                    </div>
+                    <div className="lds-f"><label htmlFor="em">Email for the scan copy</label>
+                      <input id="em" className={inCls('email')} type="email" value={f.email} onChange={set('email')} autoComplete="email" /><Err k="email" /></div>
+                  </>
+                )}
 
-                  <div className="ess-nav">
-                    {step > 1 && <button type="button" className="ess-btn ess-btn-ghost" onClick={back}>Back</button>}
-                    {step < 3
-                      ? <button type="button" className="ess-btn ess-btn-primary" onClick={next}>Next</button>
-                      : <button type="button" className="ess-btn ess-btn-primary" onClick={pay} disabled={paying} aria-busy={paying}>
-                          {paying ? 'Processing…' : `Proceed to Pay ${inr(total)}`}
-                        </button>}
-                  </div>
-                  {payErr && <div className="ess-msg err" role="alert">{payErr}</div>}
-                </>
-              )}
+                <div className="lds-actions">
+                  {step > 1 && <button type="button" className="lds-btn plain" onClick={() => goTo(step - 1)}>Back</button>}
+                  {step < 3
+                    ? <button type="button" className="lds-btn primary" onClick={next}>Continue</button>
+                    : <button type="button" className="lds-btn primary" onClick={pay} disabled={paying} aria-busy={paying}>
+                        {paying ? 'Opening payment…' : `Pay ${inr(total)}`}
+                      </button>}
+                </div>
+                {payErr && <div className="lds-alert" role="alert">{payErr}</div>}
+              </>
+            )}
+          </section>
+
+          {/* Live certificate + price */}
+          <aside className="lds-aside" aria-label="Your e-Stamp">
+            <StampCertificate stateName={st.name} firstParty={f.firstParty} secondParty={f.secondParty} payer={f.payer}
+              docType={f.docType} purpose={f.purpose} duty={validDuty ? duty : null} />
+            <div className="lds-price">
+              <h3>Price</h3>
+              <dl>
+                <dt>Stamp duty</dt><dd>{validDuty ? inr(duty) : '—'}</dd>
+                {ESTAMP_FEES.service > 0 && <><dt>Service fee</dt><dd>{inr(ESTAMP_FEES.service)}</dd></>}
+                {courier > 0 && <><dt>Courier</dt><dd>{inr(courier)}</dd></>}
+                {gst > 0 && <><dt>GST on fees (18%)</dt><dd>{inr(gst)}</dd></>}
+                <dt className="total">Total</dt><dd className="total">{validDuty ? inr(total) : '—'}</dd>
+              </dl>
+              <p>Stamp duty goes to the government at actual. The final amount is confirmed when you pay.</p>
             </div>
-
-            {/* ── Side panel ── */}
-            <aside className="ess-side">
-              <a className="ess-side-btn orange" href={`https://wa.me/${LD_WA}?text=${encodeURIComponent(`Hi, I need ${st.name} e-Stamp paper urgently.`)}`} target="_blank" rel="noopener noreferrer">
-                Need it urgently? Chat with us on WhatsApp
-              </a>
-              <Link className="ess-side-btn blue" to="/company/contact">Request bulk e-Stamping / API integration</Link>
-              <h4>3 STEPS TO</h4>
-              <h3>Get e-Stamp Paper</h3>
-              <div className="ess-3">
-                <div><span><svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M9 13h6M9 17h6" /></svg></span>Fill the form with all required details</div>
-                <div><span><svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3a4 4 0 0 0 0-8" /></svg></span>Review details &amp; make payment</div>
-                <div><span><svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" /><path d="m22 6-10 7L2 6" /></svg></span>e-Stamp paper emailed / delivered</div>
-              </div>
-              <div className="ess-side-note">
-                <b>Your details are safe.</b> We use them only to issue your e-Stamp. Payments are processed securely by Razorpay.
-              </div>
-            </aside>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Login required ── */}
-      {!isLoggedIn && !done && (
-        <div className="ess-gate" role="dialog" aria-modal="true" aria-labelledby="gate-h">
-          <div className="ess-gate-box">
-            <div className="ess-gate-top">
-              <img src="/launcherdesk-logo-transparent.png" alt="LauncherDesk" />
-              <span className="ess-gate-tag">Login required</span>
+            <div className="lds-help-card">
+              Need it today, or have a question? <a href={`https://wa.me/${LD_WA}?text=${encodeURIComponent(`Hi, I have a question about ${st.name} e-Stamp paper.`)}`} target="_blank" rel="noopener noreferrer">Chat with us on WhatsApp</a>.
             </div>
-            <h2 id="gate-h">Continue to LauncherDesk</h2>
-            <p>Login or create an account to order your {st.name} e-Stamp paper. We’ll bring you right back here.</p>
-            <button type="button" className="ess-btn ess-btn-primary" style={{ marginLeft: 0 }} onClick={() => goLogin('login')}>Login</button>
-            <button type="button" className="ess-btn ess-btn-ghost" onClick={() => goLogin('register')}>Create an account</button>
-            <Link to="/estamp" className="ess-gate-back">← Back to all states</Link>
-          </div>
+          </aside>
         </div>
+      </div>
+
+      {/* Login side panel — only when the customer tries to pay */}
+      {askLogin && !isLoggedIn && (
+        <>
+          <div className="lds-scrim" onClick={() => setAskLogin(false)} aria-hidden="true" />
+          <div className="lds-panel" role="dialog" aria-modal="true" aria-labelledby="lds-login-h">
+            <button type="button" className="close" onClick={() => setAskLogin(false)} aria-label="Close">×</button>
+            <img src="/launcherdesk-logo-transparent.png" alt="LauncherDesk" />
+            <h2 id="lds-login-h">Log in to pay</h2>
+            <p>Your order and invoice are saved to your LauncherDesk account so you can track it. It takes a few seconds.</p>
+            <button type="button" className="lds-btn primary" style={{ marginLeft: 0 }} onClick={() => goLogin('login')} autoFocus>Log in</button>
+            <button type="button" className="lds-btn ghost" onClick={() => goLogin('register')}>Create an account</button>
+            <div className="lds-saved">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+              Your {st.name} e-Stamp details are saved. You’ll come straight back here.
+            </div>
+          </div>
+        </>
       )}
     </>
   )
