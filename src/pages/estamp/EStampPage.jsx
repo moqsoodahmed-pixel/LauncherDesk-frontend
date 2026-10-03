@@ -9,9 +9,9 @@ const CSS = `
 
 /* Hero — navy band, state picker on the left, live certificate on the right */
 .lde-hero { background:radial-gradient(900px 520px at 85% 0%, rgba(43,114,212,.35), transparent 60%), linear-gradient(160deg, var(--navy-3) 0%, var(--navy) 55%, var(--navy-2) 100%);
-  color:#fff; padding:clamp(44px,6vw,84px) 0 clamp(64px,8vw,104px); position:relative; overflow:hidden; }
-.lde-hero::after { content:''; position:absolute; left:-10%; right:-10%; bottom:-1px; height:60px; background:var(--bg, #F8FAFC);
-  clip-path:ellipse(60% 100% at 50% 100%); }
+  color:#fff; padding:clamp(44px,6vw,84px) 0 clamp(64px,8vw,104px); position:relative; z-index:2; }
+.lde-hero::after { content:''; position:absolute; left:0; right:0; bottom:-1px; height:60px; background:var(--bg, #F8FAFC);
+  clip-path:ellipse(75% 100% at 50% 100%); pointer-events:none; }
 .lde-hero-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(32px,5vw,64px); align-items:center; position:relative; z-index:1; }
 .lde-hero h1 { font-size:clamp(32px,4.1vw,52px); line-height:1.05; letter-spacing:-.035em; font-weight:800; margin:0 0 18px; max-width:18ch; color:#fff; text-wrap:balance; }
 .lde-hero-lead { font-size:clamp(16px,1.6vw,18.5px); line-height:1.65; color:#C9D7EE; margin:0 0 30px; max-width:46ch; }
@@ -28,8 +28,11 @@ const CSS = `
   font-size:16px; font-family:inherit; cursor:pointer; white-space:nowrap; }
 .lde-pick button.go:hover { background:var(--blue-dark); }
 .lde-pick button.go:focus-visible, .lde-opt:focus-visible { outline:3px solid var(--brand-200); outline-offset:2px; }
-.lde-opts { position:absolute; left:0; right:0; top:calc(100% + 10px); background:#fff; border-radius:14px; padding:6px; z-index:5;
-  box-shadow:0 24px 50px -10px rgba(11,31,72,.35); max-height:300px; overflow:auto; list-style:none; margin:0; }
+.lde-opts { position:absolute; left:-8px; right:-8px; top:calc(100% + 14px); background:#fff; border-radius:14px; padding:6px; z-index:50;
+  box-shadow:0 24px 60px -12px rgba(11,31,72,.45), 0 0 0 1px rgba(15,28,46,.06); max-height:min(320px, 60vh); overflow-y:auto;
+  overscroll-behavior:contain; scrollbar-width:thin; list-style:none; margin:0; }
+.lde-pick { z-index:3; }
+.lde-opts-count { padding:8px 12px 6px; font-size:12.5px; font-weight:600; color:var(--text-3); }
 .lde-opt { display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%; text-align:left; border:0; background:none;
   padding:11px 12px; border-radius:9px; font-family:inherit; font-size:15px; font-weight:600; line-height:1.3; color:var(--navy); cursor:pointer; }
 .lde-opt[aria-selected="true"], .lde-opt:hover { background:var(--brand-50); }
@@ -172,9 +175,11 @@ export default function EStampPage() {
                 />
                 {open && (
                   <ul className="lde-opts" id="lde-state-list" role="listbox" aria-label="States">
+                    {matches.length > 0 && <li className="lde-opts-count" role="presentation">{q.trim() ? `${matches.length} matching` : `All ${matches.length} states and UTs`}</li>}
                     {matches.length ? matches.map((s, i) => (
                       <li key={s.slug}>
                         <button type="button" id={`lde-opt-${s.slug}`} role="option" aria-selected={i === active} className="lde-opt"
+                          ref={el => { if (el && i === active && open) el.scrollIntoView({ block: 'nearest' }) }}
                           onMouseDown={e => e.preventDefault()} onMouseEnter={() => setActive(i)} onClick={() => choose(s)}>
                           {s.name}{s.script && <small lang="und">{s.script.split(' ').slice(-2).join(' ')}</small>}
                         </button>
@@ -199,7 +204,7 @@ export default function EStampPage() {
           </div>
 
           <div className="lde-cert">
-            <StampCertificate stateName={previewState?.name} docType="Rent / Lease Agreement" purpose="Rent agreement" duty={100} compact />
+            <StampCertificate stateName={previewState?.name} docType="Rent / Lease Agreement" purpose="Rent agreement" duty={500} compact />
           </div>
         </div>
       </section>

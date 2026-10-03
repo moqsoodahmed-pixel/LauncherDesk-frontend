@@ -12,7 +12,7 @@ export const ESTAMP_FEES = {
 }
 
 /** Stamp duty values the customer can pick (₹). They can also type a custom value. */
-export const DENOMINATIONS = [10, 20, 50, 100, 200, 500, 1000]
+export const DENOMINATIONS = [500, 1000]
 export const MAX_DUTY = 100000
 export const GST_RATE = 0.18
 

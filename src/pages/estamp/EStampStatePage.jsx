@@ -63,7 +63,7 @@ textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertic
 .lds-seg input, .lds-card input { margin-top:3px; accent-color:var(--blue); }
 .lds-card { display:grid; gap:10px; }
 .lds-card small { display:block; font-weight:500; color:var(--text-3); margin-top:3px; line-height:1.45; }
-.lds-duty { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.lds-duty { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; max-width:420px; }
 .lds-duty button { height:46px; border-radius:10px; border:1.5px solid var(--line-strong); background:#fff; font-family:inherit; font-weight:800;
   font-size:15px; color:var(--navy); cursor:pointer; }
 .lds-duty button[aria-pressed="true"] { border-color:var(--blue); background:var(--blue); color:#fff; }
@@ -150,7 +150,7 @@ textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertic
 
 @media (max-width:1100px) { .lds-grid { grid-template-columns:minmax(0,1fr) 340px; } .lds-rail { display:none; } }
 @media (max-width:860px) { .lds-grid { grid-template-columns:1fr; } .lds-aside { position:static; } }
-@media (max-width:520px) { .lds-two, .lds-seg { grid-template-columns:1fr; } .lds-duty { grid-template-columns:repeat(3,1fr); }
+@media (max-width:520px) { .lds-two, .lds-seg { grid-template-columns:1fr; } 
   .lds-actions { flex-direction:column-reverse; } .lds-btn.primary { width:100%; } }
 `
 
@@ -168,7 +168,13 @@ const STEPS = [
 ]
 
 function loadDraft(slug) {
-  try { const d = JSON.parse(localStorage.getItem(DRAFT_KEY(slug)) || 'null'); return d && typeof d === 'object' ? { ...EMPTY, ...d } : null } catch { return null }
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT_KEY(slug)) || 'null')
+    if (!d || typeof d !== 'object') return null
+    // a value saved earlier that is no longer offered (e.g. ₹100) is cleared
+    if (d.duty && d.duty !== 'custom' && !DENOMINATIONS.includes(Number(d.duty))) d.duty = ''
+    return { ...EMPTY, ...d }
+  } catch { return null }
 }
 
 function ArticlePicker({ items, value, onChange, invalid, verified, stateName }) {
