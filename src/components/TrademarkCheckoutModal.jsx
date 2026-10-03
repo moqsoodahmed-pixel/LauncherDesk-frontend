@@ -14,6 +14,8 @@ const PROFESSIONAL_FEE_PER_CLASS = false
 // Must match the server (backend: src/config/planPrices.js → TRADEMARK.collectGovtFeeOnline).
 // true = the government fee is part of the Razorpay amount; false = fee + GST only.
 const COLLECT_GOVT_FEE_ONLINE = true
+// Brand logo upload: PDF only. Must match the server (backend: src/middleware/trademarkLogo.js → MAX_MB).
+const LOGO_MAX_MB = 5
 
 const CITIES = [
   'Bengaluru', 'Mumbai', 'Delhi', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Surat',
@@ -99,6 +101,19 @@ const CSS = `
 .tmk-chip { display:inline-flex; align-items:center; gap:4px; background:#EEF4FF; color:var(--navy); border-radius:999px; padding:3px 4px 3px 10px; font-size:12px; font-weight:700; }
 .tmk-chip button { border:0; background:transparent; color:var(--navy); font-size:15px; line-height:1; padding:0 5px; cursor:pointer; }
 .tmk-chosen .tmk-check { margin:8px 0 0; font-size:12.5px; }
+.tmk-drop { display:flex; align-items:center; gap:12px; padding:14px; border:1.5px dashed #B9C8E6; border-radius:10px; background:#FAFCFF; cursor:pointer; transition:border-color .15s, background .15s; }
+.tmk-drop:hover, .tmk-drop.tmk-over { border-color:var(--blue); background:#F2F7FF; }
+.tmk-drop.tmk-bad { border-color:#DC2626; }
+.tmk-drop input { position:absolute; width:1px; height:1px; opacity:0; }
+.tmk-drop:focus-within { outline:2px solid var(--blue); outline-offset:2px; }
+.tmk-drop-ic { flex:none; width:40px; height:40px; border-radius:10px; background:#EEF4FF; color:var(--blue); display:flex; align-items:center; justify-content:center; }
+.tmk-drop-t { font-size:13.5px; font-weight:700; color:var(--navy); }
+.tmk-drop-s { font-size:12px; color:var(--text-3); margin-top:2px; }
+.tmk-file { display:flex; align-items:center; gap:10px; padding:11px 12px; border:1.5px solid var(--blue); border-radius:10px; background:#F2F7FF; }
+.tmk-file-ic { flex:none; width:34px; height:40px; border-radius:6px; background:#DC2626; color:#fff; font-size:10px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+.tmk-file-n { flex:1; min-width:0; font-size:13px; font-weight:700; color:var(--navy); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.tmk-file-n small { display:block; font-weight:500; color:var(--text-3); }
+.tmk-file button { flex:none; border:0; background:transparent; color:#B91C1C; font:inherit; font-size:12.5px; font-weight:700; cursor:pointer; padding:6px; }
 .tmk-gst-row { background:#FFF7E6; margin:0 -8px; padding:9px 8px; border-radius:8px; border-bottom-color:transparent; }
 .tmk-incl { margin:4px 0 0; font-size:12.5px; font-weight:700; color:#15803D; }
 .tmk-pay small { display:block; font-size:12px; font-weight:600; opacity:.9; margin-top:2px; }
@@ -147,6 +162,8 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
   const [unsure, setUnsure] = useState(false)       // "let the expert choose" = billed as 1 class
   const [clsFilter, setClsFilter] = useState('all') // all | goods | services | selected
   const [clsQuery, setClsQuery] = useState('')
+  const [logo, setLogo] = useState(null)            // optional brand logo (PDF File)
+  const [dragOver, setDragOver] = useState(false)
   const classes = picked.length || (unsure ? 1 : 0)
   const [errs, setErrs] = useState({})
   const [busy, setBusy] = useState(false)
@@ -164,6 +181,17 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
       return String(c.n) === q || `${c.t} ${c.k}`.toLowerCase().includes(q)
     })
   }, [clsQuery, clsFilter, picked])
+
+  function pickLogo(file) {
+    if (!file) return
+    const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name)
+    let err
+    if (!isPdf) err = 'Please upload your logo as a PDF file'
+    else if (file.size > LOGO_MAX_MB * 1024 * 1024) err = `Logo PDF must be under ${LOGO_MAX_MB} MB`
+    if (err) { setLogo(null); setErrs(p => ({ ...p, logo: err })); return }
+    setLogo(file)
+    setErrs(p => ({ ...p, logo: undefined }))
+  }
 
   function toggleClass(n) {
     setPicked(p => {
@@ -204,20 +232,28 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
     e.preventDefault()
     const v = validate(f)
     if (classes < 1) v.classes = 'Choose at least one class, or tick "Not sure" below the list'
+    if (errs.logo) v.logo = errs.logo
     setErrs(v); setAlert('')
     if (Object.keys(v).length) return
     setBusy(true)
     const mobile = '+91' + cleanPhone(f.mobile)
     try {
-      const res = await fetch(`${API_BASE}/payments/checkout/trademark/create-order`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: f.name.trim(), email: f.email.trim(), mobile, city: f.city.trim(),
-          applicantType: applicant, classes, classNumbers: picked, expertToChoose: unsure && !picked.length,
-          brandName: f.brand.trim(), whatsappOptIn: f.whatsapp,
-        }),
-      })
+      const fields = {
+        name: f.name.trim(), email: f.email.trim(), mobile, city: f.city.trim(),
+        applicantType: applicant, classes, classNumbers: picked, expertToChoose: unsure && !picked.length,
+        brandName: f.brand.trim(), whatsappOptIn: f.whatsapp,
+      }
+      let request
+      if (logo) {
+        // With a logo the details go as a form upload (the browser sets the content type).
+        const fd = new FormData()
+        Object.entries(fields).forEach(([k, v]) => fd.append(k, k === 'classNumbers' ? JSON.stringify(v) : String(v)))
+        fd.append('logo', logo, logo.name)
+        request = { method: 'POST', body: fd }
+      } else {
+        request = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fields) }
+      }
+      const res = await fetch(`${API_BASE}/payments/checkout/trademark/create-order`, request)
       const data = await res.json()
       if (!res.ok) {
         if (data.fields) setErrs(p => ({ ...p, ...data.fields }))
@@ -370,7 +406,7 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
                 {errs.classes && <div className="tmk-err">{errs.classes}</div>}
               </div>
 
-              {input('name', 'Full name', { ref: firstRef, type: 'text', autoComplete: 'name', placeholder: 'As on your PAN / ID' })}
+              {input('name', 'Full name', { ref: firstRef, type: 'text', autoComplete: 'name', placeholder: 'Enter your full name' })}
               {input('email', 'Email address', { type: 'email', autoComplete: 'email', inputMode: 'email', placeholder: 'you@gmail.com' })}
               <div className="tmk-row2">
                 <div className="tmk-field">
@@ -393,6 +429,36 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
                 </div>
               </div>
               {input('brand', 'Brand name to register', { type: 'text', maxLength: 120, placeholder: 'e.g. Acme Foods' }, true)}
+
+              <div className="tmk-field">
+                <span className="tmk-label" id="tmk-logo-l">Upload logo <span className="tmk-opt">(optional, PDF only)</span></span>
+                {logo ? (
+                  <div className="tmk-file">
+                    <span className="tmk-file-ic" aria-hidden="true">PDF</span>
+                    <span className="tmk-file-n">{logo.name}<small>{logo.size < 1024 * 1024 ? `${Math.max(1, Math.round(logo.size / 1024))} KB` : `${(logo.size / 1024 / 1024).toFixed(1)} MB`} · ready to upload</small></span>
+                    <button type="button" onClick={() => setLogo(null)} aria-label={`Remove ${logo.name}`}>Remove</button>
+                  </div>
+                ) : (
+                  <label
+                    className={`tmk-drop${dragOver ? ' tmk-over' : ''}${errs.logo ? ' tmk-bad' : ''}`}
+                    onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+                    onDragLeave={() => setDragOver(false)}
+                    onDrop={e => { e.preventDefault(); setDragOver(false); pickLogo(e.dataTransfer.files?.[0]) }}
+                  >
+                    <input type="file" accept="application/pdf,.pdf" aria-labelledby="tmk-logo-l"
+                      aria-describedby={errs.logo ? 'tmk-logo-e' : undefined}
+                      onChange={e => { pickLogo(e.target.files?.[0]); e.target.value = '' }} />
+                    <span className="tmk-drop-ic" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width={20} height={20} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M12 16V4M7 9l5-5 5 5" /><path d="M20 16v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3" /></svg>
+                    </span>
+                    <span>
+                      <span className="tmk-drop-t">Click to upload or drag your logo here</span>
+                      <span className="tmk-drop-s" style={{ display: 'block' }}>PDF only, up to {LOGO_MAX_MB} MB. Skip this if you are registering only the brand name.</span>
+                    </span>
+                  </label>
+                )}
+                {errs.logo && <div className="tmk-err" id="tmk-logo-e">{errs.logo}</div>}
+              </div>
 
               <label className="tmk-check">
                 <input type="checkbox" checked={f.whatsapp} onChange={set('whatsapp')} />
