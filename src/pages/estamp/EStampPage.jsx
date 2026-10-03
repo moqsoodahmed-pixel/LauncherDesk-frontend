@@ -1,480 +1,229 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
+import SEO from '../../components/SEO'
 import estampSample from '../../assets/e-stamp-sample.jpeg'
+import { ESTAMP_STATES, LD_WA } from '../../data/estamp'
 
-const API = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-production.up.railway.app/api'
+export const ES_CSS = `
+.esx-hero { position:relative; overflow:hidden; border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#FBFDFF 0%,#F2F8FF 55%,#EAF3FF 100%); padding:clamp(48px,7vw,92px) 0 clamp(48px,6vw,80px); }
+.esx-hero::before { content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(760px 520px at 18% -10%,rgba(29,93,184,.10),transparent 62%),radial-gradient(420px 380px at 95% 100%,rgba(29,93,184,.08),transparent 60%); }
+.esx-wrap { max-width:1180px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+.esx-hero-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center; }
+.esx-pill { display:inline-flex; align-items:center; gap:8px; background:var(--brand-50); border:1px solid var(--brand-100);
+  border-radius:99px; padding:7px 16px; font-size:13px; font-weight:600; color:var(--blue-dark); margin-bottom:22px; }
+.esx-pill i { width:8px; height:8px; border-radius:50%; background:#16A34A; box-shadow:0 0 0 4px rgba(22,163,74,.15); }
+.esx-hero h1 { font-size:clamp(34px,5vw,60px); font-weight:900; color:var(--navy); letter-spacing:-.035em; line-height:1.06; margin:0 0 20px; }
+.esx-hero h1 span { background:linear-gradient(118deg,var(--blue-dark),var(--blue-bright)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.esx-lead { font-size:clamp(15.5px,1.7vw,18px); color:var(--text-2); line-height:1.7; margin:0 0 22px; max-width:560px; }
+.esx-lead b { color:var(--blue-dark); font-weight:700; }
+.esx-lead em { font-style:normal; color:#EA580C; font-weight:700; }
+.esx-checks { display:flex; flex-wrap:wrap; gap:10px 22px; margin:0 0 28px; padding:0; list-style:none; }
+.esx-checks li { display:flex; align-items:center; gap:8px; font-size:15px; font-weight:600; color:var(--navy); }
+.esx-checks li svg { width:18px; height:18px; flex:none; stroke:var(--blue); background:var(--brand-50); border-radius:50%; padding:3px; }
+.esx-cta { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px; }
+.esx-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; height:54px; padding:0 26px; border-radius:12px;
+  font-size:16px; font-weight:700; text-decoration:none; font-family:inherit; cursor:pointer; transition:transform .15s, box-shadow .15s; border:0; }
+.esx-btn:hover { transform:translateY(-1px); }
+.esx-btn-primary { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); color:#fff; box-shadow:0 10px 26px rgba(29,93,184,.28); }
+.esx-btn-ghost { background:#fff; color:var(--navy); border:1.5px solid var(--line-strong, #CBD5E1); }
+.esx-trust { display:flex; flex-wrap:wrap; gap:8px 18px; font-size:13.5px; color:var(--text-3); }
+.esx-trust span { display:inline-flex; align-items:center; gap:6px; }
+.esx-trust svg { width:15px; height:15px; stroke:var(--blue); }
 
-const S = `
-.es-hero {
-  background: linear-gradient(180deg, #FBFDFF 0%, #F2F8FF 55%, #EAF3FF 100%);
-  padding: clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);
-  position: relative; overflow: hidden;
-  border-bottom: 1px solid var(--line);
-}
-.es-hero::before {
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background: radial-gradient(760px 520px at 22% -12%,rgba(29,93,184,.10),transparent 62%),
-              radial-gradient(360px 360px at 92% 100%,rgba(29,93,184,.07),transparent 60%);
-  animation: esHeroGlow 22s ease-in-out infinite alternate;
-}
-@keyframes esHeroGlow {
-  from { transform: translate3d(0,0,0) scale(1); }
-  to   { transform: translate3d(1.5%, 1.2%, 0) scale(1.03); }
-}
-.es-hero::after {
-  content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;
-  background-image:
-    linear-gradient(rgba(29,93,184,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(29,93,184,.035) 1px, transparent 1px);
-  background-size:44px 44px;
-  -webkit-mask-image: radial-gradient(700px 460px at 20% 0%, #000, transparent 72%);
-  mask-image: radial-gradient(700px 460px at 20% 0%, #000, transparent 72%);
-}
-@media (prefers-reduced-motion: reduce) {
-  .es-hero::before { animation: none; }
-}
-.es-hero-inner {
-  max-width:1180px;margin:0 auto;padding:0 28px;position:relative;z-index:1;
-  display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:start;text-align:left;
-}
-.es-hero-text { max-width:560px;padding-top:6px; }
-.es-badge {
-  display:inline-flex;align-items:center;gap:8px;background:var(--brand-50);
-  border:1px solid var(--brand-100);border-radius:99px;padding:6px 16px;
-  font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:22px;
-}
-.es-hero h1 { font-size:clamp(34px,5vw,62px);font-weight:900;color:var(--navy);letter-spacing:-.04em;line-height:1.04;margin-bottom:18px; }
-.es-hero h1 span { background:linear-gradient(118deg,var(--blue-dark),var(--blue-bright));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent; }
-.es-hero p { font-size:clamp(15px,1.8vw,18px);color:var(--text-2);margin:0 0 32px;line-height:1.7; }
-.es-hero-cta { display:flex;gap:14px;justify-content:flex-start;flex-wrap:wrap; }
-.es-hero-features { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px;max-width:480px; }
-.es-hero-feature {
-  display:flex;align-items:center;gap:10px;padding:12px 14px;
-  background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);border:1px solid rgba(255,255,255,.14);border-radius:12px;
-  font-size:13.5px;font-weight:700;color:#fff;line-height:1.3;box-shadow:0 6px 16px rgba(29,93,184,.22);
-}
-.es-hero-feature svg { flex:none;stroke:#fff; }
-.es-btn-secondary {
-  display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;
-  background:#25D366;color:#fff;font-weight:700;font-size:15px;border-radius:10px;
-  border:1.5px solid #25D366;text-decoration:none;transition:all .15s;cursor:pointer;font-family:inherit;
-  box-shadow:0 6px 16px rgba(37,211,102,.28);
-}
-.es-btn-secondary:hover { background:#1EBE5A;border-color:#1EBE5A;transform:translateY(-1px); }
+.esx-visual { position:relative; max-width:500px; justify-self:end; width:100%; }
+.esx-paper { background:#fff; border-radius:14px; padding:14px; transform:rotate(1.6deg);
+  box-shadow:0 30px 60px -18px rgba(15,28,46,.30), 0 0 0 1px rgba(15,28,46,.06); }
+.esx-paper img { width:100%; height:300px; object-fit:cover; object-position:top; border-radius:8px; display:block; }
+.esx-duty { position:absolute; top:-18px; left:-18px; background:#fff; border-radius:12px; padding:10px 16px; transform:rotate(-3deg);
+  box-shadow:0 12px 28px rgba(15,28,46,.16); }
+.esx-duty small { display:block; font-size:10.5px; letter-spacing:.14em; font-weight:700; color:var(--text-3); }
+.esx-duty b { font-size:24px; color:var(--blue-dark); font-weight:900; }
+.esx-fast { position:absolute; top:-14px; right:-10px; display:flex; align-items:center; gap:8px; background:#fff; border-radius:99px;
+  padding:8px 14px; font-size:13px; font-weight:700; color:var(--navy); box-shadow:0 12px 28px rgba(15,28,46,.16); }
+.esx-fast svg { width:16px; height:16px; stroke:#F59E0B; }
+.esx-biz { display:flex; align-items:center; gap:16px; margin-top:26px; background:linear-gradient(135deg,#0F1C2E,#1E2A4A); color:#fff;
+  border-radius:16px; padding:18px 20px; text-decoration:none; transition:transform .15s; }
+.esx-biz:hover { transform:translateY(-2px); }
+.esx-biz-ico { width:46px; height:46px; border-radius:12px; flex:none; display:grid; place-items:center; background:linear-gradient(135deg,var(--blue),var(--blue-bright)); }
+.esx-biz-ico svg { width:22px; height:22px; stroke:#fff; }
+.esx-biz b { display:block; font-size:16px; margin-bottom:3px; }
+.esx-biz span { font-size:13.5px; color:#B8C7DD; line-height:1.5; }
+.esx-biz span em { font-style:normal; color:#FDBA74; font-weight:700; }
+.esx-biz > svg { width:20px; height:20px; stroke:#fff; flex:none; margin-left:auto; }
 
-/* Hero visual — sample certificate card (styled like a "document preview" card:
-   full-width header strip, watermarked certificate image, full-width CTA,
-   full-width trust strip) */
-.es-hero-visual {
-  position:relative;max-width:360px;margin-left:auto;width:100%;
-  animation:esFloat 5s ease-in-out infinite;
-}
-.es-hero-visual::before {
-  content:'';position:absolute;inset:-36px -28px;z-index:0;
-  background:radial-gradient(circle,rgba(29,111,224,.24),rgba(29,111,224,0) 70%);
-  filter:blur(6px);pointer-events:none;
-  animation:esGlowPulse 6s ease-in-out infinite;
-}
-@keyframes esFloat { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-9px) } }
-@keyframes esGlowPulse { 0%,100%{ opacity:.55;transform:scale(1) } 50%{ opacity:1;transform:scale(1.05) } }
-@media (prefers-reduced-motion: reduce) {
-  .es-hero-visual, .es-hero-visual::before { animation:none !important; }
-}
-.es-doc-card {
-  position:relative;z-index:1;
-  background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;
-  box-shadow:0 30px 70px -20px rgba(13,43,92,.30),0 8px 24px rgba(13,43,92,.08);
-}
-.es-doc-card-head {
-  background:var(--brand-50);border-bottom:1px solid var(--brand-100);
-  padding:13px 16px;text-align:center;
-  font-size:13.5px;font-weight:800;color:var(--blue-dark);letter-spacing:.01em;
-}
-.es-doc-card-body { padding:18px 18px 0; }
-.es-doc-img-wrap {
-  position:relative;border-radius:12px;overflow-y:auto;overflow-x:hidden;
-  border:1px solid var(--line);background:var(--sec-b);max-height:390px;
-}
-.es-doc-img-wrap img { display:block;width:100%;height:auto; }
-.es-doc-img-wrap::-webkit-scrollbar { width:6px; }
-.es-doc-img-wrap::-webkit-scrollbar-track { background:transparent; }
-.es-doc-img-wrap::-webkit-scrollbar-thumb { background:rgba(29,111,224,.35);border-radius:99px; }
-.es-doc-scroll-hint { display:flex;align-items:center;justify-content:center;gap:5px;font-size:11.5px;color:var(--text-2);margin-top:8px; }
-.es-doc-watermark {
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-30deg);
-  font-size:16px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
-  color:rgba(29,111,224,.4);white-space:nowrap;pointer-events:none;user-select:none;
-  text-shadow:0 1px 0 rgba(255,255,255,.6);
-}
-.es-doc-cta {
-  display:flex;align-items:center;justify-content:center;gap:8px;height:50px;width:100%;
-  background:#1D6FE0;color:#fff;font-weight:700;font-size:14.5px;border-radius:10px;
-  text-decoration:none;transition:all .15s;box-shadow:0 8px 20px rgba(29,111,224,.3);
-  border:0;cursor:pointer;font-family:inherit;margin:16px 0 18px;
-}
-.es-doc-cta:hover { background:#0F52C0;transform:translateY(-1px); }
-.es-doc-card-note {
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  background:#FEFCE8;border-top:1px solid #FDE68A;padding:11px 16px;
-  font-size:12.5px;font-weight:600;color:#92660A;
-}
-.es-doc-card-note svg { flex:none;stroke:#B45309; }
+.esx-states { background:#FBF9F4; padding:clamp(48px,6vw,80px) 0; border-bottom:1px solid var(--line); position:relative; }
+.esx-states::before { content:''; position:absolute; inset:14px; border:1px solid rgba(29,93,184,.10); border-radius:18px; pointer-events:none; }
+.esx-scripts { text-align:center; font-size:13.5px; color:var(--text-3); letter-spacing:.04em; margin-bottom:14px; }
+.esx-h2 { text-align:center; font-size:clamp(28px,3.6vw,44px); font-weight:900; color:var(--navy); letter-spacing:-.03em; line-height:1.15; margin:0 0 26px; }
+.esx-h2 span { color:var(--blue); }
+.esx-search { position:relative; max-width:560px; margin:0 auto 30px; }
+.esx-search svg { position:absolute; left:16px; top:50%; transform:translateY(-50%); width:18px; height:18px; stroke:var(--text-3); }
+.esx-search input { width:100%; height:54px; border:1.5px solid var(--line-strong, #CBD5E1); border-radius:12px; padding:0 18px 0 46px;
+  font-size:16px; font-family:inherit; background:#fff; outline:none; box-sizing:border-box; }
+.esx-search input:focus { border-color:var(--blue); box-shadow:0 0 0 4px rgba(29,111,224,.12); }
+.esx-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
+.esx-state { display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px 14px;
+  text-decoration:none; color:var(--navy); font-weight:700; font-size:15px; transition:all .18s; min-height:72px; box-sizing:border-box; }
+.esx-state:hover { border-color:rgba(29,93,184,.35); box-shadow:0 10px 24px rgba(29,93,184,.12); transform:translateY(-2px); }
+.esx-state-ab { width:38px; height:38px; flex:none; border-radius:10px; display:grid; place-items:center; font-size:12.5px; font-weight:800;
+  color:var(--blue-dark); background:var(--brand-50); border:1px solid var(--brand-100); }
+.esx-state:hover .esx-state-ab { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); color:#fff; border-color:transparent; }
+.esx-state-name { flex:1; line-height:1.3; }
+.esx-state > svg { width:16px; height:16px; stroke:var(--text-3); flex:none; }
+.esx-none { text-align:center; color:var(--text-3); padding:24px 0; }
+.esx-note { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:26px; font-size:14.5px; color:var(--text-2); text-align:center; }
+.esx-note svg { width:18px; height:18px; stroke:#EA580C; flex:none; }
+.esx-note a { color:var(--blue); font-weight:700; }
 
-/* What is E-Stamp */
-.es-what { padding:80px 0;background:var(--sec-b); }
-.es-inner { max-width:1100px;margin:0 auto;padding:0 28px; }
-.es-section-label { font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block; }
-.es-what h2 { font-size:clamp(28px,3.6vw,44px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:16px; }
-.es-what-grid { display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:48px; }
-.es-what-desc { font-size:16px;color:var(--text-2);line-height:1.75; }
-.es-what-points { display:flex;flex-direction:column;gap:18px; }
-.es-point {
-  display:flex;gap:16px;align-items:flex-start;padding:18px 20px;
-  border-radius:14px;border:1.5px solid var(--line);background:var(--bg);
-}
-.es-point-icon { width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#EEF2FF,#DBEAFE);display:grid;place-items:center;flex:none; }
-.es-point-icon svg { width:20px;height:20px;stroke:#1D6FE0;fill:none;stroke-width:2; }
-.es-point h4 { font-size:14.5px;font-weight:700;color:var(--navy);margin-bottom:3px; }
-.es-point p  { font-size:13px;color:var(--text-2);line-height:1.5; }
+.esx-steps { padding:clamp(48px,6vw,84px) 0; }
+.esx-steps-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:8px; }
+.esx-step { background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px 20px; position:relative; }
+.esx-step-n { width:42px; height:42px; border-radius:50%; display:grid; place-items:center; font-weight:900; color:#fff; margin-bottom:14px;
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue)); box-shadow:0 6px 16px rgba(29,93,184,.28); }
+.esx-step b { display:block; font-size:16.5px; color:var(--navy); margin-bottom:6px; }
+.esx-step p { margin:0; font-size:14px; color:var(--text-2); line-height:1.6; }
+.esx-sub { text-align:center; color:var(--text-2); font-size:16px; margin:-14px 0 30px; }
 
-/* How it works */
-.es-how { padding:80px 0;background:var(--sec-b); }
-.es-how .es-section-label { text-align:center; }
-.es-how h2 { font-size:clamp(26px,3.4vw,42px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:8px;text-align:center; }
+.esx-what { padding:0 0 clamp(48px,6vw,84px); }
+.esx-what-card { background:linear-gradient(180deg,#F5F9FF,#fff); border:1px solid var(--line); border-radius:20px; padding:clamp(24px,4vw,40px);
+  display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; }
+.esx-what-card h3 { font-size:clamp(22px,2.6vw,30px); color:var(--navy); margin:0 0 12px; letter-spacing:-.02em; }
+.esx-what-card p { color:var(--text-2); line-height:1.75; margin:0; font-size:15px; }
+.esx-what-list { display:grid; gap:12px; }
+.esx-what-list div { display:flex; gap:12px; background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px; font-size:14.5px; color:var(--text-2); line-height:1.5; }
+.esx-what-list strong { color:var(--navy); display:block; }
 
-/* Vertical timeline — icon node + speech-bubble card, per-step */
-.es-steps-v { position:relative;margin:44px auto 0;display:flex;flex-direction:column;gap:30px;max-width:640px; }
-.es-step-v { display:flex;align-items:flex-start;gap:22px;position:relative;z-index:1; }
-.es-step-v:not(:last-child)::after {
-  content:'';position:absolute;top:64px;left:31px;width:2px;
-  height:calc(100% - 64px + 30px);
-  background:linear-gradient(180deg,var(--blue-dark),var(--blue));z-index:0;
-}
-.es-step-v-node {
-  flex:none;width:64px;height:64px;border-radius:50%;
-  background:linear-gradient(135deg,#0F52C0,#1D6FE0);
-  display:grid;place-items:center;box-shadow:0 8px 24px rgba(29,111,224,.35);
-}
-.es-step-v-node svg { width:26px;height:26px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round; }
-.es-step-v-card {
-  position:relative;flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;
-  padding:16px 20px;margin-top:6px;box-shadow:0 4px 18px rgba(13,43,92,.06);
-  transition:transform .2s,box-shadow .2s;
-}
-.es-step-v-card:hover { transform:translateY(-2px);box-shadow:0 14px 30px rgba(13,43,92,.10); }
-.es-step-v-card::before {
-  content:'';position:absolute;left:-8px;top:20px;width:15px;height:15px;background:#fff;
-  border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg);
-}
-.es-step-v-tag { display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:4px; }
-.es-step-v-card h4 { font-size:16px;font-weight:800;color:var(--navy);margin-bottom:5px; }
-.es-step-v-card p  { font-size:13.5px;color:var(--text-2);line-height:1.6; }
-
-/* Form / CTA */
-.es-form-section { padding:80px 0;background:var(--sec-b); }
-.es-form-card {
-  background:linear-gradient(160deg,#FBFDFF,#F3F8FF 70%,#EAF3FF);
-  border:1px solid var(--line);
-  border-radius:24px;padding:clamp(40px,5vw,64px);position:relative;overflow:hidden;
-  box-shadow:0 24px 64px rgba(15,28,46,.07);
-}
-.es-form-card::before { content:'';position:absolute;inset:0;background:radial-gradient(600px 400px at 80% -20%,rgba(29,93,184,.09),transparent 60%);pointer-events:none; }
-.es-form-grid { display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative; }
-.es-form-left h2 { font-size:clamp(26px,3.4vw,42px);font-weight:900;color:var(--navy);letter-spacing:-.04em;margin-bottom:12px; }
-.es-form-left p  { font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:24px; }
-.es-contact-rows { display:flex;flex-direction:column;gap:12px; }
-.es-contact-row  { display:flex;align-items:center;gap:12px;color:var(--text-2);font-size:14px; }
-.es-contact-row svg { width:18px;height:18px;stroke:var(--blue);fill:none;stroke-width:2;flex:none; }
-.es-form { display:flex;flex-direction:column;gap:14px; }
-.es-form-field { display:flex;flex-direction:column;gap:6px; }
-.es-form-label { font-size:12.5px;font-weight:600;color:var(--text-2); }
-.es-form-input {
-  height:46px;border-radius:10px;
-  background:#fff;color:var(--navy);padding:0 16px;font-size:14px;border:1.5px solid var(--line);
-  outline:none;font-family:inherit;transition:border-color .15s;
-}
-.es-form-input::placeholder { color:var(--text-4); }
-.es-form-input:focus { border-color:var(--blue); }
-.es-form-select {
-  height:46px;border-radius:10px;
-  background:#fff;color:var(--navy);padding:0 16px;font-size:14px;border:1.5px solid var(--line);
-  outline:none;font-family:inherit;cursor:pointer;
-}
-.es-form-select option { background:#fff;color:var(--navy); }
-.es-form-row { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
-.es-submit-btn {
-  height:50px;border-radius:10px;background:#1D6FE0;color:#fff;
-  font-weight:800;font-size:15px;border:0;cursor:pointer;font-family:inherit;
-  transition:all .15s;margin-top:4px;box-shadow:0 8px 24px rgba(29,111,224,.3);
-}
-.es-submit-btn:hover { background:#0F52C0;transform:translateY(-1px); }
-.es-success { background:var(--success-bg);border:1px solid rgba(5,150,105,.25);border-radius:12px;padding:20px;text-align:center;color:var(--success);font-weight:600; }
-
-/* Responsive */
-@media(max-width:900px){
-  .es-hero-inner{ grid-template-columns:1fr;text-align:center;gap:40px }
-  .es-hero-text{ max-width:640px;margin:0 auto }
-  .es-hero p{ max-width:580px;margin:0 auto 32px }
-  .es-hero-cta{ justify-content:center }
-  .es-hero-visual{ max-width:380px;margin:0 auto;width:100% }
-  .es-what-grid,.es-form-grid{ grid-template-columns:1fr }
-}
-@media(max-width:640px){
-  .es-form-row{ grid-template-columns:1fr }
-  .es-hero-cta{ flex-direction:column;align-items:center }
-  .es-hero-features{ grid-template-columns:1fr;max-width:340px;margin:24px auto 0 }
-  .es-steps-v{ gap:22px }
-  .es-step-v:not(:last-child)::after{ left:25px;height:calc(100% - 52px + 22px) }
-  .es-step-v{ gap:16px }
-  .es-step-v-node{ width:52px;height:52px }
-  .es-step-v-node svg{ width:22px;height:22px }
-  .es-step-v-card{ padding:14px 16px }
-}
+@media (max-width:1024px) { .esx-grid { grid-template-columns:repeat(3,1fr); } .esx-steps-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:860px) { .esx-hero-grid, .esx-what-card { grid-template-columns:1fr; } .esx-visual { justify-self:center; margin-top:18px; } }
+@media (max-width:560px) { .esx-grid { grid-template-columns:repeat(2,1fr); gap:10px; } .esx-state { padding:12px 10px; font-size:14px; }
+  .esx-state-ab { width:32px; height:32px; font-size:11px; } .esx-steps-grid { grid-template-columns:1fr; } .esx-btn { width:100%; } }
 `
 
+const Ic = ({ d, ...p }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...p}>{d.split('|').map((x, i) => <path key={i} d={x} />)}</svg>
+const CHECK = 'M20 6 9 17l-5-5'
+export const abbrev = name => name.replace(/&/g, ' ').split(/\s+/).filter(Boolean).map(w => w[0]).join('').slice(0, 2).toUpperCase()
+
 const STEPS = [
-  {num:'01',title:'Fill the Form',desc:'Just fill the required form online on our website.',
-   icon:<><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></>},
-  {num:'02',title:'Confirmation Call',desc:'Get a confirmation call from LauncherDesk.',
-   icon:<><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></>},
-  {num:'03',title:'Delivered to You',desc:'Stamped document delivered to your mail — ready to sign.',
-   icon:<><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></>},
+  { t: 'Choose your state', d: 'Pick the state whose stamp paper you need.' },
+  { t: 'Fill in the details', d: 'Party names, document type and stamp duty value — takes about 2 minutes.' },
+  { t: 'Pay securely online', d: 'Pay by UPI, card or net banking through Razorpay.' },
+  { t: 'Get it delivered', d: 'Scan copy by email; the original by courier if you choose doorstep delivery.' },
 ]
 
 export default function EStampPage() {
-  const [form, setForm] = useState({ name:'', mobile:'', email:'', service:'', state:'' })
-  const [submitted, setSubmitted] = useState(false)
-  const [saving, setSaving] = useState(false)
-  const [formErr, setFormErr] = useState('')
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setSaving(true); setFormErr('')
-    try {
-      const res = await fetch(`${API}/contact`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name:    form.name,
-          mobile:  form.mobile,
-          email:   form.email || undefined,
-          state:   form.state,
-          message: `E-Stamp enquiry — Document: ${form.service}`,
-          source:  'estamp-page',
-          service: `E-Stamp — ${form.service}`,
-        }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.message || 'Submission failed')
-      setSubmitted(true)
-    } catch (err) {
-      setFormErr(err.message || 'Something went wrong. Please try again.')
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const STATES = ['Karnataka','Maharashtra','Delhi','Tamil Nadu','Telangana','Gujarat','Rajasthan','Uttar Pradesh','West Bengal','Kerala','Andhra Pradesh','Punjab','Haryana','Madhya Pradesh','Other']
-  const SVC_OPTS = ['Rental Agreement','Property Sale Deed','Partnership Deed','Loan Agreement','Affidavit / Indemnity Bond','MOU / Business Agreement','Other Document']
+  const [q, setQ] = useState('')
+  const [printMode, setPrintMode] = useState(false)
+  const states = useMemo(() => ESTAMP_STATES.filter(s => s.name.toLowerCase().includes(q.trim().toLowerCase())), [q])
+  const scrollToStates = (e, print = false) => { e.preventDefault(); setPrintMode(print); document.getElementById('state-selector')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
 
   return (
     <>
-      <style>{S}</style>
+      <SEO title="Buy Non-Judicial e-Stamp Paper Online — Any State in India" description="Buy government-authorised non-judicial e-Stamp paper online for any state in India. Fill your details, pay online and get the scan copy by email, with the original delivered to your doorstep." canonical="/estamp" />
+      <style>{ES_CSS}</style>
 
-      {/* Hero */}
-      <section className="es-hero">
-        <div className="es-hero-inner">
-          <div className="es-hero-text">
-            <div className="es-badge">
-              <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5}><path d="M9 12h6m-6 4h6M12 2v4M4.22 4.22l2.83 2.83M2 12h4M4.22 19.78l2.83-2.83M12 18v4M19.78 19.78l-2.83-2.83M22 12h-4M19.78 4.22l-2.83 2.83"/></svg>
-              Official E-Stamp Service
-            </div>
-            <h1>
-              We help you to get<br/>
-              <span>Pan India E-stamps</span>
-            </h1>
-            <p>Get legally valid e-stamped documents for property, business and personal needs — handled end to end by LauncherDesk. No government portal visits required.</p>
-            <div className="es-hero-cta">
-              <a href="https://wa.me/918548854859?text=Hi%2C%20I%20need%20assistance%20with%20E-Stamp%20services." target="_blank" rel="noopener noreferrer" className="es-btn-secondary">
-                <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{flexShrink:0}}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>
-                Ask on WhatsApp
+      {/* ── Hero ── */}
+      <section className="esx-hero">
+        <div className="esx-wrap esx-hero-grid">
+          <div>
+            <span className="esx-pill"><i aria-hidden="true" /> Pan-India e-Stamp service by LauncherDesk</span>
+            <h1>Non-judicial e-Stamp paper in India, <span>scan copy in a few hours</span></h1>
+            <p className="esx-lead">
+              Buy government-authorised e-Stamp paper for <b>any state in India</b>. Fill your details, pay online, and get it on email —
+              with the original <em>at your doorstep</em>.
+            </p>
+            <ul className="esx-checks">
+              <li><Ic d={CHECK} /> {ESTAMP_STATES.length} states &amp; UTs covered</li>
+              <li><Ic d={CHECK} /> No queues, no agents</li>
+              <li><Ic d={CHECK} /> Verifiable certificate number on every stamp</li>
+            </ul>
+            <div className="esx-cta">
+              <a href="#state-selector" onClick={scrollToStates} className="esx-btn esx-btn-primary">
+                Choose your state <Ic d="M5 12h14M13 6l6 6-6 6" width={18} height={18} />
               </a>
+              <a href="#state-selector" onClick={e => scrollToStates(e, true)} className="esx-btn esx-btn-ghost">Print on e-Stamp paper</a>
             </div>
-
-            <div className="es-hero-features">
-              <div className="es-hero-feature">
-                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M12 21s7-5.44 7-11a7 7 0 1 0-14 0c0 5.56 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-                Pan-India coverage
-              </div>
-              <div className="es-hero-feature">
-                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-5H9v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>
-                No portal visits
-              </div>
-              <div className="es-hero-feature">
-                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.9 8 11 4.6-2.1 8-6 8-11V5z"/><path d="m9.5 12 1.8 1.8L15 10"/></svg>
-                Legally valid, govt-issued
-              </div>
-              <div className="es-hero-feature">
-                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg>
-                Property, business &amp; personal docs
-              </div>
+            <div className="esx-trust">
+              <span><Ic d="M12 2 4 5v6c0 5 3.4 8.9 8 11 4.6-2.1 8-6 8-11V5z" /> Government-issued certificates</span>
+              <span><Ic d="M3 10h18M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" /> Secure Razorpay payments</span>
             </div>
           </div>
 
-          <div className="es-hero-visual">
-            <div className="es-doc-card">
-              <div className="es-doc-card-head">Sample E-Stamp — Karnataka</div>
-              <div className="es-doc-card-body">
-                <div className="es-doc-img-wrap">
-                  <img src={estampSample} alt="Sample government e-stamp certificate for a rental agreement" loading="lazy" />
-                  <span className="es-doc-watermark">Sample Certificate</span>
-                </div>
-                <div className="es-doc-scroll-hint">
-                  <svg viewBox="0 0 24 24" width={12} height={12} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
-                  Scroll to view the full certificate
-                </div>
-                <a href="#get-stamp" className="es-doc-cta">
-                  Get Your E-Stamp
-                  <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
-                </a>
-              </div>
-              <div className="es-doc-card-note">
-                <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5}><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0"/></svg>
-                Government-verified &amp; digitally signed certificate
-              </div>
-            </div>
+          <div className="esx-visual">
+            <div className="esx-paper"><img src={estampSample} alt="Sample non-judicial e-Stamp certificate" loading="eager" /></div>
+            <div className="esx-duty"><small>STAMP DUTY</small><b>₹100</b></div>
+            <div className="esx-fast"><Ic d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" /> Scan copy in a few hours</div>
+            <Link to="/company/contact" className="esx-biz">
+              <span className="esx-biz-ico"><Ic d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6" /></span>
+              <span><b>e-Stamping for business &amp; enterprise</b>
+                <span>Bulk orders &amp; API access for <em>NBFCs, fintechs and all other firms</em>.</span></span>
+              <Ic d="M5 12h14M13 6l6 6-6 6" />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* What is E-Stamp */}
-      <section className="es-what">
-        <div className="es-inner">
-          <span className="es-section-label">What is E-Stamping?</span>
-          <h2>The secure, digital alternative to physical stamp paper.</h2>
-          <div className="es-what-grid">
-            <p className="es-what-desc">
-              E-stamping is the government-authorised method of paying stamp duty electronically. Instead of buying physical stamp paper, a unique certificate is issued by SHCIL (Stock Holding Corporation of India Limited) or the respective state portal — making it tamper-proof, legally valid and instantly verifiable.<br/><br/>
-              LauncherDesk handles the entire process — from identifying the right stamp duty amount for your state and document type, to generating and delivering the official e-stamp certificate.
+      {/* ── State selector ── */}
+      <section className="esx-states" id="state-selector" style={{ scrollMarginTop: 90 }}>
+        <div className="esx-wrap">
+          <div className="esx-scripts" aria-hidden="true">स्टाम्प पेपर · ಸ್ಟಾಂಪ್ ಪೇಪರ್ · ஸ்டாம்ப் பேப்பர் · స్టాంప్ పేపర్ · স্ট্যাম্প পেপার · સ્ટેમ્પ પેપર</div>
+          <h2 className="esx-h2">Where do you need the <span>e-Stamp paper</span>?</h2>
+          {printMode && (
+            <p className="esx-note" style={{ marginTop: -10, marginBottom: 22 }}>
+              <span>🖨️ <b>Print on e-Stamp:</b> pick your state — after payment you upload your document and we print it on the stamp paper.
+                {' '}<a href="#state-selector" onClick={e => { e.preventDefault(); setPrintMode(false) }}>Cancel</a></span>
             </p>
-            <div className="es-what-points">
-              {[
-                {icon:'M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0',title:'100% Legally Valid',desc:'Accepted by courts, banks, registrars and government bodies across India.'},
-                {icon:'M12 15V3|M8 11l4 4 4-4',title:'Delivered Digitally',desc:'No physical stamp paper needed — your stamped document comes directly to you.'},
-                {icon:'M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z',title:'Tamper-Proof',desc:'Every e-stamp has a unique certificate number verifiable on the government portal.'},
-                {icon:'M12 8v4l3 3|M3.05 11a9 9 0 1 0 .5-3',title:'Fast Turnaround',desc:'Most documents stamped and returned within 2–4 working hours.'},
-              ].map(p=>(
-                <div key={p.title} className="es-point">
-                  <div className="es-point-icon">
-                    <svg viewBox="0 0 24 24"><path d={p.icon}/></svg>
-                  </div>
-                  <div><h4>{p.title}</h4><p>{p.desc}</p></div>
-                </div>
+          )}
+          <div className="esx-search">
+            <Ic d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm10 2-4.35-4.35" />
+            <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search your state…" aria-label="Search your state" />
+          </div>
+          {states.length ? (
+            <div className="esx-grid">
+              {states.map(s => (
+                <Link key={s.slug} to={`/estamp/${s.slug}${printMode ? '?print=1' : ''}`} className="esx-state">
+                  <span className="esx-state-ab" aria-hidden="true">{abbrev(s.name)}</span>
+                  <span className="esx-state-name">{s.name}</span>
+                  <Ic d="m9 18 6-6-6-6" />
+                </Link>
               ))}
             </div>
-          </div>
+          ) : <p className="esx-none">No state matches “{q}”.</p>}
+          <p className="esx-note">
+            <Ic d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 8v4M12 16h.01" />
+            <span>Can’t find your state? <a href={`https://wa.me/${LD_WA}?text=${encodeURIComponent('Hi, I need e-Stamp paper for a state not listed on your website.')}`} target="_blank" rel="noopener noreferrer">Message us</a> — we’re expanding coverage every month.</span>
+          </p>
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="es-how">
-        <div className="es-inner">
-          <span className="es-section-label">The Process</span>
-          <h2>How it works.</h2>
-          <div className="es-steps-v">
-            {STEPS.map(s=>(
-              <div key={s.num} className="es-step-v">
-                <div className="es-step-v-node">
-                  <svg viewBox="0 0 24 24">{s.icon}</svg>
-                </div>
-                <div className="es-step-v-card">
-                  <span className="es-step-v-tag">Step {s.num}</span>
-                  <h4>{s.title}</h4>
-                  <p>{s.desc}</p>
-                </div>
-              </div>
+      {/* ── Steps ── */}
+      <section className="esx-steps">
+        <div className="esx-wrap">
+          <h2 className="esx-h2">From order to <span>doorstep in 4 steps</span></h2>
+          <p className="esx-sub">No portal visits, no paperwork runs.</p>
+          <div className="esx-steps-grid">
+            {STEPS.map((s, i) => (
+              <div key={s.t} className="esx-step"><span className="esx-step-n">{i + 1}</span><b>{s.t}</b><p>{s.d}</p></div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Form + CTA */}
-      <section className="es-form-section" id="get-stamp">
-        <div className="es-inner">
-          <div className="es-form-card">
-            <div className="es-form-grid">
-              <div className="es-form-left">
-                <h2>Get your document stamped today.</h2>
-                <p>Fill in your details and we'll contact you within 2 hours with the exact stamp duty amount and a clear quote.</p>
-                <div className="es-contact-rows">
-                  <div className="es-contact-row">
-                    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    +91 85488 54859
-                  </div>
-                  <div className="es-contact-row">
-                    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    contact@launcherdesk.com
-                  </div>
-                  <div className="es-contact-row">
-                    <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    4th Block, Koramangala, Bengaluru – 560095
-                  </div>
-                </div>
-              </div>
-
-              {submitted ? (
-                <div className="es-success">
-                  <div style={{fontSize:36,marginBottom:12}}>✅</div>
-                  <div style={{fontSize:18,fontWeight:800,color:'var(--navy)',marginBottom:8}}>Request received!</div>
-                  <div style={{fontSize:14,color:'var(--text-2)'}}>Our team will contact you within 2 hours with stamp duty details and a quote.</div>
-                </div>
-              ) : (
-                <form className="es-form" onSubmit={handleSubmit}>
-                  <div className="es-form-row">
-                    <div className="es-form-field">
-                      <label className="es-form-label">Full Name *</label>
-                      <input className="es-form-input" type="text" required placeholder="Your name"
-                        value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/>
-                    </div>
-                    <div className="es-form-field">
-                      <label className="es-form-label">Mobile Number *</label>
-                      <input className="es-form-input" type="tel" required placeholder="+91 98765 43210"
-                        value={form.mobile} onChange={e=>setForm({...form,mobile:e.target.value})}/>
-                    </div>
-                  </div>
-                  <div className="es-form-field">
-                    <label className="es-form-label">Email Address</label>
-                    <input className="es-form-input" type="email" placeholder="your@email.com"
-                      value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/>
-                  </div>
-                  <div className="es-form-row">
-                    <div className="es-form-field">
-                      <label className="es-form-label">Document Type *</label>
-                      <select className="es-form-select" required value={form.service} onChange={e=>setForm({...form,service:e.target.value})}>
-                        <option value="">Select document</option>
-                        {SVC_OPTS.map(s=><option key={s} value={s}>{s}</option>)}
-                      </select>
-                    </div>
-                    <div className="es-form-field">
-                      <label className="es-form-label">State *</label>
-                      <select className="es-form-select" required value={form.state} onChange={e=>setForm({...form,state:e.target.value})}>
-                        <option value="">Select state</option>
-                        {STATES.map(s=><option key={s} value={s}>{s}</option>)}
-                      </select>
-                    </div>
-                  </div>
-                  <button type="submit" className="es-submit-btn" disabled={saving}>
-                    {saving ? 'Submitting…' : 'Request E-Stamp Quote →'}
-                  </button>
-                  {formErr && <p style={{fontSize:13,color:'#DC2626',textAlign:'center',marginTop:8}}>{formErr}</p>}
-                  <a href="https://doqfy.in/stamping" target="_blank" rel="noopener noreferrer"
-                    style={{display:'block',textAlign:'center',marginTop:12,fontSize:13,color:'var(--text-3)',textDecoration:'underline'}}>
-                    Or get it directly on Doqfy →
-                  </a>
-                  <p style={{fontSize:12,color:'var(--text-4)',textAlign:'center'}}>
-                    We'll respond within 2 hours · No spam · 100% confidential
-                  </p>
-                </form>
-              )}
+      {/* ── What is e-stamping ── */}
+      <section className="esx-what">
+        <div className="esx-wrap">
+          <div className="esx-what-card">
+            <div>
+              <h3>What is a non-judicial e-Stamp?</h3>
+              <p>E-stamping is the government-authorised way of paying stamp duty electronically. Instead of physical stamp paper,
+                a unique certificate is issued through the official e-stamping system. It is used for rent agreements, affidavits,
+                agreements, bonds and powers of attorney, and can be verified online using its certificate number.</p>
+            </div>
+            <div className="esx-what-list">
+              <div><Ic d={CHECK} width={18} height={18} /><span><strong>Legally valid</strong>Accepted by banks, registrars, courts and government offices.</span></div>
+              <div><Ic d={CHECK} width={18} height={18} /><span><strong>Verifiable</strong>Every certificate carries a unique number you can check online.</span></div>
+              <div><Ic d={CHECK} width={18} height={18} /><span><strong>Print your document on it</strong>Send us your document and we print it on the e-Stamp paper for you.</span></div>
             </div>
           </div>
         </div>
