@@ -12,6 +12,8 @@ import UserDashboard from './pages/user/UserDashboard'
 import UserServices from './pages/user/UserServices'
 import UserServiceDetail from './pages/user/UserServiceDetail'
 import UserPayments from './pages/user/UserPayments'
+import UserInvoices from './pages/user/UserInvoices'
+import UserSupport from './pages/user/UserSupport'
 import UserProfile from './pages/user/UserProfile'
 // Sales CRM
 import SalesLogin from './pages/sales/SalesLogin'
@@ -59,6 +61,9 @@ import { AdminAuthProvider } from './context/AdminAuthContext'
 import AdminLogin from './pages/admin/AdminLogin'
 import AdminLayout from './pages/admin/AdminLayout'
 import AdminDashboard from './pages/admin/pages/AdminDashboard'
+import AdminOrders from './pages/admin/pages/AdminOrders'
+import AdminNotifications from './pages/admin/pages/AdminNotifications'
+import AdminTickets from './pages/admin/pages/AdminTickets'
 import AdminContacts from './pages/admin/pages/AdminContacts'
 import AdminLeads from './pages/admin/pages/AdminLeads'
 import AdminQuotes from './pages/admin/pages/AdminQuotes'
@@ -136,6 +141,8 @@ export default function App() {
                   <Route path="services" element={<UserServices />} />
                   <Route path="services/:id" element={<UserServiceDetail />} />
                   <Route path="payments" element={<UserPayments />} />
+                  <Route path="invoices" element={<UserInvoices />} />
+                  <Route path="support" element={<UserSupport />} />
                   <Route path="profile" element={<UserProfile />} />
                   <Route path="*" element={<Navigate to="/user/dashboard" replace />} />
                 </Route>
@@ -148,6 +155,9 @@ export default function App() {
                 <Route path="/admin" element={<AdminLogin />} />
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route path="dashboard" element={<AdminDashboard />} />
+                  <Route path="orders" element={<AdminOrders />} />
+                  <Route path="notifications" element={<AdminNotifications />} />
+                  <Route path="tickets" element={<AdminTickets />} />
                   <Route path="contacts" element={<AdminContacts />} />
                   <Route path="leads" element={<AdminLeads />} />
                   <Route path="quotes" element={<AdminQuotes />} />
