@@ -4,7 +4,8 @@ import SEO from '../../components/SEO'
 import { useUserAuth } from '../../context/UserAuthContext'
 import { loadRazorpayScript } from '../../lib/razorpay'
 import StampCertificate, { CERT_CSS } from './StampCertificate'
-import { stateBySlug, DOC_TYPES, DENOMINATIONS, MAX_DUTY, ESTAMP_FEES, GST_RATE, LD_WA } from '../../data/estamp'
+import { stateBySlug, DENOMINATIONS, MAX_DUTY, ESTAMP_FEES, GST_RATE, LD_WA } from '../../data/estamp'
+import { articlesFor, keyOf, dutyFromRule, ruleText } from '../../data/estampArticles'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
@@ -84,6 +85,38 @@ textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertic
   border-radius:12px; padding:12px 14px; font-size:14px; line-height:1.5; margin-bottom:20px; }
 .lds-alert { margin-top:14px; padding:12px 14px; border-radius:10px; font-size:14px; background:var(--error-bg); border:1px solid #FECACA; color:#991B1B; }
 
+/* Article picker */
+.lda { position:relative; }
+.lda-btn { width:100%; min-height:54px; box-sizing:border-box; display:flex; align-items:center; gap:10px; text-align:left; cursor:pointer;
+  border:1.5px solid var(--line-strong); border-radius:11px; background:#fff; padding:8px 14px; font-family:inherit; }
+.lda-btn.bad { border-color:var(--error); }
+.lda-btn:focus-visible, .lda-btn[aria-expanded="true"] { border-color:var(--blue); box-shadow:0 0 0 4px rgba(29,93,184,.12); outline:none; }
+.lda-btn .t { flex:1; min-width:0; }
+.lda-btn b { display:block; font-size:15.5px; color:var(--navy); font-weight:700; line-height:1.35; }
+.lda-btn small { display:block; font-size:12.5px; color:var(--text-3); margin-top:2px; }
+.lda-btn .ph { color:var(--text-4, #9CA3AF); font-weight:600; font-size:15.5px; }
+.lda-btn svg { width:18px; height:18px; stroke:var(--text-3); flex:none; }
+.lda-pop { position:absolute; left:0; right:0; top:calc(100% + 8px); z-index:40; background:#fff; border-radius:14px; overflow:hidden;
+  box-shadow:0 24px 60px -12px rgba(11,31,72,.40), 0 0 0 1px rgba(15,28,46,.06); }
+.lda-search { position:relative; border-bottom:1px solid var(--line); }
+.lda-search svg { position:absolute; left:14px; top:50%; transform:translateY(-50%); width:17px; height:17px; stroke:var(--text-3); }
+.lda-search input { width:100%; height:50px; border:0; outline:none; padding:0 14px 0 42px; font-size:15px; font-family:inherit; box-sizing:border-box; }
+.lda-list { list-style:none; margin:0; padding:6px; max-height:min(340px,55vh); overflow-y:auto; overscroll-behavior:contain; }
+.lda-opt { display:flex; gap:10px; width:100%; text-align:left; border:0; background:none; padding:10px 10px; border-radius:9px; cursor:pointer; font-family:inherit; }
+.lda-opt[aria-selected="true"] { background:var(--brand-50); }
+.lda-opt .chk { width:18px; flex:none; color:var(--blue); font-weight:900; padding-top:1px; }
+.lda-opt b { display:block; font-size:14.5px; color:var(--navy); font-weight:600; line-height:1.35; }
+.lda-opt small { display:block; font-size:12.5px; color:var(--text-3); margin-top:2px; }
+.lda-opt small i { font-style:normal; color:var(--blue); font-weight:600; }
+.lda-empty { padding:16px 14px; color:var(--text-3); font-size:14px; }
+.lda-src { padding:9px 14px; font-size:11.5px; color:var(--text-3); background:var(--bg); border-top:1px solid var(--line); }
+.lds-rule { display:flex; gap:10px; align-items:flex-start; background:var(--brand-50); border:1px solid var(--brand-100); border-radius:12px;
+  padding:12px 14px; font-size:14px; color:var(--navy); line-height:1.5; margin-top:10px; }
+.lds-rule b { font-weight:800; }
+.lds-duty-fixed { display:flex; align-items:baseline; gap:10px; border:1.5px solid var(--blue); background:var(--brand-50); border-radius:12px; padding:12px 16px; }
+.lds-duty-fixed b { font-size:22px; color:var(--blue-dark); }
+.lds-duty-fixed span { font-size:13.5px; color:var(--text-2); }
+
 /* Aside */
 .lds-aside { position:sticky; top:100px; display:grid; gap:16px; }
 .lds-price { background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px 18px 16px; }
@@ -125,7 +158,7 @@ const DRAFT_KEY = slug => `ld_estamp_draft_${slug}`
 const inr = n => `₹${Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`
 const EMPTY = {
   firstParty: '', secondParty: '', payer: '',
-  docType: '', purpose: '', consideration: '', duty: '', customDuty: '', print: false,
+  article: '', baseAmount: '', purpose: '', consideration: '', duty: '', customDuty: '', print: false,
   delivery: 'email', name: '', mobile: '', email: '', address: '', city: '', pincode: '',
 }
 const STEPS = [
@@ -136,6 +169,74 @@ const STEPS = [
 
 function loadDraft(slug) {
   try { const d = JSON.parse(localStorage.getItem(DRAFT_KEY(slug)) || 'null'); return d && typeof d === 'object' ? { ...EMPTY, ...d } : null } catch { return null }
+}
+
+function ArticlePicker({ items, value, onChange, invalid, verified, stateName }) {
+  const [open, setOpen] = useState(false)
+  const [q, setQ] = useState('')
+  const [active, setActive] = useState(0)
+  const wrap = useRef(null)
+  const search = useRef(null)
+  const sel = items.find(a => keyOf(a) === value)
+  const list = useMemo(() => {
+    const t = q.trim().toLowerCase()
+    return t ? items.filter(a => `${a.label} ${a.code} article ${a.code} ${a.hint || ''}`.toLowerCase().includes(t)) : items
+  }, [q, items])
+
+  useEffect(() => {
+    if (!open) return
+    setTimeout(() => search.current?.focus(), 0)
+    const off = e => { if (wrap.current && !wrap.current.contains(e.target)) setOpen(false) }
+    document.addEventListener('mousedown', off)
+    return () => document.removeEventListener('mousedown', off)
+  }, [open])
+
+  const pick = a => { onChange(keyOf(a)); setOpen(false); setQ('') }
+  const onKey = e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive(i => Math.min(i + 1, list.length - 1)) }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(i => Math.max(i - 1, 0)) }
+    else if (e.key === 'Enter' && list[active]) { e.preventDefault(); pick(list[active]) }
+    else if (e.key === 'Escape') setOpen(false)
+  }
+  const sub = a => [a.code ? `Article ${a.code}` : '', a.hint].filter(Boolean)
+
+  return (
+    <div className="lda" ref={wrap}>
+      <button type="button" id="dt" className={`lda-btn${invalid ? ' bad' : ''}`} aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen(o => !o)}>
+        <span className="t">
+          {sel ? <><b>{sel.label}</b>{sub(sel).length > 0 && <small>{sub(sel).join(' · ')}</small>}</> : <span className="ph">Search or choose the document</span>}
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+      {open && (
+        <div className="lda-pop">
+          <div className="lda-search">
+            <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm10 2-4.35-4.35" /></svg>
+            <input ref={search} value={q} onChange={e => { setQ(e.target.value); setActive(0) }} onKeyDown={onKey}
+              placeholder={verified ? 'Search, e.g. lease, affidavit or 5(J)' : 'Search document types'} aria-label="Search documents"
+              role="combobox" aria-expanded="true" aria-controls="lda-list" aria-activedescendant={list[active] ? `lda-${list.indexOf(list[active])}` : undefined} />
+          </div>
+          <ul className="lda-list" id="lda-list" role="listbox" aria-label="Documents">
+            {list.length ? list.map((a, i) => (
+              <li key={keyOf(a)}>
+                <button type="button" id={`lda-${i}`} role="option" aria-selected={i === active} className="lda-opt"
+                  onMouseEnter={() => setActive(i)} onClick={() => pick(a)}
+                  ref={el => { if (el && i === active) el.scrollIntoView({ block: 'nearest' }) }}>
+                  <span className="chk" aria-hidden="true">{keyOf(a) === value ? '✓' : ''}</span>
+                  <span><b>{a.label}</b>
+                    {(a.code || a.hint || a.rule) && <small>{[a.code && `Article ${a.code}`, a.hint].filter(Boolean).join(' · ')}{a.rule && <> {a.code || a.hint ? '· ' : ''}<i>{ruleText(a.rule)}</i></>}</small>}
+                  </span>
+                </button>
+              </li>
+            )) : <li className="lda-empty">No match. Choose “Other document” and describe it in the purpose.</li>}
+          </ul>
+          <div className="lda-src">
+            {verified ? `Articles from the official ${stateName} e-stamping list.` : `Our team confirms the exact ${stateName} article before buying your stamp.`}
+          </div>
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default function EStampStatePage() {
@@ -175,7 +276,14 @@ export default function EStampStatePage() {
     return () => document.removeEventListener('keydown', onKey)
   }, [askLogin])
 
-  const duty = f.duty === 'custom' ? Number(f.customDuty) : Number(f.duty)
+  const { verified, items: articles } = useMemo(() => articlesFor(slug), [slug])
+  const article = articles.find(a => keyOf(a) === f.article) || null
+  const rule = article?.rule && article.rule.type !== 'text' ? article.rule : null
+  const baseField = rule?.base === 'Consideration amount' ? 'consideration' : 'baseAmount'
+  const ruled = rule ? dutyFromRule(rule, f[baseField]) : null      // { duty } | { error } | null
+  const manualDuty = f.duty === 'custom' ? Number(f.customDuty) : Number(f.duty)
+  const duty = rule ? (ruled?.duty ?? NaN) : manualDuty
+  const docLabel = article ? `${article.code ? `Article ${article.code} ` : ''}${article.label}` : ''
   const validDuty = Number.isInteger(duty) && duty >= 1 && duty <= MAX_DUTY
   const courier = f.delivery === 'courier' ? ESTAMP_FEES.courier : 0
   const fees = ESTAMP_FEES.service + courier
@@ -184,7 +292,12 @@ export default function EStampStatePage() {
 
   if (!st) return <Navigate to="/estamp" replace />
 
-  const set = k => e => setF(v => ({ ...v, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }))
+  const set = k => e => {
+    setF(v => ({ ...v, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }))
+    // an edited field shouldn't keep showing its old error
+    setErrs(x => (x[k] || ((k === 'baseAmount' || k === 'consideration') && x.base) || (k === 'customDuty' && x.duty))
+      ? { ...x, [k]: undefined, ...(k === 'baseAmount' || k === 'consideration' ? { base: undefined } : {}), ...(k === 'customDuty' ? { duty: undefined } : {}) } : x)
+  }
   const goLogin = tab => navigate('/user/login', { state: { from: location.pathname + location.search, tab } })
 
   function validate(s) {
@@ -195,9 +308,12 @@ export default function EStampStatePage() {
       if (!f.payer) e.payer = 'Choose who pays the stamp duty.'
     }
     if (s === 2) {
-      if (!f.docType) e.docType = 'Choose the document type.'
+      if (!article) e.docType = 'Choose the document type.'
       if (!f.purpose.trim()) e.purpose = 'Describe what the stamp is for.'
-      if (!f.duty) e.duty = 'Choose a stamp duty value.'
+      if (rule) {
+        if (ruled?.error) e.base = ruled.error
+        else if (!validDuty) e.base = `The duty works out above ${inr(MAX_DUTY)}. Message us and we’ll arrange it for you.`
+      } else if (!f.duty) e.duty = 'Choose a stamp duty value.'
       else if (!validDuty) e.duty = `Enter a whole amount from ₹1 to ${inr(MAX_DUTY)}.`
       if (f.consideration && !(Number(f.consideration) >= 0)) e.consideration = 'Enter the amount in rupees, numbers only.'
     }
@@ -229,7 +345,8 @@ export default function EStampStatePage() {
         body: JSON.stringify({
           state: st.slug, stateName: st.name,
           firstParty: f.firstParty.trim(), secondParty: f.secondParty.trim(), payer: f.payer,
-          documentType: f.docType, purpose: f.purpose.trim(), consideration: f.consideration,
+          documentType: article?.label || '', articleCode: article?.code || '', baseAmount: rule && baseField === 'baseAmount' ? f.baseAmount : undefined,
+          purpose: f.purpose.trim(), consideration: f.consideration,
           stampDuty: duty, printDocument: !!f.print, delivery: f.delivery,
           name: f.name.trim(), email: f.email.trim(), mobile: f.mobile.trim(),
           ...(f.delivery === 'courier' ? { address: f.address.trim(), city: f.city.trim(), pincode: f.pincode.trim() } : {}),
@@ -363,14 +480,17 @@ export default function EStampStatePage() {
                 {step === 2 && (
                   <>
                     <h2>What is it for?</h2>
-                    <p className="lead">Choose the value set by {st.name}’s rules for your document. Not sure? Pick your best guess — we check every order before buying the stamp and call you if it needs to change.</p>
+                    <p className="lead">
+                      {verified
+                        ? <>Pick the article your document falls under. Where {st.name}’s rules fix the duty, we fill it in for you.</>
+                        : <>Pick your document and the stamp duty value. We confirm the exact {st.name} article and duty before buying the stamp, and call you if anything needs to change.</>}
+                    </p>
                     <div className="lds-f">
                       <label htmlFor="dt">Document type</label>
-                      <select id="dt" className={inCls('docType')} value={f.docType} onChange={set('docType')}>
-                        <option value="">Choose…</option>
-                        {DOC_TYPES.map(d => <option key={d} value={d}>{d}</option>)}
-                      </select>
+                      <ArticlePicker items={articles} value={f.article} verified={verified} stateName={st.name} invalid={!!errs.docType}
+                        onChange={k => { setF(v => ({ ...v, article: k })); setErrs(x => ({ ...x, docType: undefined, base: undefined, duty: undefined })) }} />
                       <Err k="docType" />
+                      {article?.rule?.type === 'text' && <div className="lds-rule"><span>How the duty is worked out: <b>{article.rule.text}</b> Enter the amount below.</span></div>}
                     </div>
                     <div className="lds-f">
                       <label htmlFor="pu">Purpose</label>
@@ -378,22 +498,40 @@ export default function EStampStatePage() {
                         placeholder="e.g. Rent agreement for flat 12, 4th Cross, Koramangala, Bengaluru" />
                       <Err k="purpose" />
                     </div>
-                    <div className="lds-f">
-                      <div className="lbl" id="duty-l">Stamp duty value</div>
-                      <div className="lds-duty" role="group" aria-labelledby="duty-l">
-                        {DENOMINATIONS.map(d => (
-                          <button type="button" key={d} aria-pressed={String(f.duty) === String(d)} onClick={() => setF(v => ({ ...v, duty: String(d) }))}>{inr(d)}</button>
-                        ))}
-                        <button type="button" aria-pressed={f.duty === 'custom'} onClick={() => setF(v => ({ ...v, duty: 'custom' }))}>Other</button>
+                    {rule ? (
+                      <div className="lds-f">
+                        {rule.type !== 'fixed' && baseField === 'baseAmount' && (
+                          <div className="lds-f" style={{ marginBottom: 12 }}>
+                            <label htmlFor="ba">{rule.base}</label>
+                            <input id="ba" className={inCls('base')} type="number" min="1" inputMode="numeric" value={f.baseAmount} onChange={set('baseAmount')} placeholder="Amount in ₹" />
+                          </div>
+                        )}
+                        <div className="lbl">Stamp duty</div>
+                        <div className="lds-duty-fixed" aria-live="polite">
+                          <b>{validDuty ? inr(duty) : '₹ —'}</b>
+                          <span>{rule.type === 'fixed' ? `Fixed by ${st.name}’s rules for this article` : ruleText(rule)}</span>
+                        </div>
+                        {baseField === 'consideration' && !errs.base && !validDuty && <div className="lds-help">Enter the consideration amount below to work out the duty.</div>}
+                        <Err k="base" />
                       </div>
-                      {f.duty === 'custom' && (
-                        <input className={inCls('duty')} style={{ marginTop: 10 }} type="number" min="1" max={MAX_DUTY} step="1" inputMode="numeric"
-                          value={f.customDuty} onChange={set('customDuty')} placeholder="Amount in rupees" aria-label="Stamp duty amount in rupees" autoFocus />
-                      )}
-                      <Err k="duty" />
-                    </div>
+                    ) : (
+                      <div className="lds-f">
+                        <div className="lbl" id="duty-l">Stamp duty value</div>
+                        <div className="lds-duty" role="group" aria-labelledby="duty-l">
+                          {DENOMINATIONS.map(d => (
+                            <button type="button" key={d} aria-pressed={String(f.duty) === String(d)} onClick={() => setF(v => ({ ...v, duty: String(d) }))}>{inr(d)}</button>
+                          ))}
+                          <button type="button" aria-pressed={f.duty === 'custom'} onClick={() => setF(v => ({ ...v, duty: 'custom' }))}>Other</button>
+                        </div>
+                        {f.duty === 'custom' && (
+                          <input className={inCls('duty')} style={{ marginTop: 10 }} type="number" min="1" max={MAX_DUTY} step="1" inputMode="numeric"
+                            value={f.customDuty} onChange={set('customDuty')} placeholder="Amount in rupees" aria-label="Stamp duty amount in rupees" autoFocus />
+                        )}
+                        <Err k="duty" />
+                      </div>
+                    )}
                     <div className="lds-f">
-                      <label htmlFor="cp">Consideration amount <span className="lds-optional">(optional)</span></label>
+                      <label htmlFor="cp">Consideration amount {baseField === 'consideration' && rule ? null : <span className="lds-optional">(optional)</span>}</label>
                       <input id="cp" className={inCls('consideration')} type="number" min="0" inputMode="numeric" value={f.consideration} onChange={set('consideration')} placeholder="e.g. security deposit or deal value, in ₹" />
                       <Err k="consideration" />
                     </div>
@@ -463,7 +601,7 @@ export default function EStampStatePage() {
           {/* Live certificate + price */}
           <aside className="lds-aside" aria-label="Your e-Stamp">
             <StampCertificate stateName={st.name} firstParty={f.firstParty} secondParty={f.secondParty} payer={f.payer}
-              docType={f.docType} purpose={f.purpose} duty={validDuty ? duty : null} />
+              docType={docLabel} purpose={f.purpose} duty={validDuty ? duty : null} />
             <div className="lds-price">
               <h3>Price</h3>
               <dl>
