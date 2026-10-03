@@ -1913,12 +1913,13 @@ export const SERVICES = {
 
   'startup-india-dpiit': {
     title: 'Startup India / DPIIT Recognition',
+    titleSuffix: '+ Org DSC',
     metaTitle: 'Startup India DPIIT Recognition | Tax Benefits & Schemes | LauncherDesk',
     metaDesc: 'Get your startup officially recognised by DPIIT. Access tax exemptions, government schemes and funding benefits. Application support by LauncherDesk.',
     eyebrow: 'START — Certifications',
     crumbCategory: 'START',
     lead: 'Get your startup officially recognised by DPIIT — unlocking income tax benefits, government scheme access, patent fee rebates and investor credibility.',
-    priceCard: { label: 'Price', price: '₹4,200 + GST + Org DSC', sub: '' },
+    priceCard: { label: 'Price', price: '₹4,200 + GST', sub: '' },
     helpCard: { title: 'Not sure if you qualify?', body: 'We check eligibility before you apply — free assessment.' },
     toc: [
       { href: '#overview', label: 'Overview' },
@@ -2002,12 +2003,13 @@ export const SERVICES = {
 
   'iso-certification': {
     title: 'ISO Certification',
+    titleSuffix: '9001:2015',
     metaTitle: 'ISO Certification in India | ISO 9001, 27001 & More | LauncherDesk',
     metaDesc: 'Get ISO certified for your business in India. ISO 9001:2015, ISO 27001, ISO 14001 and other standards. Coordination support for audit and certification.',
     eyebrow: 'START — Certifications',
     crumbCategory: 'START',
     lead: 'Get your business ISO certified — with guidance on the right standard, documentation support and certification body coordination.',
-    priceCard: { label: 'Price', price: '₹3,499 + GST', sub: 'ISO 9001:2015' },
+    priceCard: { label: 'Price', price: '₹3,499 + GST', sub: '' },
     helpCard: { title: 'Not sure which ISO standard you need?', body: 'We help you identify the right standard for your business and sector.' },
     toc: [
       { href: '#overview', label: 'Overview' },

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { createPortal } from 'react-dom'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useUserAuth } from '../context/UserAuthContext'
 import SEO, { serviceSchema, breadcrumbSchema, faqSchema } from './SEO'
@@ -11,58 +10,6 @@ import WhyChooseGrid from './trust/WhyChooseGrid'
 import ContextualCta from './trust/ContextualCta'
 import { CTA_EVENTS } from '../data/cta'
 import { openRazorpayCheckout } from '../lib/razorpay'
-import { calcBreakdown, fmtPaise } from '../lib/pricing'
-
-// A price shown as "₹4,200 + GST" (or "+ taxes") is charged with 18% GST added on top.
-const priceAddsGst = pc => /gst|tax/i.test(`${pc?.price || ''} ${pc?.sub || ''}`)
-
-// true  = clicking Pay first shows a short "why is the total higher?" popup, then opens Razorpay.
-// false = clicking Pay opens Razorpay straight away (the button still shows the GST split).
-const SHOW_GST_NOTICE = true
-
-/* "Why ₹4,956 and not ₹4,200?" — shown when Pay is clicked on a "+ GST" price. */
-function GstNotice({ title, feePaise, gstPaise, totalPaise, onConfirm, onCancel }) {
-  useEffect(() => {
-    const onKey = e => { if (e.key === 'Escape') onCancel() }
-    document.addEventListener('keydown', onKey)
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = prev }
-  }, [onCancel])
-  const row = { display: 'flex', justifyContent: 'space-between', gap: 12, padding: '9px 0', fontSize: 14, color: '#334155', borderBottom: '1px solid #E3EAF6' }
-  return createPortal(
-    <div role="presentation" onClick={onCancel} style={{ position: 'fixed', inset: 0, zIndex: 10000, background: 'rgba(15,28,46,.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
-      <div role="dialog" aria-modal="true" aria-labelledby="gstn-title" onClick={e => e.stopPropagation()}
-        style={{ background: '#fff', borderRadius: 16, width: '100%', maxWidth: 400, padding: '24px 22px', boxShadow: '0 30px 80px rgba(15,28,46,.35)', fontFamily: 'inherit' }}>
-        <h3 id="gstn-title" style={{ margin: '0 0 6px', fontSize: 19, fontWeight: 800, color: '#1A2F4E' }}>
-          Why {fmtPaise(totalPaise)} and not {fmtPaise(feePaise)}?
-        </h3>
-        <p style={{ margin: '0 0 14px', fontSize: 13.5, color: '#64748B', lineHeight: 1.55 }}>
-          The {fmtPaise(feePaise)} shown on the page is our fee <b>before tax</b>. 18% GST is charged on top of it, so the total you pay is {fmtPaise(totalPaise)}.
-        </p>
-        <div style={{ fontSize: 12, fontWeight: 800, letterSpacing: '.08em', textTransform: 'uppercase', color: '#94A3B8', marginBottom: 2 }}>{title}</div>
-        <div style={row}><span>Service fee</span><b style={{ color: '#1A2F4E' }}>{fmtPaise(feePaise)}</b></div>
-        <div style={{ ...row, background: '#FFF7E6', margin: '0 -8px', padding: '9px 8px', borderRadius: 8, borderBottomColor: 'transparent' }}>
-          <span>GST @ 18%<small style={{ display: 'block', fontSize: 11.5, color: '#64748B' }}>Added as per Indian tax rules</small></span>
-          <b style={{ color: '#1A2F4E' }}>{fmtPaise(gstPaise)}</b>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '14px 0 4px', fontWeight: 800, color: '#1A2F4E' }}>
-          <span>Total payable</span><span style={{ fontSize: 24, letterSpacing: '-.02em' }}>{fmtPaise(totalPaise)}</span>
-        </div>
-        <p style={{ margin: '2px 0 16px', fontSize: 12.5, fontWeight: 700, color: '#15803D' }}>✓ Includes {fmtPaise(gstPaise)} GST (18%)</p>
-        <button type="button" autoFocus onClick={onConfirm}
-          style={{ width: '100%', padding: 14, border: 0, borderRadius: 12, background: 'linear-gradient(180deg,#2F7BEA 0%,#1D6FE0 100%)', color: '#fff', font: 'inherit', fontSize: 15, fontWeight: 800, cursor: 'pointer' }}>
-          Continue to pay {fmtPaise(totalPaise)} →
-        </button>
-        <button type="button" onClick={onCancel}
-          style={{ width: '100%', marginTop: 8, padding: 10, border: 0, background: 'transparent', color: '#64748B', font: 'inherit', fontSize: 13.5, fontWeight: 700, cursor: 'pointer' }}>
-          Cancel
-        </button>
-      </div>
-    </div>,
-    document.body
-  )
-}
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 const CHEV = 'm9 18 6-6-6-6'
@@ -414,7 +361,6 @@ function BuyNowButton({ svc, priceCard }) {
   const [loading, setLoading] = useState(false)
   const [msg, setMsg] = useState('')
   const [payEnabled, setPayEnabled] = useState(null)
-  const [showNotice, setShowNotice] = useState(false)
 
   const rawPrice = priceCard?.price || ''
   const numericPrice = parseFloat(rawPrice.replace(/[₹,*]/g, ''))
@@ -430,41 +376,24 @@ function BuyNowButton({ svc, priceCard }) {
 
   if (!hasPrice) return null
 
-  // Prices shown as "+ GST" are charged with 18% GST added; the button shows the total and the split.
-  const addGst = priceAddsGst(priceCard)
-  const { gstPaise, totalPaise } = calcBreakdown(numericPrice)
-  const payAmount = addGst ? fmtPaise(totalPaise) : `₹${numericPrice.toLocaleString('en-IN')}`
-  const btnLabel = loading ? 'Processing…' : isLoggedIn ? `Pay ${payAmount} →` : 'Login to Pay'
+  const btnLabel = loading ? 'Processing…' : isLoggedIn ? `Pay ₹${numericPrice.toLocaleString('en-IN')} →` : 'Login to Pay'
 
-  function handleBuy() {
+  async function handleBuy() {
     if (!isLoggedIn) { navigate('/user/login', { state: { from: location.pathname, tab: 'login' } }); return }
     if (payEnabled === null) return
     if (!payEnabled) { navigate('/company/contact'); return }
-    if (addGst && SHOW_GST_NOTICE) { setShowNotice(true); return }   // explain the GST first
-    startPayment()
-  }
-
-  async function startPayment() {
-    setShowNotice(false)
     setLoading(true); setMsg('')
     try {
-      const res = await fetch(`${API_BASE}/payments/create-order`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ amount: numericPrice, addGst, serviceSlug: svc.slug || '', serviceTitle: svc.title }) })
+      const res = await fetch(`${API_BASE}/payments/create-order`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ amount: numericPrice, serviceSlug: svc.slug || '', serviceTitle: svc.title }) })
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Failed to create order')
-      // Safety net: never open payment for a different amount than the price + GST shown here.
-      if (addGst && data.amount !== totalPaise) throw new Error('The price on this page is out of date. Please refresh the page and try again.')
       if (!window.Razorpay) {
         await new Promise((resolve, reject) => { const s = document.createElement('script'); s.src = 'https://checkout.razorpay.com/v1/checkout.js'; s.onload = resolve; s.onerror = reject; document.body.appendChild(s) })
       }
       await new Promise((resolve) => {
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
-          name: 'LauncherDesk',
-          description: addGst
-            ? `${svc.title} — ${fmtPaise(numericPrice * 100)} + ${fmtPaise(gstPaise)} GST (18%) = ${fmtPaise(totalPaise)}`
-            : svc.title,
-          image: '/launcherdesk-logo-transparent.png',
-          notes: addGst ? { gstIncluded: fmtPaise(gstPaise) } : undefined,
+          name: 'LauncherDesk', description: svc.title, image: '/launcherdesk-logo-transparent.png',
           theme: { color: '#1D6FE0' },
           handler: async (response) => {
             try {
@@ -487,16 +416,7 @@ function BuyNowButton({ svc, priceCard }) {
     <div style={{ marginTop: 10 }}>
       <button onClick={handleBuy} disabled={loading} aria-busy={loading} style={{ display: 'block', width: '100%', textAlign: 'center', padding: '12px', borderRadius: 10, background: loading ? '#94A3B8' : 'rgba(255,255,255,.15)', color: '#fff', fontWeight: 700, fontSize: 14, border: '1px solid rgba(255,255,255,.3)', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: 'inherit', transition: 'background .15s' }}>
         {btnLabel}
-        {addGst && !loading && (
-          <small style={{ display: 'block', marginTop: 3, fontSize: 11, fontWeight: 600, opacity: .9, whiteSpace: 'nowrap' }}>
-            {fmtPaise(numericPrice * 100)} + {fmtPaise(gstPaise)} GST (18%)
-          </small>
-        )}
       </button>
-      {showNotice && (
-        <GstNotice title={svc.title} feePaise={Math.round(numericPrice * 100)} gstPaise={gstPaise} totalPaise={totalPaise}
-          onConfirm={startPayment} onCancel={() => setShowNotice(false)} />
-      )}
       {msg && <div role="status" aria-live="polite" style={{ marginTop: 10, padding: '10px 12px', borderRadius: 8, background: isSuccess ? '#DCFCE7' : isFail ? '#FEF2F2' : '#FEF9C3', border: `1px solid ${isSuccess ? '#BBF7D0' : isFail ? '#FECACA' : '#FDE68A'}`, fontSize: 12.5, color: isSuccess ? '#166534' : isFail ? '#DC2626' : '#854D0E', lineHeight: 1.5 }}>{msg}</div>}
     </div>
   )
@@ -681,6 +601,35 @@ function WebsitePackages({ packages }) {
         </div>
       </div>
     </section>
+  )
+}
+
+/* Hero "Pay" button for registration services — only shown to logged-in users. */
+function HeroPayButton({ svc }) {
+  const { isLoggedIn, token } = useUserAuth()
+  const [loading, setLoading] = useState(false)
+  const [msg, setMsg] = useState('')
+  if (!isLoggedIn || !isRegistrationService(svc)) return null
+
+  // Services with Basic/Standard/Premium plans (Pvt Ltd, OPC, LLP) show their
+  // prices in the plan cards below, so no "Pay from ₹X" button in the hero.
+  if (REGISTRATION_PLANS[svc.slug]) return null
+  // Trademark pays through the "Proceed to Pay" popup in the price card instead.
+  if (svc.priceCard?.hideBuyNow) return null
+  const amount = parsePrice(svc.priceCard?.price)
+  if (!amount) return null
+  async function pay() {
+    setLoading(true); setMsg('')
+    await openRazorpayCheckout({ amount, serviceSlug: svc.slug || '', serviceTitle: svc.title, token, onSuccess: setMsg, onError: setMsg })
+    setLoading(false)
+  }
+  return (
+    <>
+      <button type="button" onClick={pay} disabled={loading} aria-busy={loading} className="btn btn-primary" style={{ fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer' }}>
+        {loading ? 'Processing…' : `Pay ₹${amount.toLocaleString('en-IN')} →`}
+      </button>
+      {msg && <div style={{ flexBasis: '100%' }}><PayMsg msg={msg} /></div>}
+    </>
   )
 }
 
@@ -1090,6 +1039,7 @@ export default function ServicePage({ svc }) {
               <span className="eyebrow reveal-up in" style={{ marginBottom: 16 }}>{eyebrow}</span>
               <h1 className="reveal-up in" style={{ fontSize: 'clamp(23px, 4.8vw, 48px)', fontWeight: 900, letterSpacing: '-.04em', lineHeight: 1.08, color: 'var(--navy)', margin: '14px 0 16px', maxWidth: 640, overflowWrap: 'break-word', wordBreak: 'normal' }}>
                 {title}
+                {svc.titleSuffix && <> <span style={{ color: 'var(--blue)', whiteSpace: 'nowrap' }}>{svc.titleSuffix}</span></>}
               </h1>
               <p className="reveal-up in" style={{ fontSize: 'clamp(14px,1.5vw,16px)', color: 'var(--text-2)', lineHeight: 1.7, maxWidth: 560, marginBottom: 24 }}>
                 {lead}
@@ -1103,6 +1053,7 @@ export default function ServicePage({ svc }) {
                   <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" aria-hidden="true"><path d={WA_PATH} /></svg>
                   WhatsApp Us
                 </a>
+                <HeroPayButton svc={svc} />
               </div>
             </div>
             <div className="svc-hero-visual-col">

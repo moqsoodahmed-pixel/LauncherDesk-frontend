@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom'
 import { REVIEWS, CASE_STUDIES } from '../../data/trust'
+import logoAlBarakah from '../../assets/clients/al-barakah.webp'
+import logoOfficerestore from '../../assets/clients/officerestore.webp'
+import logoOcean from '../../assets/clients/ocean-premium-construction.webp'
+import logoJacobella from '../../assets/clients/jacobella.webp'
 
 /**
  * ProofSection — "Real Businesses. Real Work." case studies (Phase 6) and
@@ -13,7 +17,12 @@ import { REVIEWS, CASE_STUDIES } from '../../data/trust'
  */
 
 /* Clients shown in "Real Businesses. Real Work." until full case studies are added to data/trust.js */
-const CLIENT_NAMES = ['AL Baraqa', 'Officerestore', 'Ocean Premium Construction']
+const CLIENTS = [
+  { name: 'Al Barakah Group of Industries', logo: logoAlBarakah },
+  { name: 'Officerestore', logo: logoOfficerestore },
+  { name: 'Ocean Premium Construction', logo: logoOcean },
+  { name: 'Jacobella', logo: logoJacobella },
+]
 
 function Stars({ rating }) {
   const n = Math.round(rating || 5)
@@ -104,21 +113,34 @@ export function CaseStudiesSection() {
             {items.map(item => <CaseStudyCard key={item.id} item={item} />)}
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, maxWidth: 960, margin: '0 auto' }}>
-            {CLIENT_NAMES.map(name => (
-              <div key={name} className="reveal-up" style={{ display: 'flex', alignItems: 'center', gap: 14, background: '#fff', border: '1px solid var(--line)', borderRadius: 14, padding: '20px 22px', boxShadow: '0 2px 10px rgba(15,28,46,.05)' }}>
-                <span aria-hidden="true" style={{ width: 46, height: 46, borderRadius: 12, flexShrink: 0, display: 'grid', placeItems: 'center', background: 'var(--brand-50, #EEF4FF)', color: 'var(--blue)', fontWeight: 900, fontSize: 16 }}>
-                  {name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()}
-                </span>
-                <span style={{ fontSize: 16.5, fontWeight: 800, color: 'var(--navy)', lineHeight: 1.3 }}>{name}</span>
-              </div>
+          <>
+          <style>{CLIENTS_CSS}</style>
+          <ul className="proof-clients" aria-label="Some of our clients">
+            {CLIENTS.map(c => (
+              <li key={c.name} className="proof-client reveal-up">
+                <span className="proof-client-logo"><img src={c.logo} alt={`${c.name} logo`} loading="lazy" /></span>
+                <span className="proof-client-name">{c.name}</span>
+              </li>
             ))}
-          </div>
+          </ul>
+          </>
         )}
       </div>
     </section>
   )
 }
+
+const CLIENTS_CSS = `
+.proof-clients { list-style:none; margin:0 auto; padding:0; max-width:1040px; display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+.proof-client { background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px 16px 16px; display:flex; flex-direction:column;
+  align-items:center; gap:12px; box-shadow:0 2px 10px rgba(15,28,46,.05); transition:box-shadow .2s, transform .2s; }
+.proof-client:hover { transform:translateY(-3px); box-shadow:0 14px 30px -10px rgba(15,28,46,.18); }
+.proof-client-logo { height:118px; width:100%; display:grid; place-items:center; }
+.proof-client-logo img { max-height:118px; max-width:100%; object-fit:contain; border-radius:8px; }
+.proof-client-name { font-size:15px; font-weight:800; color:var(--navy); text-align:center; line-height:1.3; }
+@media (max-width:860px) { .proof-clients { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:420px) { .proof-clients { gap:12px; } .proof-client-logo { height:92px; } .proof-client-logo img { max-height:92px; } }
+`
 
 export function TestimonialsSection() {
   const items = (REVIEWS || []).slice(0, 6)

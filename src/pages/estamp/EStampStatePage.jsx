@@ -117,6 +117,11 @@ textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertic
 .lds-duty-fixed b { font-size:22px; color:var(--blue-dark); }
 .lds-duty-fixed span { font-size:13.5px; color:var(--text-2); }
 
+.lds-extra { display:inline-block; margin-left:8px; padding:1px 8px; border-radius:99px; background:var(--brand-100); color:var(--blue-dark);
+  font-size:13px; font-weight:800; vertical-align:1px; }
+.lds-extra-why { color:var(--text-2) !important; }
+.lds-incl { display:block; font-size:11.5px; color:var(--text-3); }
+
 /* Aside */
 .lds-aside { position:sticky; top:100px; display:grid; gap:16px; }
 .lds-price { background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px 18px 16px; }
@@ -293,7 +298,7 @@ export default function EStampStatePage() {
   const validDuty = Number.isInteger(duty) && duty >= 1 && duty <= MAX_DUTY
   const courier = f.delivery === 'courier' ? ESTAMP_FEES.courier : 0
   const fees = ESTAMP_FEES.service + courier
-  const gst = Math.round(fees * GST_RATE * 100) / 100
+  const gst = Math.round(ESTAMP_FEES.service * GST_RATE * 100) / 100   // courier price already includes GST
   const total = useMemo(() => Math.round(((validDuty ? duty : 0) + fees + gst) * 100) / 100, [validDuty, duty, fees, gst])
 
   if (!st) return <Navigate to="/estamp" replace />
@@ -562,7 +567,10 @@ export default function EStampStatePage() {
                       </label>
                       <label>
                         <input type="radio" name="dl" value="courier" checked={f.delivery === 'courier'} onChange={set('delivery')} />
-                        <span>Email and courier{ESTAMP_FEES.courier ? ` (+${inr(ESTAMP_FEES.courier)})` : ''}<small>Scan copy by email, original stamp paper delivered to your door.</small></span>
+                        <span>Email and courier{ESTAMP_FEES.courier ? <span className="lds-extra">+{inr(ESTAMP_FEES.courier)}</span> : null}
+                          <small>Scan copy by email, and the original stamp paper delivered to your door.</small>
+                          {ESTAMP_FEES.courier > 0 && <small className="lds-extra-why">The extra {inr(ESTAMP_FEES.courier)} covers packing and couriering the original stamp paper to your address. GST is included.</small>}
+                        </span>
                       </label>
                     </div>
                     {f.delivery === 'courier' && (
@@ -613,8 +621,8 @@ export default function EStampStatePage() {
               <dl>
                 <dt>Stamp duty</dt><dd>{validDuty ? inr(duty) : '—'}</dd>
                 {ESTAMP_FEES.service > 0 && <><dt>Service fee</dt><dd>{inr(ESTAMP_FEES.service)}</dd></>}
-                {courier > 0 && <><dt>Courier</dt><dd>{inr(courier)}</dd></>}
-                {gst > 0 && <><dt>GST on fees (18%)</dt><dd>{inr(gst)}</dd></>}
+                {courier > 0 && <><dt>Courier to your door <small className="lds-incl">incl. GST</small></dt><dd>{inr(courier)}</dd></>}
+                {gst > 0 && <><dt>GST on service fee (18%)</dt><dd>{inr(gst)}</dd></>}
                 <dt className="total">Total</dt><dd className="total">{validDuty ? inr(total) : '—'}</dd>
               </dl>
               <p>Stamp duty goes to the government at actual. The final amount is confirmed when you pay.</p>
