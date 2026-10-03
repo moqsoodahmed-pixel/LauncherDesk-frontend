@@ -243,17 +243,11 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
         applicantType: applicant, classes, classNumbers: picked, expertToChoose: unsure && !picked.length,
         brandName: f.brand.trim(), whatsappOptIn: f.whatsapp,
       }
-      let request
-      if (logo) {
-        // With a logo the details go as a form upload (the browser sets the content type).
-        const fd = new FormData()
-        Object.entries(fields).forEach(([k, v]) => fd.append(k, k === 'classNumbers' ? JSON.stringify(v) : String(v)))
-        fd.append('logo', logo, logo.name)
-        request = { method: 'POST', body: fd }
-      } else {
-        request = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fields) }
-      }
-      const res = await fetch(`${API_BASE}/payments/checkout/trademark/create-order`, request)
+      // The order details always go as plain JSON. The logo is sent as a separate step below,
+      // so a problem with the logo can never stop the payment.
+      const res = await fetch(`${API_BASE}/payments/checkout/trademark/create-order`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fields),
+      })
       const data = await res.json()
       if (!res.ok) {
         if (data.fields) setErrs(p => ({ ...p, ...data.fields }))
@@ -262,6 +256,20 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
       // Safety net: never open payment for an amount different from what the customer saw.
       if (data.breakdown && data.breakdown.totalPaise !== totalPaise) {
         throw new Error('The price on this page is out of date. Please refresh the page and try again.')
+      }
+      // Optional logo: attach it to this order. If it fails the customer can still pay and
+      // upload the logo later from their dashboard (it is on the post-payment document list).
+      let logoSaved = !logo
+      if (logo) {
+        try {
+          if (!data.logoToken) throw new Error('logo upload not available')
+          const fd = new FormData()
+          fd.append('razorpayOrderId', data.orderId)
+          fd.append('token', data.logoToken)
+          fd.append('logo', logo, logo.name)
+          const lr = await fetch(`${API_BASE}/payments/checkout/trademark/logo`, { method: 'POST', body: fd })
+          logoSaved = lr.ok
+        } catch { logoSaved = false }
       }
       await loadRazorpayScript()
       await new Promise(resolve => {
@@ -284,7 +292,7 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
                 }),
               })
               const vd = await vr.json()
-              setDone({ ok: !!vd.success, orderNumber: vd.orderNumber })
+              setDone({ ok: !!vd.success, orderNumber: vd.orderNumber, logoMissed: !logoSaved })
             } catch {
               setDone({ ok: false })
             }
@@ -327,6 +335,11 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
                 ? `Thank you! A confirmation will be sent to ${f.email}. Our team will call you on +91 ${cleanPhone(f.mobile)} within 1 business day to confirm your brand and ${picked.length > 1 ? 'classes' : 'class'}.`
                 : 'We got your payment but could not confirm it on screen. Please contact support@launcherdesk.com with your email and we will confirm it for you.'}
             </p>
+            {done.logoMissed && (
+              <p className="tmk-sub" style={{ maxWidth: 440, margin: '-6px auto 18px' }}>
+                Your logo could not be uploaded, but your payment is safe. Our team will ask you to share the logo PDF, or you can upload it from your dashboard.
+              </p>
+            )}
             <button type="button" className="tmk-pay" style={{ maxWidth: 220 }} onClick={onClose}>Done</button>
           </div>
         ) : (
@@ -406,7 +419,7 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
                 {errs.classes && <div className="tmk-err">{errs.classes}</div>}
               </div>
 
-              {input('name', 'Full name', { ref: firstRef, type: 'text', autoComplete: 'name', placeholder: 'Enter your full name' })}
+              {input('name', 'Full name', { ref: firstRef, type: 'text', autoComplete: 'name', placeholder: 'Add your full name' })}
               {input('email', 'Email address', { type: 'email', autoComplete: 'email', inputMode: 'email', placeholder: 'you@gmail.com' })}
               <div className="tmk-row2">
                 <div className="tmk-field">

@@ -196,7 +196,7 @@ export default function CheckoutModal({ svc, plan, onClose }) {
               <p className="ckm-sub">We use these to set up your order and keep you updated. No account or password needed.</p>
               {alert && <div className="ckm-alert" role="alert">{alert}</div>}
 
-              {field('name', 'Full name', { ref: firstRef, type: 'text', autoComplete: 'name', placeholder: 'As on your PAN / ID' })}
+              {field('name', 'Full name', { ref: firstRef, type: 'text', autoComplete: 'name', placeholder: 'Add your full name' })}
               {field('email', 'Email address', { type: 'email', autoComplete: 'email', inputMode: 'email', placeholder: 'you@gmail.com' })}
               <div className="ckm-field">
                 <label className="ckm-label" htmlFor="ckm-mobile">Mobile number</label>
