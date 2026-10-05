@@ -62,20 +62,20 @@ export default function UserServiceDetail() {
   return (
     <>
       <SEO title={`${order.serviceTitle} — My Services`} noindex={true}/>
-      <nav style={{fontSize:13,color:'#64748B',marginBottom:20,display:'flex',alignItems:'center',gap:6}} aria-label="Breadcrumb">
+      <nav className="ud-crumbs" aria-label="Breadcrumb">
         <Link to="/user/dashboard" style={{color:'#1D6FE0'}}>Dashboard</Link><span>›</span>
         <Link to="/user/services" style={{color:'#1D6FE0'}}>Services</Link><span>›</span>
-        <span style={{color:'#1A2F4E',fontWeight:600,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',maxWidth:200}}>{order.serviceTitle}</span>
+        <span className="ud-crumbs-current" title={order.serviceTitle}>{order.serviceTitle}</span>
       </nav>
-      <div style={{display:'grid',gridTemplateColumns:'1fr 280px',gap:20,alignItems:'start'}}>
+      <div className="ud-detail-grid">
         <div>
-          <div style={{background:'#fff',borderRadius:16,border:'1px solid #E8EEF6',padding:'24px',marginBottom:16}}>
-            <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:12,marginBottom:16,flexWrap:'wrap'}}>
-              <div>
-                <h1 style={{fontSize:20,fontWeight:800,color:'#1A2F4E',marginBottom:6}}>{order.serviceTitle}</h1>
-                <span style={{display:'inline-flex',alignItems:'center',gap:5,fontSize:11.5,fontWeight:600,padding:'3px 10px',borderRadius:99,background:cfg.bg,color:cfg.color}}><span style={{width:6,height:6,borderRadius:'50%',background:cfg.color}}/>{cfg.label}</span>
-                {order.orderNumber && <span style={{fontSize:12,color:'#64748B',marginLeft:10}}>Order: {order.orderNumber}</span>}
-                {!order.orderNumber && order.externalRef&&<span style={{fontSize:12,color:'#64748B',marginLeft:10}}>Ref: {order.externalRef}</span>}
+          <div className="ud-card ud-pad" style={{marginBottom:16}}>
+            <div style={{marginBottom:totalSteps>0?16:0}}>
+              <h1 className="ud-h1">{order.serviceTitle}</h1>
+              <div className="ud-detail-meta">
+                <span style={{display:'inline-flex',alignItems:'center',gap:5,fontSize:11.5,fontWeight:600,padding:'3px 10px',borderRadius:99,background:cfg.bg,color:cfg.color,whiteSpace:'nowrap'}}><span style={{width:6,height:6,borderRadius:'50%',background:cfg.color}}/>{cfg.label}</span>
+                {order.orderNumber && <span style={{fontSize:12,color:'#64748B',whiteSpace:'nowrap'}}>Order: {order.orderNumber}</span>}
+                {!order.orderNumber && order.externalRef&&<span className="ud-break" style={{fontSize:12,color:'#64748B'}}>Ref: {order.externalRef}</span>}
               </div>
             </div>
             {totalSteps>0&&(
@@ -105,7 +105,7 @@ export default function UserServiceDetail() {
           {needsDocuments && <DocumentChecklist orderId={order._id} />}
 
           {order.steps?.length>0&&(
-            <div style={{background:'#fff',borderRadius:16,border:'1px solid #E8EEF6',padding:'24px',marginBottom:16}}>
+            <div className="ud-card ud-pad" style={{marginBottom:16}}>
               <h2 style={{fontSize:15,fontWeight:700,color:'#1A2F4E',marginBottom:20}}>Service Progress</h2>
               <ol style={{listStyle:'none',position:'relative',padding:0,margin:0}}>
                 <div style={{position:'absolute',left:17,top:18,bottom:18,width:2,background:'#E2E8F0',zIndex:0}}/>
@@ -116,7 +116,7 @@ export default function UserServiceDetail() {
                       <div style={{width:36,height:36,borderRadius:'50%',flexShrink:0,background:isDone?'#1D6FE0':isActive?'#FFFBEB':'#F8FAFC',border:`2px solid ${isDone?'#1D6FE0':isActive?'#D97706':'#E2E8F0'}`,display:'grid',placeItems:'center'}}>
                         <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke={isDone?'#fff':isActive?'#D97706':'#CBD5E1'} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{(isDone?'M9 11l3 3L22 4':'M12 6v6l4 2|M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z').split('|').map((p,i)=><path key={i} d={p}/>)}</svg>
                       </div>
-                      <div style={{paddingTop:6}}>
+                      <div style={{paddingTop:6,minWidth:0}} className="ud-break">
                         <div style={{fontSize:14,fontWeight:700,color:step.status==='pending'?'#94A3B8':'#1A2F4E',marginBottom:2}}>{step.title}</div>
                         {step.description&&<div style={{fontSize:13,color:'#64748B',lineHeight:1.5}}>{step.description}</div>}
                         {step.completedAt&&<div style={{fontSize:12,color:'#94A3B8',marginTop:4}}>Completed {new Date(step.completedAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div>}
@@ -130,20 +130,20 @@ export default function UserServiceDetail() {
 
           <OrderTimeline orderId={order._id} createdAt={order.createdAt} expectedBy={order.expectedBy} completedAt={order.completedAt} />
         </div>
-        <div>
-          <div style={{background:'#fff',borderRadius:14,border:'1px solid #E8EEF6',padding:'20px',marginBottom:14}}>
+        <aside className="ud-detail-side">
+          <div className="ud-card" style={{padding:'20px',marginBottom:14}}>
             <h3 style={{fontSize:13.5,fontWeight:700,color:'#1A2F4E',marginBottom:14}}>Your Professional</h3>
             {order.assignedProfessional?.name ? (
               <div>
                 <div style={{width:44,height:44,borderRadius:'50%',background:'linear-gradient(135deg,#1A2F4E,#1D6FE0)',color:'#fff',fontSize:16,fontWeight:700,display:'grid',placeItems:'center',marginBottom:10}}>{order.assignedProfessional.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)}</div>
                 <div style={{fontWeight:700,color:'#1A2F4E',fontSize:14}}>{order.assignedProfessional.name}</div>
                 {order.assignedProfessional.designation&&<div style={{fontSize:12.5,color:'#64748B',marginTop:2}}>{order.assignedProfessional.designation}</div>}
-                {order.assignedProfessional.email&&<a href={`mailto:${order.assignedProfessional.email}`} style={{fontSize:12,color:'#1D6FE0',display:'block',marginTop:8}}>{order.assignedProfessional.email}</a>}
+                {order.assignedProfessional.email&&<a href={`mailto:${order.assignedProfessional.email}`} className="ud-break" style={{fontSize:12,color:'#1D6FE0',display:'block',marginTop:8}}>{order.assignedProfessional.email}</a>}
               </div>
             ) : <p style={{fontSize:13,color:'#94A3B8',margin:0}}>A professional will be assigned once your service starts.</p>}
           </div>
           {order.payment&&(
-            <div style={{background:'#fff',borderRadius:14,border:'1px solid #E8EEF6',padding:'20px',marginBottom:14}}>
+            <div className="ud-card" style={{padding:'20px',marginBottom:14}}>
               <h3 style={{fontSize:13.5,fontWeight:700,color:'#1A2F4E',marginBottom:12}}>Payment</h3>
               <div style={{display:'flex',justifyContent:'space-between',fontSize:13,marginBottom:6}}><span style={{color:'#64748B'}}>Amount paid</span><span style={{fontWeight:700,color:'#1A2F4E'}}>₹{order.payment.amountRupees?.toLocaleString('en-IN')}</span></div>
               <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'#94A3B8',marginBottom:10}}><span>Status</span><span style={{color:'#16A34A',fontWeight:600}}>✓ Paid</span></div>
@@ -154,11 +154,10 @@ export default function UserServiceDetail() {
             <h3 style={{fontSize:13.5,fontWeight:700,color:'#fff',marginBottom:8}}>Looking for support?</h3>
             <p style={{fontSize:12.5,color:'rgba(255,255,255,.7)',marginBottom:14,lineHeight:1.5}}>Raise a ticket about this order and our team will follow up by email.</p>
             <Link to={supportLink} style={{display:'flex',alignItems:'center',justifyContent:'center',gap:7,padding:'10px',borderRadius:9,background:'#F97316',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none',marginBottom:8}}>Raise a Ticket</Link>
-            <a href={`https://wa.me/918548854859?text=Hi, regarding my service: ${order.serviceTitle}`} target="_blank" rel="noopener noreferrer" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:7,padding:'10px',borderRadius:9,background:'#25D366',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none'}}>WhatsApp Us</a>
+            <a href={`https://wa.me/918548854859?text=${encodeURIComponent(`Hi, regarding my service: ${order.serviceTitle}`)}`} target="_blank" rel="noopener noreferrer" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:7,padding:'10px',borderRadius:9,background:'#25D366',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none'}}>WhatsApp Us</a>
           </div>
-        </div>
+        </aside>
       </div>
-      <style>{`@media(max-width:768px){div[style*="grid-template-columns:1fr 280px"]{grid-template-columns:1fr!important}}`}</style>
     </>
   )
 }

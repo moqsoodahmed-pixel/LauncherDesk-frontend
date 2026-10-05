@@ -48,14 +48,14 @@ export default function UserServices() {
   return (
     <>
       <SEO title="My Services" noindex={true}/>
-      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:20,flexWrap:'wrap',gap:12}}>
+      <div className="ud-page-head" style={{alignItems:'center',marginBottom:20}}>
         <div>
-          <h1 style={{fontSize:20,fontWeight:800,color:'#1A2F4E',marginBottom:2}}>My Services</h1>
+          <h1 className="ud-h1">My Services</h1>
           <p style={{fontSize:13,color:'#64748B'}}>{total} service{total!==1?'s':''} total</p>
         </div>
-        <Link to="/services" style={{display:'inline-flex',alignItems:'center',gap:7,padding:'0 18px',height:40,borderRadius:9,background:'#1D6FE0',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none'}}>+ Add Service</Link>
+        <Link to="/services" className="ud-head-action" style={{display:'inline-flex',alignItems:'center',gap:7,padding:'0 18px',height:40,borderRadius:9,background:'#1D6FE0',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none'}}>+ Add Service</Link>
       </div>
-      <div style={{display:'flex',gap:6,marginBottom:20,background:'#F1F5F9',borderRadius:10,padding:4,width:'fit-content'}}>
+      <div className="ud-tabs" style={{display:'flex',gap:6,marginBottom:20,background:'#F1F5F9',borderRadius:10,padding:4,width:'fit-content',maxWidth:'100%'}}>
         {TABS.map(tab=>(
           <button key={tab.value} onClick={()=>setFilter(tab.value)} style={{padding:'7px 16px',borderRadius:7,border:'none',cursor:'pointer',fontFamily:'inherit',fontWeight:600,fontSize:13,background:filter===tab.value?'#fff':'transparent',color:filter===tab.value?'#1A2F4E':'#64748B',boxShadow:filter===tab.value?'0 1px 4px rgba(0,0,0,.1)':'none',transition:'all .15s'}}>{tab.label}</button>
         ))}
@@ -74,15 +74,15 @@ export default function UserServices() {
         <div style={{display:'flex',flexDirection:'column',gap:12}}>
           {orders.map(order=>(
             <Link key={order._id} to={`/user/services/${order._id}`} style={{display:'block',background:'#fff',borderRadius:14,border:'1px solid #E8EEF6',padding:'18px 20px',textDecoration:'none',color:'inherit',transition:'box-shadow .15s,border-color .15s'}} onMouseEnter={e=>{e.currentTarget.style.borderColor='#1D6FE0';e.currentTarget.style.boxShadow='0 4px 16px rgba(29,111,224,.1)'}} onMouseLeave={e=>{e.currentTarget.style.borderColor='#E8EEF6';e.currentTarget.style.boxShadow='none'}}>
-              <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:12,marginBottom:10}}>
+              <div className="ud-row-between" style={{marginBottom:10}}>
                 <div style={{flex:1,minWidth:0}}>
-                  <h3 style={{fontSize:15,fontWeight:700,color:'#1A2F4E',marginBottom:3,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{order.serviceTitle}</h3>
+                  <h3 title={order.serviceTitle} style={{fontSize:15,fontWeight:700,color:'#1A2F4E',marginBottom:3,lineHeight:1.35,overflow:'hidden',display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',overflowWrap:'anywhere'}}>{order.serviceTitle}</h3>
                   {order.assignedProfessional?.name ? <p style={{fontSize:12,color:'#64748B',margin:0}}>{order.assignedProfessional.designation&&`${order.assignedProfessional.designation} · `}{order.assignedProfessional.name}</p> : <p style={{fontSize:12,color:'#94A3B8',margin:0}}>Professional being assigned</p>}
                 </div>
-                <StatusBadge status={order.status}/>
+                <div style={{flexShrink:0}}><StatusBadge status={order.status}/></div>
               </div>
               <ProgressBar steps={order.steps}/>
-              <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'#94A3B8',marginTop:10}}>
+              <div style={{display:'flex',justifyContent:'space-between',flexWrap:'wrap',gap:'4px 12px',fontSize:12,color:'#94A3B8',marginTop:10}}>
                 <span>Started {new Date(order.createdAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</span>
                 {order.expectedBy&&<span>Expected {new Date(order.expectedBy).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</span>}
               </div>

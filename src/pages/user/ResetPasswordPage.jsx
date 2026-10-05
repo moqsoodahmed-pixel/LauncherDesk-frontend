@@ -33,7 +33,8 @@ const S = `
 .rp-ok{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:11px;padding:12px 16px;font-size:13px;color:#15803D;margin-bottom:18px;display:flex;align-items:center;gap:8px}
 .rp-strength{height:4px;border-radius:2px;margin-top:6px;transition:all .3s}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:480px){.rp-card{padding:32px 20px}}
+@media(max-width:480px){.rp-wrap{padding:20px 14px}.rp-card{padding:32px 20px;border-radius:20px}.rp-field input{font-size:16px}}
+@media(max-width:360px){.rp-card{padding:26px 16px}}
 `
 
 export default function ResetPasswordPage() {

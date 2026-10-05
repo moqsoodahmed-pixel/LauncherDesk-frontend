@@ -18,8 +18,8 @@ export default function UserPayments() {
   return (
     <>
       <SEO title="My Payments" noindex={true}/>
-      <div style={{marginBottom:24}}><h1 style={{fontSize:20,fontWeight:800,color:'#1A2F4E',marginBottom:4}}>Payments</h1><p style={{fontSize:13,color:'#64748B'}}>{payments.length} transaction{payments.length!==1?'s':''}</p></div>
-      {total>0&&<div style={{background:'linear-gradient(135deg,#1A2F4E,#1D6FE0)',borderRadius:16,padding:'24px',color:'#fff',marginBottom:20}}><div style={{fontSize:12,fontWeight:600,color:'rgba(255,255,255,.6)',textTransform:'uppercase',letterSpacing:'.1em',marginBottom:6}}>Total spent</div><div style={{fontSize:36,fontWeight:900,letterSpacing:'-.03em'}}>₹{total.toLocaleString('en-IN')}</div><div style={{fontSize:12.5,color:'rgba(255,255,255,.6)',marginTop:4}}>Across {payments.length} payment{payments.length!==1?'s':''}</div></div>}
+      <div className="ud-page-head"><div><h1 className="ud-h1">Payments</h1><p style={{fontSize:13,color:'#64748B'}}>{payments.length} transaction{payments.length!==1?'s':''}</p></div></div>
+      {total>0&&<div style={{background:'linear-gradient(135deg,#1A2F4E,#1D6FE0)',borderRadius:16,padding:'24px',color:'#fff',marginBottom:20}}><div style={{fontSize:12,fontWeight:600,color:'rgba(255,255,255,.6)',textTransform:'uppercase',letterSpacing:'.1em',marginBottom:6}}>Total spent</div><div className="ud-break" style={{fontSize:'clamp(26px,8vw,36px)',fontWeight:900,letterSpacing:'-.03em',lineHeight:1.15}}>₹{total.toLocaleString('en-IN')}</div><div style={{fontSize:12.5,color:'rgba(255,255,255,.6)',marginTop:4}}>Across {payments.length} payment{payments.length!==1?'s':''}</div></div>}
       {error&&<div style={{background:'#FEF2F2',border:'1px solid #FECACA',borderRadius:10,padding:'12px 16px',fontSize:14,color:'#DC2626',marginBottom:16}}>{error}</div>}
       {loading ? (
         <div style={{textAlign:'center',padding:'60px 0',color:'#94A3B8'}}><style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style><div style={{width:32,height:32,border:'3px solid #E2E8F0',borderTopColor:'#1D6FE0',borderRadius:'50%',animation:'spin 1s linear infinite',margin:'0 auto 12px'}}/></div>
@@ -32,7 +32,24 @@ export default function UserPayments() {
         </div>
       ) : (
         <div style={{background:'#fff',borderRadius:16,border:'1px solid #E8EEF6',overflow:'hidden'}}>
-          <div style={{overflowX:'auto'}}>
+          <div className="ud-pay-cards">
+            {payments.map(p=>(
+              <div key={p._id} className="ud-pay-card">
+                <div className="ud-row-between">
+                  <div className="ud-break" style={{fontSize:14,fontWeight:700,color:'#1A2F4E'}}>{p.serviceTitle||p.serviceSlug}</div>
+                  <div style={{fontSize:14,fontWeight:800,color:'#1A2F4E',whiteSpace:'nowrap'}}>₹{p.amountRupees?.toLocaleString('en-IN')}</div>
+                </div>
+                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:10,flexWrap:'wrap',marginTop:8}}>
+                  <div style={{fontSize:12,color:'#64748B'}}>
+                    {new Date(p.verifiedAt||p.createdAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}
+                    {p.razorpayPaymentId && <span className="ud-break" style={{display:'block',fontSize:11,color:'#94A3B8',fontFamily:'monospace',marginTop:2}}>{p.razorpayPaymentId}</span>}
+                  </div>
+                  <span style={{display:'inline-flex',alignItems:'center',gap:5,fontSize:11.5,fontWeight:600,padding:'3px 10px',borderRadius:99,background:'#F0FDF4',color:'#16A34A'}}><span style={{width:6,height:6,borderRadius:'50%',background:'#16A34A'}}/>Paid</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="ud-pay-table" style={{overflowX:'auto'}}>
             <table style={{width:'100%',borderCollapse:'collapse',minWidth:560}}>
               <thead><tr style={{background:'#F8FAFC',borderBottom:'1px solid #E8EEF6'}}>{['Service','Amount','Date','Payment ID','Status'].map(h=><th key={h} scope="col" style={{padding:'12px 16px',textAlign:'left',fontSize:12,fontWeight:700,color:'#64748B',textTransform:'uppercase',letterSpacing:'.06em',whiteSpace:'nowrap'}}>{h}</th>)}</tr></thead>
               <tbody>

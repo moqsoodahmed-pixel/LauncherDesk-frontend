@@ -31,16 +31,16 @@ function NewTicketForm({ defaultSubject, defaultOrderId, onCreated, onCancel }) 
   }
 
   return (
-    <form onSubmit={submit} style={{ background: '#fff', borderRadius: 16, border: '1px solid #E8EEF6', padding: 24, marginBottom: 20 }}>
+    <form onSubmit={submit} className="ud-card ud-pad" style={{ marginBottom: 20 }}>
       <h2 style={{ fontSize: 15, fontWeight: 700, color: '#1A2F4E', marginBottom: 16 }}>Raise a new ticket</h2>
       <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: '#475569', marginBottom: 6 }}>Subject</label>
       <input value={subject} onChange={e => setSubject(e.target.value)} placeholder="e.g. Question about my GST filing"
-        style={{ width: '100%', height: 42, borderRadius: 9, border: '1px solid #E2E8F0', padding: '0 14px', fontSize: 13.5, marginBottom: 14, outline: 'none', fontFamily: 'inherit' }} />
+        style={{ width: '100%', height: 42, borderRadius: 9, border: '1px solid #E2E8F0', padding: '0 14px', fontSize: 16, marginBottom: 14, outline: 'none', fontFamily: 'inherit' }} />
       <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: '#475569', marginBottom: 6 }}>Message</label>
       <textarea value={message} onChange={e => setMessage(e.target.value)} rows={4} placeholder="Describe your question or issue…"
-        style={{ width: '100%', borderRadius: 9, border: '1px solid #E2E8F0', padding: '10px 14px', fontSize: 13.5, marginBottom: 14, outline: 'none', fontFamily: 'inherit', resize: 'vertical' }} />
+        style={{ width: '100%', borderRadius: 9, border: '1px solid #E2E8F0', padding: '10px 14px', fontSize: 16, marginBottom: 14, outline: 'none', fontFamily: 'inherit', resize: 'vertical' }} />
       {err && <p style={{ fontSize: 12.5, color: '#DC2626', marginBottom: 12 }}>{err}</p>}
-      <div style={{ display: 'flex', gap: 10 }}>
+      <div className="ud-btn-row">
         <button type="submit" disabled={saving} style={{ height: 40, padding: '0 20px', borderRadius: 9, border: 'none', background: '#1D6FE0', color: '#fff', fontWeight: 700, fontSize: 13.5, cursor: saving ? 'default' : 'pointer', opacity: saving ? 0.7 : 1 }}>{saving ? 'Submitting…' : 'Submit Ticket'}</button>
         <button type="button" onClick={onCancel} style={{ height: 40, padding: '0 20px', borderRadius: 9, border: '1px solid #E2E8F0', background: '#fff', color: '#475569', fontWeight: 700, fontSize: 13.5, cursor: 'pointer' }}>Cancel</button>
       </div>
@@ -72,17 +72,17 @@ function TicketThread({ ticketId, onBack }) {
 
   return (
     <div style={{ background: '#fff', borderRadius: 16, border: '1px solid #E8EEF6', overflow: 'hidden' }}>
-      <div style={{ padding: '18px 22px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
-        <div>
+      <div className="ud-pad" style={{ paddingTop: 18, paddingBottom: 18, borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
+        <div className="ud-break" style={{ minWidth: 0 }}>
           <button onClick={onBack} style={{ background: 'none', border: 'none', color: '#1D6FE0', fontWeight: 600, fontSize: 12.5, cursor: 'pointer', fontFamily: 'inherit', padding: 0, marginBottom: 6 }}>← All tickets</button>
           <h2 style={{ fontSize: 15, fontWeight: 700, color: '#1A2F4E' }}>{ticket.subject}</h2>
           <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>Ticket ID: {ticket.ticketId}</div>
         </div>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 11.5, fontWeight: 600, padding: '4px 12px', borderRadius: 99, background: cfg.bg, color: cfg.color }}>{cfg.label}</span>
       </div>
-      <div style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 14, maxHeight: 420, overflowY: 'auto' }}>
+      <div className="ud-pad" style={{ display: 'flex', flexDirection: 'column', gap: 14, maxHeight: 'min(420px, 60vh)', overflowY: 'auto' }}>
         {ticket.messages.map((m, i) => (
-          <div key={i} style={{ alignSelf: m.from === 'customer' ? 'flex-end' : 'flex-start', maxWidth: '80%' }}>
+          <div key={i} className="ud-msg ud-break" style={{ alignSelf: m.from === 'customer' ? 'flex-end' : 'flex-start' }}>
             <div style={{
               background: m.from === 'customer' ? '#1D6FE0' : '#F1F5F9', color: m.from === 'customer' ? '#fff' : '#1A2F4E',
               borderRadius: 12, padding: '10px 14px', fontSize: 13.5, lineHeight: 1.5,
@@ -92,8 +92,8 @@ function TicketThread({ ticketId, onBack }) {
         ))}
       </div>
       {!['RESOLVED', 'CLOSED'].includes(ticket.status) ? (
-        <form onSubmit={send} style={{ padding: '14px 22px', borderTop: '1px solid #F1F5F9', display: 'flex', gap: 10 }}>
-          <input value={reply} onChange={e => setReply(e.target.value)} placeholder="Type a reply…" style={{ flex: 1, height: 42, borderRadius: 9, border: '1px solid #E2E8F0', padding: '0 14px', fontSize: 13.5, outline: 'none', fontFamily: 'inherit' }} />
+        <form onSubmit={send} className="ud-reply-form">
+          <input value={reply} onChange={e => setReply(e.target.value)} placeholder="Type a reply…" style={{ flex: 1, height: 42, borderRadius: 9, border: '1px solid #E2E8F0', padding: '0 14px', fontSize: 16, outline: 'none', fontFamily: 'inherit' }} />
           <button type="submit" disabled={sending || !reply.trim()} style={{ height: 42, padding: '0 20px', borderRadius: 9, border: 'none', background: '#1D6FE0', color: '#fff', fontWeight: 700, fontSize: 13, cursor: sending ? 'default' : 'pointer', opacity: sending ? 0.7 : 1 }}>Send</button>
         </form>
       ) : (
@@ -126,13 +126,13 @@ export default function UserSupport() {
   return (
     <>
       <SEO title="Support" noindex={true} />
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 24 }}>
+      <div className="ud-page-head">
         <div>
-          <h1 style={{ fontSize: 22, fontWeight: 800, color: '#1A2F4E', letterSpacing: '-.02em', marginBottom: 4 }}>Support</h1>
+          <h1 className="ud-h1">Support</h1>
           <p style={{ fontSize: 14, color: '#64748B' }}>Raise a ticket and our team replies by email and here.</p>
         </div>
         {!showNew && (
-          <button onClick={() => setShowNew(true)} style={{ height: 42, padding: '0 20px', borderRadius: 9, border: 'none', background: '#1D6FE0', color: '#fff', fontWeight: 700, fontSize: 13.5, cursor: 'pointer' }}>+ New Ticket</button>
+          <button onClick={() => setShowNew(true)} className="ud-head-action" style={{ display: 'inline-flex', alignItems: 'center', height: 42, padding: '0 20px', borderRadius: 9, border: 'none', background: '#1D6FE0', color: '#fff', fontWeight: 700, fontSize: 13.5, cursor: 'pointer' }}>+ New Ticket</button>
         )}
       </div>
 
@@ -159,8 +159,8 @@ export default function UserSupport() {
                 padding: '16px 20px', borderBottom: '1px solid #F1F5F9', background: 'none', border: 'none', borderBottomWidth: 1,
                 borderBottomStyle: 'solid', borderBottomColor: '#F1F5F9', cursor: 'pointer', fontFamily: 'inherit',
               }}>
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: '#1A2F4E' }}>{t.subject}</div>
+                <div className="ud-break" style={{ minWidth: 0 }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: '#1A2F4E', lineHeight: 1.4 }}>{t.subject}</div>
                   <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>{t.ticketId} · Updated {fmt(t.updatedAt)}</div>
                 </div>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 99, background: cfg.bg, color: cfg.color, flexShrink: 0 }}>{cfg.label}</span>

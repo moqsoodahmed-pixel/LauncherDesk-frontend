@@ -53,12 +53,12 @@ function DocRow({ doc, orderId, onChanged }) {
   return (
     <div style={{ padding: '14px 0', borderBottom: '1px solid #F1F5F9' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-        <div style={{ minWidth: 0 }}>
+        <div style={{ minWidth: 0, flex: '1 1 180px', overflowWrap: 'anywhere' }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: '#1A2F4E' }}>{doc.name}</div>
           {doc.description && <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>{doc.description}</div>}
           {doc.filename && <div style={{ fontSize: 12, color: '#64748B', marginTop: 4 }}>📎 {doc.filename} {doc.fileSize ? `· ${fmtSize(doc.fileSize)}` : ''}</div>}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0, flexWrap: 'wrap' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 99, background: cfg.bg, color: cfg.color, whiteSpace: 'nowrap' }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: cfg.color }} />{cfg.label}
           </span>
@@ -106,7 +106,7 @@ export default function DocumentChecklist({ orderId }) {
   useEffect(() => { load() }, [load])
 
   if (loading) return (
-    <div style={{ background: '#fff', borderRadius: 16, border: '1px solid #E8EEF6', padding: '24px', marginBottom: 16, textAlign: 'center', color: '#94A3B8', fontSize: 13 }}>
+    <div className="ud-card ud-pad" style={{ marginBottom: 16, textAlign: 'center', color: '#94A3B8', fontSize: 13 }}>
       Loading documents…
     </div>
   )
@@ -126,7 +126,7 @@ export default function DocumentChecklist({ orderId }) {
   }
 
   return (
-    <div style={{ background: '#fff', borderRadius: 16, border: '1px solid #E8EEF6', padding: '24px', marginBottom: 16 }}>
+    <div className="ud-card ud-pad" style={{ marginBottom: 16 }}>
       {data.required?.length > 0 && (
         <>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6, flexWrap: 'wrap', gap: 10 }}>
@@ -139,7 +139,7 @@ export default function DocumentChecklist({ orderId }) {
           {!allApproved && (
             <div style={{ marginTop: 16, display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
               <button onClick={submit} disabled={!uploaded.length || submitting} style={{
-                height: 40, padding: '0 20px', borderRadius: 9, border: 'none', background: uploaded.length ? '#1D6FE0' : '#E2E8F0',
+                minHeight: 40, padding: '8px 20px', maxWidth: '100%', fontFamily: 'inherit', borderRadius: 9, border: 'none', background: uploaded.length ? '#1D6FE0' : '#E2E8F0',
                 color: uploaded.length ? '#fff' : '#94A3B8', fontWeight: 700, fontSize: 13.5, cursor: uploaded.length && !submitting ? 'pointer' : 'default',
               }}>{submitting ? 'Submitting…' : "I've uploaded my documents"}</button>
               {submitMsg && <span style={{ fontSize: 12.5, color: '#16A34A' }}>{submitMsg}</span>}

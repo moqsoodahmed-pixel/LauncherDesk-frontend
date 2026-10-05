@@ -26,7 +26,7 @@ function StatCard({ label, value, sub, icon, color='#1D6FE0', bg='#EEF2FF' }) {
       <div style={{width:44,height:44,borderRadius:10,background:bg,display:'grid',placeItems:'center',flexShrink:0}}>
         <svg viewBox="0 0 24 24" width={20} height={20} fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{icon.split('|').map((p,i)=><path key={i} d={p}/>)}</svg>
       </div>
-      <div>
+      <div style={{minWidth:0}}>
         <div style={{fontSize:28,fontWeight:900,color:'#1A2F4E',lineHeight:1,letterSpacing:'-.02em'}}>{value}</div>
         <div style={{fontSize:13,fontWeight:600,color:'#4A5E78',marginTop:2}}>{label}</div>
         {sub && <div style={{fontSize:11.5,color:'#94A3B8',marginTop:3}}>{sub}</div>}
@@ -49,9 +49,11 @@ export default function UserDashboard() {
   return (
     <>
       <SEO title="My Dashboard" noindex={true} />
-      <div style={{marginBottom:24}}>
-        <h1 style={{fontSize:22,fontWeight:800,color:'#1A2F4E',letterSpacing:'-.02em',marginBottom:4}}>Welcome back, {firstName}</h1>
+      <div className="ud-page-head">
+        <div>
+        <h1 className="ud-h1">Welcome back, {firstName}</h1>
         <p style={{fontSize:14,color:'#64748B'}}>Here's an overview of your services and activity.</p>
+        </div>
       </div>
       {error && <div style={{background:'#FEF2F2',border:'1px solid #FECACA',borderRadius:10,padding:'14px 16px',fontSize:14,color:'#DC2626',marginBottom:20}}>{error}</div>}
       {loading ? (
@@ -61,15 +63,15 @@ export default function UserDashboard() {
         </div>
       ) : (
         <>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:16,marginBottom:28}}>
+          <div className="ud-stat-grid">
             <StatCard label="Active Services" value={data?.stats?.activeOrders??0} sub="Currently being processed" icon="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6" color="#D97706" bg="#FFFBEB"/>
             <StatCard label="Total Services" value={data?.stats?.totalOrders??0} sub="All time" icon="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" color="#1D6FE0" bg="#EEF2FF"/>
             <StatCard label="Payments Made" value={data?.stats?.totalPayments??0} sub="Successful transactions" icon="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z|M16 21V5a2 2 0 0-2-2h-4a2 2 0 0 0-2 2v16" color="#16A34A" bg="#F0FDF4"/>
           </div>
           <div style={{background:'#fff',borderRadius:16,border:'1px solid #E8EEF6',overflow:'hidden',marginBottom:24}}>
-            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'18px 20px',borderBottom:'1px solid #F1F5F9'}}>
+            <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:12,padding:'18px 20px',borderBottom:'1px solid #F1F5F9'}}>
               <h2 style={{fontSize:15,fontWeight:700,color:'#1A2F4E',margin:0}}>Recent Services</h2>
-              <Link to="/user/services" style={{fontSize:13,color:'#1D6FE0',fontWeight:600,textDecoration:'none'}}>View all →</Link>
+              <Link to="/user/services" style={{fontSize:13,color:'#1D6FE0',fontWeight:600,textDecoration:'none',whiteSpace:'nowrap'}}>View all →</Link>
             </div>
             {!data?.recentOrders?.length ? (
               <div style={{padding:'48px 24px',textAlign:'center'}}>
@@ -82,8 +84,8 @@ export default function UserDashboard() {
               <div>
                 {data.recentOrders.map((order, i) => (
                   <Link key={order._id} to={`/user/services/${order._id}`} style={{display:'block',padding:'16px 20px',textDecoration:'none',color:'inherit',borderBottom:i<data.recentOrders.length-1?'1px solid #F1F5F9':'none',transition:'background .12s'}} onMouseEnter={e=>e.currentTarget.style.background='#F8FAFC'} onMouseLeave={e=>e.currentTarget.style.background='transparent'}>
-                    <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:12,marginBottom:6}}>
-                      <div>
+                    <div className="ud-row-between" style={{marginBottom:6,flexWrap:'wrap'}}>
+                      <div className="ud-break">
                         <div style={{fontSize:14,fontWeight:700,color:'#1A2F4E',marginBottom:2}}>{order.serviceTitle}</div>
                         {order.assignedProfessional?.name && <div style={{fontSize:12,color:'#64748B'}}>Handled by {order.assignedProfessional.designation?`${order.assignedProfessional.designation} `:''}{order.assignedProfessional.name}</div>}
                       </div>
@@ -101,7 +103,7 @@ export default function UserDashboard() {
           <div style={{background:'linear-gradient(135deg,#1A2F4E,#1D6FE0)',borderRadius:16,padding:'24px',color:'#fff'}}>
             <h3 style={{fontSize:15,fontWeight:700,marginBottom:6,color:'#fff'}}>Need something?</h3>
             <p style={{fontSize:13,color:'rgba(255,255,255,.7)',marginBottom:18}}>Start a new service, ask our AI, or talk to our expert directly.</p>
-            <div style={{display:'flex',gap:10,flexWrap:'wrap'}}>
+            <div className="ud-btn-row">
               <Link to="/services" style={{display:'inline-flex',alignItems:'center',gap:7,padding:'0 18px',height:40,borderRadius:8,background:'#F97316',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none'}}>Browse Services →</Link>
               <Link to="/ai" style={{display:'inline-flex',alignItems:'center',gap:7,padding:'0 18px',height:40,borderRadius:8,background:'rgba(255,255,255,.12)',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none',border:'1px solid rgba(255,255,255,.2)'}}>Ask Sneha</Link>
               <Link to="/company/contact" style={{display:'inline-flex',alignItems:'center',gap:7,padding:'0 18px',height:40,borderRadius:8,background:'rgba(255,255,255,.12)',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none',border:'1px solid rgba(255,255,255,.2)'}}>Talk to Expert</Link>

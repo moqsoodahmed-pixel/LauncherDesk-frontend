@@ -169,6 +169,13 @@ const S = `
 @media(max-width: 480px) {
   .ul-card { padding: 32px 22px; border-radius: 20px; }
   .ul-wrap { padding: 20px 14px; }
+  .ul-field input { font-size: 16px; }
+  .ul-ambient-orb-1, .ul-ambient-orb-2 { width: 240px; height: 240px; }
+}
+@media(max-width: 360px) {
+  .ul-card { padding: 26px 16px; }
+  .ul-social-row { flex-direction: column; gap: 10px; }
+  .ul-social-icon-btn { width: 100%; flex: none; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 `

@@ -70,10 +70,10 @@ export default function VerifyEmailBanner() {
     <>
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap',
-        background: '#FFFBEB', border: '1px solid #FDE68A', borderRadius: 12, padding: '12px 18px', marginBottom: 20,
+        background: '#FFFBEB', border: '1px solid #FDE68A', borderRadius: 12, padding: '12px 16px', marginBottom: 20,
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13.5, color: '#92400E' }}>
-          <span style={{ fontSize: 18 }}>✉️</span>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13.5, color: '#92400E', lineHeight: 1.5, flex: '1 1 260px', minWidth: 0 }}>
+          <span style={{ fontSize: 18, lineHeight: 1.2, flexShrink: 0 }}>✉️</span>
           <span><strong>Verify your email</strong> — so you never miss an order, payment or document update.</span>
         </div>
         <button onClick={sendOtp} disabled={sending} style={{
@@ -85,19 +85,19 @@ export default function VerifyEmailBanner() {
       {open && (
         <div onClick={e => { if (e.target === e.currentTarget) setOpen(false) }} style={{
           position: 'fixed', inset: 0, background: 'rgba(10,18,33,.55)', backdropFilter: 'blur(3px)', zIndex: 1000,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16,
         }}>
-          <div style={{ background: '#fff', borderRadius: 16, width: '100%', maxWidth: 400, padding: '30px 28px', textAlign: 'center' }}>
+          <div style={{ background: '#fff', borderRadius: 16, width: '100%', maxWidth: 400, maxHeight: 'calc(100dvh - 32px)', overflowY: 'auto', padding: 'clamp(22px, 6vw, 30px) clamp(16px, 5vw, 28px)', textAlign: 'center' }}>
             <div style={{ fontSize: 34, marginBottom: 6 }}>📧</div>
             <h2 style={{ fontSize: 18, fontWeight: 800, color: '#1A2F4E', marginBottom: 6 }}>Enter verification code</h2>
-            <p style={{ fontSize: 13, color: '#64748B', marginBottom: 22 }}>We sent a 6-digit code to <strong>{user.email}</strong>.</p>
+            <p style={{ fontSize: 13, color: '#64748B', marginBottom: 22, overflowWrap: 'anywhere' }}>We sent a 6-digit code to <strong>{user.email}</strong>.</p>
 
-            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 16 }} onPaste={onPaste}>
+            <div className="ud-otp" style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 16 }} onPaste={onPaste}>
               {digits.map((d, i) => (
                 <input key={i} ref={el => inputs.current[i] = el} value={d} inputMode="numeric" maxLength={1}
                   onChange={e => setDigit(i, e.target.value)} onKeyDown={e => onKeyDown(i, e)}
                   style={{
-                    width: 42, height: 50, textAlign: 'center', fontSize: 20, fontWeight: 700, borderRadius: 10,
+                    flex: '1 1 0', minWidth: 0, maxWidth: 46, height: 50, padding: 0, textAlign: 'center', fontSize: 20, fontWeight: 700, borderRadius: 10,
                     border: '1.5px solid #E2E8F0', outline: 'none', color: '#1A2F4E',
                   }} />
               ))}
