@@ -2,6 +2,14 @@ import { createContext, useContext, useState, useCallback } from 'react'
 
 const UserAuthContext = createContext(null)
 const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+
+// If the live site was built without VITE_API_URL it silently calls http://localhost:5000,
+// which fails (or makes Chrome ask for "local network" permission) on every visitor's machine.
+const IS_LOCAL_PAGE = typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)
+const API_MISCONFIGURED = !IS_LOCAL_PAGE && /\/\/(localhost|127\.0\.0\.1)[:/]/.test(API)
+if (API_MISCONFIGURED) {
+  console.error(`[LauncherDesk] VITE_API_URL is not set for this build, so the app is calling ${API}. Set VITE_API_URL to your backend URL (e.g. https://<your-backend>/api) in the hosting build settings and redeploy.`)
+}
 const REQUEST_TIMEOUT_MS = 20000
 
 export function UserAuthProvider({ children }) {
@@ -77,7 +85,9 @@ export function UserAuthProvider({ children }) {
       })
     } catch (err) {
       if (err.name === 'AbortError') throw new Error('The server is taking too long to respond. Please refresh in a moment.')
-      throw new Error('Could not reach the server. Check your internet connection and try again.')
+      if (API_MISCONFIGURED) throw new Error('This site is not connected to its server (API address missing from the build). Please contact support.')
+      console.error(`[LauncherDesk] Network error calling ${API}${path}:`, err)
+      throw new Error('Could not reach the server. Please try again in a minute.')
     } finally {
       clearTimeout(timer)
     }
