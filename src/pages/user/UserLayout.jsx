@@ -22,19 +22,25 @@ const MOBILE_NAV = NAV
 
 const CSS = `
 /* ── Shell ───────────────────────────────────────────────────── */
-.ud-root{display:flex;min-height:100vh;min-height:100dvh;background:#F7F9FC;font-family:'Manrope',system-ui,sans-serif;width:100%;max-width:100%;overflow-x:hidden}
+.ud-root{--ud-side:240px;min-height:100vh;min-height:100dvh;background:#F7F9FC;font-family:'Manrope',system-ui,sans-serif;width:100%;max-width:100%;overflow-x:clip}
 .ud-root *{box-sizing:border-box}
-.ud-sidebar{width:240px;background:#0D1B2E;color:#fff;display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;height:100dvh;overflow-y:auto}
+.ud-sidebar{position:fixed;top:0;left:0;bottom:0;z-index:30;width:var(--ud-side);background:linear-gradient(180deg,#0D1B2E 0%,#0B1727 100%);color:#fff;display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,.06)}
 .ud-sidebar-brand{padding:20px 16px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08)}
 .ud-sidebar-logo{height:28px;width:auto;max-width:140px;object-fit:contain;filter:brightness(0) invert(1)}
-.ud-sidebar-nav{padding:12px 8px;flex:1}
+.ud-sidebar-nav{padding:14px 10px;flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent}
+.ud-nav-section{padding:14px 12px 6px;font-size:10.5px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.35)}
 .ud-nav-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;color:rgba(255,255,255,.6);font-size:13.5px;font-weight:600;text-decoration:none;margin-bottom:2px;transition:background .15s,color .15s}
 .ud-nav-link:hover{background:rgba(255,255,255,.07);color:#fff}
-.ud-nav-link.active{background:rgba(29,93,184,.25);color:#93C5FD;border-left:3px solid #1D5DB8}
-.ud-sidebar-footer{padding:12px 8px 16px;border-top:1px solid rgba(255,255,255,.08)}
+.ud-nav-link.active{background:rgba(29,111,224,.22);color:#BFDBFE;box-shadow:inset 3px 0 0 #3B8FEF}
+.ud-sidebar-footer{padding:12px 10px 16px;border-top:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.ud-side-user{display:flex;align-items:center;gap:10px;padding:10px 10px;margin-bottom:8px;border-radius:10px;background:rgba(255,255,255,.05);text-decoration:none}
+.ud-side-user:hover{background:rgba(255,255,255,.08)}
+.ud-side-user-txt{min-width:0;line-height:1.3}
+.ud-side-user-name{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ud-side-user-mail{font-size:11px;color:rgba(255,255,255,.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ud-logout-btn{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border-radius:9px;background:transparent;border:none;color:rgba(255,255,255,.5);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:color .15s,background .15s}
 .ud-logout-btn:hover{background:rgba(239,68,68,.15);color:#F87171}
-.ud-main{flex:1;display:flex;flex-direction:column;min-width:0;overflow-x:hidden}
+.ud-main{margin-left:var(--ud-side);display:flex;flex-direction:column;min-width:0;min-height:100vh;min-height:100dvh}
 .ud-topbar{background:#fff;border-bottom:1px solid #E8EEF6;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:20;flex-shrink:0}
 .ud-topbar-left{display:flex;align-items:center;gap:10px;min-width:0}
 .ud-topbar-logo{display:none;height:22px;width:auto;max-width:110px;object-fit:contain}
@@ -93,7 +99,7 @@ const CSS = `
 
 /* ── Tablet ──────────────────────────────────────────────────── */
 @media(max-width:1100px){
-  .ud-sidebar{width:210px}
+  .ud-root{--ud-side:210px}
   .ud-content{padding:20px}
 }
 @media(max-width:980px){
@@ -105,6 +111,7 @@ const CSS = `
 /* ── Phone ───────────────────────────────────────────────────── */
 @media(max-width:768px){
   .ud-sidebar{display:none}
+  .ud-main{margin-left:0}
   .ud-content{padding:16px;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
   .ud-mobile-bar{display:block}
   .ud-topbar{padding:0 16px;height:52px}
@@ -161,6 +168,7 @@ export default function UserLayout() {
           <Link to="/"><img src={logoImg} alt="LauncherDesk" className="ud-sidebar-logo" /></Link>
         </div>
         <nav className="ud-sidebar-nav" aria-label="Main navigation">
+          <div className="ud-nav-section">MY ACCOUNT</div>
           {NAV.map(item => (
             <NavLink key={item.path} to={item.path} className={({isActive})=>`ud-nav-link${isActive?' active':''}`}>
               <Ic d={item.icon}/>{item.label}
@@ -168,6 +176,13 @@ export default function UserLayout() {
           ))}
         </nav>
         <div className="ud-sidebar-footer">
+          <Link to="/user/profile" className="ud-side-user" title="View profile">
+            <div className="ud-topbar-avatar" aria-hidden="true">{initials(user?.name)}</div>
+            <div className="ud-side-user-txt">
+              <div className="ud-side-user-name">{user?.name || 'My account'}</div>
+              {user?.email && <div className="ud-side-user-mail">{user.email}</div>}
+            </div>
+          </Link>
           <Link to="/services" className="ud-nav-link" style={{marginBottom:4}}>
             <Ic d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10"/>Browse Services
           </Link>

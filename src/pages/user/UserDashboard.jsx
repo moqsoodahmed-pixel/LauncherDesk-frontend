@@ -13,10 +13,30 @@ const STATUS_CFG = {
   completed:      { label:'Completed',    color:'#16A34A', bg:'#F0FDF4' },
   'on-hold':      { label:'On Hold',      color:'#64748B', bg:'#F1F5F9' },
   cancelled:      { label:'Cancelled',    color:'#DC2626', bg:'#FEF2F2' },
+  CREATED:                      { label:'Created',            color:'#3B82F6', bg:'#EFF6FF' },
+  PAYMENT_PENDING:              { label:'Payment Pending',    color:'#D97706', bg:'#FFFBEB' },
+  PAYMENT_SUCCESSFUL:           { label:'Payment Received',   color:'#16A34A', bg:'#F0FDF4' },
+  PAYMENT_FAILED:               { label:'Payment Failed',     color:'#DC2626', bg:'#FEF2F2' },
+  DOCUMENTS_PENDING:            { label:'Docs Needed',        color:'#7C3AED', bg:'#F5F3FF' },
+  DOCUMENTS_SUBMITTED:          { label:'Docs Submitted',     color:'#0284C7', bg:'#F0F9FF' },
+  DOCUMENTS_UNDER_REVIEW:       { label:'Docs Under Review',  color:'#0284C7', bg:'#F0F9FF' },
+  DOCUMENT_CORRECTION_REQUIRED: { label:'Correction Needed',  color:'#DC2626', bg:'#FEF2F2' },
+  DOCUMENTS_APPROVED:           { label:'Docs Approved',      color:'#16A34A', bg:'#F0FDF4' },
+  ASSIGNED:                     { label:'Assigned',           color:'#0284C7', bg:'#F0F9FF' },
+  PROCESSING:                   { label:'Processing',         color:'#0284C7', bg:'#F0F9FF' },
+  GOVERNMENT_PROCESSING:        { label:'With Authority',     color:'#0284C7', bg:'#F0F9FF' },
+  ACTION_REQUIRED:              { label:'Action Needed',      color:'#D97706', bg:'#FFFBEB' },
+  ON_HOLD:                      { label:'On Hold',            color:'#64748B', bg:'#F1F5F9' },
+  COMPLETED:                    { label:'Completed',          color:'#16A34A', bg:'#F0FDF4' },
+  DOCUMENTS_READY:              { label:'Docs Ready',         color:'#16A34A', bg:'#F0FDF4' },
+  CANCELLED:                    { label:'Cancelled',          color:'#DC2626', bg:'#FEF2F2' },
+  REFUND_INITIATED:             { label:'Refund Initiated',   color:'#D97706', bg:'#FFFBEB' },
+  REFUNDED:                     { label:'Refunded',           color:'#64748B', bg:'#F1F5F9' },
+  CLOSED:                       { label:'Closed',             color:'#64748B', bg:'#F1F5F9' },
 }
 
 function StatusBadge({ status }) {
-  const c = STATUS_CFG[status] || { label:status, color:'#64748B', bg:'#F1F5F9' }
+  const c = STATUS_CFG[status] || { label:String(status||'').replace(/_/g,' ').toLowerCase().replace(/^./,m=>m.toUpperCase()), color:'#64748B', bg:'#F1F5F9' }
   return <span style={{display:'inline-flex',alignItems:'center',gap:5,fontSize:11.5,fontWeight:600,padding:'3px 10px',borderRadius:99,background:c.bg,color:c.color}}><span style={{width:6,height:6,borderRadius:'50%',background:c.color,flexShrink:0}}/>{c.label}</span>
 }
 
