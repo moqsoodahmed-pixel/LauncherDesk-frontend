@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useCallback } from 'react'
 
 const UserAuthContext = createContext(null)
 const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+const REQUEST_TIMEOUT_MS = 20000
 
 export function UserAuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem('ld_user_token') || null)
@@ -61,13 +62,33 @@ export function UserAuthProvider({ children }) {
     setToken(null); setUser(null)
   }, [])
 
+  // Every portal request goes through here. It never hangs forever (timeout), copes with
+  // non-JSON replies (e.g. a proxy's HTML 502 page) and signs the user out on an expired token.
   const apiFetch = useCallback(async (path, opts = {}) => {
-    const res = await fetch(`${API}${path}`, {
-      ...opts,
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, ...(opts.headers || {}) },
-    })
-    const data = await res.json()
-    if (!res.ok) throw new Error(data.message || 'API error')
+    const { timeoutMs = REQUEST_TIMEOUT_MS, ...fetchOpts } = opts
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), timeoutMs)
+    let res
+    try {
+      res = await fetch(`${API}${path}`, {
+        ...fetchOpts,
+        signal: fetchOpts.signal || controller.signal,
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, ...(fetchOpts.headers || {}) },
+      })
+    } catch (err) {
+      if (err.name === 'AbortError') throw new Error('The server is taking too long to respond. Please refresh in a moment.')
+      throw new Error('Could not reach the server. Check your internet connection and try again.')
+    } finally {
+      clearTimeout(timer)
+    }
+    let data = {}
+    try { data = await res.json() } catch { /* not JSON */ }
+    if (res.status === 401) {
+      localStorage.removeItem('ld_user_token'); localStorage.removeItem('ld_user_data')
+      setToken(null); setUser(null)
+      throw new Error(data.message || 'Your session has expired. Please sign in again.')
+    }
+    if (!res.ok) throw new Error(data.message || `Server error (${res.status}). Please try again shortly.`)
     return data
   }, [token])
 

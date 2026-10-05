@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { useUserAuth } from '../../context/UserAuthContext'
 import SEO from '../../components/SEO'
@@ -42,9 +42,12 @@ export default function UserDashboard() {
   const [error, setError]     = useState('')
   const firstName = user?.name?.split(' ')[0] || 'there'
 
-  useEffect(() => {
+  const load = useCallback(() => {
+    setLoading(true); setError('')
     apiFetch('/user/dashboard').then(d => setData(d.data)).catch(e => setError(e.message || 'Failed to load')).finally(() => setLoading(false))
   }, [apiFetch])
+
+  useEffect(() => { load() }, [load])
 
   return (
     <>
@@ -55,7 +58,12 @@ export default function UserDashboard() {
         <p style={{fontSize:14,color:'#64748B'}}>Here's an overview of your services and activity.</p>
         </div>
       </div>
-      {error && <div style={{background:'#FEF2F2',border:'1px solid #FECACA',borderRadius:10,padding:'14px 16px',fontSize:14,color:'#DC2626',marginBottom:20}}>{error}</div>}
+      {error && (
+        <div style={{background:'#FEF2F2',border:'1px solid #FECACA',borderRadius:10,padding:'14px 16px',fontSize:14,color:'#DC2626',marginBottom:20,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12,flexWrap:'wrap'}}>
+          <span style={{minWidth:0,flex:'1 1 220px'}}>{error}</span>
+          <button onClick={load} style={{height:34,padding:'0 14px',borderRadius:8,border:'1px solid #FCA5A5',background:'#fff',color:'#DC2626',fontWeight:700,fontSize:12.5,cursor:'pointer',fontFamily:'inherit'}}>Try again</button>
+        </div>
+      )}
       {loading ? (
         <div style={{textAlign:'center',padding:'60px 0',color:'#94A3B8'}}>
           <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
