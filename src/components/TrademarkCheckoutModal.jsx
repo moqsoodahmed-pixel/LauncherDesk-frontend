@@ -277,7 +277,7 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
           name: 'LauncherDesk',
           description: `${svc.title} — ${classes} ${classes === 1 ? 'class' : 'classes'} · total incl. ${fmtPaise(gstPaise)} GST (18%)`,
-          image: '/launcherdesk-logo-transparent.png',
+          image: '/apple-touch-icon.png',
           prefill: { name: f.name.trim(), email: f.email.trim(), contact: mobile },
           notes: { city: f.city.trim(), classes: picked.join(', ') || 'expert to choose', gstIncluded: fmtPaise(gstPaise) },
           theme: { color: '#1D6FE0' },

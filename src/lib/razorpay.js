@@ -77,7 +77,7 @@ export async function openRazorpayCheckout({
           planLabel ? `${serviceTitle} — ${planLabel}` : serviceTitle,
           data.breakdown?.gstPaise ? `total incl. ${fmtPaise(data.breakdown.gstPaise)} GST (18%)` : '',
         ].filter(Boolean).join(' · '),
-        image: '/launcherdesk-logo-transparent.png',
+        image: '/apple-touch-icon.png',
         theme: { color: '#1D6FE0' },
         handler: async (response) => {
           try {

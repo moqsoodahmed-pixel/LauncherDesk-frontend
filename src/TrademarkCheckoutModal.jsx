@@ -171,7 +171,7 @@ export default function TrademarkCheckoutModal({ svc, onClose }) {
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
           name: 'LauncherDesk', description: `${svc.title} — ${classes} ${classes === 1 ? 'class' : 'classes'}`,
-          image: '/launcherdesk-logo-transparent.png',
+          image: '/apple-touch-icon.png',
           prefill: { name: f.name.trim(), email: f.email.trim(), contact: mobile },
           notes: { state: f.state },
           theme: { color: '#1D6FE0' },

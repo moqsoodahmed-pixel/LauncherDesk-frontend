@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { GOVT_FEE_BREAKDOWN } from '../data/registrationPlans'
 import { calcBreakdown, fmtPaise, parseRupees, GST_RATE } from '../lib/pricing'
 import { loadRazorpayScript } from '../lib/razorpay'
 
@@ -82,6 +83,11 @@ export default function CheckoutModal({ svc, plan, onClose }) {
   const [done, setDone] = useState(null)
   const firstRef = useRef(null)
 
+  // Government fee — shown for information. It is not part of the online payment.
+  const govtRows = GOVT_FEE_BREAKDOWN[svc.slug]?.rows || []
+  const govtKnown = govtRows.length > 0 && govtRows.every(r => typeof r.amount === 'number')
+  const govtTotal = govtRows.reduce((a, r) => a + (r.amount || 0), 0)
+
   useEffect(() => {
     const onKey = e => { if (e.key === 'Escape' && !busy) onClose() }
     document.addEventListener('keydown', onKey)
@@ -123,7 +129,7 @@ export default function CheckoutModal({ svc, plan, onClose }) {
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
           name: 'LauncherDesk', description: `${svc.title} — ${plan.tier} Plan`,
-          image: '/launcherdesk-logo-transparent.png',
+          image: '/apple-touch-icon.png',
           prefill: { name: f.name.trim(), email: f.email.trim(), contact: mobile },
           notes: { city: f.city.trim() },
           theme: { color: '#1D6FE0' },
@@ -225,7 +231,11 @@ export default function CheckoutModal({ svc, plan, onClose }) {
               <div className="ckm-total"><span>Pay now</span><span>{fmtPaise(totalPaise)}</span></div>
 
               <div className="ckm-later">
-                <p style={{ margin: 0 }}>Government fee is charged separately, at actual — no GST on it.<br />Our expert will share the exact amount during your consultation.</p>
+                <div className="ckm-row">
+                  <span>Government fee<small>Not charged today</small></span>
+                  <b>{govtKnown ? fmtPaise(govtTotal * 100) : 'At actual'}</b>
+                </div>
+                <p>Government charges are paid separately, at actual, after your expert consultation. GST does not apply to them.</p>
               </div>
             </aside>
           </div>

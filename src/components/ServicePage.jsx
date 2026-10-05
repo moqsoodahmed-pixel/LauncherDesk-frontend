@@ -393,7 +393,7 @@ function BuyNowButton({ svc, priceCard }) {
       await new Promise((resolve) => {
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
-          name: 'LauncherDesk', description: svc.title, image: '/launcherdesk-logo-transparent.png',
+          name: 'LauncherDesk', description: svc.title, image: '/apple-touch-icon.png',
           theme: { color: '#1D6FE0' },
           handler: async (response) => {
             try {
