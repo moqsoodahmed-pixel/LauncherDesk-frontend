@@ -225,7 +225,7 @@ export default function CheckoutModal({ svc, plan, onClose }) {
               <div className="ckm-total"><span>Pay now</span><span>{fmtPaise(totalPaise)}</span></div>
 
               <div className="ckm-later">
-                <p style={{ margin: 0 }}>Our expert will tell you the exact government fee for your case during your consultation. It is paid separately, at actual, and GST does not apply to it.</p>
+                <p style={{ margin: 0 }}>Government fee is charged separately, at actual — no GST on it.<br />Our expert will share the exact amount during your consultation.</p>
               </div>
             </aside>
           </div>
