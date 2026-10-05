@@ -74,7 +74,7 @@ export default function UserDashboard() {
           <div className="ud-stat-grid">
             <StatCard label="Active Services" value={data?.stats?.activeOrders??0} sub="Currently being processed" icon="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6" color="#D97706" bg="#FFFBEB"/>
             <StatCard label="Total Services" value={data?.stats?.totalOrders??0} sub="All time" icon="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" color="#1D6FE0" bg="#EEF2FF"/>
-            <StatCard label="Payments Made" value={data?.stats?.totalPayments??0} sub="Successful transactions" icon="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z|M16 21V5a2 2 0 0-2-2h-4a2 2 0 0 0-2 2v16" color="#16A34A" bg="#F0FDF4"/>
+            <StatCard label="Payments Made" value={data?.stats?.totalPayments??0} sub="Successful transactions" icon="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z|M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" color="#16A34A" bg="#F0FDF4"/>
           </div>
           <div style={{background:'#fff',borderRadius:16,border:'1px solid #E8EEF6',overflow:'hidden',marginBottom:24}}>
             <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:12,padding:'18px 20px',borderBottom:'1px solid #F1F5F9'}}>
