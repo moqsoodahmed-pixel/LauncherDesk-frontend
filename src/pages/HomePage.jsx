@@ -936,8 +936,8 @@ const STAGES = [
   },
   {
     id: 'build', num: '03', name: 'Licences & Compliance',
-    desc: 'Get GST, MSME, FSSAI, trademark and every licence you need — without chasing government portals yourself.',
-    chips: [{ l: 'GST Registration', h: '/services/gst-registration' }, { l: 'Trademark', h: '/services/trademark-registration' }, { l: 'MSME / Udyam', h: '/services/msme-registration' }, { l: 'FSSAI', h: '/services/fssai-registration' }],
+    desc: 'Get GST, MSME, trademark and every licence you need — without chasing government portals yourself.',
+    chips: [{ l: 'GST Registration', h: '/services/gst-registration' }, { l: 'Trademark', h: '/services/trademark-registration' }, { l: 'MSME / Udyam', h: '/services/msme-registration' }],
     ctaPrompt: 'Already registered?', ctaLabel: 'Explore Compliance', ctaHref: '/solutions/compliance-management',
   },
   {
