@@ -11,7 +11,15 @@ const apiClient = axios.create({
   withCredentials: true, // sends the httpOnly refresh-token cookie
 });
 
-let accessToken = null;
+// Initialize from localStorage immediately so the interceptor has the token
+// even before PortalAuthContext's useEffect runs on a fresh page load.
+let accessToken = (() => {
+  try {
+    return localStorage.getItem('portal_access_token') || null;
+  } catch {
+    return null;
+  }
+})();
 let isRefreshing = false;
 let refreshSubscribers = [];
 
@@ -96,6 +104,12 @@ apiClient.interceptors.response.use(
           localStorage.removeItem('portal_access_token');
           localStorage.removeItem('portal_refresh_token');
           localStorage.removeItem('portal_user');
+        }
+        // Notify PortalAuthContext to clear React user state so the route guard
+        // redirects to login. Without this, user state stays non-null while the
+        // tokens are gone, causing every subsequent request to lack an auth header.
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('portal:session-expired'));
         }
         return Promise.reject(refreshErr);
       }

@@ -12,18 +12,49 @@ const PortalAuthContext = createContext(null);
 export function PortalAuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     try {
-      const stored = localStorage.getItem('portal_user');
-      return stored ? JSON.parse(stored) : null;
+      const storedUser = localStorage.getItem('portal_user');
+      if (!storedUser) return null;
+      // If there is a stored user but NO access token AND no refresh token,
+      // the session is dead (tokens were cleared by a failed refresh in a prior
+      // render). Don't trust the stale user — treat as logged out immediately
+      // so the route guard doesn't render protected pages with no valid session.
+      const hasToken = !!localStorage.getItem('portal_access_token');
+      const hasRefresh = !!localStorage.getItem('portal_refresh_token');
+      if (!hasToken && !hasRefresh) return null;
+      return JSON.parse(storedUser);
     } catch {
       return null;
     }
   });
   const [isLoading, setIsLoading] = useState(() => {
-    return !localStorage.getItem('portal_user');
+    try {
+      if (!localStorage.getItem('portal_user')) return false;
+      const hasToken = !!localStorage.getItem('portal_access_token');
+      const hasRefresh = !!localStorage.getItem('portal_refresh_token');
+      // If user is stored but tokens are gone, we are not loading — we are logged out.
+      if (!hasToken && !hasRefresh) return false;
+      return false;
+    } catch {
+      return false;
+    }
   });
 
   // Protect active session from being overwritten by in-flight background mount checks
   const activeSessionRef = useRef(false);
+
+  // When the axios refresh interceptor fails (expired/invalid refresh token),
+  // it clears localStorage but cannot touch React state. This listener bridges
+  // that gap: it clears user state so the route guard redirects to login.
+  useEffect(() => {
+    const handleSessionExpired = () => {
+      activeSessionRef.current = false;
+      setAccessToken(null);
+      setUser(null);
+      setIsLoading(false);
+    };
+    window.addEventListener('portal:session-expired', handleSessionExpired);
+    return () => window.removeEventListener('portal:session-expired', handleSessionExpired);
+  }, []);
 
   // On first load, restore the in-memory access token from localStorage,
   // then verify / silently refresh the session.  The apiClient interceptor
@@ -38,6 +69,15 @@ export function PortalAuthProvider({ children }) {
     const storedRefreshToken = localStorage.getItem('portal_refresh_token');
 
     if (storedToken) setAccessToken(storedToken);
+
+    // portal_user in localStorage but no tokens at all → stale state, clear it
+    // so the route guard doesn't render protected pages with no valid session.
+    if (storedUser && !storedToken && !storedRefreshToken) {
+      setUser(null);
+      localStorage.removeItem('portal_user');
+      setIsLoading(false);
+      return;
+    }
 
     // Nothing stored at all → definitely not logged in, skip network calls.
     if (!storedToken && !storedUser && !storedRefreshToken) {
