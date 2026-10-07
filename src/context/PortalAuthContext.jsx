@@ -26,14 +26,20 @@ export function PortalAuthProvider({ children }) {
       return null;
     }
   });
+  // True ONLY while a stored session still has to be verified against the server.
+  // The stored user above is unverified — the mount effect's /auth/me call may be
+  // about to reject it. PortalRoute, DashboardRedirect and the login page all wait
+  // on this flag, so while it is true the app neither renders protected content nor
+  // auto-navigates into it. Returning false here unconditionally is what let a
+  // dead session paint the dashboard and then bounce to /user/login a moment later.
   const [isLoading, setIsLoading] = useState(() => {
     try {
       if (!localStorage.getItem('portal_user')) return false;
       const hasToken = !!localStorage.getItem('portal_access_token');
       const hasRefresh = !!localStorage.getItem('portal_refresh_token');
-      // If user is stored but tokens are gone, we are not loading — we are logged out.
+      // Stored user but no tokens at all: already logged out, nothing to verify.
       if (!hasToken && !hasRefresh) return false;
-      return false;
+      return true;
     } catch {
       return false;
     }
@@ -101,6 +107,14 @@ export function PortalAuthProvider({ children }) {
 
     let isMounted = true;
 
+    // A cold-started or unreachable backend must never strand the app behind the
+    // loading gate. After this budget we stop blocking render but deliberately do
+    // NOT clear the session: a slow network is not proof that the session is dead,
+    // and the next real API call will surface a genuinely invalid one.
+    const restoreTimeout = setTimeout(() => {
+      if (isMounted) setIsLoading(false);
+    }, 8000);
+
     (async () => {
       try {
         // fetchCurrentUser → apiClient.get('/auth/me')
@@ -115,19 +129,23 @@ export function PortalAuthProvider({ children }) {
           setUser(currentUser);
           localStorage.setItem('portal_user', JSON.stringify(currentUser));
         }
-      } catch {
+      } catch (err) {
         if (!isMounted || activeSessionRef.current) return;
 
-        // Access-token invalid AND refresh failed → truly logged out.
-        // Only clear if no new login was processed while this was in flight.
-        if (!activeSessionRef.current) {
-          setAccessToken(null);
-          setUser(null);
-          localStorage.removeItem('portal_access_token');
-          localStorage.removeItem('portal_refresh_token');
-          localStorage.removeItem('portal_user');
-        }
+        // Only an explicit rejection from the server proves the session is dead.
+        // A network error, CORS failure, 502 or timeout carries no such proof —
+        // treating those as logout signs people out whenever the backend hiccups
+        // or cold-starts, which is indistinguishable from the session "expiring".
+        const status = err?.response?.status;
+        if (status !== 401 && status !== 403) return;
+
+        setAccessToken(null);
+        setUser(null);
+        localStorage.removeItem('portal_access_token');
+        localStorage.removeItem('portal_refresh_token');
+        localStorage.removeItem('portal_user');
       } finally {
+        clearTimeout(restoreTimeout);
         if (isMounted && !activeSessionRef.current) {
           setIsLoading(false);
         }
@@ -136,6 +154,7 @@ export function PortalAuthProvider({ children }) {
 
     return () => {
       isMounted = false;
+      clearTimeout(restoreTimeout);
     };
   }, []);
 

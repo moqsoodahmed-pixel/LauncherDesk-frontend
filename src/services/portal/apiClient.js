@@ -115,6 +115,15 @@ apiClient.interceptors.response.use(
           return Promise.reject(refreshErr);
         }
 
+        // Only the server rejecting the refresh token proves the session is over.
+        // If the refresh call never got an answer — backend cold start, 502 from a
+        // proxy, CORS failure, dropped connection — the session is probably fine and
+        // discarding it here would sign the user out over a transient network fault.
+        const refreshStatus = refreshErr?.response?.status;
+        if (refreshStatus !== 401 && refreshStatus !== 403) {
+          return Promise.reject(refreshErr);
+        }
+
         // Genuine session expiry — clear stale tokens and notify React.
         setAccessToken(null);
         if (typeof localStorage !== 'undefined') {

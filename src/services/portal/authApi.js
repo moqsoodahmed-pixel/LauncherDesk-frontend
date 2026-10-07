@@ -6,7 +6,11 @@ export async function loginRequest(email, password) {
 }
 
 export async function logoutRequest() {
-  const { data } = await apiClient.post('/auth/logout');
+  // Send the token explicitly: when the frontend and API are on different sites the
+  // refresh cookie is not sent, and without it the server has nothing to revoke —
+  // the session would stay valid for its full lifetime after a "logout".
+  const refreshToken = typeof localStorage !== 'undefined' ? localStorage.getItem('portal_refresh_token') : null;
+  const { data } = await apiClient.post('/auth/logout', { refreshToken: refreshToken || undefined });
   return data;
 }
 
