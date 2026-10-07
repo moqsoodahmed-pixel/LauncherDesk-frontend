@@ -59,8 +59,9 @@ apiClient.interceptors.response.use(
       originalRequest._retry = true;
 
       if (isRefreshing) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           refreshSubscribers.push((newToken) => {
+            if (!newToken) return reject(error);
             originalRequest.headers.Authorization = `Bearer ${newToken}`;
             resolve(apiClient(originalRequest));
           });
@@ -85,8 +86,17 @@ apiClient.interceptors.response.use(
         return apiClient(originalRequest);
       } catch (refreshErr) {
         isRefreshing = false;
-        // Do not force a hard window.location redirect here.
-        // Route guards and UI components manage session transitions cleanly.
+        // Flush all waiting requests so they reject instead of hanging forever.
+        refreshSubscribers.forEach((cb) => cb(null));
+        refreshSubscribers = [];
+        // Clear stale tokens so the auth context knows the session is dead
+        // and route guards redirect to /user/login cleanly.
+        setAccessToken(null);
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem('portal_access_token');
+          localStorage.removeItem('portal_refresh_token');
+          localStorage.removeItem('portal_user');
+        }
         return Promise.reject(refreshErr);
       }
     }

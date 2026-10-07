@@ -3,7 +3,6 @@ import {
   logoutRequest,
   logoutAllRequest,
   fetchCurrentUser,
-  refreshTokenRequest,
   changePasswordRequest,
 } from '../services/portal/authApi';
 import { setAccessToken } from '../services/portal/apiClient';
@@ -26,7 +25,13 @@ export function PortalAuthProvider({ children }) {
   // Protect active session from being overwritten by in-flight background mount checks
   const activeSessionRef = useRef(false);
 
-  // On first load, initialize access token and refresh the session safely
+  // On first load, restore the in-memory access token from localStorage,
+  // then verify / silently refresh the session.  The apiClient interceptor
+  // handles 401 → refresh-token rotation with its own deduplication lock
+  // (isRefreshing / refreshSubscribers), so we only call fetchCurrentUser()
+  // here.  This prevents the double-refresh race that used to kill sessions
+  // (two parallel /auth/refresh calls using the same token → token-reuse →
+  // session revoked).
   useEffect(() => {
     const storedToken = localStorage.getItem('portal_access_token');
     const storedUser = localStorage.getItem('portal_user');
@@ -34,7 +39,7 @@ export function PortalAuthProvider({ children }) {
 
     if (storedToken) setAccessToken(storedToken);
 
-    // If there is no stored session at all, do not perform speculative refresh
+    // Nothing stored at all → definitely not logged in, skip network calls.
     if (!storedToken && !storedUser && !storedRefreshToken) {
       setIsLoading(false);
       return;
@@ -44,18 +49,11 @@ export function PortalAuthProvider({ children }) {
 
     (async () => {
       try {
-        const refreshRes = await refreshTokenRequest(storedRefreshToken);
-        if (!isMounted || activeSessionRef.current) return;
-
-        const newAccessToken = refreshRes?.accessToken;
-        if (newAccessToken) {
-          setAccessToken(newAccessToken);
-          localStorage.setItem('portal_access_token', newAccessToken);
-        }
-        if (refreshRes?.refreshToken) {
-          localStorage.setItem('portal_refresh_token', refreshRes.refreshToken);
-        }
-
+        // fetchCurrentUser → apiClient.get('/auth/me')
+        // If the access token is valid, this succeeds immediately.
+        // If it's expired, the apiClient 401-interceptor transparently
+        // refreshes the token (using the refresh token from localStorage)
+        // and retries the request.  No second refresh path needed.
         const currentUser = await fetchCurrentUser();
         if (!isMounted || activeSessionRef.current) return;
 
@@ -66,21 +64,8 @@ export function PortalAuthProvider({ children }) {
       } catch {
         if (!isMounted || activeSessionRef.current) return;
 
-        // If refresh failed, attempt to verify existing access token via /auth/me before wiping
-        if (storedToken) {
-          try {
-            const currentUser = await fetchCurrentUser();
-            if (isMounted && !activeSessionRef.current && currentUser) {
-              setUser(currentUser);
-              localStorage.setItem('portal_user', JSON.stringify(currentUser));
-              return;
-            }
-          } catch {
-            // Access token truly invalid
-          }
-        }
-
-        // Only clear if no new login was processed while this was in flight
+        // Access-token invalid AND refresh failed → truly logged out.
+        // Only clear if no new login was processed while this was in flight.
         if (!activeSessionRef.current) {
           setAccessToken(null);
           setUser(null);
