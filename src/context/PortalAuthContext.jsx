@@ -42,11 +42,25 @@ export function PortalAuthProvider({ children }) {
   // Protect active session from being overwritten by in-flight background mount checks
   const activeSessionRef = useRef(false);
 
+  // Timestamp of the most recent setFromLogin call (ms since epoch, 0 = no login yet).
+  // portal:session-expired events whose refresh started BEFORE this timestamp are stale —
+  // a new login happened while that old refresh was in-flight; we must not clear the new session.
+  const loginTimestampRef = useRef(0);
+
   // When the axios refresh interceptor fails (expired/invalid refresh token),
   // it clears localStorage but cannot touch React state. This listener bridges
   // that gap: it clears user state so the route guard redirects to login.
   useEffect(() => {
-    const handleSessionExpired = () => {
+    const handleSessionExpired = (e) => {
+      // The event carries the timestamp of when the failed refresh was initiated.
+      // If that timestamp predates the most recent login, this event is stale —
+      // a new login succeeded while that old refresh was in-flight. Clearing state
+      // here would destroy the fresh session. The apiClient refreshTokenUsed guard
+      // already blocks dispatch in most cases; this is the final safety net.
+      const refreshStartedAt = e?.detail?.refreshStartedAt ?? 0;
+      if (loginTimestampRef.current && refreshStartedAt < loginTimestampRef.current) {
+        return;
+      }
       activeSessionRef.current = false;
       setAccessToken(null);
       setUser(null);
@@ -128,6 +142,7 @@ export function PortalAuthProvider({ children }) {
   // Called from the unified login page after a successful portal login response.
   const setFromLogin = useCallback(({ user: loggedInUser, accessToken, refreshToken }) => {
     activeSessionRef.current = true;
+    loginTimestampRef.current = Date.now();
     if (accessToken) {
       setAccessToken(accessToken);
       localStorage.setItem('portal_access_token', accessToken);

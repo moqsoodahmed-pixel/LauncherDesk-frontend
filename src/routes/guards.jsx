@@ -35,13 +35,37 @@ export function canRoleOpen(role, path) {
 /**
  * Portal role guard — same behaviour as the original Portal's RoleRoute + ProtectedRoute:
  * not signed in → login (remembering where they were going); wrong role → /unauthorized.
+ *
+ * Falls back to localStorage when React's user state is null but valid tokens exist.
+ * In a production React build (no StrictMode, concurrent scheduler), navigate() after
+ * setFromLogin() can render this component with the new route before setUser() is
+ * committed — reading localStorage directly avoids the premature redirect in that window.
  */
 export function PortalRoute({ allow, children }) {
   const { user, isLoading } = usePortalAuth();
   const location = useLocation();
   if (isLoading) return null;
-  if (!user) return <Navigate to="/user/login" state={{ from: location.pathname + location.search }} replace />;
-  if (!allow.includes(user.role)) return <Navigate to="/unauthorized" replace />;
+
+  // If React hasn't committed setUser yet (concurrent render race), fall back to
+  // localStorage. setFromLogin writes tokens + user synchronously before calling setUser,
+  // so if there is a stored user with at least one valid token, a login just succeeded.
+  const effectiveUser = user ?? (() => {
+    try {
+      const stored = localStorage.getItem('portal_user');
+      if (!stored) return null;
+      const hasToken = !!(
+        localStorage.getItem('portal_access_token') ||
+        localStorage.getItem('portal_refresh_token')
+      );
+      if (!hasToken) return null;
+      return JSON.parse(stored);
+    } catch {
+      return null;
+    }
+  })();
+
+  if (!effectiveUser) return <Navigate to="/user/login" state={{ from: location.pathname + location.search }} replace />;
+  if (!allow.includes(effectiveUser.role)) return <Navigate to="/unauthorized" replace />;
   return children;
 }
 

@@ -77,10 +77,13 @@ apiClient.interceptors.response.use(
       }
 
       isRefreshing = true;
-      // Capture the refresh token we are about to use. In the catch block we
-      // compare it to what is currently in localStorage: if they differ, a new
-      // login wrote fresh tokens while this refresh was in flight and we must
-      // NOT clobber the new session.
+      // Capture the refresh token we are about to use and the time we started.
+      // In the catch block we compare the token to what is currently in localStorage:
+      // if they differ, a new login wrote fresh tokens while this refresh was in
+      // flight and we must NOT clobber the new session.
+      // The start time is passed in the portal:session-expired event so the context
+      // handler can tell whether the event is stale (predates the last login).
+      const refreshStartedAt = Date.now();
       const refreshTokenUsed = typeof localStorage !== 'undefined' ? localStorage.getItem('portal_refresh_token') : null;
       try {
         const { data } = await apiClient.post('/auth/refresh', {
@@ -120,7 +123,9 @@ apiClient.interceptors.response.use(
           localStorage.removeItem('portal_user');
         }
         if (typeof window !== 'undefined') {
-          window.dispatchEvent(new CustomEvent('portal:session-expired'));
+          window.dispatchEvent(new CustomEvent('portal:session-expired', {
+            detail: { refreshStartedAt },
+          }));
         }
         return Promise.reject(refreshErr);
       }
