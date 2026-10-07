@@ -247,8 +247,8 @@ export default function UserLoginPage() {
   // Fallback homes, used only when re-visiting this page with an existing session
   // (a fresh login always uses the `redirect` the backend returns).
   const ROLE_HOME = {
-    user:        '/user/dashboard',
-    admin:       '/internal-admin/dashboard',
+    user:        '/client/dashboard',
+    admin:       '/admin/dashboard',
     sales:       '/sales/dashboard',
     partner:     '/partner/dashboard',
     SUPER_ADMIN: '/super-admin/dashboard',
@@ -259,7 +259,7 @@ export default function UserLoginPage() {
   // Only return to `from` when it is a public page or inside the role's own workspace;
   // otherwise e.g. a customer sent here from /client/* would bounce back and forth.
   const destinationFor = (role, backendRedirect) =>
-    (isValidInternalPath && canRoleOpen(role, rawFrom)) ? rawFrom : (backendRedirect || ROLE_HOME[role] || '/user/dashboard')
+    (isValidInternalPath && canRoleOpen(role, rawFrom)) ? rawFrom : (backendRedirect || ROLE_HOME[role] || '/client/dashboard')
 
   const effectiveRole = portalUser?.role || user?.role
   const from = destinationFor(effectiveRole)
@@ -285,22 +285,22 @@ export default function UserLoginPage() {
   function openSession(res) {
     const rawUser = res.user || res.data?.user
     const role = res.role || rawUser?.role || res.data?.role
-    const isPortal = res.userType === 'portal' || ['SUPER_ADMIN', 'ADMIN', 'CLIENT'].includes(role)
+    const isPortal = res.userType === 'portal' || ['SUPER_ADMIN', 'ADMIN', 'CLIENT', 'user', 'admin', 'super_admin'].includes(role)
 
     if (isPortal) {
-      // Portal: in-memory access token (+ httpOnly refresh cookie set by the backend).
+      const portalRole = (role === 'admin' ? 'ADMIN' : (role === 'user' ? 'CLIENT' : (role === 'super_admin' ? 'SUPER_ADMIN' : role)))
+      const mappedUser = { ...rawUser, role: portalRole }
       localStorage.removeItem('ld_user_token')
       localStorage.removeItem('ld_user_data')
-      setPortalUser({ user: rawUser, accessToken: res.accessToken || res.data?.accessToken })
-    } else if (role === 'admin') {
-      adminAuth.loginWithToken(res.token, res.user)
-      salesAuth.loginWithToken(res.token, res.user)     // admins may also open the Sales CRM
+      setPortalUser({ user: mappedUser, accessToken: res.accessToken || res.data?.accessToken || res.token })
+      navigate(destinationFor(portalRole, res.redirect || res.redirectTo), { replace: true })
+      return
     } else if (role === 'sales') {
       salesAuth.loginWithToken(res.token, res.user)
     } else if (role === 'partner') {
       partnerAuth.loginWithToken(res.token, res.partner || null)
     } else {
-      loginWithToken(res.token, res.user)               // customer (no-op if already stored)
+      loginWithToken(res.token, res.user)
     }
     navigate(destinationFor(role, res.redirect || res.redirectTo), { replace: true })
   }
@@ -313,10 +313,10 @@ export default function UserLoginPage() {
   useEffect(() => {
     if (portalAuthLoading) return
     if (portalUser) navigate(destinationFor(portalUser.role), { replace: true })
-    else if (adminAuth?.isLoggedIn) navigate(destinationFor('admin'), { replace: true })
+    else if (adminAuth?.isLoggedIn) navigate(destinationFor('ADMIN'), { replace: true })
     else if (salesAuth?.isLoggedIn) navigate(destinationFor('sales'), { replace: true })
     else if (partnerAuth?.isLoggedIn) navigate(destinationFor('partner'), { replace: true })
-    else if (isLoggedIn) navigate(from, { replace: true })
+    else if (isLoggedIn) navigate(destinationFor('CLIENT'), { replace: true })
   }, [isLoggedIn, portalUser, portalAuthLoading, adminAuth?.isLoggedIn, salesAuth?.isLoggedIn, partnerAuth?.isLoggedIn, from, navigate]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const set = k => e => {
@@ -373,7 +373,8 @@ export default function UserLoginPage() {
       if (!form.agreedToTerms) return setLocalErr('Please agree to the Terms and Conditions and Privacy Policy')
 
       const res = await register(form.name.trim(), emailVal, form.password, phoneVal)
-      if (!res?.success) setLocalErr(res?.message || 'Registration failed')
+      if (!res?.success) return setLocalErr(res?.message || 'Registration failed')
+      openSession(res)
     }
   }
 

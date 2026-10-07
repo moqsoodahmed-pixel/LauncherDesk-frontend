@@ -11,20 +11,52 @@ import { setAccessToken } from '../services/portal/apiClient';
 const PortalAuthContext = createContext(null);
 
 export function PortalAuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(() => {
+    try {
+      const stored = localStorage.getItem('portal_user');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [isLoading, setIsLoading] = useState(() => {
+    return !localStorage.getItem('portal_user');
+  });
 
-  // On first load, silently refresh the session using the httpOnly cookie.
+  // On first load, initialize access token and refresh the session
   useEffect(() => {
+    const storedToken = localStorage.getItem('portal_access_token');
+    if (storedToken) setAccessToken(storedToken);
+
     (async () => {
       try {
         const { accessToken } = await refreshTokenRequest();
-        setAccessToken(accessToken);
+        if (accessToken) {
+          setAccessToken(accessToken);
+          localStorage.setItem('portal_access_token', accessToken);
+        }
         const currentUser = await fetchCurrentUser();
-        setUser(currentUser);
+        if (currentUser) {
+          setUser(currentUser);
+          localStorage.setItem('portal_user', JSON.stringify(currentUser));
+        }
       } catch {
+        if (storedToken) {
+          try {
+            const currentUser = await fetchCurrentUser();
+            if (currentUser) {
+              setUser(currentUser);
+              localStorage.setItem('portal_user', JSON.stringify(currentUser));
+              return;
+            }
+          } catch {
+            // Token truly invalid
+          }
+        }
         setAccessToken(null);
         setUser(null);
+        localStorage.removeItem('portal_access_token');
+        localStorage.removeItem('portal_user');
       } finally {
         setIsLoading(false);
       }
@@ -35,6 +67,8 @@ export function PortalAuthProvider({ children }) {
   const setFromLogin = useCallback(({ user: loggedInUser, accessToken }) => {
     setAccessToken(accessToken);
     setUser(loggedInUser);
+    if (accessToken) localStorage.setItem('portal_access_token', accessToken);
+    if (loggedInUser) localStorage.setItem('portal_user', JSON.stringify(loggedInUser));
   }, []);
 
   const logout = useCallback(async () => {
@@ -43,6 +77,8 @@ export function PortalAuthProvider({ children }) {
     } finally {
       setAccessToken(null);
       setUser(null);
+      localStorage.removeItem('portal_access_token');
+      localStorage.removeItem('portal_user');
     }
   }, []);
 
@@ -52,6 +88,8 @@ export function PortalAuthProvider({ children }) {
     } finally {
       setAccessToken(null);
       setUser(null);
+      localStorage.removeItem('portal_access_token');
+      localStorage.removeItem('portal_user');
     }
   }, []);
 

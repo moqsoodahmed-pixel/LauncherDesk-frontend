@@ -32,10 +32,15 @@ export default function DashboardRedirect() {
     if (portalUser.role === 'CLIENT') return <Navigate to="/client/dashboard" replace />;
   }
 
-  if (adminAuth?.isLoggedIn) return <Navigate to="/internal-admin/dashboard" replace />;
+  if (adminAuth?.isLoggedIn) {
+    if (adminAuth.user?.role === 'super_admin' || adminAuth.user?.email === 'moqsood@launcherdesk.com') {
+      return <Navigate to="/super-admin/dashboard" replace />;
+    }
+    return <Navigate to="/admin/dashboard" replace />;
+  }
   if (salesAuth?.isLoggedIn) return <Navigate to="/sales/dashboard" replace />;
   if (partnerAuth?.isLoggedIn) return <Navigate to="/partner/dashboard" replace />;
-  if (isUserLoggedIn) return <Navigate to="/user/dashboard" replace />;
+  if (isUserLoggedIn) return <Navigate to="/client/dashboard" replace />;
 
   return <Navigate to="/user/login" replace />;
 }

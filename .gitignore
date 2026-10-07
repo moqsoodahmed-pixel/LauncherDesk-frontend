@@ -51,8 +51,8 @@ desktop.ini
 # Database & Uploads
 *.db
 *.sqlite
-uploads/
-storage/
+/uploads/
+/storage/
 
 # Archives & Scratch
 *.zip

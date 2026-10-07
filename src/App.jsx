@@ -207,45 +207,28 @@ export default function App() {
                   {/* ── THE login (every role). Old per-role login URLs point here. ── */}
                   <Route path="/user/login" element={<UserLoginPage />} />
                   <Route path="/login" element={<Navigate to="/user/login" replace />} />
+                  <Route path="/admin/login" element={<Navigate to="/user/login" replace />} />
+                  <Route path="/super-admin/login" element={<Navigate to="/user/login" replace />} />
                   <Route path="/partner/login" element={<Navigate to="/user/login" replace />} />
                   <Route path="/user/reset-password" element={<ResetPasswordPage />} />
                   <Route path="/dashboard" element={<DashboardRedirect />} />
 
-                  {/* ── Customer dashboard ── */}
-                  <Route path="/user" element={<UserLayout />}>
-                    <Route index element={<Navigate to="/user/dashboard" replace />} />
-                    <Route path="dashboard" element={<UserDashboard />} />
-                    <Route path="services" element={<UserServices />} />
-                    <Route path="services/:id" element={<UserServiceDetail />} />
-                    <Route path="payments" element={<UserPayments />} />
-                    <Route path="invoices" element={<UserInvoices />} />
-                    <Route path="support" element={<UserSupport />} />
-                    <Route path="profile" element={<UserProfile />} />
-                    <Route path="*" element={<Navigate to="/user/dashboard" replace />} />
-                  </Route>
+                  {/* ── Client dashboard (redirects legacy /user routes straight to Portal Client) ── */}
+                  <Route path="/user/dashboard" element={<Navigate to="/client/dashboard" replace />} />
+                  <Route path="/user/services" element={<Navigate to="/client/services" replace />} />
+                  <Route path="/user/payments" element={<Navigate to="/client/payments" replace />} />
+                  <Route path="/user/invoices" element={<Navigate to="/client/invoices" replace />} />
+                  <Route path="/user/support" element={<Navigate to="/client/support" replace />} />
+                  <Route path="/user/profile" element={<Navigate to="/client/profile" replace />} />
+                  <Route path="/user/*" element={<Navigate to="/client/dashboard" replace />} />
+                  <Route path="/user" element={<Navigate to="/client/dashboard" replace />} />
 
                   {/* ── Partner portal ── */}
                   <Route path="/partner/dashboard" element={<PartnerDashboard />} />
 
-                  {/* ── Legacy internal admin panel (website operations) ── */}
-                  <Route path="/internal-admin" element={<AdminLayout />}>
-                    <Route index element={<Navigate to="dashboard" replace />} />
-                    <Route path="dashboard" element={<AdminDashboard />} />
-                    <Route path="orders" element={<AdminOrders />} />
-                    <Route path="notifications" element={<AdminNotifications />} />
-                    <Route path="tickets" element={<AdminTickets />} />
-                    <Route path="contacts" element={<AdminContacts />} />
-                    <Route path="leads" element={<AdminLeads />} />
-                    <Route path="quotes" element={<AdminQuotes />} />
-                    <Route path="applications" element={<AdminApplications />} />
-                    <Route path="office" element={<AdminOffice />} />
-                    <Route path="settings" element={<AdminSettings />} />
-                    <Route path="partners" element={<AdminPartners />} />
-                    <Route path="chats" element={<AdminChats />} />
-                    <Route path="*" element={<Navigate to="/internal-admin/dashboard" replace />} />
-                  </Route>
-                  {/* /admin is the portal B2B admin panel (portal ADMIN role).
-                      Legacy website-ops admin is at /internal-admin. */}
+                  {/* ── Legacy internal admin panel redirects straight to Portal Admin ── */}
+                  <Route path="/internal-admin/*" element={<Navigate to="/admin/dashboard" replace />} />
+                  <Route path="/internal-admin" element={<Navigate to="/admin/dashboard" replace />} />
 
                   {/* ── Sales CRM ── */}
                   <Route path="/sales" element={<SalesLayout />}>

@@ -306,8 +306,8 @@ function LoginDropdown() {
 
   // Resolve active logged-in account across all role sessions
   let activeUser = null
-  let roleLabel = 'Customer Account'
-  let dashboardPath = '/user/dashboard'
+  let roleLabel = 'Client Portal'
+  let dashboardPath = '/client/dashboard'
   let logoutFn = logoutUser
 
   if (portalUser) {
@@ -325,8 +325,13 @@ function LoginDropdown() {
     }
   } else if (adminAuth?.isLoggedIn && adminAuth?.user) {
     activeUser = adminAuth.user
-    dashboardPath = '/internal-admin/dashboard'
-    roleLabel = 'Operations Admin'
+    if (adminAuth.user.role === 'super_admin' || adminAuth.user.email === 'moqsood@launcherdesk.com') {
+      dashboardPath = '/super-admin/dashboard'
+      roleLabel = 'Super Admin Portal'
+    } else {
+      dashboardPath = '/admin/dashboard'
+      roleLabel = 'Admin Portal'
+    }
     logoutFn = adminAuth.logout
   } else if (salesAuth?.isLoggedIn && salesAuth?.user) {
     activeUser = salesAuth.user
@@ -340,8 +345,8 @@ function LoginDropdown() {
     logoutFn = partnerAuth.logout
   } else if (isUserLoggedIn && normalUser) {
     activeUser = normalUser
-    dashboardPath = '/user/dashboard'
-    roleLabel = 'Customer Dashboard'
+    dashboardPath = '/client/dashboard'
+    roleLabel = 'Client Portal'
     logoutFn = logoutUser
   }
 

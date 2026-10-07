@@ -12,13 +12,13 @@ import { activateWorkspaceStyles, workspaceForPath } from '../styles/workspaceSt
 
 /** Workspace path prefixes each role may open. Add a role here (and in the backend table). */
 export const ROLE_AREAS = {
-  user:        ['/user'],
+  user:        ['/client', '/user'],
   partner:     ['/partner'],
   sales:       ['/sales'],
-  admin:       ['/internal-admin', '/sales'],   // SalesLayout already admits admins
-  CLIENT:      ['/client'],
+  admin:       ['/admin', '/super-admin', '/internal-admin', '/sales'],
+  CLIENT:      ['/client', '/user'],
   ADMIN:       ['/admin'],
-  SUPER_ADMIN: ['/super-admin', '/admin'],    // as in the original Portal router
+  SUPER_ADMIN: ['/super-admin', '/admin'],
 };
 
 const ALL_AREAS = [...new Set(Object.values(ROLE_AREAS).flat())];
