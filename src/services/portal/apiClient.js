@@ -77,10 +77,14 @@ apiClient.interceptors.response.use(
       }
 
       isRefreshing = true;
+      // Capture the refresh token we are about to use. In the catch block we
+      // compare it to what is currently in localStorage: if they differ, a new
+      // login wrote fresh tokens while this refresh was in flight and we must
+      // NOT clobber the new session.
+      const refreshTokenUsed = typeof localStorage !== 'undefined' ? localStorage.getItem('portal_refresh_token') : null;
       try {
-        const storedRefreshToken = typeof localStorage !== 'undefined' ? localStorage.getItem('portal_refresh_token') : null;
         const { data } = await apiClient.post('/auth/refresh', {
-          refreshToken: storedRefreshToken || undefined,
+          refreshToken: refreshTokenUsed || undefined,
         });
         const newToken = data?.data?.accessToken;
         const newRefreshToken = data?.data?.refreshToken;
@@ -97,17 +101,24 @@ apiClient.interceptors.response.use(
         // Flush all waiting requests so they reject instead of hanging forever.
         refreshSubscribers.forEach((cb) => cb(null));
         refreshSubscribers = [];
-        // Clear stale tokens so the auth context knows the session is dead
-        // and route guards redirect to /user/login cleanly.
+
+        // Guard: if a new login wrote a different refresh token while this
+        // (now-failed) refresh was in flight, a fresh session is active.
+        // Clearing tokens or dispatching portal:session-expired here would
+        // destroy that new session — skip it entirely.
+        const currentRefreshToken = typeof localStorage !== 'undefined' ? localStorage.getItem('portal_refresh_token') : null;
+        const newSessionStarted = currentRefreshToken && currentRefreshToken !== refreshTokenUsed;
+        if (newSessionStarted) {
+          return Promise.reject(refreshErr);
+        }
+
+        // Genuine session expiry — clear stale tokens and notify React.
         setAccessToken(null);
         if (typeof localStorage !== 'undefined') {
           localStorage.removeItem('portal_access_token');
           localStorage.removeItem('portal_refresh_token');
           localStorage.removeItem('portal_user');
         }
-        // Notify PortalAuthContext to clear React user state so the route guard
-        // redirects to login. Without this, user state stays non-null while the
-        // tokens are gone, causing every subsequent request to lack an auth header.
         if (typeof window !== 'undefined') {
           window.dispatchEvent(new CustomEvent('portal:session-expired'));
         }
