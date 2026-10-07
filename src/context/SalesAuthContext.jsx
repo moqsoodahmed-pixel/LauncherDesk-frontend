@@ -30,6 +30,13 @@ export function SalesAuthProvider({ children }) {
     } finally { setLoading(false) }
   }, [])
 
+  // Session opened by the unified login (/user/login) — no second login needed.
+  const loginWithToken = useCallback((newToken, userData) => {
+    localStorage.setItem('ld_sales_token', newToken)
+    localStorage.setItem('ld_sales_user',  JSON.stringify(userData))
+    setToken(newToken); setUser(userData)
+  }, [])
+
   const logout = useCallback(() => {
     localStorage.removeItem('ld_sales_token')
     localStorage.removeItem('ld_sales_user')
@@ -47,7 +54,7 @@ export function SalesAuthProvider({ children }) {
   }, [token])
 
   return (
-    <SalesAuthContext.Provider value={{ token, user, login, logout, apiFetch, error, loading, isLoggedIn: !!token }}>
+    <SalesAuthContext.Provider value={{ token, user, login, loginWithToken, logout, apiFetch, error, loading, isLoggedIn: !!token }}>
       {children}
     </SalesAuthContext.Provider>
   )

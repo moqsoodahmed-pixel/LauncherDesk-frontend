@@ -1,0 +1,90 @@
+export const ORDER_STATUS = Object.freeze({
+  CREATED: 'CREATED',
+  PAYMENT_PENDING: 'PAYMENT_PENDING',
+  PAYMENT_CONFIRMED: 'PAYMENT_CONFIRMED',
+  ASSIGNED: 'ASSIGNED',
+  KYC_PENDING: 'KYC_PENDING',
+  KYC_SUBMITTED: 'KYC_SUBMITTED',
+  KYC_VERIFICATION: 'KYC_VERIFICATION',
+  KYC_REJECTED: 'KYC_REJECTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  QUALITY_CHECK: 'QUALITY_CHECK',
+  COMPLETED: 'COMPLETED',
+  DELIVERED: 'DELIVERED',
+  KYC_DELETION_PENDING: 'KYC_DELETION_PENDING',
+  CLOSED: 'CLOSED',
+  ARCHIVED: 'ARCHIVED',
+  CANCELLED: 'CANCELLED',
+});
+
+export const ALL_ORDER_STATUSES = Object.values(ORDER_STATUS);
+
+// Mirrors backend/src/constants/orderStatus.js's ORDER_STATUS_LABELS - the
+// one presentation layer for status strings, reused everywhere rather than
+// formatted ad hoc per component.
+export const ORDER_STATUS_LABELS = Object.freeze({
+  CREATED: 'Order Created',
+  PAYMENT_PENDING: 'Payment Pending',
+  PAYMENT_CONFIRMED: 'Payment Confirmed',
+  ASSIGNED: 'Assigned',
+  KYC_PENDING: 'Documents Pending',
+  KYC_SUBMITTED: 'Documents Uploaded',
+  KYC_VERIFICATION: 'Under Verification',
+  KYC_REJECTED: 'Documents Rejected',
+  IN_PROGRESS: 'Under Processing',
+  QUALITY_CHECK: 'Quality Check',
+  COMPLETED: 'Completed',
+  DELIVERED: 'Delivered',
+  KYC_DELETION_PENDING: 'Closing (Doc Cleanup)',
+  CLOSED: 'Closed',
+  ARCHIVED: 'Archived',
+  CANCELLED: 'Cancelled',
+});
+
+export function formatOrderStatus(status) {
+  return ORDER_STATUS_LABELS[status] || status;
+}
+
+// The "happy path" sequence shown in the tracking timeline. CANCELLED and
+// KYC_REJECTED are handled separately (shown only when actually reached),
+// not inserted into this fixed spine.
+// Mirrors backend CLIENT_CANCELLABLE_STATUSES - UI purposes only (whether
+// to show the Cancel button); the backend always re-checks.
+export const CLIENT_CANCELLABLE_STATUSES = ['CREATED', 'PAYMENT_PENDING', 'PAYMENT_CONFIRMED'];
+
+export const TERMINAL_ORDER_STATUSES = ['CLOSED', 'ARCHIVED', 'CANCELLED'];
+
+export const ORDER_TRACKING_SEQUENCE = [
+  ORDER_STATUS.CREATED,
+  ORDER_STATUS.PAYMENT_PENDING,
+  ORDER_STATUS.PAYMENT_CONFIRMED,
+  ORDER_STATUS.ASSIGNED,
+  ORDER_STATUS.KYC_PENDING,
+  ORDER_STATUS.KYC_SUBMITTED,
+  ORDER_STATUS.KYC_VERIFICATION,
+  ORDER_STATUS.IN_PROGRESS,
+  ORDER_STATUS.QUALITY_CHECK,
+  ORDER_STATUS.COMPLETED,
+  ORDER_STATUS.DELIVERED,
+  ORDER_STATUS.KYC_DELETION_PENDING,
+  ORDER_STATUS.CLOSED,
+];
+
+export const ORDER_STATUS_TRANSITIONS = Object.freeze({
+  CREATED: ['PAYMENT_PENDING', 'CANCELLED'],
+  PAYMENT_PENDING: ['PAYMENT_CONFIRMED', 'CANCELLED'],
+  PAYMENT_CONFIRMED: ['ASSIGNED', 'CANCELLED'],
+  ASSIGNED: ['KYC_PENDING', 'CANCELLED'],
+  KYC_PENDING: ['KYC_SUBMITTED', 'CANCELLED'],
+  KYC_SUBMITTED: ['KYC_VERIFICATION', 'CANCELLED'],
+  KYC_VERIFICATION: ['IN_PROGRESS', 'KYC_PENDING', 'KYC_REJECTED', 'CANCELLED'],
+  KYC_REJECTED: ['KYC_PENDING', 'KYC_SUBMITTED', 'CANCELLED'],
+  IN_PROGRESS: ['QUALITY_CHECK', 'COMPLETED', 'CANCELLED'],
+  QUALITY_CHECK: ['COMPLETED', 'IN_PROGRESS', 'CANCELLED'],
+  COMPLETED: ['DELIVERED', 'KYC_DELETION_PENDING'],
+  DELIVERED: ['KYC_DELETION_PENDING', 'CLOSED'],
+  KYC_DELETION_PENDING: ['CLOSED'],
+  CLOSED: ['ARCHIVED'],
+  ARCHIVED: [],
+  CANCELLED: [],
+});

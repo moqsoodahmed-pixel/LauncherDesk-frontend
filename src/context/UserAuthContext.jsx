@@ -25,14 +25,20 @@ export function UserAuthProvider({ children }) {
     try {
       const res = await fetch(`${API}/auth/login`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       })
       const data = await res.json()
       if (!res.ok || !data.success) throw new Error(data.message || 'Invalid credentials')
-      localStorage.setItem('ld_user_token', data.token)
-      localStorage.setItem('ld_user_data', JSON.stringify(data.user))
-      setToken(data.token); setUser(data.user)
-      return { success: true }
+      // The backend decides the role and workspace. Only customers get a customer session here;
+      // every other role's session is opened by the login page in that role's own context
+      // (Portal: in-memory token + httpOnly refresh cookie; partner/sales/admin: their stores).
+      if (data.userType !== 'portal' && data.role === 'user') {
+        localStorage.setItem('ld_user_token', data.token)
+        localStorage.setItem('ld_user_data', JSON.stringify(data.user))
+        setToken(data.token); setUser(data.user)
+      }
+      return { ...data, success: true }
     } catch (err) {
       setError(err.message); return { success: false, message: err.message }
     } finally { setLoading(false) }

@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useUserAuth } from '../../context/UserAuthContext'
+import { usePortalAuth } from '../../context/PortalAuthContext'
+import { useAdminAuth } from '../../context/AdminAuthContext'
+import { useSalesAuth } from '../../context/SalesAuthContext'
+import { usePartnerAuth } from '../../context/PartnerAuthContext'
+import { canRoleOpen } from '../../routes/guards'
 import logoImg from '../../assets/launcherdesk-logo-transparent.png'
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
@@ -200,7 +205,7 @@ const Spinner = ({ color = '#fff' }) => (
 )
 
 /* ─── Social login helper ────────────────────────────────────────────────── */
-async function socialLogin(provider, payload, setLocalErr, loginWithTokenFn) {
+async function socialLogin(provider, payload, setLocalErr, openSessionFn) {
   try {
     const body = typeof payload === 'string' ? { token: payload } : payload
     const res = await fetch(`${API}/auth/${provider}-token`, {
@@ -210,11 +215,11 @@ async function socialLogin(provider, payload, setLocalErr, loginWithTokenFn) {
     })
     const data = await res.json()
     if (!data.success) { setLocalErr(data.message || `${provider} login failed`); return }
-    if (typeof loginWithTokenFn !== 'function') {
+    if (typeof openSessionFn !== 'function') {
       setLocalErr('Authentication error. Please refresh and try again.')
       return
     }
-    loginWithTokenFn(data.token, data.user)
+    openSessionFn({ ...data, role: data.role || data.user?.role })
   } catch (err) {
     setLocalErr(`${provider} login failed: ${err?.message || 'Please try again.'}`)
   }
@@ -222,19 +227,42 @@ async function socialLogin(provider, payload, setLocalErr, loginWithTokenFn) {
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
 export default function UserLoginPage() {
-  const { login, register, loginWithToken, error, setError, loading, isLoggedIn } = useUserAuth()
+  const { login, register, loginWithToken, error, setError, loading, isLoggedIn, user } = useUserAuth()
+  const { setFromLogin: setPortalUser, user: portalUser, isLoading: portalAuthLoading } = usePortalAuth()
+  const adminAuth = useAdminAuth()
+  const salesAuth = useSalesAuth()
+  const partnerAuth = usePartnerAuth()
   const navigate = useNavigate()
   const location = useLocation()
   // Accept any internal path as a return destination.
   // Reject external URLs, empty strings, and bare /user/login to avoid loops.
-  // Fallback is /user/dashboard for direct logins with no prior context.
+  // Fallback is determined by the user's role.
   const rawFrom  = location.state?.from
   const isValidInternalPath = typeof rawFrom === 'string' &&
     rawFrom.startsWith('/') &&
     !rawFrom.startsWith('//') &&
     rawFrom !== '/user/login' &&
     rawFrom !== '/user/register'
-  const from = isValidInternalPath ? rawFrom : '/user/dashboard'
+
+  // Fallback homes, used only when re-visiting this page with an existing session
+  // (a fresh login always uses the `redirect` the backend returns).
+  const ROLE_HOME = {
+    user:        '/user/dashboard',
+    admin:       '/internal-admin/dashboard',
+    sales:       '/sales/dashboard',
+    partner:     '/partner/dashboard',
+    SUPER_ADMIN: '/super-admin/dashboard',
+    ADMIN:       '/admin/dashboard',
+    CLIENT:      '/client/dashboard',
+  }
+
+  // Only return to `from` when it is a public page or inside the role's own workspace;
+  // otherwise e.g. a customer sent here from /client/* would bounce back and forth.
+  const destinationFor = (role, backendRedirect) =>
+    (isValidInternalPath && canRoleOpen(role, rawFrom)) ? rawFrom : (backendRedirect || ROLE_HOME[role] || '/user/dashboard')
+
+  const effectiveRole = portalUser?.role || user?.role
+  const from = destinationFor(effectiveRole)
 
   const [tab, setTab] = useState(location.state?.tab || 'login')
   const [view, setView] = useState('main')   // 'main' | 'forgot'
@@ -250,11 +278,46 @@ export default function UserLoginPage() {
   const [fpSent, setFpSent] = useState(false)
   const [fpErr, setFpErr] = useState('')
 
-  // Keep a ref to loginWithToken so OAuth callbacks always have the latest reference
-  const loginWithTokenRef = useRef(loginWithToken)
-  useEffect(() => { loginWithTokenRef.current = loginWithToken }, [loginWithToken])
+  /**
+   * Open the session for whatever role the BACKEND returned and go to its workspace.
+   * One login for every role — no second login page, no frontend role guessing.
+   */
+  function openSession(res) {
+    const rawUser = res.user || res.data?.user
+    const role = res.role || rawUser?.role || res.data?.role
+    const isPortal = res.userType === 'portal' || ['SUPER_ADMIN', 'ADMIN', 'CLIENT'].includes(role)
 
-  useEffect(() => { if (isLoggedIn) navigate(from, { replace: true }) }, [isLoggedIn, from, navigate])
+    if (isPortal) {
+      // Portal: in-memory access token (+ httpOnly refresh cookie set by the backend).
+      localStorage.removeItem('ld_user_token')
+      localStorage.removeItem('ld_user_data')
+      setPortalUser({ user: rawUser, accessToken: res.accessToken || res.data?.accessToken })
+    } else if (role === 'admin') {
+      adminAuth.loginWithToken(res.token, res.user)
+      salesAuth.loginWithToken(res.token, res.user)     // admins may also open the Sales CRM
+    } else if (role === 'sales') {
+      salesAuth.loginWithToken(res.token, res.user)
+    } else if (role === 'partner') {
+      partnerAuth.loginWithToken(res.token, res.partner || null)
+    } else {
+      loginWithToken(res.token, res.user)               // customer (no-op if already stored)
+    }
+    navigate(destinationFor(role, res.redirect || res.redirectTo), { replace: true })
+  }
+
+  // Keep a ref so OAuth callbacks always call the latest openSession
+  const openSessionRef = useRef(openSession)
+  useEffect(() => { openSessionRef.current = openSession })
+
+  // Already signed in (any role)? Go straight to that workspace instead of showing the form.
+  useEffect(() => {
+    if (portalAuthLoading) return
+    if (portalUser) navigate(destinationFor(portalUser.role), { replace: true })
+    else if (adminAuth?.isLoggedIn) navigate(destinationFor('admin'), { replace: true })
+    else if (salesAuth?.isLoggedIn) navigate(destinationFor('sales'), { replace: true })
+    else if (partnerAuth?.isLoggedIn) navigate(destinationFor('partner'), { replace: true })
+    else if (isLoggedIn) navigate(from, { replace: true })
+  }, [isLoggedIn, portalUser, portalAuthLoading, adminAuth?.isLoggedIn, salesAuth?.isLoggedIn, partnerAuth?.isLoggedIn, from, navigate]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const set = k => e => {
     let val = e.target.value
@@ -279,7 +342,9 @@ export default function UserLoginPage() {
       if (!form.password) return setLocalErr('Please enter your password')
 
       const res = await login(emailVal, form.password)
-      if (!res?.success) setLocalErr(res?.message || 'Invalid credentials')
+      if (!res?.success) return setLocalErr(res?.message || 'Invalid credentials')
+      openSession(res)
+      return
     } else {
       if (!form.name.trim()) return setLocalErr('Please enter your full name')
 
@@ -354,7 +419,7 @@ export default function UserLoginPage() {
               return
             }
             if (resp?.access_token) {
-              await socialLogin('google', { accessToken: resp.access_token }, setLocalErr, loginWithTokenRef.current)
+              await socialLogin('google', { accessToken: resp.access_token }, setLocalErr, openSessionRef.current)
             }
             setSocialLoading('')
           },
@@ -389,7 +454,7 @@ export default function UserLoginPage() {
         })
         if (typeof msalInstance.initialize === 'function') await msalInstance.initialize()
         const result = await msalInstance.loginPopup({ scopes: ['openid', 'profile', 'email', 'User.Read'], prompt: 'select_account' })
-        await socialLogin('microsoft', result.idToken, setLocalErr, loginWithTokenRef.current)
+        await socialLogin('microsoft', result.idToken, setLocalErr, openSessionRef.current)
       } catch (err) {
         if (err?.errorCode !== 'user_cancelled') setLocalErr(err?.message || 'Microsoft login failed. Please try again.')
       } finally { setSocialLoading('') }
@@ -538,7 +603,7 @@ export default function UserLoginPage() {
               {loading ? <><Spinner /><span>Please wait…</span></> : <span>Create Account →</span>}
             </button>
             <div className="ul-or-divider" aria-hidden="true"><span>or</span></div>
-            <p className="ul-partner-row">Are you a partner? <Link to="/partner/login" className="ul-partner-link">Partner Login →</Link></p>
+            <p className="ul-partner-row">Want to become a partner? <Link to="/partner-register" className="ul-partner-link">Apply as Partner →</Link></p>
             <p className="ul-back-row"><Link to="/" className="ul-back-link">← Back to home</Link></p>
           </form>
         ) : (

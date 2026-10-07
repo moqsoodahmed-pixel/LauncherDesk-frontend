@@ -37,6 +37,14 @@ export function AdminAuthProvider({ children }) {
     }
   }, [])
 
+  // Session opened by the unified login (/user/login) — no second login needed.
+  const loginWithToken = useCallback((newToken, userData) => {
+    localStorage.setItem('ld_admin_token', newToken)
+    localStorage.setItem('ld_admin_user',  JSON.stringify(userData))
+    setToken(newToken)
+    setUser(userData)
+  }, [])
+
   const logout = useCallback(() => {
     localStorage.removeItem('ld_admin_token')
     localStorage.removeItem('ld_admin_user')
@@ -60,7 +68,7 @@ export function AdminAuthProvider({ children }) {
   }, [token])
 
   return (
-    <AdminAuthContext.Provider value={{ token, user, login, logout, apiFetch, error, loading, isLoggedIn: !!token }}>
+    <AdminAuthContext.Provider value={{ token, user, login, loginWithToken, logout, apiFetch, error, loading, isLoggedIn: !!token }}>
       {children}
     </AdminAuthContext.Provider>
   )

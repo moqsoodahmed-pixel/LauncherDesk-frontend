@@ -1,12 +1,85 @@
 import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom'
-import { PartnerAuthProvider } from './context/PartnerAuthContext'
+import { PortalAuthProvider } from './context/PortalAuthContext'
+import { PortalRoute as RoleRoute, WorkspaceStyleSync } from './routes/guards'
+import { AdminAuthProvider } from './context/AdminAuthContext'
 import { UserAuthProvider } from './context/UserAuthContext'
 import { SalesAuthProvider } from './context/SalesAuthContext'
-import PartnerLogin from './pages/partner/PartnerLogin'
+import { PartnerAuthProvider } from './context/PartnerAuthContext'
+import { ROLES } from './constants/portal/roles'
+
+// Portal — layout
+import DashboardLayout from './layouts/portal/DashboardLayout'
+// Portal — shared
+import UnauthorizedPage from './pages/portal/UnauthorizedPage'
+import PortalNotFoundPage from './pages/portal/NotFoundPage'
+import PortalResetPasswordPage from './pages/portal/auth/ResetPasswordPage'
+import PortalForgotPasswordPage from './pages/portal/auth/ForgotPasswordPage'
+// Portal — Super Admin pages
+import SuperAdminDashboardPage from './pages/portal/super-admin/SuperAdminDashboardPage'
+import AdminsListPage from './pages/portal/super-admin/AdminsListPage'
+import AdminDetailPage from './pages/portal/super-admin/AdminDetailPage'
+import SaClientsListPage from './pages/portal/super-admin/ClientsListPage'
+import SaClientDetailPage from './pages/portal/super-admin/ClientDetailPage'
+import ServicesListPage from './pages/portal/super-admin/ServicesListPage'
+import SaServiceDetailPage from './pages/portal/super-admin/ServiceDetailPage'
+import SaOrdersListPage from './pages/portal/super-admin/OrdersListPage'
+import SaOrderCreatePage from './pages/portal/super-admin/OrderCreatePage'
+import SaOrderDetailPage from './pages/portal/super-admin/OrderDetailPage'
+import PaymentsListPage from './pages/portal/super-admin/PaymentsListPage'
+import InvoicePage from './pages/portal/super-admin/InvoicePage'
+import SaKycListPage from './pages/portal/super-admin/KycListPage'
+import SaNotificationsPage from './pages/portal/super-admin/NotificationsPage'
+import AuditLogsPage from './pages/portal/super-admin/AuditLogsPage'
+import LoginHistoryPage from './pages/portal/super-admin/LoginHistoryPage'
+import ReportsPage from './pages/portal/super-admin/ReportsPage'
+import SettingsPage from './pages/portal/super-admin/SettingsPage'
+import WorkflowDashboardPage from './pages/portal/super-admin/WorkflowDashboardPage'
+import SupportTicketsPage from './pages/portal/super-admin/SupportTicketsPage'
+import SearchPage from './pages/portal/super-admin/SearchPage'
+import SystemMonitorPage from './pages/portal/super-admin/SystemMonitorPage'
+import FinanceDashboardPage from './pages/portal/super-admin/FinanceDashboardPage'
+import PaymentDetailPage from './pages/portal/super-admin/PaymentDetailPage'
+import CrmIntelligencePage from './pages/portal/super-admin/CrmIntelligencePage'
+import RequiresAttentionPage from './pages/portal/super-admin/RequiresAttentionPage'
+import AnnouncementsPage from './pages/portal/super-admin/AnnouncementsPage'
+import ActivityTimelinePage from './pages/portal/super-admin/ActivityTimelinePage'
+import BackupPage from './pages/portal/super-admin/BackupPage'
+// Portal — Admin pages
+import AdminDashboardPage from './pages/portal/admin/AdminDashboardPage'
+import AdClientsListPage from './pages/portal/admin/ClientsListPage'
+import AdClientDetailPage from './pages/portal/admin/ClientDetailPage'
+import AdOrdersListPage from './pages/portal/admin/OrdersListPage'
+import AdOrderDetailPage from './pages/portal/admin/OrderDetailPage'
+import AdOrderCreatePage from './pages/portal/admin/OrderCreatePage'
+import AdKycListPage from './pages/portal/admin/KycListPage'
+import AdNotificationsPage from './pages/portal/admin/NotificationsPage'
+import AdProfilePage from './pages/portal/admin/ProfilePage'
+import AdTasksPage from './pages/portal/admin/TasksPage'
+import AdSupportPage from './pages/portal/admin/SupportPage'
+import AdWorkQueuePage from './pages/portal/admin/WorkQueuePage'
+import AdSlaMonitorPage from './pages/portal/admin/SlaMonitorPage'
+import AdSearchPage from './pages/portal/admin/AdminSearchPage'
+// Portal — Client pages
+import ClientDashboardPage from './pages/portal/client/ClientDashboardPage'
+import ClProfilePage from './pages/portal/client/ProfilePage'
+import ClOrdersListPage from './pages/portal/client/OrdersListPage'
+import ClOrderDetailPage from './pages/portal/client/OrderDetailPage'
+import ClOrderCreatePage from './pages/portal/client/OrderCreatePage'
+import ClServicesListPage from './pages/portal/client/ServicesListPage'
+import ClServiceDetailPage from './pages/portal/client/ServiceDetailPage'
+import ClDocumentsPage from './pages/portal/client/DocumentsPage'
+import ClNotificationsPage from './pages/portal/client/NotificationsPage'
+import ClSupportPage from './pages/portal/client/SupportPage'
+import ClDownloadsPage from './pages/portal/client/DownloadsPage'
+import ClPaymentsPage from './pages/portal/client/PaymentsPage'
+import ClSearchPage from './pages/portal/client/ClientSearchPage'
+import ClInvoicesPage from './pages/portal/client/InvoicesPage'
+
+// Existing app imports
 import PartnerDashboard from './pages/partner/PartnerDashboard'
 import UserLoginPage from './pages/user/UserLoginPage'
+import DashboardRedirect from './routes/DashboardRedirect'
 import ResetPasswordPage from './pages/user/ResetPasswordPage'
-// Customer dashboard
 import UserLayout from './pages/user/UserLayout'
 import UserDashboard from './pages/user/UserDashboard'
 import UserServices from './pages/user/UserServices'
@@ -15,8 +88,6 @@ import UserPayments from './pages/user/UserPayments'
 import UserInvoices from './pages/user/UserInvoices'
 import UserSupport from './pages/user/UserSupport'
 import UserProfile from './pages/user/UserProfile'
-// Sales CRM
-import SalesLogin from './pages/sales/SalesLogin'
 import SalesLayout from './pages/sales/SalesLayout'
 import SalesDashboard from './pages/sales/SalesDashboard'
 import SalesEnquiries from './pages/sales/SalesEnquiries'
@@ -58,8 +129,7 @@ import SalesQuotationRedirect from './pages/SalesQuotationRedirect'
 import MarketIndex from './pages/market/MarketIndex'
 import CategoryPage from './pages/market/CategoryPage'
 import ProductPage from './pages/market/ProductPage'
-import { AdminAuthProvider } from './context/AdminAuthContext'
-import AdminLogin from './pages/admin/AdminLogin'
+// Legacy internal admin (website operations panel)
 import AdminLayout from './pages/admin/AdminLayout'
 import AdminDashboard from './pages/admin/pages/AdminDashboard'
 import AdminOrders from './pages/admin/pages/AdminOrders'
@@ -86,105 +156,212 @@ function NotFound() {
 
 export default function App() {
   return (
-    <AdminAuthProvider>
-      <UserAuthProvider>
-        <SalesAuthProvider>
-          <PartnerAuthProvider>
-            <BrowserRouter>
-              <Routes>
-                {/* ── Public website ── */}
-                <Route element={<Layout />}>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/services" element={<ServicesIndex />} />
-                  <Route path="/services/:slug" element={<ServiceDetailPage />} />
-                  <Route path="/digital-marketing" element={<DigitalMarketingPage />} />
-                  <Route path="/solutions" element={<SolutionsIndex />} />
-                  <Route path="/solutions/:slug" element={<SolutionDetailPage />} />
-                  <Route path="/business-types" element={<BusinessTypesIndex />} />
-                  <Route path="/business-types/:slug" element={<BusinessTypeDetailPage />} />
-                  <Route path="/company/about" element={<AboutPage />} />
-                  <Route path="/careers" element={<CareersPage />} />
-                  <Route path="/company/careers" element={<Navigate to="/careers" replace />} />
-                  <Route path="/company/contact" element={<ContactPage />} />
-                  <Route path="/company/why-launcherdesk" element={<WhyPage />} />
-                  <Route path="/resources" element={<ResourcesIndex />} />
-                  <Route path="/resources/blog" element={<BlogPage />} />
-                  <Route path="/resources/guides" element={<GuidesPage />} />
-                  <Route path="/resources/tools" element={<ToolsPage />} />
-                  <Route path="/resources/faq" element={<FaqPage />} />
-                  <Route path="/pricing" element={<PricingPage />} />
-                  <Route path="/ai" element={<AiPage />} />
-                  <Route path="/office-restore" element={<OfficeRestorePage />} />
-                  <Route path="/office-restore/individual" element={<IndividualOfficePage />} />
-                  <Route path="/office-restore/coworking" element={<CoworkingOfficePage />} />
-                  <Route path="/estamp" element={<EStampPage />} />
-                  <Route path="/estamp/:state" element={<EStampStatePage />} />
-                  <Route path="/virtual-office" element={<VirtualOfficePage />} />
-                  <Route path="/partner-register" element={<PartnerRegister />} />
-                  <Route path="/legal/terms" element={<TermsPage />} />
-                  <Route path="/legal/privacy" element={<PrivacyPage />} />
-                  <Route path="/legal/refund" element={<RefundPage />} />
-                  <Route path="/legal/disclaimer" element={<DisclaimerPage />} />
-                  <Route path="/market" element={<MarketIndex />} />
-                  <Route path="/market/category" element={<CategoryPage />} />
-                  <Route path="/market/product" element={<ProductPage />} />
-                  <Route path="/salesQuotation" element={<SalesQuotationRedirect />} />
-                  <Route path="*" element={<NotFound />} />
-                </Route>
+    <PortalAuthProvider>
+      <AdminAuthProvider>
+        <UserAuthProvider>
+          <SalesAuthProvider>
+            <PartnerAuthProvider>
+              <BrowserRouter>
+                <WorkspaceStyleSync />
+                <Routes>
+                  {/* ── Public website ── */}
+                  <Route element={<Layout />}>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/services" element={<ServicesIndex />} />
+                    <Route path="/services/:slug" element={<ServiceDetailPage />} />
+                    <Route path="/digital-marketing" element={<DigitalMarketingPage />} />
+                    <Route path="/solutions" element={<SolutionsIndex />} />
+                    <Route path="/solutions/:slug" element={<SolutionDetailPage />} />
+                    <Route path="/business-types" element={<BusinessTypesIndex />} />
+                    <Route path="/business-types/:slug" element={<BusinessTypeDetailPage />} />
+                    <Route path="/company/about" element={<AboutPage />} />
+                    <Route path="/careers" element={<CareersPage />} />
+                    <Route path="/company/careers" element={<Navigate to="/careers" replace />} />
+                    <Route path="/company/contact" element={<ContactPage />} />
+                    <Route path="/company/why-launcherdesk" element={<WhyPage />} />
+                    <Route path="/resources" element={<ResourcesIndex />} />
+                    <Route path="/resources/blog" element={<BlogPage />} />
+                    <Route path="/resources/guides" element={<GuidesPage />} />
+                    <Route path="/resources/tools" element={<ToolsPage />} />
+                    <Route path="/resources/faq" element={<FaqPage />} />
+                    <Route path="/pricing" element={<PricingPage />} />
+                    <Route path="/ai" element={<AiPage />} />
+                    <Route path="/office-restore" element={<OfficeRestorePage />} />
+                    <Route path="/office-restore/individual" element={<IndividualOfficePage />} />
+                    <Route path="/office-restore/coworking" element={<CoworkingOfficePage />} />
+                    <Route path="/estamp" element={<EStampPage />} />
+                    <Route path="/estamp/:state" element={<EStampStatePage />} />
+                    <Route path="/virtual-office" element={<VirtualOfficePage />} />
+                    <Route path="/partner-register" element={<PartnerRegister />} />
+                    <Route path="/legal/terms" element={<TermsPage />} />
+                    <Route path="/legal/privacy" element={<PrivacyPage />} />
+                    <Route path="/legal/refund" element={<RefundPage />} />
+                    <Route path="/legal/disclaimer" element={<DisclaimerPage />} />
+                    <Route path="/market" element={<MarketIndex />} />
+                    <Route path="/market/category" element={<CategoryPage />} />
+                    <Route path="/market/product" element={<ProductPage />} />
+                    <Route path="/salesQuotation" element={<SalesQuotationRedirect />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Route>
 
-                {/* ── User auth ── */}
-                <Route path="/user/login" element={<UserLoginPage />} />
-                <Route path="/user/reset-password" element={<ResetPasswordPage />} />
+                  {/* ── THE login (every role). Old per-role login URLs point here. ── */}
+                  <Route path="/user/login" element={<UserLoginPage />} />
+                  <Route path="/login" element={<Navigate to="/user/login" replace />} />
+                  <Route path="/partner/login" element={<Navigate to="/user/login" replace />} />
+                  <Route path="/user/reset-password" element={<ResetPasswordPage />} />
+                  <Route path="/dashboard" element={<DashboardRedirect />} />
 
-                {/* ── Customer dashboard ── */}
-                <Route path="/user" element={<UserLayout />}>
-                  <Route index element={<Navigate to="/user/dashboard" replace />} />
-                  <Route path="dashboard" element={<UserDashboard />} />
-                  <Route path="services" element={<UserServices />} />
-                  <Route path="services/:id" element={<UserServiceDetail />} />
-                  <Route path="payments" element={<UserPayments />} />
-                  <Route path="invoices" element={<UserInvoices />} />
-                  <Route path="support" element={<UserSupport />} />
-                  <Route path="profile" element={<UserProfile />} />
-                  <Route path="*" element={<Navigate to="/user/dashboard" replace />} />
-                </Route>
+                  {/* ── Customer dashboard ── */}
+                  <Route path="/user" element={<UserLayout />}>
+                    <Route index element={<Navigate to="/user/dashboard" replace />} />
+                    <Route path="dashboard" element={<UserDashboard />} />
+                    <Route path="services" element={<UserServices />} />
+                    <Route path="services/:id" element={<UserServiceDetail />} />
+                    <Route path="payments" element={<UserPayments />} />
+                    <Route path="invoices" element={<UserInvoices />} />
+                    <Route path="support" element={<UserSupport />} />
+                    <Route path="profile" element={<UserProfile />} />
+                    <Route path="*" element={<Navigate to="/user/dashboard" replace />} />
+                  </Route>
 
-                {/* ── Partner portal ── */}
-                <Route path="/partner/login" element={<PartnerLogin />} />
-                <Route path="/partner/dashboard" element={<PartnerDashboard />} />
+                  {/* ── Partner portal ── */}
+                  <Route path="/partner/dashboard" element={<PartnerDashboard />} />
 
-                {/* ── Admin panel ── */}
-                <Route path="/admin" element={<AdminLogin />} />
-                <Route path="/admin" element={<AdminLayout />}>
-                  <Route path="dashboard" element={<AdminDashboard />} />
-                  <Route path="orders" element={<AdminOrders />} />
-                  <Route path="notifications" element={<AdminNotifications />} />
-                  <Route path="tickets" element={<AdminTickets />} />
-                  <Route path="contacts" element={<AdminContacts />} />
-                  <Route path="leads" element={<AdminLeads />} />
-                  <Route path="quotes" element={<AdminQuotes />} />
-                  <Route path="applications" element={<AdminApplications />} />
-                  <Route path="office" element={<AdminOffice />} />
-                  <Route path="settings" element={<AdminSettings />} />
-                  <Route path="partners" element={<AdminPartners />} />
-                  <Route path="chats" element={<AdminChats />} />
-                  <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
-                </Route>
+                  {/* ── Legacy internal admin panel (website operations) ── */}
+                  <Route path="/internal-admin" element={<AdminLayout />}>
+                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route path="dashboard" element={<AdminDashboard />} />
+                    <Route path="orders" element={<AdminOrders />} />
+                    <Route path="notifications" element={<AdminNotifications />} />
+                    <Route path="tickets" element={<AdminTickets />} />
+                    <Route path="contacts" element={<AdminContacts />} />
+                    <Route path="leads" element={<AdminLeads />} />
+                    <Route path="quotes" element={<AdminQuotes />} />
+                    <Route path="applications" element={<AdminApplications />} />
+                    <Route path="office" element={<AdminOffice />} />
+                    <Route path="settings" element={<AdminSettings />} />
+                    <Route path="partners" element={<AdminPartners />} />
+                    <Route path="chats" element={<AdminChats />} />
+                    <Route path="*" element={<Navigate to="/internal-admin/dashboard" replace />} />
+                  </Route>
+                  {/* /admin is the portal B2B admin panel (portal ADMIN role).
+                      Legacy website-ops admin is at /internal-admin. */}
 
-                {/* ── Sales CRM ── */}
-                <Route path="/sales" element={<SalesLogin />} />
-                <Route path="/sales" element={<SalesLayout />}>
-                  <Route path="dashboard" element={<SalesDashboard />} />
-                  <Route path="enquiries" element={<SalesEnquiries />} />
-                  <Route path="leads" element={<SalesLeads />} />
-                  <Route path="contacts" element={<SalesContacts />} />
-                  <Route path="quotes" element={<SalesQuotes />} />
-                </Route>
-              </Routes>
-            </BrowserRouter>
-          </PartnerAuthProvider>
-        </SalesAuthProvider>
-      </UserAuthProvider>
-    </AdminAuthProvider>
+                  {/* ── Sales CRM ── */}
+                  <Route path="/sales" element={<SalesLayout />}>
+                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route path="dashboard" element={<SalesDashboard />} />
+                    <Route path="enquiries" element={<SalesEnquiries />} />
+                    <Route path="leads" element={<SalesLeads />} />
+                    <Route path="contacts" element={<SalesContacts />} />
+                    <Route path="quotes" element={<SalesQuotes />} />
+                  </Route>
+
+                  {/* ── Portal: Super Admin ── */}
+                  <Route
+                    path="/super-admin"
+                    element={<RoleRoute allow={[ROLES.SUPER_ADMIN]}><DashboardLayout /></RoleRoute>}
+                  >
+                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route path="dashboard" element={<SuperAdminDashboardPage />} />
+                    <Route path="admins" element={<AdminsListPage />} />
+                    <Route path="admins/:id" element={<AdminDetailPage />} />
+                    <Route path="clients" element={<SaClientsListPage />} />
+                    <Route path="clients/:id" element={<SaClientDetailPage />} />
+                    <Route path="services" element={<ServicesListPage />} />
+                    <Route path="services/:id" element={<SaServiceDetailPage />} />
+                    <Route path="orders" element={<SaOrdersListPage />} />
+                    <Route path="orders/create" element={<SaOrderCreatePage />} />
+                    <Route path="orders/:id" element={<SaOrderDetailPage />} />
+                    <Route path="orders/:id/invoice" element={<InvoicePage />} />
+                    <Route path="payments" element={<PaymentsListPage />} />
+                    <Route path="payments/:id" element={<PaymentDetailPage />} />
+                    <Route path="kyc" element={<SaKycListPage />} />
+                    <Route path="notifications" element={<SaNotificationsPage />} />
+                    <Route path="audit-logs" element={<AuditLogsPage />} />
+                    <Route path="login-history" element={<LoginHistoryPage />} />
+                    <Route path="reports" element={<ReportsPage />} />
+                    <Route path="settings" element={<SettingsPage />} />
+                    <Route path="workflow" element={<WorkflowDashboardPage />} />
+                    <Route path="support" element={<SupportTicketsPage />} />
+                    <Route path="search" element={<SearchPage />} />
+                    <Route path="system" element={<SystemMonitorPage />} />
+                    <Route path="finance" element={<FinanceDashboardPage />} />
+                    <Route path="crm" element={<CrmIntelligencePage />} />
+                    <Route path="attention" element={<RequiresAttentionPage />} />
+                    <Route path="announcements" element={<AnnouncementsPage />} />
+                    <Route path="activity" element={<ActivityTimelinePage />} />
+                    <Route path="backup" element={<BackupPage />} />
+                  </Route>
+
+                  {/* ── Portal: Admin ── */}
+                  <Route
+                    path="/admin"
+                    element={<RoleRoute allow={[ROLES.ADMIN, ROLES.SUPER_ADMIN]}><DashboardLayout /></RoleRoute>}
+                  >
+                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route path="dashboard" element={<AdminDashboardPage />} />
+                    <Route path="clients" element={<AdClientsListPage />} />
+                    <Route path="clients/:id" element={<AdClientDetailPage />} />
+                    <Route path="orders" element={<AdOrdersListPage />} />
+                    <Route path="orders/create" element={<AdOrderCreatePage />} />
+                    <Route path="orders/:id" element={<AdOrderDetailPage />} />
+                    <Route path="orders/:id/invoice" element={<InvoicePage />} />
+                    <Route path="kyc" element={<AdKycListPage />} />
+                    <Route path="tasks" element={<AdTasksPage />} />
+                    <Route path="support" element={<AdSupportPage />} />
+                    <Route path="queue" element={<AdWorkQueuePage />} />
+                    <Route path="sla" element={<AdSlaMonitorPage />} />
+                    <Route path="search" element={<AdSearchPage />} />
+                    <Route path="notifications" element={<AdNotificationsPage />} />
+                    <Route path="profile" element={<AdProfilePage />} />
+                  </Route>
+
+                  {/* ── Portal: Client ── */}
+                  <Route
+                    path="/client"
+                    element={<RoleRoute allow={[ROLES.CLIENT]}><DashboardLayout /></RoleRoute>}
+                  >
+                    <Route index element={<Navigate to="dashboard" replace />} />
+                    <Route path="dashboard" element={<ClientDashboardPage />} />
+                    <Route path="profile" element={<ClProfilePage />} />
+                    <Route path="services" element={<ClServicesListPage />} />
+                    <Route path="services/:id" element={<ClServiceDetailPage />} />
+                    <Route path="orders" element={<ClOrdersListPage />} />
+                    <Route path="orders/create" element={<ClOrderCreatePage />} />
+                    <Route path="orders/create/:serviceId" element={<ClOrderCreatePage />} />
+                    <Route path="orders/:id" element={<ClOrderDetailPage />} />
+                    <Route path="orders/:id/invoice" element={<InvoicePage />} />
+                    <Route path="invoices" element={<ClInvoicesPage />} />
+                    <Route path="documents" element={<ClDocumentsPage />} />
+                    <Route path="notifications" element={<ClNotificationsPage />} />
+                    <Route path="support" element={<ClSupportPage />} />
+                    <Route path="payments" element={<ClPaymentsPage />} />
+                    <Route path="search" element={<ClSearchPage />} />
+                    <Route path="downloads" element={<ClDownloadsPage />} />
+                  </Route>
+
+                  {/* ── Portal legacy redirects (old /portal/* bookmarks) ── */}
+                  <Route path="/portal/super-admin/*" element={<Navigate to="/super-admin/dashboard" replace />} />
+                  <Route path="/portal/admin/*" element={<Navigate to="/admin/dashboard" replace />} />
+                  <Route path="/portal/client/*" element={<Navigate to="/client/dashboard" replace />} />
+                  <Route path="/portal/login" element={<Navigate to="/user/login" replace />} />
+                  <Route path="/portal/*" element={<Navigate to="/user/login" replace />} />
+
+                  {/* ── Portal standalone pages (original Portal UI) ── */}
+                  <Route path="/unauthorized" element={<UnauthorizedPage />} />
+                  <Route path="/reset-password" element={<PortalResetPasswordPage />} />   {/* link in Portal reset emails */}
+                  <Route path="/forgot-password" element={<PortalForgotPasswordPage />} />
+                  {/* Unknown Portal URLs get the Portal's own 404, as in the original app */}
+                  <Route path="/super-admin/*" element={<PortalNotFoundPage />} />
+                  <Route path="/admin/*" element={<PortalNotFoundPage />} />
+                  <Route path="/client/*" element={<PortalNotFoundPage />} />
+                </Routes>
+              </BrowserRouter>
+            </PartnerAuthProvider>
+          </SalesAuthProvider>
+        </UserAuthProvider>
+      </AdminAuthProvider>
+    </PortalAuthProvider>
   )
 }

@@ -1,0 +1,9 @@
+export const CLIENT_STATUS = Object.freeze({
+  PENDING: 'PENDING',
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  ARCHIVED: 'ARCHIVED',
+});
+
+export const ALL_CLIENT_STATUSES = Object.values(CLIENT_STATUS);
