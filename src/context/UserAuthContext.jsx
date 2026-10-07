@@ -49,14 +49,17 @@ export function UserAuthProvider({ children }) {
     try {
       const res = await fetch(`${API}/auth/register`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ name, email, password, phone }),
       })
       const data = await res.json()
       if (!res.ok || !data.success) throw new Error(data.message || 'Registration failed')
-      localStorage.setItem('ld_user_token', data.token)
-      localStorage.setItem('ld_user_data', JSON.stringify(data.user))
-      setToken(data.token); setUser(data.user)
-      return { success: true }
+      if (data.userType !== 'portal' && data.role === 'user') {
+        localStorage.setItem('ld_user_token', data.token)
+        localStorage.setItem('ld_user_data', JSON.stringify(data.user))
+        setToken(data.token); setUser(data.user)
+      }
+      return { ...data, success: true }
     } catch (err) {
       setError(err.message); return { success: false, message: err.message }
     } finally { setLoading(false) }

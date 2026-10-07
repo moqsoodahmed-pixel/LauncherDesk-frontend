@@ -17,10 +17,22 @@ let refreshSubscribers = [];
 
 export function setAccessToken(token) {
   accessToken = token;
+  if (typeof window !== 'undefined' && window.localStorage) {
+    if (token) {
+      localStorage.setItem('portal_access_token', token);
+    } else {
+      localStorage.removeItem('portal_access_token');
+    }
+  }
 }
 
 export function getAccessToken() {
-  return accessToken;
+  if (accessToken) return accessToken;
+  try {
+    return localStorage.getItem('portal_access_token');
+  } catch {
+    return null;
+  }
 }
 
 function onRefreshed(newToken) {
@@ -29,8 +41,9 @@ function onRefreshed(newToken) {
 }
 
 apiClient.interceptors.request.use((config) => {
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
+  const token = getAccessToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
@@ -56,17 +69,24 @@ apiClient.interceptors.response.use(
 
       isRefreshing = true;
       try {
-        const { data } = await apiClient.post('/auth/refresh');
+        const storedRefreshToken = typeof localStorage !== 'undefined' ? localStorage.getItem('portal_refresh_token') : null;
+        const { data } = await apiClient.post('/auth/refresh', {
+          refreshToken: storedRefreshToken || undefined,
+        });
         const newToken = data?.data?.accessToken;
-        setAccessToken(newToken);
+        const newRefreshToken = data?.data?.refreshToken;
+        if (newToken) setAccessToken(newToken);
+        if (newRefreshToken && typeof localStorage !== 'undefined') {
+          localStorage.setItem('portal_refresh_token', newRefreshToken);
+        }
         isRefreshing = false;
         onRefreshed(newToken);
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return apiClient(originalRequest);
       } catch (refreshErr) {
         isRefreshing = false;
-        setAccessToken(null);
-        window.location.href = '/user/login';
+        // Do not force a hard window.location redirect here.
+        // Route guards and UI components manage session transitions cleanly.
         return Promise.reject(refreshErr);
       }
     }

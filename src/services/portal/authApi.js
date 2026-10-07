@@ -15,9 +15,12 @@ export async function fetchCurrentUser() {
   return data.data;
 }
 
-export async function refreshTokenRequest() {
-  const { data } = await apiClient.post('/auth/refresh');
-  return data.data; // { accessToken }
+export async function refreshTokenRequest(refreshToken) {
+  const token = refreshToken || (typeof localStorage !== 'undefined' ? localStorage.getItem('portal_refresh_token') : null);
+  const { data } = await apiClient.post('/auth/refresh', {
+    refreshToken: token || undefined,
+  });
+  return data.data; // { accessToken, refreshToken }
 }
 
 export async function logoutAllRequest() {

@@ -292,7 +292,11 @@ export default function UserLoginPage() {
       const mappedUser = { ...rawUser, role: portalRole }
       localStorage.removeItem('ld_user_token')
       localStorage.removeItem('ld_user_data')
-      setPortalUser({ user: mappedUser, accessToken: res.accessToken || res.data?.accessToken || res.token })
+      setPortalUser({
+        user: mappedUser,
+        accessToken: res.accessToken || res.data?.accessToken || res.token,
+        refreshToken: res.refreshToken || res.data?.refreshToken,
+      })
       navigate(destinationFor(portalRole, res.redirect || res.redirectTo), { replace: true })
       return
     } else if (role === 'sales') {
