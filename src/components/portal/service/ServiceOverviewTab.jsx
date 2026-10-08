@@ -150,7 +150,7 @@ export default function ServiceOverviewTab({ service, onChanged, onToast }) {
                   onChange={(e) => setForm({ ...form, isPublic: e.target.checked })}
                   style={{ marginRight: 6 }}
                 />
-                Public (visible in the future client catalogue)
+                Public (visible in the Client Portal catalogue)
               </label>
             </div>
             <div className="ld-form-group">

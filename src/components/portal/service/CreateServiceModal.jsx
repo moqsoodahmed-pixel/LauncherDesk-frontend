@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { createService } from '../../../services/portal/servicesApi';
 import { ALL_SERVICE_CATEGORIES } from '../../../constants/portal/serviceCategory';
 
-const EMPTY = { name: '', serviceCode: '', category: 'OTHER', basePrice: '', gstPercentage: '18', shortDescription: '' };
+const EMPTY = { name: '', serviceCode: '', category: 'OTHER', basePrice: '', gstPercentage: '18', shortDescription: '', isPublic: true };
 
 export default function CreateServiceModal({ open, onClose, onCreated }) {
   const [form, setForm] = useState(EMPTY);
@@ -27,6 +27,7 @@ export default function CreateServiceModal({ open, onClose, onCreated }) {
         basePrice: Number(form.basePrice),
         gstPercentage: Number(form.gstPercentage),
         shortDescription: form.shortDescription || undefined,
+        isPublic: form.isPublic,
       });
       onCreated(service);
       setForm(EMPTY);
@@ -81,6 +82,17 @@ export default function CreateServiceModal({ open, onClose, onCreated }) {
           <div className="ld-form-group">
             <label className="ld-form-label">Short Description (optional)</label>
             <input className="ld-form-input" value={form.shortDescription} onChange={setField('shortDescription')} />
+          </div>
+          <div className="ld-form-group">
+            <label className="ld-form-label">
+              <input
+                type="checkbox"
+                checked={form.isPublic}
+                onChange={(e) => setForm((f) => ({ ...f, isPublic: e.target.checked }))}
+                style={{ marginRight: 6 }}
+              />
+              Public (visible in the Client Portal catalogue)
+            </label>
           </div>
 
           <div className="ld-modal-actions">
