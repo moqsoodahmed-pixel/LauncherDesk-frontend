@@ -61,3 +61,11 @@ desktop.ini
 *.tar.gz
 scratch/
 verify_*.js
+check_*.js
+audit_*.js
+
+# Audit / report PDFs & other local-only test artifacts
+*.pdf
+Reports/
+test_*.pdf
+*-Audit-Report.pdf

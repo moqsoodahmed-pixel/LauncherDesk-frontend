@@ -4,6 +4,7 @@ import EmptyState from '../EmptyState';
 import ConfirmModal from '../ConfirmModal';
 import Pagination from '../Pagination';
 import { assignClientToAdmin, reassignClientToAdmin, unassignClient, getClientAssignmentHistory } from '../../../services/portal/clientsApi';
+import { getAdmins } from '../../../services/portal/adminsApi';
 import { useAuth } from '../../../context/PortalAuthContext';
 import { PERMISSIONS } from '../../../constants/portal/permissions';
 
@@ -13,8 +14,31 @@ export default function ClientAssignmentTab({ client, onChanged, onToast }) {
   const canReassign = hasPermission(PERMISSIONS.REASSIGN_CLIENT);
 
   const [adminId, setAdminId] = useState('');
+  const [admins, setAdmins] = useState([]);
+  const [adminsLoading, setAdminsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [unassignOpen, setUnassignOpen] = useState(false);
+
+  // 100 is the backend's hard cap (validators/portal/admins.validators.js) -
+  // fine for the picker today; a searchable picker is the follow-up once the
+  // admin roster outgrows one page.
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      try {
+        const result = await getAdmins({ limit: 100, status: 'ACTIVE' });
+        if (isMounted) setAdmins(result.items || []);
+      } catch {
+        if (isMounted) setAdmins([]);
+      } finally {
+        if (isMounted) setAdminsLoading(false);
+      }
+    })();
+    return () => { isMounted = false; };
+  }, []);
+
+  const currentAdminId = client.assignedAdmin?.id ? String(client.assignedAdmin.id) : null;
+  const assignableAdmins = admins.filter((a) => String(a.id) !== currentAdminId);
 
   const [history, setHistory] = useState([]);
   const [meta, setMeta] = useState(null);
@@ -75,8 +99,10 @@ export default function ClientAssignmentTab({ client, onChanged, onToast }) {
         <div className="ld-card-grid" style={{ marginBottom: 16 }}>
           <div>
             <div className="ld-card-label">Currently Assigned Admin</div>
-            <div className="ld-card-value" style={{ fontSize: 14, fontFamily: client.assignedAdmin ? 'monospace' : 'inherit' }}>
-              {client.assignedAdmin || 'Unassigned'}
+            <div className="ld-card-value" style={{ fontSize: 14 }}>
+              {client.assignedAdmin
+                ? `${client.assignedAdmin.name}${client.assignedAdmin.adminCode ? ` (${client.assignedAdmin.adminCode})` : ''}`
+                : 'Unassigned'}
             </div>
           </div>
           <div>
@@ -89,15 +115,24 @@ export default function ClientAssignmentTab({ client, onChanged, onToast }) {
 
         {(canAssign || canReassign) && (
           <form onSubmit={handleAssign} style={{ display: 'flex', gap: 8 }}>
-            <input
+            <select
               className="ld-form-input"
-              placeholder="Admin ID"
               value={adminId}
               onChange={(e) => setAdminId(e.target.value)}
               style={{ width: 280 }}
               required
-            />
-            <button type="submit" className="ld-btn-primary" disabled={isSubmitting}>
+              disabled={adminsLoading}
+            >
+              <option value="" disabled>
+                {adminsLoading ? 'Loading admins…' : 'Select an admin…'}
+              </option>
+              {assignableAdmins.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.name} ({a.adminCode || a.role})
+                </option>
+              ))}
+            </select>
+            <button type="submit" className="ld-btn-primary" disabled={isSubmitting || !adminId}>
               {client.assignedAdmin ? 'Reassign' : 'Assign'}
             </button>
             {client.assignedAdmin && (
@@ -107,9 +142,6 @@ export default function ClientAssignmentTab({ client, onChanged, onToast }) {
             )}
           </form>
         )}
-        <p className="ld-phase-note" style={{ marginTop: 8 }}>
-          Full Admin picker arrives alongside the Admin Management UI integration - paste an Admin&apos;s id for now.
-        </p>
       </div>
 
       <div className="ld-permission-group-title">Assignment History</div>
