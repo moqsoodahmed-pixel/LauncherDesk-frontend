@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import KycDocStatusBadge from './KycDocStatusBadge';
-import { triggerBlobDownload } from './kycDownload';
+import KycUploadWidget from './KycUploadWidget';
+import KycCommentsPanel from './KycCommentsPanel';
 import {
   getOwnOrderKycSummary,
   getOwnOrderKycDocuments,
@@ -8,7 +9,7 @@ import {
   downloadOwnKycDocument,
   submitOwnKyc,
 } from '../../../services/portal/kycApi';
-import { ACCEPTED_KYC_FILE_EXTENSIONS, MAX_KYC_FILE_SIZE_BYTES, MAX_KYC_FILE_SIZE_MB } from '../../../constants/portal/kycStatus';
+import { MAX_KYC_FILE_SIZE_MB } from '../../../constants/portal/kycStatus';
 
 // Order statuses while a client is expected to still be interacting with
 // this panel (uploading / replacing / submitting). Outside these the
@@ -16,47 +17,16 @@ import { ACCEPTED_KYC_FILE_EXTENSIONS, MAX_KYC_FILE_SIZE_BYTES, MAX_KYC_FILE_SIZ
 // controls, mirroring kycState.service.js's assertCanUpload.
 const UPLOADABLE_ORDER_STATUSES = ['KYC_PENDING', 'KYC_REJECTED'];
 
+// Upload mechanics (the actual uploadOwnKycDocument call, size/type
+// validation, progress, retry) now live in the new, shared
+// KycUploadWidget (components/portal/kyc/KycUploadWidget.jsx) rather than
+// a bespoke <input type="file"> here - same component the new KYC
+// dashboard (KycRequirementsDashboard) uses. This row keeps 100% of its
+// original gating logic (mandatory/optional label, which statuses still
+// allow upload, the rejection-reason note) and just hands the widget the
+// same uploadOwnKycDocument/downloadOwnKycDocument calls it always used.
 function DocumentRow({ orderId, doc, onChanged, onToast }) {
-  const inputRef = useRef(null);
-  const [busy, setBusy] = useState(false);
-  const [downloading, setDownloading] = useState(false);
-
   const hasUploadedFile = doc.status !== 'NOT_UPLOADED';
-  const isReplace = doc.status === 'REJECTED';
-
-  async function handleFileChosen(e) {
-    const file = e.target.files?.[0];
-    e.target.value = '';
-    if (!file) return;
-
-    if (file.size > MAX_KYC_FILE_SIZE_BYTES) {
-      onToast({ type: 'error', message: `"${file.name}" is too large. Maximum allowed size is ${MAX_KYC_FILE_SIZE_MB}MB.` });
-      return;
-    }
-
-    setBusy(true);
-    try {
-      await uploadOwnKycDocument(orderId, doc.type, file);
-      onToast({ type: 'success', message: `${doc.label} uploaded.` });
-      onChanged();
-    } catch (err) {
-      onToast({ type: 'error', message: err.response?.data?.message || 'Could not upload this document.' });
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function handleDownload() {
-    setDownloading(true);
-    try {
-      const { blob, fileName } = await downloadOwnKycDocument(orderId, doc.documentId);
-      triggerBlobDownload({ blob, fileName: fileName || doc.originalFileName });
-    } catch (err) {
-      onToast({ type: 'error', message: err.response?.data?.message || 'Could not download this document.' });
-    } finally {
-      setDownloading(false);
-    }
-  }
 
   return (
     <div style={{ padding: '12px 0', borderBottom: '1px solid var(--ld-border)' }}>
@@ -74,27 +44,19 @@ function DocumentRow({ orderId, doc, onChanged, onToast }) {
         </p>
       )}
 
-      <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginTop: 8, flexWrap: 'wrap' }}>
-        {hasUploadedFile && doc.documentId && (
-          <button className="ld-btn-secondary ld-btn-sm" onClick={handleDownload} disabled={downloading}>
-            {downloading ? 'Downloading…' : 'Download'}
-          </button>
-        )}
-
-        {doc.status !== 'VERIFIED' && (
-          <>
-            <input
-              ref={inputRef}
-              type="file"
-              accept={ACCEPTED_KYC_FILE_EXTENSIONS}
-              style={{ display: 'none' }}
-              onChange={handleFileChosen}
-            />
-            <button className="ld-btn-primary ld-btn-sm" onClick={() => inputRef.current?.click()} disabled={busy}>
-              {busy ? 'Uploading…' : isReplace ? 'Replace Document' : hasUploadedFile ? 'Re-upload' : 'Upload'}
-            </button>
-          </>
-        )}
+      <div style={{ marginTop: 8 }}>
+        <KycUploadWidget
+          compact
+          hasExisting={hasUploadedFile && !!doc.documentId}
+          existingFileName={doc.originalFileName}
+          disabled={doc.status === 'VERIFIED'}
+          onUpload={(file, onProgress) => uploadOwnKycDocument(orderId, doc.type, file, onProgress)}
+          onDownload={doc.documentId ? () => downloadOwnKycDocument(orderId, doc.documentId) : undefined}
+          onUploaded={() => {
+            onToast({ type: 'success', message: `${doc.label} uploaded.` });
+            onChanged();
+          }}
+        />
       </div>
     </div>
   );
@@ -187,6 +149,10 @@ export default function ClientKycPanel({ order, onOrderChanged, onToast }) {
           )}
         </div>
       )}
+
+      <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid var(--ld-border)' }}>
+        <KycCommentsPanel orderId={order.id} isClient onToast={onToast} />
+      </div>
     </div>
   );
 }

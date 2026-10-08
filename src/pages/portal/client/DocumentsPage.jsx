@@ -4,6 +4,8 @@ import PageHeader from '../../../components/portal/PageHeader';
 import LoadingState from '../../../components/portal/LoadingState';
 import ErrorState from '../../../components/portal/ErrorState';
 import EmptyState from '../../../components/portal/EmptyState';
+import Toast from '../../../components/portal/Toast';
+import KycRequirementsDashboard from '../../../components/portal/kyc/KycRequirementsDashboard';
 import { getOrders } from '../../../services/portal/ordersApi';
 
 const KYC_ORDER_STATUSES = ['KYC_PENDING', 'KYC_SUBMITTED', 'KYC_VERIFICATION', 'KYC_REJECTED', 'IN_PROGRESS', 'COMPLETED'];
@@ -35,6 +37,7 @@ export default function DocumentsPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [toast, setToast] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -58,6 +61,8 @@ export default function DocumentsPage() {
   return (
     <div>
       <PageHeader title="My Documents" subtitle="Upload and track your KYC documents for each order." />
+
+      <KycRequirementsDashboard onToast={setToast} />
 
       {loading && <LoadingState />}
       {error && <ErrorState message={error} />}
@@ -131,6 +136,8 @@ export default function DocumentsPage() {
           })}
         </div>
       )}
+
+      <Toast toast={toast} onClose={() => setToast(null)} />
     </div>
   );
 }

@@ -14,6 +14,7 @@ import OrderStatusTimeline from './OrderStatusTimeline';
 import OrderActivityTab from './OrderActivityTab';
 import AdminKycPanel from '../kyc/AdminKycPanel';
 import AdminPaymentPanel from '../payment/AdminPaymentPanel';
+import AdminOrderInvoicePanel from '../invoice/AdminOrderInvoicePanel';
 import AdminCommunicationsPanel from '../communications/AdminCommunicationsPanel';
 import OrderTasksPanel from './OrderTasksPanel';
 import InternalNotesPanel from './InternalNotesPanel';
@@ -23,7 +24,7 @@ import SlaIndicator from './SlaIndicator';
 import { getOrder, getOrderStatusHistory } from '../../../services/portal/ordersApi';
 import { formatMoney } from '../../../utils/portal/money';
 
-const TABS = ['Overview', 'Assignment', 'KYC', 'Payment', 'Communications', 'Tasks', 'Doc Requests', 'Notes', 'Status Timeline', 'Activity'];
+const TABS = ['Overview', 'Assignment', 'KYC', 'Payment', 'Invoice', 'Communications', 'Tasks', 'Doc Requests', 'Notes', 'Status Timeline', 'Activity'];
 
 export default function OrderDetailView({ basePath }) {
   const { id } = useParams();
@@ -102,6 +103,12 @@ export default function OrderDetailView({ basePath }) {
       {tab === 'Assignment' && <OrderAssignmentPanel order={order} onChanged={load} onToast={setToast} />}
       {tab === 'KYC' && <AdminKycPanel order={order} onOrderChanged={load} onToast={setToast} />}
       {tab === 'Payment' && <AdminPaymentPanel order={order} onOrderChanged={load} onToast={setToast} />}
+      {tab === 'Invoice' && (
+        <AdminOrderInvoicePanel
+          orderId={order.id}
+          basePath={basePath.replace('/orders', '/invoices')}
+        />
+      )}
       {tab === 'Communications' && <AdminCommunicationsPanel order={order} />}
       {tab === 'Tasks' && <OrderTasksPanel order={order} basePath={basePath} />}
       {tab === 'Doc Requests' && <DocRequestPanel order={order} />}

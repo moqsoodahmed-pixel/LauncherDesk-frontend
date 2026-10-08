@@ -6,6 +6,7 @@ import ErrorState from '../../../components/portal/ErrorState';
 import EmptyState from '../../../components/portal/EmptyState';
 import Pagination from '../../../components/portal/Pagination';
 import { getMyPayments } from '../../../services/portal/clientPaymentsApi';
+import { getOwnInvoiceByOrder } from '../../../services/portal/invoicesApi';
 import { formatMoney } from '../../../utils/portal/money';
 
 /**
@@ -162,8 +163,15 @@ export default function PaymentsPage() {
                               {p.status === 'CONFIRMED' ? (
                                 <button
                                   className="ld-btn-primary ld-btn-sm"
-                                  onClick={() => navigate(`/client/orders/${p.order.id}/invoice`)}
-                                  title="View GST invoice & receipt"
+                                  onClick={async () => {
+                                    // The real generated invoice (Preview/Download/Print all live
+                                    // on that page) if one exists yet; the old print-only view as a
+                                    // safe fallback for the rare case payment confirmed but the
+                                    // invoice hasn't generated yet (should be near-instantaneous).
+                                    const inv = await getOwnInvoiceByOrder(p.order.id).catch(() => null);
+                                    navigate(inv ? `/client/invoices/${inv.id}` : `/client/orders/${p.order.id}/invoice`);
+                                  }}
+                                  title="View, download, or print the GST invoice"
                                 >
                                   🧾 Invoice
                                 </button>

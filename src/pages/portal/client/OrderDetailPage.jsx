@@ -13,6 +13,7 @@ import ClientKycPanel from '../../../components/portal/kyc/ClientKycPanel';
 import ClientPaymentPanel from '../../../components/portal/payment/ClientPaymentPanel';
 import ClientNotificationsPanel from '../../../components/portal/communications/ClientNotificationsPanel';
 import ClientDocRequestsBanner from '../../../components/portal/order/ClientDocRequestsBanner';
+import OrderInvoicePanel from '../../../components/portal/invoice/OrderInvoicePanel';
 import { getOwnOrder, cancelOwnOrder } from '../../../services/portal/clientOrdersApi';
 import { CLIENT_CANCELLABLE_STATUSES, TERMINAL_ORDER_STATUSES } from '../../../constants/portal/orderStatus';
 
@@ -123,6 +124,8 @@ export default function ClientOrderDetailPage() {
         <ClientDocRequestsBanner orderId={order.id || order._id} />
 
         <ClientPaymentPanel order={order} onOrderChanged={() => load(true)} onToast={setToast} />
+
+        <OrderInvoicePanel orderId={order.id || order._id} />
 
         <ClientKycPanel order={order} onOrderChanged={() => load(true)} onToast={setToast} />
 

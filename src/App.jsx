@@ -27,6 +27,8 @@ import SaOrderCreatePage from './pages/portal/super-admin/OrderCreatePage'
 import SaOrderDetailPage from './pages/portal/super-admin/OrderDetailPage'
 import PaymentsListPage from './pages/portal/super-admin/PaymentsListPage'
 import InvoicePage from './pages/portal/super-admin/InvoicePage'
+import SaInvoicesListPage from './pages/portal/super-admin/InvoicesListPage'
+import SaInvoiceDetailPage from './pages/portal/super-admin/InvoiceDetailPage'
 import SaKycListPage from './pages/portal/super-admin/KycListPage'
 import SaNotificationsPage from './pages/portal/super-admin/NotificationsPage'
 import AuditLogsPage from './pages/portal/super-admin/AuditLogsPage'
@@ -51,6 +53,8 @@ import AdClientDetailPage from './pages/portal/admin/ClientDetailPage'
 import AdOrdersListPage from './pages/portal/admin/OrdersListPage'
 import AdOrderDetailPage from './pages/portal/admin/OrderDetailPage'
 import AdOrderCreatePage from './pages/portal/admin/OrderCreatePage'
+import AdInvoicesListPage from './pages/portal/admin/InvoicesPage'
+import AdInvoiceDetailPage from './pages/portal/admin/InvoiceDetailPage'
 import AdKycListPage from './pages/portal/admin/KycListPage'
 import AdNotificationsPage from './pages/portal/admin/NotificationsPage'
 import AdProfilePage from './pages/portal/admin/ProfilePage'
@@ -74,6 +78,7 @@ import ClDownloadsPage from './pages/portal/client/DownloadsPage'
 import ClPaymentsPage from './pages/portal/client/PaymentsPage'
 import ClSearchPage from './pages/portal/client/ClientSearchPage'
 import ClInvoicesPage from './pages/portal/client/InvoicesPage'
+import ClInvoiceViewPage from './pages/portal/client/InvoiceViewPage'
 
 // Existing app imports
 import PartnerDashboard from './pages/partner/PartnerDashboard'
@@ -257,6 +262,8 @@ export default function App() {
                     <Route path="orders/create" element={<SaOrderCreatePage />} />
                     <Route path="orders/:id" element={<SaOrderDetailPage />} />
                     <Route path="orders/:id/invoice" element={<InvoicePage />} />
+                    <Route path="invoices" element={<SaInvoicesListPage />} />
+                    <Route path="invoices/:id" element={<SaInvoiceDetailPage />} />
                     <Route path="payments" element={<PaymentsListPage />} />
                     <Route path="payments/:id" element={<PaymentDetailPage />} />
                     <Route path="kyc" element={<SaKycListPage />} />
@@ -290,6 +297,8 @@ export default function App() {
                     <Route path="orders/create" element={<AdOrderCreatePage />} />
                     <Route path="orders/:id" element={<AdOrderDetailPage />} />
                     <Route path="orders/:id/invoice" element={<InvoicePage />} />
+                    <Route path="invoices" element={<AdInvoicesListPage />} />
+                    <Route path="invoices/:id" element={<AdInvoiceDetailPage />} />
                     <Route path="kyc" element={<AdKycListPage />} />
                     <Route path="tasks" element={<AdTasksPage />} />
                     <Route path="support" element={<AdSupportPage />} />
@@ -316,6 +325,7 @@ export default function App() {
                     <Route path="orders/:id" element={<ClOrderDetailPage />} />
                     <Route path="orders/:id/invoice" element={<InvoicePage />} />
                     <Route path="invoices" element={<ClInvoicesPage />} />
+                    <Route path="invoices/:id" element={<ClInvoiceViewPage />} />
                     <Route path="documents" element={<ClDocumentsPage />} />
                     <Route path="notifications" element={<ClNotificationsPage />} />
                     <Route path="support" element={<ClSupportPage />} />
