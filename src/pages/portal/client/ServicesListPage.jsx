@@ -96,6 +96,13 @@ export default function ClientServicesPage() {
       <div className="ld-toolbar">
         <PageHeader title="Services" subtitle="Browse LauncherDesk service offerings and start an order." />
         <div className="ld-toolbar-spacer" />
+        {/* React Router navigation (not window.location) - /services is the public catalogue in this
+            same app, so this stays a client-side route change: the Portal session in PortalAuthContext
+            lives above BrowserRouter and is untouched by it, and the back button returns the user here
+            still signed in. */}
+        <button className="ld-btn-secondary" onClick={() => navigate('/services')}>
+          Browse All Services
+        </button>
         <button className="ld-btn-secondary" onClick={() => navigate('/client/orders')}>
           My Orders
         </button>
@@ -162,7 +169,7 @@ export default function ClientServicesPage() {
 
           {filtered.length === 0 ? (
             <EmptyState message={search || category !== 'ALL' ? 'No services found matching your criteria.' : 'No services are currently available.'}>
-              {(search || category !== 'ALL') && (
+              {(search || category !== 'ALL') ? (
                 <button
                   className="ld-btn-secondary"
                   style={{ marginTop: 10 }}
@@ -173,6 +180,10 @@ export default function ClientServicesPage() {
                   }}
                 >
                   Reset Filters
+                </button>
+              ) : (
+                <button className="ld-btn-primary" style={{ marginTop: 10 }} onClick={() => navigate('/services')}>
+                  Browse All Services
                 </button>
               )}
             </EmptyState>
