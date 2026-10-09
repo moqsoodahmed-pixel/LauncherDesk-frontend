@@ -302,7 +302,7 @@ export default function KycListPage() {
       a.remove();
       window.URL.revokeObjectURL(url);
     } catch (err) {
-      setToast({ type: 'error', message: err.response?.status === 404 ? 'ZIP export is not live on the backend yet.' : (err.response?.data?.message || 'Export failed.') });
+      setToast({ type: 'error', message: err.response?.data?.message || 'Export failed.' });
     } finally {
       setExporting(false);
     }
@@ -328,7 +328,7 @@ export default function KycListPage() {
         <PageHeader title="KYC Management" subtitle="Verify, approve, and manage KYC documents across all client orders." />
         <div style={{ display: 'flex', gap: 8, marginTop: 4, flexShrink: 0 }}>
           <button className="ld-btn-secondary ld-btn-sm" onClick={handleExportCsv}>↓ CSV</button>
-          <button className="ld-btn-secondary ld-btn-sm" onClick={handleExportZip} disabled={exporting} title="Bundles the filtered documents into a ZIP - not yet live on the backend">
+          <button className="ld-btn-secondary ld-btn-sm" onClick={handleExportZip} disabled={exporting} title="Bundles the selected single order's KYC documents into a ZIP">
             {exporting ? 'Exporting…' : '↓ ZIP'}
           </button>
         </div>

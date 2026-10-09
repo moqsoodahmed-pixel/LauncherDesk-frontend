@@ -108,6 +108,7 @@ export default function NotificationBell() {
 
     let es = null;
     let intervalId = null;
+    let retryTimeoutId = null;
     let sseAlive = false;
 
     function startPolling() {
@@ -146,9 +147,13 @@ export default function NotificationBell() {
           sseAlive = false;
           es?.close();
           es = null;
-          // SSE failed — fall back to polling and retry SSE in 60s
+          // SSE failed — fall back to polling and retry SSE in 60s. Tracked so
+          // the effect cleanup can cancel it; otherwise an unmount during the
+          // 60s window (e.g. logout, navigating away) left this fire anyway
+          // and call connectSSE() on a dead effect instance, opening a new
+          // EventSource/interval that nothing could ever clean up again.
           startPolling();
-          setTimeout(() => { if (user) connectSSE(); }, 60000);
+          retryTimeoutId = setTimeout(() => { retryTimeoutId = null; if (user) connectSSE(); }, 60000);
         };
       } catch {
         startPolling();
@@ -171,6 +176,7 @@ export default function NotificationBell() {
     return () => {
       es?.close();
       stopPolling();
+      if (retryTimeoutId) { clearTimeout(retryTimeoutId); retryTimeoutId = null; }
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [user, fetchUnreadCount]);
