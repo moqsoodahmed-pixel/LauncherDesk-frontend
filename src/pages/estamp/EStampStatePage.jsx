@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import SEO from '../../components/SEO'
 import { useUserAuth } from '../../context/UserAuthContext'
+import { useAdminAuth } from '../../context/AdminAuthContext'
+import logoImg from '../../assets/launcherdesk-logo-transparent.png'
 import { loadRazorpayScript } from '../../lib/razorpay'
 import StampCertificate, { CERT_CSS } from './StampCertificate'
 import { stateBySlug, DENOMINATIONS, MAX_DUTY, ESTAMP_FEES, GST_RATE, LD_WA } from '../../data/estamp'
@@ -254,7 +256,13 @@ export default function EStampStatePage() {
   const { state: slug } = useParams()
   const st = stateBySlug(slug)
   const [params] = useSearchParams()
-  const { isLoggedIn, token, user } = useUserAuth()
+  const { isLoggedIn, token, user, logout } = useUserAuth()
+  const adminAuth = useAdminAuth()
+  // A customer login OR an admin login can pay (both are accounts on the server).
+  // Without this, an admin-only session saw "Log in to pay" and the login page sent it straight back.
+  const payToken = token || adminAuth?.token || null
+  const canPay = !!payToken
+  const [sessionExpired, setSessionExpired] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const formRef = useRef(null)
@@ -279,7 +287,7 @@ export default function EStampStatePage() {
     if (!user) return
     setF(v => ({ ...v, name: v.name || user.name || '', email: v.email || user.email || '', mobile: v.mobile || user.phone || '' }))
   }, [user])
-  useEffect(() => { if (isLoggedIn) setAskLogin(false) }, [isLoggedIn])
+  useEffect(() => { if (canPay) { setAskLogin(false); setSessionExpired(false) } }, [canPay])
   useEffect(() => {
     if (!askLogin) return
     const onKey = e => { if (e.key === 'Escape') setAskLogin(false) }
@@ -346,13 +354,13 @@ export default function EStampStatePage() {
 
   async function pay() {
     if (!validate(3)) return
-    if (!isLoggedIn) { setAskLogin(true); return }
+    if (!canPay) { setAskLogin(true); return }
     setPaying(true); setPayErr('')
     try {
       // 1. The server prices and creates the order (it recalculates everything)
       const res = await fetch(`${API_BASE}/payments/checkout/estamp/create-order`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${payToken}` },
         body: JSON.stringify({
           state: st.slug, stateName: st.name,
           firstParty: f.firstParty.trim(), secondParty: f.secondParty.trim(), payer: f.payer,
@@ -364,7 +372,12 @@ export default function EStampStatePage() {
         }),
       })
       const data = await res.json()
-      if (res.status === 401) { setAskLogin(true); return }
+      if (res.status === 401) {
+        // The saved login is no longer valid (expired, or signed out elsewhere). Clear it so the
+        // login page doesn't bounce straight back here, then ask to log in again.
+        if (token) logout(); else adminAuth?.logout?.()
+        setSessionExpired(true); setAskLogin(true); return
+      }
       if (!res.ok) throw new Error((data.fields && Object.values(data.fields)[0]) || data.message || 'We couldn’t create your order. Check the details and try again.')
 
       // 2. Razorpay opens with the server’s amount
@@ -372,14 +385,14 @@ export default function EStampStatePage() {
       await new Promise(resolve => {
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
-          name: 'LauncherDesk', description: `e-Stamp paper, ${st.name}`, image: '/launcherdesk-logo-transparent.png',
+          name: 'LauncherDesk', description: `e-Stamp paper, ${st.name}`, image: new URL(logoImg, window.location.origin).href,
           prefill: { name: f.name, email: f.email, contact: f.mobile }, theme: { color: '#1D5DB8' },
           handler: async response => {
             // 3. The server confirms the payment
             try {
               const v = await fetch(`${API_BASE}/payments/verify`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${payToken}` },
                 body: JSON.stringify(response),
               }).then(r => r.json())
               if (v.success) {
@@ -557,7 +570,7 @@ export default function EStampStatePage() {
                   <>
                     <h2>Where should we send it?</h2>
                     <p className="lead">The scan copy goes to your email. Choose courier if you also need the original.</p>
-                    {!isLoggedIn && (
+                    {!canPay && (
                       <div className="lds-note">You’ll be asked to log in before paying. Everything you’ve entered is saved.</div>
                     )}
                     <div className="lds-f lds-card" role="radiogroup" aria-label="Delivery">
@@ -635,14 +648,16 @@ export default function EStampStatePage() {
       </div>
 
       {/* Login side panel — only when the customer tries to pay */}
-      {askLogin && !isLoggedIn && (
+      {askLogin && !canPay && (
         <>
           <div className="lds-scrim" onClick={() => setAskLogin(false)} aria-hidden="true" />
           <div className="lds-panel" role="dialog" aria-modal="true" aria-labelledby="lds-login-h">
             <button type="button" className="close" onClick={() => setAskLogin(false)} aria-label="Close">×</button>
-            <img src="/launcherdesk-logo-transparent.png" alt="LauncherDesk" />
-            <h2 id="lds-login-h">Log in to pay</h2>
-            <p>Your order and invoice are saved to your LauncherDesk account so you can track it. It takes a few seconds.</p>
+            <img src={logoImg} alt="LauncherDesk" />
+            <h2 id="lds-login-h">{sessionExpired ? 'Please log in again' : 'Log in to pay'}</h2>
+            <p>{sessionExpired
+              ? 'Your login on this device has expired. Log in again to pay — everything you entered is still here.'
+              : 'Your order and invoice are saved to your LauncherDesk account so you can track it. It takes a few seconds.'}</p>
             <button type="button" className="lds-btn primary" style={{ marginLeft: 0 }} onClick={() => goLogin('login')} autoFocus>Log in</button>
             <button type="button" className="lds-btn ghost" onClick={() => goLogin('register')}>Create an account</button>
             <div className="lds-saved">
