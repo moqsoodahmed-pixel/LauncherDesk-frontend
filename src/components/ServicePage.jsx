@@ -383,32 +383,16 @@ function BuyNowButton({ svc, priceCard }) {
     if (payEnabled === null) return
     if (!payEnabled) { navigate('/company/contact'); return }
     setLoading(true); setMsg('')
-    try {
-      const res = await fetch(`${API_BASE}/payments/create-order`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ amount: numericPrice, serviceSlug: svc.slug || '', serviceTitle: svc.title }) })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.message || 'Failed to create order')
-      if (!window.Razorpay) {
-        await new Promise((resolve, reject) => { const s = document.createElement('script'); s.src = 'https://checkout.razorpay.com/v1/checkout.js'; s.onload = resolve; s.onerror = reject; document.body.appendChild(s) })
-      }
-      await new Promise((resolve) => {
-        const rzp = new window.Razorpay({
-          key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
-          name: 'LauncherDesk', description: svc.title, image: '/apple-touch-icon.png',
-          theme: { color: '#1D6FE0' },
-          handler: async (response) => {
-            try {
-              const vRes = await fetch(`${API_BASE}/payments/verify`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify({ razorpay_order_id: response.razorpay_order_id, razorpay_payment_id: response.razorpay_payment_id, razorpay_signature: response.razorpay_signature, serviceSlug: svc.slug || '', serviceTitle: svc.title }) })
-              const vData = await vRes.json()
-              setMsg(vData.success ? '✅ Payment successful! Our team will contact you within 1 business day.' : '⚠️ Payment received but verification pending. Contact support@launcherdesk.com')
-            } catch { setMsg('Payment received. Contact support@launcherdesk.com to confirm.') }
-            resolve()
-          },
-          modal: { ondismiss: () => { setLoading(false); resolve() } },
-        })
-        rzp.open()
-      })
-    } catch (err) { setMsg(`❌ ${err.message || 'Something went wrong. Please try again.'}`) }
-    finally { setLoading(false) }
+    // Routed through the shared openRazorpayCheckout() helper (lib/razorpay.js)
+    // instead of a second, hand-rolled copy of the same flow — the duplicate
+    // that used to live here never detected a mobile network/ad-blocker
+    // silently blocking checkout.razorpay.com (common on Indian carrier
+    // networks), so `await new Promise(...)` on the script tag's `onload`
+    // would resolve but `window.Razorpay` was never actually defined,
+    // leaving the button stuck on "Processing…" forever with no error. The
+    // shared helper already guards against exactly this.
+    await openRazorpayCheckout({ amount: numericPrice, serviceSlug: svc.slug || '', serviceTitle: svc.title, token, onSuccess: setMsg, onError: setMsg })
+    setLoading(false)
   }
 
   const isSuccess = msg.startsWith('✅'), isFail = msg.startsWith('❌')

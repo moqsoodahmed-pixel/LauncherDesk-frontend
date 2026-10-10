@@ -7,6 +7,7 @@ import { useAdminAuth } from '../context/AdminAuthContext'
 import { useSalesAuth } from '../context/SalesAuthContext'
 import { usePartnerAuth } from '../context/PartnerAuthContext'
 import { searchWebsite } from '../data/searchIndex'
+import MobileDrawer from './MobileDrawer'
 
 const I = {
   rocket: 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0',
@@ -438,6 +439,7 @@ export default function Navbar({ activePage = '' }) {
   const navRef = useRef(null)
   const mainNavRef = useRef(null)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [pill, setPill] = useState({ left: 0, width: 0, opacity: 0 })
 
@@ -477,9 +479,9 @@ export default function Navbar({ activePage = '' }) {
     if (item && mainNavRef.current?.contains(item)) movePillTo(item)
   }
 
-  // Close search on route change
+  // Close search/drawer on route change
   const location = useLocation()
-  useEffect(() => { setSearchOpen(false) }, [location.pathname])
+  useEffect(() => { setSearchOpen(false); setDrawerOpen(false) }, [location.pathname])
 
   // Prevent body scroll when search is open
   useEffect(() => {
@@ -632,12 +634,14 @@ export default function Navbar({ activePage = '' }) {
 
             <LoginDropdown />
             <a className="btn btn-primary btn-sm hide-mobile" href="/services#finder" style={{ borderRadius: 8, padding: '0 20px', height: 38, fontSize: 13.5 }}>Get Started</a>
-            <button className="burger" aria-label="Open menu" data-open-drawer="true">
+            <button className="burger" aria-label="Open menu" aria-expanded={drawerOpen} onClick={() => setDrawerOpen(true)}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={I.list} /></svg>
             </button>
           </div>
         </div>
       </header>
+
+      <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </>
   )
 }
