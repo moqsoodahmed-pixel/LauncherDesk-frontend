@@ -290,9 +290,11 @@ export default function UserLoginPage() {
     if (isPortal) {
       const portalRole = (role === 'admin' ? 'ADMIN' : (role === 'user' ? 'CLIENT' : (role === 'super_admin' ? 'SUPER_ADMIN' : role)))
       const mappedUser = { ...rawUser, role: portalRole }
-      localStorage.removeItem('ld_user_token')
-      localStorage.removeItem('ld_user_data')
-      const portalToken = res.accessToken || res.data?.accessToken;
+      const portalToken = res.accessToken || res.data?.accessToken || res.token || res.data?.token
+      if (res.token || portalToken) {
+        localStorage.setItem('ld_user_token', res.token || portalToken)
+        localStorage.setItem('ld_user_data', JSON.stringify(mappedUser))
+      }
       setPortalUser({
         user: mappedUser,
         accessToken: portalToken,

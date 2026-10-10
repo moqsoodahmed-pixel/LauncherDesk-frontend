@@ -4,7 +4,7 @@ import SEO from '../../components/SEO'
 import { useUserAuth } from '../../context/UserAuthContext'
 import { useAdminAuth } from '../../context/AdminAuthContext'
 import { usePortalAuth } from '../../context/PortalAuthContext'
-import apiClient from '../../services/portal/apiClient'
+import apiClient, { getAccessToken } from '../../services/portal/apiClient'
 import logoImg from '../../assets/launcherdesk-logo-transparent.png'
 import { loadRazorpayScript, armOpenWatchdog } from '../../lib/razorpay'
 import StampCertificate, { CERT_CSS } from './StampCertificate'
@@ -266,7 +266,7 @@ export default function EStampStatePage() {
   const adminAuth = useAdminAuth()
   const { user: portalUser } = usePortalAuth()
   const usingPortal = !!portalUser
-  const canPay = usingPortal || isLoggedIn || !!adminAuth?.token
+  const canPay = usingPortal || isLoggedIn || !!adminAuth?.token || !!localStorage.getItem('portal_user') || !!localStorage.getItem('ld_user_token') || !!localStorage.getItem('portal_access_token')
   const [sessionExpired, setSessionExpired] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
@@ -310,9 +310,10 @@ export default function EStampStatePage() {
   useEffect(() => { try { localStorage.setItem(DRAFT_KEY(slug), JSON.stringify(f)) } catch { /* storage unavailable */ } }, [f, slug])
   useEffect(() => { try { sessionStorage.setItem(`${DRAFT_KEY(slug)}_step`, String(maxStep)) } catch { /* ignore */ } }, [maxStep, slug])
   useEffect(() => {
-    if (!user) return
-    setF(v => ({ ...v, name: v.name || user.name || '', email: v.email || user.email || '', mobile: v.mobile || user.phone || '' }))
-  }, [user])
+    const activeUser = portalUser || user
+    if (!activeUser) return
+    setF(v => ({ ...v, name: v.name || activeUser.name || '', email: v.email || activeUser.email || '', mobile: v.mobile || activeUser.phone || activeUser.mobile || '' }))
+  }, [user, portalUser])
   useEffect(() => { if (canPay) { setAskLogin(false); setSessionExpired(false) } }, [canPay])
   useEffect(() => {
     if (!askLogin) return
@@ -394,33 +395,61 @@ export default function EStampStatePage() {
     }
     try {
       let data
-      const viaLegacy = async () => {
-        const legacyToken = token || adminAuth?.token
-        if (!legacyToken) { const e = new Error('no legacy token'); e.response = { status: 401 }; throw e }
+      const getActiveToken = () => {
+        try {
+          return (
+            (typeof getAccessToken === 'function' ? getAccessToken() : null) ||
+            localStorage.getItem('portal_access_token') ||
+            token ||
+            localStorage.getItem('ld_user_token') ||
+            adminAuth?.token ||
+            localStorage.getItem('ld_admin_token') ||
+            null
+          )
+        } catch {
+          return null
+        }
+      }
+
+      const activeToken = getActiveToken()
+
+      const tryCreateOrder = async (useAuth = true) => {
+        const headers = { 'Content-Type': 'application/json' }
+        if (useAuth && activeToken) {
+          headers.Authorization = `Bearer ${activeToken}`
+        }
         const res = await fetch(`${API_BASE}/payments/checkout/estamp/create-order`, {
           signal: AbortSignal.timeout ? AbortSignal.timeout(25000) : undefined,
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${legacyToken}` },
+          headers,
           body: JSON.stringify(payload),
         })
         const d = await res.json().catch(() => ({}))
-        if (res.status === 401) { const e = new Error('expired'); e.response = { status: 401 }; throw e }
-        if (!res.ok) throw new Error((d.fields && Object.values(d.fields)[0]) || d.message || "We couldn't create your order. Check the details and try again.")
+        if (!res.ok) {
+          const err = new Error((d.fields && Object.values(d.fields)[0]) || d.message || "We couldn't create your order. Check the details and try again.")
+          err.response = { status: res.status, data: d }
+          throw err
+        }
         return d
       }
-      if (usingPortal) {
+
+      if (usingPortal && activeToken) {
         try {
           // apiClient attaches the Portal token and retries once after a silent refresh.
           const res = await apiClient.post('/payments/checkout/estamp/create-order', payload, { baseURL: API_BASE, timeout: 25000 })
           data = res.data
         } catch (pe) {
           // A stale Portal login on this phone must not dead-end the payment: if this
-          // browser also has the site's own login, use that instead.
-          if (pe?.response?.status === 401 && (token || adminAuth?.token)) { setPayStage('1/4 Re-checking your login…'); data = await viaLegacy() }
-          else throw pe
+          // browser also has another token or active session, use that instead.
+          if (pe?.response?.status === 401 && activeToken) {
+            setPayStage('1/4 Re-checking your login…')
+            data = await tryCreateOrder(true)
+          } else {
+            throw pe
+          }
         }
       } else {
-        data = await viaLegacy()
+        data = await tryCreateOrder(true)
       }
 
       setPayStage('2/4 Order created. Loading secure checkout…')
@@ -469,20 +498,32 @@ export default function EStampStatePage() {
             stopWatch()
             try {
               let v
-              if (usingPortal) {
-                const vr = await apiClient.post('/payments/verify', response, { baseURL: API_BASE })
-                v = vr.data
-              } else {
-                v = await fetch(`${API_BASE}/payments/verify`, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token || adminAuth?.token}` },
-                  body: JSON.stringify(response),
-                }).then(r => r.json())
+              const verifyHeaders = {
+                'Content-Type': 'application/json',
+                ...(activeToken ? { Authorization: `Bearer ${activeToken}` } : {})
               }
-              if (v.success) {
+              const vr = await fetch(`${API_BASE}/payments/checkout/verify`, {
+                method: 'POST',
+                headers: verifyHeaders,
+                body: JSON.stringify(response),
+              }).catch(() => null)
+              v = vr ? await vr.json().catch(() => ({})) : null
+              if (!v?.success) {
+                if (usingPortal) {
+                  const pvr = await apiClient.post('/payments/verify', response, { baseURL: API_BASE }).catch(() => null)
+                  if (pvr?.data?.success) v = pvr.data
+                } else {
+                  v = await fetch(`${API_BASE}/payments/verify`, {
+                    method: 'POST',
+                    headers: verifyHeaders,
+                    body: JSON.stringify(response),
+                  }).then(r => r.json()).catch(() => ({}))
+                }
+              }
+              if (v?.success) {
                 try { localStorage.removeItem(DRAFT_KEY(slug)) } catch { /* ignore */ }
                 setDone({ orderNumber: v.orderNumber || data.orderNumber, ldOrderId: v.ldOrderId || data.ldOrderId })
-              } else setPayErr(v.message || "Payment received. We're confirming it and will email you shortly.")
+              } else setPayErr(v?.message || "Payment received. We're confirming it and will email you shortly.")
             } catch {
               setPayErr("Payment received. We're confirming it and will email you shortly. You don't need to pay again.")
             }

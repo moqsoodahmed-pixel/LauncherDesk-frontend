@@ -37,7 +37,12 @@ export function setAccessToken(token) {
 export function getAccessToken() {
   if (accessToken) return accessToken;
   try {
-    return localStorage.getItem('portal_access_token');
+    return (
+      localStorage.getItem('portal_access_token') ||
+      localStorage.getItem('ld_user_token') ||
+      localStorage.getItem('ld_admin_token') ||
+      null
+    );
   } catch {
     return null;
   }
