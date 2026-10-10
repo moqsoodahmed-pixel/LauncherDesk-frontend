@@ -10,14 +10,31 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 let scriptPromise = null
 
+// A clear message for the one failure mode that otherwise looks like
+// "nothing happens": some mobile networks/apps (ad blockers, privacy DNS,
+// certain carrier filters) return an empty 200 OK page instead of actually
+// blocking checkout.razorpay.com, so the <script> tag's onload still fires
+// — but window.Razorpay is never defined. Without the check below, that
+// silently resolves and the Pay button just does nothing with no error.
+const BLOCKED_MSG = "Your payment couldn't start because this device or network is blocking Razorpay's secure checkout (checkout.razorpay.com) — this is usually an ad blocker, VPN or private DNS app. Turn it off, or switch to mobile data / a different Wi-Fi, then try again."
+
 export function loadRazorpayScript() {
   if (window.Razorpay) return Promise.resolve()
   if (scriptPromise) return scriptPromise
   scriptPromise = new Promise((resolve, reject) => {
+    const fail = (msg) => { scriptPromise = null; clearTimeout(timer); reject(new Error(msg)) }
+    const timer = setTimeout(() => fail("Razorpay's payment script is taking too long to load. Please check your internet connection and try again."), 15000)
     const s = document.createElement('script')
     s.src = 'https://checkout.razorpay.com/v1/checkout.js'
-    s.onload = resolve
-    s.onerror = () => { scriptPromise = null; reject(new Error('Could not load Razorpay. Check your connection and try again.')) }
+    s.onload = () => {
+      clearTimeout(timer)
+      // onload fires even when a network filter served a harmless 200 page
+      // instead of the real script — only a real Razorpay global proves it
+      // actually arrived.
+      if (typeof window.Razorpay === 'function') resolve()
+      else fail(BLOCKED_MSG)
+    }
+    s.onerror = () => fail('Could not load Razorpay. Check your connection and try again.')
     document.body.appendChild(s)
   })
   return scriptPromise

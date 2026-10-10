@@ -2,6 +2,10 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import SEO from '../../components/SEO'
 import { useUserAuth } from '../../context/UserAuthContext'
+import { useAdminAuth } from '../../context/AdminAuthContext'
+import { usePortalAuth } from '../../context/PortalAuthContext'
+import apiClient from '../../services/portal/apiClient'
+import logoImg from '../../assets/launcherdesk-logo-transparent.png'
 import { loadRazorpayScript } from '../../lib/razorpay'
 import StampCertificate, { CERT_CSS } from './StampCertificate'
 import { stateBySlug, DENOMINATIONS, MAX_DUTY, ESTAMP_FEES, GST_RATE, LD_WA } from '../../data/estamp'
@@ -254,7 +258,16 @@ export default function EStampStatePage() {
   const { state: slug } = useParams()
   const st = stateBySlug(slug)
   const [params] = useSearchParams()
-  const { isLoggedIn, token, user } = useUserAuth()
+  // The site now has two login systems: the original one (useUserAuth/useAdminAuth)
+  // and the newer "Portal" unified login (usePortalAuth) that the main /user/login
+  // page signs people into today. A customer may be signed in through either —
+  // Portal takes priority when both are present, matching the navbar's own logic.
+  const { isLoggedIn, token, user, logout } = useUserAuth()
+  const adminAuth = useAdminAuth()
+  const { user: portalUser } = usePortalAuth()
+  const usingPortal = !!portalUser
+  const canPay = usingPortal || isLoggedIn || !!adminAuth?.token
+  const [sessionExpired, setSessionExpired] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const formRef = useRef(null)
@@ -279,7 +292,7 @@ export default function EStampStatePage() {
     if (!user) return
     setF(v => ({ ...v, name: v.name || user.name || '', email: v.email || user.email || '', mobile: v.mobile || user.phone || '' }))
   }, [user])
-  useEffect(() => { if (isLoggedIn) setAskLogin(false) }, [isLoggedIn])
+  useEffect(() => { if (canPay) { setAskLogin(false); setSessionExpired(false) } }, [canPay])
   useEffect(() => {
     if (!askLogin) return
     const onKey = e => { if (e.key === 'Escape') setAskLogin(false) }
@@ -346,44 +359,59 @@ export default function EStampStatePage() {
 
   async function pay() {
     if (!validate(3)) return
-    if (!isLoggedIn) { setAskLogin(true); return }
+    if (!canPay) { setAskLogin(true); return }
     setPaying(true); setPayErr('')
+    const payload = {
+      state: st.slug, stateName: st.name,
+      firstParty: f.firstParty.trim(), secondParty: f.secondParty.trim(), payer: f.payer,
+      documentType: f.docType, purpose: f.purpose.trim(), consideration: f.consideration,
+      stampDuty: duty, printDocument: !!f.print, delivery: f.delivery,
+      name: f.name.trim(), email: f.email.trim(), mobile: f.mobile.trim(),
+      ...(f.delivery === 'courier' ? { address: f.address.trim(), city: f.city.trim(), pincode: f.pincode.trim() } : {}),
+    }
     try {
-      // 1. The server prices and creates the order (it recalculates everything)
-      const res = await fetch(`${API_BASE}/payments/checkout/estamp/create-order`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({
-          state: st.slug, stateName: st.name,
-          firstParty: f.firstParty.trim(), secondParty: f.secondParty.trim(), payer: f.payer,
-          documentType: article?.label || '', articleCode: article?.code || '', baseAmount: rule && baseField === 'baseAmount' ? f.baseAmount : undefined,
-          purpose: f.purpose.trim(), consideration: f.consideration,
-          stampDuty: duty, printDocument: !!f.print, delivery: f.delivery,
-          name: f.name.trim(), email: f.email.trim(), mobile: f.mobile.trim(),
-          ...(f.delivery === 'courier' ? { address: f.address.trim(), city: f.city.trim(), pincode: f.pincode.trim() } : {}),
-        }),
-      })
-      const data = await res.json()
-      if (res.status === 401) { setAskLogin(true); return }
-      if (!res.ok) throw new Error((data.fields && Object.values(data.fields)[0]) || data.message || 'We couldn’t create your order. Check the details and try again.')
+      let data
+      if (usingPortal) {
+        // apiClient already knows how to attach a valid (auto-refreshed) Portal
+        // token and retries once after a silent refresh — reused as-is here,
+        // just pointed at this endpoint instead of its own /api/portal/* base.
+        const res = await apiClient.post('/payments/checkout/estamp/create-order', payload, { baseURL: API_BASE })
+        data = res.data
+      } else {
+        const res = await fetch(`${API_BASE}/payments/checkout/estamp/create-order`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token || adminAuth?.token}` },
+          body: JSON.stringify(payload),
+        })
+        data = await res.json()
+        if (res.status === 401) {
+          if (token) logout(); else adminAuth?.logout?.()
+          setSessionExpired(true); setAskLogin(true); setPaying(false); return
+        }
+        if (!res.ok) throw new Error((data.fields && Object.values(data.fields)[0]) || data.message || 'We couldn’t create your order. Check the details and try again.')
+      }
 
-      // 2. Razorpay opens with the server’s amount
       await loadRazorpayScript()
       await new Promise(resolve => {
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
-          name: 'LauncherDesk', description: `e-Stamp paper, ${st.name}`, image: '/launcherdesk-logo-transparent.png',
+          name: 'LauncherDesk', description: `e-Stamp paper, ${st.name}`, image: new URL(logoImg, window.location.origin).href,
           prefill: { name: f.name, email: f.email, contact: f.mobile }, theme: { color: '#1D5DB8' },
           handler: async response => {
-            // 3. The server confirms the payment
             try {
-              const v = await fetch(`${API_BASE}/payments/verify`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                body: JSON.stringify(response),
-              }).then(r => r.json())
+              let v
+              if (usingPortal) {
+                const vr = await apiClient.post('/payments/verify', response, { baseURL: API_BASE })
+                v = vr.data
+              } else {
+                v = await fetch(`${API_BASE}/payments/verify`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token || adminAuth?.token}` },
+                  body: JSON.stringify(response),
+                }).then(r => r.json())
+              }
               if (v.success) {
-                try { localStorage.removeItem(DRAFT_KEY(slug)); sessionStorage.removeItem(`${DRAFT_KEY(slug)}_step`) } catch { /* ignore */ }
+                try { localStorage.removeItem(DRAFT_KEY(slug)) } catch { /* ignore */ }
                 setDone({ orderNumber: v.orderNumber || data.orderNumber, ldOrderId: v.ldOrderId || data.ldOrderId })
               } else setPayErr(v.message || 'Payment received. We’re confirming it and will email you shortly.')
             } catch {
@@ -397,7 +425,10 @@ export default function EStampStatePage() {
         rzp.open()
       })
     } catch (err) {
-      setPayErr(err.message)
+      // apiClient (Portal path) throws here after its own silent-refresh retry also
+      // failed — a real, unrecoverable session expiry, not a one-off network blip.
+      if (usingPortal && err?.response?.status === 401) { setSessionExpired(true); setAskLogin(true) }
+      else setPayErr(err?.response?.data?.message || err.message || 'Something went wrong. Please try again.')
     } finally {
       setPaying(false)
     }
@@ -557,7 +588,7 @@ export default function EStampStatePage() {
                   <>
                     <h2>Where should we send it?</h2>
                     <p className="lead">The scan copy goes to your email. Choose courier if you also need the original.</p>
-                    {!isLoggedIn && (
+                    {!canPay && (
                       <div className="lds-note">You’ll be asked to log in before paying. Everything you’ve entered is saved.</div>
                     )}
                     <div className="lds-f lds-card" role="radiogroup" aria-label="Delivery">
@@ -635,14 +666,16 @@ export default function EStampStatePage() {
       </div>
 
       {/* Login side panel — only when the customer tries to pay */}
-      {askLogin && !isLoggedIn && (
+      {askLogin && !canPay && (
         <>
           <div className="lds-scrim" onClick={() => setAskLogin(false)} aria-hidden="true" />
           <div className="lds-panel" role="dialog" aria-modal="true" aria-labelledby="lds-login-h">
             <button type="button" className="close" onClick={() => setAskLogin(false)} aria-label="Close">×</button>
-            <img src="/launcherdesk-logo-transparent.png" alt="LauncherDesk" />
-            <h2 id="lds-login-h">Log in to pay</h2>
-            <p>Your order and invoice are saved to your LauncherDesk account so you can track it. It takes a few seconds.</p>
+            <img src={logoImg} alt="LauncherDesk" />
+            <h2 id="lds-login-h">{sessionExpired ? 'Please log in again' : 'Log in to pay'}</h2>
+            <p>{sessionExpired
+              ? 'Your login on this device has expired. Log in again to pay — everything you entered is still here.'
+              : 'Your order and invoice are saved to your LauncherDesk account so you can track it. It takes a few seconds.'}</p>
             <button type="button" className="lds-btn primary" style={{ marginLeft: 0 }} onClick={() => goLogin('login')} autoFocus>Log in</button>
             <button type="button" className="lds-btn ghost" onClick={() => goLogin('register')}>Create an account</button>
             <div className="lds-saved">
