@@ -6,7 +6,7 @@ import { useAdminAuth } from '../../context/AdminAuthContext'
 import { usePortalAuth } from '../../context/PortalAuthContext'
 import apiClient from '../../services/portal/apiClient'
 import logoImg from '../../assets/launcherdesk-logo-transparent.png'
-import { loadRazorpayScript } from '../../lib/razorpay'
+import { loadRazorpayScript, armOpenWatchdog } from '../../lib/razorpay'
 import StampCertificate, { CERT_CSS } from './StampCertificate'
 import { stateBySlug, DENOMINATIONS, MAX_DUTY, ESTAMP_FEES, GST_RATE, LD_WA } from '../../data/estamp'
 import { articlesFor, keyOf, dutyFromRule, ruleText } from '../../data/estampArticles'
@@ -285,6 +285,11 @@ export default function EStampStatePage() {
   const [done, setDone] = useState(null)
   const [askLogin, setAskLogin] = useState(false)
 
+  // Load Razorpay's script as soon as the page opens, so by the time the customer
+  // taps Pay it is already there and checkout opens right after the tap (mobile
+  // browsers can refuse to open the payment window if too much time has passed).
+  useEffect(() => { loadRazorpayScript().catch(() => { /* retried on Pay */ }) }, [])
+
   // keep a draft so nothing is lost while the customer logs in
   useEffect(() => { try { localStorage.setItem(DRAFT_KEY(slug), JSON.stringify(f)) } catch { /* storage unavailable */ } }, [f, slug])
   useEffect(() => { try { sessionStorage.setItem(`${DRAFT_KEY(slug)}_step`, String(maxStep)) } catch { /* ignore */ } }, [maxStep, slug])
@@ -422,19 +427,13 @@ export default function EStampStatePage() {
             resolve()
           }
         }
-        const watchdog = setTimeout(() => {
-          if (!settled) {
-            setPayErr('The payment window didn\u2019t open. Please check your connection and try again \u2014 no amount has been charged.')
-            finish()
-          }
-        }, 15000)
-
+        let stopWatch = () => {}
         const rzpOptions = {
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
-          name: 'LauncherDesk', description: `e-Stamp paper, ${st.name}`, image: new URL(logoImg, window.location.origin).href,
+          name: 'LauncherDesk', description: `e-Stamp paper, ${st.name}`, image: new URL('/apple-touch-icon.png', window.location.origin).href,
           prefill: { name: f.name, email: f.email, contact: f.mobile }, theme: { color: '#1D5DB8' },
           modal: {
-            ondismiss: () => { clearTimeout(watchdog); finish() },
+            ondismiss: () => { stopWatch(); finish() },
             // Prevent accidental close on mobile back-gesture
             confirm_close: true,
             animation: true,
@@ -442,7 +441,7 @@ export default function EStampStatePage() {
             escape: true,
           },
           handler: async response => {
-            clearTimeout(watchdog)
+            stopWatch()
             try {
               let v
               if (usingPortal) {
@@ -476,22 +475,23 @@ export default function EStampStatePage() {
         // is preserved long enough for this to work reliably.
         const rzp = new window.Razorpay(rzpOptions)
         rzp.on?.('payment.failed', r => {
-          clearTimeout(watchdog)
+          stopWatch()
           setPayErr(r?.error?.description || "The payment didn't go through. No money was taken; you can try again.")
           finish()
         })
 
-        // Use setTimeout(0) so the browser paints "Opening payment…" before
-        // the modal renders — this prevents a blank/frozen screen on mobile.
-        setTimeout(() => {
-          try {
-            rzp.open()
-          } catch (openErr) {
-            clearTimeout(watchdog)
-            setPayErr(openErr?.message || 'Could not open the payment window. Please try again.')
-            finish()
-          }
-        }, 0)
+        try {
+          rzp.open()
+          stopWatch = armOpenWatchdog(() => {
+            if (!settled) {
+              setPayErr('The payment window didn\u2019t open. Please check your connection and try again \u2014 no amount has been charged.')
+              finish()
+            }
+          }, 15000)
+        } catch (openErr) {
+          setPayErr(openErr?.message || 'Could not open the payment window. Please try again.')
+          finish()
+        }
       })
     } catch (err) {
       // apiClient (Portal path) throws here after its own silent-refresh retry also
