@@ -290,6 +290,19 @@ export default function EStampStatePage() {
   // browsers can refuse to open the payment window if too much time has passed).
   useEffect(() => { loadRazorpayScript().catch(() => { /* retried on Pay */ }) }, [])
 
+  // Phones pay on Razorpay's full-page checkout (see pay()); Razorpay sends the customer
+  // back here with ?paid=<order no> or ?payfail=<reason>.
+  useEffect(() => {
+    const paid = params.get('paid'), fail = params.get('payfail')
+    if (!paid && !fail) return
+    if (paid) {
+      try { localStorage.removeItem(DRAFT_KEY(slug)) } catch { /* ignore */ }
+      setDone({ orderNumber: paid === 'ok' ? '' : paid, ldOrderId: params.get('oid') || '' })
+    } else setPayErr(fail)
+    navigate(location.pathname, { replace: true })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   // keep a draft so nothing is lost while the customer logs in
   useEffect(() => { try { localStorage.setItem(DRAFT_KEY(slug), JSON.stringify(f)) } catch { /* storage unavailable */ } }, [f, slug])
   useEffect(() => { try { sessionStorage.setItem(`${DRAFT_KEY(slug)}_step`, String(maxStep)) } catch { /* ignore */ } }, [maxStep, slug])
@@ -416,6 +429,7 @@ export default function EStampStatePage() {
       const bodyOverflow = document.body.style.overflow
       document.body.style.overflow = ''
 
+      const isPhone = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || window.matchMedia('(pointer: coarse)').matches
       await new Promise(resolve => {
         // Watchdog: if the Razorpay modal fails to open or respond within
         // 15 s, recover gracefully so the button is never stuck permanently.
@@ -432,6 +446,9 @@ export default function EStampStatePage() {
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
           name: 'LauncherDesk', description: `e-Stamp paper, ${st.name}`, image: new URL('/apple-touch-icon.png', window.location.origin).href,
           prefill: { name: f.name, email: f.email, contact: f.mobile }, theme: { color: '#1D5DB8' },
+          // Phones: the pop-up can fail to show, so go to Razorpay's own full page instead and
+          // come back through our callback (handler/ondismiss are not used in this mode).
+          ...(isPhone ? { redirect: true, callback_url: `${API_BASE.replace(/\/+$/, '')}/payments/checkout/estamp/callback?state=${encodeURIComponent(st.slug)}` } : {}),
           modal: {
             ondismiss: () => { stopWatch(); finish() },
             // Prevent accidental close on mobile back-gesture
@@ -487,7 +504,7 @@ export default function EStampStatePage() {
               setPayErr('The payment window didn\u2019t open. Please check your connection and try again \u2014 no amount has been charged.')
               finish()
             }
-          }, 15000)
+          }, isPhone ? 30000 : 15000)
         } catch (openErr) {
           setPayErr(openErr?.message || 'Could not open the payment window. Please try again.')
           finish()
