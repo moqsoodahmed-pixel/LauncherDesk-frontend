@@ -143,20 +143,6 @@ textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertic
 .lds-done h2 { font-size:26px; }
 .lds-done p { color:var(--text-2); line-height:1.65; max-width:52ch; margin:0 auto 22px; }
 
-/* Login side panel */
-.lds-scrim { position:fixed; inset:0; background:rgba(11,31,72,.45); z-index:9998; }
-.lds-panel { position:fixed; top:0; right:0; bottom:0; width:min(420px,100%); background:#fff; z-index:9999; padding:28px 26px;
-  box-shadow:-20px 0 60px rgba(11,31,72,.25); display:flex; flex-direction:column; animation:ldsIn .25s ease; }
-@keyframes ldsIn { from { transform:translateX(30px); opacity:0; } to { transform:none; opacity:1; } }
-@media (prefers-reduced-motion: reduce) { .lds-panel { animation:none; } }
-.lds-panel img { height:34px; align-self:flex-start; margin-bottom:28px; }
-.lds-panel h2 { margin:0 0 8px; font-size:24px; color:var(--navy); letter-spacing:-.02em; }
-.lds-panel p { margin:0 0 22px; color:var(--text-2); line-height:1.6; }
-.lds-panel .lds-btn { width:100%; margin:0 0 10px; }
-.lds-panel .lds-btn.ghost { background:#fff; color:var(--navy); border:1.5px solid var(--line-strong); }
-.lds-panel .close { position:absolute; top:16px; right:16px; width:38px; height:38px; border-radius:50%; border:0; background:var(--bg-2); font-size:22px; cursor:pointer; }
-.lds-saved { display:flex; gap:10px; align-items:center; margin-top:auto; background:var(--success-bg); color:#065F46; border-radius:12px; padding:12px 14px; font-size:14px; }
-
 @media (max-width:1100px) { .lds-grid { grid-template-columns:minmax(0,1fr) 340px; } .lds-rail { display:none; } }
 @media (max-width:860px) { .lds-grid { grid-template-columns:1fr; } .lds-aside { position:static; } }
 @media (max-width:520px) { .lds-two, .lds-seg { grid-template-columns:1fr; } 
@@ -262,12 +248,10 @@ export default function EStampStatePage() {
   // and the newer "Portal" unified login (usePortalAuth) that the main /user/login
   // page signs people into today. A customer may be signed in through either —
   // Portal takes priority when both are present, matching the navbar's own logic.
-  const { isLoggedIn, token, user, logout } = useUserAuth()
+  const { isLoggedIn, token, user } = useUserAuth()
   const adminAuth = useAdminAuth()
   const { user: portalUser } = usePortalAuth()
   const usingPortal = !!portalUser
-  const canPay = usingPortal || isLoggedIn || !!adminAuth?.token || !!localStorage.getItem('portal_user') || !!localStorage.getItem('ld_user_token') || !!localStorage.getItem('portal_access_token')
-  const [sessionExpired, setSessionExpired] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const formRef = useRef(null)
@@ -286,7 +270,6 @@ export default function EStampStatePage() {
   const payStageRef = useRef('')
   useEffect(() => { payStageRef.current = payStage }, [payStage])
   const [done, setDone] = useState(null)
-  const [askLogin, setAskLogin] = useState(false)
 
   // Load Razorpay's script as soon as the page opens, so by the time the customer
   // taps Pay it is already there and checkout opens right after the tap (mobile
@@ -314,13 +297,6 @@ export default function EStampStatePage() {
     if (!activeUser) return
     setF(v => ({ ...v, name: v.name || activeUser.name || '', email: v.email || activeUser.email || '', mobile: v.mobile || activeUser.phone || activeUser.mobile || '' }))
   }, [user, portalUser])
-  useEffect(() => { if (canPay) { setAskLogin(false); setSessionExpired(false) } }, [canPay])
-  useEffect(() => {
-    if (!askLogin) return
-    const onKey = e => { if (e.key === 'Escape') setAskLogin(false) }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [askLogin])
 
   const { verified, items: articles } = useMemo(() => articlesFor(slug), [slug])
   const article = articles.find(a => keyOf(a) === f.article) || null
@@ -344,7 +320,6 @@ export default function EStampStatePage() {
     setErrs(x => (x[k] || ((k === 'baseAmount' || k === 'consideration') && x.base) || (k === 'customDuty' && x.duty))
       ? { ...x, [k]: undefined, ...(k === 'baseAmount' || k === 'consideration' ? { base: undefined } : {}), ...(k === 'customDuty' ? { duty: undefined } : {}) } : x)
   }
-  const goLogin = tab => navigate('/user/login', { state: { from: location.pathname + location.search, tab } })
 
   function validate(s) {
     const e = {}
@@ -381,7 +356,6 @@ export default function EStampStatePage() {
 
   async function pay() {
     if (!validate(3)) return
-    if (!canPay) { setAskLogin(true); return }
     setPaying(true); setPayErr(''); setPayStage('1/4 Creating your order…')
     const payload = {
       state: st.slug, stateName: st.name,
@@ -433,23 +407,15 @@ export default function EStampStatePage() {
         return d
       }
 
-      if (usingPortal && activeToken) {
-        try {
-          // apiClient attaches the Portal token and retries once after a silent refresh.
-          const res = await apiClient.post('/payments/checkout/estamp/create-order', payload, { baseURL: API_BASE, timeout: 25000 })
-          data = res.data
-        } catch (pe) {
-          // A stale Portal login on this phone must not dead-end the payment: if this
-          // browser also has another token or active session, use that instead.
-          if (pe?.response?.status === 401 && activeToken) {
-            setPayStage('1/4 Re-checking your login…')
-            data = await tryCreateOrder(true)
-          } else {
-            throw pe
-          }
+      try {
+        data = await tryCreateOrder(!!activeToken)
+      } catch (orderErr) {
+        if (orderErr?.response?.status === 401 && activeToken) {
+          setPayStage('1/4 Connecting to checkout…')
+          data = await tryCreateOrder(false)
+        } else {
+          throw orderErr
         }
-      } else {
-        data = await tryCreateOrder(true)
       }
 
       setPayStage('2/4 Order created. Loading secure checkout…')
@@ -560,19 +526,11 @@ export default function EStampStatePage() {
         }
       })
     } catch (err) {
-      // apiClient (Portal path) throws here after its own silent-refresh retry also
-      // failed — a real, unrecoverable session expiry, not a one-off network blip.
-      if (err?.response?.status === 401) {
-        setSessionExpired(true); setAskLogin(true)
-        setPayErr('Your login has expired on this device. Please log in again — everything you entered is saved.')
-      }
-      else {
-        const timedOut = err?.code === 'ECONNABORTED' || err?.name === 'TimeoutError' || err?.name === 'AbortError'
-        const base = timedOut
-          ? "We couldn't reach our server from this device (timed out). Check your internet or try mobile data / another Wi-Fi."
-          : (err?.response?.data?.message || err.message || 'Something went wrong. Please try again.')
-        setPayErr(`${base} [stopped at: ${payStageRef.current || 'start'}]`)
-      }
+      const timedOut = err?.code === 'ECONNABORTED' || err?.name === 'TimeoutError' || err?.name === 'AbortError'
+      const base = timedOut
+        ? "We couldn't reach our server from this device (timed out). Check your internet or try mobile data / another Wi-Fi."
+        : (err?.response?.data?.message || err.message || 'Something went wrong. Please try again.')
+      setPayErr(`${base} [stopped at: ${payStageRef.current || 'start'}]`)
     } finally {
       setPaying(false); setPayStage('')
     }
@@ -732,9 +690,6 @@ export default function EStampStatePage() {
                   <>
                     <h2>Where should we send it?</h2>
                     <p className="lead">The scan copy goes to your email. Choose courier if you also need the original.</p>
-                    {!canPay && (
-                      <div className="lds-note">You'll be asked to log in before paying. Everything you've entered is saved.</div>
-                    )}
                     <div className="lds-f lds-card" role="radiogroup" aria-label="Delivery">
                       <label>
                         <input type="radio" name="dl" value="email" checked={f.delivery === 'email'} onChange={set('delivery')} />
@@ -810,26 +765,6 @@ export default function EStampStatePage() {
         </div>
       </div>
 
-      {/* Login side panel — only when the customer tries to pay */}
-      {askLogin && (!canPay || sessionExpired) && (
-        <>
-          <div className="lds-scrim" onClick={() => setAskLogin(false)} aria-hidden="true" />
-          <div className="lds-panel" role="dialog" aria-modal="true" aria-labelledby="lds-login-h">
-            <button type="button" className="close" onClick={() => setAskLogin(false)} aria-label="Close">×</button>
-            <img src={logoImg} alt="LauncherDesk" />
-            <h2 id="lds-login-h">{sessionExpired ? 'Please log in again' : 'Log in to pay'}</h2>
-            <p>{sessionExpired
-              ? 'Your login on this device has expired. Log in again to pay — everything you entered is still here.'
-              : 'Your order and invoice are saved to your LauncherDesk account so you can track it. It takes a few seconds.'}</p>
-            <button type="button" className="lds-btn primary" style={{ marginLeft: 0 }} onClick={() => goLogin('login')} autoFocus>Log in</button>
-            <button type="button" className="lds-btn ghost" onClick={() => goLogin('register')}>Create an account</button>
-            <div className="lds-saved">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-              Your {st.name} e-Stamp details are saved. You'll come straight back here.
-            </div>
-          </div>
-        </>
-      )}
     </>
   )
 }
