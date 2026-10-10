@@ -18,6 +18,25 @@ let scriptPromise = null
 // silently resolves and the Pay button just does nothing with no error.
 const BLOCKED_MSG = "Your payment couldn't start because this device or network is blocking Razorpay's secure checkout (checkout.razorpay.com) — this is usually an ad blocker, VPN or private DNS app. Turn it off, or switch to mobile data / a different Wi-Fi, then try again."
 
+// Razorpay gives no "modal opened" callback. Its checkout iframe is always
+// added to <body> inside `.razorpay-container`, so once that exists the window
+// DID open and we must NOT show a "didn't open" error — on mobile the customer
+// often spends well over 15-20s inside the modal (switching to a UPI app,
+// typing an OTP), and a fixed timer used to fire mid-payment and reset the
+// button. Returns a function that cancels the watchdog.
+export function armOpenWatchdog(onFail, ms = 15000) {
+  const started = Date.now()
+  const iv = setInterval(() => {
+    if (document.querySelector('.razorpay-container, iframe.razorpay-checkout-frame')) {
+      clearInterval(iv)
+    } else if (Date.now() - started > ms) {
+      clearInterval(iv)
+      onFail()
+    }
+  }, 500)
+  return () => clearInterval(iv)
+}
+
 export function loadRazorpayScript() {
   if (window.Razorpay) return Promise.resolve()
   if (scriptPromise) return scriptPromise
@@ -103,12 +122,15 @@ export async function openRazorpayCheckout({
       // retry — this guarantees the UI always recovers.
       let settled = false
       const finish = () => { if (!settled) { settled = true; resolve() } }
-      const watchdog = setTimeout(() => {
-        if (!settled) {
-          onError('The payment window didn’t open. Please check your connection and try again — no amount has been charged.')
-          finish()
-        }
-      }, 20000)
+      let stopWatch = () => {}
+      const startWatch = () => {
+        stopWatch = armOpenWatchdog(() => {
+          if (!settled) {
+            onError('The payment window didn’t open. Please check your connection and try again — no amount has been charged.')
+            finish()
+          }
+        }, 20000)
+      }
 
       const rzp = new window.Razorpay({
         key: data.keyId,
@@ -120,10 +142,10 @@ export async function openRazorpayCheckout({
           planLabel ? `${serviceTitle} — ${planLabel}` : serviceTitle,
           data.breakdown?.gstPaise ? `total incl. ${fmtPaise(data.breakdown.gstPaise)} GST (18%)` : '',
         ].filter(Boolean).join(' · '),
-        image: '/apple-touch-icon.png',
+        image: new URL('/apple-touch-icon.png', window.location.origin).href,
         theme: { color: '#1D6FE0' },
         handler: async (response) => {
-          clearTimeout(watchdog)
+          stopWatch()
           try {
             const vRes = await fetch(`${API_BASE}/payments/verify`, {
               method: 'POST',
@@ -144,12 +166,13 @@ export async function openRazorpayCheckout({
           }
           finish()
         },
-        modal: { ondismiss: () => { clearTimeout(watchdog); onDismiss(); finish() } },
+        modal: { ondismiss: () => { stopWatch(); onDismiss(); finish() } },
       })
       try {
         rzp.open()
+        startWatch()
       } catch (openErr) {
-        clearTimeout(watchdog)
+        stopWatch()
         onError(`❌ ${openErr?.message || 'Could not open the payment window. Please try again.'}`)
         finish()
       }
