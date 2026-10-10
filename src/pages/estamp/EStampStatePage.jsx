@@ -391,13 +391,41 @@ export default function EStampStatePage() {
         if (!res.ok) throw new Error((data.fields && Object.values(data.fields)[0]) || data.message || 'We couldn’t create your order. Check the details and try again.')
       }
 
+      // Without a real key, `new window.Razorpay({...})`/`.open()` can fail
+      // silently on some mobile browsers instead of throwing (the desktop
+      // checkout.js build is more likely to surface a visible SDK error) —
+      // matches the exact "stuck on Opening payment… forever" symptom seen
+      // on mobile. Fail loudly here instead, same guard ClientPaymentPanel.jsx
+      // already uses for the Portal payment flow.
+      if (!data.keyId) {
+        setPayErr('Payment could not be started (missing payment configuration). Please contact support@launcherdesk.com — no amount has been charged.')
+        return
+      }
+
       await loadRazorpayScript()
       await new Promise(resolve => {
+        // Watchdog: Razorpay's `handler`/`modal.ondismiss` are the only way
+        // this promise ever resolves. If the checkout modal fails to render
+        // or respond for any reason (invalid key rejected only internally,
+        // a mobile webview blocking the iframe, a slow/flaky connection to
+        // Razorpay after the script itself loaded), neither callback fires
+        // and the button was stuck on "Opening payment…" forever with no
+        // way to retry. This guarantees the UI always recovers.
+        let settled = false
+        const finish = () => { if (!settled) { settled = true; resolve() } }
+        const watchdog = setTimeout(() => {
+          if (!settled) {
+            setPayErr('The payment window didn’t open. Please check your connection and try again — no amount has been charged.')
+            finish()
+          }
+        }, 20000)
+
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
           name: 'LauncherDesk', description: `e-Stamp paper, ${st.name}`, image: new URL(logoImg, window.location.origin).href,
           prefill: { name: f.name, email: f.email, contact: f.mobile }, theme: { color: '#1D5DB8' },
           handler: async response => {
+            clearTimeout(watchdog)
             try {
               let v
               if (usingPortal) {
@@ -417,12 +445,18 @@ export default function EStampStatePage() {
             } catch {
               setPayErr('Payment received. We’re confirming it and will email you shortly. You don’t need to pay again.')
             }
-            resolve()
+            finish()
           },
-          modal: { ondismiss: resolve },
+          modal: { ondismiss: () => { clearTimeout(watchdog); finish() } },
         })
-        rzp.on?.('payment.failed', r => setPayErr(r?.error?.description || 'The payment didn’t go through. No money was taken; you can try again.'))
-        rzp.open()
+        rzp.on?.('payment.failed', r => { clearTimeout(watchdog); setPayErr(r?.error?.description || 'The payment didn’t go through. No money was taken; you can try again.') })
+        try {
+          rzp.open()
+        } catch (openErr) {
+          clearTimeout(watchdog)
+          setPayErr(openErr?.message || 'Could not open the payment window. Please try again.')
+          finish()
+        }
       })
     } catch (err) {
       // apiClient (Portal path) throws here after its own silent-refresh retry also

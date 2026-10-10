@@ -124,8 +124,24 @@ export default function CheckoutModal({ svc, plan, onClose }) {
         if (data.fields) setErrs(p => ({ ...p, ...data.fields }))
         throw new Error(data.message || 'Could not start the payment')
       }
+      if (!data.keyId) {
+        setAlert('Payment could not be started (missing payment configuration). Please contact support@launcherdesk.com — no amount has been charged.')
+        setBusy(false)
+        return
+      }
+
       await loadRazorpayScript()
       await new Promise(resolve => {
+        // Watchdog — if the checkout modal never calls back (invalid key
+        // rejected only internally by the SDK, a mobile webview blocking
+        // the iframe, etc.) the button would otherwise stay stuck on its
+        // "processing" state forever with no way to retry.
+        let settled = false
+        const finish = () => { if (!settled) { settled = true; resolve() } }
+        const watchdog = setTimeout(() => {
+          if (!settled) { setAlert('The payment window didn’t open. Please check your connection and try again — no amount has been charged.'); finish() }
+        }, 20000)
+
         const rzp = new window.Razorpay({
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
           name: 'LauncherDesk', description: `${svc.title} — ${plan.tier} Plan`,
@@ -134,6 +150,7 @@ export default function CheckoutModal({ svc, plan, onClose }) {
           notes: { city: f.city.trim() },
           theme: { color: '#1D6FE0' },
           handler: async response => {
+            clearTimeout(watchdog)
             try {
               const vr = await fetch(`${API_BASE}/payments/checkout/verify`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -148,12 +165,18 @@ export default function CheckoutModal({ svc, plan, onClose }) {
             } catch {
               setDone({ ok: false })
             }
-            resolve()
+            finish()
           },
-          modal: { ondismiss: () => resolve() },
+          modal: { ondismiss: () => { clearTimeout(watchdog); finish() } },
         })
-        rzp.on('payment.failed', r => setAlert(r?.error?.description || 'The payment did not go through. You can try again.'))
-        rzp.open()
+        rzp.on('payment.failed', r => { clearTimeout(watchdog); setAlert(r?.error?.description || 'The payment did not go through. You can try again.') })
+        try {
+          rzp.open()
+        } catch (openErr) {
+          clearTimeout(watchdog)
+          setAlert(openErr?.message || 'Could not open the payment window. Please try again.')
+          finish()
+        }
       })
     } catch (err) {
       setAlert(err.message || 'Something went wrong. Please try again.')

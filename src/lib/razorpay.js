@@ -81,9 +81,35 @@ export async function openRazorpayCheckout({
     const data = await res.json()
     if (!res.ok) throw new Error(data.message || 'Failed to create order')
 
+    // Without a real key, `new window.Razorpay({...})`/`.open()` can fail
+    // silently on some mobile browsers instead of throwing — this is the
+    // single most-used payment entry point in the app (every "Buy Now" /
+    // "Pay" button on the public site goes through here), so this guard
+    // covers all of them at once.
+    if (!data.keyId) {
+      onError('Payment could not be started (missing payment configuration). Please contact support@launcherdesk.com — no amount has been charged.')
+      return
+    }
+
     await loadRazorpayScript()
 
     await new Promise((resolve) => {
+      // Watchdog: `handler`/`modal.ondismiss` are the only way this promise
+      // normally resolves. If the checkout modal fails to render or respond
+      // for any reason (invalid key rejected only internally by the SDK, a
+      // mobile webview blocking the iframe, a flaky connection to Razorpay
+      // right after the script itself loaded), neither callback ever fires
+      // and the button was stuck on "Processing…" forever with no way to
+      // retry — this guarantees the UI always recovers.
+      let settled = false
+      const finish = () => { if (!settled) { settled = true; resolve() } }
+      const watchdog = setTimeout(() => {
+        if (!settled) {
+          onError('The payment window didn’t open. Please check your connection and try again — no amount has been charged.')
+          finish()
+        }
+      }, 20000)
+
       const rzp = new window.Razorpay({
         key: data.keyId,
         amount: data.amount,
@@ -97,6 +123,7 @@ export async function openRazorpayCheckout({
         image: '/apple-touch-icon.png',
         theme: { color: '#1D6FE0' },
         handler: async (response) => {
+          clearTimeout(watchdog)
           try {
             const vRes = await fetch(`${API_BASE}/payments/verify`, {
               method: 'POST',
@@ -115,11 +142,17 @@ export async function openRazorpayCheckout({
           } catch {
             onSuccess('Payment received. Contact support@launcherdesk.com to confirm.')
           }
-          resolve()
+          finish()
         },
-        modal: { ondismiss: () => { onDismiss(); resolve() } },
+        modal: { ondismiss: () => { clearTimeout(watchdog); onDismiss(); finish() } },
       })
-      rzp.open()
+      try {
+        rzp.open()
+      } catch (openErr) {
+        clearTimeout(watchdog)
+        onError(`❌ ${openErr?.message || 'Could not open the payment window. Please try again.'}`)
+        finish()
+      }
     })
   } catch (err) {
     onError(`❌ ${err.message || 'Something went wrong. Please try again.'}`)

@@ -38,6 +38,8 @@ export default function ClientPaymentPanel({ order, onOrderChanged, onToast }) {
   const handlePay = useCallback(async () => {
     setDevNotice(false);
     setProcessing(true);
+    let settled = false;
+    let watchdog = null;
     try {
       const { razorpayOrderId, amount, currency, keyId } = await createOwnPaymentOrder(order.id);
 
@@ -59,6 +61,19 @@ export default function ClientPaymentPanel({ order, onOrderChanged, onToast }) {
         return;
       }
 
+      // Watchdog: `handler`/`modal.ondismiss` are the only way `processing`
+      // ever gets reset. If the checkout modal fails to render or respond
+      // for any reason (the SDK rejecting an invalid key only internally,
+      // a mobile webview blocking the iframe) neither callback fires and
+      // the button is stuck on "Opening checkout…" forever with no retry.
+      watchdog = setTimeout(() => {
+        if (!settled && mounted.current) {
+          settled = true;
+          onToast({ type: 'error', message: 'The payment window didn’t open. Please check your connection and try again — no amount has been charged.' });
+          setProcessing(false);
+        }
+      }, 20000);
+
       const rzp = new window.Razorpay({
         key: keyId,
         amount,
@@ -67,6 +82,7 @@ export default function ClientPaymentPanel({ order, onOrderChanged, onToast }) {
         name: 'LauncherDesk',
         description: order.orderCode,
         handler: async (response) => {
+          settled = true; clearTimeout(watchdog);
           try {
             await verifyOwnPayment(order.id, {
               razorpay_order_id: response.razorpay_order_id,
@@ -87,6 +103,7 @@ export default function ClientPaymentPanel({ order, onOrderChanged, onToast }) {
         },
         modal: {
           ondismiss: async () => {
+            settled = true; clearTimeout(watchdog);
             // User closed the checkout without completing it. Not an
             // error worth alarming them over - just record it for
             // bookkeeping and silently refresh so they can try again.
@@ -106,6 +123,7 @@ export default function ClientPaymentPanel({ order, onOrderChanged, onToast }) {
       });
 
       rzp.on('payment.failed', async (resp) => {
+        settled = true; clearTimeout(watchdog);
         try {
           await reportOwnPaymentFailure(order.id, razorpayOrderId, resp?.error?.description || 'Payment failed.');
         } catch {
@@ -121,6 +139,7 @@ export default function ClientPaymentPanel({ order, onOrderChanged, onToast }) {
 
       rzp.open();
     } catch (err) {
+      clearTimeout(watchdog);
       if (!mounted.current) return;
       onToast({ type: 'error', message: err.response?.data?.message || 'Could not start payment.' });
       setProcessing(false);
