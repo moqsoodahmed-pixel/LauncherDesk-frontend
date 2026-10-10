@@ -63,6 +63,14 @@ scratch/
 verify_*.js
 check_*.js
 audit_*.js
+inspect_*.js
+__tmp_*
+*_scratch.*
+test_*.mjs
+test_*.cjs
+# NOTE: this does NOT match a real, tracked test suite under src/ — only
+# loose, ad-hoc one-off scripts dropped at the repo root during manual
+# verification, never meant to be committed.
 
 # Audit / report PDFs & other local-only test artifacts
 *.pdf
