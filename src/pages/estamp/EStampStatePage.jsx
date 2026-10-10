@@ -282,6 +282,9 @@ export default function EStampStatePage() {
   const [errs, setErrs] = useState({})
   const [paying, setPaying] = useState(false)
   const [payErr, setPayErr] = useState('')
+  const [payStage, setPayStage] = useState('')
+  const payStageRef = useRef('')
+  useEffect(() => { payStageRef.current = payStage }, [payStage])
   const [done, setDone] = useState(null)
   const [askLogin, setAskLogin] = useState(false)
 
@@ -378,7 +381,7 @@ export default function EStampStatePage() {
   async function pay() {
     if (!validate(3)) return
     if (!canPay) { setAskLogin(true); return }
-    setPaying(true); setPayErr('')
+    setPaying(true); setPayErr(''); setPayStage('1/4 Creating your order…')
     const payload = {
       state: st.slug, stateName: st.name,
       firstParty: f.firstParty.trim(), secondParty: f.secondParty.trim(), payer: f.payer,
@@ -395,10 +398,11 @@ export default function EStampStatePage() {
         // apiClient already knows how to attach a valid (auto-refreshed) Portal
         // token and retries once after a silent refresh — reused as-is here,
         // just pointed at this endpoint instead of its own /api/portal/* base.
-        const res = await apiClient.post('/payments/checkout/estamp/create-order', payload, { baseURL: API_BASE })
+        const res = await apiClient.post('/payments/checkout/estamp/create-order', payload, { baseURL: API_BASE, timeout: 25000 })
         data = res.data
       } else {
         const res = await fetch(`${API_BASE}/payments/checkout/estamp/create-order`, {
+          signal: AbortSignal.timeout ? AbortSignal.timeout(25000) : undefined,
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token || adminAuth?.token}` },
           body: JSON.stringify(payload),
@@ -417,12 +421,14 @@ export default function EStampStatePage() {
       // matches the exact "stuck on Opening payment… forever" symptom seen
       // on mobile. Fail loudly here instead, same guard ClientPaymentPanel.jsx
       // already uses for the Portal payment flow.
+      setPayStage('2/4 Order created. Loading secure checkout…')
       if (!data.keyId) {
         setPayErr('Payment could not be started (missing payment configuration). Please contact support@launcherdesk.com — no amount has been charged.')
         return
       }
 
       await loadRazorpayScript()
+      setPayStage('3/4 Opening checkout…')
 
       // On mobile, body scroll-lock from our own UI can trap Razorpay's
       // iframe. Release it before opening, restore it on close.
@@ -514,9 +520,15 @@ export default function EStampStatePage() {
       // apiClient (Portal path) throws here after its own silent-refresh retry also
       // failed — a real, unrecoverable session expiry, not a one-off network blip.
       if (usingPortal && err?.response?.status === 401) { setSessionExpired(true); setAskLogin(true) }
-      else setPayErr(err?.response?.data?.message || err.message || 'Something went wrong. Please try again.')
+      else {
+        const timedOut = err?.code === 'ECONNABORTED' || err?.name === 'TimeoutError' || err?.name === 'AbortError'
+        const base = timedOut
+          ? "We couldn't reach our server from this device (timed out). Check your internet or try mobile data / another Wi-Fi."
+          : (err?.response?.data?.message || err.message || 'Something went wrong. Please try again.')
+        setPayErr(`${base} [stopped at: ${payStageRef.current || 'start'}]`)
+      }
     } finally {
-      setPaying(false)
+      setPaying(false); setPayStage('')
     }
   }
 
@@ -725,6 +737,7 @@ export default function EStampStatePage() {
                       </button>}
                 </div>
                 {payErr && <div className="lds-alert" role="alert">{payErr}</div>}
+                {paying && payStage && <div className="lds-alert" style={{ background: '#EEF4FF', color: '#1D3A8A', borderColor: '#C7D8FF' }}>{payStage}</div>}
               </>
             )}
           </section>
