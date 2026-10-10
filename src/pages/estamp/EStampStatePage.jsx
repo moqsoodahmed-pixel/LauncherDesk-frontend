@@ -394,33 +394,35 @@ export default function EStampStatePage() {
     }
     try {
       let data
-      if (usingPortal) {
-        // apiClient already knows how to attach a valid (auto-refreshed) Portal
-        // token and retries once after a silent refresh — reused as-is here,
-        // just pointed at this endpoint instead of its own /api/portal/* base.
-        const res = await apiClient.post('/payments/checkout/estamp/create-order', payload, { baseURL: API_BASE, timeout: 25000 })
-        data = res.data
-      } else {
+      const viaLegacy = async () => {
+        const legacyToken = token || adminAuth?.token
+        if (!legacyToken) { const e = new Error('no legacy token'); e.response = { status: 401 }; throw e }
         const res = await fetch(`${API_BASE}/payments/checkout/estamp/create-order`, {
           signal: AbortSignal.timeout ? AbortSignal.timeout(25000) : undefined,
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token || adminAuth?.token}` },
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${legacyToken}` },
           body: JSON.stringify(payload),
         })
-        data = await res.json()
-        if (res.status === 401) {
-          if (token) logout(); else adminAuth?.logout?.()
-          setSessionExpired(true); setAskLogin(true); setPaying(false); return
+        const d = await res.json().catch(() => ({}))
+        if (res.status === 401) { const e = new Error('expired'); e.response = { status: 401 }; throw e }
+        if (!res.ok) throw new Error((d.fields && Object.values(d.fields)[0]) || d.message || "We couldn't create your order. Check the details and try again.")
+        return d
+      }
+      if (usingPortal) {
+        try {
+          // apiClient attaches the Portal token and retries once after a silent refresh.
+          const res = await apiClient.post('/payments/checkout/estamp/create-order', payload, { baseURL: API_BASE, timeout: 25000 })
+          data = res.data
+        } catch (pe) {
+          // A stale Portal login on this phone must not dead-end the payment: if this
+          // browser also has the site's own login, use that instead.
+          if (pe?.response?.status === 401 && (token || adminAuth?.token)) { setPayStage('1/4 Re-checking your login…'); data = await viaLegacy() }
+          else throw pe
         }
-        if (!res.ok) throw new Error((data.fields && Object.values(data.fields)[0]) || data.message || "We couldn't create your order. Check the details and try again.")
+      } else {
+        data = await viaLegacy()
       }
 
-      // Without a real key, `new window.Razorpay({...})`/`.open()` can fail
-      // silently on some mobile browsers instead of throwing (the desktop
-      // checkout.js build is more likely to surface a visible SDK error) —
-      // matches the exact "stuck on Opening payment… forever" symptom seen
-      // on mobile. Fail loudly here instead, same guard ClientPaymentPanel.jsx
-      // already uses for the Portal payment flow.
       setPayStage('2/4 Order created. Loading secure checkout…')
       if (!data.keyId) {
         setPayErr('Payment could not be started (missing payment configuration). Please contact support@launcherdesk.com — no amount has been charged.')
@@ -519,7 +521,10 @@ export default function EStampStatePage() {
     } catch (err) {
       // apiClient (Portal path) throws here after its own silent-refresh retry also
       // failed — a real, unrecoverable session expiry, not a one-off network blip.
-      if (usingPortal && err?.response?.status === 401) { setSessionExpired(true); setAskLogin(true) }
+      if (err?.response?.status === 401) {
+        setSessionExpired(true); setAskLogin(true)
+        setPayErr('Your login has expired on this device. Please log in again — everything you entered is saved.')
+      }
       else {
         const timedOut = err?.code === 'ECONNABORTED' || err?.name === 'TimeoutError' || err?.name === 'AbortError'
         const base = timedOut
@@ -765,7 +770,7 @@ export default function EStampStatePage() {
       </div>
 
       {/* Login side panel — only when the customer tries to pay */}
-      {askLogin && !canPay && (
+      {askLogin && (!canPay || sessionExpired) && (
         <>
           <div className="lds-scrim" onClick={() => setAskLogin(false)} aria-hidden="true" />
           <div className="lds-panel" role="dialog" aria-modal="true" aria-labelledby="lds-login-h">
