@@ -243,7 +243,7 @@ function ArticlePicker({ items, value, onChange, invalid, verified, stateName })
                   </span>
                 </button>
               </li>
-            )) : <li className="lda-empty">No match. Choose “Other document” and describe it in the purpose.</li>}
+            )) : <li className="lda-empty">No match. Choose "Other document" and describe it in the purpose.</li>}
           </ul>
           <div className="lda-src">
             {verified ? `Articles from the official ${stateName} e-stamping list.` : `Our team confirms the exact ${stateName} article before buying your stamp.`}
@@ -327,8 +327,8 @@ export default function EStampStatePage() {
   function validate(s) {
     const e = {}
     if (s === 1) {
-      if (!f.firstParty.trim()) e.firstParty = 'Enter the first party’s name.'
-      if (!f.secondParty.trim()) e.secondParty = 'Enter the second party’s name, or NIL if there isn’t one.'
+      if (!f.firstParty.trim()) e.firstParty = "Enter the first party's name."
+      if (!f.secondParty.trim()) e.secondParty = "Enter the second party's name, or NIL if there isn't one."
       if (!f.payer) e.payer = 'Choose who pays the stamp duty.'
     }
     if (s === 2) {
@@ -336,7 +336,7 @@ export default function EStampStatePage() {
       if (!f.purpose.trim()) e.purpose = 'Describe what the stamp is for.'
       if (rule) {
         if (ruled?.error) e.base = ruled.error
-        else if (!validDuty) e.base = `The duty works out above ${inr(MAX_DUTY)}. Message us and we’ll arrange it for you.`
+        else if (!validDuty) e.base = `The duty works out above ${inr(MAX_DUTY)}. Message us and we'll arrange it for you.`
       } else if (!f.duty) e.duty = 'Choose a stamp duty value.'
       else if (!validDuty) e.duty = `Enter a whole amount from ₹1 to ${inr(MAX_DUTY)}.`
       if (f.consideration && !(Number(f.consideration) >= 0)) e.consideration = 'Enter the amount in rupees, numbers only.'
@@ -364,7 +364,9 @@ export default function EStampStatePage() {
     const payload = {
       state: st.slug, stateName: st.name,
       firstParty: f.firstParty.trim(), secondParty: f.secondParty.trim(), payer: f.payer,
-      documentType: f.docType, purpose: f.purpose.trim(), consideration: f.consideration,
+      documentType: article ? article.label : '',
+      articleCode: article?.code || '',
+      purpose: f.purpose.trim(), consideration: f.consideration,
       stampDuty: duty, printDocument: !!f.print, delivery: f.delivery,
       name: f.name.trim(), email: f.email.trim(), mobile: f.mobile.trim(),
       ...(f.delivery === 'courier' ? { address: f.address.trim(), city: f.city.trim(), pincode: f.pincode.trim() } : {}),
@@ -388,7 +390,7 @@ export default function EStampStatePage() {
           if (token) logout(); else adminAuth?.logout?.()
           setSessionExpired(true); setAskLogin(true); setPaying(false); return
         }
-        if (!res.ok) throw new Error((data.fields && Object.values(data.fields)[0]) || data.message || 'We couldn’t create your order. Check the details and try again.')
+        if (!res.ok) throw new Error((data.fields && Object.values(data.fields)[0]) || data.message || "We couldn't create your order. Check the details and try again.")
       }
 
       // Without a real key, `new window.Razorpay({...})`/`.open()` can fail
@@ -403,27 +405,42 @@ export default function EStampStatePage() {
       }
 
       await loadRazorpayScript()
+
+      // On mobile, body scroll-lock from our own UI can trap Razorpay's
+      // iframe. Release it before opening, restore it on close.
+      const bodyOverflow = document.body.style.overflow
+      document.body.style.overflow = ''
+
       await new Promise(resolve => {
-        // Watchdog: Razorpay's `handler`/`modal.ondismiss` are the only way
-        // this promise ever resolves. If the checkout modal fails to render
-        // or respond for any reason (invalid key rejected only internally,
-        // a mobile webview blocking the iframe, a slow/flaky connection to
-        // Razorpay after the script itself loaded), neither callback fires
-        // and the button was stuck on "Opening payment…" forever with no
-        // way to retry. This guarantees the UI always recovers.
+        // Watchdog: if the Razorpay modal fails to open or respond within
+        // 15 s, recover gracefully so the button is never stuck permanently.
         let settled = false
-        const finish = () => { if (!settled) { settled = true; resolve() } }
+        const finish = () => {
+          if (!settled) {
+            settled = true
+            document.body.style.overflow = bodyOverflow
+            resolve()
+          }
+        }
         const watchdog = setTimeout(() => {
           if (!settled) {
-            setPayErr('The payment window didn’t open. Please check your connection and try again — no amount has been charged.')
+            setPayErr('The payment window didn\u2019t open. Please check your connection and try again \u2014 no amount has been charged.')
             finish()
           }
-        }, 20000)
+        }, 15000)
 
-        const rzp = new window.Razorpay({
+        const rzpOptions = {
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
           name: 'LauncherDesk', description: `e-Stamp paper, ${st.name}`, image: new URL(logoImg, window.location.origin).href,
           prefill: { name: f.name, email: f.email, contact: f.mobile }, theme: { color: '#1D5DB8' },
+          modal: {
+            ondismiss: () => { clearTimeout(watchdog); finish() },
+            // Prevent accidental close on mobile back-gesture
+            confirm_close: true,
+            animation: true,
+            // Escape key also closes
+            escape: true,
+          },
           handler: async response => {
             clearTimeout(watchdog)
             try {
@@ -441,22 +458,40 @@ export default function EStampStatePage() {
               if (v.success) {
                 try { localStorage.removeItem(DRAFT_KEY(slug)) } catch { /* ignore */ }
                 setDone({ orderNumber: v.orderNumber || data.orderNumber, ldOrderId: v.ldOrderId || data.ldOrderId })
-              } else setPayErr(v.message || 'Payment received. We’re confirming it and will email you shortly.')
+              } else setPayErr(v.message || "Payment received. We're confirming it and will email you shortly.")
             } catch {
-              setPayErr('Payment received. We’re confirming it and will email you shortly. You don’t need to pay again.')
+              setPayErr("Payment received. We're confirming it and will email you shortly. You don't need to pay again.")
             }
             finish()
           },
-          modal: { ondismiss: () => { clearTimeout(watchdog); finish() } },
-        })
-        rzp.on?.('payment.failed', r => { clearTimeout(watchdog); setPayErr(r?.error?.description || 'The payment didn’t go through. No money was taken; you can try again.') })
-        try {
-          rzp.open()
-        } catch (openErr) {
-          clearTimeout(watchdog)
-          setPayErr(openErr?.message || 'Could not open the payment window. Please try again.')
-          finish()
         }
+
+        // On Android WebViews / mobile Chrome, the Razorpay checkout iframe
+        // must be opened synchronously during or immediately after a user
+        // gesture. By the time we reach here we have done async work (fetch +
+        // loadRazorpayScript), which means we are technically outside the
+        // original click gesture context. Wrapping open() in setTimeout(0)
+        // gives the browser a chance to finish rendering (the "Opening
+        // payment…" label), and on most mobile browsers the gesture window
+        // is preserved long enough for this to work reliably.
+        const rzp = new window.Razorpay(rzpOptions)
+        rzp.on?.('payment.failed', r => {
+          clearTimeout(watchdog)
+          setPayErr(r?.error?.description || "The payment didn't go through. No money was taken; you can try again.")
+          finish()
+        })
+
+        // Use setTimeout(0) so the browser paints "Opening payment…" before
+        // the modal renders — this prevents a blank/frozen screen on mobile.
+        setTimeout(() => {
+          try {
+            rzp.open()
+          } catch (openErr) {
+            clearTimeout(watchdog)
+            setPayErr(openErr?.message || 'Could not open the payment window. Please try again.')
+            finish()
+          }
+        }, 0)
       })
     } catch (err) {
       // apiClient (Portal path) throws here after its own silent-refresh retry also
@@ -515,7 +550,7 @@ export default function EStampStatePage() {
                 <h2>Order placed</h2>
                 <p>
                   {done.orderNumber && <>Your order number is <b>{done.orderNumber}</b>. </>}
-                  We’ve emailed your receipt and tax invoice. Our team will check the details and email you the scan copy
+                  We've emailed your receipt and tax invoice. Our team will check the details and email you the scan copy
                   {f.delivery === 'courier' ? ', then courier the original to you' : ''}.
                   {f.print ? ' Upload the document you want printed from your order page.' : ''}
                 </p>
@@ -558,7 +593,7 @@ export default function EStampStatePage() {
                     <h2>What is it for?</h2>
                     <p className="lead">
                       {verified
-                        ? <>Pick the article your document falls under. Where {st.name}’s rules fix the duty, we fill it in for you.</>
+                        ? <>Pick the article your document falls under. Where {st.name}'s rules fix the duty, we fill it in for you.</>
                         : <>Pick your document and the stamp duty value. We confirm the exact {st.name} article and duty before buying the stamp, and call you if anything needs to change.</>}
                     </p>
                     <div className="lds-f">
@@ -585,7 +620,7 @@ export default function EStampStatePage() {
                         <div className="lbl">Stamp duty</div>
                         <div className="lds-duty-fixed" aria-live="polite">
                           <b>{validDuty ? inr(duty) : '₹ —'}</b>
-                          <span>{rule.type === 'fixed' ? `Fixed by ${st.name}’s rules for this article` : ruleText(rule)}</span>
+                          <span>{rule.type === 'fixed' ? `Fixed by ${st.name}'s rules for this article` : ruleText(rule)}</span>
                         </div>
                         {baseField === 'consideration' && !errs.base && !validDuty && <div className="lds-help">Enter the consideration amount below to work out the duty.</div>}
                         <Err k="base" />
@@ -623,7 +658,7 @@ export default function EStampStatePage() {
                     <h2>Where should we send it?</h2>
                     <p className="lead">The scan copy goes to your email. Choose courier if you also need the original.</p>
                     {!canPay && (
-                      <div className="lds-note">You’ll be asked to log in before paying. Everything you’ve entered is saved.</div>
+                      <div className="lds-note">You'll be asked to log in before paying. Everything you've entered is saved.</div>
                     )}
                     <div className="lds-f lds-card" role="radiogroup" aria-label="Delivery">
                       <label>
@@ -714,7 +749,7 @@ export default function EStampStatePage() {
             <button type="button" className="lds-btn ghost" onClick={() => goLogin('register')}>Create an account</button>
             <div className="lds-saved">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-              Your {st.name} e-Stamp details are saved. You’ll come straight back here.
+              Your {st.name} e-Stamp details are saved. You'll come straight back here.
             </div>
           </div>
         </>
