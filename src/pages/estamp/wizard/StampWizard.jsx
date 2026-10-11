@@ -37,8 +37,8 @@ const CSS = `
 .lds-change { font-size:14.5px; font-weight:700; color:var(--blue); text-decoration:none; border:1.5px solid var(--brand-100);
   border-radius:10px; padding:9px 14px; background:var(--brand-50); }
 
-.lds-restore { display:flex; gap:10px; align-items:center; background:var(--brand-50); border:1px solid var(--brand-100); color:var(--blue-dark);
-  border-radius:12px; padding:12px 16px; font-size:14px; margin-bottom:20px; }
+.lds-restore { display:flex; gap:10px; align-items:center; background:#EFF6FF; border:1px solid #DBEAFE; color:#1E40AF;
+  border-radius:12px; padding:10px 16px; font-size:14px; margin-bottom:20px; font-weight:500; }
 
 .lds-grid { display:grid; grid-template-columns:minmax(0,1fr) 380px; gap:28px; align-items:start; }
 
@@ -98,31 +98,37 @@ select.lds-in { appearance:none; -webkit-appearance:none; cursor:pointer; paddin
 .lds-review-dl { margin:0; display:grid; grid-template-columns:1fr auto; gap:8px 14px; font-size:14.5px; }
 .lds-review-dl dt { color:var(--text-3); } .lds-review-dl dd { margin:0; text-align:right; font-weight:700; color:var(--navy); }
 
-/* Article picker */
-.lda { position:relative; }
-.lda-btn { width:100%; min-height:54px; box-sizing:border-box; display:flex; align-items:center; gap:10px; text-align:left; cursor:pointer;
-  border:1.5px solid var(--line-strong); border-radius:11px; background:#fff; padding:8px 14px; font-family:inherit; }
+/* Step indicator & metadata matching reference clone */
+.lds-step-tag { font-size:12px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--text-3, #64748B); margin-bottom:8px; }
+.lds-state-check { font-size:12.5px; color:var(--text-3, #64748B); margin:-14px 0 20px; }
+
+/* Article picker - clean clone of reference image */
+.lda { position:relative; font-variant-ligatures:none; }
+.lda-btn { width:100%; height:46px; min-height:46px; box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:12px; text-align:left; cursor:pointer;
+  border:1.5px solid #D1D5DB; border-radius:8px; background:#fff; padding:0 14px; font-family:inherit; transition:border-color .15s, box-shadow .15s; }
 .lda-btn.bad { border-color:var(--error); }
-.lda-btn:focus-visible, .lda-btn[aria-expanded="true"] { border-color:var(--blue); box-shadow:0 0 0 4px rgba(29,93,184,.12); outline:none; }
-.lda-btn .t { flex:1; min-width:0; }
-.lda-btn b { display:block; font-size:15.5px; color:var(--navy); font-weight:700; line-height:1.35; }
-.lda-btn small { display:block; font-size:12.5px; color:var(--text-3); margin-top:2px; }
-.lda-btn .ph { color:var(--text-4, #9CA3AF); font-weight:600; font-size:15.5px; }
-.lda-btn svg { width:18px; height:18px; stroke:var(--text-3); flex:none; }
-.lda-pop { position:absolute; left:0; right:0; top:calc(100% + 8px); z-index:40; background:#fff; border-radius:14px; overflow:hidden;
-  box-shadow:0 24px 60px -12px rgba(11,31,72,.40), 0 0 0 1px rgba(15,28,46,.06); }
-.lda-search { position:relative; border-bottom:1px solid var(--line); }
-.lda-search svg { position:absolute; left:14px; top:50%; transform:translateY(-50%); width:17px; height:17px; stroke:var(--text-3); }
-.lda-search input { width:100%; height:50px; border:0; outline:none; padding:0 14px 0 42px; font-size:15px; font-family:inherit; box-sizing:border-box; }
-.lda-list { list-style:none; margin:0; padding:6px; max-height:min(340px,55vh); overflow-y:auto; overscroll-behavior:contain; }
-.lda-opt { display:flex; gap:10px; width:100%; text-align:left; border:0; background:none; padding:10px 10px; border-radius:9px; cursor:pointer; font-family:inherit; }
-.lda-opt[aria-selected="true"] { background:var(--brand-50); }
-.lda-opt .chk { width:18px; flex:none; color:var(--blue); font-weight:900; padding-top:1px; }
-.lda-opt b { display:block; font-size:14.5px; color:var(--navy); font-weight:600; line-height:1.35; }
-.lda-opt small { display:block; font-size:12.5px; color:var(--text-3); margin-top:2px; }
-.lda-opt small i { font-style:normal; color:var(--blue); font-weight:600; }
-.lda-empty { padding:16px 14px; color:var(--text-3); font-size:14px; }
-.lda-src { padding:9px 14px; font-size:11.5px; color:var(--text-3); background:var(--bg); border-top:1px solid var(--line); }
+.lda-btn:focus-visible, .lda-btn[aria-expanded="true"] { border-color:#16A34A; box-shadow:0 0 0 3px rgba(22,163,74,.15); outline:none; }
+.lda-btn .t { flex:1; min-width:0; font-size:14px; font-weight:500; color:#111827; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-variant-ligatures:none; }
+.lda-btn .t.ph { color:#111827; font-weight:400; }
+.lda-btn svg { width:16px; height:16px; stroke:#374151; stroke-width:2.2; flex:none; transition:transform .15s; }
+.lda-btn[aria-expanded="true"] svg { transform:rotate(180deg); }
+
+.lda-pop { position:absolute; left:0; right:0; top:calc(100% + 4px); z-index:50; background:#fff; border-radius:8px; overflow:hidden;
+  border:1px solid #D1D5DB; box-shadow:0 12px 30px -6px rgba(0,0,0,.15), 0 4px 6px -2px rgba(0,0,0,.05); }
+.lda-search { position:relative; border-bottom:1px solid #E5E7EB; background:#F9FAFB; }
+.lda-search svg { position:absolute; left:12px; top:50%; transform:translateY(-50%); width:15px; height:15px; stroke:#9CA3AF; }
+.lda-search input { width:100%; height:38px; border:0; outline:none; padding:0 12px 0 36px; font-size:13.5px; font-family:inherit; color:#111827; background:transparent; box-sizing:border-box; }
+.lda-search input::placeholder { color:#9CA3AF; }
+
+.lda-list { list-style:none; margin:0; padding:0; max-height:min(320px,50vh); overflow-y:auto; overscroll-behavior:contain; }
+.lda-opt { display:block; width:100%; text-align:left; border:0; background:none; padding:7.5px 14px; cursor:pointer; font-family:inherit;
+  font-size:13.5px; line-height:1.45; color:#111827; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-variant-ligatures:none; transition:background .1s; }
+.lda-opt:hover, .lda-opt:focus { background:#F1F5F9; color:#111827; outline:none; }
+.lda-opt[aria-selected="true"], .lda-opt.active { background:#1D5DB8; color:#fff; font-weight:500; }
+.lda-opt-default { font-weight:500; }
+.lda-opt-default[aria-selected="true"], .lda-opt-default.active { background:#1D5DB8; color:#fff; }
+.lda-empty { padding:14px; color:#6B7280; font-size:13.5px; text-align:center; }
+.lda-src { padding:6px 14px; font-size:11px; color:#6B7280; background:#F9FAFB; border-top:1px solid #E5E7EB; }
 .lds-rule { display:flex; gap:10px; align-items:flex-start; background:var(--brand-50); border:1px solid var(--brand-100); border-radius:12px;
   padding:12px 14px; font-size:14px; color:var(--navy); line-height:1.5; margin-top:10px; }
 .lds-rule b { font-weight:800; }
@@ -542,7 +548,7 @@ export default function StampWizard() {
         <div className="lds-wrap">
           {!done && <EStepRail steps={STEPS} step={step} maxStep={maxStep} done={!!done} onGoTo={n => n <= maxStep && goTo(n)} />}
           {restored && !done && (
-            <div className="lds-restore" role="status">Welcome back. We restored your in-progress application.</div>
+            <div className="lds-restore" role="status">Welcome back — we restored your in-progress application.</div>
           )}
 
           <div className="lds-grid">

@@ -8,9 +8,10 @@ function ArticlePicker({ items, value, onChange, invalid, verified, stateName })
   const wrap = useRef(null)
   const search = useRef(null)
   const sel = items.find(a => keyOf(a) === value)
+
   const list = useMemo(() => {
     const t = q.trim().toLowerCase()
-    return t ? items.filter(a => `${a.label} ${a.code} article ${a.code} ${a.hint || ''}`.toLowerCase().includes(t)) : items
+    return t ? items.filter(a => `${a.code || ''} ${a.label} ${a.hint || ''}`.toLowerCase().includes(t)) : items
   }, [q, items])
 
   useEffect(() => {
@@ -21,48 +22,120 @@ function ArticlePicker({ items, value, onChange, invalid, verified, stateName })
     return () => document.removeEventListener('mousedown', off)
   }, [open])
 
-  const pick = a => { onChange(keyOf(a)); setOpen(false); setQ('') }
-  const onKey = e => {
-    if (e.key === 'ArrowDown') { e.preventDefault(); setActive(i => Math.min(i + 1, list.length - 1)) }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(i => Math.max(i - 1, 0)) }
-    else if (e.key === 'Enter' && list[active]) { e.preventDefault(); pick(list[active]) }
-    else if (e.key === 'Escape') setOpen(false)
+  const pick = a => {
+    if (!a) {
+      onChange('')
+    } else {
+      onChange(keyOf(a))
+    }
+    setOpen(false)
+    setQ('')
   }
-  const sub = a => [a.code ? `Article ${a.code}` : '', a.hint].filter(Boolean)
+
+  const onKey = e => {
+    const hasDefault = !q.trim()
+    const total = list.length + (hasDefault ? 1 : 0)
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setActive(i => Math.min(i + 1, total - 1))
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActive(i => Math.max(i - 1, 0))
+    } else if (e.key === 'Enter') {
+      e.preventDefault()
+      if (hasDefault && active === 0) {
+        pick(null)
+      } else {
+        const item = hasDefault ? list[active - 1] : list[active]
+        if (item) pick(item)
+      }
+    } else if (e.key === 'Escape') {
+      setOpen(false)
+    }
+  }
+
+  const formatItem = a => {
+    if (!a) return 'Select article'
+    return a.code ? `${a.code} - ${a.label}` : a.label
+  }
 
   return (
     <div className="lda" ref={wrap}>
-      <button type="button" id="dt" className={`lda-btn${invalid ? ' bad' : ''}`} aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen(o => !o)}>
-        <span className="t">
-          {sel ? <><b>{sel.label}</b>{sub(sel).length > 0 && <small>{sub(sel).join(', ')}</small>}</> : <span className="ph">Search or choose the document</span>}
+      <button
+        type="button"
+        id="dt"
+        className={`lda-btn${invalid ? ' bad' : ''}`}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => setOpen(o => !o)}
+      >
+        <span className={`t${sel ? '' : ' ph'}`}>
+          {sel ? formatItem(sel) : 'Select article'}
         </span>
-        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
       </button>
+
       {open && (
         <div className="lda-pop">
           <div className="lda-search">
-            <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm10 2-4.35-4.35" /></svg>
-            <input ref={search} value={q} onChange={e => { setQ(e.target.value); setActive(0) }} onKeyDown={onKey}
-              placeholder={verified ? 'Search, e.g. lease, affidavit or 5(J)' : 'Search document types'} aria-label="Search documents"
-              role="combobox" aria-expanded="true" aria-controls="lda-list" aria-activedescendant={list[active] ? `lda-${list.indexOf(list[active])}` : undefined} />
+            <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm10 2-4.35-4.35" />
+            </svg>
+            <input
+              ref={search}
+              value={q}
+              onChange={e => { setQ(e.target.value); setActive(0) }}
+              onKeyDown={onKey}
+              placeholder="Search, e.g. lease, affidavit or 5(J)"
+              aria-label="Search documents"
+              role="combobox"
+              aria-expanded="true"
+              aria-controls="lda-list"
+            />
           </div>
+
           <ul className="lda-list" id="lda-list" role="listbox" aria-label="Documents">
-            {list.length ? list.map((a, i) => (
-              <li key={keyOf(a)}>
-                <button type="button" id={`lda-${i}`} role="option" aria-selected={i === active} className="lda-opt"
-                  onMouseEnter={() => setActive(i)} onClick={() => pick(a)}
-                  ref={el => { if (el && i === active) el.scrollIntoView({ block: 'nearest' }) }}>
-                  <span className="chk" aria-hidden="true">{keyOf(a) === value ? '✓' : ''}</span>
-                  <span><b>{a.label}</b>
-                    {(a.code || a.hint || a.rule) && <small>{[a.code && `Article ${a.code}`, a.hint].filter(Boolean).join(', ')}{a.rule && <> {a.code || a.hint ? ', ' : ''}<i>{ruleText(a.rule)}</i></>}</small>}
-                  </span>
+            {!q.trim() && (
+              <li>
+                <button
+                  type="button"
+                  id="lda-opt-default"
+                  role="option"
+                  aria-selected={!value || active === 0}
+                  className={`lda-opt lda-opt-default${(!value || active === 0) ? ' active' : ''}`}
+                  onMouseEnter={() => setActive(0)}
+                  onClick={() => pick(null)}
+                >
+                  Select article
                 </button>
               </li>
-            )) : <li className="lda-empty">No match. Choose "Other document" and describe it in the purpose.</li>}
+            )}
+            {list.length ? list.map((a, i) => {
+              const optIndex = q.trim() ? i : i + 1
+              const isSelected = keyOf(a) === value
+              const isFocused = active === optIndex
+              return (
+                <li key={keyOf(a)}>
+                  <button
+                    type="button"
+                    id={`lda-${i}`}
+                    role="option"
+                    aria-selected={isSelected}
+                    className={`lda-opt${isSelected ? ' active' : ''}`}
+                    onMouseEnter={() => setActive(optIndex)}
+                    onClick={() => pick(a)}
+                    ref={el => { if (el && isFocused) el.scrollIntoView({ block: 'nearest' }) }}
+                  >
+                    {formatItem(a)}
+                  </button>
+                </li>
+              )
+            }) : (
+              <li className="lda-empty">No article matching your search.</li>
+            )}
           </ul>
-          <div className="lda-src">
-            {verified ? `Articles from the official ${stateName} e-stamping list.` : `Our team confirms the exact ${stateName} article before buying your stamp.`}
-          </div>
         </div>
       )}
     </div>
@@ -72,14 +145,14 @@ function ArticlePicker({ items, value, onChange, invalid, verified, stateName })
 export default function DocumentDetailsStep({ f, setF, set, errs, setErrs, inCls, Err, st, verified, articles, article, rule, baseField }) {
   return (
     <>
-      <h2>What is it for?</h2>
+      <div className="lds-step-tag">STEP 2 OF 5</div>
+      <h2>What is the stamp for?</h2>
       <p className="lead">
-        {verified
-          ? <>Pick the article your document falls under. Where {st.name}'s rules fix the duty, we fill it in for you.</>
-          : <>Pick your document and we'll confirm the exact {st.name} article and duty before buying the stamp.</>}
+        Stamp paper for {st.name}. Choose the document (article) so we apply the right duty.
       </p>
+      <div className="lds-state-check">State availability last checked 2 min ago.</div>
       <div className="lds-f">
-        <label htmlFor="dt">Document type</label>
+        <label htmlFor="dt">Type of document <span style={{ color: '#dc2626' }}>*</span></label>
         <ArticlePicker items={articles} value={f.article} verified={verified} stateName={st.name} invalid={!!errs.docType}
           onChange={k => { setF(v => ({ ...v, article: k })); setErrs(x => ({ ...x, docType: undefined, base: undefined, duty: undefined })) }} />
         <Err k="docType" />
