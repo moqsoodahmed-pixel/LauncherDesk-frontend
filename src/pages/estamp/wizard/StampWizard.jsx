@@ -143,11 +143,13 @@ select.lds-in { appearance:none; -webkit-appearance:none; cursor:pointer; paddin
 /* Aside */
 .lds-aside { position:sticky; top:100px; display:grid; gap:16px; }
 .lds-price { background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px 18px 16px; }
-.lds-price h3 { margin:0 0 12px; font-size:15px; color:var(--navy); }
-.lds-price dl { margin:0; display:grid; grid-template-columns:1fr auto; gap:8px 12px; font-size:14.5px; }
+.lds-price h3 { margin:0 0 6px; font-size:16px; font-weight:800; color:var(--navy); }
+.lds-price-doc { font-size:12.5px; color:#64748B; margin:0 0 14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.lds-price dl { margin:0; display:grid; grid-template-columns:1fr auto; gap:10px 12px; font-size:14.5px; align-items:center; }
 .lds-price dt { color:var(--text-2); } .lds-price dd { margin:0; text-align:right; font-weight:700; color:var(--navy); }
-.lds-price .total { border-top:1px solid var(--line); padding-top:10px; font-size:17px; font-weight:800; color:var(--navy); }
-.lds-price p { margin:12px 0 0; font-size:12.5px; color:var(--text-3); line-height:1.5; }
+.lds-price-badge-actuals { display:inline-block; background:#FEF3C7; color:#92400E; font-size:12px; font-weight:700; padding:2px 10px; border-radius:9999px; line-height:1.4; }
+.lds-price .total { border-top:2px solid var(--navy); padding-top:12px; margin-top:4px; font-size:18px; font-weight:800; color:var(--navy); }
+.lds-price p { margin:12px 0 0; font-size:12px; color:var(--text-3); line-height:1.5; }
 .lds-docs { background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px 18px; }
 .lds-docs h4 { margin:0 0 6px; font-size:13px; color:var(--navy); }
 .lds-docs p { margin:0; font-size:13.5px; color:var(--text-2); }
@@ -263,6 +265,7 @@ export default function StampWizard() {
   const manualDuty = f.duty === 'custom' ? Number(f.customDuty) : Number(f.duty)
   const duty = rule ? (ruled?.duty ?? NaN) : manualDuty
   const docLabel = article ? `${article.code ? `Article ${article.code} ` : ''}${article.label}` : ''
+  const docTitle = article ? (article.code ? `${article.code} - ${article.label}` : article.label) : ''
   const validDuty = Number.isInteger(duty) && duty >= 1 && duty <= MAX_DUTY
   const courier = f.delivery === 'courier' ? ESTAMP_FEES.courier : 0
   const convenience = validDuty ? getConvenienceFee(duty) : 0
@@ -432,7 +435,7 @@ export default function StampWizard() {
             resolve()
           }
         }
-        let stopWatch = () => {}
+        let stopWatch = () => { }
         const rzpOptions = {
           key: data.keyId, amount: data.amount, currency: data.currency, order_id: data.orderId,
           name: 'LauncherDesk', description: `e-Stamp paper, ${st.name}`, image: new URL('/apple-touch-icon.png', window.location.origin).href,
@@ -600,7 +603,7 @@ export default function StampWizard() {
             <aside className="lds-aside" aria-label="Your e-Stamp">
               <StampCertificate stateName={st.name} firstParty={f.firstParty} secondParty={f.secondParty} payer={f.payer}
                 docType={docLabel} purpose={f.purpose} duty={validDuty ? duty : null} />
-              <PriceSummary stateName={st.name} validDuty={validDuty} duty={duty} convenience={convenience} courier={courier} fees={fees} gst={gst} total={total} />
+              <PriceSummary stateName={st.name} docType={docTitle || docLabel} validDuty={validDuty} duty={duty} convenience={convenience} courier={courier} fees={fees} gst={gst} total={total} />
             </aside>
           </div>
         </div>
