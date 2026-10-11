@@ -19,6 +19,7 @@ export default function PriceSummary({ stateName, docType, validDuty, duty, conv
           </div>
         )}
         <dl>
+          <dt>Stamp duty</dt><dd>{validDuty ? inr(duty) : '—'}</dd>
           <dt>Convenience Fee</dt><dd>{inr(convFee)}</dd>
           <dt>Procurement Charge</dt><dd>{inr(ESTAMP_FEES.procurement)}</dd>
           {courier > 0 && <><dt>Doorstep delivery</dt><dd>{inr(courier)}</dd></>}
