@@ -123,7 +123,9 @@ import OfficeRestorePage from './pages/office-restore/OfficeRestorePage'
 import IndividualOfficePage from './pages/office-restore/IndividualOfficePage'
 import CoworkingOfficePage from './pages/office-restore/CoworkingOfficePage'
 import EStampPage from './pages/estamp/EStampPage'
-import EStampStatePage from './pages/estamp/EStampStatePage'
+import AgreementsPage from './pages/agreements/AgreementsPage'
+import AgreementDetailPage from './pages/agreements/AgreementDetailPage'
+import StampWizard from './pages/estamp/wizard/StampWizard'
 import TermsPage from './pages/legal/TermsPage'
 import PrivacyPage from './pages/legal/PrivacyPage'
 import RefundPage from './pages/legal/RefundPage'
@@ -195,7 +197,9 @@ export default function App() {
                     <Route path="/office-restore/individual" element={<IndividualOfficePage />} />
                     <Route path="/office-restore/coworking" element={<CoworkingOfficePage />} />
                     <Route path="/estamp" element={<EStampPage />} />
-                    <Route path="/estamp/:state" element={<EStampStatePage />} />
+                    <Route path="/agreements" element={<AgreementsPage />} />
+                    <Route path="/agreements/:slug" element={<AgreementDetailPage />} />
+                    <Route path="/estamp/:state" element={<StampWizard />} />
                     <Route path="/virtual-office" element={<VirtualOfficePage />} />
                     <Route path="/partner-register" element={<PartnerRegister />} />
                     <Route path="/legal/terms" element={<TermsPage />} />

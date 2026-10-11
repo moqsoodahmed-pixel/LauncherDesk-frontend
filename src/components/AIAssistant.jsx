@@ -159,13 +159,15 @@ export default function AIAssistant() {
     setActiveOptions({ kind: 'none', options: [] })
   }, [isLoggedIn])
 
-  // Re-open Sneha automatically after the user comes back from the login page
+  // Re-open Sneha automatically after the user comes back from the login page.
+  // Suppressed on the e-Stamp pages — those flows should never pop a panel on their own.
+  const isEstamp = location.pathname.startsWith('/estamp')
   useEffect(() => {
     if (!isLoggedIn) return
     let pending = false
     try { pending = sessionStorage.getItem(SNEHA_PENDING_KEY) === '1'; sessionStorage.removeItem(SNEHA_PENDING_KEY) } catch { /* ignore */ }
-    if (pending) setTimeout(() => openAI(), 400)
-  }, [isLoggedIn])
+    if (pending && !isEstamp) setTimeout(() => openAI(), 400)
+  }, [isLoggedIn, isEstamp])
 
   function rememberSnehaForAfterLogin() {
     try { sessionStorage.setItem(SNEHA_PENDING_KEY, '1') } catch { /* ignore */ }

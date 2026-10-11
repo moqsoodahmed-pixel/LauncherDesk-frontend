@@ -241,6 +241,7 @@ export default function MobileDrawer({ open, onClose }) {
           ))}
           <Link className="d-link" to="/virtual-office" onClick={onClose}>Virtual Office</Link>
           <Link className="d-link" to="/estamp" onClick={onClose}>E-Stamp</Link>
+          <Link className="d-link" to="/agreements" onClick={onClose}>Deeds &amp; Agreements</Link>
         </nav>
 
         <div className="d-actions">

@@ -7,8 +7,9 @@
  *   A fee of 0 is hidden from the customer.
  */
 export const ESTAMP_FEES = {
-  service: 0,   // LauncherDesk service / convenience fee per e-stamp (₹)
-  courier: 150, // doorstep delivery of the original stamp paper (₹) — GST INCLUDED, the customer pays exactly this
+  convenience: 0,   // LauncherDesk convenience fee per e-stamp (₹) — GST added on top
+  procurement: 99,  // procurement & platform charge (₹) — GST added on top
+  courier: 149,     // doorstep delivery of the original stamp paper (₹) — GST added on top
 }
 
 /** Stamp duty values the customer can pick (₹). They can also type a custom value. */

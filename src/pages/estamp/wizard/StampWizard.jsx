@@ -1,22 +1,34 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import SEO from '../../components/SEO'
-import { useUserAuth } from '../../context/UserAuthContext'
-import { useAdminAuth } from '../../context/AdminAuthContext'
-import { usePortalAuth } from '../../context/PortalAuthContext'
-import apiClient, { getAccessToken } from '../../services/portal/apiClient'
-import logoImg from '../../assets/launcherdesk-logo-transparent.png'
-import { loadRazorpayScript, armOpenWatchdog } from '../../lib/razorpay'
-import StampCertificate, { CERT_CSS } from './StampCertificate'
-import { stateBySlug, DENOMINATIONS, MAX_DUTY, ESTAMP_FEES, GST_RATE, LD_WA } from '../../data/estamp'
-import { articlesFor, keyOf, dutyFromRule, ruleText } from '../../data/estampArticles'
+import SEO from '../../../components/SEO'
+import { useUserAuth } from '../../../context/UserAuthContext'
+import { useAdminAuth } from '../../../context/AdminAuthContext'
+import { usePortalAuth } from '../../../context/PortalAuthContext'
+import apiClient, { getAccessToken } from '../../../services/portal/apiClient'
+import { loadRazorpayScript, armOpenWatchdog } from '../../../lib/razorpay'
+import StampCertificate, { CERT_CSS } from '../StampCertificate'
+import { stateBySlug, DENOMINATIONS, MAX_DUTY, ESTAMP_FEES, GST_RATE, LD_WA } from '../../../data/estamp'
+import { articlesFor, keyOf, dutyFromRule } from '../../../data/estampArticles'
+import { EStepRail } from '../estampKit'
+import '../estampKit.css'
+import StateDetailsStep from './StateDetailsStep'
+import DocumentDetailsStep from './DocumentDetailsStep'
+import PartyDetailsStep from './PartyDetailsStep'
+import StampAmountStep from './StampAmountStep'
+import ReviewPayStep from './ReviewPayStep'
+import PriceSummary from './PriceSummary'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
 
 const CSS = `
 .lds { background:var(--sec-b, #F8FAFC); min-height:80vh; padding-bottom:80px; }
-.lds-wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
-.lds-head { background:#fff; border-bottom:1px solid var(--line); padding:22px 0 24px; margin-bottom:28px; }
+/* Matches the navbar's pill (.site-header, width:min(1360px, 100% - 40px)) nested with .header-in's own
+   padding (src/assets/launcherdesk.css), so page content's left edge lines up with the logo. */
+.lds-wrap { max-width:1480px; margin:0 auto; padding:0 36px; box-sizing:border-box; }
+@media (min-width:1025px) { .lds-wrap { max-width:1460px; width:calc(100% - 40px); } }
+@media (max-width:1280px) { .lds-wrap { padding:0 20px; } }
+@media (max-width:768px) { .lds-wrap { padding:0 14px; } }
+.lds-head { background:#fff; border-bottom:1px solid var(--line); padding:22px 0 24px; margin-bottom:22px; }
 .lds-crumb { font-size:13.5px; color:var(--text-3); margin-bottom:10px; }
 .lds-crumb a { color:var(--text-3); text-decoration:none; } .lds-crumb a:hover { color:var(--blue); }
 .lds-head-row { display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; }
@@ -25,36 +37,25 @@ const CSS = `
 .lds-change { font-size:14.5px; font-weight:700; color:var(--blue); text-decoration:none; border:1.5px solid var(--brand-100);
   border-radius:10px; padding:9px 14px; background:var(--brand-50); }
 
-.lds-grid { display:grid; grid-template-columns:190px minmax(0,1fr) 380px; gap:28px; align-items:start; }
+.lds-restore { display:flex; gap:10px; align-items:center; background:var(--brand-50); border:1px solid var(--brand-100); color:var(--blue-dark);
+  border-radius:12px; padding:12px 16px; font-size:14px; margin-bottom:20px; }
 
-/* Step rail */
-.lds-rail { position:sticky; top:100px; margin:0; padding:0; list-style:none; }
-.lds-rail li { position:relative; padding:0 0 26px 40px; }
-.lds-rail li:last-child { padding-bottom:0; }
-.lds-rail li::after { content:''; position:absolute; left:14px; top:30px; bottom:2px; width:2px; background:var(--line-strong); }
-.lds-rail li:last-child::after { display:none; }
-.lds-rail li.done::after { background:var(--blue); }
-.lds-rail button { all:unset; cursor:pointer; display:block; }
-.lds-rail button:disabled { cursor:default; }
-.lds-rail button:focus-visible { outline:3px solid var(--brand-200); outline-offset:4px; border-radius:6px; }
-.lds-dot { position:absolute; left:0; top:0; width:30px; height:30px; border-radius:50%; display:grid; place-items:center; font-weight:800; font-size:13px;
-  background:#fff; border:2px solid var(--line-strong); color:var(--text-3); }
-.lds-rail li.now .lds-dot { border-color:var(--blue); color:var(--blue); box-shadow:0 0 0 5px var(--brand-50); }
-.lds-rail li.done .lds-dot { background:var(--blue); border-color:var(--blue); color:#fff; }
-.lds-rail b { display:block; font-size:14.5px; color:var(--navy); padding-top:4px; }
-.lds-rail small { display:block; font-size:12.5px; color:var(--text-3); margin-top:2px; line-height:1.4; }
-.lds-rail li:not(.now):not(.done) b { color:var(--text-3); }
+.lds-grid { display:grid; grid-template-columns:minmax(0,1fr) 380px; gap:28px; align-items:start; }
 
 /* Form */
 .lds-form { background:#fff; border:1px solid var(--line); border-radius:18px; padding:clamp(20px,3vw,32px); }
 .lds-form h2 { margin:0 0 4px; font-size:22px; color:var(--navy); letter-spacing:-.02em; }
 .lds-form .lead { margin:0 0 24px; color:var(--text-2); font-size:15px; line-height:1.55; }
+.lds-section-h { font-size:17px; color:var(--navy); margin:28px 0 16px; padding-top:20px; border-top:1px solid var(--line); }
 .lds-f { margin-bottom:20px; }
 .lds-f > label, .lds-f > .lbl { display:block; font-size:14.5px; font-weight:700; color:var(--navy); margin-bottom:8px; }
 .lds-f .lds-optional { font-weight:500; color:var(--text-3); }
 .lds-in { width:100%; height:50px; box-sizing:border-box; border:1.5px solid var(--line-strong); border-radius:11px; padding:0 14px;
   font-size:15.5px; font-family:inherit; background:#fff; color:var(--navy); outline:none; transition:border-color .15s, box-shadow .15s; }
 textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertical; line-height:1.5; }
+select.lds-in { appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:40px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 14px center; background-size:18px; }
 .lds-in:focus { border-color:var(--blue); box-shadow:0 0 0 4px rgba(29,93,184,.12); }
 .lds-in.bad { border-color:var(--error); }
 .lds-err { color:var(--error); font-size:13px; margin-top:6px; }
@@ -73,7 +74,7 @@ textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertic
 .lds-duty button[aria-pressed="true"] { border-color:var(--blue); background:var(--blue); color:#fff; }
 .lds-duty button:focus-visible { outline:3px solid var(--brand-200); outline-offset:2px; }
 .lds-print { display:flex; gap:12px; align-items:flex-start; border:1.5px dashed var(--brand-200); border-radius:12px; padding:14px; cursor:pointer;
-  background:linear-gradient(180deg,#fff,var(--brand-50)); }
+  background:linear-gradient(180deg,#fff,var(--brand-50)); margin-bottom:20px; }
 .lds-print input { margin-top:3px; width:18px; height:18px; accent-color:var(--blue); flex:none; }
 .lds-print b { color:var(--navy); }
 .lds-print span { font-size:14px; color:var(--text-2); line-height:1.5; }
@@ -84,10 +85,18 @@ textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertic
 .lds-btn.primary:hover { background:var(--blue-dark); }
 .lds-btn.primary:disabled { opacity:.6; cursor:not-allowed; }
 .lds-btn.plain { background:none; color:var(--text-2); padding:0 8px; }
+.lds-btn.outline { background:#fff; color:var(--blue); border:1.5px solid var(--brand-100); }
 .lds-btn:focus-visible { outline:3px solid var(--brand-200); outline-offset:2px; }
 .lds-note { display:flex; gap:10px; align-items:flex-start; background:var(--warn-bg, #FFFBEB); border:1px solid #FDE68A; color:#92400E;
   border-radius:12px; padding:12px 14px; font-size:14px; line-height:1.5; margin-bottom:20px; }
 .lds-alert { margin-top:14px; padding:12px 14px; border-radius:10px; font-size:14px; background:var(--error-bg); border:1px solid #FECACA; color:#991B1B; }
+
+/* Review */
+.lds-review { border:1.5px solid var(--line-strong); border-radius:14px; padding:16px 18px; margin-bottom:24px; }
+.lds-review-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.lds-review-head h3 { margin:0; font-size:15.5px; color:var(--navy); }
+.lds-review-dl { margin:0; display:grid; grid-template-columns:1fr auto; gap:8px 14px; font-size:14.5px; }
+.lds-review-dl dt { color:var(--text-3); } .lds-review-dl dd { margin:0; text-align:right; font-weight:700; color:var(--navy); }
 
 /* Article picker */
 .lda { position:relative; }
@@ -123,7 +132,6 @@ textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertic
 
 .lds-extra { display:inline-block; margin-left:8px; padding:1px 8px; border-radius:99px; background:var(--brand-100); color:var(--blue-dark);
   font-size:13px; font-weight:800; vertical-align:1px; }
-.lds-extra-why { color:var(--text-2) !important; }
 .lds-incl { display:block; font-size:11.5px; color:var(--text-3); }
 
 /* Aside */
@@ -134,6 +142,10 @@ textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertic
 .lds-price dt { color:var(--text-2); } .lds-price dd { margin:0; text-align:right; font-weight:700; color:var(--navy); }
 .lds-price .total { border-top:1px solid var(--line); padding-top:10px; font-size:17px; font-weight:800; color:var(--navy); }
 .lds-price p { margin:12px 0 0; font-size:12.5px; color:var(--text-3); line-height:1.5; }
+.lds-docs { background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px 18px; }
+.lds-docs h4 { margin:0 0 6px; font-size:13px; color:var(--navy); }
+.lds-docs p { margin:0; font-size:13.5px; color:var(--text-2); }
+.lds-docs p span { color:var(--text-3); font-size:12.5px; }
 .lds-help-card { border-radius:16px; padding:16px 18px; background:var(--navy); color:#fff; font-size:14px; line-height:1.55; }
 .lds-help-card a { color:#fff; font-weight:800; }
 
@@ -143,23 +155,25 @@ textarea.lds-in { height:auto; min-height:88px; padding:12px 14px; resize:vertic
 .lds-done h2 { font-size:26px; }
 .lds-done p { color:var(--text-2); line-height:1.65; max-width:52ch; margin:0 auto 22px; }
 
-@media (max-width:1100px) { .lds-grid { grid-template-columns:minmax(0,1fr) 340px; } .lds-rail { display:none; } }
 @media (max-width:860px) { .lds-grid { grid-template-columns:1fr; } .lds-aside { position:static; } }
-@media (max-width:520px) { .lds-two, .lds-seg { grid-template-columns:1fr; } 
+@media (max-width:520px) { .lds-two, .lds-seg { grid-template-columns:1fr; }
   .lds-actions { flex-direction:column-reverse; } .lds-btn.primary { width:100%; } }
 `
 
 const DRAFT_KEY = slug => `ld_estamp_draft_${slug}`
-const inr = n => `₹${Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`
 const EMPTY = {
   firstParty: '', secondParty: '', payer: '',
   article: '', baseAmount: '', purpose: '', consideration: '', duty: '', customDuty: '', print: false,
-  delivery: 'email', name: '', mobile: '', email: '', address: '', city: '', pincode: '',
+  delivery: 'email', name: '', mobile: '', email: '', contactState: '', contactCity: '',
+  businessName: '', agentReferralCode: '', specialInstructions: '',
+  address: '', city: '', pincode: '',
 }
 const STEPS = [
-  { t: 'The parties', s: 'Who the stamp is for' },
-  { t: 'The stamp', s: 'Document and value' },
-  { t: 'Delivery and pay', s: 'Where we send it' },
+  { t: 'State Details' },
+  { t: 'Document Details' },
+  { t: 'Party Details' },
+  { t: 'Stamp Amount' },
+  { t: 'Review & Pay' },
 ]
 
 function loadDraft(slug) {
@@ -172,75 +186,7 @@ function loadDraft(slug) {
   } catch { return null }
 }
 
-function ArticlePicker({ items, value, onChange, invalid, verified, stateName }) {
-  const [open, setOpen] = useState(false)
-  const [q, setQ] = useState('')
-  const [active, setActive] = useState(0)
-  const wrap = useRef(null)
-  const search = useRef(null)
-  const sel = items.find(a => keyOf(a) === value)
-  const list = useMemo(() => {
-    const t = q.trim().toLowerCase()
-    return t ? items.filter(a => `${a.label} ${a.code} article ${a.code} ${a.hint || ''}`.toLowerCase().includes(t)) : items
-  }, [q, items])
-
-  useEffect(() => {
-    if (!open) return
-    setTimeout(() => search.current?.focus(), 0)
-    const off = e => { if (wrap.current && !wrap.current.contains(e.target)) setOpen(false) }
-    document.addEventListener('mousedown', off)
-    return () => document.removeEventListener('mousedown', off)
-  }, [open])
-
-  const pick = a => { onChange(keyOf(a)); setOpen(false); setQ('') }
-  const onKey = e => {
-    if (e.key === 'ArrowDown') { e.preventDefault(); setActive(i => Math.min(i + 1, list.length - 1)) }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(i => Math.max(i - 1, 0)) }
-    else if (e.key === 'Enter' && list[active]) { e.preventDefault(); pick(list[active]) }
-    else if (e.key === 'Escape') setOpen(false)
-  }
-  const sub = a => [a.code ? `Article ${a.code}` : '', a.hint].filter(Boolean)
-
-  return (
-    <div className="lda" ref={wrap}>
-      <button type="button" id="dt" className={`lda-btn${invalid ? ' bad' : ''}`} aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen(o => !o)}>
-        <span className="t">
-          {sel ? <><b>{sel.label}</b>{sub(sel).length > 0 && <small>{sub(sel).join(' · ')}</small>}</> : <span className="ph">Search or choose the document</span>}
-        </span>
-        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-      </button>
-      {open && (
-        <div className="lda-pop">
-          <div className="lda-search">
-            <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm10 2-4.35-4.35" /></svg>
-            <input ref={search} value={q} onChange={e => { setQ(e.target.value); setActive(0) }} onKeyDown={onKey}
-              placeholder={verified ? 'Search, e.g. lease, affidavit or 5(J)' : 'Search document types'} aria-label="Search documents"
-              role="combobox" aria-expanded="true" aria-controls="lda-list" aria-activedescendant={list[active] ? `lda-${list.indexOf(list[active])}` : undefined} />
-          </div>
-          <ul className="lda-list" id="lda-list" role="listbox" aria-label="Documents">
-            {list.length ? list.map((a, i) => (
-              <li key={keyOf(a)}>
-                <button type="button" id={`lda-${i}`} role="option" aria-selected={i === active} className="lda-opt"
-                  onMouseEnter={() => setActive(i)} onClick={() => pick(a)}
-                  ref={el => { if (el && i === active) el.scrollIntoView({ block: 'nearest' }) }}>
-                  <span className="chk" aria-hidden="true">{keyOf(a) === value ? '✓' : ''}</span>
-                  <span><b>{a.label}</b>
-                    {(a.code || a.hint || a.rule) && <small>{[a.code && `Article ${a.code}`, a.hint].filter(Boolean).join(' · ')}{a.rule && <> {a.code || a.hint ? '· ' : ''}<i>{ruleText(a.rule)}</i></>}</small>}
-                  </span>
-                </button>
-              </li>
-            )) : <li className="lda-empty">No match. Choose "Other document" and describe it in the purpose.</li>}
-          </ul>
-          <div className="lda-src">
-            {verified ? `Articles from the official ${stateName} e-stamping list.` : `Our team confirms the exact ${stateName} article before buying your stamp.`}
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
-
-export default function EStampStatePage() {
+export default function StampWizard() {
   const { state: slug } = useParams()
   const st = stateBySlug(slug)
   const [params] = useSearchParams()
@@ -256,9 +202,11 @@ export default function EStampStatePage() {
   const location = useLocation()
   const formRef = useRef(null)
 
+  const [restored, setRestored] = useState(false)
   const [f, setF] = useState(() => {
-    const d = loadDraft(slug) || {}
-    return { ...EMPTY, ...d, print: params.get('print') === '1' ? true : !!d.print }
+    const d = loadDraft(slug)
+    if (d) setTimeout(() => setRestored(true), 0)
+    return { ...EMPTY, ...(d || {}), print: params.get('print') === '1' ? true : !!(d && d.print) }
   })
   const savedStep = (() => { try { return Number(sessionStorage.getItem(`${DRAFT_KEY(slug)}_step`)) || 1 } catch { return 1 } })()
   const [step, setStep] = useState(savedStep)
@@ -295,10 +243,13 @@ export default function EStampStatePage() {
   useEffect(() => {
     const activeUser = portalUser || user
     if (!activeUser) return
-    setF(v => ({ ...v, name: v.name || activeUser.name || '', email: v.email || activeUser.email || '', mobile: v.mobile || activeUser.phone || activeUser.mobile || '' }))
+    setF(v => ({
+      ...v,
+      name: v.name || activeUser.name || '', email: v.email || activeUser.email || '', mobile: v.mobile || activeUser.phone || activeUser.mobile || '',
+    }))
   }, [user, portalUser])
 
-  const { verified, items: articles } = useMemo(() => articlesFor(slug), [slug])
+  const { verified, items: articles } = useMemo(() => (st ? articlesFor(slug) : { verified: false, items: [] }), [slug, st])
   const article = articles.find(a => keyOf(a) === f.article) || null
   const rule = article?.rule && article.rule.type !== 'text' ? article.rule : null
   const baseField = rule?.base === 'Consideration amount' ? 'consideration' : 'baseAmount'
@@ -308,9 +259,30 @@ export default function EStampStatePage() {
   const docLabel = article ? `${article.code ? `Article ${article.code} ` : ''}${article.label}` : ''
   const validDuty = Number.isInteger(duty) && duty >= 1 && duty <= MAX_DUTY
   const courier = f.delivery === 'courier' ? ESTAMP_FEES.courier : 0
-  const fees = ESTAMP_FEES.service + courier
-  const gst = Math.round(ESTAMP_FEES.service * GST_RATE * 100) / 100   // courier price already includes GST
+  const fees = ESTAMP_FEES.convenience + ESTAMP_FEES.procurement + courier
+  const gst = Math.round(fees * GST_RATE * 100) / 100
   const total = useMemo(() => Math.round(((validDuty ? duty : 0) + fees + gst) * 100) / 100, [validDuty, duty, fees, gst])
+
+  // A restored draft's saved step number can be stale (e.g. the browser closed mid-step,
+  // or an older draft shape). Never trust it blindly — clamp to how far the saved data
+  // actually goes, so the step rail can't show a later step as "done" while an earlier
+  // one (like the document type) is still genuinely empty.
+  useEffect(() => {
+    if (!st) return
+    const step2Done = !!article && !!f.purpose.trim()
+    const step3Done = !!f.firstParty.trim() && !!f.secondParty.trim() && !!f.payer
+    const step4Done = validDuty
+    let furthestComplete = 1
+    if (step2Done) furthestComplete = 2
+    if (step2Done && step3Done) furthestComplete = 3
+    if (step2Done && step3Done && step4Done) furthestComplete = 4
+    const allowedMax = Math.min(furthestComplete + 1, 5)
+    setMaxStep(m => Math.min(m, allowedMax))
+    setStep(s => Math.min(s, allowedMax))
+    // Only re-check when the state changes — normal step navigation already
+    // advances maxStep itself via next()/validate().
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug])
 
   if (!st) return <Navigate to="/estamp" replace />
 
@@ -323,25 +295,32 @@ export default function EStampStatePage() {
 
   function validate(s) {
     const e = {}
-    if (s === 1) {
+    if (s === 2) {
+      if (!article) e.docType = 'Choose the document type.'
+      if (!f.purpose.trim()) e.purpose = 'Describe what the stamp is for.'
+      if (rule && rule.type !== 'fixed') {
+        if (ruled?.error) e.base = ruled.error
+      }
+      if (f.consideration && !(Number(f.consideration) >= 0)) e.consideration = 'Enter the amount in rupees, numbers only.'
+    }
+    if (s === 3) {
       if (!f.firstParty.trim()) e.firstParty = "Enter the first party's name."
       if (!f.secondParty.trim()) e.secondParty = "Enter the second party's name, or NIL if there isn't one."
       if (!f.payer) e.payer = 'Choose who pays the stamp duty.'
     }
-    if (s === 2) {
-      if (!article) e.docType = 'Choose the document type.'
-      if (!f.purpose.trim()) e.purpose = 'Describe what the stamp is for.'
+    if (s === 4) {
       if (rule) {
         if (ruled?.error) e.base = ruled.error
-        else if (!validDuty) e.base = `The duty works out above ${inr(MAX_DUTY)}. Message us and we'll arrange it for you.`
+        else if (!validDuty) e.base = `The duty works out above ₹${MAX_DUTY.toLocaleString('en-IN')}. Message us and we'll arrange it for you.`
       } else if (!f.duty) e.duty = 'Choose a stamp duty value.'
-      else if (!validDuty) e.duty = `Enter a whole amount from ₹1 to ${inr(MAX_DUTY)}.`
-      if (f.consideration && !(Number(f.consideration) >= 0)) e.consideration = 'Enter the amount in rupees, numbers only.'
+      else if (!validDuty) e.duty = `Enter a whole amount from ₹1 to ₹${MAX_DUTY.toLocaleString('en-IN')}.`
     }
-    if (s === 3) {
+    if (s === 5) {
       if (!f.name.trim()) e.name = 'Enter your name.'
       if (!/^\+?[0-9\s-]{10,14}$/.test(f.mobile.trim())) e.mobile = 'Enter a 10-digit mobile number.'
       if (!/^\S+@\S+\.\S+$/.test(f.email.trim())) e.email = 'Enter a valid email address.'
+      if (!f.contactState.trim()) e.contactState = 'Enter your state/region.'
+      if (!f.contactCity.trim()) e.contactCity = 'Enter your city.'
       if (f.delivery === 'courier') {
         if (!f.address.trim()) e.address = 'Enter the delivery address.'
         if (!f.city.trim()) e.city = 'Enter the city.'
@@ -355,7 +334,7 @@ export default function EStampStatePage() {
   const next = () => { if (validate(step)) { setMaxStep(m => Math.max(m, step + 1)); goTo(step + 1) } }
 
   async function pay() {
-    if (!validate(3)) return
+    if (!validate(5)) return
     setPaying(true); setPayErr(''); setPayStage('1/4 Creating your order…')
     const payload = {
       state: st.slug, stateName: st.name,
@@ -365,6 +344,8 @@ export default function EStampStatePage() {
       purpose: f.purpose.trim(), consideration: f.consideration,
       stampDuty: duty, printDocument: !!f.print, delivery: f.delivery,
       name: f.name.trim(), email: f.email.trim(), mobile: f.mobile.trim(),
+      contactState: f.contactState.trim(), contactCity: f.contactCity.trim(),
+      businessName: f.businessName.trim(), agentReferralCode: f.agentReferralCode.trim(), specialInstructions: f.specialInstructions.trim(),
       ...(f.delivery === 'courier' ? { address: f.address.trim(), city: f.city.trim(), pincode: f.pincode.trim() } : {}),
     }
     try {
@@ -420,7 +401,7 @@ export default function EStampStatePage() {
 
       setPayStage('2/4 Order created. Loading secure checkout…')
       if (!data.keyId) {
-        setPayErr('Payment could not be started (missing payment configuration). Please contact support@launcherdesk.com — no amount has been charged.')
+        setPayErr('Payment could not be started (missing payment configuration). Please contact support@launcherdesk.com. No amount has been charged.')
         return
       }
 
@@ -516,7 +497,7 @@ export default function EStampStatePage() {
           rzp.open()
           stopWatch = armOpenWatchdog(() => {
             if (!settled) {
-              setPayErr('The payment window didn\u2019t open. Please check your connection and try again \u2014 no amount has been charged.')
+              setPayErr('The payment window didn’t open. Please check your connection and try again. No amount has been charged.')
               finish()
             }
           }, isPhone ? 30000 : 15000)
@@ -541,7 +522,7 @@ export default function EStampStatePage() {
 
   return (
     <>
-      <SEO title={`${st.name} e-Stamp Paper — Order Online`} description={`Order non-judicial e-Stamp paper for ${st.name} online. Fill in the details, pay securely and get the scan copy by email, with doorstep delivery available.`} canonical={`/estamp/${st.slug}`} />
+      <SEO title={`${st.name} e-Stamp Paper: Order Online`} description={`Order non-judicial e-Stamp paper for ${st.name} online. Fill in the details, pay securely and get the scan copy by email, with doorstep delivery available.`} canonical={`/estamp/${st.slug}`} />
       <style>{CERT_CSS + CSS}</style>
 
       <div className="lds">
@@ -558,213 +539,65 @@ export default function EStampStatePage() {
           </div>
         </header>
 
-        <div className="lds-wrap lds-grid">
-          {/* Step rail */}
-          <ol className="lds-rail" aria-label="Order steps">
-            {STEPS.map((s, i) => {
-              const n = i + 1
-              const cls = done || n < step ? 'done' : n === step ? 'now' : ''
-              return (
-                <li key={s.t} className={cls}>
-                  <button type="button" disabled={!!done || n > maxStep} onClick={() => goTo(n)} aria-current={n === step ? 'step' : undefined}>
-                    <span className="lds-dot">{cls === 'done' ? '✓' : n}</span>
-                    <b>{s.t}</b><small>{s.s}</small>
-                  </button>
-                </li>
-              )
-            })}
-          </ol>
+        <div className="lds-wrap">
+          {!done && <EStepRail steps={STEPS} step={step} maxStep={maxStep} done={!!done} onGoTo={n => n <= maxStep && goTo(n)} />}
+          {restored && !done && (
+            <div className="lds-restore" role="status">Welcome back. We restored your in-progress application.</div>
+          )}
 
-          {/* Form */}
-          <section className="lds-form" ref={formRef} style={{ scrollMarginTop: 100 }} aria-live="polite">
-            {done ? (
-              <div className="lds-done">
-                <div className="tick"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg></div>
-                <h2>Order placed</h2>
-                <p>
-                  {done.orderNumber && <>Your order number is <b>{done.orderNumber}</b>. </>}
-                  We've emailed your receipt and tax invoice. Our team will check the details and email you the scan copy
-                  {f.delivery === 'courier' ? ', then courier the original to you' : ''}.
-                  {f.print ? ' Upload the document you want printed from your order page.' : ''}
-                </p>
-                <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
-                  {done.ldOrderId && <Link to={`/user/services/${done.ldOrderId}`} className="lds-btn primary" style={{ marginLeft: 0 }}>View my order</Link>}
-                  <Link to="/estamp" className="lds-btn plain">Order another e-Stamp</Link>
+          <div className="lds-grid">
+            {/* Form */}
+            <section className="lds-form" ref={formRef} style={{ scrollMarginTop: 100 }} aria-live="polite">
+              {done ? (
+                <div className="lds-done">
+                  <div className="tick"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg></div>
+                  <h2>Order placed</h2>
+                  <p>
+                    {done.orderNumber && <>Your order number is <b>{done.orderNumber}</b>. </>}
+                    We've emailed your receipt and tax invoice. Our team will check the details and email you the scan copy
+                    {f.delivery === 'courier' ? ', then courier the original to you' : ''}.
+                    {f.print ? ' Upload the document you want printed from your order page.' : ''}
+                  </p>
+                  <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
+                    {done.ldOrderId && <Link to={`/user/services/${done.ldOrderId}`} className="lds-btn primary" style={{ marginLeft: 0 }}>View my order</Link>}
+                    <Link to="/estamp" className="lds-btn plain">Order another e-Stamp</Link>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <>
-                {step === 1 && (
-                  <>
-                    <h2>Who is the stamp for?</h2>
-                    <p className="lead">These names are printed on the certificate exactly as you type them.</p>
-                    <div className="lds-f">
-                      <label htmlFor="fp">First party</label>
-                      <input id="fp" className={inCls('firstParty')} value={f.firstParty} onChange={set('firstParty')} placeholder="e.g. landlord or person giving the affidavit" autoComplete="name" />
-                      <Err k="firstParty" />
-                    </div>
-                    <div className="lds-f">
-                      <label htmlFor="sp">Second party</label>
-                      <input id="sp" className={inCls('secondParty')} value={f.secondParty} onChange={set('secondParty')} placeholder="e.g. tenant — or NIL" />
-                      <div className="lds-help">For an affidavit or declaration with no second party, write NIL.</div>
-                      <Err k="secondParty" />
-                    </div>
-                    <div className="lds-f" role="radiogroup" aria-labelledby="payer-l">
-                      <div className="lbl" id="payer-l">Who pays the stamp duty?</div>
-                      <div className="lds-seg">
-                        {['First Party', 'Second Party'].map(p => (
-                          <label key={p}><input type="radio" name="payer" value={p} checked={f.payer === p} onChange={set('payer')} />{p === 'First Party' ? 'First party' : 'Second party'}</label>
-                        ))}
-                      </div>
-                      <Err k="payer" />
-                    </div>
-                  </>
-                )}
+              ) : (
+                <>
+                  {step === 1 && <StateDetailsStep st={st} verified={verified} />}
+                  {step === 2 && (
+                    <DocumentDetailsStep f={f} setF={setF} set={set} errs={errs} setErrs={setErrs} inCls={inCls} Err={Err}
+                      st={st} verified={verified} articles={articles} article={article} rule={rule} baseField={baseField} />
+                  )}
+                  {step === 3 && <PartyDetailsStep f={f} set={set} errs={errs} inCls={inCls} Err={Err} />}
+                  {step === 4 && (
+                    <StampAmountStep f={f} setF={setF} set={set} errs={errs} inCls={inCls} Err={Err} st={st} rule={rule} duty={duty} validDuty={validDuty} baseField={baseField} article={article} />
+                  )}
+                  {step === 5 && (
+                    <ReviewPayStep f={f} set={set} errs={errs} inCls={inCls} Err={Err} st={st} docLabel={docLabel} duty={duty} validDuty={validDuty}
+                      total={total} onEdit={goTo} pay={pay} paying={paying} payErr={payErr} payStage={payStage} />
+                  )}
 
-                {step === 2 && (
-                  <>
-                    <h2>What is it for?</h2>
-                    <p className="lead">
-                      {verified
-                        ? <>Pick the article your document falls under. Where {st.name}'s rules fix the duty, we fill it in for you.</>
-                        : <>Pick your document and the stamp duty value. We confirm the exact {st.name} article and duty before buying the stamp, and call you if anything needs to change.</>}
-                    </p>
-                    <div className="lds-f">
-                      <label htmlFor="dt">Document type</label>
-                      <ArticlePicker items={articles} value={f.article} verified={verified} stateName={st.name} invalid={!!errs.docType}
-                        onChange={k => { setF(v => ({ ...v, article: k })); setErrs(x => ({ ...x, docType: undefined, base: undefined, duty: undefined })) }} />
-                      <Err k="docType" />
-                      {article?.rule?.type === 'text' && <div className="lds-rule"><span>How the duty is worked out: <b>{article.rule.text}</b> Enter the amount below.</span></div>}
+                  {step < 5 && (
+                    <div className="lds-actions">
+                      {step > 1 && <button type="button" className="lds-btn plain" onClick={() => goTo(step - 1)}>Back</button>}
+                      <button type="button" className="lds-btn primary" onClick={next}>Continue</button>
                     </div>
-                    <div className="lds-f">
-                      <label htmlFor="pu">Purpose</label>
-                      <textarea id="pu" className={inCls('purpose')} value={f.purpose} onChange={set('purpose')} maxLength={500}
-                        placeholder="e.g. Rent agreement for flat 12, 4th Cross, Koramangala, Bengaluru" />
-                      <Err k="purpose" />
-                    </div>
-                    {rule ? (
-                      <div className="lds-f">
-                        {rule.type !== 'fixed' && baseField === 'baseAmount' && (
-                          <div className="lds-f" style={{ marginBottom: 12 }}>
-                            <label htmlFor="ba">{rule.base}</label>
-                            <input id="ba" className={inCls('base')} type="number" min="1" inputMode="numeric" value={f.baseAmount} onChange={set('baseAmount')} placeholder="Amount in ₹" />
-                          </div>
-                        )}
-                        <div className="lbl">Stamp duty</div>
-                        <div className="lds-duty-fixed" aria-live="polite">
-                          <b>{validDuty ? inr(duty) : '₹ —'}</b>
-                          <span>{rule.type === 'fixed' ? `Fixed by ${st.name}'s rules for this article` : ruleText(rule)}</span>
-                        </div>
-                        {baseField === 'consideration' && !errs.base && !validDuty && <div className="lds-help">Enter the consideration amount below to work out the duty.</div>}
-                        <Err k="base" />
-                      </div>
-                    ) : (
-                      <div className="lds-f">
-                        <div className="lbl" id="duty-l">Stamp duty value</div>
-                        <div className="lds-duty" role="group" aria-labelledby="duty-l">
-                          {DENOMINATIONS.map(d => (
-                            <button type="button" key={d} aria-pressed={String(f.duty) === String(d)} onClick={() => setF(v => ({ ...v, duty: String(d) }))}>{inr(d)}</button>
-                          ))}
-                          <button type="button" aria-pressed={f.duty === 'custom'} onClick={() => setF(v => ({ ...v, duty: 'custom' }))}>Other</button>
-                        </div>
-                        {f.duty === 'custom' && (
-                          <input className={inCls('duty')} style={{ marginTop: 10 }} type="number" min="1" max={MAX_DUTY} step="1" inputMode="numeric"
-                            value={f.customDuty} onChange={set('customDuty')} placeholder="Amount in rupees" aria-label="Stamp duty amount in rupees" autoFocus />
-                        )}
-                        <Err k="duty" />
-                      </div>
-                    )}
-                    <div className="lds-f">
-                      <label htmlFor="cp">Consideration amount {baseField === 'consideration' && rule ? null : <span className="lds-optional">(optional)</span>}</label>
-                      <input id="cp" className={inCls('consideration')} type="number" min="0" inputMode="numeric" value={f.consideration} onChange={set('consideration')} placeholder="e.g. security deposit or deal value, in ₹" />
-                      <Err k="consideration" />
-                    </div>
-                    <label className="lds-print">
-                      <input type="checkbox" checked={f.print} onChange={set('print')} />
-                      <span><b>Print my document on this e-Stamp.</b> After paying, upload your agreement or affidavit from your order page and we print it on the stamp.</span>
-                    </label>
-                  </>
-                )}
+                  )}
+                </>
+              )}
+            </section>
 
-                {step === 3 && (
-                  <>
-                    <h2>Where should we send it?</h2>
-                    <p className="lead">The scan copy goes to your email. Choose courier if you also need the original.</p>
-                    <div className="lds-f lds-card" role="radiogroup" aria-label="Delivery">
-                      <label>
-                        <input type="radio" name="dl" value="email" checked={f.delivery === 'email'} onChange={set('delivery')} />
-                        <span>Email only<small>Scan copy by email, usually within a few hours on working days.</small></span>
-                      </label>
-                      <label>
-                        <input type="radio" name="dl" value="courier" checked={f.delivery === 'courier'} onChange={set('delivery')} />
-                        <span>Email and courier{ESTAMP_FEES.courier ? <span className="lds-extra">+{inr(ESTAMP_FEES.courier)}</span> : null}
-                          <small>Scan copy by email, and the original stamp paper delivered to your door.</small>
-                          {ESTAMP_FEES.courier > 0 && <small className="lds-extra-why">The extra {inr(ESTAMP_FEES.courier)} covers packing and couriering the original stamp paper to your address. GST is included.</small>}
-                        </span>
-                      </label>
-                    </div>
-                    {f.delivery === 'courier' && (
-                      <>
-                        <div className="lds-f">
-                          <label htmlFor="ad">Delivery address</label>
-                          <textarea id="ad" className={inCls('address')} value={f.address} onChange={set('address')} maxLength={300} placeholder="House or flat, street, area" autoComplete="street-address" />
-                          <Err k="address" />
-                        </div>
-                        <div className="lds-two">
-                          <div className="lds-f"><label htmlFor="ci">City</label>
-                            <input id="ci" className={inCls('city')} value={f.city} onChange={set('city')} autoComplete="address-level2" /><Err k="city" /></div>
-                          <div className="lds-f"><label htmlFor="pin">PIN code</label>
-                            <input id="pin" className={inCls('pincode')} inputMode="numeric" maxLength={6} value={f.pincode} onChange={set('pincode')} autoComplete="postal-code" /><Err k="pincode" /></div>
-                        </div>
-                      </>
-                    )}
-                    <div className="lds-two">
-                      <div className="lds-f"><label htmlFor="nm">Your name</label>
-                        <input id="nm" className={inCls('name')} value={f.name} onChange={set('name')} autoComplete="name" /><Err k="name" /></div>
-                      <div className="lds-f"><label htmlFor="mb">Mobile</label>
-                        <input id="mb" className={inCls('mobile')} type="tel" value={f.mobile} onChange={set('mobile')} placeholder="98765 43210" autoComplete="tel" /><Err k="mobile" /></div>
-                    </div>
-                    <div className="lds-f"><label htmlFor="em">Email for the scan copy</label>
-                      <input id="em" className={inCls('email')} type="email" value={f.email} onChange={set('email')} autoComplete="email" /><Err k="email" /></div>
-                  </>
-                )}
-
-                <div className="lds-actions">
-                  {step > 1 && <button type="button" className="lds-btn plain" onClick={() => goTo(step - 1)}>Back</button>}
-                  {step < 3
-                    ? <button type="button" className="lds-btn primary" onClick={next}>Continue</button>
-                    : <button type="button" className="lds-btn primary" onClick={pay} disabled={paying} aria-busy={paying}>
-                        {paying ? 'Opening payment…' : `Pay ${inr(total)}`}
-                      </button>}
-                </div>
-                {payErr && <div className="lds-alert" role="alert">{payErr}</div>}
-                {paying && payStage && <div className="lds-alert" style={{ background: '#EEF4FF', color: '#1D3A8A', borderColor: '#C7D8FF' }}>{payStage}</div>}
-              </>
-            )}
-          </section>
-
-          {/* Live certificate + price */}
-          <aside className="lds-aside" aria-label="Your e-Stamp">
-            <StampCertificate stateName={st.name} firstParty={f.firstParty} secondParty={f.secondParty} payer={f.payer}
-              docType={docLabel} purpose={f.purpose} duty={validDuty ? duty : null} />
-            <div className="lds-price">
-              <h3>Price</h3>
-              <dl>
-                <dt>Stamp duty</dt><dd>{validDuty ? inr(duty) : '—'}</dd>
-                {ESTAMP_FEES.service > 0 && <><dt>Service fee</dt><dd>{inr(ESTAMP_FEES.service)}</dd></>}
-                {courier > 0 && <><dt>Courier to your door <small className="lds-incl">incl. GST</small></dt><dd>{inr(courier)}</dd></>}
-                {gst > 0 && <><dt>GST on service fee (18%)</dt><dd>{inr(gst)}</dd></>}
-                <dt className="total">Total</dt><dd className="total">{validDuty ? inr(total) : '—'}</dd>
-              </dl>
-              <p>Stamp duty goes to the government at actual. The final amount is confirmed when you pay.</p>
-            </div>
-            <div className="lds-help-card">
-              Need it today, or have a question? <a href={`https://wa.me/${LD_WA}?text=${encodeURIComponent(`Hi, I have a question about ${st.name} e-Stamp paper.`)}`} target="_blank" rel="noopener noreferrer">Chat with us on WhatsApp</a>.
-            </div>
-          </aside>
+            {/* Live certificate + price */}
+            <aside className="lds-aside" aria-label="Your e-Stamp">
+              <StampCertificate stateName={st.name} firstParty={f.firstParty} secondParty={f.secondParty} payer={f.payer}
+                docType={docLabel} purpose={f.purpose} duty={validDuty ? duty : null} />
+              <PriceSummary stateName={st.name} validDuty={validDuty} duty={duty} courier={courier} fees={fees} gst={gst} total={total} />
+            </aside>
+          </div>
         </div>
       </div>
-
     </>
   )
 }

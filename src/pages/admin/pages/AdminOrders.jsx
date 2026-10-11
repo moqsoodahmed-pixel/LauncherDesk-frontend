@@ -121,6 +121,26 @@ function OrderDetail({ orderId, onClose, onChanged }) {
             ['Total', rs(order.totalAmount)], ['Payment Status', order.paymentStatus], ['Created', fmtDate(order.createdAt)],
           ]} />
 
+          {order.serviceSlug?.startsWith('e-stamp') && order.details && (
+            <Card>
+              <div style={{ padding: 18 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#1C2434', marginBottom: 10 }}>e-Stamp details</div>
+                <InfoGrid rows={[
+                  ['State', order.details.state], ['First party', order.details.firstParty], ['Second party', order.details.secondParty],
+                  ['Duty paid by', order.details.stampDutyPaidBy], ['Document type', order.details.documentType],
+                  ['Purpose', order.details.purpose], ['Duty calculated from', order.details.dutyCalculatedFrom || '—'],
+                  ['Consideration amount', order.details.considerationAmount != null ? rs(order.details.considerationAmount) : '—'],
+                  ['Stamp duty', rs(order.details.stampDuty)], ['Print on stamp', order.details.printDocumentOnStamp ? 'Yes' : 'No'],
+                  ['Delivery', order.details.delivery],
+                  ['Contact', [order.details.contact?.name, order.details.contact?.mobile, order.details.contact?.email].filter(Boolean).join(' · ')],
+                  ['Business name', order.details.businessName || '—'], ['Agent referral code', order.details.agentReferralCode || '—'],
+                  ['Special instructions', order.details.specialInstructions || '—'],
+                  ...(order.details.deliveryAddress ? [['Delivery address', [order.details.deliveryAddress.address, order.details.deliveryAddress.city, order.details.deliveryAddress.pincode].filter(Boolean).join(', ')]] : []),
+                ]} />
+              </div>
+            </Card>
+          )}
+
           <Card>
             <div style={{ padding: 18 }}>
               <div style={{ fontSize: 13, fontWeight: 700, color: '#1C2434', marginBottom: 10 }}>Change status</div>

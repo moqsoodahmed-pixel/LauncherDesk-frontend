@@ -613,6 +613,37 @@ export default function Navbar({ activePage = '' }) {
                 </div>
               </div>
             </div>
+            <div className={`nav-item${activePage === 'agreements' ? ' active' : ''} nav-item--wide`} data-drop="true">
+              <button>Agreements <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg></button>
+              <div className="mega" style={{ minWidth: 640, padding: '18px 20px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
+                  <div>
+                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text-3)', padding: '4px 10px 8px' }}>Property &amp; Land</div>
+                    <SvcLink href="/agreements/rent-lease-agreement" title="Rent / Lease Agreement" />
+                    <SvcLink href="/agreements/agreement-to-sell" title="Agreement to Sell" />
+                    <SvcLink href="/agreements/sale-deed" title="Sale Deed" />
+                    <SvcLink href="/agreements/gift-deed" title="Gift Deed" />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text-3)', padding: '4px 10px 8px' }}>Business Agreements</div>
+                    <SvcLink href="/agreements/partnership-llp-deed" title="Partnership / LLP Deed" />
+                    <SvcLink href="/agreements/franchise-agreement" title="Franchise Agreement" />
+                    <SvcLink href="/agreements/joint-venture-agreement" title="Joint Venture Agreement" />
+                    <SvcLink href="/agreements/vendor-supply-agreement" title="Vendor / Supply Agreement" />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text-3)', padding: '4px 10px 8px' }}>Personal &amp; Investment</div>
+                    <SvcLink href="/agreements/loan-agreement" title="Loan Agreement" />
+                    <SvcLink href="/agreements/non-disclosure-agreement" title="Non-Disclosure Agreement" />
+                    <SvcLink href="/agreements/shareholder-agreement" title="Shareholder Agreement" />
+                    <SvcLink href="/agreements/vehicle-sale-agreement" title="Vehicle Sale Agreement" />
+                  </div>
+                </div>
+                <div style={{ borderTop: '1px solid var(--line)', marginTop: 12, paddingTop: 10, paddingLeft: 10 }}>
+                  <SvcLink href="/agreements" title="View all Deeds & Agreements" desc="Browse every document type" />
+                </div>
+              </div>
+            </div>
             <div className={`nav-item${activePage === 'virtual-office' ? ' active' : ''}`}>
               <a href="/virtual-office" className="nav-restore">Virtual Office</a>
             </div>
