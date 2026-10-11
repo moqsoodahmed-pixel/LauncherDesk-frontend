@@ -1,16 +1,17 @@
-import { ESTAMP_FEES, LD_WA } from '../../../data/estamp'
+import { ESTAMP_FEES, getConvenienceFee, LD_WA } from '../../../data/estamp'
 
 const inr = n => `₹${Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`
 
 /** Shared live price sidebar used across every wizard step. */
-export default function PriceSummary({ stateName, validDuty, duty, courier, fees, gst, total }) {
+export default function PriceSummary({ stateName, validDuty, duty, convenience, courier, fees, gst, total }) {
+  const convFee = convenience !== undefined ? convenience : (validDuty ? getConvenienceFee(duty) : 0)
   return (
     <>
       <div className="lds-price">
         <h3>Price summary</h3>
         <dl>
           <dt>Stamp duty</dt><dd>{validDuty ? inr(duty) : 'At Actuals'}</dd>
-          <dt>Convenience Fee</dt><dd>{inr(ESTAMP_FEES.convenience)}</dd>
+          <dt>Convenience Fee</dt><dd>{inr(convFee)}</dd>
           <dt>Procurement Charge</dt><dd>{inr(ESTAMP_FEES.procurement)}</dd>
           {courier > 0 && <><dt>Doorstep delivery</dt><dd>{inr(courier)}</dd></>}
           <dt>GST (18%)</dt><dd>{inr(gst)}</dd>

@@ -7,9 +7,22 @@
  *   A fee of 0 is hidden from the customer.
  */
 export const ESTAMP_FEES = {
-  convenience: 0,   // LauncherDesk convenience fee per e-stamp (₹) — GST added on top
+  convenience: 0,   // Base convenience fee (₹)
   procurement: 99,  // procurement & platform charge (₹) — GST added on top
   courier: 149,     // doorstep delivery of the original stamp paper (₹) — GST added on top
+}
+
+/**
+ * Convenience fee:
+ * Stamp duty <= ₹500: ₹0
+ * Stamp duty > ₹500 (e.g. ₹1000, ₹1001, ₹1500, ₹2000+): 5% of stamp duty
+ */
+export function getConvenienceFee(duty) {
+  const d = Number(duty || 0)
+  if (d > 500) {
+    return Math.round(d * 0.05 * 100) / 100
+  }
+  return ESTAMP_FEES.convenience || 0
 }
 
 /** Stamp duty values the customer can pick (₹). They can also type a custom value. */

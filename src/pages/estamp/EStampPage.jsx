@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import SEO from '../../components/SEO'
 import StampCertificate, { CERT_CSS } from './StampCertificate'
-import { ESTAMP_STATES, ESTAMP_FEES, GST_RATE, LD_WA } from '../../data/estamp'
+import { ESTAMP_STATES, ESTAMP_FEES, getConvenienceFee, GST_RATE, LD_WA } from '../../data/estamp'
 import { EButton, ECard, EBadge, EAccordion } from './estampKit'
 import './estampKit.css'
 
@@ -192,7 +192,8 @@ export default function EStampPage() {
   const [calcDuty, setCalcDuty] = useState(500)
   const [calcDelivery, setCalcDelivery] = useState('email')
   const calcCourier = calcDelivery === 'courier' ? ESTAMP_FEES.courier : 0
-  const calcFees = ESTAMP_FEES.convenience + ESTAMP_FEES.procurement + calcCourier
+  const calcConvenience = getConvenienceFee(calcDuty)
+  const calcFees = calcConvenience + ESTAMP_FEES.procurement + calcCourier
   const calcGst = Math.round(calcFees * GST_RATE * 100) / 100
   const calcTotal = Math.round((calcDuty + calcFees + calcGst) * 100) / 100
   const inputRef = useRef(null)
@@ -347,7 +348,7 @@ export default function EStampPage() {
               <h4>Digital statement receipt</h4>
               <dl>
                 <dt>Stamp duty</dt><dd>{inr(calcDuty)}</dd>
-                <dt>Convenience fee</dt><dd>{inr(ESTAMP_FEES.convenience)}</dd>
+                <dt>Convenience fee</dt><dd>{inr(calcConvenience)}</dd>
                 <dt>Procurement charge</dt><dd>{inr(ESTAMP_FEES.procurement)}</dd>
                 {calcCourier > 0 && <><dt>Doorstep delivery</dt><dd>{inr(calcCourier)}</dd></>}
                 <dt>GST (18%)</dt><dd>{inr(calcGst)}</dd>

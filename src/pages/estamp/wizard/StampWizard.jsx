@@ -7,7 +7,7 @@ import { usePortalAuth } from '../../../context/PortalAuthContext'
 import apiClient, { getAccessToken } from '../../../services/portal/apiClient'
 import { loadRazorpayScript, armOpenWatchdog } from '../../../lib/razorpay'
 import StampCertificate, { CERT_CSS } from '../StampCertificate'
-import { stateBySlug, DENOMINATIONS, MAX_DUTY, ESTAMP_FEES, GST_RATE, LD_WA } from '../../../data/estamp'
+import { stateBySlug, DENOMINATIONS, MAX_DUTY, ESTAMP_FEES, getConvenienceFee, GST_RATE, LD_WA } from '../../../data/estamp'
 import { articlesFor, keyOf, dutyFromRule } from '../../../data/estampArticles'
 import { EStepRail } from '../estampKit'
 import '../estampKit.css'
@@ -265,7 +265,8 @@ export default function StampWizard() {
   const docLabel = article ? `${article.code ? `Article ${article.code} ` : ''}${article.label}` : ''
   const validDuty = Number.isInteger(duty) && duty >= 1 && duty <= MAX_DUTY
   const courier = f.delivery === 'courier' ? ESTAMP_FEES.courier : 0
-  const fees = ESTAMP_FEES.convenience + ESTAMP_FEES.procurement + courier
+  const convenience = validDuty ? getConvenienceFee(duty) : 0
+  const fees = convenience + ESTAMP_FEES.procurement + courier
   const gst = Math.round(fees * GST_RATE * 100) / 100
   const total = useMemo(() => Math.round(((validDuty ? duty : 0) + fees + gst) * 100) / 100, [validDuty, duty, fees, gst])
 
@@ -599,7 +600,7 @@ export default function StampWizard() {
             <aside className="lds-aside" aria-label="Your e-Stamp">
               <StampCertificate stateName={st.name} firstParty={f.firstParty} secondParty={f.secondParty} payer={f.payer}
                 docType={docLabel} purpose={f.purpose} duty={validDuty ? duty : null} />
-              <PriceSummary stateName={st.name} validDuty={validDuty} duty={duty} courier={courier} fees={fees} gst={gst} total={total} />
+              <PriceSummary stateName={st.name} validDuty={validDuty} duty={duty} convenience={convenience} courier={courier} fees={fees} gst={gst} total={total} />
             </aside>
           </div>
         </div>
