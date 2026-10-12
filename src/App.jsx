@@ -206,6 +206,7 @@ export default function App() {
                     <Route path="/legal/privacy" element={<PrivacyPage />} />
                     <Route path="/legal/refund" element={<RefundPage />} />
                     <Route path="/legal/disclaimer" element={<DisclaimerPage />} />
+                    <Route path="/disclaimer" element={<Navigate to="/legal/disclaimer" replace />} />
                     <Route path="/market" element={<MarketIndex />} />
                     <Route path="/market/category" element={<CategoryPage />} />
                     <Route path="/market/product" element={<ProductPage />} />
