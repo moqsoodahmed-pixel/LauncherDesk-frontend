@@ -224,9 +224,13 @@ export default function Footer() {
               <img src={startupIndiaImg} alt="DPIIT Startup India" style={{ height:34,width:'auto',opacity:.95 }} />
             </div>
           </div>
+          <p style={{ fontSize:11.5,color:C.muted,lineHeight:1.6,maxWidth:700,margin:'0 0 12px' }}>
+            MSME and DPIIT / Startup India logos indicate registration or recognition and do not imply government endorsement.
+          </p>
           <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:12 }}>
             <p style={{ fontSize:12,color:C.muted,lineHeight:1.6,maxWidth:700,margin:0 }}>
-              LauncherDesk is operated by DutyLaunch Solutions Pvt. Ltd. Services may involve licensed professionals, statutory filings, or government approvals. Timelines and outcomes may vary. LauncherDesk is not a regulatory authority and does not guarantee approvals or registrations.
+              LauncherDesk is operated by DutyLaunch Solutions Pvt. Ltd. It is a private platform, not a government website or regulatory authority. Services may involve licensed professionals, statutory filings, or government approvals. Timelines and outcomes may vary, and approvals or registrations are not guaranteed.{' '}
+              <a href="/legal/disclaimer" style={{ color:C.link,textDecoration:'underline' }}>Read the full disclaimer</a>.
             </p>
             <span style={{ fontSize:12,color:C.muted,whiteSpace:'nowrap' }}>
               © {year} DutyLaunch Solutions Pvt. Ltd.

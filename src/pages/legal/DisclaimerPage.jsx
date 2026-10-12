@@ -12,8 +12,15 @@ export default function DisclaimerPage() {
 
           <p>This Disclaimer applies to all content, information, and Services provided through <strong>www.launcherdesk.com</strong> ("Website"), associated applications, and all communication channels operated by DutyLaunch Solutions Private Limited under the brand name "LauncherDesk" ("Company", "we", "our", "us"). By accessing or using the Platform, you acknowledge that you have read, understood, and agree to this Disclaimer.</p>
 
+          <div className="legal-contact-card" style={{ marginBottom: 28 }}>
+            <p><strong>In short</strong></p>
+            <p>LauncherDesk.com is a private platform operated by DutyLaunch Solutions Private Limited. It is not a government website.</p>
+            <p>Government registrations, licences and approvals are issued only by the relevant authorities. We cannot guarantee approvals, timelines or outcomes.</p>
+            <p>Please verify requirements with official sources or a qualified professional.</p>
+          </div>
+
           <h2>1. Facilitation Platform — Not a Regulatory Authority</h2>
-          <p>LauncherDesk is a technology-enabled facilitation platform that connects Clients with qualified Professionals and simplifies business registration, compliance, technology, finance, legal, procurement, and growth workflows. The Company does <strong>NOT</strong>:</p>
+          <p>LauncherDesk.com is a privately operated, independent technology platform. It is not a government website or an official representative of the Government of India, any State Government, or any government department, unless expressly stated for a specific authorised arrangement. LauncherDesk is a technology-enabled facilitation platform that connects Clients with qualified Professionals and simplifies business registration, compliance, technology, finance, legal, procurement, and growth workflows. The Company does <strong>NOT</strong>:</p>
           <ul>
             <li>Act as, or represent itself as, a regulatory authority, government department, or statutory body.</li>
             <li>Operate as a law firm, chartered accountancy firm, company secretarial firm, or financial advisory institution.</li>
@@ -87,11 +94,19 @@ export default function DisclaimerPage() {
           <h2>12. Accuracy of Information</h2>
           <p>While we make every reasonable effort to ensure that the information on the Platform is accurate, current, and complete, we do not warrant or represent that all information is free from errors, omissions, or inaccuracies. Laws, regulations, government fees, tax rates, and compliance requirements change frequently. The Company is not responsible for any action taken based on outdated or inaccurate information on the Platform.</p>
 
-          <h2>13. Limitation on Claims</h2>
+          <h2>13. Fees &amp; Government Charges</h2>
+          <p>Government fees, statutory charges, stamp duty, and third-party fees are separate from LauncherDesk service fees unless the service description states otherwise. Refunds and cancellations are governed by our <a href="/legal/refund">Cancellation &amp; Refund Policy</a>.</p>
+
+          <h2>14. Logos, Certifications &amp; Trademarks</h2>
+          <p>Logos shown on the Platform, including those of MSME and DPIIT / Startup India, indicate a registration or recognition held by the Company, where applicable. They do not mean that LauncherDesk is a government body or that any government authority endorses the Company's services. All third-party names, logos, and trademarks belong to their respective owners.</p>
+
+          <h2>15. Limitation on Claims</h2>
           <p>Any claim, suit, or cause of action arising out of or related to your use of the Platform or the Services must be filed within one (1) year from the date the cause of action first accrues. Any claim not filed within this period shall be permanently and irrevocably barred, to the maximum extent permitted by applicable law.</p>
 
-          <h2>14. Indemnification</h2>
+          <h2>16. Indemnification</h2>
           <p>You acknowledge and agree that your use of the Platform and the Services is at your sole risk. You agree to indemnify and hold harmless the Company and its directors, officers, employees, agents, and affiliates from any claims, damages, losses, or expenses (including legal fees) arising from your reliance on any content or information on the Platform, or from your breach of this Disclaimer.</p>
+
+          <p>Use of the Platform and the Services is also subject to our <a href="/legal/terms">Terms of Use</a>, <a href="/legal/privacy">Privacy Policy</a>, and any service-specific terms.</p>
 
           <h2>Contact Us</h2>
           <div className="legal-contact-card">
