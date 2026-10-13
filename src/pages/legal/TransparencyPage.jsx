@@ -80,6 +80,8 @@ const CSS = `
 .trp-dl > div { display:grid; grid-template-columns:200px 1fr; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; }
 .trp-dl dt { color:var(--text-3); font-weight:600; }
 .trp-dl dd { margin:0; color:var(--navy); font-weight:700; }
+.trp-dl dd a { color:var(--blue); text-decoration:none; }
+.trp-dl dd a:hover { text-decoration:underline; }
 @media (max-width:600px) { .trp-dl > div { grid-template-columns:1fr; gap:3px; } }
 
 .trp-cta { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; border-radius:22px;
@@ -95,6 +97,12 @@ const CSS = `
 
 function SectionHeading({ id, children }) {
   return <h2 id={id}>{children}</h2>
+}
+
+function ContactValue({ value }) {
+  if (/^\S+@\S+\.\S+$/.test(value)) return <a href={`mailto:${value}`}>{value}</a>
+  if (/^\+?[\d\s]{8,}$/.test(value)) return <a href={`tel:${value.replace(/\s+/g, '')}`}>{value}</a>
+  return value
 }
 
 export default function TransparencyPage() {
@@ -250,7 +258,7 @@ export default function TransparencyPage() {
                     <div className="trp-card">
                       <h3>Contacts &amp; Support</h3>
                       <dl className="trp-dl">
-                        {CORPORATE_DETAILS.contacts.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
+                        {CORPORATE_DETAILS.contacts.map(([k, v]) => <div key={k}><dt>{k}</dt><dd><ContactValue value={v} /></dd></div>)}
                       </dl>
                     </div>
                   </div>
