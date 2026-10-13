@@ -57,6 +57,63 @@ export const AGREEMENT_DOCUMENTS = [
 export const LD_WA = '918548854859'
 export const waLink = title => `https://wa.me/${LD_WA}?text=${encodeURIComponent(`Hi, I need a ${title} drafted.`)}`
 
+/** Overview copy, templated per agreement title. Kept as one shared template (not hardcoded per page)
+ *  so wording stays consistent and is editable in one place. */
+export const agreementOverview = title =>
+  `A ${title.toLowerCase()} records the terms agreed between the parties in writing, so both sides have a clear, enforceable reference if a dispute arises later. Use it whenever you need the arrangement confirmed on paper, with a government e-Stamp, before either party acts on it.`
+
+/** Purpose — why this document exists, distinct from the general overview above. */
+export const agreementPurpose = title =>
+  `The purpose of a ${title.toLowerCase()} is to set out, in writing, exactly what each party has agreed to — so neither side can later dispute the terms, timelines or obligations. It protects both parties and gives either one a legal basis to act if the other doesn't hold up their end.`
+
+/** When to use — the practical trigger for needing this document. */
+export const agreementWhenToUse = title =>
+  `Get a ${title.toLowerCase()} drafted before any money changes hands or possession is handed over — ideally as soon as both parties have agreed on the key terms. Having it signed and e-Stamped upfront avoids disputes later and is often required to register, enforce, or produce the document as evidence.`
+
+export const AGREEMENT_BENEFITS = [
+  'Drafted by our documentation team, not a generic template generator',
+  'Reviewed for accuracy before it is sent to you',
+  'Printed on genuine Government e-Stamp paper',
+  'Doorstep delivery of the signed original, if you choose it',
+]
+
+/** Key features — what the service itself includes, distinct from Benefits (why it helps you). */
+export const AGREEMENT_FEATURES = [
+  'Lawyer-reviewed clause library, not a generic online template',
+  'Editable draft — request changes before it is finalised',
+  'Correct Government e-Stamp duty applied for your state',
+  'Digital copy delivered to your dashboard, with physical delivery optional',
+]
+
+/** Eligibility — who can use this service / what's needed to qualify, templated per agreement. */
+export const agreementEligibility = title =>
+  [
+    `Both parties to the ${title.toLowerCase()} must be 18 years or older and legally competent to enter into a contract.`,
+    'Valid government-issued ID (PAN and Aadhaar) is required for every named party.',
+    'If a party is a company, LLP or firm, its Certificate of Incorporation and an authorised signatory are required.',
+  ]
+
+export const AGREEMENT_PROCESS = [
+  ['Share your details', 'Tell us the parties, dates and terms over WhatsApp.'],
+  ['We draft it', 'Our documentation team prepares the agreement for your review.'],
+  ['You review it', 'Check every detail and request changes before anything is finalised.'],
+  ['e-Stamp and delivery', 'We print it on e-Stamp paper and deliver it to your door, if chosen.'],
+]
+
+export const agreementFaqs = title => [
+  [`Is this ${title.toLowerCase()} legally valid?`, 'Yes. Once printed on Government e-Stamp paper and signed by both parties, it is legally valid and admissible as evidence, the same as a physical stamp paper agreement.'],
+  ['How long does drafting take?', 'Most agreements are drafted and ready for your review within 24 to 48 hours of sharing your details.'],
+  ['Can I request changes after seeing the draft?', 'Yes. You review the full draft before it is finalised and can request changes at no extra cost.'],
+]
+
+/** Other items in the same sub-category, for "Related agreements" — excludes the current one. */
+export const relatedAgreements = (slug, limit = 3) => {
+  const current = agreementBySlug(slug)
+  if (!current) return []
+  const section = AGREEMENT_SECTIONS.find(s => s.id === current.sectionId)
+  return (section?.items || []).filter(i => i.slug !== slug).slice(0, limit)
+}
+
 const B = '_______________'
 
 /** Sample draft previews — clause-by-clause, matching the structure of a real rent/lease agreement.

@@ -14,7 +14,7 @@ const SOCIALS = [
 const NAV_COLS = [
   { title: 'Company', links: [['About Us','/company/about'],['Contact Us','/company/contact'],['Careers','/careers'],['Pricing','/pricing'],['Resources','/resources'],['FAQ','/resources/faq']] },
   { title: 'Services', links: [['Company Registration','/services/private-limited-company-registration'],['GST Registration','/services/gst-registration'],['Trademark','/services/trademark-registration'],['ROC Compliance','/services/roc-compliance'],['Website Development','/services/website-development'],['Digital Marketing','/services/digital-marketing']] },
-  { title: 'Legal', links: [['Terms of Use','/legal/terms'],['Privacy Policy','/legal/privacy'],['Cancellation & Refund','/legal/refund'],['Disclaimer','/legal/disclaimer']] },
+  { title: 'Legal', links: [['Terms of Use','/legal/terms'],['Privacy Policy','/legal/privacy'],['Cancellation & Refund','/legal/refund'],['Disclaimer','/legal/disclaimer'],['Transparency & Compliance','/transparency']] },
 ]
 
 function IndiaFlag({ width = 24, height = 16, style = {} }) {
@@ -226,7 +226,8 @@ export default function Footer() {
           </div>
           <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:12 }}>
             <p style={{ fontSize:12,color:C.muted,lineHeight:1.6,maxWidth:700,margin:0 }}>
-              LauncherDesk is operated by DutyLaunch Solutions Pvt. Ltd. Services may involve licensed professionals, statutory filings, or government approvals. Timelines and outcomes may vary. LauncherDesk is not a regulatory authority and does not guarantee approvals or registrations.
+              <strong style={{ color:C.heading }}>Disclaimer &amp; Transparency.</strong> LauncherDesk is operated by DutyLaunch Solutions Pvt. Ltd. and is a privately operated, independent technology platform — not a government website or regulatory authority. Services may involve licensed professionals, statutory filings, or government approvals; timelines and outcomes may vary and are not guaranteed.{' '}
+              <Link to="/transparency" style={{ color:C.link, fontWeight:700, textDecoration:'underline' }}>Transparency &amp; Compliance</Link>
             </p>
             <span style={{ fontSize:12,color:C.muted,whiteSpace:'nowrap' }}>
               © {year} DutyLaunch Solutions Pvt. Ltd.

@@ -1,7 +1,12 @@
 import { useState } from 'react'
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import SEO from '../../components/SEO'
-import { agreementBySlug, AGREEMENT_PRICING, AGREEMENT_DOCUMENTS, DRAFT_PREVIEWS, LD_WA } from '../../data/agreements'
+import {
+  agreementBySlug, AGREEMENT_PRICING, AGREEMENT_DOCUMENTS, DRAFT_PREVIEWS, LD_WA,
+  agreementOverview, agreementPurpose, agreementWhenToUse, AGREEMENT_BENEFITS, AGREEMENT_FEATURES,
+  agreementEligibility, AGREEMENT_PROCESS, agreementFaqs, relatedAgreements,
+} from '../../data/agreements'
+import { EAccordion } from '../estamp/estampKit'
 
 const inr = n => `₹${Number(n).toLocaleString('en-IN')}`
 
@@ -72,6 +77,35 @@ const CSS = `
 
 @media (max-width:1024px) { .agd-body.has-draft .agd-wrap { grid-template-columns:1fr; } .agd-draft-col { position:static; } .agd-doc { max-height:520px; } }
 @media (max-width:700px) { .agd-tiers { grid-template-columns:1fr; } }
+
+.agd-sec p.lead { font-size:15px; line-height:1.65; color:var(--text-2); max-width:70ch; margin:0; }
+.agd-benefits { list-style:none; margin:0; padding:0; display:grid; gap:10px; max-width:60ch; }
+.agd-benefits li { display:flex; gap:10px; font-size:14.5px; color:var(--text-2); line-height:1.5; }
+.agd-benefits li::before { content:'✓'; color:var(--blue); font-weight:800; flex:none; }
+.agd-process { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:16px; counter-reset:agdstep; }
+.agd-process li { position:relative; padding:0; }
+.agd-process li::before { counter-increment:agdstep; content:counter(agdstep); display:grid; place-items:center; width:36px; height:36px; margin:0 0 10px;
+  border-radius:50%; background:#fff; border:2px solid var(--blue); color:var(--blue); font-weight:800; font-size:14px; }
+.agd-process b { display:block; font-size:14.5px; color:var(--navy); margin-bottom:4px; }
+.agd-process span { display:block; font-size:13px; color:var(--text-2); line-height:1.5; }
+.agd-related { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:10px; }
+.agd-related a { display:inline-flex; align-items:center; padding:10px 16px; border-radius:10px; border:1px solid var(--line-strong);
+  color:var(--navy); font-weight:700; font-size:14px; text-decoration:none; }
+.agd-related a:hover { border-color:var(--blue); background:var(--brand-50); }
+
+@media (max-width:700px) { .agd-process { grid-template-columns:1fr 1fr; } }
+
+.agd-steps { list-style:none; margin:0; padding:0; display:grid; gap:16px; max-width:70ch; }
+.agd-steps li { display:flex; gap:14px; align-items:flex-start; }
+.agd-steps .n { flex:none; width:32px; height:32px; border-radius:50%; background:var(--brand-50); border:1.5px solid var(--brand-100);
+  color:var(--blue-dark); font-weight:800; font-size:14px; display:grid; place-items:center; }
+.agd-steps b { display:block; font-size:14.5px; color:var(--navy); margin-bottom:3px; }
+.agd-steps span { display:block; font-size:13.5px; color:var(--text-2); line-height:1.5; }
+
+.agd-support { display:flex; gap:12px; flex-wrap:wrap; }
+.agd-support a { display:inline-flex; align-items:center; padding:10px 18px; border-radius:10px; border:1.5px solid var(--line-strong);
+  color:var(--navy); font-weight:700; font-size:14px; text-decoration:none; }
+.agd-support a:hover { border-color:var(--blue); background:var(--brand-50); }
 `
 
 /** Replaces each blank-underscore run with a highlighted placeholder span, like a live draft preview. */
@@ -82,12 +116,14 @@ function DraftText({ text }) {
 
 export default function AgreementDetailPage() {
   const { slug } = useParams()
+  const navigate = useNavigate()
   const agreement = agreementBySlug(slug)
   const [tier, setTier] = useState('standard')
   if (!agreement) return <Navigate to="/agreements" replace />
 
   const { title, sectionTitle, sectionId } = agreement
   const draft = DRAFT_PREVIEWS[slug]
+  const relatedList = relatedAgreements(slug)
   const selected = AGREEMENT_PRICING[tier]
   const waLink = `https://wa.me/${LD_WA}?text=${encodeURIComponent(`Hi, I need a ${title} drafted (${selected.label} package, ${inr(selected.price)} + GST).`)}`
 
@@ -117,6 +153,67 @@ export default function AgreementDetailPage() {
         <div className="agd-wrap">
           <div>
             <div className="agd-sec">
+              <h2>About this Agreement</h2>
+              <p className="lead">{agreementOverview(title)}</p>
+            </div>
+
+            <div className="agd-sec">
+              <h2>Purpose</h2>
+              <p className="lead">{agreementPurpose(title)}</p>
+            </div>
+
+            <div className="agd-sec">
+              <h2>When to Use</h2>
+              <p className="lead">{agreementWhenToUse(title)}</p>
+            </div>
+
+            <div className="agd-sec">
+              <h2>Benefits</h2>
+              <ul className="agd-benefits">
+                {AGREEMENT_BENEFITS.map(b => <li key={b}>{b}</li>)}
+              </ul>
+            </div>
+
+            <div className="agd-sec">
+              <h2>Key Features</h2>
+              <ul className="agd-benefits">
+                {AGREEMENT_FEATURES.map(f => <li key={f}>{f}</li>)}
+              </ul>
+            </div>
+
+            <div className="agd-sec">
+              <h2>Eligibility</h2>
+              <ul className="agd-benefits">
+                {agreementEligibility(title).map(e => <li key={e}>{e}</li>)}
+              </ul>
+            </div>
+
+            <div className="agd-sec">
+              <h2>Required Documents</h2>
+              <ul className="agd-docs">
+                {AGREEMENT_DOCUMENTS.map(doc => <li key={doc}>{doc}</li>)}
+              </ul>
+            </div>
+
+            <div className="agd-sec">
+              <h2>Process Timeline</h2>
+              <ul className="agd-process">
+                {AGREEMENT_PROCESS.map(([h, s]) => (
+                  <li key={h}><b>{h}</b><span>{s}</span></li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="agd-sec">
+              <h2>Step-by-Step Process</h2>
+              <ol className="agd-steps">
+                {AGREEMENT_PROCESS.map(([h, s], i) => (
+                  <li key={h}><span className="n">{i + 1}</span><div><b>{h}</b><span>{s}</span></div></li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="agd-sec">
               <h2>Pricing</h2>
               <div className="agd-tiers" role="radiogroup" aria-label="Choose a package">
                 {Object.entries(AGREEMENT_PRICING).map(([key, t]) => (
@@ -145,10 +242,26 @@ export default function AgreementDetailPage() {
             </div>
 
             <div className="agd-sec">
-              <h2>Documents you'll need</h2>
-              <ul className="agd-docs">
-                {AGREEMENT_DOCUMENTS.map(doc => <li key={doc}>{doc}</li>)}
-              </ul>
+              <h2>Frequently asked questions</h2>
+              <EAccordion items={agreementFaqs(title)} />
+            </div>
+
+            {relatedList.length > 0 && (
+              <div className="agd-sec">
+                <h2>Related agreements</h2>
+                <ul className="agd-related">
+                  {relatedList.map(r => <li key={r.slug}><Link to={`/agreements/${r.slug}`}>{r.title}</Link></li>)}
+                </ul>
+              </div>
+            )}
+
+            <div className="agd-sec">
+              <h2>Support &amp; Contact</h2>
+              <p className="lead">Questions before you proceed? Our documentation team is available on WhatsApp and will reply within business hours.</p>
+              <div className="agd-support">
+                <a href={waLink} target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+                <a href="tel:+918548854859">Call +91 85488 54859</a>
+              </div>
             </div>
 
             <div className="agd-sec">
@@ -157,7 +270,10 @@ export default function AgreementDetailPage() {
                   <h3>Ready to get your {title.toLowerCase()} drafted?</h3>
                   <p>{selected.label} package selected — {inr(selected.price)} + GST</p>
                 </div>
-                <a href={waLink} target="_blank" rel="noopener noreferrer">Request this draft</a>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                  <a href={waLink} target="_blank" rel="noopener noreferrer" style={{ background: '#fff', color: 'var(--blue)', border: '1.5px solid var(--brand-100)' }}>Ask a question</a>
+                  <a href={`/agreements/${slug}/checkout?tier=${tier}`} onClick={e => { e.preventDefault(); navigate(`/agreements/${slug}/checkout?tier=${tier}`) }}>Proceed to Purchase</a>
+                </div>
               </div>
             </div>
           </div>

@@ -141,6 +141,21 @@ function OrderDetail({ orderId, onClose, onChanged }) {
             </Card>
           )}
 
+          {order.serviceSlug?.startsWith('agreement-') && order.details && (
+            <Card>
+              <div style={{ padding: 18 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#1C2434', marginBottom: 10 }}>Agreement details</div>
+                <InfoGrid rows={[
+                  ['Agreement', order.details.agreementTitle], ['Plan', order.details.tierLabel],
+                  ['First party', order.details.firstParty], ['Second party', order.details.secondParty],
+                  ['Contact', [order.details.contact?.name, order.details.contact?.mobile, order.details.contact?.email].filter(Boolean).join(' · ')],
+                  ['City', order.details.contact?.city || '—'],
+                  ['Special instructions', order.details.specialInstructions || '—'],
+                ]} />
+              </div>
+            </Card>
+          )}
+
           <Card>
             <div style={{ padding: 18 }}>
               <div style={{ fontSize: 13, fontWeight: 700, color: '#1C2434', marginBottom: 10 }}>Change status</div>

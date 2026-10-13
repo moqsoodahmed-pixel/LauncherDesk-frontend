@@ -1,0 +1,281 @@
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import SEO from '../../components/SEO'
+import { EAccordion } from '../estamp/estampKit'
+import {
+  TRANSPARENCY_HERO, TRANSPARENCY_SECTIONS, WHO_WE_ARE, HOW_IT_WORKS_INTRO, HOW_IT_WORKS_STEPS,
+  GOVERNMENT_INTERACTION, ORDERING_PAYMENTS, USER_RESPONSIBILITY, CORPORATE_DETAILS, TRANSPARENCY_FAQS,
+} from '../../data/transparency'
+
+const CSS = `
+.trp { background:#fff; }
+.trp-wrap { max-width:1480px; margin:0 auto; padding:0 36px; box-sizing:border-box; }
+@media (min-width:1025px) { .trp-wrap { max-width:1460px; width:calc(100% - 40px); } }
+@media (max-width:1280px) { .trp-wrap { padding:0 20px; } }
+@media (max-width:768px) { .trp-wrap { padding:0 14px; } }
+
+.trp-crumb { font-size:13.5px; color:var(--text-3); margin:20px 0 0; }
+.trp-crumb a { color:var(--text-3); text-decoration:none; } .trp-crumb a:hover { color:var(--blue); }
+
+.trp-hero { padding:clamp(24px,3.5vw,40px) 0 clamp(20px,3vw,28px); }
+.trp-badge { display:inline-flex; align-items:center; gap:7px; margin:0 0 14px; padding:6px 14px; border-radius:99px;
+  background:var(--brand-50); color:var(--blue-dark); font-size:12px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; }
+.trp-hero h1 { font-size:clamp(30px,4vw,44px); line-height:1.15; letter-spacing:-.03em; font-weight:800; margin:0 0 14px; color:var(--navy); }
+.trp-hero p.lead { font-size:16px; line-height:1.65; color:var(--text-2); max-width:72ch; margin:0; }
+
+.trp-notice { display:flex; gap:14px; align-items:flex-start; background:var(--navy); color:#fff; border-radius:16px;
+  padding:18px 22px; margin:22px 0 0; animation:trpFade .5s ease both; }
+.trp-notice svg { flex:none; margin-top:2px; }
+.trp-notice p { margin:0; font-size:14.5px; line-height:1.6; }
+.trp-notice b { font-weight:800; }
+
+.trp-body { padding:clamp(28px,4vw,40px) 0 clamp(48px,6vw,72px); }
+.trp-grid { display:grid; grid-template-columns:220px 1fr; gap:clamp(28px,4vw,48px); align-items:start; }
+@media (max-width:900px) { .trp-grid { grid-template-columns:1fr; } }
+
+.trp-nav { position:sticky; top:96px; display:grid; gap:2px; }
+.trp-nav-label { font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); margin-bottom:8px; }
+.trp-nav a { display:block; padding:9px 12px; border-radius:9px; font-size:13.5px; font-weight:600; color:var(--text-2); text-decoration:none;
+  border-left:2.5px solid transparent; transition:background .15s, color .15s, border-color .15s; }
+.trp-nav a:hover { background:var(--brand-50); color:var(--navy); }
+.trp-nav a.active { background:var(--brand-50); color:var(--blue-dark); border-left-color:var(--blue); font-weight:800; }
+@media (max-width:900px) { .trp-nav { position:static; display:flex; flex-wrap:wrap; gap:8px; } .trp-nav a { border-left:0; border:1px solid var(--line-strong); } }
+
+.trp-sec { margin-bottom:clamp(36px,5vw,52px); scroll-margin-top:100px; opacity:0; transform:translateY(10px); animation:trpReveal .5s ease forwards; }
+.trp-sec:last-child { margin-bottom:0; }
+.trp-sec h2 { font-size:clamp(20px,2.4vw,25px); color:var(--navy); margin:0 0 18px; font-weight:800; letter-spacing:-.02em; }
+.trp-sec p { font-size:15px; line-height:1.7; color:var(--text-2); margin:0 0 14px; }
+.trp-sec p:last-child { margin-bottom:0; }
+
+.trp-two { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+@media (max-width:700px) { .trp-two { grid-template-columns:1fr; } }
+.trp-card { background:#F8FAFC; border:1px solid var(--line); border-radius:16px; padding:22px; }
+.trp-card h3 { margin:0 0 10px; font-size:16px; color:var(--navy); font-weight:800; }
+.trp-card p { margin:0; font-size:14.5px; line-height:1.6; color:var(--text-2); }
+
+.trp-legend { display:flex; gap:18px; flex-wrap:wrap; margin:0 0 20px; font-size:13px; color:var(--text-2); }
+.trp-legend span { display:inline-flex; align-items:center; gap:6px; }
+.trp-legend i { width:10px; height:10px; border-radius:50%; display:inline-block; }
+.trp-steps { list-style:none; margin:0; padding:0; display:grid; gap:14px; }
+.trp-steps li { display:flex; gap:14px; align-items:flex-start; border:1px solid var(--line); border-radius:14px; padding:16px 18px; background:#fff; }
+.trp-steps .n { flex:none; width:30px; height:30px; border-radius:50%; background:var(--brand-50); color:var(--blue-dark); font-weight:800; font-size:13px;
+  display:grid; place-items:center; }
+.trp-steps b { display:block; font-size:14.5px; color:var(--navy); margin-bottom:3px; }
+.trp-steps span.d { display:block; font-size:13.5px; color:var(--text-2); line-height:1.55; }
+.trp-tag { flex:none; font-size:10.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; padding:3px 9px; border-radius:99px; align-self:flex-start; }
+.trp-tag.you { background:#EFF6FF; color:#1D4ED8; }
+.trp-tag.team { background:#ECFDF5; color:#047857; }
+.trp-tag.govt { background:#FEF3C7; color:#92400E; }
+
+.trp-callout { background:var(--brand-50); border:1px solid var(--brand-100); border-radius:14px; padding:18px 20px; margin-top:14px; }
+.trp-callout p { margin:0; font-size:14px; line-height:1.6; color:var(--navy); }
+
+.trp-feetable { width:100%; border-collapse:collapse; margin:0 0 20px; }
+.trp-feetable th, .trp-feetable td { text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); font-size:14px; }
+.trp-feetable th { color:var(--text-3); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.05em; }
+.trp-feetable td:first-child { font-weight:700; color:var(--navy); white-space:nowrap; }
+.trp-feetable td:last-child { color:var(--text-2); }
+
+.trp-dl { margin:0; display:grid; gap:10px; }
+.trp-dl > div { display:grid; grid-template-columns:200px 1fr; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; }
+.trp-dl dt { color:var(--text-3); font-weight:600; }
+.trp-dl dd { margin:0; color:var(--navy); font-weight:700; }
+@media (max-width:600px) { .trp-dl > div { grid-template-columns:1fr; gap:3px; } }
+
+.trp-cta { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; border-radius:22px;
+  padding:clamp(24px,3vw,32px); background:var(--brand-50); border:1px solid var(--brand-100); margin-top:clamp(36px,5vw,52px); }
+.trp-cta h3 { margin:0 0 4px; font-size:clamp(17px,2vw,20px); color:var(--navy); letter-spacing:-.02em; }
+.trp-cta p { margin:0; font-size:13.5px; color:var(--text-2); }
+.trp-cta a { background:var(--blue); color:#fff; font-weight:800; padding:12px 22px; border-radius:11px; text-decoration:none; white-space:nowrap; }
+.trp-cta a:hover { background:var(--blue-dark); }
+
+@keyframes trpReveal { to { opacity:1; transform:translateY(0); } }
+@keyframes trpFade { from { opacity:0; } to { opacity:1; } }
+`
+
+function SectionHeading({ id, children }) {
+  return <h2 id={id}>{children}</h2>
+}
+
+export default function TransparencyPage() {
+  const [active, setActive] = useState(TRANSPARENCY_SECTIONS[0].id)
+  const sectionRefs = useRef({})
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        const visible = entries.filter(e => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible[0]) setActive(visible[0].target.id)
+      },
+      { rootMargin: '-110px 0px -70% 0px', threshold: 0 }
+    )
+    TRANSPARENCY_SECTIONS.forEach(s => {
+      const el = document.getElementById(s.id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
+  }, [])
+
+  const goTo = (e, id) => {
+    e.preventDefault()
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  return (
+    <>
+      <SEO title="Disclaimer & Transparency — LauncherDesk" description="LauncherDesk's corporate status, how our platform works, government interaction, and how orders and payments are handled." canonical="/transparency" />
+      <style>{CSS}</style>
+
+      <div className="trp">
+        <nav className="trp-crumb trp-wrap" aria-label="Breadcrumb">
+          <Link to="/">Home</Link> / Transparency &amp; Compliance
+        </nav>
+
+        <section className="trp-hero">
+          <div className="trp-wrap">
+            <span className="trp-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z" /><path d="m9 12 2 2 4-4" /></svg>
+              {TRANSPARENCY_HERO.badge}
+            </span>
+            <h1>{TRANSPARENCY_HERO.title}</h1>
+            <p className="lead">{TRANSPARENCY_HERO.intro}</p>
+
+            <div className="trp-notice">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 8v5" /><path d="M12 16h.01" /></svg>
+              <p><b>Important Notice.</b> {TRANSPARENCY_HERO.notice}</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="trp-body">
+          <div className="trp-wrap">
+            <div className="trp-grid">
+              <nav className="trp-nav" aria-label="On this page">
+                <div className="trp-nav-label">On this page</div>
+                {TRANSPARENCY_SECTIONS.map(s => (
+                  <a key={s.id} href={`#${s.id}`} className={active === s.id ? 'active' : ''} onClick={e => goTo(e, s.id)}>{s.label}</a>
+                ))}
+              </nav>
+
+              <div>
+                <div className="trp-sec" id="who-we-are">
+                  <SectionHeading>Who We Are</SectionHeading>
+                  <div className="trp-two">
+                    <div className="trp-card"><h3>{WHO_WE_ARE.company.title}</h3><p>{WHO_WE_ARE.company.body}</p></div>
+                    <div className="trp-card"><h3>{WHO_WE_ARE.platform.title}</h3><p>{WHO_WE_ARE.platform.body}</p></div>
+                  </div>
+                </div>
+
+                <div className="trp-sec" id="how-it-works">
+                  <SectionHeading>How It Works</SectionHeading>
+                  <p>{HOW_IT_WORKS_INTRO}</p>
+                  <div className="trp-legend">
+                    <span><i style={{ background: '#1D4ED8' }} />You</span>
+                    <span><i style={{ background: '#047857' }} />LauncherDesk team</span>
+                    <span><i style={{ background: '#92400E' }} />Government</span>
+                  </div>
+                  <ol className="trp-steps">
+                    {HOW_IT_WORKS_STEPS.map((s, i) => (
+                      <li key={s.title}>
+                        <span className="n">{i + 1}</span>
+                        <div style={{ flex: 1 }}><b>{s.title}</b><span className="d">{s.body}</span></div>
+                        <span className={`trp-tag ${s.who}`}>{s.who === 'you' ? 'You' : s.who === 'team' ? 'LauncherDesk team' : 'Government'}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+
+                <div className="trp-sec" id="government-interaction">
+                  <SectionHeading>Government Interaction</SectionHeading>
+                  <h3 style={{ fontSize: 16, color: 'var(--navy)', margin: '0 0 10px' }}>{GOVERNMENT_INTERACTION.heading}</h3>
+                  <p>{GOVERNMENT_INTERACTION.body}</p>
+                  <div className="trp-two">
+                    <div className="trp-card">
+                      <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.07em', textTransform: 'uppercase', color: 'var(--text-3)', marginBottom: 8 }}>{GOVERNMENT_INTERACTION.issuedBy.label}</div>
+                      <h3>{GOVERNMENT_INTERACTION.issuedBy.title}</h3>
+                      <p>{GOVERNMENT_INTERACTION.issuedBy.body}</p>
+                    </div>
+                    <div className="trp-card">
+                      <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.07em', textTransform: 'uppercase', color: 'var(--text-3)', marginBottom: 8 }}>{GOVERNMENT_INTERACTION.handledBy.label}</div>
+                      <h3>{GOVERNMENT_INTERACTION.handledBy.title}</h3>
+                      <p>{GOVERNMENT_INTERACTION.handledBy.body}</p>
+                    </div>
+                  </div>
+                  <div className="trp-callout"><p>{GOVERNMENT_INTERACTION.directCallout}</p></div>
+                </div>
+
+                <div className="trp-sec" id="ordering-payments">
+                  <SectionHeading>Ordering, Payments &amp; Policies</SectionHeading>
+                  <p>{ORDERING_PAYMENTS.intro}</p>
+                  <table className="trp-feetable">
+                    <thead><tr><th>Fee component</th><th>Description</th></tr></thead>
+                    <tbody>
+                      {ORDERING_PAYMENTS.feeTable.map(f => <tr key={f.label}><td>{f.label}</td><td>{f.body}</td></tr>)}
+                    </tbody>
+                  </table>
+                  <div className="trp-two">
+                    <div className="trp-card"><h3>{ORDERING_PAYMENTS.securePayments.title}</h3><p>{ORDERING_PAYMENTS.securePayments.body}</p></div>
+                    <div className="trp-card"><h3>{ORDERING_PAYMENTS.confidentiality.title}</h3><p>{ORDERING_PAYMENTS.confidentiality.body}</p></div>
+                  </div>
+                  <div className="trp-callout" style={{ marginTop: 18 }}>
+                    <p><b>{ORDERING_PAYMENTS.refunds.title}.</b> {ORDERING_PAYMENTS.refunds.body}</p>
+                  </div>
+                </div>
+
+                <div className="trp-sec" id="user-responsibility">
+                  <SectionHeading>User Responsibility</SectionHeading>
+                  {USER_RESPONSIBILITY.importantNotice.split('\n\n').map((p, i) => <p key={i}>{p}</p>)}
+                  <div className="trp-two" style={{ marginTop: 6 }}>
+                    <div className="trp-card"><h3>{USER_RESPONSIBILITY.thirdParty.title}</h3><p>{USER_RESPONSIBILITY.thirdParty.body}</p></div>
+                    <div className="trp-card"><h3>{USER_RESPONSIBILITY.noGuarantee.title}</h3><p>{USER_RESPONSIBILITY.noGuarantee.body}</p></div>
+                    <div className="trp-card"><h3>{USER_RESPONSIBILITY.userResponsibility.title}</h3><p>{USER_RESPONSIBILITY.userResponsibility.body}</p></div>
+                    <div className="trp-card"><h3>{USER_RESPONSIBILITY.limitation.title}</h3><p>{USER_RESPONSIBILITY.limitation.body}</p></div>
+                  </div>
+                  <p style={{ marginTop: 18 }}>
+                    {USER_RESPONSIBILITY.closing.replace('Terms of Use, Privacy Policy, and applicable service-specific terms and conditions.', '')}
+                    <Link to="/legal/terms">Terms of Use</Link>, <Link to="/legal/privacy">Privacy Policy</Link>, and applicable service-specific terms and conditions.
+                  </p>
+                </div>
+
+                <div className="trp-sec" id="corporate-details">
+                  <SectionHeading>Corporate Details</SectionHeading>
+                  <p>{CORPORATE_DETAILS.intro}</p>
+                  <div className="trp-two">
+                    <div className="trp-card">
+                      <h3>Legal Identity</h3>
+                      <dl className="trp-dl">
+                        {CORPORATE_DETAILS.legalIdentity.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
+                      </dl>
+                    </div>
+                    <div className="trp-card">
+                      <h3>Contacts &amp; Support</h3>
+                      <dl className="trp-dl">
+                        {CORPORATE_DETAILS.contacts.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="trp-sec">
+                  <SectionHeading>Frequently Asked Questions</SectionHeading>
+                  <EAccordion items={TRANSPARENCY_FAQS} />
+                </div>
+
+                <div className="trp-cta">
+                  <div>
+                    <h3>Questions about how LauncherDesk works?</h3>
+                    <p>Our support team is available on WhatsApp and email.</p>
+                  </div>
+                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                    <Link to="/legal/disclaimer" style={{ background: '#fff', color: 'var(--blue)', border: '1.5px solid var(--brand-100)', fontWeight: 800, padding: '12px 22px', borderRadius: 11, textDecoration: 'none' }}>Read full Disclaimer</Link>
+                    <a href="https://wa.me/918548854859" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
+  )
+}

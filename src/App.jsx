@@ -125,11 +125,13 @@ import CoworkingOfficePage from './pages/office-restore/CoworkingOfficePage'
 import EStampPage from './pages/estamp/EStampPage'
 import AgreementsPage from './pages/agreements/AgreementsPage'
 import AgreementDetailPage from './pages/agreements/AgreementDetailPage'
+import AgreementCheckout from './pages/agreements/AgreementCheckout'
 import StampWizard from './pages/estamp/wizard/StampWizard'
 import TermsPage from './pages/legal/TermsPage'
 import PrivacyPage from './pages/legal/PrivacyPage'
 import RefundPage from './pages/legal/RefundPage'
 import DisclaimerPage from './pages/legal/DisclaimerPage'
+import TransparencyPage from './pages/legal/TransparencyPage'
 import VirtualOfficePage from './pages/virtual-office/VirtualOfficePage'
 import PartnerRegister from './pages/partner/PartnerRegister'
 import SalesQuotationRedirect from './pages/SalesQuotationRedirect'
@@ -199,6 +201,7 @@ export default function App() {
                     <Route path="/estamp" element={<EStampPage />} />
                     <Route path="/agreements" element={<AgreementsPage />} />
                     <Route path="/agreements/:slug" element={<AgreementDetailPage />} />
+                    <Route path="/agreements/:slug/checkout" element={<AgreementCheckout />} />
                     <Route path="/estamp/:state" element={<StampWizard />} />
                     <Route path="/virtual-office" element={<VirtualOfficePage />} />
                     <Route path="/partner-register" element={<PartnerRegister />} />
@@ -206,6 +209,7 @@ export default function App() {
                     <Route path="/legal/privacy" element={<PrivacyPage />} />
                     <Route path="/legal/refund" element={<RefundPage />} />
                     <Route path="/legal/disclaimer" element={<DisclaimerPage />} />
+                    <Route path="/transparency" element={<TransparencyPage />} />
                     <Route path="/market" element={<MarketIndex />} />
                     <Route path="/market/category" element={<CategoryPage />} />
                     <Route path="/market/product" element={<ProductPage />} />
