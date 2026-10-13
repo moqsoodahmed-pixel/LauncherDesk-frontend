@@ -95,7 +95,7 @@ export const CORPORATE_DETAILS = {
   ],
   contacts: [
     ['Grievance Officer', 'grievance@launcherdesk.com'],
-    ['Legal Team', 'support@launcherdesk.com'],
+    ['Legal Team', 'contact@launcherdesk.com'],
     ['Corporate Helpdesk', 'contact@launcherdesk.com'],
     ['Phone', '+91 85488 54859'],
   ],
