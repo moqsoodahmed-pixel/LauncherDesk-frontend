@@ -224,13 +224,16 @@ export default function Footer() {
               <img src={startupIndiaImg} alt="DPIIT Startup India" style={{ height:34,width:'auto',opacity:.95 }} />
             </div>
           </div>
-          <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:12 }}>
-            <p style={{ fontSize:12,color:C.muted,lineHeight:1.6,maxWidth:700,margin:0 }}>
-              <strong style={{ color:C.heading }}>Disclaimer &amp; Transparency.</strong> LauncherDesk is operated by DutyLaunch Solutions Pvt. Ltd. and is a privately operated, independent technology platform — not a government website or regulatory authority. Services may involve licensed professionals, statutory filings, or government approvals; timelines and outcomes may vary and are not guaranteed.{' '}
+          <div style={{ display:'flex', gap:12, alignItems:'flex-start', background:'rgba(15,28,46,0.035)', border:'1px solid rgba(15,28,46,0.08)', borderRadius:12, padding:'16px 18px' }}>
+            <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke={C.heading} strokeWidth={2} style={{ flexShrink:0, marginTop:2 }}><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+            <p style={{ fontSize:12,color:C.muted,lineHeight:1.65,margin:0,width:'100%' }}>
+              <strong style={{ color:C.heading }}>Disclaimer &amp; Transparency.</strong> LauncherDesk is a privately operated, independent technology platform owned and operated by DutyLaunch Solutions Private Limited. It is not a government website, department, or regulatory authority, and is not affiliated with, endorsed by, or representative of the Government of India or any State Government or authority, unless expressly stated for a specific authorised arrangement. The platform facilitates access to business registration, statutory compliance, e-Stamping, legal documentation, and other business support services through licensed professionals, authorised vendors, and official government portals, as applicable. LauncherDesk does not itself issue government registrations, licences, certificates, approvals, or e-Stamps, and assumes no responsibility for the decisions, processing timelines, or outcomes of the respective issuing authorities, which remain solely within their purview. All prices displayed include our professional service fee and applicable GST, with statutory government fees charged separately at actuals. Users are advised to exercise independent judgment while using the platform. Use of our services is subject to our Terms of Use and Privacy Policy.{' '}
               <Link to="/transparency" style={{ color:C.link, fontWeight:700, textDecoration:'underline' }}>Transparency &amp; Compliance</Link>
             </p>
-            <span style={{ fontSize:12,color:C.muted,whiteSpace:'nowrap' }}>
-              © {year} DutyLaunch Solutions Pvt. Ltd.
+          </div>
+          <div style={{ marginTop:16 }}>
+            <span style={{ fontSize:12,color:C.muted }}>
+              © {year} DutyLaunch Solutions Pvt. Ltd. All rights reserved.
             </span>
           </div>
         </div>

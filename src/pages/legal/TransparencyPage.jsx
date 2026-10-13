@@ -123,7 +123,7 @@ export default function TransparencyPage() {
 
   return (
     <>
-      <SEO title="Disclaimer & Transparency — LauncherDesk" description="LauncherDesk's corporate status, how our platform works, government interaction, and how orders and payments are handled." canonical="/transparency" />
+      <SEO title="Disclaimer & Transparency" description="LauncherDesk's corporate status, how our platform works, government interaction, and how orders and payments are handled." canonical="/transparency" />
       <style>{CSS}</style>
 
       <div className="trp">

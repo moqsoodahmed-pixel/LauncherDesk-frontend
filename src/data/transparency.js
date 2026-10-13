@@ -24,7 +24,7 @@ export const WHO_WE_ARE = {
   },
   platform: {
     title: 'What is LauncherDesk?',
-    body: 'LauncherDesk is a technology-enabled facilitation platform that connects you with qualified professionals and licensed service providers to simplify business registration, statutory compliance, e-Stamping, legal documentation, IT services, and other business support workflows. We are not a law firm, chartered accountancy firm, company secretarial firm, or financial advisory institution — all information on the platform is for general informational purposes only.',
+    body: 'LauncherDesk is a technology-enabled facilitation platform that connects you with qualified professionals and licensed service providers to simplify business registration, statutory compliance, e-Stamping, legal documentation, IT services, and other business support workflows. We are not a law firm, chartered accountancy firm, company secretarial firm, or financial advisory institution. All information on the platform is for general informational purposes only.',
   },
 }
 
@@ -46,7 +46,7 @@ export const GOVERNMENT_INTERACTION = {
   heading: 'Who Issues Government Approvals?',
   body: 'All statutory registrations, certificates, approvals, e-Stamps, and credentials are issued exclusively by their respective competent Government authorities (for example the Registrar of Companies, GST Department, Ministry of Corporate Affairs, or the relevant State Stamp/Registration authority). LauncherDesk does not itself exercise governmental or regulatory powers and does not independently issue government registrations, licences, certificates, approvals, or statutory documents unless expressly authorised by the relevant issuing authority.',
   issuedBy: { label: 'ISSUED BY', title: 'Government authorities', body: 'LauncherDesk acts solely as an independent facilitation platform. The relevant authority alone issues the credential, certificate, or approval.' },
-  handledBy: { label: 'HANDLED BY', title: "LauncherDesk's team", body: 'When you place an order, our in-house team and independent professionals — including Chartered Accountants, Company Secretaries, and documentation staff — prepare your data, verify documentation, and file your submission on the relevant Government portal on your behalf, where applicable.' },
+  handledBy: { label: 'HANDLED BY', title: "LauncherDesk's team", body: 'When you place an order, our in-house team and authorised vendors, including Chartered Accountants, Company Secretaries, and documentation staff, prepare your data, verify documentation, and file your submission on the relevant Government portal on your behalf, where applicable.' },
   directCallout: 'You are always free to file registrations or procure e-Stamps directly through the official Government websites or authorised counters, for free or by paying only the statutory Government fees. By using LauncherDesk, you choose a facilitation service for professional speed, software convenience, document drafting, and support.',
 }
 
@@ -105,5 +105,5 @@ export const TRANSPARENCY_FAQS = [
   ['Is LauncherDesk a government website?', 'No. LauncherDesk is a privately operated, independent technology platform. It is not affiliated with, endorsed by, or representative of the Government of India or any State Government or authority, except where expressly stated for a specific authorised arrangement.'],
   ['Can I complete these filings myself, directly with the Government?', 'Yes. You are always free to file registrations or procure e-Stamps directly through the official Government portals, for free or by paying only the statutory fees. LauncherDesk is a facilitation service for those who want drafting support, document verification, and a faster, guided process.'],
   ['Does LauncherDesk guarantee my application will be approved?', 'No. Approval, timelines, and outcomes are entirely at the discretion of the relevant Government authority. LauncherDesk facilitates the process diligently but has no control over government decisions or processing times.'],
-  ['Are government fees and stamp duties refundable?', 'No. Once a statutory Government fee or stamp duty has been deposited on your behalf, it is non-refundable, as it is paid directly to the relevant authority. Our professional fee may be refundable if work has not yet begun — see our Cancellation & Refund Policy.'],
+  ['Are government fees and stamp duties refundable?', 'No. Once a statutory Government fee or stamp duty has been deposited on your behalf, it is non-refundable, as it is paid directly to the relevant authority. Our professional fee may be refundable if work has not yet begun. Please refer to our Cancellation & Refund Policy.'],
 ]
