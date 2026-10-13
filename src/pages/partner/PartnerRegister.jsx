@@ -359,22 +359,6 @@ export default function PartnerRegister() {
         </div>
       </div>
 
-      {/* Existing partners */}
-      <div className="pr-partners">
-        <div className="pr-partners-inner">
-          <h2>Current Partners</h2>
-          <div className="pr-partner-card">
-            <div className="pr-partner-logo">DQ</div>
-            <div style={{flex:1}}>
-              <div className="pr-partner-name">Doqfy</div>
-              <span className="pr-partner-cat">CLM / Contract Management</span>
-              <div className="pr-partner-desc">India-ready contract lifecycle platform — fast creation, negotiation, Aadhaar e-sign and real-time collaboration.</div>
-            </div>
-            <span className="pr-partner-badge">Active Partner</span>
-          </div>
-        </div>
-      </div>
-
       {/* Form */}
       <section className="pr-form-section">
         <div className="pr-form-inner">
@@ -520,7 +504,7 @@ export default function PartnerRegister() {
                 <div className="pr-row">
                   <div className="pr-field">
                     <label className="pr-label">Product / Tool Name *</label>
-                    <input className="pr-input" required placeholder="e.g. Doqfy" value={form.productName} onChange={e=>set('productName',e.target.value)}/>
+                    <input className="pr-input" required placeholder="e.g. YourApp" value={form.productName} onChange={e=>set('productName',e.target.value)}/>
                   </div>
                   <div className="pr-field">
                     <label className="pr-label">Tagline *</label>

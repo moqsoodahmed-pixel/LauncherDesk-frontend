@@ -1211,35 +1211,6 @@ export default function HomePage() {
         )
       })()}
 
-      {/* ═══ TRUSTED TECHNOLOGY & SERVICE PARTNERS ═══════════════════════════
-          Phase 4: this section lists actual technology/service PARTNERS
-          LauncherDesk works with — it is never presented as customer social
-          proof, and does not pad itself with "Coming Soon" filler cards
-          styled to look like real partners. ═══ */}
-      <section className="hp-partners">
-        <div className="hp-partners-label">Trusted Technology &amp; Service Partners</div>
-        <div className="hp-partners-row">
-          {[
-            { name: 'Doqfy', category: 'CLM Software', img: '/doqfy-logo.png', href: '/market/category?cat=clm' },
-          ].map(p => (
-            <Link key={p.name} to={p.href} className="hp-partners-card">
-              <div className="hp-partners-logo" title={p.name}>
-                {p.img
-                  ? <img src={p.img} alt={`${p.name} logo`} />
-                  : <span className="hp-partners-logo-text">{p.name}</span>}
-              </div>
-              <div className="hp-partners-info">
-                <div className="hp-partners-name">{p.name}</div>
-                <div className="hp-partners-cat">{p.category}</div>
-              </div>
-            </Link>
-          ))}
-        </div>
-        <div className="hp-partners-more">
-          <Link to="/market" style={{ color: 'inherit', textDecoration: 'none' }}>More partner categories launching on the marketplace →</Link>
-        </div>
-      </section>
-
       {/* ═══ SERVICES ═══════════════════════════════════════ */}
       <section className="hp-services">
         <div className="hp-section-head">

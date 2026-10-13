@@ -7,15 +7,10 @@ export const CATS = [
   { slug:'hr-payroll',         name:'HR & Payroll',           icon:'hr',      tag:'People & salaries',       blurb:'From hiring and attendance to payroll, PF, ESI and full-and-final settlements.',  soon:true },
   { slug:'inventory',          name:'Inventory Management',   icon:'box',     tag:'Stock & orders',          blurb:'Manage stock across warehouses, sync orders and never oversell again.',            soon:true },
   { slug:'whatsapp',           name:'WhatsApp Automation',    icon:'wa',      tag:'Bots & broadcasts',       blurb:'Official WhatsApp API — chatbots, broadcasts, catalogues and drip flows.',         soon:true },
-  { slug:'clm',                name:'CLM',                    icon:'clm',     tag:'Contracts & e-sign',      blurb:'Draft, negotiate, e-sign and renew contracts without losing a single one.',       soon:false },
+  { slug:'clm',                name:'CLM',                    icon:'clm',     tag:'Contracts & e-sign',      blurb:'Draft, negotiate, e-sign and renew contracts without losing a single one.',       soon:true },
 ]
 
 export const PRODUCTS = [
-  /* ── CLM — Doqfy (LauncherDesk collab partner) ─────────── */
-  { id:'doqfy', cat:'clm', soon:false, name:'Doqfy', c:'#6B21A8', tagline:'India-ready contract platform — our collab partner', price:'Custom pricing', badge:'Partner',
-    logoUrl:'/doqfy-logo.png',
-    desc:'A fast-growing Indian CLM platform built for high-velocity teams. Streamline contract creation, negotiation and signing with a clean, intuitive interface and India-compliant e-sign. LauncherDesk is proud to collaborate with Doqfy.',
-    features:['Drag-and-drop contract builder','Aadhaar & OTP-based e-sign','Clause and template library','Real-time collaboration & audit trail'], url:'https://doqfy.in/' },
 ]
 
 /* ── helpers ────────────────────────────────────────────── */
