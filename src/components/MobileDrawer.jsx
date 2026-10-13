@@ -104,7 +104,7 @@ const SECTIONS = [
           { href: '/market/category?cat=hr-payroll', label: 'HR & Payroll' },
           { href: '/market/category?cat=inventory', label: 'Inventory Management' },
           { href: '/market/category?cat=whatsapp', label: 'WhatsApp Automation' },
-          { href: '/market/category?cat=clm', label: 'CLM (in collab with Doqfy)' },
+          { href: '/market/category?cat=clm', label: 'CLM' },
         ],
       },
     ],

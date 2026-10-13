@@ -67,13 +67,5 @@ export const WHY_CHOOSE_LAUNCHERDESK = [
 ]
 
 export const FEATURED_PARTNERS = [
-  {
-    id:       'doqfy',
-    name:     'Doqfy',
-    tagline:  'India-ready contract platform — our collab partner',
-    category: 'CLM',
-    url:      'https://doqfy.in/',
-    logo:     '/doqfy-logo.png',
-    badge:    'Partner',
-  },
+  // No featured partners listed yet.
 ]

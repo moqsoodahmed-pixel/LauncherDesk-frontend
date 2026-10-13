@@ -271,7 +271,7 @@ function MegaMarket() {
     { slug: 'hr-payroll', icon: I.hr, name: 'HR & Payroll', desc: 'Hiring, PF/ESI, salaries' },
     { slug: 'inventory', icon: I.box, name: 'Inventory Management', desc: 'Stock, warehouses, orders' },
     { slug: 'whatsapp', icon: I.wa, name: 'WhatsApp Automation', desc: 'Bots, broadcasts & flows' },
-    { slug: 'clm', icon: I.clm, name: 'CLM', desc: 'In collab with Doqfy' },
+    { slug: 'clm', icon: I.clm, name: 'CLM', desc: 'Contracts & e-sign' },
   ]
   return (
     <div className="mega mn-market">
