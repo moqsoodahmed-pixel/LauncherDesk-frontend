@@ -142,7 +142,7 @@ function ArticlePicker({ items, value, onChange, invalid, verified, stateName })
   )
 }
 
-export default function DocumentDetailsStep({ f, setF, set, errs, setErrs, inCls, Err, st, verified, articles, article, rule, baseField }) {
+export default function DocumentDetailsStep({ f, setF, set, errs, setErrs, inCls, Err, st, verified, articles, rule, baseField }) {
   return (
     <>
       <div className="lds-step-tag">STEP 2 OF 5</div>
@@ -156,7 +156,6 @@ export default function DocumentDetailsStep({ f, setF, set, errs, setErrs, inCls
         <ArticlePicker items={articles} value={f.article} verified={verified} stateName={st.name} invalid={!!errs.docType}
           onChange={k => { setF(v => ({ ...v, article: k })); setErrs(x => ({ ...x, docType: undefined, base: undefined, duty: undefined })) }} />
         <Err k="docType" />
-        {article?.rule?.type === 'text' && <div className="lds-rule"><span>How the duty is worked out: <b>{article.rule.text}</b> We'll ask for the amount on the next step.</span></div>}
       </div>
       <div className="lds-f">
         <label htmlFor="pu">Purpose</label>

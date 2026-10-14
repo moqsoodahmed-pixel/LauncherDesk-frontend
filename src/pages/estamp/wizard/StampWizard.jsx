@@ -141,7 +141,7 @@ select.lds-in { appearance:none; -webkit-appearance:none; cursor:pointer; paddin
 .lds-incl { display:block; font-size:11.5px; color:var(--text-3); }
 
 /* Aside */
-.lds-aside { position:sticky; top:100px; display:grid; gap:16px; }
+.lds-aside { position:sticky; top:100px; display:grid; grid-template-columns:minmax(0,1fr); gap:16px; min-width:0; }
 .lds-price { background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px 18px 16px; }
 .lds-price h3 { margin:0 0 6px; font-size:16px; font-weight:800; color:var(--navy); }
 .lds-price-doc { font-size:12.5px; color:#64748B; margin:0 0 14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }

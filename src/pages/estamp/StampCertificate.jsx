@@ -26,9 +26,9 @@ export function rupeesInWords(n) {
 }
 
 export const CERT_CSS = `
-.ldc { position:relative; background:#FFFDF6; border-radius:6px; padding:12px; color:#23324A;
+.ldc { position:relative; background:#FFFDF6; border-radius:6px; padding:12px; color:#23324A; max-width:100%; box-sizing:border-box;
   font-family:Georgia,'Times New Roman',serif; box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 24px 50px -20px rgba(11,31,72,.45); }
-.ldc-frame { position:relative; border-radius:3px; padding:18px 20px 16px;
+.ldc-frame { position:relative; border-radius:3px; padding:18px 20px 16px; max-width:100%; box-sizing:border-box; overflow:hidden;
   background:
     repeating-radial-gradient(circle at 0 0, rgba(29,93,184,.07) 0 1px, transparent 1px 7px),
     repeating-radial-gradient(circle at 100% 100%, rgba(5,150,105,.07) 0 1px, transparent 1px 7px),
@@ -46,10 +46,11 @@ export const CERT_CSS = `
   background:linear-gradient(180deg,#1E4080,#1D5DB8); font-family:'Manrope',system-ui,sans-serif; }
 .ldc-duty small { display:block; font-size:8.5px; opacity:.8; }
 .ldc-duty b { font-size:15px; font-weight:800; }
-.ldc-rows { display:grid; grid-template-columns:auto 1fr; gap:5px 10px; font-size:11.5px; line-height:1.35; margin-top:8px; }
+.ldc-rows { display:grid; grid-template-columns:auto minmax(0,1fr); gap:5px 10px; font-size:11.5px; line-height:1.35; margin-top:8px; max-width:100%; }
 .ldc-rows dt { color:#4B5B75; white-space:nowrap; }
-.ldc-rows dd { margin:0; font-weight:700; color:#23324A; min-width:0; overflow-wrap:anywhere; }
+.ldc-rows dd { margin:0; font-weight:700; color:#23324A; min-width:0; max-width:100%; overflow-wrap:anywhere; word-break:break-word; }
 .ldc-rows dd.empty { font-weight:400; color:#9AA6B8; font-style:italic; }
+.ldc-rows dd.clamp { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .ldc-foot { display:flex; align-items:center; gap:10px; margin-top:12px; padding-top:10px; border-top:1px dashed #C5D1E3; }
 .ldc-qr { width:38px; height:38px; flex:none; border-radius:3px;
   background:conic-gradient(#23324A 0 25%, #FFFDF6 0 50%, #23324A 0 75%, #FFFDF6 0) 0 0/9.5px 9.5px; opacity:.75; }
@@ -62,10 +63,10 @@ export const CERT_CSS = `
 @media (prefers-reduced-motion: reduce) { .ldc-fresh { animation:none; } }
 `
 
-const Row = ({ label, value, placeholder }) => (
+const Row = ({ label, value, placeholder, clamp }) => (
   <>
     <dt>{label}</dt>
-    <dd className={value ? '' : 'empty'}>{value || placeholder}</dd>
+    <dd className={`${value ? '' : 'empty'}${clamp ? ' clamp' : ''}`} title={clamp && value ? value : undefined}>{value || placeholder}</dd>
   </>
 )
 
@@ -87,7 +88,7 @@ export default function StampCertificate({ stateName, firstParty, secondParty, p
         </div>
         <dl className="ldc-rows">
           <Row label="Certificate no." value="" placeholder="Issued after payment" />
-          {!compact && <Row label="Description" value={docType} placeholder="Document type" />}
+          {!compact && <Row label="Description" value={docType} placeholder="Document type" clamp />}
           <Row label="Purpose" value={purpose} placeholder="What it’s for" />
           <Row label="First party" value={firstParty} placeholder="Name" />
           <Row label="Second party" value={secondParty} placeholder="Name or NIL" />
