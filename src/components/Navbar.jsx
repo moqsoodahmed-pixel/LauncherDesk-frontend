@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import logoImg from '../assets/launcherdesk-logo-animated.gif'
+import logoImg from '../assets/launcherdesk-logo-transparent.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useUserAuth } from '../context/UserAuthContext'
 import { usePortalAuth } from '../context/PortalAuthContext'
@@ -25,30 +25,31 @@ const I = {
 /* ─── Search bar styles injected once ─────────────────────────────────────── */
 const SEARCH_STYLES = `
 .ld-search-wrap{position:relative;display:flex;align-items:center}
-.ld-search-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(255,255,255,.7);border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(240,247,255,.55));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 2px 8px rgba(15,28,46,.06);cursor:pointer;transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,background .18s,color .18s;color:#475569;flex-shrink:0}
-.ld-search-btn:hover{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(239,246,255,.85));color:#1D6FE0;transform:scale(1.05);box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 6px 16px rgba(29,111,224,.20)}
+.ld-search-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.05);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(255,255,255,.1) inset,0 2px 8px rgba(0,0,0,.3);cursor:pointer;transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,background .18s,color .18s;color:#CBD5E1;flex-shrink:0}
+.ld-search-btn:hover{background:rgba(255,255,255,.1);color:#38BDF8;transform:scale(1.05);border-color:rgba(56,189,248,.35);box-shadow:0 0 16px rgba(56,189,248,.25)}
 @media (max-width: 640px) {
   .ld-search-btn { width: 34px; height: 34px; }
   .ld-search-btn svg { width: 15px; height: 15px; }
 }
-.ld-search-overlay{position:fixed;inset:0;z-index:999;background:rgba(10,37,64,.45);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding-top:80px;animation:srchIn .15s ease}
+.ld-search-overlay{position:fixed;inset:0;z-index:999;background:rgba(10,14,20,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:flex-start;justify-content:center;padding-top:80px;animation:srchIn .15s ease}
 @keyframes srchIn{from{opacity:0}to{opacity:1}}
-.ld-search-box{background:#fff;border-radius:16px;width:100%;max-width:620px;box-shadow:0 24px 64px rgba(0,0,0,.22);overflow:hidden;animation:srchUp .2s cubic-bezier(.16,1,.3,1)}
+.ld-search-box{background:rgba(22,27,34,.96);border:1px solid rgba(255,255,255,.08);border-radius:18px;width:100%;max-width:620px;box-shadow:0 24px 64px rgba(0,0,0,.6),0 0 32px rgba(30,111,251,.15);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);overflow:hidden;animation:srchUp .2s cubic-bezier(.16,1,.3,1)}
 @keyframes srchUp{from{transform:translateY(-16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
-.ld-search-input-row{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #F1F5F9}
-.ld-search-input{flex:1;border:none;outline:none;font-size:16px;font-family:inherit;color:#0A2540;background:transparent}
-.ld-search-esc{display:flex;align-items:center;justify-content:center;width:26px;height:26px;color:#94A3B8;border:1px solid #E2E8F0;border-radius:6px;background:#F8FAFC;cursor:pointer;flex-shrink:0;padding:0;transition:all .15s}
-.ld-search-esc:hover{background:#EFF6FF;color:#1D6FE0;border-color:#BFDBFE}
+.ld-search-input-row{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.ld-search-input{flex:1;border:none;outline:none;font-size:16px;font-family:inherit;color:#FFFFFF;background:transparent}
+.ld-search-input::placeholder{color:#B9C2CF}
+.ld-search-esc{display:flex;align-items:center;justify-content:center;width:26px;height:26px;color:#94A3B8;border:1px solid rgba(255,255,255,.12);border-radius:6px;background:rgba(255,255,255,.05);cursor:pointer;flex-shrink:0;padding:0;transition:all .15s}
+.ld-search-esc:hover{background:rgba(56,189,248,.12);color:#38BDF8;border-color:rgba(56,189,248,.3)}
 .ld-search-result{display:flex;align-items:flex-start;gap:12px;padding:12px 20px;cursor:pointer;transition:background .12s;text-decoration:none;color:inherit}
-.ld-search-result:hover,.ld-search-result:focus{background:#F8FAFF;outline:none}
-.ld-search-result-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#EFF6FF;color:#1D6FE0;flex-shrink:0;margin-top:2px;letter-spacing:.04em}
-.ld-search-result-title{font-size:13.5px;font-weight:700;color:#0A2540;line-height:1.3;margin-bottom:2px}
-.ld-search-result-desc{font-size:12px;color:#64748B;line-height:1.4}
-.ld-search-empty{padding:32px 20px;text-align:center;color:#94A3B8;font-size:14px}
-.ld-search-hint{padding:16px 20px;font-size:12px;color:#94A3B8;line-height:1.8}
+.ld-search-result:hover,.ld-search-result:focus{background:rgba(255,255,255,.06);outline:none}
+.ld-search-result-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(30,111,251,.15);color:#38BDF8;border:1px solid rgba(30,111,251,.25);flex-shrink:0;margin-top:2px;letter-spacing:.04em}
+.ld-search-result-title{font-size:13.5px;font-weight:700;color:#FFFFFF;line-height:1.3;margin-bottom:2px}
+.ld-search-result-desc{font-size:12px;color:#B9C2CF;line-height:1.4}
+.ld-search-empty{padding:32px 20px;text-align:center;color:#B9C2CF;font-size:14px}
+.ld-search-hint{padding:16px 20px;font-size:12px;color:#B9C2CF;line-height:1.8}
 .ld-search-hint-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.ld-search-chip{background:#F1F5F9;border:none;border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;color:#475569;cursor:pointer;font-family:inherit;transition:background .15s}
-.ld-search-chip:hover{background:#EFF6FF;color:#1D6FE0}
+.ld-search-chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;color:#FFFFFF;cursor:pointer;font-family:inherit;transition:all .15s}
+.ld-search-chip:hover{background:rgba(30,111,251,.15);border-color:rgba(30,111,251,.3);color:#38BDF8}
 `
 
 /* ─── Search overlay ─────────────────────────────────────────────────────── */
@@ -102,7 +103,7 @@ function SearchOverlay({ onClose }) {
         <div className="ld-search-results">
           {query && results.length === 0 && (
             <div className="ld-search-empty">
-              No results for "<strong>{query}</strong>" — try a different keyword.
+              No results for "<strong>{query}</strong>", try a different keyword.
             </div>
           )}
           {results.map(item => (
@@ -120,7 +121,7 @@ function SearchOverlay({ onClose }) {
           ))}
           {!query && (
             <div className="ld-search-hint">
-              <span style={{ fontWeight: 600, color: '#475569' }}>Quick searches</span>
+              <span style={{ fontWeight: 600, color: '#B9C2CF' }}>Quick searches</span>
               <div className="ld-search-hint-row">
                 {suggestions.map(s => (
                   <button key={s} className="ld-search-chip" onClick={() => handleQuery(s)}>{s}</button>
@@ -155,7 +156,7 @@ function MegaRegistrations() {
           <div className="mp-panel mp-panel--active" data-mp-panel="inc">
             <div className="mp-panel-head">Business Incorporation</div>
             <div className="mp-svc-grid">
-              <SvcLink href="/services/private-limited-company-registration" title="Private Limited Company Registration" desc="Incorporate a Pvt Ltd — the startup standard" />
+              <SvcLink href="/services/private-limited-company-registration" title="Private Limited Company Registration" desc="Incorporate a Pvt Ltd, the startup standard" />
               <SvcLink href="/services/llp-registration" title="LLP Registration" desc="Flexible partner-owned structure" />
               <SvcLink href="/services/opc-registration" title="One Person Company Registration" desc="Full limited liability for a solo founder" />
             </div>
@@ -258,7 +259,7 @@ function MegaIT() {
             </div>
           </div>  </div>
       </div>
-      <div className="mp-foot-wrap"><div className="mp-footer"><a href="/services">View all IT services →</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/digital-marketing">View Digital Marketing →</a></div></div>
+      <div className="mp-foot-wrap"><div className="mp-footer"><a href="/services">View all IT services →</a>&nbsp;&nbsp;<span style={{ opacity: 0.4 }}>|</span>&nbsp;&nbsp;<a href="/digital-marketing">View Digital Marketing →</a></div></div>
     </div>
   )
 }
@@ -361,13 +362,14 @@ function LoginDropdown() {
           aria-expanded={open}
           style={{
             display: 'flex', alignItems: 'center', gap: 6,
-            border: '1.5px solid var(--line)', background: '#F8FAFF',
+            border: '1px solid rgba(255,255,255,.14)', background: 'rgba(255,255,255,.06)',
+            backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
             borderRadius: 999, padding: '0 14px', height: 38,
             fontSize: 13, fontWeight: 700, cursor: 'pointer',
-            color: 'var(--navy)', fontFamily: 'inherit'
+            color: '#F8FAFC', fontFamily: 'inherit'
           }}
         >
-          <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="#1D6FE0" strokeWidth={2}>
+          <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="#38BDF8" strokeWidth={2}>
             <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
           </svg>
           <span>{displayName}</span>
@@ -376,17 +378,17 @@ function LoginDropdown() {
           </svg>
         </button>
         {open && (
-          <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: '#fff', border: '1.5px solid #E2E8F0', borderRadius: 12, boxShadow: '0 12px 36px rgba(0,0,0,.15)', minWidth: 220, overflow: 'hidden', zIndex: 200 }}>
-            <div style={{ padding: '12px 16px', borderBottom: '1px solid #F1F5F9' }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--navy)' }}>{activeUser.name || activeUser.companyName || displayName}</div>
-              <div style={{ fontSize: 11, color: '#64748B', fontWeight: 500, marginTop: 1 }}>{activeUser.email}</div>
-              <div style={{ fontSize: 10, color: '#1D6FE0', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.05em', marginTop: 4 }}>{roleLabel}</div>
+          <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: 'rgba(15,23,42,.96)', border: '1px solid rgba(255,255,255,.12)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', borderRadius: 14, boxShadow: '0 16px 48px rgba(0,0,0,.6), 0 0 24px rgba(30,111,251,.15)', minWidth: 230, overflow: 'hidden', zIndex: 200 }}>
+            <div style={{ padding: '14px 18px', borderBottom: '1px solid rgba(255,255,255,.08)' }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#F8FAFC' }}>{activeUser.name || activeUser.companyName || displayName}</div>
+              <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 500, marginTop: 2 }}>{activeUser.email}</div>
+              <div style={{ fontSize: 10, color: '#38BDF8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', marginTop: 5 }}>{roleLabel}</div>
             </div>
             <Link
               to={dashboardPath}
               onClick={() => setOpen(false)}
-              style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '11px 16px', fontSize: 13.5, fontWeight: 600, color: '#1D6FE0', textDecoration: 'none', transition: 'background .1s' }}
-              onMouseEnter={e => e.currentTarget.style.background = '#F8FAFF'}
+              style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 18px', fontSize: 13.5, fontWeight: 600, color: '#38BDF8', textDecoration: 'none', transition: 'background .15s' }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,.06)'}
               onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
             >
               <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2}><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
@@ -398,7 +400,9 @@ function LoginDropdown() {
                 try { await logoutFn() } catch {}
                 navigate('/')
               }}
-              style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%', textAlign: 'left', padding: '11px 16px', fontSize: 13.5, fontWeight: 600, color: '#EF4444', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', borderTop: '1px solid #F1F5F9' }}
+              style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%', textAlign: 'left', padding: '12px 18px', fontSize: 13.5, fontWeight: 600, color: '#F87171', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', borderTop: '1px solid rgba(255,255,255,.08)' }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,.08)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'none'}
             >
               <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2}><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
               <span>Log Out</span>
@@ -416,19 +420,30 @@ function LoginDropdown() {
         className="nav-login-btn"
         style={{
           display: 'flex', alignItems: 'center', gap: 6,
-          border: '1px solid rgba(255,255,255,.35)',
-          background: 'linear-gradient(180deg, #FB923C 0%, #F97316 55%, #EA6C0A 100%)',
+          border: '1px solid rgba(255,255,255,.16)',
+          background: 'rgba(255,255,255,.05)',
+          backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
           borderRadius: 999, padding: '0 18px', height: 38,
           fontSize: 13.5, fontWeight: 700, cursor: 'pointer',
-          color: '#fff', fontFamily: 'inherit', letterSpacing: '.01em',
-          boxShadow: '0 1px 0 rgba(255,255,255,.4) inset, 0 4px 14px rgba(249,115,22,.32)',
+          color: '#F8FAFC', fontFamily: 'inherit', letterSpacing: '.01em',
+          boxShadow: '0 1px 0 rgba(255,255,255,.08) inset, 0 2px 8px rgba(0,0,0,.25)',
           textDecoration: 'none',
-          transition: 'transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s,background .18s'
+          transition: 'all .22s cubic-bezier(.16,1,.3,1)'
         }}
-        onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(180deg, #FDBA74 0%, #F97316 55%, #EA6C0A 100%)'; e.currentTarget.style.boxShadow = '0 1px 0 rgba(255,255,255,.5) inset, 0 8px 22px rgba(249,115,22,.42)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(180deg, #FB923C 0%, #F97316 55%, #EA6C0A 100%)'; e.currentTarget.style.boxShadow = '0 1px 0 rgba(255,255,255,.4) inset, 0 4px 14px rgba(249,115,22,.32)'; e.currentTarget.style.transform = 'none' }}
+        onMouseEnter={e => {
+          e.currentTarget.style.background = 'rgba(255,255,255,.1)'
+          e.currentTarget.style.borderColor = 'rgba(255,255,255,.3)'
+          e.currentTarget.style.boxShadow = '0 0 16px rgba(255,255,255,.12)'
+          e.currentTarget.style.transform = 'translateY(-1px)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.background = 'rgba(255,255,255,.05)'
+          e.currentTarget.style.borderColor = 'rgba(255,255,255,.16)'
+          e.currentTarget.style.boxShadow = '0 1px 0 rgba(255,255,255,.08) inset, 0 2px 8px rgba(0,0,0,.25)'
+          e.currentTarget.style.transform = 'none'
+        }}
       >
-        <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="#fff" strokeWidth={2}><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
+        <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
         <span>Login</span>
       </Link>
     </div>
@@ -584,7 +599,7 @@ export default function Navbar({ activePage = '' }) {
         onMouseLeave={onHeaderMouseLeave}
       >
         <div className="header-in">
-          <Link to="/" className="nav-logo-link">
+          <Link to="/" className="nav-logo-link logo-plate" aria-label="LauncherDesk Home">
             <img src={logoImg} alt="LauncherDesk" className="nav-logo-img" />
           </Link>
 
@@ -664,7 +679,31 @@ export default function Navbar({ activePage = '' }) {
             </button>
 
             <LoginDropdown />
-            <a className="btn btn-primary btn-sm hide-mobile" href="/services#finder" style={{ borderRadius: 8, padding: '0 20px', height: 38, fontSize: 13.5 }}>Get Started</a>
+            <a
+              className="btn btn-primary btn-sm hide-mobile"
+              href="/services#finder"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 7,
+                borderRadius: 999,
+                padding: '0 20px',
+                height: 38,
+                fontSize: 13.5,
+                fontWeight: 700,
+                background: 'linear-gradient(135deg, #1E6FFB 0%, #8B5CF6 100%)',
+                color: '#FFFFFF',
+                boxShadow: '0 4px 18px rgba(30,111,251,0.38), 0 0 12px rgba(139,92,246,0.22)',
+                border: 'none',
+                textDecoration: 'none',
+                transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)'
+              }}
+            >
+              <span>Get Started</span>
+              <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5}>
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
             <button className="burger" aria-label="Open menu" aria-expanded={drawerOpen} onClick={() => setDrawerOpen(true)}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={I.list} /></svg>
             </button>

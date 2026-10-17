@@ -85,36 +85,36 @@ export default function SalesLayout() {
               </svg>
             </a>
             <div className="sl-avatar" style={{width:34,height:34,fontSize:13}}>{user?.name?.[0]||'S'}</div>
-            <span style={{fontSize:13,fontWeight:600,color:'#1C2434'}}>{user?.name}</span>
+            <span style={{fontSize:13,fontWeight:600,color:'#FFFFFF'}}>{user?.name}</span>
           </div>
         </header>
         <main className="sl-content"><Outlet /></main>
       </div>
       <style>{`
         *{box-sizing:border-box;margin:0;padding:0}
-        .sl-shell{display:flex;height:100vh;height:100dvh;overflow:hidden;font-family:'Inter',system-ui,sans-serif;background:#F1F5F9}
-        .sl-sidebar{background:#1C2434;display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;width:220px}
-        .sl-mobile{position:fixed;top:0;left:0;bottom:0;z-index:200;width:240px;transform:translateX(-100%);transition:transform .25s;box-shadow:4px 0 24px rgba(0,0,0,.2)}
+        .sl-shell{display:flex;height:100vh;height:100dvh;overflow:hidden;font-family:'Manrope',system-ui,sans-serif;background:#0A0D14;color:#FFFFFF}
+        .sl-sidebar{background:rgba(11,15,25,0.95);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;width:220px;border-right:1px solid rgba(255,255,255,.08)}
+        .sl-mobile{position:fixed;top:0;left:0;bottom:0;z-index:200;width:240px;transform:translateX(-100%);transition:transform .25s;box-shadow:4px 0 24px rgba(0,0,0,.5);background:rgba(11,15,25,0.98)}
         .sl-mobile.open{transform:translateX(0)}
-        .sl-overlay{position:fixed;inset:0;z-index:199;background:rgba(0,0,0,.45)}
-        .sl-brand{height:60px;display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
-        .sl-collapse-btn{background:rgba(255,255,255,.07);border:0;width:28px;height:28px;border-radius:7px;display:grid;place-items:center;cursor:pointer;color:#8A99AF;margin-left:auto}
-        .sl-section-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8A99AF;padding:12px 16px 4px}
+        .sl-overlay{position:fixed;inset:0;z-index:199;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+        .sl-brand{height:60px;display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+        .sl-collapse-btn{background:rgba(255,255,255,.07);border:0;width:28px;height:28px;border-radius:7px;display:grid;place-items:center;cursor:pointer;color:#94A3B8;margin-left:auto}
+        .sl-section-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#38BDF8;padding:12px 16px 4px}
         .sl-nav-list{flex:1;overflow-y:auto;padding:4px 8px}
-        .sl-nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;margin:1px 0;color:#DEE4EE;cursor:pointer;transition:background .12s;font-size:13.5px;font-weight:500;text-decoration:none;border:0;background:none;width:100%;font-family:inherit}
-        .sl-nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
-        .sl-nav-item.active{background:#3B5BDB;color:#fff}
-        .sl-logout{color:#FF8080}.sl-logout:hover{background:rgba(255,128,128,.12)}
-        .sl-divider{height:1px;background:rgba(255,255,255,.07);margin:8px 0}
-        .sl-user-chip{display:flex;align-items:center;gap:10px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.07);flex-shrink:0}
-        .sl-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3B5BDB,#7C9FFF);display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
-        .sl-user-name{font-size:13px;font-weight:700;color:#fff}
-        .sl-user-role{font-size:11px;color:#6da8e0;margin-top:1px}
-        .sl-main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-        .sl-topbar{height:60px;background:#fff;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0}
-        .sl-hamburger{display:none;background:none;border:0;cursor:pointer;color:#64748B;padding:4px}
-        .sl-icon-btn{width:36px;height:36px;border-radius:8px;background:#F8FAFC;border:1px solid #E2E8F0;display:grid;place-items:center;cursor:pointer;text-decoration:none}
-        .sl-content{flex:1;overflow-y:auto;padding:20px;background:#F1F5F9}
+        .sl-nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;margin:1px 0;color:#CBD5E1;cursor:pointer;transition:all .15s;font-size:13.5px;font-weight:500;text-decoration:none;border:0;background:none;width:100%;font-family:inherit}
+        .sl-nav-item:hover{background:rgba(255,255,255,.06);color:#38BDF8}
+        .sl-nav-item.active{background:rgba(30,111,251,.22);color:#FFFFFF;box-shadow:inset 3px 0 0 #38BDF8}
+        .sl-logout{color:#F87171}.sl-logout:hover{background:rgba(239,68,68,.12)}
+        .sl-divider{height:1px;background:rgba(255,255,255,.08);margin:8px 0}
+        .sl-user-chip{display:flex;align-items:center;gap:10px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.08);flex-shrink:0}
+        .sl-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1E6FFB,#8B5CF6);display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+        .sl-user-name{font-size:13px;font-weight:700;color:#FFFFFF}
+        .sl-user-role{font-size:11px;color:#38BDF8;margin-top:1px}
+        .sl-main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;background:#0A0D14}
+        .sl-topbar{height:60px;background:rgba(11,15,25,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0}
+        .sl-hamburger{display:none;background:none;border:0;cursor:pointer;color:#94A3B8;padding:4px}
+        .sl-icon-btn{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:grid;place-items:center;cursor:pointer;text-decoration:none}
+        .sl-content{flex:1;overflow-y:auto;padding:20px;background:#0A0D14;color:#FFFFFF}
         @media(max-width:767px){.sl-desktop{display:none}.sl-hamburger{display:grid;place-items:center}.sl-content{padding:14px 12px}}
       `}</style>
     </div>

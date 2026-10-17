@@ -42,8 +42,8 @@ export default function QuickActionsPanel() {
             style={{
               display: 'flex', flexDirection: 'column', alignItems: 'center',
               gap: 8, padding: '14px 10px', borderRadius: 'var(--ld-radius)',
-              border: '1px solid var(--ld-gold-border)',
-              background: 'rgba(255,255,255,0.40)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              background: 'rgba(255, 255, 255, 0.04)',
               backdropFilter: 'blur(8px)',
               cursor: 'pointer',
               transition: 'all 0.3s cubic-bezier(0.16,1,0.3,1)',
@@ -51,16 +51,16 @@ export default function QuickActionsPanel() {
               fontFamily: 'inherit',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(212,165,116,0.18)';
-              e.currentTarget.style.color = 'var(--ld-gold)';
-              e.currentTarget.style.borderColor = 'var(--ld-gold)';
+              e.currentTarget.style.background = 'rgba(30, 111, 251, 0.18)';
+              e.currentTarget.style.color = '#38BDF8';
+              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.4)';
               e.currentTarget.style.transform = 'translateY(-3px)';
               e.currentTarget.style.boxShadow = 'var(--ld-shadow-sm)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.40)';
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
               e.currentTarget.style.color = 'var(--ld-text-muted)';
-              e.currentTarget.style.borderColor = 'var(--ld-gold-border)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.boxShadow = 'none';
             }}

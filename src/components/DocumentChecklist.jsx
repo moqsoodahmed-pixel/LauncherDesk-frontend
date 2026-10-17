@@ -63,8 +63,8 @@ function DocRow({ doc, orderId, onChanged }) {
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: cfg.color }} />{cfg.label}
           </span>
           {doc.filename && (
-            <button onClick={download} disabled={busy} title="Download what you uploaded" style={{ width: 30, height: 30, borderRadius: 7, border: '1px solid #E2E8F0', background: '#fff', cursor: 'pointer', display: 'grid', placeItems: 'center' }}>
-              <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="#64748B" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="M7 10l5 5 5-5" /><path d="M12 15V3" /></svg>
+            <button onClick={download} disabled={busy} title="Download what you uploaded" style={{ width: 30, height: 30, borderRadius: 7, border: '1px solid rgba(255, 255, 255, 0.12)', background: 'rgba(255, 255, 255, 0.08)', cursor: 'pointer', display: 'grid', placeItems: 'center' }}>
+              <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="#FFFFFF" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="M7 10l5 5 5-5" /><path d="M12 15V3" /></svg>
             </button>
           )}
           {!locked && (

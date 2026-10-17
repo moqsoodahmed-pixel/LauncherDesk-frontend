@@ -60,18 +60,16 @@ function IndiaFlag({ width = 24, height = 16, style = {} }) {
   )
 }
 
-// Light theme — reuses the site's own CSS custom properties (defined in
-// launcherdesk.css :root) instead of new hardcoded colours, so this stays
-// in sync automatically if the palette is ever retuned centrally.
+// Unified Dark SaaS Theme Tokens
 const C = {
-  bg: 'var(--bg)',          // #F8FAFC — same as the page background
-  ink: 'var(--text)',       // #0F1C2E — primary text
-  heading: 'var(--brand-600)', // #1E4080 — section labels
-  body: 'var(--text-2)',    // #374151 — paragraph / nav-link text
-  muted: 'var(--text-3)',   // #6B7280 — fine print
-  link: 'var(--blue)',      // #1D5DB8 — link hover / accents
-  chip: 'var(--bg-2)',      // #F1F5F9 — icon chip background
-  border: 'var(--line)',    // rgba(15,28,46,.09)
+  bg: 'var(--bg, #0A0D14)',
+  ink: 'var(--text, #F8FAFC)',
+  heading: '#FFFFFF',
+  body: 'var(--text-2, #94A3B8)',
+  muted: 'var(--text-3, #64748B)',
+  link: '#38BDF8',
+  chip: 'rgba(255, 255, 255, 0.05)',
+  border: 'rgba(255, 255, 255, 0.08)',
 }
 
 export default function Footer() {
@@ -79,7 +77,7 @@ export default function Footer() {
 
   return (
     <footer style={{ background: C.bg, color: C.ink, position:'relative', overflow:'hidden' }}>
-      {/* Ambient glow — same soft radial-blue treatment already used across
+      {/* Ambient glow: same soft radial-blue treatment already used across
           this site's own light sections (see .hv-ambient-glow / hero
           glows in launcherdesk.css), reused here rather than inventing a
           new background style for just the footer. */}
@@ -91,7 +89,7 @@ export default function Footer() {
       <div className="wrap footer-main" style={{ padding:'56px 24px 0', position:'relative', zIndex:1 }}>
         <div className="footer-grid" style={{ display:'grid', gridTemplateColumns:'1.6fr 1fr 1.1fr 1fr', gap:'40px 32px' }}>
 
-          {/* Col 1 — Brand */}
+          {/* Col 1: Brand */}
           <div className="footer-brand-col">
             <Link to="/" style={{ display:'inline-flex', textDecoration:'none', marginBottom:16 }}>
               <img src={logoImg} alt="LauncherDesk" style={{ height:46, width:'auto' }} />
@@ -100,7 +98,7 @@ export default function Footer() {
               Your Business HQ. Launch. Manage. Grow.
             </p>
             <p style={{ fontSize:13,color:C.body,lineHeight:1.75,marginBottom:20 }}>
-              LauncherDesk helps founders and businesses access, coordinate and manage the services they need — from registration and compliance to technology, finance, marketing and growth.
+              LauncherDesk helps founders and businesses access, coordinate and manage the services they need, from registration and compliance to technology, finance, marketing and growth.
             </p>
             {/* Socials */}
             <div style={{ display:'flex', gap:8, marginBottom:20 }}>
@@ -202,7 +200,7 @@ export default function Footer() {
               <span style={{ fontSize:13,color:C.body,lineHeight:1.7 }}>
                 #63, Office No. 224 & 225, 2nd Floor<br/>
                 The Plazzo Mall, Ibrahim Sahib St<br/>
-                Off Commercial Street, Bangalore – 560001
+                Off Commercial Street, Bangalore 560001
               </span>
             </div>
             <a href="https://maps.app.goo.gl/BCNfdV7j5PEBkYrM6" target="_blank" rel="noopener noreferrer"
@@ -213,21 +211,19 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* ── BOTTOM BAR ── */}
-        <div style={{ padding:'20px 0 28px' }}>
+        {/* ── BOTTOM BAR (96px bottom clearance protects disclaimer from floating widgets) ── */}
+        <div style={{ padding:'24px 0 96px' }}>
           <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:16,marginBottom:16 }}>
-            {/* Badges — both keep their natural artwork colours (gold/blue
-                MSME, navy/orange DPIIT); a light footer needs no recolouring
-                the way the previous dark footer did. */}
-            <div style={{ display:'flex',alignItems:'center',gap:16,flexWrap:'wrap' }}>
+            {/* Badges with safe margin from floating buttons (64px left clearance avoids scroll-to-top button) */}
+            <div style={{ display:'flex',alignItems:'center',gap:20,flexWrap:'wrap',paddingLeft:64 }}>
               <img src={msmeImg} alt="MSME Registered" style={{ height:44,width:'auto',opacity:.95 }} />
               <img src={startupIndiaImg} alt="DPIIT Startup India" style={{ height:34,width:'auto',opacity:.95 }} />
             </div>
           </div>
-          <div style={{ display:'flex', gap:12, alignItems:'flex-start', background:'rgba(15,28,46,0.035)', border:'1px solid rgba(15,28,46,0.08)', borderRadius:12, padding:'16px 18px' }}>
-            <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke={C.heading} strokeWidth={2} style={{ flexShrink:0, marginTop:2 }}><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+          <div style={{ display:'flex', gap:12, alignItems:'flex-start', background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.08)', borderRadius:14, padding:'18px 20px', backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)' }}>
+            <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="#38BDF8" strokeWidth={2} style={{ flexShrink:0, marginTop:2 }}><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
             <p style={{ fontSize:12,color:C.muted,lineHeight:1.65,margin:0,width:'100%' }}>
-              <strong style={{ color:C.heading }}>Disclaimer &amp; Transparency.</strong> LauncherDesk is a privately operated, independent technology platform owned and operated by DutyLaunch Solutions Private Limited. It is not a government website, department, or regulatory authority, and is not affiliated with, endorsed by, or representative of the Government of India or any State Government or authority, unless expressly stated for a specific authorised arrangement. The platform facilitates access to business registration, statutory compliance, e-Stamping, legal documentation, and other business support services through licensed professionals, authorised vendors, and official government portals, as applicable. LauncherDesk does not itself issue government registrations, licences, certificates, approvals, or e-Stamps, and assumes no responsibility for the decisions, processing timelines, or outcomes of the respective issuing authorities, which remain solely within their purview. All prices displayed include our professional service fee and applicable GST, with statutory government fees charged separately at actuals. Users are advised to exercise independent judgment while using the platform. Use of our services is subject to our Terms of Use and Privacy Policy.{' '}
+              <strong style={{ color:'#FFFFFF' }}>Disclaimer &amp; Transparency.</strong> LauncherDesk is a privately operated, independent technology platform owned and operated by DutyLaunch Solutions Private Limited. It is not a government website, department, or regulatory authority, and is not affiliated with, endorsed by, or representative of the Government of India or any State Government or authority, unless expressly stated for a specific authorised arrangement. The platform facilitates access to business registration, statutory compliance, e-Stamping, legal documentation, and other business support services through licensed professionals, authorised vendors, and official government portals, as applicable. LauncherDesk does not itself issue government registrations, licences, certificates, approvals, or e-Stamps, and assumes no responsibility for the decisions, processing timelines, or outcomes of the respective issuing authorities, which remain solely within their purview. All prices displayed include our professional service fee and applicable GST, with statutory government fees charged separately at actuals. Users are advised to exercise independent judgment while using the platform. Use of our services is subject to our Terms of Use and Privacy Policy.{' '}
               <Link to="/transparency" style={{ color:C.link, fontWeight:700, textDecoration:'underline' }}>Transparency &amp; Compliance</Link>
             </p>
           </div>

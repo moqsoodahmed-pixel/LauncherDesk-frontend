@@ -70,9 +70,9 @@ export default function VerifyEmailBanner() {
     <>
       <div style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap',
-        background: '#FFFBEB', border: '1px solid #FDE68A', borderRadius: 12, padding: '12px 16px', marginBottom: 20,
+        background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.25)', borderRadius: 12, padding: '12px 16px', marginBottom: 20,
       }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13.5, color: '#92400E', lineHeight: 1.5, flex: '1 1 260px', minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13.5, color: '#FCD34D', lineHeight: 1.5, flex: '1 1 260px', minWidth: 0 }}>
           <span style={{ fontSize: 18, lineHeight: 1.2, flexShrink: 0 }}>✉️</span>
           <span><strong>Verify your email</strong> — so you never miss an order, payment or document update.</span>
         </div>
@@ -84,13 +84,13 @@ export default function VerifyEmailBanner() {
 
       {open && (
         <div onClick={e => { if (e.target === e.currentTarget) setOpen(false) }} style={{
-          position: 'fixed', inset: 0, background: 'rgba(10,18,33,.55)', backdropFilter: 'blur(3px)', zIndex: 1000,
+          position: 'fixed', inset: 0, background: 'rgba(5, 7, 11, 0.75)', backdropFilter: 'blur(8px)', zIndex: 1000,
           display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16,
         }}>
-          <div style={{ background: '#fff', borderRadius: 16, width: '100%', maxWidth: 400, maxHeight: 'calc(100dvh - 32px)', overflowY: 'auto', padding: 'clamp(22px, 6vw, 30px) clamp(16px, 5vw, 28px)', textAlign: 'center' }}>
+          <div style={{ background: 'rgba(18, 30, 48, 0.95)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(16px)', borderRadius: 16, width: '100%', maxWidth: 400, maxHeight: 'calc(100dvh - 32px)', overflowY: 'auto', padding: 'clamp(22px, 6vw, 30px) clamp(16px, 5vw, 28px)', textAlign: 'center', color: '#FFFFFF', boxShadow: '0 30px 80px rgba(0, 0, 0, 0.6)' }}>
             <div style={{ fontSize: 34, marginBottom: 6 }}>📧</div>
-            <h2 style={{ fontSize: 18, fontWeight: 800, color: '#1A2F4E', marginBottom: 6 }}>Enter verification code</h2>
-            <p style={{ fontSize: 13, color: '#64748B', marginBottom: 22, overflowWrap: 'anywhere' }}>We sent a 6-digit code to <strong>{user.email}</strong>.</p>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: '#FFFFFF', marginBottom: 6 }}>Enter verification code</h2>
+            <p style={{ fontSize: 13, color: '#8A98AA', marginBottom: 22, overflowWrap: 'anywhere' }}>We sent a 6-digit code to <strong>{user.email}</strong>.</p>
 
             <div className="ud-otp" style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 16 }} onPaste={onPaste}>
               {digits.map((d, i) => (
@@ -98,21 +98,21 @@ export default function VerifyEmailBanner() {
                   onChange={e => setDigit(i, e.target.value)} onKeyDown={e => onKeyDown(i, e)}
                   style={{
                     flex: '1 1 0', minWidth: 0, maxWidth: 46, height: 50, padding: 0, textAlign: 'center', fontSize: 20, fontWeight: 700, borderRadius: 10,
-                    border: '1.5px solid #E2E8F0', outline: 'none', color: '#1A2F4E',
+                    border: '1px solid rgba(255, 255, 255, 0.12)', background: 'rgba(255, 255, 255, 0.05)', outline: 'none', color: '#FFFFFF',
                   }} />
               ))}
             </div>
 
-            {notice && !error && <p style={{ fontSize: 12.5, color: '#16A34A', marginBottom: 12 }}>{notice}</p>}
-            {error && <p style={{ fontSize: 12.5, color: '#DC2626', marginBottom: 12 }}>{error}</p>}
+            {notice && !error && <p style={{ fontSize: 12.5, color: '#4ADE80', marginBottom: 12 }}>{notice}</p>}
+            {error && <p style={{ fontSize: 12.5, color: '#F87171', marginBottom: 12 }}>{error}</p>}
 
             <button onClick={verify} disabled={verifying} style={{
-              width: '100%', height: 46, borderRadius: 10, border: 'none', background: '#1D6FE0', color: '#fff',
+              width: '100%', height: 46, borderRadius: 10, border: 'none', background: '#2F80FF', color: '#fff',
               fontWeight: 700, fontSize: 14.5, cursor: verifying ? 'default' : 'pointer', opacity: verifying ? 0.7 : 1, marginBottom: 12,
             }}>{verifying ? 'Verifying…' : 'Verify email'}</button>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12.5 }}>
-              <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#64748B', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
+              <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#8A98AA', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
               <button onClick={sendOtp} disabled={cooldown > 0 || sending} style={{
                 background: 'none', border: 'none', color: cooldown > 0 ? '#94A3B8' : '#1D6FE0', fontWeight: 600,
                 cursor: cooldown > 0 ? 'default' : 'pointer', fontFamily: 'inherit',

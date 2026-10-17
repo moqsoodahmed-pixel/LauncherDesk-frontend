@@ -19,10 +19,10 @@ const S = `
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(1000px 600px at 50% -10%, rgba(59,143,239,.32), transparent 70%),
-              radial-gradient(800px 500px at 15% 100%, rgba(29,111,224,.22), transparent 60%),
-              radial-gradient(600px 400px at 85% 90%, rgba(29,93,184,.12), transparent 60%),
-              linear-gradient(155deg, #070E22 0%, #0D1C44 45%, #152B60 100%);
+  background: radial-gradient(1000px 600px at 50% -10%, rgba(30, 111, 251, 0.22), transparent 70%),
+              radial-gradient(800px 500px at 15% 100%, rgba(139, 92, 246, 0.16), transparent 60%),
+              radial-gradient(600px 400px at 85% 90%, rgba(30, 111, 251, 0.12), transparent 60%),
+              linear-gradient(155deg, #06090F 0%, #0A0D14 45%, #0E131F 100%);
   padding: 36px 20px;
   position: relative;
   overflow: hidden;
@@ -32,27 +32,30 @@ const S = `
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
   background-size: 44px 44px;
 }
 .ul-ambient-orb-1 {
-  position: absolute; width: 400px; height: 400px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(59,143,239,.18) 0%, transparent 70%);
-  top: 10%; left: 8%; pointer-events: none; filter: blur(40px);
+  position: absolute; width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 111, 251, 0.20) 0%, transparent 70%);
+  top: 10%; left: 8%; pointer-events: none; filter: blur(50px);
 }
 .ul-ambient-orb-2 {
-  position: absolute; width: 350px; height: 350px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(29,93,184,.08) 0%, transparent 70%);
-  bottom: 12%; right: 10%; pointer-events: none; filter: blur(40px);
+  position: absolute; width: 380px; height: 380px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.16) 0%, transparent 70%);
+  bottom: 12%; right: 10%; pointer-events: none; filter: blur(50px);
 }
 .ul-card {
-  background: #FFFFFF;
+  background: rgba(18, 26, 44, 0.78);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 24px;
   width: 100%;
   max-width: 460px;
   padding: 40px 36px;
-  box-shadow: 0 32px 80px -16px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.1);
+  box-shadow: 0 32px 80px -16px rgba(0,0,0,.75), 0 0 32px rgba(30,111,251,0.18);
   position: relative;
   z-index: 2;
   animation: cardFadeUp .3s cubic-bezier(.16,1,.3,1);
@@ -63,28 +66,28 @@ const S = `
 }
 .ul-tabs {
   display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
-  background: #F1F5F9; border-radius: 12px; padding: 4px; margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 4px; margin-bottom: 24px;
 }
 .ul-tab {
   padding: 10px; border: none; border-radius: 9px; font-family: inherit;
   font-size: 13.5px; font-weight: 700; cursor: pointer;
-  transition: all .18s cubic-bezier(.2,.7,.3,1); background: transparent; color: #64748B;
+  transition: all .18s cubic-bezier(.2,.7,.3,1); background: transparent; color: #94A3B8;
 }
-.ul-tab.active { background: #FFFFFF; color: #1D6FE0; box-shadow: 0 2px 8px rgba(15,23,42,.08); }
+.ul-tab.active { background: rgba(30, 111, 251, 0.22); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.3); box-shadow: 0 2px 8px rgba(0,0,0,.3); }
 .ul-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
 .ul-field label {
-  font-size: 11.5px; font-weight: 800; color: #334155;
+  font-size: 11.5px; font-weight: 800; color: #CBD5E1;
   text-transform: uppercase; letter-spacing: .06em;
   display: flex; align-items: center; flex-wrap: wrap;
 }
 .ul-field input {
-  border: 1.5px solid #E2E8F0; border-radius: 11px; padding: 0 16px;
-  height: 48px; font-size: 14.5px; color: #0F172A; outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.10); border-radius: 11px; padding: 0 16px;
+  height: 48px; font-size: 14.5px; color: #F8FAFC; outline: none;
   font-family: inherit; transition: border-color .18s, box-shadow .18s, background .18s;
-  background: #F8FAFC; box-sizing: border-box; width: 100%;
+  background: rgba(255, 255, 255, 0.04); box-sizing: border-box; width: 100%;
 }
 .ul-field input:focus {
-  border-color: #1D6FE0; box-shadow: 0 0 0 3.5px rgba(29,111,224,.16); background: #FFFFFF;
+  border-color: #38BDF8; box-shadow: 0 0 0 3.5px rgba(56, 189, 248, 0.20); background: rgba(255, 255, 255, 0.08);
 }
 .ul-pw-wrap { position: relative; width: 100%; display: flex; align-items: center; }
 .ul-pw-wrap input { padding-right: 44px !important; }
@@ -94,80 +97,80 @@ const S = `
   padding: 4px; display: flex; align-items: center; justify-content: center;
   transition: color .15s ease; outline: none;
 }
-.ul-pw-toggle:hover { color: #475569; }
+.ul-pw-toggle:hover { color: #F8FAFC; }
 .ul-opt-text { font-weight: 400; text-transform: none; font-size: 11px; color: #94A3B8; margin-left: 6px; letter-spacing: normal; }
 .ul-agree-row {
   display: flex; align-items: flex-start; gap: 10px; margin: 16px 0 20px;
-  font-size: 12.5px; color: #334155; line-height: 1.45;
+  font-size: 12.5px; color: #94A3B8; line-height: 1.45;
 }
 .ul-agree-row input[type="checkbox"] {
   width: 16px; height: 16px; margin-top: 2px; border-radius: 4px;
-  border: 1.5px solid #CBD5E1; accent-color: #1D6FE0; cursor: pointer; flex-shrink: 0;
+  border: 1.5px solid rgba(255, 255, 255, 0.2); accent-color: #1E6FFB; cursor: pointer; flex-shrink: 0;
 }
-.ul-agree-row label { cursor: pointer; font-size: 12.5px; color: #334155; font-weight: 500; user-select: none; }
-.ul-agree-row a { color: #1D6FE0; text-decoration: none; font-weight: 600; }
+.ul-agree-row label { cursor: pointer; font-size: 12.5px; color: #94A3B8; font-weight: 500; user-select: none; }
+.ul-agree-row a { color: #38BDF8; text-decoration: none; font-weight: 600; }
 .ul-agree-row a:hover { text-decoration: underline; }
 .ul-submit {
   width: 100%; height: 50px;
-  background: linear-gradient(135deg, #1D6FE0 0%, #0F52C0 100%);
+  background: linear-gradient(135deg, #1E6FFB 0%, #8B5CF6 100%);
   color: #FFFFFF; border: none; border-radius: 12px; font-size: 15px; font-weight: 800;
   cursor: pointer; font-family: inherit; margin-top: 4px;
-  transition: all .18s cubic-bezier(.2,.7,.3,1);
-  box-shadow: 0 8px 24px -4px rgba(29,111,224,.45);
+  transition: all .25s cubic-bezier(.16,1,.3,1);
+  box-shadow: 0 8px 24px -4px rgba(30, 111, 251, 0.45);
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.ul-submit:hover { transform: translateY(-1.5px); box-shadow: 0 14px 32px -4px rgba(29,111,224,.55); background: linear-gradient(135deg,#2563EB,#1D4ED8); }
+.ul-submit:hover { transform: translateY(-2px); box-shadow: 0 14px 32px -4px rgba(30, 111, 251, 0.65), 0 0 16px rgba(139, 92, 246, 0.35); }
 .ul-submit:active { transform: translateY(0.5px) scale(.985); }
 .ul-submit:disabled { opacity: .65; cursor: not-allowed; transform: none; }
 .ul-err {
-  background: #FEF2F2; border: 1px solid #FECACA; border-radius: 11px;
-  padding: 12px 16px; font-size: 13px; color: #DC2626; margin-bottom: 18px;
+  background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 11px;
+  padding: 12px 16px; font-size: 13px; color: #FB7185; margin-bottom: 18px;
   line-height: 1.5; display: flex; align-items: center; gap: 8px;
 }
 .ul-divider {
-  display: flex; align-items: center; text-align: center; color: #94A3B8;
+  display: flex; align-items: center; text-align: center; color: #64748B;
   font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em;
   margin: 22px 0 16px; gap: 12px;
 }
-.ul-divider::before, .ul-divider::after { content: ''; flex: 1; height: 1px; background: #E2E8F0; }
+.ul-divider::before, .ul-divider::after { content: ''; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.08); }
 .ul-or-divider {
-  display: flex; align-items: center; text-align: center; color: #94A3B8;
+  display: flex; align-items: center; text-align: center; color: #64748B;
   font-size: 12px; font-weight: 500; margin: 24px 0 18px; gap: 14px;
 }
-.ul-or-divider::before, .ul-or-divider::after { content: ''; flex: 1; height: 1px; background: #E2E8F0; }
-.ul-partner-row { text-align: center; font-size: 13px; color: #475569; margin-bottom: 12px; }
-.ul-partner-link { color: #1D6FE0; font-weight: 700; text-decoration: none; margin-left: 4px; transition: color .15s; }
-.ul-partner-link:hover { text-decoration: underline; }
+.ul-or-divider::before, .ul-or-divider::after { content: ''; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.08); }
+.ul-partner-row { text-align: center; font-size: 13px; color: #94A3B8; margin-bottom: 12px; }
+.ul-partner-link { color: #38BDF8; font-weight: 700; text-decoration: none; margin-left: 4px; transition: color .15s; }
+.ul-partner-link:hover { text-decoration: underline; color: #8B5CF6; }
 .ul-back-row { text-align: center; font-size: 12.5px; color: #64748B; margin-top: 6px; }
 .ul-back-link { color: #64748B; text-decoration: none; transition: color .15s ease; }
-.ul-back-link:hover { color: #1D6FE0; }
+.ul-back-link:hover { color: #38BDF8; }
 .ul-social-section { text-align: center; margin-bottom: 6px; }
 .ul-social-row { display: flex; align-items: center; justify-content: center; gap: 14px; }
 .ul-social-icon-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  flex: 1; height: 48px; background: #FFFFFF; border: 1.5px solid #E2E8F0;
+  flex: 1; height: 48px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 12px; cursor: pointer; transition: all .18s cubic-bezier(.2,.7,.3,1);
-  outline: none; font-family: inherit; font-size: 13.5px; font-weight: 700; color: #334155;
-  box-shadow: 0 1px 3px rgba(15,23,42,.04);
+  outline: none; font-family: inherit; font-size: 13.5px; font-weight: 700; color: #F8FAFC;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
 }
-.ul-social-icon-btn:hover { background: #F8FAFC; border-color: #CBD5E1; transform: translateY(-1.5px); box-shadow: 0 8px 20px rgba(15,23,42,.08); }
+.ul-social-icon-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(56, 189, 248, 0.35); transform: translateY(-1.5px); box-shadow: 0 8px 20px rgba(0,0,0,.4); }
 .ul-social-icon-btn:active { transform: scale(.97); }
 .ul-social-icon-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-.ul-social-icon-btn:focus-visible { border-color: #1D6FE0; box-shadow: 0 0 0 3px rgba(29,111,224,.2); }
+.ul-social-icon-btn:focus-visible { border-color: #38BDF8; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25); }
 
 /* ── Forgot password ── */
 .ul-forgot { display: flex; justify-content: flex-end; margin-top: -8px; margin-bottom: 14px; }
-.ul-forgot a { font-size: 12.5px; color: #1D6FE0; text-decoration: none; font-weight: 600; }
-.ul-forgot a:hover { text-decoration: underline; }
+.ul-forgot a { font-size: 12.5px; color: #38BDF8; text-decoration: none; font-weight: 600; }
+.ul-forgot a:hover { text-decoration: underline; color: #8B5CF6; }
 .ul-fp-back {
-  display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #64748B;
+  display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #94A3B8;
   cursor: pointer; background: none; border: none; font-family: inherit;
   padding: 0; margin-bottom: 16px; transition: color .15s;
 }
-.ul-fp-back:hover { color: #1D6FE0; }
+.ul-fp-back:hover { color: #38BDF8; }
 .ul-fp-ok {
-  background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 11px;
-  padding: 14px 16px; font-size: 13.5px; color: #15803D; margin-bottom: 16px;
+  background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 11px;
+  padding: 14px 16px; font-size: 13.5px; color: #34D399; margin-bottom: 16px;
   display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;
 }
 
@@ -498,8 +501,8 @@ export default function UserLoginPage() {
             Back to login
           </button>
 
-          <h1 style={{ fontSize: 22, fontWeight: 900, color: '#0A2540', marginBottom: 6 }}>Forgot your password?</h1>
-          <p style={{ fontSize: 13.5, color: '#64748B', marginBottom: 24, lineHeight: 1.6 }}>
+          <h1 style={{ fontSize: 22, fontWeight: 900, color: '#FFFFFF', marginBottom: 6 }}>Forgot your password?</h1>
+          <p style={{ fontSize: 13.5, color: '#94A3B8', marginBottom: 24, lineHeight: 1.6 }}>
             Enter your email address and we'll send you a link to reset your password. The link expires in 15 minutes.
           </p>
 
@@ -553,10 +556,10 @@ export default function UserLoginPage() {
           </Link>
         </div>
 
-        <h1 style={{ textAlign: 'center', fontSize: 22, fontWeight: 900, color: '#0A2540', marginBottom: 6, letterSpacing: '-.02em' }}>
+        <h1 style={{ textAlign: 'center', fontSize: 22, fontWeight: 900, color: '#FFFFFF', marginBottom: 6, letterSpacing: '-.02em' }}>
           {tab === 'login' ? 'Welcome back' : 'Create your account'}
         </h1>
-        <p style={{ textAlign: 'center', fontSize: 13.5, color: '#64748B', marginBottom: 22 }}>
+        <p style={{ textAlign: 'center', fontSize: 13.5, color: '#94A3B8', marginBottom: 22 }}>
           {tab === 'login' ? 'Sign in to access your services, orders & dashboard' : 'Sign up to get started with LauncherDesk'}
         </p>
 
@@ -576,26 +579,26 @@ export default function UserLoginPage() {
         {tab === 'register' ? (
           <form onSubmit={handleSubmit} noValidate>
             <div className="ul-field">
-              <label htmlFor="reg-name">FULL NAME</label>
+              <label htmlFor="reg-name">Full Name *</label>
               <input id="reg-name" type="text" value={form.name} onChange={set('name')} placeholder="Your full name" required aria-required="true" autoComplete="name" />
             </div>
             <div className="ul-field">
-              <label htmlFor="reg-email">EMAIL ADDRESS</label>
+              <label htmlFor="reg-email">Email Address *</label>
               <input id="reg-email" type="email" value={form.email} onChange={set('email')} placeholder="you@example.com" required aria-required="true" autoComplete="email" />
             </div>
             <div className="ul-field">
-              <label htmlFor="reg-phone">PHONE NUMBER</label>
+              <label htmlFor="reg-phone">Phone Number *</label>
               <input id="reg-phone" type="tel" inputMode="numeric" pattern="[0-9]{10}" maxLength={10} value={form.phone} onChange={set('phone')} placeholder="Enter 10-digit mobile number" required aria-required="true" autoComplete="tel" />
             </div>
             <div className="ul-field">
-              <label htmlFor="reg-password">PASSWORD</label>
+              <label htmlFor="reg-password">Password *</label>
               <div className="ul-pw-wrap">
                 <input id="reg-password" type={showPw ? 'text' : 'password'} value={form.password} onChange={set('password')} placeholder="Min. 6 characters" required aria-required="true" autoComplete="new-password" />
                 <button type="button" className="ul-pw-toggle" onClick={() => setShowPw(p => !p)} aria-label={showPw ? 'Hide password' : 'Show password'} tabIndex="-1"><EyeIcon open={showPw} /></button>
               </div>
             </div>
             <div className="ul-field">
-              <label htmlFor="reg-confirm-password">CONFIRM PASSWORD</label>
+              <label htmlFor="reg-confirm-password">Confirm Password *</label>
               <div className="ul-pw-wrap">
                 <input id="reg-confirm-password" type={showConf ? 'text' : 'password'} value={form.confirmPassword} onChange={set('confirmPassword')} placeholder="Re-enter your password" required aria-required="true" autoComplete="new-password" />
                 <button type="button" className="ul-pw-toggle" onClick={() => setShowConf(p => !p)} aria-label={showConf ? 'Hide password' : 'Show password'} tabIndex="-1"><EyeIcon open={showConf} /></button>
@@ -642,7 +645,7 @@ export default function UserLoginPage() {
               <button type="submit" disabled={loading || !!socialLoading} className="ul-submit" aria-busy={loading}>
                 {loading
                   ? <><Spinner /><span>Please wait…</span></>
-                  : <><span>Sign In</span><svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2.5}><path d="M5 12h14M12 5l7 7-7 7" /></svg></>
+                  : <><span>Log In</span><svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2.5}><path d="M5 12h14M12 5l7 7-7 7" /></svg></>
                 }
               </button>
             </form>

@@ -15,27 +15,27 @@ const CATEGORIES = [
 
 const ALL_SERVICES = [
   // START
-  { href: '/services/private-limited-company-registration', title: 'Private Limited Company', desc: 'The startup standard for limited liability and fundraising.' },
-  { href: '/services/llp-registration', title: 'LLP Registration', desc: 'Partner-owned firm with lower compliance overhead.' },
-  { href: '/services/opc-registration', title: 'OPC Registration', desc: 'Right-sized structure for a solo founder.' },
-  { href: '/services/partnership-registration', title: 'Partnership Firm', desc: 'Simple shared-ownership registration.' },
-  { href: '/services/gst-registration', title: 'GST Registration', desc: 'Registration and ongoing return filing.' },
-  { href: '/services/msme-registration', title: 'MSME / Udyam', desc: 'Unlock government benefits and easier credit.' },
+  { href: '/services/private-limited-company-registration', title: 'Private Limited Company', startingPrice: 'Starting at ₹4,999', desc: 'The startup standard for limited liability and fundraising.' },
+  { href: '/services/llp-registration', title: 'LLP Registration', startingPrice: 'Starting at ₹4,500', desc: 'Partner-owned firm with lower compliance overhead.' },
+  { href: '/services/opc-registration', title: 'OPC Registration', startingPrice: 'Starting at ₹4,999', desc: 'Right-sized structure for a solo founder.' },
+  { href: '/services/partnership-registration', title: 'Partnership Firm', startingPrice: 'Starting at ₹2,999', desc: 'Simple shared-ownership registration.' },
+  { href: '/services/gst-registration', title: 'GST Registration', startingPrice: 'Starting at ₹1,999', desc: 'Registration and ongoing return filing.' },
+  { href: '/services/msme-registration', title: 'MSME / Udyam', startingPrice: 'Starting at ₹499', desc: 'Unlock government benefits and easier credit.' },
   { href: '/services/fssai-registration', title: 'FSSAI Registration', desc: 'Mandatory licence for any food business.' },
-  { href: '/services/trademark-registration', title: 'Trademark Registration', desc: 'Protect your brand name and logo.' },
+  { href: '/services/trademark-registration', title: 'Trademark Registration', startingPrice: 'Starting at ₹1,999', desc: 'Protect your brand name and logo.' },
   { href: '/services/startup-india-dpiit', title: 'Startup India / DPIIT', desc: 'Tax benefits and government scheme access.' },
   { href: '/services/iso-certification', title: 'ISO Certification', desc: 'Quality and security certifications for your business.' },
   // BUILD
-  { href: '/services/website-development', title: 'Website Development', desc: 'Mobile-first professional websites for businesses.' },
+  { href: '/services/website-development', title: 'Website Development', startingPrice: 'Starting at ₹9,999', desc: 'Mobile-first professional websites for businesses.' },
   { href: '/services/ecommerce-website', title: 'E-Commerce Website', desc: 'Online store with payment gateway and catalogue.' },
   { href: '/services/branding-logo-design', title: 'Branding & Logo Design', desc: 'Logo, colour palette, typography and brand guide.' },
   { href: '/services/business-email-hosting', title: 'Business Email & Hosting', desc: 'Professional email and reliable website hosting.' },
   { href: '/services/software-saas-development', title: 'Software & SaaS Development', desc: 'Custom software, web apps and SaaS products.' },
   { href: '/services/mobile-app-development', title: 'Mobile App Development', desc: 'iOS and Android applications for your business.' },
-  { href: '/services/business-automation', title: 'Business Automation', desc: 'CRM, workflows and automation that scale with you.' },
+  { href: '/services/business-automation', title: 'Business Automation', startingPrice: 'Starting at ₹4,999', desc: 'CRM, workflows and automation that scale with you.' },
   // MANAGE
   { href: '/services/accounting', title: 'Accounting & Bookkeeping', desc: 'Monthly bookkeeping and financial statements.' },
-  { href: '/services/gst-registration', title: 'GST Filing & Returns', desc: 'GSTR-1, GSTR-3B, annual returns — filed on time.' },
+  { href: '/services/gst-registration', title: 'GST Filing & Returns', desc: 'GSTR-1, GSTR-3B, annual returns, filed on time.' },
   { href: '/services/income-tax-filing', title: 'Income Tax Filing', desc: 'CA-reviewed ITR for companies and LLPs.' },
   { href: '/services/roc-compliance', title: 'ROC / Annual Compliance', desc: 'Annual filings that keep you penalty-free.' },
   { href: '/services/payroll', title: 'Payroll Management', desc: 'Salary processing, TDS, PF/ESI compliance.' },
@@ -43,7 +43,7 @@ const ALL_SERVICES = [
   // GROW
   { href: '/services/digital-marketing', title: 'SEO & Performance Marketing', desc: 'Organic growth, keyword strategy and content.' },
   { href: '/services/social-media-management', title: 'Social Media Management', desc: 'Instagram, LinkedIn, Facebook content and posting.' },
-  { href: '/services/whatsapp-business-api', title: 'WhatsApp Business API', desc: 'Bulk messaging, automation and CRM integration.' },
+  { href: '/services/whatsapp-business-api', title: 'WhatsApp Business API', startingPrice: 'Starting at ₹2,499', desc: 'Bulk messaging, automation and CRM integration.' },
   { href: '/services/crm-setup-lead-management', title: 'CRM Setup & Lead Management', desc: 'Pipeline management so no lead falls through.' },
   { href: '/services/google-ads-paid-marketing', title: 'Google Ads & Paid Marketing', desc: 'Managed campaigns that generate real leads.' },
   // EXPAND
@@ -55,9 +55,9 @@ const ALL_SERVICES = [
 // Change 2: removed Retail/Shop & Food/Restaurant; step 2 = text input for state
 const FINDER_STEPS = [
   { q: "What are you building?", k: "type", inputType: 'select', opts: ["Services / Consulting", "E-commerce / Online", "Technology / SaaS", "Something else"] },
-  { q: "Where will you operate from?", k: "state", inputType: 'text', placeholder: "Type your state (e.g. Karnataka, Maharashtra…)" },
-  { q: "How many founders?", k: "founders", inputType: 'select', opts: ["Just me", "2–3 founders", "4 or more"] },
-  { q: "Expected annual turnover?", k: "turnover", inputType: 'select', opts: ["Under ₹20 lakh", "₹20 lakh – ₹1 crore", "Over ₹1 crore", "Not sure yet"] },
+  { q: "Where will you operate from?", k: "state", inputType: 'text', placeholder: "Type your state (e.g. Karnataka, Maharashtra...)" },
+  { q: "How many founders?", k: "founders", inputType: 'select', opts: ["Just me", "2 to 3 founders", "4 or more"] },
+  { q: "Expected annual turnover?", k: "turnover", inputType: 'select', opts: ["Under ₹20 lakh", "₹20 lakh to ₹1 crore", "Over ₹1 crore", "Not sure yet"] },
   { q: "Do you plan to hire employees?", k: "hire", inputType: 'select', opts: ["Yes, soon", "Maybe later", "No"] },
   { q: "What do you already have?", k: "have", inputType: 'select', opts: ["Nothing yet", "A registered company", "GST already", "Just an idea"] },
 ]
@@ -66,9 +66,9 @@ function buildRoadmap(ans) {
   const p = []
   const solo = ans.founders === 'Just me'
   if (ans.have !== 'A registered company') p.push(solo ? ['OPC or Proprietorship', 'Right-sized structure for a single founder starting out.', 'hi'] : ['Private Limited Company', 'Best structure for multiple founders and future funding.', 'hi'])
-  if (ans.have !== 'GST already' && (ans.type === 'E-commerce / Online' || ans.turnover === 'Over ₹1 crore' || ans.turnover === '₹20 lakh – ₹1 crore' || (ans.state && ans.state.toLowerCase() !== 'karnataka'))) p.push(['GST Registration', 'Required for online sales, inter-state trade, or your turnover band.', 'hi'])
+  if (ans.have !== 'GST already' && (ans.type === 'E-commerce / Online' || ans.turnover === 'Over ₹1 crore' || ans.turnover === '₹20 lakh to ₹1 crore' || (ans.state && ans.state.toLowerCase() !== 'karnataka'))) p.push(['GST Registration', 'Required for online sales, inter-state trade, or your turnover band.', 'hi'])
   p.push(['MSME / Udyam Registration', 'Quick to file and unlocks benefits and easier credit.', 'mid'])
-  p.push(['Trademark', (ans.type === 'E-commerce / Online' || ans.type === 'Technology / SaaS') ? "Protect your brand early — it's an asset investors look for." : 'Protect your brand name before you build on it.', (ans.type === 'E-commerce / Online' || ans.type === 'Technology / SaaS') ? 'mid' : 'low'])
+  p.push(['Trademark', (ans.type === 'E-commerce / Online' || ans.type === 'Technology / SaaS') ? "Protect your brand early, as it is an asset investors look for." : 'Protect your brand name before you build on it.', (ans.type === 'E-commerce / Online' || ans.type === 'Technology / SaaS') ? 'mid' : 'low'])
   if (ans.hire === 'Yes, soon') p.push(['Payroll & PF/ESI setup', 'Get employment compliance right from your first hire.', 'mid'])
   p.push(['Accounting & annual compliance', "Keep books clean and never miss an ROC or tax deadline.", 'mid'])
   if (ans.type === 'Technology / SaaS' || ans.type === 'E-commerce / Online') p.push(['Website & growth stack', 'Get online with a site, CRM and marketing foundation.', 'low'])
@@ -208,7 +208,7 @@ function ServiceFinder() {
                 </div>
                 <div className="finder-nav">
                   {step > 0 ? <button className="finder-back" onClick={handleBack}>← Back</button> : <span></span>}
-                  <span className="mut" style={{ fontSize: 13 }}>Free · no signup</span>
+                  <span className="mut" style={{ fontSize: 13 }}>Free, no signup required</span>
                 </div>
               </div>
             )}
@@ -260,13 +260,13 @@ export default function ServicesIndex() {
           </nav>
           <span className="eyebrow reveal-up in" style={{ marginTop: 16, display: 'block' }}>Service catalog</span>
           <h1 className="reveal-up in">Business solutions for every stage.</h1>
-          <p className="lead reveal-up in">Whether you're registering your first company or scaling your tenth — find, arrange and coordinate the services your business needs, at every stage.</p>
+          <p className="lead reveal-up in">Whether you're registering your first company or scaling your tenth, find, arrange and coordinate the services your business needs, at every stage.</p>
           <div className="reveal-up in" style={{ marginTop: 24, maxWidth: 520, position: 'relative' }}>
             <input
               id="svcSearch"
               type="text"
-              placeholder="Search services — e.g. GST, trademark, payroll…"
-              style={{ width: '100%', border: '1px solid var(--line)', borderRadius: 12, padding: '13px 16px', fontFamily: 'var(--font-body)', fontSize: 15, background: '#fff', boxShadow: 'var(--sh-sm)', outline: 'none' }}
+              placeholder="Search services, for example GST, trademark, payroll..."
+              style={{ width: '100%', border: '1px solid var(--line)', borderRadius: 12, padding: '13px 16px', fontFamily: 'var(--font-body)', fontSize: 15, background: 'rgba(18, 30, 48, 0.72)', color: '#FFFFFF', boxShadow: 'var(--sh-sm)', outline: 'none' }}
             />
           </div>
         </div>
@@ -283,6 +283,11 @@ export default function ServicesIndex() {
           <div className="grid-3" id="allSvcList" style={{ marginTop: 28 }}>
             {ALL_SERVICES.map((svc, i) => (
               <a key={`${svc.href}-${i}`} className="card reveal-up" data-allsvc={`${svc.title.toLowerCase()} ${svc.desc.toLowerCase()}`} href={svc.href}>
+                {svc.startingPrice && (
+                  <span style={{ display: 'inline-block', fontSize: 11, fontWeight: 700, color: '#38BDF8', background: 'rgba(30, 111, 251, 0.16)', border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: 999, padding: '2px 8px', marginBottom: 10, width: 'fit-content' }}>
+                    {svc.startingPrice}
+                  </span>
+                )}
                 <h3>{svc.title}</h3>
                 <p>{svc.desc}</p>
                 <span className="arrow">View</span>
@@ -292,13 +297,13 @@ export default function ServicesIndex() {
         </div>
       </section>
 
-      {/* Service Finder — fully React-controlled */}
+      {/* Service Finder: fully React-controlled */}
       <section className="section section-warm" id="finder">
         <div className="wrap">
           <div className="sec-head reveal-up">
             <span className="eyebrow">Service finder</span>
             <h2>Not sure what you need?</h2>
-            <p>Answer six quick questions and we'll build your prioritised roadmap — free, before you talk to anyone.</p>
+            <p>Answer six quick questions and we'll build your prioritised roadmap for free, before you talk to anyone.</p>
           </div>
           <ServiceFinder />
         </div>
@@ -309,7 +314,7 @@ export default function ServicesIndex() {
         <div className="wrap">
           <div className="final reveal-up">
             <h2>Not sure where to start?</h2>
-            <p>Tell us about your business. We'll understand your requirement and guide you on the right starting point — no obligation.</p>
+            <p>Tell us about your business. We'll understand your requirement and guide you on the right starting point, with no obligation.</p>
             <div className="row">
               <a href="/company/contact" className="btn btn-light">Talk to Our Expert</a>
               <button className="btn btn-ghost-d" data-open-ai="true">Ask Sneha</button>

@@ -68,7 +68,7 @@ export default function SalesDashboard() {
       <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12,marginBottom:28}}>
         {[
           { label:'View all Leads', to:'/sales/leads', color:'#3B5BDB' },
-          { label:'View all Contacts', to:'/sales/contacts', color:'#F97316' },
+          { label:'View all Contacts', to:'/sales/contacts', color:'#1E6FFB' },
           { label:'View all Quotes', to:'/sales/quotes', color:'#7C3AED' },
         ].map(a => (
           <Link key={a.to} to={a.to} style={{display:'block',padding:'14px',background:a.color,color:'#fff',borderRadius:12,fontWeight:700,fontSize:14,textDecoration:'none',textAlign:'center',transition:'opacity .15s'}}

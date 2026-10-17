@@ -17,20 +17,20 @@ function EyeIcon({ open }) {
 }
 
 const S = `
-.rp-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(155deg,#070E22 0%,#0D1C44 45%,#152B60 100%);padding:36px 20px}
-.rp-card{background:#fff;border-radius:24px;width:100%;max-width:440px;padding:40px 36px;box-shadow:0 32px 80px -16px rgba(0,0,0,.5)}
+.rp-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(900px 500px at 50% 0%, rgba(47,128,255,0.12), transparent 70%), #05070B;padding:36px 20px}
+.rp-card{background:rgba(18, 30, 48, 0.72);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.08);border-radius:24px;width:100%;max-width:440px;padding:40px 36px;box-shadow:0 32px 80px -16px rgba(0,0,0,.7);color:#fff}
 .rp-field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
-.rp-field label{font-size:11.5px;font-weight:800;color:#334155;text-transform:uppercase;letter-spacing:.06em}
-.rp-field input{border:1.5px solid #E2E8F0;border-radius:11px;padding:0 44px 0 16px;height:48px;font-size:14.5px;color:#0F172A;outline:none;font-family:inherit;transition:border-color .18s;background:#F8FAFC;width:100%;box-sizing:border-box}
-.rp-field input:focus{border-color:#1D6FE0;box-shadow:0 0 0 3px rgba(29,111,224,.16);background:#fff}
+.rp-field label{font-size:11.5px;font-weight:800;color:#CBD5E1;text-transform:uppercase;letter-spacing:.06em}
+.rp-field input{border:1.5px solid rgba(255,255,255,0.12);border-radius:11px;padding:0 44px 0 16px;height:48px;font-size:14.5px;color:#FFFFFF;outline:none;font-family:inherit;transition:border-color .18s;background:rgba(12, 23, 38, 0.85);width:100%;box-sizing:border-box}
+.rp-field input:focus{border-color:#2F80FF;box-shadow:0 0 0 3px rgba(47,128,255,.2);background:rgba(18, 30, 48, 0.95)}
 .rp-pw-wrap{position:relative}
 .rp-pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:#94A3B8;cursor:pointer;padding:4px;display:flex;align-items:center}
-.rp-pw-toggle:hover{color:#475569}
-.rp-btn{width:100%;height:50px;background:linear-gradient(135deg,#1D6FE0,#0F52C0);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .18s;box-shadow:0 8px 24px -4px rgba(29,111,224,.45);display:flex;align-items:center;justify-content:center;gap:8px}
-.rp-btn:hover{transform:translateY(-1.5px);box-shadow:0 14px 32px -4px rgba(29,111,224,.55)}
+.rp-pw-toggle:hover{color:#2F80FF}
+.rp-btn{width:100%;height:50px;background:linear-gradient(135deg,#1E6FFB 0%,#8B5CF6 100%);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .18s;box-shadow:0 8px 24px -4px rgba(30,111,251,.45);display:flex;align-items:center;justify-content:center;gap:8px}
+.rp-btn:hover{transform:translateY(-1.5px);box-shadow:0 14px 32px -4px rgba(30,111,251,.55)}
 .rp-btn:disabled{opacity:.65;cursor:not-allowed;transform:none}
-.rp-err{background:#FEF2F2;border:1px solid #FECACA;border-radius:11px;padding:12px 16px;font-size:13px;color:#DC2626;margin-bottom:18px;display:flex;align-items:center;gap:8px}
-.rp-ok{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:11px;padding:12px 16px;font-size:13px;color:#15803D;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.rp-err{background:rgba(239, 68, 68, 0.12);border:1px solid rgba(239, 68, 68, 0.25);border-radius:11px;padding:12px 16px;font-size:13px;color:#F87171;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.rp-ok{background:rgba(16, 185, 129, 0.12);border:1px solid rgba(16, 185, 129, 0.25);border-radius:11px;padding:12px 16px;font-size:13px;color:#34D399;margin-bottom:18px;display:flex;align-items:center;gap:8px}
 .rp-strength{height:4px;border-radius:2px;margin-top:6px;transition:all .3s}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:480px){.rp-wrap{padding:20px 14px}.rp-card{padding:32px 20px;border-radius:20px}.rp-field input{font-size:16px}}

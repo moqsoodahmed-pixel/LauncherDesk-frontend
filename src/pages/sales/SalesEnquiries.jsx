@@ -3,7 +3,7 @@ import { useSalesAuth } from '../../context/SalesAuthContext'
 
 const SOURCE_COLORS = {
   contact: { bg:'#EFF6FF', color:'#1D6FE0', label:'Contact Form' },
-  lead:    { bg:'#FFF7ED', color:'#F97316', label:'Service Enquiry' },
+  lead:    { bg:'rgba(14, 165, 233, 0.12)', color:'#0EA5E9', label:'Service Enquiry' },
   quote:   { bg:'#F5F3FF', color:'#7C3AED', label:'Quote Request' },
 }
 
@@ -104,7 +104,7 @@ export default function SalesEnquiries() {
         {[
           {key:'all',label:'All Forms',color:'#475569'},
           {key:'contact',label:'Contact Form',color:'#1D6FE0'},
-          {key:'lead',label:'Service Enquiries',color:'#F97316'},
+          {key:'lead',label:'Service Enquiries',color:'#0EA5E9'},
           {key:'quote',label:'Quote Requests',color:'#7C3AED'},
         ].map(s => (
           <button key={s.key} onClick={()=>{setSource(s.key);setPage(1)}}
@@ -168,7 +168,7 @@ export default function SalesEnquiries() {
                       )}
                       {item.email && (
                         <a href={`mailto:${item.email}`}
-                          style={{padding:'5px 8px',background:'#FFF7ED',color:'#F97316',borderRadius:6,fontSize:12,fontWeight:600,textDecoration:'none',whiteSpace:'nowrap'}}>
+                          style={{padding:'5px 8px',background:'rgba(139, 92, 246, 0.15)',color:'#8B5CF6',borderRadius:6,fontSize:12,fontWeight:600,textDecoration:'none',whiteSpace:'nowrap'}}>
                           Mail
                         </a>
                       )}
@@ -241,7 +241,7 @@ export default function SalesEnquiries() {
                     style={{flex:1,padding:'10px',background:'#DCFCE7',color:'#16A34A',borderRadius:9,fontWeight:700,fontSize:13,textDecoration:'none',textAlign:'center'}}>💬 WhatsApp</a>
                 </>}
                 {selected.email && (
-                  <a href={`mailto:${selected.email}`} style={{flex:1,padding:'10px',background:'#FFF7ED',color:'#F97316',borderRadius:9,fontWeight:700,fontSize:13,textDecoration:'none',textAlign:'center'}}>✉️ Email</a>
+                  <a href={`mailto:${selected.email}`} style={{flex:1,padding:'10px',background:'rgba(139, 92, 246, 0.15)',color:'#8B5CF6',borderRadius:9,fontWeight:700,fontSize:13,textDecoration:'none',textAlign:'center'}}>✉️ Email</a>
                 )}
               </div>
 

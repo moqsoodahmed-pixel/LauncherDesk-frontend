@@ -106,20 +106,20 @@ export default function UserServiceDetail() {
 
           {order.steps?.length>0&&(
             <div className="ud-card ud-pad" style={{marginBottom:16}}>
-              <h2 style={{fontSize:15,fontWeight:700,color:'#1A2F4E',marginBottom:20}}>Service Progress</h2>
+              <h2 style={{fontSize:15,fontWeight:700,color:'#FFFFFF',marginBottom:20}}>Service Progress</h2>
               <ol style={{listStyle:'none',position:'relative',padding:0,margin:0}}>
-                <div style={{position:'absolute',left:17,top:18,bottom:18,width:2,background:'#E2E8F0',zIndex:0}}/>
+                <div style={{position:'absolute',left:17,top:18,bottom:18,width:2,background:'rgba(255,255,255,0.08)',zIndex:0}}/>
                 {order.steps.map((step,idx)=>{
                   const isDone=step.status==='completed', isActive=step.status==='in-progress'
                   return (
                     <li key={idx} style={{display:'flex',gap:16,position:'relative',zIndex:1,marginBottom:idx<order.steps.length-1?20:0}}>
-                      <div style={{width:36,height:36,borderRadius:'50%',flexShrink:0,background:isDone?'#1D6FE0':isActive?'#FFFBEB':'#F8FAFC',border:`2px solid ${isDone?'#1D6FE0':isActive?'#D97706':'#E2E8F0'}`,display:'grid',placeItems:'center'}}>
-                        <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke={isDone?'#fff':isActive?'#D97706':'#CBD5E1'} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{(isDone?'M9 11l3 3L22 4':'M12 6v6l4 2|M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z').split('|').map((p,i)=><path key={i} d={p}/>)}</svg>
+                      <div style={{width:36,height:36,borderRadius:'50%',flexShrink:0,background:isDone?'#1E6FFB':isActive?'rgba(245, 158, 11, 0.15)':'rgba(255,255,255,0.05)',border:`2px solid ${isDone?'#38BDF8':isActive?'#F59E0B':'rgba(255,255,255,0.1)'}`,display:'grid',placeItems:'center'}}>
+                        <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke={isDone?'#fff':isActive?'#F59E0B':'#64748B'} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{(isDone?'M9 11l3 3L22 4':'M12 6v6l4 2|M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z').split('|').map((p,i)=><path key={i} d={p}/>)}</svg>
                       </div>
                       <div style={{paddingTop:6,minWidth:0}} className="ud-break">
-                        <div style={{fontSize:14,fontWeight:700,color:step.status==='pending'?'#94A3B8':'#1A2F4E',marginBottom:2}}>{step.title}</div>
-                        {step.description&&<div style={{fontSize:13,color:'#64748B',lineHeight:1.5}}>{step.description}</div>}
-                        {step.completedAt&&<div style={{fontSize:12,color:'#94A3B8',marginTop:4}}>Completed {new Date(step.completedAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div>}
+                        <div style={{fontSize:14,fontWeight:700,color:step.status==='pending'?'#64748B':'#FFFFFF',marginBottom:2}}>{step.title}</div>
+                        {step.description&&<div style={{fontSize:13,color:'#94A3B8',lineHeight:1.5}}>{step.description}</div>}
+                        {step.completedAt&&<div style={{fontSize:12,color:'rgba(255,255,255,0.45)',marginTop:4}}>Completed {new Date(step.completedAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div>}
                       </div>
                     </li>
                   )
@@ -132,28 +132,28 @@ export default function UserServiceDetail() {
         </div>
         <aside className="ud-detail-side">
           <div className="ud-card" style={{padding:'20px',marginBottom:14}}>
-            <h3 style={{fontSize:13.5,fontWeight:700,color:'#1A2F4E',marginBottom:14}}>Your Professional</h3>
+            <h3 style={{fontSize:13.5,fontWeight:700,color:'#FFFFFF',marginBottom:14}}>Your Professional</h3>
             {order.assignedProfessional?.name ? (
               <div>
-                <div style={{width:44,height:44,borderRadius:'50%',background:'linear-gradient(135deg,#1A2F4E,#1D6FE0)',color:'#fff',fontSize:16,fontWeight:700,display:'grid',placeItems:'center',marginBottom:10}}>{order.assignedProfessional.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)}</div>
-                <div style={{fontWeight:700,color:'#1A2F4E',fontSize:14}}>{order.assignedProfessional.name}</div>
-                {order.assignedProfessional.designation&&<div style={{fontSize:12.5,color:'#64748B',marginTop:2}}>{order.assignedProfessional.designation}</div>}
-                {order.assignedProfessional.email&&<a href={`mailto:${order.assignedProfessional.email}`} className="ud-break" style={{fontSize:12,color:'#1D6FE0',display:'block',marginTop:8}}>{order.assignedProfessional.email}</a>}
+                <div style={{width:44,height:44,borderRadius:'50%',background:'linear-gradient(135deg,#1E6FFB,#8B5CF6)',color:'#fff',fontSize:16,fontWeight:700,display:'grid',placeItems:'center',marginBottom:10}}>{order.assignedProfessional.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)}</div>
+                <div style={{fontWeight:700,color:'#FFFFFF',fontSize:14}}>{order.assignedProfessional.name}</div>
+                {order.assignedProfessional.designation&&<div style={{fontSize:12.5,color:'#94A3B8',marginTop:2}}>{order.assignedProfessional.designation}</div>}
+                {order.assignedProfessional.email&&<a href={`mailto:${order.assignedProfessional.email}`} className="ud-break" style={{fontSize:12,color:'#38BDF8',display:'block',marginTop:8}}>{order.assignedProfessional.email}</a>}
               </div>
             ) : <p style={{fontSize:13,color:'#94A3B8',margin:0}}>A professional will be assigned once your service starts.</p>}
           </div>
           {order.payment&&(
             <div className="ud-card" style={{padding:'20px',marginBottom:14}}>
-              <h3 style={{fontSize:13.5,fontWeight:700,color:'#1A2F4E',marginBottom:12}}>Payment</h3>
-              <div style={{display:'flex',justifyContent:'space-between',fontSize:13,marginBottom:6}}><span style={{color:'#64748B'}}>Amount paid</span><span style={{fontWeight:700,color:'#1A2F4E'}}>₹{order.payment.amountRupees?.toLocaleString('en-IN')}</span></div>
-              <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'#94A3B8',marginBottom:10}}><span>Status</span><span style={{color:'#16A34A',fontWeight:600}}>✓ Paid</span></div>
-              <Link to="/user/invoices" style={{display:'block',textAlign:'center',padding:'9px',borderRadius:8,background:'#F1F5F9',color:'#1A2F4E',fontWeight:700,fontSize:12.5,textDecoration:'none'}}>View Invoice</Link>
+              <h3 style={{fontSize:13.5,fontWeight:700,color:'#FFFFFF',marginBottom:12}}>Payment</h3>
+              <div style={{display:'flex',justifyContent:'space-between',fontSize:13,marginBottom:6}}><span style={{color:'#94A3B8'}}>Amount paid</span><span style={{fontWeight:700,color:'#FFFFFF'}}>₹{order.payment.amountRupees?.toLocaleString('en-IN')}</span></div>
+              <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'rgba(255,255,255,0.45)',marginBottom:10}}><span>Status</span><span style={{color:'#34D399',fontWeight:600}}>✓ Paid</span></div>
+              <Link to="/user/invoices" style={{display:'block',textAlign:'center',padding:'9px',borderRadius:8,background:'rgba(255,255,255,0.06)',color:'#38BDF8',fontWeight:700,fontSize:12.5,textDecoration:'none',border:'1px solid rgba(255,255,255,0.08)'}}>View Invoice</Link>
             </div>
           )}
-          <div style={{background:'linear-gradient(135deg,#1A2F4E,#1D6FE0)',borderRadius:14,padding:'20px',color:'#fff'}}>
+          <div style={{background:'linear-gradient(135deg, rgba(14, 22, 38, 0.85) 0%, rgba(20, 32, 56, 0.85) 100%)',border:'1px solid rgba(56, 189, 248, 0.25)',backdropFilter:'blur(16px)',borderRadius:14,padding:'20px',color:'#fff',boxShadow:'0 8px 32px rgba(0,0,0,0.35)'}}>
             <h3 style={{fontSize:13.5,fontWeight:700,color:'#fff',marginBottom:8}}>Looking for support?</h3>
             <p style={{fontSize:12.5,color:'rgba(255,255,255,.7)',marginBottom:14,lineHeight:1.5}}>Raise a ticket about this order and our team will follow up by email.</p>
-            <Link to={supportLink} style={{display:'flex',alignItems:'center',justifyContent:'center',gap:7,padding:'10px',borderRadius:9,background:'#F97316',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none',marginBottom:8}}>Raise a Ticket</Link>
+            <Link to={supportLink} style={{display:'flex',alignItems:'center',justifyContent:'center',gap:7,padding:'10px',borderRadius:9,background:'linear-gradient(135deg, #1E6FFB 0%, #8B5CF6 100%)',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none',marginBottom:8,boxShadow:'0 4px 14px rgba(30,111,251,0.35)'}}>Raise a Ticket</Link>
             <a href={`https://wa.me/918548854859?text=${encodeURIComponent(`Hi, regarding my service: ${order.serviceTitle}`)}`} target="_blank" rel="noopener noreferrer" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:7,padding:'10px',borderRadius:9,background:'#25D366',color:'#fff',fontWeight:700,fontSize:13,textDecoration:'none'}}>WhatsApp Us</a>
           </div>
         </aside>

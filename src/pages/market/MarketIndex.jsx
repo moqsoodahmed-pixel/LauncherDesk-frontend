@@ -62,12 +62,12 @@ export default function MarketIndex() {
       {/* CTA band */}
       <section className="section-sm" style={{ paddingBottom: 80 }}>
         <div className="wrap">
-          <div className="card reveal-up" style={{ background: 'var(--navy)', color: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24, flexWrap: 'wrap', padding: '34px 38px' }}>
+          <div className="card reveal-up" style={{ background: 'linear-gradient(135deg, rgba(30, 136, 229, 0.16) 0%, rgba(124, 77, 255, 0.12) 100%)', border: '1px solid rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: 20, color: '#fff', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24, flexWrap: 'wrap', padding: '34px 38px', boxShadow: '0 16px 40px rgba(0,0,0,0.5)' }}>
             <div>
               <h3 style={{ color: '#fff', fontSize: 24 }}>Not sure which tool fits?</h3>
-              <p style={{ color: '#9ab5d4', marginTop: 8, maxWidth: 520 }}>Tell us how you work and we'll recommend the right stack — then set it up, migrate your data and train your team.</p>
+              <p style={{ color: '#B9C2CF', marginTop: 8, maxWidth: 520 }}>Tell us how you work and we'll recommend the right stack — then set it up, migrate your data and train your team.</p>
             </div>
-            <a className="btn btn-light" href="/company/contact">Talk to Our Expert</a>
+            <a className="btn btn-primary" href="/company/contact">Talk to Our Expert</a>
           </div>
         </div>
       </section>

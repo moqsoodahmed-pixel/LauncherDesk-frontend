@@ -163,10 +163,10 @@ export default function AdminLayout() {
         body{font-family:'Manrope',system-ui,sans-serif}
 
         /* ── Shell ── */
-        .adm-shell{display:flex;height:100vh;height:100dvh;overflow:hidden;font-family:'Manrope',system-ui,sans-serif;background:#F1F5F9}
+        .adm-shell{display:flex;height:100vh;height:100dvh;overflow:hidden;font-family:'Manrope',system-ui,sans-serif;background:#05070B;color:#FFFFFF}
 
         /* ── Sidebar base ── */
-        .adm-sidebar{background:#1C2434;display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
+        .adm-sidebar{background:#08111D;border-right:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
         .adm-sidebar-desktop{width:240px;transition:width .22s cubic-bezier(.2,.7,.3,1)}
         .adm-sidebar-desktop.collapsed{width:68px}
 
@@ -175,10 +175,10 @@ export default function AdminLayout() {
           position:fixed;top:0;left:0;bottom:0;z-index:200;
           width:260px;transform:translateX(-100%);
           transition:transform .25s cubic-bezier(.2,.7,.3,1);
-          box-shadow:4px 0 24px rgba(0,0,0,.18);
+          box-shadow:4px 0 24px rgba(0,0,0,.5);
         }
         .adm-sidebar-mobile.open{transform:translateX(0)}
-        .adm-overlay{position:fixed;inset:0;z-index:199;background:rgba(0,0,0,.45);backdrop-filter:blur(2px)}
+        .adm-overlay{position:fixed;inset:0;z-index:199;background:rgba(0,0,0,.65);backdrop-filter:blur(4px)}
 
         /* ── Sidebar internals ── */
         .adm-brand{height:60px;display:flex;align-items:center;gap:10px;padding:0 14px 0 16px;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
@@ -196,7 +196,7 @@ export default function AdminLayout() {
           border:0;background:none;width:100%;font-family:inherit;
         }
         .adm-nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
-        .adm-nav-item.active{background:#1D5DB8;color:#fff}
+        .adm-nav-item.active{background:#2563EB;color:#fff}
         .adm-logout-btn{color:#FF8080}
         .adm-logout-btn:hover{background:rgba(255,128,128,.12);color:#FF6060}
 
@@ -209,21 +209,21 @@ export default function AdminLayout() {
         .adm-main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 
         /* ── Topbar ── */
-        .adm-topbar{height:60px;background:#fff;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;padding:0 16px;gap:12px;flex-shrink:0}
-        .adm-hamburger{display:none;background:none;border:0;cursor:pointer;color:#64748B;padding:4px;border-radius:6px;flex-shrink:0}
-        .adm-hamburger:hover{background:#F1F5F9}
+        .adm-topbar{height:60px;background:rgba(8, 17, 29, 0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;padding:0 16px;gap:12px;flex-shrink:0}
+        .adm-hamburger{display:none;background:none;border:0;cursor:pointer;color:#8A98AA;padding:4px;border-radius:6px;flex-shrink:0}
+        .adm-hamburger:hover{background:rgba(255,255,255,0.05)}
         .adm-search-wrap{flex:1;max-width:340px;position:relative}
         .adm-search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%)}
-        .adm-search-input{width:100%;height:36px;border:1px solid #E2E8F0;border-radius:8px;padding:0 12px 0 30px;font-size:13.5px;color:#1C2434;outline:none;background:#F8FAFC;font-family:inherit}
+        .adm-search-input{width:100%;height:36px;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0 12px 0 30px;font-size:13.5px;color:#FFFFFF;outline:none;background:rgba(18, 30, 48, 0.72);font-family:inherit}
         .adm-topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-        .adm-icon-btn{width:36px;height:36px;border-radius:8px;background:#F8FAFC;border:1px solid #E2E8F0;display:grid;place-items:center;cursor:pointer;text-decoration:none;flex-shrink:0}
+        .adm-icon-btn{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);display:grid;place-items:center;cursor:pointer;text-decoration:none;flex-shrink:0;color:#B8C5D8}
         .adm-avatar-top{width:34px;height:34px;font-size:13px}
-        .adm-topbar-name{font-size:13px;font-weight:600;color:#1C2434;white-space:nowrap}
+        .adm-topbar-name{font-size:13px;font-weight:600;color:#FFFFFF;white-space:nowrap}
 
         /* ── Content ── */
-        .adm-content{flex:1;overflow-y:auto;padding:20px;background:#F1F5F9}
+        .adm-content{flex:1;overflow-y:auto;padding:20px;background:#05070B}
         .adm-content::-webkit-scrollbar{width:5px}
-        .adm-content::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:4px}
+        .adm-content::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:4px}
 
         /* ── TABLET (768–1024px) ── */
         @media(max-width:1024px){

@@ -176,7 +176,7 @@ export default function SalesContacts() {
                   <a href={`tel:${selected.mobile}`} style={{flex:1,minWidth:100,padding:'10px',background:'#EEF2FF',color:'#3B5BDB',borderRadius:9,fontWeight:700,fontSize:13,textDecoration:'none',textAlign:'center'}}>📞 Call</a>
                   <a href={`https://wa.me/91${selected.mobile.replace(/\D/g,'')}`} target="_blank" rel="noopener noreferrer" style={{flex:1,minWidth:100,padding:'10px',background:'#DCFCE7',color:'#16A34A',borderRadius:9,fontWeight:700,fontSize:13,textDecoration:'none',textAlign:'center'}}>💬 WhatsApp</a>
                 </>}
-                {selected.email && <a href={`mailto:${selected.email}`} style={{flex:1,minWidth:100,padding:'10px',background:'#FFF7ED',color:'#F97316',borderRadius:9,fontWeight:700,fontSize:13,textDecoration:'none',textAlign:'center'}}>✉️ Email</a>}
+                {selected.email && <a href={`mailto:${selected.email}`} style={{flex:1,minWidth:100,padding:'10px',background:'rgba(139, 92, 246, 0.15)',color:'#8B5CF6',borderRadius:9,fontWeight:700,fontSize:13,textDecoration:'none',textAlign:'center'}}>✉️ Email</a>}
               </div>
               <div style={{display:'flex',gap:10}}>
                 <button onClick={()=>setSelected(null)} style={{flex:1,padding:'11px',background:'#F1F5F9',border:'none',borderRadius:9,fontSize:14,fontWeight:600,cursor:'pointer',fontFamily:'inherit',color:'#475569'}}>Cancel</button>

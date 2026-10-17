@@ -23,22 +23,23 @@ function RoadmapSummary({ roadmap }) {
   const priClass = { hi: 'hi', mid: 'mid', low: 'low' }
   return (
     <div style={{
-      background: 'linear-gradient(160deg,#FBFDFF,#F2F8FF)',
-      border: '1px solid var(--line)',
+      background: 'rgba(22, 27, 34, 0.78)',
+      border: '1px solid rgba(255, 255, 255, 0.08)',
       borderRadius: 16,
       padding: '24px 26px',
       marginBottom: 24,
-      boxShadow: '0 16px 40px rgba(15,28,46,.07)',
+      boxShadow: '0 16px 40px rgba(0,0,0,0.4)',
+      backdropFilter: 'blur(20px)',
     }}>
-      <div style={{ fontSize: 11, fontFamily: 'var(--font)', fontWeight: 800, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--blue-dark)', marginBottom: 6 }}>
+      <div style={{ fontSize: 11, fontFamily: 'var(--font)', fontWeight: 800, letterSpacing: '.16em', textTransform: 'uppercase', color: '#2196F3', marginBottom: 6 }}>
         Your LauncherDesk Roadmap
       </div>
-      <h3 style={{ color: 'var(--navy)', fontSize: 18, marginBottom: 4 }}>Here's what your business needs next</h3>
+      <h3 style={{ color: '#FFFFFF', fontSize: 18, marginBottom: 4 }}>Here's what your business needs next</h3>
       {roadmap.answers && (
         <div style={{ fontSize: 13, color: 'var(--text-2)', marginBottom: 14, lineHeight: 1.6 }}>
-          {roadmap.answers.type && <span><b>What you're building:</b> {roadmap.answers.type} &nbsp;·&nbsp; </span>}
-          {roadmap.answers.state && <span><b>State:</b> {roadmap.answers.state} &nbsp;·&nbsp; </span>}
-          {roadmap.answers.founders && <span><b>Founders:</b> {roadmap.answers.founders} &nbsp;·&nbsp; </span>}
+          {roadmap.answers.type && <span><b>What you're building:</b> {roadmap.answers.type} &nbsp;, &nbsp; </span>}
+          {roadmap.answers.state && <span><b>State:</b> {roadmap.answers.state} &nbsp;, &nbsp; </span>}
+          {roadmap.answers.founders && <span><b>Founders:</b> {roadmap.answers.founders} &nbsp;, &nbsp; </span>}
           {roadmap.answers.turnover && <span><b>Turnover:</b> {roadmap.answers.turnover}</span>}
         </div>
       )}
@@ -54,7 +55,7 @@ function RoadmapSummary({ roadmap }) {
               {priLabel[item[2]] || item[2]}
             </span>
             <div>
-              <b style={{ fontFamily: 'var(--font)', fontSize: 14.5, color: 'var(--navy)', display: 'block' }}>{item[0]}</b>
+              <b style={{ fontFamily: 'var(--font)', fontSize: 14.5, color: '#FFFFFF', display: 'block' }}>{item[0]}</b>
               <p style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 2 }}>{item[1]}</p>
             </div>
           </div>
@@ -85,10 +86,10 @@ function ContactForm({ roadmap }) {
     setLoading(true)
     setError('')
 
-    // Build message — include roadmap if available
+    // Build message, include roadmap if available
     let fullMessage = message
     if (roadmap && roadmap.plan && roadmap.plan.length > 0) {
-      const roadmapText = roadmap.plan.map(p => `${p[2] === 'hi' ? 'Now' : p[2] === 'mid' ? 'Soon' : 'Later'}: ${p[0]} — ${p[1]}`).join('\n')
+      const roadmapText = roadmap.plan.map(p => `${p[2] === 'hi' ? 'Now' : p[2] === 'mid' ? 'Soon' : 'Later'}: ${p[0]}, ${p[1]}`).join('\n')
       const answersText = roadmap.answers
         ? `Type: ${roadmap.answers.type || '-'}, State: ${roadmap.answers.state || '-'}, Founders: ${roadmap.answers.founders || '-'}, Turnover: ${roadmap.answers.turnover || '-'}`
         : ''
@@ -160,7 +161,7 @@ function ContactForm({ roadmap }) {
         <div className="field"><input type="tel" required placeholder="Mobile number*" value={mobile} onChange={e => setMobile(e.target.value)} /></div>
         <div className="field"><input type="email" required placeholder="Email address*" value={email} onChange={e => setEmail(e.target.value)} /></div>
         <div className="field">
-          <label style={{fontSize:13,fontWeight:600,color:'var(--navy)',marginBottom:8,display:'block'}}>What do you need help with? <span style={{color:'#94A3B8',fontWeight:400}}>(select all that apply)</span></label>
+          <label style={{fontSize:13,fontWeight:600,color:'#FFFFFF',marginBottom:8,display:'block'}}>What do you need help with? <span style={{color:'#B9C2CF',fontWeight:400}}>(select all that apply)</span></label>
           <div style={{display:'flex',flexWrap:'wrap',gap:8}}>
             {REQUIREMENT_OPTIONS.map(o => {
               const selected = (requirement||'').split(',').map(s=>s.trim()).filter(Boolean).includes(o)
@@ -172,10 +173,10 @@ function ContactForm({ roadmap }) {
                     setRequirement(next.join(', '))
                   }}
                   style={{
-                    padding:'7px 14px',borderRadius:99,fontSize:13,fontWeight:600,cursor:'pointer',
-                    border:selected?'1.5px solid #1D6FE0':'1.5px solid var(--line)',
-                    background:selected?'#EEF2FF':'#fff',
-                    color:selected?'#1D6FE0':'var(--navy)',transition:'all .15s'
+                    padding: '7px 14px', borderRadius: 99, fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                    border: selected ? '1px solid #38BDF8' : '1px solid rgba(255, 255, 255, 0.12)',
+                    background: selected ? 'rgba(30, 111, 251, 0.22)' : 'rgba(255, 255, 255, 0.05)',
+                    color: selected ? '#38BDF8' : '#CBD5E1', transition: 'all .15s'
                   }}
                 >{o}</button>
               )
@@ -231,7 +232,7 @@ export default function ContactPage() {
           </nav>
           <span className="eyebrow reveal-up in" style={{ marginTop: 16, display: 'block' }}>Get in touch</span>
           <h1 className="reveal-up in">Tell us what your business needs.</h1>
-          <p className="lead reveal-up in">Whether you're starting a company, managing compliance, building technology or looking to grow — start with a conversation. We'll do the rest.</p>
+          <p className="lead reveal-up in">Whether you're starting a company, managing compliance, building technology or looking to grow, start with a conversation. We'll do the rest.</p>
         </div>
       </header>
 
@@ -274,12 +275,12 @@ export default function ContactPage() {
                 </span>
                 <div>
                   <b>Office</b>
-                  <span>4th Block, Koramangala, Bengaluru – 560095, Karnataka, India.</span>
+                  <span>4th Block, Koramangala, Bengaluru, 560095, Karnataka, India.</span>
                   <span style={{ fontSize: 12.5, color: 'var(--text-3)', display: 'block', marginTop: 4 }}>DutyLaunch Solutions Private Limited</span>
                 </div>
               </div>
 
-              {/* Phase 18 — reassurance flow before/around the form */}
+              {/* Phase 18, reassurance flow before/around the form */}
               <div className="ctx-cta" style={{ display: 'block', marginTop: 8 }}>
                 <span className="ctx-cta-prompt" style={{ display: 'block', marginBottom: 10 }}>What happens after you submit?</span>
                 <ol style={{ margin: 0, paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 6, fontSize: 13.5, color: 'var(--text-2)' }}>

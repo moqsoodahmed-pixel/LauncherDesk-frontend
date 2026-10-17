@@ -212,6 +212,7 @@ export default function App() {
                     <Route path="/transparency" element={<TransparencyPage />} />
                     <Route path="/disclaimer" element={<Navigate to="/legal/disclaimer" replace />} />
                     <Route path="/market" element={<MarketIndex />} />
+                    <Route path="/marketplace" element={<Navigate to="/market" replace />} />
                     <Route path="/market/category" element={<CategoryPage />} />
                     <Route path="/market/product" element={<ProductPage />} />
                     <Route path="/salesQuotation" element={<SalesQuotationRedirect />} />

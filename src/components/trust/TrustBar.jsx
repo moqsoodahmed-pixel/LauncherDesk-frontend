@@ -1,12 +1,11 @@
 import { COMPANY_METRICS, TRUST_BADGES } from '../../data/company'
 
 /**
- * TrustBar — compact, honest hero trust strip (Phase 2 / Phase 3).
+ * TrustBar, compact, honest hero trust strip (Phase 2 / Phase 3).
  *
  * Reads only from the single centralized source (company.js COMPANY_METRICS /
  * TRUST_BADGES) so numbers can never drift out of sync with the rest of the
- * site. Any metric that is `null` (not yet verified) is simply not rendered —
- * this component never fabricates a rating, a client count or a review count.
+ * site. Any metric that is `null` (not yet verified) is simply not rendered, * this component never fabricates a rating, a client count or a review count.
  *
  * Renders nothing if there is genuinely no verified signal yet, rather than
  * showing an empty/awkward bar.
@@ -33,8 +32,7 @@ export default function TrustBar({ className = '' }) {
     items.push({ id: 'rating', value: `${COMPANY_METRICS.rating}/5`, label: `From ${COMPANY_METRICS.reviewCount}+ verified reviews`, stars: true })
   }
 
-  // Always-true structural facts (not a "metric" that needs verification —
-  // this is simply how the service is delivered).
+  // Always-true structural facts (not a "metric" that needs verification, // this is simply how the service is delivered).
   items.push({ id: 'contact', value: '1', label: 'Single point of contact' })
 
   // 'Made in India' is already shown (with the flag) in the homepage stats strip.

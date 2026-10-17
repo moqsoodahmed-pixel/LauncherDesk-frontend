@@ -68,32 +68,33 @@ function SectionContent({ id, data }) {
         {data.items.slice(0, 6).map((item, i) => (
           <div key={i} style={{
             display: 'flex', alignItems: 'flex-start', gap: 14,
-            background: '#fff', borderRadius: 12,
-            border: '1px solid var(--line)',
-            padding: '14px 16px',
-            boxShadow: '0 1px 4px rgba(15,28,46,0.04)',
+            background: 'rgba(14, 22, 38, 0.70)', borderRadius: 14,
+            border: '1px solid rgba(255, 255, 255, 0.10)',
+            padding: '16px 18px',
+            backdropFilter: 'blur(20px)',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
             transition: 'border-color .18s, box-shadow .18s, transform .18s',
           }}
             onMouseEnter={e => {
-              e.currentTarget.style.borderColor = 'rgba(29,93,184,0.25)'
-              e.currentTarget.style.boxShadow = '0 6px 18px rgba(29,93,184,0.09)'
+              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.35)'
+              e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.5), 0 0 16px rgba(30, 111, 251, 0.2)'
               e.currentTarget.style.transform = 'translateX(3px)'
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.borderColor = 'var(--line)'
-              e.currentTarget.style.boxShadow = '0 1px 4px rgba(15,28,46,0.04)'
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.10)'
+              e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.35)'
               e.currentTarget.style.transform = 'translateX(0)'
             }}
           >
             {/* Numbered badge */}
             <span style={{
               width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
-              background: 'var(--brand-50)', border: '1.5px solid var(--brand-100)',
-              color: 'var(--blue)', fontWeight: 800, fontSize: 11,
+              background: 'rgba(30, 111, 251, 0.15)', border: '1px solid rgba(56, 189, 248, 0.3)',
+              color: '#38BDF8', fontWeight: 800, fontSize: 11,
               display: 'grid', placeItems: 'center', fontFamily: 'var(--font)',
               marginTop: 1,
             }}>{i + 1}</span>
-            <span style={{ fontSize: 14.5, lineHeight: 1.6, color: 'var(--text-2)' }}
+            <span style={{ fontSize: 14.5, lineHeight: 1.6, color: '#E2E8F0' }}
               dangerouslySetInnerHTML={{ __html: item }} />
           </div>
         ))}
@@ -117,19 +118,21 @@ function SectionContent({ id, data }) {
           {data.steps.slice(0, 6).map((step, i) => (
             <div key={i} style={{
               display: 'flex', gap: 16, alignItems: 'flex-start',
-              background: '#fff', borderRadius: 12,
-              border: '1px solid var(--line)',
-              padding: '16px 18px 16px 0',
+              background: 'rgba(14, 22, 38, 0.70)', borderRadius: 14,
+              border: '1px solid rgba(255, 255, 255, 0.10)',
+              padding: '16px 18px 16px 16px',
               position: 'relative', zIndex: 1,
+              backdropFilter: 'blur(20px)',
+              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
               transition: 'border-color .18s, box-shadow .18s',
             }}
               onMouseEnter={e => {
-                e.currentTarget.style.borderColor = 'rgba(29,93,184,0.28)'
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(29,93,184,0.10)'
+                e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.35)'
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.5), 0 0 16px rgba(30, 111, 251, 0.2)'
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.borderColor = 'var(--line)'
-                e.currentTarget.style.boxShadow = 'none'
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.10)'
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.35)'
               }}
             >
               {/* Step number circle */}
@@ -141,7 +144,7 @@ function SectionContent({ id, data }) {
                 marginLeft: 0, boxShadow: '0 4px 12px rgba(29,93,184,0.30)',
               }}>{i + 1}</span>
               <div style={{ flex: 1 }}>
-                <strong style={{ fontSize: 15, fontWeight: 700, color: 'var(--navy)', display: 'block', marginBottom: 4 }}>
+                <strong style={{ fontSize: 15, fontWeight: 700, color: '#FFFFFF', display: 'block', marginBottom: 4 }}>
                   {step.title}
                 </strong>
                 <p style={{ fontSize: 13.5, color: 'var(--text-2)', lineHeight: 1.65, margin: 0 }}>
@@ -160,9 +163,10 @@ function SectionContent({ id, data }) {
     <section id={id} style={{ marginBottom: 48 }}>
       <SectionHeading>{data.heading}</SectionHeading>
       <div style={{
-        background: '#fff', borderRadius: 14, overflow: 'hidden',
-        border: '1px solid var(--line)',
-        boxShadow: '0 2px 12px rgba(15,28,46,0.06)',
+        background: 'rgba(14, 22, 38, 0.75)', borderRadius: 14, overflow: 'hidden',
+        border: '1px solid rgba(255, 255, 255, 0.10)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+        backdropFilter: 'blur(20px)',
       }} dangerouslySetInnerHTML={{ __html: data.tableHtml }} />
     </section>
   )
@@ -178,7 +182,7 @@ function SectionHeading({ children }) {
   return (
     <h2 style={{
       fontSize: 'clamp(20px,2.4vw,27px)', fontWeight: 800,
-      letterSpacing: '-.02em', color: 'var(--navy)',
+      letterSpacing: '-.02em', color: '#FFFFFF',
       marginBottom: 20, paddingBottom: 12,
       borderBottom: '2px solid var(--brand-50)',
       position: 'relative',
@@ -211,10 +215,10 @@ function FaqSection({ data }) {
           const btnId = `faq-btn-${i}`
           return (
             <div key={i} style={{
-              background: '#fff', borderRadius: 12,
-              border: `1.5px solid ${isOpen ? 'rgba(29,93,184,0.30)' : 'var(--line)'}`,
-              boxShadow: isOpen ? '0 6px 20px rgba(29,93,184,0.10)' : '0 1px 4px rgba(15,28,46,0.04)',
-              overflow: 'hidden', transition: 'border-color .2s, box-shadow .2s',
+              background: 'rgba(14, 22, 38, 0.70)', borderRadius: 14,
+              border: `1.5px solid ${isOpen ? 'rgba(56, 189, 248, 0.40)' : 'rgba(255, 255, 255, 0.10)'}`,
+              boxShadow: isOpen ? '0 8px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(30, 111, 251, 0.2)' : '0 4px 16px rgba(0, 0, 0, 0.35)',
+              overflow: 'hidden', backdropFilter: 'blur(20px)', transition: 'border-color .2s, box-shadow .2s',
             }}>
               <button id={btnId} aria-expanded={isOpen} aria-controls={answerId}
                 onClick={() => toggle(i)}
@@ -222,17 +226,17 @@ function FaqSection({ data }) {
                   width: '100%', display: 'flex', alignItems: 'center',
                   justifyContent: 'space-between', gap: 16,
                   padding: '16px 18px', cursor: 'pointer',
-                  background: isOpen ? 'rgba(239,246,255,0.6)' : 'transparent',
+                  background: isOpen ? 'rgba(30, 111, 251, 0.12)' : 'transparent',
                   border: 'none', textAlign: 'left', fontFamily: 'inherit',
                   transition: 'background .15s',
                 }}>
-                <span style={{ fontSize: 15.5, fontWeight: 700, color: 'var(--navy)', lineHeight: 1.4 }}>
+                <span style={{ fontSize: 15.5, fontWeight: 700, color: '#FFFFFF', lineHeight: 1.4 }}>
                   {item.q}
                 </span>
                 <span style={{
                   width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
-                  background: isOpen ? 'var(--blue)' : 'var(--brand-50)',
-                  border: `1.5px solid ${isOpen ? 'var(--blue)' : 'var(--brand-100)'}`,
+                  background: isOpen ? '#1E6FFB' : 'rgba(255, 255, 255, 0.08)',
+                  border: `1.5px solid ${isOpen ? '#38BDF8' : 'rgba(255, 255, 255, 0.15)'}`,
                   display: 'grid', placeItems: 'center',
                   transition: 'background .2s, transform .25s',
                   transform: isOpen ? 'rotate(45deg)' : 'none',
@@ -300,8 +304,8 @@ function QuoteForm({ svc }) {
   const [done, setDone] = useState(false)
   const [err, setErr] = useState('')
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }))
-  const inp = { border: '1.5px solid #E2E8F0', borderRadius: 8, padding: '0 12px', fontSize: 13.5, color: '#1C2434', outline: 'none', fontFamily: 'inherit', background: '#fff', width: '100%', height: 38, boxSizing: 'border-box' }
-  const lbl = { fontSize: 12, fontWeight: 600, color: '#64748B', display: 'block', marginBottom: 4 }
+  const inp = { border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: 8, padding: '0 12px', fontSize: 13.5, color: '#F1F5F9', outline: 'none', fontFamily: 'inherit', background: 'rgba(10, 16, 28, 0.65)', width: '100%', height: 38, boxSizing: 'border-box' }
+  const lbl = { fontSize: 12, fontWeight: 600, color: '#94A3B8', display: 'block', marginBottom: 4 }
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -319,17 +323,17 @@ function QuoteForm({ svc }) {
   }
 
   if (done) return (
-    <div style={{ background: '#F0FDF4', border: '1.5px solid #BBF7D0', borderRadius: 12, padding: '20px 18px', textAlign: 'center' }} role="status">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2" style={{ width: 36, height: 36, margin: '0 auto 10px' }} aria-hidden="true"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
-      <div style={{ fontWeight: 700, color: '#15803D', fontSize: 15, marginBottom: 4 }}>Request received!</div>
-      <div style={{ fontSize: 13, color: '#166534' }}>Our expert will contact you within one business day.</div>
+    <div style={{ background: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.3)', borderRadius: 12, padding: '20px 18px', textAlign: 'center' }} role="status">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" style={{ width: 36, height: 36, margin: '0 auto 10px' }} aria-hidden="true"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
+      <div style={{ fontWeight: 700, color: '#4ADE80', fontSize: 15, marginBottom: 4 }}>Request received!</div>
+      <div style={{ fontSize: 13, color: '#86EFAC' }}>Our expert will contact you within one business day.</div>
     </div>
   )
 
   return (
-    <div style={{ background: '#fff', border: '1.5px solid #E2E8F0', borderRadius: 14, padding: '20px 18px', boxShadow: '0 4px 16px rgba(0,0,0,.06)' }}>
-      <div style={{ fontSize: 14, fontWeight: 800, color: '#1C2434', marginBottom: 4 }}>Get an exact quote</div>
-      <div style={{ fontSize: 12.5, color: '#64748B', marginBottom: 16 }}>Free consultation · No commitment</div>
+    <div style={{ background: 'rgba(14, 22, 38, 0.75)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 14, padding: '20px 18px', boxShadow: '0 8px 32px rgba(0,0,0,.3)' }}>
+      <div style={{ fontSize: 14, fontWeight: 800, color: '#F1F5F9', marginBottom: 4 }}>Get an exact quote</div>
+      <div style={{ fontSize: 12.5, color: '#94A3B8', marginBottom: 16 }}>Free consultation · No commitment</div>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 11 }} noValidate>
         <div><label htmlFor="qf-name" style={lbl}>Full Name *</label><input id="qf-name" style={inp} value={form.name} onChange={set('name')} placeholder="Your name" required aria-required="true" /></div>
         <div><label htmlFor="qf-mobile" style={lbl}>Mobile *</label><input id="qf-mobile" style={inp} type="tel" value={form.mobile} onChange={set('mobile')} placeholder="+91 98765 43210" required aria-required="true" /></div>
@@ -337,17 +341,17 @@ function QuoteForm({ svc }) {
         <div>
           <label htmlFor="qf-state" style={lbl}>State *</label>
           <select id="qf-state" style={{ ...inp, height: 38, cursor: 'pointer' }} value={form.state} onChange={set('state')} required aria-required="true">
-            <option value="">Select state…</option>
-            {STATES.map(s => <option key={s} value={s}>{s}</option>)}
+            <option value="" style={{ background: '#0E1626', color: '#F1F5F9' }}>Select state…</option>
+            {STATES.map(s => <option key={s} value={s} style={{ background: '#0E1626', color: '#F1F5F9' }}>{s}</option>)}
           </select>
         </div>
         <div><label htmlFor="qf-info" style={lbl}>Additional info <span style={{ fontWeight: 400 }}>(optional)</span></label><textarea id="qf-info" style={{ ...inp, height: 64, padding: '8px 12px', resize: 'vertical' }} value={form.info} onChange={set('info')} placeholder="Anything we should know?" /></div>
-        {err && <div role="alert" style={{ color: '#DC2626', fontSize: 12.5, background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 6, padding: '8px 10px' }}>{err}</div>}
-        <button type="submit" disabled={loading} style={{ height: 42, borderRadius: 9, background: '#1D6FE0', color: '#fff', fontWeight: 700, fontSize: 14, border: 'none', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? .7 : 1, fontFamily: 'inherit' }}>
+        {err && <div role="alert" style={{ color: '#F87171', fontSize: 12.5, background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: 6, padding: '8px 10px' }}>{err}</div>}
+        <button type="submit" disabled={loading} style={{ height: 42, borderRadius: 9, background: 'linear-gradient(135deg, #1E6FFB 0%, #8B5CF6 100%)', color: '#fff', fontWeight: 700, fontSize: 14, border: 'none', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? .7 : 1, fontFamily: 'inherit', boxShadow: '0 4px 14px rgba(30, 111, 251, 0.35)' }}>
           {loading ? 'Sending…' : 'Request Quote →'}
         </button>
         <p style={{ fontSize: 11, color: '#94A3B8', textAlign: 'center', margin: 0 }}>
-          By submitting, you agree to our <Link to="/legal/privacy" style={{ color: '#1D6FE0' }}>Privacy Policy</Link>.
+          By submitting, you agree to our <Link to="/legal/privacy" style={{ color: '#38BDF8' }}>Privacy Policy</Link>.
         </p>
       </form>
     </div>
@@ -562,17 +566,17 @@ function WebsitePackages({ packages }) {
         <SectionHeading>Choose your website</SectionHeading>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {packages.map(pkg => (
-            <div key={pkg.slug} style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: 14, padding: '18px 20px', boxShadow: '0 2px 10px rgba(15,28,46,.05)' }}>
+            <div key={pkg.slug} style={{ background: 'rgba(14, 22, 38, 0.70)', border: '1px solid rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 14, padding: '18px 20px', boxShadow: '0 4px 20px rgba(0,0,0,.25)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
                 <div style={{ flex: '1 1 300px', minWidth: 0 }}>
-                  <h3 style={{ fontSize: 18, fontWeight: 800, color: 'var(--navy)', margin: '0 0 4px' }}>{pkg.title}</h3>
-                  <p style={{ fontSize: 14, color: 'var(--text-2)', margin: '0 0 6px', lineHeight: 1.6 }}>{pkg.desc}</p>
-                  <Link to={`/services/${pkg.slug}`} style={{ fontSize: 13.5, fontWeight: 700, color: 'var(--blue)' }}>View details →</Link>
+                  <h3 style={{ fontSize: 18, fontWeight: 800, color: '#F1F5F9', margin: '0 0 4px' }}>{pkg.title}</h3>
+                  <p style={{ fontSize: 14, color: '#94A3B8', margin: '0 0 6px', lineHeight: 1.6 }}>{pkg.desc}</p>
+                  <Link to={`/services/${pkg.slug}`} style={{ fontSize: 13.5, fontWeight: 700, color: '#38BDF8' }}>View details →</Link>
                 </div>
                 <div style={{ textAlign: 'right', flex: '0 0 auto' }}>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '.08em' }}>Starts from</div>
-                  <div style={{ fontSize: 26, fontWeight: 900, color: 'var(--navy)', lineHeight: 1.2 }}>₹{pkg.amount.toLocaleString('en-IN')}</div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-3)' }}>+ GST</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '.08em' }}>Starts from</div>
+                  <div style={{ fontSize: 26, fontWeight: 900, color: '#F1F5F9', lineHeight: 1.2 }}>₹{pkg.amount.toLocaleString('en-IN')}</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#94A3B8' }}>+ GST</div>
                 </div>
                 <button type="button" onClick={() => pay(pkg)} disabled={loadingKey !== null} aria-busy={loadingKey === pkg.slug}
                   className="btn btn-primary" style={{ flex: '0 0 auto', minWidth: 170, justifyContent: 'center', opacity: loadingKey !== null && loadingKey !== pkg.slug ? .7 : 1, cursor: loadingKey !== null ? 'not-allowed' : 'pointer' }}>
@@ -657,7 +661,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
           so repeating it here would just be duplicate "paying" content taking
           up space in this column. */}
       {!hasTieredPlans && (
-        <div style={{ background: 'linear-gradient(135deg,#1A2F4E 0%,#1D6FE0 100%)', borderRadius: 16, padding: '24px 20px', color: '#fff', marginBottom: 16, boxShadow: '0 8px 32px rgba(29,111,224,.25)' }}>
+        <div style={{ background: 'linear-gradient(135deg, rgba(14, 22, 38, 0.85) 0%, rgba(20, 32, 56, 0.85) 100%)', border: '1px solid rgba(56, 189, 248, 0.25)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 16, padding: '24px 20px', color: '#fff', marginBottom: 16, boxShadow: '0 8px 32px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,0.1)' }}>
           {isDM ? (
             <div style={{ marginBottom: 16 }}>
               <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase', color: '#93C5FD', marginBottom: 4 }}>CHOOSE PLAN</div>
@@ -722,7 +726,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
               )}
             </>
           )}
-          <Link to="/company/contact" style={{ display: 'block', textAlign: 'center', padding: '12px', borderRadius: 10, background: '#F97316', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 10 }}>
+          <Link to="/company/contact" style={{ display: 'block', textAlign: 'center', padding: '12px', borderRadius: 10, background: 'linear-gradient(135deg, #1E6FFB 0%, #8B5CF6 100%)', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 10, boxShadow: '0 4px 14px rgba(30, 111, 251, 0.35)' }}>
             Talk to Our Expert →
           </Link>
           <a href={`https://wa.me/918548854859?text=${waMsg}`} target="_blank" rel="noopener noreferrer" aria-label={`WhatsApp us about ${svc.title}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '11px', borderRadius: 10, background: '#25D366', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 4 }}>
@@ -798,7 +802,7 @@ function ServiceAside({ priceCard, helpCard, svc }) {
               type="button"
               onClick={() => setShowFeeModal(true)}
               aria-haspopup="dialog"
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%', marginTop: 10, padding: '12px', borderRadius: 10, background: '#fff', color: '#1A2F4E', fontWeight: 800, fontSize: 14, border: 0, cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 6px 16px rgba(10,37,64,.25)', transition: 'transform .15s' }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%', marginTop: 10, padding: '12px', borderRadius: 10, background: 'linear-gradient(135deg, #1E6FFB 0%, #8B5CF6 100%)', color: '#fff', fontWeight: 800, fontSize: 14, border: 0, cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 16px rgba(30, 111, 251, 0.4)', transition: 'transform .15s' }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'none' }}
             >
@@ -882,7 +886,10 @@ function ServiceHeroVisual({ svc }) {
 
   // Extract clean deliverable highlight pills from service data or sensible defaults
   const deliverablePills = sections?.included?.items && sections.included.items.length > 0
-    ? sections.included.items.slice(0, 3).map(it => it.replace(/<[^>]*>?/gm, '').split(/[\(\—\-]/)[0].trim())
+    ? sections.included.items.slice(0, 3).map(it => {
+        const clean = it.replace(/<[^>]*>?/gm, '').split(/[\(\—\-]/)[0].trim()
+        return clean.length > 28 ? `${clean.slice(0, 26)}…` : clean
+      })
     : ['Dedicated RM', '100% Digital Process', 'Transparent SLA']
 
   return (
@@ -1000,15 +1007,15 @@ export default function ServicePage({ svc }) {
 
       {/* ── Hero ── */}
       <header className="page-hero" style={{
-        background: 'linear-gradient(180deg, #FBFDFF 0%, #F3F8FF 55%, #EEF5FF 100%)',
-        borderBottom: '1px solid var(--line)',
-        paddingTop: 'clamp(28px,4vw,48px)',
-        paddingBottom: 'clamp(28px,4vw,48px)',
+        background: 'linear-gradient(180deg, rgba(12, 28, 52, 0.50) 0%, rgba(7, 17, 29, 0.80) 100%)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+        paddingTop: 'clamp(36px,4.5vw,56px)',
+        paddingBottom: 'clamp(36px,4.5vw,56px)',
         position: 'relative', overflow: 'hidden',
       }}>
         <div aria-hidden="true" style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'radial-gradient(700px 500px at 80% -10%, rgba(43,114,212,.10), transparent 65%), radial-gradient(500px 400px at 5% 105%, rgba(43,114,212,.07), transparent 60%)'
+          background: 'radial-gradient(800px 500px at 70% 20%, rgba(33, 150, 243, 0.06), transparent 70%)'
         }} />
         <div className="wrap" style={{ position: 'relative', zIndex: 1 }}>
           <div className="svc-hero-grid">
@@ -1021,7 +1028,7 @@ export default function ServicePage({ svc }) {
               </nav>
               {/* Eyebrow — CSS ::before on .page-hero .eyebrow adds the dot automatically */}
               <span className="eyebrow reveal-up in" style={{ marginBottom: 16 }}>{eyebrow}</span>
-              <h1 className="reveal-up in" style={{ fontSize: 'clamp(23px, 4.8vw, 48px)', fontWeight: 900, letterSpacing: '-.04em', lineHeight: 1.08, color: 'var(--navy)', margin: '14px 0 16px', maxWidth: 640, overflowWrap: 'break-word', wordBreak: 'normal' }}>
+              <h1 className="reveal-up in" style={{ fontSize: 'clamp(23px, 4.8vw, 48px)', fontWeight: 900, letterSpacing: '-.04em', lineHeight: 1.08, color: '#FFFFFF', margin: '14px 0 16px', maxWidth: 640, overflowWrap: 'break-word', wordBreak: 'normal' }}>
                 {title}
                 {svc.titleSuffix && <> <span style={{ color: 'var(--blue)', whiteSpace: 'nowrap' }}>{svc.titleSuffix}</span></>}
               </h1>
@@ -1113,8 +1120,8 @@ export default function ServicePage({ svc }) {
                 return rendered
               })}
               {isRegistrationService(svc) && svc?.slug !== 'iso-certification' && (
-                <div style={{ marginTop: 28, padding: '12px 16px', borderRadius: 10, background: '#F8FAFC', border: '1px solid var(--line)', fontSize: 12.5, color: 'var(--text-3)', lineHeight: 1.6 }}>
-                  <strong style={{ color: 'var(--text-2)' }}>Please note:</strong> LauncherDesk assists with preparation and submission. Final approval depends on the government authority and may vary by document completeness and workload.
+                <div style={{ marginTop: 28, padding: '12px 16px', borderRadius: 10, background: 'rgba(14, 22, 38, 0.60)', border: '1px solid rgba(255, 255, 255, 0.08)', fontSize: 12.5, color: '#94A3B8', lineHeight: 1.6 }}>
+                  <strong style={{ color: '#F1F5F9' }}>Please note:</strong> LauncherDesk assists with preparation and submission. Final approval depends on the government authority and may vary by document completeness and workload.
                 </div>
               )}
               <WhyChooseGrid />

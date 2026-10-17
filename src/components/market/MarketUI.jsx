@@ -62,7 +62,7 @@ export function Tile({ p, size }) {
     return (
       <span
         className={`mk-tile${size === 'lg' ? ' lg' : ''}`}
-        style={{ '--c': p.c, background: '#fff', border: '1.5px solid #E2E8F0', overflow: 'hidden', padding: 0 }}
+        style={{ '--c': p.c, background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.12)', overflow: 'hidden', padding: 0 }}
       >
         <img
           src={p.logoUrl}

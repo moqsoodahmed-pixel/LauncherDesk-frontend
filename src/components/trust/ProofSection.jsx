@@ -16,12 +16,28 @@ import logoJacobella from '../../assets/clients/jacobella.webp'
  * "coming soon" state rather than fake content or an awkward blank gap.
  */
 
-/* Clients shown in "Real Businesses. Real Work." until full case studies are added to data/trust.js */
+/* Clients shown in "Real Businesses. Real Work." */
 const CLIENTS = [
-  { name: 'Al Barakah Group of Industries', logo: logoAlBarakah },
-  { name: 'Officerestore', logo: logoOfficerestore },
-  { name: 'Ocean Premium Construction', logo: logoOcean },
-  { name: 'Jacobella', logo: logoJacobella },
+  {
+    name: 'Al Barakah Group of Industries',
+    logo: logoAlBarakah,
+    url: null, // Pending real URL from business owner
+  },
+  {
+    name: 'Officerestore',
+    logo: logoOfficerestore,
+    url: 'https://officerestore.com/',
+  },
+  {
+    name: 'Ocean Premium Construction',
+    logo: logoOcean,
+    url: 'https://oceanpremiumconstruction.com/',
+  },
+  {
+    name: 'Jacobella',
+    logo: logoJacobella,
+    url: 'https://jacobella.com/',
+  },
 ]
 
 function Stars({ rating }) {
@@ -79,7 +95,7 @@ function TestimonialCard({ item }) {
       {item.verified && (
         <span className="proof-testi-badge">
           <svg viewBox="0 0 24 24" width={12} height={12} fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
-          {item.source ? `Verified — ${item.source}` : 'Verified review'}
+          {item.source ? `Verified: ${item.source}` : 'Verified review'}
         </span>
       )}
     </div>
@@ -115,14 +131,43 @@ export function CaseStudiesSection() {
         ) : (
           <>
           <style>{CLIENTS_CSS}</style>
-          <ul className="proof-clients" aria-label="Some of our clients">
-            {CLIENTS.map(c => (
-              <li key={c.name} className="proof-client reveal-up">
-                <span className="proof-client-logo"><img src={c.logo} alt={`${c.name} logo`} loading="lazy" /></span>
-                <span className="proof-client-name">{c.name}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="proof-clients" role="list" aria-label="Client stories">
+            {CLIENTS.map(c => {
+              if (!c.url) {
+                return (
+                  <div key={c.name} role="listitem">
+                    {/* Al Barakah has NO confirmed real website yet: non-clickable placeholder */}
+                    <div
+                      className="client-card client-card--pending proof-client reveal-up"
+                      aria-label={`${c.name} - website coming soon`}
+                    >
+                      <span className="proof-client-logo">
+                        <img src={c.logo} alt={`${c.name} logo`} loading="lazy" />
+                      </span>
+                      <span className="client-name proof-client-name">{c.name}</span>
+                      <span className="badge-pending">Website coming soon</span>
+                    </div>
+                  </div>
+                )
+              }
+              return (
+                <div key={c.name} role="listitem">
+                  <a
+                    href={c.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit ${c.name}'s website (opens in a new tab)`}
+                    className="client-card proof-client reveal-up"
+                  >
+                    <span className="proof-client-logo">
+                      <img src={c.logo} alt={`${c.name} logo`} loading="lazy" />
+                    </span>
+                    <span className="client-name proof-client-name">{c.name}</span>
+                  </a>
+                </div>
+              )
+            })}
+          </div>
           </>
         )}
       </div>
@@ -131,15 +176,100 @@ export function CaseStudiesSection() {
 }
 
 const CLIENTS_CSS = `
-.proof-clients { list-style:none; margin:0 auto; padding:0; max-width:1040px; display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
-.proof-client { background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px 16px 16px; display:flex; flex-direction:column;
-  align-items:center; gap:12px; box-shadow:0 2px 10px rgba(15,28,46,.05); transition:box-shadow .2s, transform .2s; }
-.proof-client:hover { transform:translateY(-3px); box-shadow:0 14px 30px -10px rgba(15,28,46,.18); }
-.proof-client-logo { height:118px; width:100%; display:grid; place-items:center; }
-.proof-client-logo img { max-height:118px; max-width:100%; object-fit:contain; border-radius:8px; }
-.proof-client-name { font-size:15px; font-weight:800; color:var(--navy); text-align:center; line-height:1.3; }
-@media (max-width:860px) { .proof-clients { grid-template-columns:repeat(2,1fr); } }
-@media (max-width:420px) { .proof-clients { gap:12px; } .proof-client-logo { height:92px; } .proof-client-logo img { max-height:92px; } }
+.proof-clients {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.client-card,
+.proof-client {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: rgba(14, 22, 38, 0.70);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 20px;
+  padding: 24px 20px;
+  text-decoration: none;
+  min-height: 180px;
+  min-width: 44px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+  outline: none;
+  box-sizing: border-box;
+  height: 100%;
+  cursor: pointer;
+}
+.client-card:hover,
+.proof-client:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.65), 0 0 24px rgba(30, 111, 251, 0.25);
+}
+.client-card:focus-visible {
+  outline: 2px solid #38BDF8;
+  outline-offset: 4px;
+}
+.client-card--pending {
+  cursor: default !important;
+}
+.client-card--pending:hover {
+  transform: none !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+}
+.proof-client-logo {
+  height: 90px;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.proof-client-logo img {
+  max-height: 70px;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  filter: brightness(1.05);
+}
+.client-name,
+.proof-client-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #F8FAFC;
+  text-align: center;
+  line-height: 1.35;
+}
+.badge-pending {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #94A3B8;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 999px;
+  padding: 3px 12px;
+  letter-spacing: 0.02em;
+}
+@media (max-width: 860px) {
+  .proof-clients { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+}
+@media (max-width: 480px) {
+  .proof-clients { grid-template-columns: 1fr; gap: 14px; }
+  .proof-client-logo { height: 90px; }
+  .proof-client-logo img { max-height: 70px; }
+}
 `
 
 export function TestimonialsSection() {

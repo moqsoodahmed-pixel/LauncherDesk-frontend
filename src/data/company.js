@@ -1,5 +1,5 @@
 /**
- * company.js — LauncherDesk centralized company data (single source of truth)
+ * company.js, LauncherDesk centralized company data (single source of truth)
  * Update here and it propagates everywhere automatically.
  * Set null for any value not yet verified/approved. Do NOT invent statistics.
  */
@@ -11,7 +11,7 @@ export const COMPANY = {
   tagline:      'Your Business HQ',
   subTagline:   'Launch. Manage. Grow.',
   proposition:  'One platform. One point of contact. Everything your business needs.',
-  description:  'LauncherDesk helps founders and businesses access, coordinate and manage the services they need — from registration and compliance to technology, finance, marketing and growth.',
+  description:  'LauncherDesk helps founders and businesses access, coordinate and manage the services they need, from registration and compliance to technology, finance, marketing and growth.',
   founded:      '2025',
   url:          'https://www.launcherdesk.com',
   phone:        '+91 85488 54859',
@@ -34,7 +34,7 @@ export const COMPANY = {
 }
 
 /**
- * COMPANY_METRICS — only populate values that are factually accurate and approved.
+ * COMPANY_METRICS, only populate values that are factually accurate and approved.
  * null = not yet verified. DO NOT fabricate these numbers.
  */
 export const COMPANY_METRICS = {

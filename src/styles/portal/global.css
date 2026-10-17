@@ -92,55 +92,55 @@
 /* ---- Tokens ---- */
 :root {
   /* Brand */
-  --ld-gold: #D4A574;
-  --ld-gold-light: #FCA311;
-  --ld-gold-border: rgba(212, 165, 116, 0.30);
-  --ld-gold-glow: rgba(212, 165, 116, 0.25);
-  --ld-gold-hover: rgba(212, 165, 116, 0.08);
+  --ld-gold: #42D9FF;
+  --ld-gold-light: #7C4DFF;
+  --ld-gold-border: rgba(255, 255, 255, 0.08);
+  --ld-gold-glow: rgba(33, 150, 243, 0.25);
+  --ld-gold-hover: rgba(33, 150, 243, 0.12);
 
   /* Semantic colors */
-  --ld-primary: #D4A574;
-  --ld-primary-dark: #b8895a;
+  --ld-primary: #2196F3;
+  --ld-primary-dark: #1E88E5;
   --ld-success: #10B981;
   --ld-warning: #F59E0B;
-  --ld-danger: #F43F5E;
-  --ld-info: #0891B2;
+  --ld-danger: #EF4444;
+  --ld-info: #42D9FF;
 
-  /* Backgrounds */
-  --ld-bg: #F5F1E8;
-  --ld-bg-page: linear-gradient(135deg, #FBF6EE 0%, #F5F1E8 100%);
-  --ld-surface: rgba(255, 255, 255, 0.55);
-  --ld-surface-solid: #FFFDF9;
-  --ld-surface-hover: rgba(255, 255, 255, 0.75);
+  /* Backgrounds — Unified Dark Corporate Theme */
+  --ld-bg: #0A0E14;
+  --ld-bg-page: radial-gradient(1000px 600px at 80% 20%, rgba(33, 150, 243, 0.08) 0%, transparent 60%), #0A0E14;
+  --ld-surface: rgba(22, 27, 34, 0.78);
+  --ld-surface-solid: #161B22;
+  --ld-surface-hover: rgba(30, 38, 48, 0.88);
 
   /* Borders */
-  --ld-border: rgba(212, 165, 116, 0.22);
+  --ld-border: rgba(255, 255, 255, 0.08);
 
-  /* Text */
-  --ld-text: #1F2937;
-  --ld-text-muted: #64748B;
-  --ld-text-light: #94A3B8;
+  /* Text — High Contrast Luxury Typography */
+  --ld-text: #FFFFFF;
+  --ld-text-muted: #B9C2CF;
+  --ld-text-light: #8B95A5;
 
   /* Radius */
   --ld-radius: 12px;
-  --ld-radius-lg: 20px;
-  --ld-radius-xl: 32px;
-  --ld-radius-2xl: 48px;
+  --ld-radius-lg: 18px;
+  --ld-radius-xl: 24px;
+  --ld-radius-2xl: 36px;
 
   /* Shadows */
-  --ld-shadow-sm: 0 4px 12px rgba(212, 165, 116, 0.12);
-  --ld-shadow: 0 12px 40px -10px rgba(212, 165, 116, 0.22);
-  --ld-shadow-lg: 0 25px 50px -12px rgba(212, 165, 116, 0.28);
-  --ld-shadow-glow: 0 0 25px rgba(212, 165, 116, 0.35);
+  --ld-shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --ld-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.55);
+  --ld-shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.7);
+  --ld-shadow-glow: 0 0 25px rgba(33, 150, 243, 0.3);
 
   /* Layout */
   --ld-sidebar-width: 280px;
   --ld-header-height: 68px;
 
   /* Glass */
-  --ld-glass-blur: blur(40px);
-  --ld-glass-bg: rgba(255, 255, 255, 0.52);
-  --ld-glass-border: 1px solid rgba(212, 165, 116, 0.28);
+  --ld-glass-blur: blur(24px);
+  --ld-glass-bg: rgba(22, 27, 34, 0.78);
+  --ld-glass-border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* ---- Reset ---- */
@@ -186,7 +186,7 @@ body {
 .ld-app-shell {
   display: flex;
   min-height: 100vh;
-  background: linear-gradient(135deg, #FBF6EE 0%, #F5F1E8 100%);
+  background: #0A0D14;
   position: relative;
   overflow-x: hidden;
 }
@@ -205,14 +205,14 @@ body {
 }
 
 .ld-app-shell::before {
-  background: radial-gradient(circle, rgba(212, 165, 116, 0.28) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(30, 111, 251, 0.16) 0%, transparent 70%);
   filter: blur(100px);
   top: -15%;
   right: -10%;
 }
 
 .ld-app-shell::after {
-  background: radial-gradient(circle, rgba(212, 165, 116, 0.20) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
   filter: blur(120px);
   bottom: -20%;
   left: -10%;
@@ -233,11 +233,11 @@ body {
   z-index: 100;
   overflow-y: auto;
   /* Glassmorphism */
-  background: rgba(255, 255, 255, 0.52);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border-right: 1px solid rgba(212, 165, 116, 0.22);
-  box-shadow: 4px 0 24px rgba(212, 165, 116, 0.08);
+  background: rgba(11, 15, 25, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 4px 0 32px rgba(0, 0, 0, 0.5);
 }
 
 /* Custom scrollbar inside sidebar */
@@ -250,7 +250,7 @@ body {
 }
 
 .ld-sidebar::-webkit-scrollbar-thumb {
-  background: rgba(212, 165, 116, 0.25);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 8px;
 }
 
@@ -259,27 +259,27 @@ body {
   align-items: center;
   justify-content: center;
   padding: 16px 12px 12px;
-  border-bottom: 1px solid var(--ld-gold-border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 8px;
-  background: #ffffff;
+  background: transparent;
 }
 
 .ld-brand-icon {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #D4A574, #FCA311);
+  background: linear-gradient(135deg, #1E6FFB, #8B5CF6);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
   color: #fff;
-  box-shadow: 0 8px 20px rgba(212, 165, 116, 0.35);
+  box-shadow: 0 4px 16px rgba(30, 111, 251, 0.35);
   flex-shrink: 0;
 }
 
 .ld-brand-text-accent {
-  background: linear-gradient(to right, #D4A574, #FCA311);
+  background: linear-gradient(90deg, #38BDF8, #A855F7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -319,16 +319,16 @@ body {
 }
 
 .ld-nav-link:hover {
-  background: var(--ld-gold-hover);
-  color: var(--ld-gold);
+  background: rgba(255, 255, 255, 0.05);
+  color: #38BDF8;
 }
 
 .ld-nav-link.active {
-  background: rgba(212, 165, 116, 0.18);
-  color: var(--ld-text);
-  border-left-color: var(--ld-gold);
+  background: rgba(30, 111, 251, 0.15);
+  color: #FFFFFF;
+  border-left-color: #38BDF8;
   font-weight: 700;
-  box-shadow: inset 0 0 12px rgba(212, 165, 116, 0.08);
+  box-shadow: inset 0 0 12px rgba(30, 111, 251, 0.12);
 }
 
 .ld-nav-icon {
@@ -344,7 +344,7 @@ body {
 
 .ld-sidebar-footer {
   padding: 14px 12px 8px;
-  border-top: 1px solid var(--ld-gold-border);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   margin-top: auto;
 }
 
@@ -354,21 +354,22 @@ body {
   gap: 10px;
   padding: 10px 12px;
   border-radius: var(--ld-radius);
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid var(--ld-gold-border);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 
 .ld-sidebar-user-card:hover {
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
 }
 
 .ld-sidebar-avatar {
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #D4A574, #FCA311);
+  background: linear-gradient(135deg, #1E6FFB, #8B5CF6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -376,13 +377,13 @@ body {
   font-weight: 800;
   color: #fff;
   flex-shrink: 0;
-  border: 2px solid rgba(212, 165, 116, 0.4);
+  border: 2px solid rgba(56, 189, 248, 0.4);
 }
 
 .ld-sidebar-user-name {
   font-size: 12px;
   font-weight: 700;
-  color: var(--ld-text);
+  color: #FFFFFF;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -390,7 +391,7 @@ body {
 
 .ld-sidebar-user-role {
   font-size: 10px;
-  color: var(--ld-gold);
+  color: #38BDF8;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -411,10 +412,10 @@ body {
 /* ---- Header ---- */
 .ld-header {
   height: var(--ld-header-height);
-  background: rgba(255, 255, 255, 0.60);
+  background: rgba(11, 15, 25, 0.82);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--ld-gold-border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -427,7 +428,7 @@ body {
 .ld-header-title {
   font-size: 15px;
   font-weight: 700;
-  color: var(--ld-text-muted);
+  color: #FFFFFF;
   letter-spacing: 0.01em;
 }
 
@@ -439,9 +440,9 @@ body {
 }
 
 .ld-badge-role {
-  background: rgba(212, 165, 116, 0.15);
-  color: var(--ld-gold);
-  border: 1px solid var(--ld-gold-border);
+  background: rgba(30, 111, 251, 0.15);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
   padding: 3px 10px;
   border-radius: 999px;
   font-size: 11px;
@@ -451,22 +452,22 @@ body {
 }
 
 .ld-logout-btn {
-  border: 1px solid var(--ld-gold-border);
-  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
   padding: 7px 14px;
   border-radius: var(--ld-radius);
   cursor: pointer;
   font-size: 12px;
   font-weight: 600;
-  color: var(--ld-text-muted);
+  color: #CBD5E1;
   transition: all 0.2s;
   backdrop-filter: blur(8px);
 }
 
 .ld-logout-btn:hover {
-  background: rgba(212, 165, 116, 0.12);
-  border-color: var(--ld-gold);
-  color: var(--ld-gold);
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #F87171;
 }
 
 /* ---- Content ---- */
@@ -580,7 +581,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #FBF6EE 0%, #F0E8D8 100%);
+  background: radial-gradient(1000px 600px at 70% 30%, rgba(30, 111, 251, 0.15) 0%, transparent 60%), #0A0D14;
   position: relative;
   overflow: hidden;
 }
@@ -591,7 +592,7 @@ body {
   width: 60vw;
   height: 60vw;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 165, 116, 0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(30, 111, 251, 0.16) 0%, transparent 70%);
   filter: blur(100px);
   top: -20%;
   right: -15%;
@@ -604,7 +605,7 @@ body {
   width: 50vw;
   height: 50vw;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 165, 116, 0.18) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
   filter: blur(120px);
   bottom: -20%;
   left: -10%;
@@ -612,15 +613,15 @@ body {
 }
 
 .ld-login-card {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(212, 165, 116, 0.30);
+  background: rgba(18, 26, 44, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--ld-radius-xl);
   padding: 40px;
   width: 100%;
-  max-width: 400px;
-  box-shadow: var(--ld-shadow-lg);
+  max-width: 420px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 32px rgba(30, 111, 251, 0.2);
   position: relative;
   z-index: 1;
 }
@@ -629,12 +630,12 @@ body {
   font-size: 26px;
   font-weight: 900;
   margin-bottom: 2px;
-  color: var(--ld-text);
+  color: #FFFFFF;
   letter-spacing: -0.03em;
 }
 
 .ld-login-subtitle {
-  color: var(--ld-text-muted);
+  color: #94A3B8;
   font-size: 13px;
   margin-bottom: 28px;
 }
@@ -649,7 +650,7 @@ body {
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 6px;
-  color: var(--ld-text);
+  color: #CBD5E1;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -657,32 +658,32 @@ body {
 .ld-form-input {
   width: 100%;
   padding: 11px 14px;
-  border: 1px solid var(--ld-border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--ld-radius);
   font-size: 14px;
   font-family: inherit;
-  background: rgba(255, 255, 255, 0.60);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  color: var(--ld-text);
+  color: #F8FAFC;
   transition: all 0.25s;
 }
 
 .ld-form-input:focus {
   outline: none;
-  border-color: var(--ld-gold);
-  box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.15);
-  background: rgba(255, 255, 255, 0.85);
+  border-color: #38BDF8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .ld-form-input::placeholder {
-  color: rgba(100, 116, 139, 0.55);
+  color: #64748B;
 }
 
 .ld-form-error {
-  background: rgba(244, 63, 94, 0.08);
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  color: var(--ld-danger);
+  background: rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  color: #FB7185;
   padding: 10px 14px;
   border-radius: var(--ld-radius);
   font-size: 13px;
@@ -692,18 +693,18 @@ body {
 .ld-login-demo-box {
   margin-top: 20px;
   padding: 12px 14px;
-  background: rgba(212, 165, 116, 0.08);
-  border: 1px solid var(--ld-gold-border);
+  background: rgba(30, 111, 251, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.2);
   border-radius: var(--ld-radius);
   font-size: 12px;
-  color: var(--ld-text-muted);
+  color: #94A3B8;
   line-height: 1.6;
 }
 
 /* ---- Buttons ---- */
 .ld-btn-primary {
   width: 100%;
-  background: linear-gradient(135deg, #D4A574, #FCA311);
+  background: linear-gradient(135deg, #1E6FFB 0%, #8B5CF6 100%);
   color: #fff;
   border: none;
   padding: 12px;
@@ -714,11 +715,12 @@ body {
   margin-top: 8px;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   letter-spacing: 0.02em;
+  box-shadow: 0 4px 18px rgba(30, 111, 251, 0.4);
 }
 
 .ld-btn-primary:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(212, 165, 116, 0.40);
+  box-shadow: 0 8px 26px rgba(30, 111, 251, 0.55), 0 0 16px rgba(139, 92, 246, 0.35);
 }
 
 .ld-btn-primary:disabled {
@@ -728,11 +730,11 @@ body {
 }
 
 .ld-btn-secondary {
-  background: rgba(255, 255, 255, 0.60);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  color: var(--ld-text);
-  border: 1px solid var(--ld-border);
+  color: #F8FAFC;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 9px 18px;
   border-radius: var(--ld-radius);
   font-size: 13px;
@@ -742,9 +744,9 @@ body {
 }
 
 .ld-btn-secondary:hover {
-  background: rgba(212, 165, 116, 0.10);
-  border-color: var(--ld-gold);
-  color: var(--ld-gold);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #38BDF8;
 }
 
 .ld-btn-secondary:disabled {
@@ -786,10 +788,10 @@ body {
 .ld-toolbar .ld-form-input,
 .ld-toolbar select {
   padding: 9px 12px;
-  border: 1px solid var(--ld-border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--ld-radius);
   font-size: 13px;
-  background: rgba(255, 255, 255, 0.60);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: var(--ld-text);
@@ -826,19 +828,22 @@ body {
 .ld-table th {
   text-align: left;
   padding: 12px 16px;
-  color: var(--ld-gold);
+  color: #38BDF8;
   font-weight: 800;
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  border-bottom: 1px solid var(--ld-gold-border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   white-space: nowrap;
-  background: rgba(212, 165, 116, 0.04);
+  background: rgba(255, 255, 255, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 5;
 }
 
 .ld-table td {
   padding: 11px 16px;
-  border-bottom: 1px solid rgba(212, 165, 116, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   vertical-align: middle;
   color: var(--ld-text);
 }
@@ -848,7 +853,7 @@ body {
 }
 
 .ld-table tr:hover td {
-  background: rgba(212, 165, 116, 0.05);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .ld-row-actions {
@@ -984,17 +989,18 @@ body {
 }
 
 .ld-modal {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(18, 26, 44, 0.92);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
-  border: 1px solid var(--ld-gold-border);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--ld-radius-xl);
   padding: 28px;
   width: 100%;
   max-width: 500px;
   max-height: 88vh;
   overflow-y: auto;
-  box-shadow: var(--ld-shadow-lg);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), 0 0 32px rgba(30, 111, 251, 0.2);
+  color: #FFFFFF;
 }
 
 .ld-modal-title {
@@ -1123,14 +1129,14 @@ body {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #D4A574, #FCA311);
+  background: linear-gradient(90deg, #1E6FFB, #8B5CF6);
   z-index: 9999;
   animation: ld-progress-slide 1.2s ease infinite;
 }
 
 /* ---- Utility: gold gradient text ---- */
 .ld-gold-text {
-  background: linear-gradient(to right, #D4A574, #FCA311);
+  background: linear-gradient(90deg, #38BDF8, #A855F7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -1146,12 +1152,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(212, 165, 116, 0.22);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(212, 165, 116, 0.40);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* ---- Reveal animations ---- */

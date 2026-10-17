@@ -55,7 +55,7 @@ export default function SolutionsIndex() {
           </nav>
           <span className="eyebrow reveal-up in" style={{ marginTop: 16, display: 'block' }}>Organised by business stage</span>
           <h1 className="reveal-up in">Solutions for every stage of your business.</h1>
-          <p className="lead reveal-up in">Whether you're registering your first company or scaling your tenth — LauncherDesk helps you find, arrange and coordinate the services your business needs, at every stage.</p>
+          <p className="lead reveal-up in">Whether you're registering your first company or scaling your tenth, LauncherDesk helps you find, arrange and coordinate the services your business needs, at every stage.</p>
         </div>
       </header>
 
@@ -75,7 +75,7 @@ export default function SolutionsIndex() {
               </div>
               <div className="reveal-up" style={{marginLeft:72,display:'flex',flexWrap:'wrap',gap:10,marginBottom:16}}>
                 {stage.services.map(s => (
-                  <span key={s} style={{fontSize:13.5,fontFamily:'var(--font)',fontWeight:600,padding:'7px 14px',borderRadius:99,background:'var(--bg)',border:'1px solid var(--line)',color:'var(--navy)'}}>{s}</span>
+                  <span key={s} style={{fontSize:13.5,fontFamily:'var(--font)',fontWeight:600,padding:'7px 14px',borderRadius:99,background:'rgba(22, 27, 34, 0.78)',border:'1px solid rgba(255, 255, 255, 0.08)',color:'#FFFFFF'}}>{s}</span>
                 ))}
               </div>
               <div style={{marginLeft:72}}>
@@ -84,9 +84,9 @@ export default function SolutionsIndex() {
             </div>
           ))}
 
-          <div className="reveal-up" style={{background:'var(--bg-warm)',borderRadius:18,padding:'32px 36px',marginTop:12}}>
-            <h3 style={{fontSize:20,marginBottom:8}}>Not sure which category is right for you?</h3>
-            <p style={{color:'var(--text-2)',marginBottom:20}}>Use our service finder and we'll point you to the right starting point — free, no obligation.</p>
+          <div className="reveal-up" style={{background:'linear-gradient(135deg, rgba(30, 136, 229, 0.12) 0%, rgba(124, 77, 255, 0.08) 100%)',border:'1px solid rgba(255, 255, 255, 0.08)',borderRadius:18,padding:'32px 36px',marginTop:12}}>
+            <h3 style={{fontSize:20,marginBottom:8,color:'#FFFFFF'}}>Not sure which category is right for you?</h3>
+            <p style={{color:'var(--text-2)',marginBottom:20}}>Use our service finder and we'll point you to the right starting point, free, no obligation.</p>
             <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
               <a href="/services#finder" className="btn btn-primary">Find My Solutions</a>
               <a href="/company/contact" className="btn btn-soft">Talk to Our Expert</a>

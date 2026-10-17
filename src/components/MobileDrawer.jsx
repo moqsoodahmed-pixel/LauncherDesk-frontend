@@ -221,7 +221,7 @@ export default function MobileDrawer({ open, onClose }) {
       <div className={`scrim${open ? ' on' : ''}`} onClick={onClose} aria-hidden="true" />
       <aside className={`drawer${open ? ' open' : ''}`} role="dialog" aria-modal="true" aria-label="Main menu">
         <div className="d-top">
-          <span style={{ fontWeight: 800, fontSize: 15, color: 'var(--navy)' }}>Menu</span>
+          <span style={{ fontWeight: 800, fontSize: 15, color: '#FFFFFF' }}>Menu</span>
           <button type="button" className="x" onClick={onClose} aria-label="Close menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
@@ -248,21 +248,21 @@ export default function MobileDrawer({ open, onClose }) {
           {activeUser ? (
             <div className="d-user-box">
               <div className="d-user-info">
-                <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="#1D6FE0" strokeWidth={2} aria-hidden="true">
+                <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="#2196F3" strokeWidth={2} aria-hidden="true">
                   <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
                 </svg>
                 <div className="d-user-text">
-                  <span className="d-user-name">{activeUser.name || activeUser.companyName || displayName}</span>
-                  <span style={{ fontSize: 11, color: '#64748B' }}>{roleLabel}</span>
+                  <span className="d-user-name" style={{ color: '#FFFFFF' }}>{activeUser.name || activeUser.companyName || displayName}</span>
+                  <span style={{ fontSize: 11, color: '#B9C2CF' }}>{roleLabel}</span>
                 </div>
               </div>
-              <Link className="d-btn-getstarted" style={{ background: '#F1F5F9', color: 'var(--navy)' }} to={dashboardPath} onClick={onClose}>
+              <Link className="d-btn-getstarted" style={{ background: 'rgba(255, 255, 255, 0.08)', color: '#FFFFFF', border: '1px solid rgba(255, 255, 255, 0.12)' }} to={dashboardPath} onClick={onClose}>
                 Go to {roleLabel}
               </Link>
               <button
                 type="button"
                 className="d-btn-getstarted"
-                style={{ background: '#FEE2E2', color: '#EF4444', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+                style={{ background: 'rgba(239, 68, 68, 0.12)', color: '#F87171', border: '1px solid rgba(239, 68, 68, 0.25)', cursor: 'pointer', fontFamily: 'inherit' }}
                 onClick={async () => { onClose(); try { await logoutFn() } catch { /* noop */ } navigate('/') }}
               >
                 Log Out
@@ -270,10 +270,6 @@ export default function MobileDrawer({ open, onClose }) {
             </div>
           ) : (
             <div className="d-auth-box">
-              <div className="d-btn-row">
-                <Link className="d-btn-login" to="/user/login" onClick={onClose}>Login</Link>
-                <Link className="d-btn-signup" to="/user/login" state={{ tab: 'register' }} onClick={onClose}>Sign Up</Link>
-              </div>
               <a className="d-btn-getstarted btn btn-primary" href="/services#finder" onClick={onClose}>Get Started</a>
             </div>
           )}

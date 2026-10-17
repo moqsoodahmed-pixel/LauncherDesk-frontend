@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 
 const API = import.meta.env.VITE_API_URL || 'https://launcherdesk-backend-production.up.railway.app/api'
 
-// NOTE: the two image files are named the wrong way round —
-// product-normal-table.jpg is the chair photo and product-ergonomic-chair.jpg is the table photo.
+// NOTE: the two image files are named the wrong way round, // product-normal-table.jpg is the chair photo and product-ergonomic-chair.jpg is the table photo.
 const imgChair        = '/product-normal-table.jpg'
 const imgNormalTable  = '/product-ergonomic-chair.jpg'
 const imgElectricTable = '/product-electric-table.jpg'
@@ -14,92 +13,92 @@ const CHECK = 'M9 11l3 3L22 4'
 const SEND = 'M22 2 11 13M22 2l-7 20-4-9-9-4z'
 
 const orStyles = `
-.or-hero{padding:64px 0 56px;position:relative;overflow:hidden;background:linear-gradient(180deg,#FBFDFF 0%,#F3F8FF 55%,#EEF5FF 100%);border-bottom:1px solid var(--line)}
-.or-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(820px 520px at 80% -10%,rgba(29,93,184,.10),transparent 62%),radial-gradient(420px 340px at 8% 105%,rgba(29,93,184,.07),transparent 60%);pointer-events:none;animation:orHeroGlow 22s ease-in-out infinite alternate}
+.or-hero{padding:64px 0 56px;position:relative;overflow:hidden;background:var(--bg-primary, #0A0E14);border-bottom:1px solid var(--line)}
+.or-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(820px 520px at 80% -10%,rgba(33,150,243.12),transparent 62%),radial-gradient(420px 340px at 8% 105%,rgba(124,77,255.08),transparent 60%);pointer-events:none;animation:orHeroGlow 22s ease-in-out infinite alternate}
 @keyframes orHeroGlow{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-1.4%,1.3%,0) scale(1.03)}}
 @media (prefers-reduced-motion: reduce){.or-hero::before{animation:none}}
 .or-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;position:relative}
-.or-eyebrow{font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:14px}
-.or-hero h1{font-size:clamp(36px,4.8vw,62px);font-weight:800;letter-spacing:-.03em;line-height:1.04;color:var(--navy);margin-bottom:20px}
-.or-hero h1 span{background:linear-gradient(118deg,var(--blue-dark),var(--blue-bright));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.or-hero p{font-size:17px;color:var(--text-2);line-height:1.7;max-width:500px;margin-bottom:32px}
+.or-eyebrow{font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue, #2196F3);margin-bottom:14px}
+.or-hero h1{font-size:clamp(36px,4.8vw,62px);font-weight:800;letter-spacing:-.03em;line-height:1.04;color:#FFFFFF;margin-bottom:20px}
+.or-hero h1 span{background:linear-gradient(118deg,#2196F3,#7C4DFF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.or-hero p{font-size:17px;color:var(--text-2, #B9C2CF);line-height:1.7;max-width:500px;margin-bottom:32px}
 .or-hero-badges{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px}
-.or-badge{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text-2)}
-.or-badge svg{width:16px;height:16px;stroke:var(--blue);fill:none;stroke-width:2;flex:none}
-.or-hero-visual-inner{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 24px 64px rgba(15,28,46,.09),0 4px 16px rgba(15,28,46,.05)}
-.or-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--line);border-radius:12px;overflow:hidden;margin-bottom:20px}
-.or-stat{background:var(--brand-50);padding:16px;text-align:center}
-.or-stat .n{font-family:var(--font);font-weight:800;font-size:26px;color:var(--navy);letter-spacing:-.02em}
-.or-stat .l{font-size:11px;color:var(--blue-dark);margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
+.or-badge{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text-2, #B9C2CF)}
+.or-badge svg{width:16px;height:16px;stroke:var(--blue, #2196F3);fill:none;stroke-width:2;flex:none}
+.or-hero-visual-inner{background:var(--card-glass, rgba(22, 27, 34, 0.78));border:1px solid rgba(255, 255, 255, 0.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:20px;padding:28px;box-shadow:0 24px 64px rgba(0,0,0.4)}
+.or-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;margin-bottom:20px}
+.or-stat{background:rgba(255, 255, 255, 0.03);padding:16px;text-align:center}
+.or-stat .n{font-family:var(--font);font-weight:800;font-size:26px;color:#FFFFFF;letter-spacing:-.02em}
+.or-stat .l{font-size:11px;color:var(--blue, #2196F3);margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
 .or-mini-items{display:flex;flex-direction:column;gap:8px}
-.or-mini-item{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
-.or-mini-ic{width:32px;height:32px;border-radius:8px;background:var(--brand-50);display:grid;place-items:center;flex:none}
-.or-mini-ic svg{width:16px;height:16px;stroke:var(--blue);fill:none;stroke-width:2}
-.or-mini-txt b{font-family:var(--font);font-size:13.5px;color:var(--navy);display:block;font-weight:600}
-.or-mini-txt span{font-size:11.5px;color:var(--text-3)}
+.or-mini-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px 14px}
+.or-mini-ic{width:32px;height:32px;border-radius:8px;background:rgba(33,150,243,0.12);border:1px solid rgba(33,150,243,0.25);display:grid;place-items:center;flex:none}
+.or-mini-ic svg{width:16px;height:16px;stroke:var(--blue, #2196F3);fill:none;stroke-width:2}
+.or-mini-txt b{font-family:var(--font);font-size:13.5px;color:#FFFFFF;display:block;font-weight:600}
+.or-mini-txt span{font-size:11.5px;color:var(--text-3, #8B95A5)}
 .or-cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.or-cat{background:#fff;border-radius:18px;border:1px solid var(--line);overflow:hidden;transition:transform .2s,box-shadow .2s}
-.or-cat:hover{transform:translateY(-4px);box-shadow:var(--sh)}
+.or-cat{background:var(--card-glass, rgba(22, 27, 34, 0.78));border-radius:18px;border:1px solid rgba(255, 255, 255, 0.08);overflow:hidden;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);transition:transform .2s,box-shadow .2s}
+.or-cat:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(33,150,243,0.15);border-color:rgba(33,150,243,0.3)}
 .or-cat-vis{height:180px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.or-cat-label{position:absolute;top:12px;left:12px;font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#fff;color:var(--blue-dark);padding:4px 10px;border-radius:99px}
+.or-cat-label{position:absolute;top:12px;left:12px;font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(22, 27, 34, 0.9);color:var(--blue, #2196F3);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:99px}
 .or-cat-body{padding:22px}
-.or-cat-body h3{font-size:18px;margin-bottom:6px}
-.or-cat-body p{font-size:13.5px;color:var(--text-2);line-height:1.6;margin-bottom:14px}
+.or-cat-body h3{font-size:18px;margin-bottom:6px;color:#FFFFFF}
+.or-cat-body p{font-size:13.5px;color:var(--text-2, #B9C2CF);line-height:1.6;margin-bottom:14px}
 .or-cat-specs{display:flex;flex-direction:column;gap:5px}
-.or-cat-spec{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--navy)}
-.or-cat-spec svg{width:14px;height:14px;stroke:var(--success);fill:none;stroke-width:2.5;flex:none;margin-top:2px}
+.or-cat-spec{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text-2, #B9C2CF)}
+.or-cat-spec svg{width:14px;height:14px;stroke:#10B981;fill:none;stroke-width:2.5;flex:none;margin-top:2px}
 .or-planner-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:start}
-.or-form-card{background:#fff;border-radius:20px;padding:32px;box-shadow:var(--sh)}
-.or-form-card h3{font-size:22px;margin-bottom:6px}
-.or-form-card .sub{font-size:14px;color:var(--text-2);margin-bottom:26px}
+.or-form-card{background:var(--card-glass, rgba(22, 27, 34, 0.78));border:1px solid rgba(255, 255, 255, 0.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:20px;padding:32px;box-shadow:0 24px 64px rgba(0,0,0.4)}
+.or-form-card h3{font-size:22px;margin-bottom:6px;color:#FFFFFF}
+.or-form-card .sub{font-size:14px;color:var(--text-2, #B9C2CF);margin-bottom:26px}
 .or-field{margin-bottom:20px}
-.or-field label{font-family:var(--font);font-weight:600;font-size:13px;color:var(--navy);display:block;margin-bottom:9px}
-.or-field label .req{color:var(--blue-dark);margin-left:2px}
+.or-field label{font-family:var(--font);font-weight:600;font-size:13px;color:#FFFFFF;display:block;margin-bottom:9px}
+.or-field label .req{color:var(--blue, #2196F3);margin-left:2px}
 .or-select-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.or-sel-btn{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;font-family:var(--font);font-weight:600;font-size:13px;color:var(--navy);transition:.14s;line-height:1.2;width:100%}
-.or-sel-btn:hover{border-color:var(--blue-bright);background:#fff;color:var(--blue-dark)}
-.or-sel-btn.on{border-color:var(--blue);background:rgba(4,125,204,.06);color:var(--blue-dark)}
-.or-input{width:100%;height:48px;border:1.5px solid var(--line);border-radius:11px;padding:0 14px;font-family:var(--font-body);font-size:14.5px;color:var(--text);outline:none;background:var(--bg);transition:.15s}
-.or-input:focus{border-color:var(--blue-bright);background:#fff;box-shadow:0 0 0 3px rgba(36,154,226,.13)}
+.or-sel-btn{border:1px solid rgba(255, 255, 255, 0.12);background:rgba(255, 255, 255, 0.04);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;font-family:var(--font);font-weight:600;font-size:13px;color:#FFFFFF;transition:.14s;line-height:1.2;width:100%}
+.or-sel-btn:hover{border-color:var(--blue, #2196F3);background:rgba(33, 150, 243, 0.12);color:var(--blue, #2196F3)}
+.or-sel-btn.on{border-color:var(--blue, #2196F3);background:rgba(33, 150, 243, 0.16);color:var(--blue, #2196F3)}
+.or-input{width:100%;height:48px;border:1px solid rgba(255, 255, 255, 0.12);border-radius:11px;padding:0 14px;font-family:var(--font-body);font-size:14.5px;color:#FFFFFF;outline:none;background:rgba(255, 255, 255, 0.05);transition:.15s}
+.or-input:focus{border-color:var(--blue, #2196F3);background:rgba(255, 255, 255, 0.08);box-shadow:0 0 0 3px rgba(33,150,243.2)}
 .or-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.or-check{display:flex;align-items:center;gap:9px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;transition:.14s;background:var(--bg)}
-.or-check:hover{border-color:var(--blue-bright);background:#fff}
-.or-check.on{border-color:var(--blue);background:rgba(4,125,204,.06)}
-.or-check-box{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line);display:grid;place-items:center;flex:none;transition:.14s;background:#fff}
-.or-check.on .or-check-box{background:var(--blue);border-color:var(--blue)}
+.or-check{display:flex;align-items:center;gap:9px;padding:10px 12px;border:1px solid rgba(255, 255, 255, 0.12);border-radius:10px;cursor:pointer;transition:.14s;background:rgba(255, 255, 255, 0.04)}
+.or-check:hover{border-color:var(--blue, #2196F3);background:rgba(33, 150, 243, 0.08)}
+.or-check.on{border-color:var(--blue, #2196F3);background:rgba(33, 150, 243, 0.12)}
+.or-check-box{width:18px;height:18px;border-radius:5px;border:1px solid rgba(255, 255, 255, 0.2);display:grid;place-items:center;flex:none;transition:.14s;background:rgba(255, 255, 255, 0.05)}
+.or-check.on .or-check-box{background:var(--blue, #2196F3);border-color:var(--blue, #2196F3)}
 .or-check-box svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:3}
-.or-check span:last-child{font-family:var(--font);font-size:13px;font-weight:500;color:var(--navy)}
+.or-check span:last-child{font-family:var(--font);font-size:13px;font-weight:500;color:var(--text-2, #B9C2CF)}
 .or-contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.or-wa-consent{display:flex;align-items:flex-start;gap:11px;padding:14px;background:rgba(31,170,89,.06);border:1px solid rgba(31,170,89,.2);border-radius:12px;margin-top:6px}
-.or-wa-consent input[type=checkbox]{width:17px;height:17px;accent-color:#1faa59;flex:none;margin-top:2px;cursor:pointer}
-.or-wa-consent label{font-size:13px;color:var(--text-2);line-height:1.5;cursor:pointer}
+.or-wa-consent{display:flex;align-items:flex-start;gap:11px;padding:14px;background:rgba(37,211,102.06);border:1px solid rgba(37,211,102.2);border-radius:12px;margin-top:6px}
+.or-wa-consent input[type=checkbox]{width:17px;height:17px;accent-color:#25D366;flex:none;margin-top:2px;cursor:pointer}
+.or-wa-consent label{font-size:13px;color:var(--text-2, #B9C2CF);line-height:1.5;cursor:pointer}
 .or-submit{width:100%;margin-top:22px}
-.or-submit-disc{text-align:center;font-size:12px;color:var(--text-3);margin-top:10px}
-.or-summary{background:linear-gradient(165deg,#1E3A6A,#1A2F4E);border-radius:20px;padding:28px;position:sticky;top:90px;color:#fff}
+.or-submit-disc{text-align:center;font-size:12px;color:var(--text-3, #8B95A5);margin-top:10px}
+.or-summary{background:var(--card-glass, rgba(22, 27, 34, 0.88));border:1px solid rgba(255, 255, 255, 0.08);backdrop-filter:blur(24px);border-radius:20px;padding:28px;position:sticky;top:90px;color:#fff}
 .or-summary h4{font-size:17px;color:#fff;margin-bottom:6px}
-.or-summary .sub{font-size:13px;color:#7494b8;margin-bottom:24px}
-.or-sum-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.or-summary .sub{font-size:13px;color:var(--text-2, #B9C2CF);margin-bottom:24px}
+.or-sum-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255.07)}
 .or-sum-row:last-of-type{border-bottom:0}
-.or-sum-row .k{font-size:13px;color:#6da8e0}
+.or-sum-row .k{font-size:13px;color:var(--text-2, #B9C2CF)}
 .or-sum-row .v{font-family:var(--font);font-weight:700;font-size:14px;color:#fff}
-.or-sum-row .v.dim{color:#3d618a;font-weight:500;font-size:13px}
-.or-quote-box{background:rgba(29,111,224,.12);border:1px solid rgba(29,111,224,.25);border-radius:14px;padding:18px;margin-top:20px}
-.or-quote-box .ql{font-size:12px;color:#6da8e0;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:4px}
-.or-quote-box .qv{font-family:var(--font);font-weight:800;font-size:22px;color:#3B8FEF}
-.or-quote-box .qd{font-size:11.5px;color:#5e7fa0;margin-top:8px;line-height:1.5}
+.or-sum-row .v.dim{color:var(--text-3, #8B95A5);font-weight:500;font-size:13px}
+.or-quote-box{background:rgba(33,150,243.12);border:1px solid rgba(33,150,243.25);border-radius:14px;padding:18px;margin-top:20px}
+.or-quote-box .ql{font-size:12px;color:var(--cyan, #42D9FF);text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:4px}
+.or-quote-box .qv{font-family:var(--font);font-weight:800;font-size:22px;color:var(--blue, #2196F3)}
+.or-quote-box .qd{font-size:11.5px;color:var(--text-2, #B9C2CF);margin-top:8px;line-height:1.5}
 .or-trust-pills{display:flex;gap:7px;margin-top:18px;flex-wrap:wrap}
-.or-trust-pill{font-family:var(--font);font-size:11px;font-weight:600;padding:5px 10px;border-radius:99px;background:rgba(255,255,255,.07);color:#7494b8}
+.or-trust-pill{font-family:var(--font);font-size:11px;font-weight:600;padding:5px 10px;border-radius:99px;background:rgba(255,255,255.07);color:var(--text-2, #B9C2CF)}
 .or-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
-.or-flow::before{content:"";position:absolute;top:28px;left:calc(12.5%);right:calc(12.5%);height:2px;background:linear-gradient(90deg,var(--blue),var(--blue-bright));opacity:.3;z-index:0}
+.or-flow::before{content:"";position:absolute;top:28px;left:calc(12.5%);right:calc(12.5%);height:2px;background:linear-gradient(90deg,var(--blue, #2196F3),var(--purple, #7C4DFF));opacity:.3;z-index:0}
 .or-step{text-align:center;padding:0 16px;position:relative;z-index:1}
-.or-step-num{width:56px;height:56px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;margin:0 auto 18px;font-family:var(--font);font-weight:800;font-size:20px;box-shadow:var(--sh-blue)}
-.or-step h4{font-size:17px;margin-bottom:8px}
-.or-step p{font-size:13.5px;color:var(--text-2);line-height:1.6}
+.or-step-num{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg, #1E88E5 0%, #7C4DFF 100%);color:#fff;display:grid;place-items:center;margin:0 auto 18px;font-family:var(--font);font-weight:800;font-size:20px;box-shadow:0 8px 24px rgba(30,136,229.35)}
+.or-step h4{font-size:17px;margin-bottom:8px;color:#FFFFFF}
+.or-step p{font-size:13.5px;color:var(--text-2, #B9C2CF);line-height:1.6}
 .or-success{text-align:center;padding:48px 24px}
-.or-success-ic{width:72px;height:72px;border-radius:50%;background:rgba(14,159,110,.12);display:grid;place-items:center;margin:0 auto 20px}
-.or-success-ic svg{width:36px;height:36px;stroke:var(--success);fill:none;stroke-width:2}
+.or-success-ic{width:72px;height:72px;border-radius:50%;background:rgba(16,185,129.12);display:grid;place-items:center;margin:0 auto 20px}
+.or-success-ic svg{width:36px;height:36px;stroke:#10B981;fill:none;stroke-width:2}
 @media(max-width:960px){
-  .or-hero-grid,.or-planner-wrap{grid-template-columns:1fr;gap:28px}
+  .or-hero-grid.or-planner-wrap{grid-template-columns:1fr;gap:28px}
   .or-cat-grid{grid-template-columns:1fr 1fr}
   .or-flow{grid-template-columns:1fr 1fr;gap:28px}
   .or-flow::before{display:none}
@@ -145,9 +144,9 @@ const CATS = [
 ]
 
 const FAQS = [
-  { q:'Do you design space layout maps before ordering?', a:'Yes. Once you submit your initial inquiry, our architecture and design team creates a custom 2D layout option based on your office space coordinates — free of charge, before any commitment. You\'ll receive a minimum of 2–3 layout options to choose from.' },
+  { q:'Do you design space layout maps before ordering?', a:'Yes. Once you submit your initial inquiry, our architecture and design team creates a custom 2D layout option based on your office space coordinates, free of charge, before any commitment. You\'ll receive a minimum of 2 to 3 layout options to choose from.' },
   { q:'Can we request custom sizes and colours?', a:'Absolutely. All furniture is manufactured to order. You can specify exact dimensions, laminate finishes, fabric colours, metal powder-coat shades, and panel configurations to match your brand identity or interior design brief.' },
-  { q:'Do you offer installation and setup?', a:'Yes — end-to-end. Our trained installation crew handles unloading, assembly, cable management and final placement. We also dispose of all packaging material, leaving your office clean and ready to use.' },
+  { q:'Do you offer installation and setup?', a:'Yes, end-to-end. Our trained installation crew handles unloading, assembly, cable management and final placement. We also dispose of all packaging material, leaving your office clean and ready to use.' },
   { q:'What areas do you cover for setup?', a:'We cover all major metropolitan areas and Tier 2 cities across India, including Bengaluru, Mumbai, Delhi NCR, Hyderabad, Chennai, Pune, Ahmedabad, Kolkata, and more. For other locations, contact us and we\'ll arrange logistics.' },
 ]
 
@@ -197,7 +196,7 @@ export default function OfficeRestorePage() {
   const [error,       setError]       = useState('')
   const [saving,      setSaving]      = useState(false)
 
-  useEffect(() => { document.title = 'Office Setup — Furniture & Workspace Solutions · LauncherDesk' }, [])
+  useEffect(() => { document.title = 'Office Setup, Furniture & Workspace Solutions, LauncherDesk' }, [])
 
   function toggleExtra(val, checked) {
     setExtras(prev => checked ? [...prev, val] : prev.filter(e => e !== val))
@@ -232,7 +231,7 @@ export default function OfficeRestorePage() {
           name, email, mobile, state,
           message,
           source:  'office-setup',
-          service: `Office Setup — ${lookingFor}`,
+          service: `Office Setup, ${lookingFor}`,
           whatsappOptin: waConsent,
         }),
       })
@@ -260,9 +259,9 @@ export default function OfficeRestorePage() {
           </nav>
           <div className="or-hero-grid">
             <div className="reveal-up in">
-              <div className="or-eyebrow">Office Setup · Furniture &amp; Workspace Solutions</div>
+              <div className="or-eyebrow">Office Setup, Furniture &amp; Workspace Solutions</div>
               <h1>Design a workspace that <span>works for your business.</span></h1>
-              <p>From workstations and ergonomic seating to storage and complete office setup — tell us what you need and we'll turn it into a practical, professional workspace plan, delivered and installed at your site.</p>
+              <p>From workstations and ergonomic seating to storage and complete office setup, tell us what you need and we'll turn it into a practical, professional workspace plan, delivered and installed at your site.</p>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <a href="#planner" className="btn btn-primary">
                   Get a Free Design Layout &amp; Quote
@@ -310,15 +309,15 @@ export default function OfficeRestorePage() {
         <div className="wrap">
           <div className="sec-head center reveal-up" style={{ marginBottom: 36 }}>
             <span className="eyebrow">Product Catalogue</span>
-            <h2 style={{ fontSize: 'clamp(26px,3.2vw,40px)', marginTop: 10 }}>Our furniture range — manufactured &amp; installed</h2>
+            <h2 style={{ fontSize: 'clamp(26px,3.2vw,40px)', marginTop: 10 }}>Our furniture range, manufactured &amp; installed</h2>
             <p>Three core products, custom-built and delivered to your office.</p>
           </div>
           <div className="or-cat-grid" style={{ gridTemplateColumns: 'repeat(3,1fr)' }}>
             {CATS.map(cat => {
               const imgSrc = cat.imgKey==='chair'?imgChair:cat.imgKey==='normal'?imgNormalTable:imgElectricTable
               return (
-              <div key={cat.title} className="or-cat reveal-up" style={{ overflow:'hidden', background:'#fff', border:'1.5px solid var(--line)' }}>
-                <div style={{ width:'100%', height:220, overflow:'hidden', background:'#f8fafc', position:'relative' }}>
+              <div key={cat.title} className="or-cat reveal-up" style={{ overflow:'hidden', background:'var(--card, rgba(18, 30, 48, 0.72))', border:'1px solid var(--line, rgba(255, 255, 255, 0.08))' }}>
+                <div style={{ width:'100%', height:220, overflow:'hidden', background:'rgba(255, 255, 255, 0.02)', position:'relative' }}>
                   <img src={imgSrc} alt={cat.title} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block', transition:'transform .35s' }}
                     onMouseEnter={e=>e.target.style.transform='scale(1.04)'}
                     onMouseLeave={e=>e.target.style.transform='scale(1)'} />
@@ -328,7 +327,7 @@ export default function OfficeRestorePage() {
                   <h3>{cat.title}</h3>
                   {cat.price && (
                     <div style={{ display:'flex', alignItems:'baseline', gap:8, flexWrap:'wrap', margin:'2px 0 10px' }}>
-                      <span style={{ fontSize:22, fontWeight:900, color:'var(--navy)' }}>₹{cat.price.toLocaleString('en-IN')}</span>
+                      <span style={{ fontSize:22, fontWeight:900, color:'#FFFFFF' }}>₹{cat.price.toLocaleString('en-IN')}</span>
                       {cat.mrp > cat.price && <>
                         <span style={{ fontSize:14, color:'var(--text-3)', textDecoration:'line-through' }}>₹{cat.mrp.toLocaleString('en-IN')}</span>
                         <span style={{ fontSize:11.5, fontWeight:800, color:'#fff', background:'#DC2626', borderRadius:6, padding:'2px 7px' }}>{Math.floor((1 - cat.price / cat.mrp) * 100)}% OFF</span>
@@ -368,7 +367,7 @@ export default function OfficeRestorePage() {
                     <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                   </div>
                   <h3>Layout request submitted!</h3>
-                  <p style={{ color: 'var(--text-2)', marginTop: 10, maxWidth: 380, marginLeft: 'auto', marginRight: 'auto' }}>Our workspace design team will review your requirements and send you a layout proposal within 1–2 business days.</p>
+                  <p style={{ color: 'var(--text-2)', marginTop: 10, maxWidth: 380, marginLeft: 'auto', marginRight: 'auto' }}>Our workspace design team will review your requirements and send you a layout proposal within 1 to 2 business days.</p>
                   <a href="/company/contact" className="btn btn-soft" style={{ marginTop: 22, display: 'inline-flex' }}>Contact us directly</a>
                 </div>
               ) : (
@@ -433,7 +432,7 @@ export default function OfficeRestorePage() {
                     {saving ? 'Submitting…' : 'Submit Layout Request'}
                     {!saving && <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={SEND}/></svg>}
                   </button>
-                  <div className="or-submit-disc">Free consultation · No payment required to submit</div>
+                  <div className="or-submit-disc">Free consultation, No payment required to submit</div>
                 </>
               )}
             </div>
@@ -443,11 +442,11 @@ export default function OfficeRestorePage() {
               <h4>Workspace Configuration</h4>
               <div className="sub">Live summary based on your selections</div>
               <div className="or-sum-row"><span className="k">Looking for</span><span className={`v${lookingFor ? '' : ' dim'}`}>{lookingFor || 'Not selected'}</span></div>
-              <div className="or-sum-row"><span className="k">Workstations</span><span className="v">{ws ? `${ws} Seats` : '—'}</span></div>
-              <div className="or-sum-row"><span className="k">Ergonomic Chairs</span><span className="v">{ch ? `${ch} Chairs` : '—'}</span></div>
+              <div className="or-sum-row"><span className="k">Workstations</span><span className="v">{ws ? `${ws} Seats` : ', '}</span></div>
+              <div className="or-sum-row"><span className="k">Ergonomic Chairs</span><span className="v">{ch ? `${ch} Chairs` : ', '}</span></div>
               <div className="or-sum-row"><span className="k">Other Elements</span><span className="v">{extras.length ? extras.join(', ') : 'None selected'}</span></div>
               <div className="or-sum-row"><span className="k">State / Location</span><span className={`v${state ? '' : ' dim'}`}>{state || 'Not selected'}</span></div>
-              <div className="or-sum-row"><span className="k">Timeline</span><span className="v">{timeline || '—'}</span></div>
+              <div className="or-sum-row"><span className="k">Timeline</span><span className="v">{timeline || ', '}</span></div>
               <div className="or-quote-box">
                 <div className="ql">Estimated Quote</div>
                 <div className="qv">Custom Quote</div>
@@ -474,7 +473,7 @@ export default function OfficeRestorePage() {
           <div className="or-flow">
             {[
               { n:'01', title:'Request & Consult', body:'Submit your requirements online. Our consultation team reviews and responds within 24 hours with clarifying questions and initial ideas.' },
-              { n:'02', title:'Layout Design', body:'Our spatial design team creates a custom 2D layout plan based on your space coordinates — free of charge, before you commit.' },
+              { n:'02', title:'Layout Design', body:'Our spatial design team creates a custom 2D layout plan based on your space coordinates, free of charge, before you commit.' },
               { n:'03', title:'Customise & Manufacture', body:'Select finishes, colours, and quantities. Manufacturing begins only after your sign-off on the layout and final pricing proposal.' },
               { n:'04', title:'Delivery & Setup', body:'LauncherDesk coordinates logistics and installation. We deliver, unpack, assemble and complete the full setup at your site.' },
             ].map(step => (
@@ -507,7 +506,7 @@ export default function OfficeRestorePage() {
         <div className="wrap">
           <div className="final reveal-up">
             <h2>Ready to design your workspace?</h2>
-            <p>Get a free layout plan and custom quote — no commitment required.</p>
+            <p>Get a free layout plan and custom quote, no commitment required.</p>
             <div className="row">
               <a href="#planner" className="btn btn-light">Get Free Layout &amp; Quote</a>
               <a href="/company/contact" className="btn btn-wa">

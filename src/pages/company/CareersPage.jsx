@@ -17,7 +17,7 @@ const JOBS = [
   },
   {
     title: 'Business Development (BD) Executive', type: 'Full-time', location: 'Koramangala, Bengaluru', dept: 'Business Development',
-    color: '#FFF7ED', accent: '#F97316',
+    color: 'rgba(139, 92, 246, 0.12)', accent: '#8B5CF6',
     about: 'Build strategic partnerships and expand LauncherDesk reach through corporate tie-ups, channel partnerships, co-working spaces, incubators and industry associations.',
     responsibilities: ['Identify and develop B2B partnerships with co-working spaces, incubators and CAs','Build a pipeline of channel partners who refer business to LauncherDesk','Represent LauncherDesk at startup events and networking meetups','Negotiate and close partnership agreements','Track partnership performance and report to management','Work with marketing to create co-branded campaigns'],
     requirements: ['0–3 years in business development or corporate sales','Strong network in the Bengaluru startup ecosystem is a big plus','Excellent presentation and negotiation skills','Experience in B2B services, legal-tech or SaaS preferred','Graduate/MBA from a recognised institution'],
@@ -59,35 +59,36 @@ const JOBS = [
 
 /* ── Styles ── */
 const S = `
-.ap-overlay{position:fixed;inset:0;background:rgba(10,20,40,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
-.ap-modal{background:#fff;border-radius:20px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.25)}
-.ap-modal-head{padding:24px 28px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:16;position:sticky;top:0;background:#fff;z-index:2;border-bottom:1px solid #f1f5f9;padding-bottom:18px}
-.ap-modal-title{font-size:18px;font-weight:800;color:var(--navy)}
-.ap-modal-sub{font-size:13px;color:var(--text-2);margin-top:3px}
-.ap-close{width:34px;height:34px;border-radius:50%;border:1.5px solid #e2e8f0;background:#f8faff;display:grid;place-items:center;cursor:pointer;flex-shrink:0}
+.ap-overlay{position:fixed;inset:0;background:rgba(10, 14, 20, 0.82);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.ap-modal{background:rgba(22, 27, 34, 0.96);border:1px solid rgba(255,255,255,.08);border-radius:20px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.ap-modal-head{padding:24px 28px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;position:sticky;top:0;background:rgba(22, 27, 34, 0.98);z-index:2;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:18px}
+.ap-modal-title{font-size:18px;font-weight:800;color:#FFFFFF}
+.ap-modal-sub{font-size:13px;color:#B9C2CF;margin-top:3px}
+.ap-close{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:#FFFFFF;display:grid;place-items:center;cursor:pointer;flex-shrink:0;transition:all .15s}
+.ap-close:hover{background:rgba(255,255,255,.12)}
 .ap-body{padding:24px 28px 28px;display:flex;flex-direction:column;gap:20px}
-.ap-section-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.ap-section-title::after{content:'';flex:1;height:1px;background:#e2e8f0}
+.ap-section-title{font-size:14px;font-weight:800;color:#FFFFFF;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.ap-section-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
 .ap-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .ap-field{display:flex;flex-direction:column;gap:5px}
-.ap-field label{font-size:12px;font-weight:600;color:#475569}
+.ap-field label{font-size:12px;font-weight:600;color:#B9C2CF}
 .ap-field label span{color:#EF4444}
-.ap-field input,.ap-field select,.ap-field textarea{border:1.5px solid #e2e8f0;border-radius:8px;padding:0 12px;height:40px;font-size:13.5px;color:#1C2434;outline:none;font-family:inherit;background:#fff;width:100%;box-sizing:border-box;transition:border-color .15s}
+.ap-field input,.ap-field select,.ap-field textarea{border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:0 12px;height:40px;font-size:13.5px;color:#F1F5F9;outline:none;font-family:inherit;background:rgba(16, 23, 34, 0.85);width:100%;box-sizing:border-box;transition:border-color .15s, box-shadow .15s}
 .ap-field textarea{height:88px;padding:10px 12px;resize:vertical}
-.ap-field input:focus,.ap-field select:focus,.ap-field textarea:focus{border-color:#1D6FE0;box-shadow:0 0 0 3px rgba(29,111,224,.08)}
-.ap-field input::placeholder,.ap-field textarea::placeholder{color:#94A3B8}
-.ap-drop-zone{border:2px dashed #93C5FD;border-radius:10px;padding:20px;text-align:center;cursor:pointer;background:#EFF6FF;transition:border-color .15s,background .15s}
-.ap-drop-zone:hover,.ap-drop-zone.drag{border-color:#1D6FE0;background:#DBEAFE}
-.ap-drop-zone p{font-size:13px;color:#3B82F6;font-weight:600;margin:0}
-.ap-drop-zone small{font-size:11.5px;color:#64748B}
-.ap-file-chosen{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:8px}
-.ap-file-chosen span{font-size:13px;font-weight:600;color:#1D6FE0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ap-submit{height:50px;border-radius:11px;background:#1D6FE0;color:#fff;font-weight:700;font-size:15px;border:none;cursor:pointer;font-family:inherit;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:10px}
-.ap-submit:hover{opacity:.9}
+.ap-field input:focus,.ap-field select:focus,.ap-field textarea:focus{border-color:#2196F3;box-shadow:0 0 0 3px rgba(33,150,243,.2)}
+.ap-field input::placeholder,.ap-field textarea::placeholder{color:rgba(255,255,255,.3)}
+.ap-drop-zone{border:2px dashed rgba(33,150,243,.4);border-radius:10px;padding:20px;text-align:center;cursor:pointer;background:rgba(16, 23, 34, 0.6);transition:border-color .15s,background .15s}
+.ap-drop-zone:hover,.ap-drop-zone.drag{border-color:#2196F3;background:rgba(33,150,243,.12)}
+.ap-drop-zone p{font-size:13px;color:#2196F3;font-weight:600;margin:0}
+.ap-drop-zone small{font-size:11.5px;color:#B9C2CF}
+.ap-file-chosen{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(33,150,243,.15);border:1px solid rgba(33,150,243,.3);border-radius:8px}
+.ap-file-chosen span{font-size:13px;font-weight:600;color:#2196F3;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ap-submit{height:50px;border-radius:11px;background:linear-gradient(135deg, #1E88E5 0%, #7C4DFF 100%);color:#fff;font-weight:700;font-size:15px;border:none;cursor:pointer;font-family:inherit;transition:opacity .15s, transform .15s;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 18px rgba(33,150,243,.35)}
+.ap-submit:hover{opacity:.95;transform:translateY(-1px)}
 .ap-submit:disabled{opacity:.6;cursor:not-allowed}
 .ap-success{text-align:center;padding:40px 28px}
-.ap-success-ic{width:72px;height:72px;border-radius:50%;background:#DCFCE7;display:grid;place-items:center;margin:0 auto 20px}
-.ap-err{background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 14px;font-size:13px;color:#DC2626}
+.ap-success-ic{width:72px;height:72px;border-radius:50%;background:rgba(37,211,102,.15);display:grid;place-items:center;margin:0 auto 20px}
+.ap-err{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px 14px;font-size:13px;color:#F87171}
 @media(max-width:560px){.ap-row{grid-template-columns:1fr}.ap-modal{border-radius:16px}.ap-body,.ap-modal-head{padding-left:18px;padding-right:18px}}
 `
 
@@ -178,11 +179,11 @@ function ApplyModal({ job, onClose }) {
             <div className="ap-success-ic">
               <svg viewBox="0 0 24 24" width={36} height={36} fill="none" stroke="#16A34A" strokeWidth={2.5}><path d="M20 6 9 17l-5-5"/></svg>
             </div>
-            <h3 style={{fontSize:20,fontWeight:800,color:'var(--navy)',marginBottom:10}}>Application Submitted!</h3>
+            <h3 style={{fontSize:20,fontWeight:800,color:'#FFFFFF',marginBottom:10}}>Application Submitted!</h3>
             <p style={{fontSize:15,color:'var(--text-2)',lineHeight:1.7,maxWidth:380,margin:'0 auto 24px'}}>
               Thank you for applying! Our HR team will review your application and reach out within <strong>3–5 business days</strong>. A confirmation has been sent to your email.
             </p>
-            <button onClick={onClose} style={{padding:'12px 32px',background:'#1D6FE0',color:'#fff',border:'none',borderRadius:10,fontWeight:700,fontSize:14,cursor:'pointer',fontFamily:'inherit'}}>
+            <button onClick={onClose} style={{padding:'12px 32px',background:'linear-gradient(135deg, #1E88E5 0%, #7C4DFF 100%)',color:'#fff',border:'none',borderRadius:10,fontWeight:700,fontSize:14,cursor:'pointer',fontFamily:'inherit',boxShadow:'0 4px 16px rgba(30, 136, 229, 0.35)'}}>
               Close
             </button>
           </div>
@@ -249,10 +250,10 @@ function ApplyModal({ job, onClose }) {
                   <div className="ap-field">
                     <label>Phone number <span>*</span></label>
                     <div style={{display:'flex',gap:8}}>
-                      <div style={{display:'flex',alignItems:'center',padding:'0 10px',border:'1.5px solid #e2e8f0',borderRadius:8,background:'#f8faff',fontSize:13,fontWeight:600,color:'#475569',gap:5,flexShrink:0}}>
+                      <div style={{display:'flex',alignItems:'center',padding:'0 10px',border:'1px solid rgba(255,255,255,0.12)',borderRadius:8,background:'rgba(10,16,28,0.65)',fontSize:13,fontWeight:600,color:'#94A3B8',gap:5,flexShrink:0}}>
                         🇮🇳 +91
                       </div>
-                      <input style={{flex:1,border:'1.5px solid #e2e8f0',borderRadius:8,padding:'0 12px',height:40,fontSize:13.5,color:'#1C2434',outline:'none',fontFamily:'inherit'}} type="tel" value={form.phone} onChange={set('phone')} placeholder="98765 43210" required />
+                      <input style={{flex:1,border:'1px solid rgba(255,255,255,0.12)',borderRadius:8,padding:'0 12px',height:40,fontSize:13.5,color:'#F1F5F9',outline:'none',fontFamily:'inherit',background:'rgba(10,16,28,0.65)'}} type="tel" value={form.phone} onChange={set('phone')} placeholder="98765 43210" required />
                     </div>
                   </div>
                 </div>
@@ -335,7 +336,7 @@ function JobCard({ job }) {
   return (
     <>
       {showForm && <ApplyModal job={job} onClose={() => setShowForm(false)} />}
-      <div style={{ background:'#fff', border:`1.5px solid ${open?job.accent:'var(--line)'}`, borderRadius:16, overflow:'hidden', transition:'border-color .2s,box-shadow .2s', boxShadow: open?`0 8px 32px ${job.accent}20`:'0 2px 8px rgba(13,31,60,.06)' }}>
+      <div style={{ background:'rgba(14, 22, 38, 0.70)', backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)', border:`1.5px solid ${open?job.accent:'rgba(255, 255, 255, 0.08)'}`, borderRadius:16, overflow:'hidden', transition:'border-color .2s,box-shadow .2s', boxShadow: open?`0 8px 32px ${job.accent}30`:'0 4px 20px rgba(0,0,0,.25)' }}>
         <div style={{ padding:'24px 24px 20px', display:'flex', alignItems:'flex-start', gap:16 }}>
           <div style={{ width:48,height:48,borderRadius:12,background:job.color,display:'grid',placeItems:'center',flexShrink:0 }}>
             <svg viewBox="0 0 24 24" width={22} height={22} fill="none" stroke={job.accent} strokeWidth={2}><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
@@ -343,20 +344,20 @@ function JobCard({ job }) {
           <div style={{ flex:1 }}>
             <div style={{ display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:12,flexWrap:'wrap' }}>
               <div>
-                <h3 style={{ fontSize:17,fontWeight:800,color:'var(--navy)',marginBottom:6 }}>{job.title}</h3>
+                <h3 style={{ fontSize:17,fontWeight:800,color:'#FFFFFF',marginBottom:6 }}>{job.title}</h3>
                 <div style={{ display:'flex',gap:8,flexWrap:'wrap' }}>
-                  <span style={{ fontSize:12,fontWeight:600,padding:'3px 10px',borderRadius:99,background:job.color,color:job.accent }}>{job.dept}</span>
-                  <span style={{ fontSize:12,color:'var(--text-2)',display:'flex',alignItems:'center',gap:4 }}>
+                  <span style={{ fontSize:12,fontWeight:600,padding:'3px 10px',borderRadius:99,background:job.color,color:job.accent,border:`1px solid ${job.accent}40` }}>{job.dept}</span>
+                  <span style={{ fontSize:12,color:'#94A3B8',display:'flex',alignItems:'center',gap:4 }}>
                     <svg viewBox="0 0 24 24" width={12} height={12} fill="none" stroke="currentColor" strokeWidth={2}><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                     {job.location}
                   </span>
-                  <span style={{ fontSize:12,color:'var(--text-2)',display:'flex',alignItems:'center',gap:4 }}>
+                  <span style={{ fontSize:12,color:'#94A3B8',display:'flex',alignItems:'center',gap:4 }}>
                     <svg viewBox="0 0 24 24" width={12} height={12} fill="none" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                     {job.type}
                   </span>
                 </div>
               </div>
-              <button onClick={() => setOpen(o => !o)} style={{ display:'inline-flex',alignItems:'center',gap:6,padding:'9px 18px',borderRadius:9,fontWeight:700,fontSize:13.5,background:open?job.accent:'#F8FAFF',color:open?'#fff':job.accent,border:`1.5px solid ${job.accent}`,cursor:'pointer',fontFamily:'inherit',transition:'all .15s',flexShrink:0 }}>
+              <button onClick={() => setOpen(o => !o)} style={{ display:'inline-flex',alignItems:'center',gap:6,padding:'9px 18px',borderRadius:9,fontWeight:700,fontSize:13.5,background:open?job.accent:'rgba(255,255,255,0.06)',color:open?'#fff':job.accent,border:`1.5px solid ${job.accent}`,cursor:'pointer',fontFamily:'inherit',transition:'all .15s',flexShrink:0 }}>
                 {open ? 'Close' : 'View Details'}
                 <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5} style={{ transform:open?'rotate(180deg)':'none',transition:'transform .2s' }}><path d="m6 9 6 6 6-6"/></svg>
               </button>
@@ -365,18 +366,18 @@ function JobCard({ job }) {
         </div>
 
         {open && (
-          <div style={{ padding:'0 24px 24px', borderTop:`1px solid ${job.color}` }}>
-            <p style={{ fontSize:14.5,color:'var(--text-2)',lineHeight:1.7,margin:'20px 0 24px' }}>{job.about}</p>
+          <div style={{ padding:'0 24px 24px', borderTop:`1px solid rgba(255,255,255,0.08)` }}>
+            <p style={{ fontSize:14.5,color:'#94A3B8',lineHeight:1.7,margin:'20px 0 24px' }}>{job.about}</p>
             <div style={{ display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,marginBottom:24 }}>
               {[['Responsibilities', job.responsibilities], ['Requirements', job.requirements]].map(([label, items]) => (
                 <div key={label}>
-                  <h4 style={{ fontSize:14,fontWeight:700,color:'var(--navy)',marginBottom:12,display:'flex',alignItems:'center',gap:6 }}>
+                  <h4 style={{ fontSize:14,fontWeight:700,color:'#FFFFFF',marginBottom:12,display:'flex',alignItems:'center',gap:6 }}>
                     <span style={{ width:6,height:6,borderRadius:'50%',background:job.accent,display:'inline-block' }} />
                     {label}
                   </h4>
-                  <ul style={{ listStyle:'none',display:'flex',flexDirection:'column',gap:8 }}>
+                  <ul style={{ listStyle:'none',display:'flex',flexDirection:'column',gap:8,padding:0,margin:0 }}>
                     {items.map(r => (
-                      <li key={r} style={{ display:'flex',gap:8,fontSize:13.5,color:'var(--text)',lineHeight:1.5,alignItems:'flex-start' }}>
+                      <li key={r} style={{ display:'flex',gap:8,fontSize:13.5,color:'#CBD5E1',lineHeight:1.5,alignItems:'flex-start' }}>
                         <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke={job.accent} strokeWidth={2.5} style={{ flexShrink:0,marginTop:2 }}><path d={CHECK}/></svg>
                         {r}
                       </li>
@@ -387,11 +388,11 @@ function JobCard({ job }) {
             </div>
 
             {/* Perks */}
-            <div style={{ background:job.color,borderRadius:10,padding:'14px 18px',marginBottom:20 }}>
+            <div style={{ background:job.color,borderRadius:10,padding:'14px 18px',marginBottom:20,border:`1px solid ${job.accent}30` }}>
               <div style={{ fontSize:12,fontWeight:700,color:job.accent,letterSpacing:'.06em',textTransform:'uppercase',marginBottom:8 }}>What we offer</div>
               <div style={{ display:'flex',gap:8,flexWrap:'wrap' }}>
                 {job.perks.map(p => (
-                  <span key={p} style={{ fontSize:12.5,fontWeight:600,padding:'4px 12px',borderRadius:99,background:'#fff',color:job.accent,border:`1px solid ${job.accent}30` }}>{p}</span>
+                  <span key={p} style={{ fontSize:12.5,fontWeight:600,padding:'4px 12px',borderRadius:99,background:'rgba(10, 16, 28, 0.7)',color:'#FFFFFF',border:`1px solid ${job.accent}40` }}>{p}</span>
                 ))}
               </div>
             </div>
@@ -400,7 +401,7 @@ function JobCard({ job }) {
             <div style={{ display:'flex',gap:12,flexWrap:'wrap' }}>
               <button
                 onClick={() => setShowForm(true)}
-                style={{ display:'inline-flex',alignItems:'center',gap:8,padding:'11px 22px',background:job.accent,color:'#fff',borderRadius:10,fontWeight:700,fontSize:14,border:'none',cursor:'pointer',fontFamily:'inherit' }}
+                style={{ display:'inline-flex',alignItems:'center',gap:8,padding:'11px 22px',background:job.accent,color:'#fff',borderRadius:10,fontWeight:700,fontSize:14,border:'none',cursor:'pointer',fontFamily:'inherit',boxShadow:`0 4px 14px ${job.accent}40` }}
               >
                 Apply Now →
               </button>

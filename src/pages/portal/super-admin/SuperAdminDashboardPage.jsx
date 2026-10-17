@@ -13,7 +13,7 @@ import ErrorState from '../../../components/portal/ErrorState';
 import { fetchSuperAdminDashboard } from '../../../services/portal/dashboardApi';
 import { formatMoney } from '../../../utils/portal/money';
 
-const COLORS = ['#D4A574', '#10B981', '#F59E0B', '#F43F5E', '#0891B2', '#6366f1'];
+const COLORS = ['#38BDF8', '#8B5CF6', '#10B981', '#F59E0B', '#F43F5E', '#6366f1'];
 const POLL_INTERVAL = 30000; // 30 seconds
 
 // Build simple chart datasets from the flat dashboard numbers
@@ -101,21 +101,21 @@ function MiniDoughnut({ data }) {
           iconType="circle"
           iconSize={8}
           wrapperStyle={{ fontSize: 12, paddingTop: 8 }}
-          formatter={(value) => <span style={{ color: '#374151' }}>{value}</span>}
+          formatter={(value) => <span style={{ color: '#94A3B8' }}>{value}</span>}
         />
       </PieChart>
     </ResponsiveContainer>
   );
 }
 
-function MiniBar({ data, color = '#D4A574' }) {
+function MiniBar({ data, color = '#38BDF8' }) {
   return (
     <ResponsiveContainer width="100%" height={240}>
       <BarChart data={data} margin={{ top: 4, right: 8, left: -16, bottom: 4 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#e3e6ee" />
-        <XAxis dataKey="name" tick={{ fontSize: 11 }} interval={0} />
-        <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
-        <Tooltip />
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+        <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#94A3B8' }} interval={0} stroke="rgba(255,255,255,0.2)" />
+        <YAxis tick={{ fontSize: 11, fill: '#94A3B8' }} allowDecimals={false} stroke="rgba(255,255,255,0.2)" />
+        <Tooltip contentStyle={{ background: 'rgba(18,26,44,0.92)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 8, color: '#fff' }} />
         <Bar dataKey="value" fill={color} radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
@@ -176,8 +176,8 @@ export default function SuperAdminDashboardPage() {
           {/* ── REVENUE RECOVERY BANNER ── */}
           {data && (
             <div style={{
-              background: 'linear-gradient(135deg, rgba(212,165,116,0.12) 0%, rgba(184,134,79,0.06) 100%)',
-              border: '1px solid var(--ld-gold-border)',
+              background: 'linear-gradient(135deg, rgba(30,111,251,0.12) 0%, rgba(139,92,246,0.06) 100%)',
+              border: '1px solid rgba(255,255,255,0.1)',
               borderRadius: 'var(--ld-radius-lg)',
               padding: '20px 28px',
               marginBottom: 24,
@@ -227,7 +227,7 @@ export default function SuperAdminDashboardPage() {
           <section className="ld-dashboard-section">
             <h2 className="ld-section-title">Client Overview</h2>
             <div className="ld-card-grid">
-              <StatCard label="Total Clients" value={data.totalClients} to="/super-admin/clients" color="#D4A574" icon="▦" />
+              <StatCard label="Total Clients" value={data.totalClients} to="/super-admin/clients" color="#38BDF8" icon="▦" />
               <StatCard label="Active Clients" value={data.activeClients} to="/super-admin/clients?status=ACTIVE" color="#10B981" icon="◉" />
               <StatCard label="Suspended Clients" value={data.suspendedClients} to="/super-admin/clients?status=SUSPENDED" color="#F43F5E" icon="⊘" />
               <StatCard label="Pending Clients" value={data.pendingClients} to="/super-admin/clients?status=PENDING" color="#F59E0B" icon="◎" />
@@ -249,7 +249,7 @@ export default function SuperAdminDashboardPage() {
           <section className="ld-dashboard-section">
             <h2 className="ld-section-title">Admin Overview</h2>
             <div className="ld-card-grid">
-              <StatCard label="Total Admins" value={data.totalAdmins} color="#D4A574" icon="◉" />
+              <StatCard label="Total Admins" value={data.totalAdmins} color="#38BDF8" icon="◉" />
               <StatCard label="Active Admins" value={data.activeAdmins} to="/super-admin/admins?status=ACTIVE" color="#10B981" icon="◎" />
               <StatCard label="Disabled Admins" value={data.disabledAdmins} to="/super-admin/admins?status=DISABLED" color="#F43F5E" icon="⊘" />
               <StatCard label="Suspended Admins" value={data.suspendedAdmins} to="/super-admin/admins?status=SUSPENDED" color="#F59E0B" icon="⊙" />

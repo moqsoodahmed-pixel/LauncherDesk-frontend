@@ -64,24 +64,24 @@ export default function UserInvoices() {
       <div className="ud-page-head">
         <div>
           <h1 className="ud-h1">Invoices</h1>
-          <p style={{ fontSize: 14, color: '#64748B' }}>Every GST tax invoice generated for your paid orders.</p>
+          <p style={{ fontSize: 14, color: '#8A98AA' }}>Every GST tax invoice generated for your paid orders.</p>
         </div>
       </div>
 
-      {error && <div style={{ background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 10, padding: '14px 16px', fontSize: 14, color: '#DC2626', marginBottom: 20 }}>{error}</div>}
+      {error && <div style={{ background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.25)', borderRadius: 10, padding: '14px 16px', fontSize: 14, color: '#F87171', marginBottom: 20 }}>{error}</div>}
 
-      <div style={{ background: '#fff', borderRadius: 16, border: '1px solid #E8EEF6', overflow: 'hidden' }}>
+      <div className="ud-card" style={{ overflow: 'hidden' }}>
         {invoices === null ? (
-          <div style={{ textAlign: 'center', padding: '60px 0', color: '#94A3B8' }}>
+          <div style={{ textAlign: 'center', padding: '60px 0', color: '#8A98AA' }}>
             <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-            <div style={{ width: 32, height: 32, border: '3px solid #E2E8F0', borderTopColor: '#1D6FE0', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
+            <div style={{ width: 32, height: 32, border: '3px solid rgba(255, 255, 255, 0.12)', borderTopColor: '#2F80FF', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
             Loading…
           </div>
         ) : invoices.length === 0 ? (
           <div style={{ padding: '56px 24px', textAlign: 'center' }}>
             <div style={{ fontSize: 40, marginBottom: 12 }}>🧾</div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1A2F4E', marginBottom: 8 }}>No invoices yet</h3>
-            <p style={{ fontSize: 14, color: '#64748B' }}>A tax invoice appears here automatically as soon as a payment is confirmed.</p>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>No invoices yet</h3>
+            <p style={{ fontSize: 14, color: '#8A98AA' }}>A tax invoice appears here automatically as soon as a payment is confirmed.</p>
           </div>
         ) : (
           <div>{invoices.map(inv => <InvoiceRow key={inv._id} inv={inv} />)}</div>

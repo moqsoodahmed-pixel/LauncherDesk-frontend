@@ -218,7 +218,7 @@ export default function PricingPage() {
               <a href="/">Home</a><svg viewBox="0 0 24 24"><path d={CHEV}/></svg>
               <span className="cur">Pricing</span>
             </nav>
-            <span className="eyebrow reveal-up in" style={{marginTop:16,display:'block'}}>
+            <span className="eyebrow reveal-up in" style={{ marginTop: 16, display: 'inline-flex' }}>
               Transparent pricing
             </span>
             <h1 className="reveal-up in">
@@ -266,21 +266,21 @@ export default function PricingPage() {
 
               return (
                 <div key={plan.name} className="card reveal-up in" style={{
-                  border: plan.primary ? '1.5px solid var(--blue)' : undefined,
+                  border: plan.primary ? '1.5px solid #38BDF8' : '1px solid var(--line)',
                   position: 'relative',
                   overflow: 'visible',
                   transform: plan.primary ? 'translateY(-8px)' : undefined,
-                  boxShadow: plan.primary ? '0 20px 48px rgba(29,93,184,.16), 0 4px 16px rgba(15,28,46,.05)' : undefined,
+                  boxShadow: plan.primary ? '0 24px 64px rgba(0, 0, 0, 0.7), 0 0 32px rgba(30, 111, 251, 0.25)' : '0 12px 32px rgba(0, 0, 0, 0.45)',
                   display: 'flex',
                   flexDirection: 'column',
                   height: '100%',
                   boxSizing: 'border-box',
                 }}>
-                  {plan.primary && <div style={{position:'absolute',top:-14,left:'50%',transform:'translateX(-50%)',background:'var(--grad)',color:'#fff',fontSize:11,fontFamily:'var(--font)',fontWeight:700,padding:'4px 14px',borderRadius:99,letterSpacing:'.06em',whiteSpace:'nowrap',boxShadow:'0 4px 14px rgba(29,93,184,.3)',zIndex:2}}>MOST POPULAR</div>}
+                  {plan.primary && <div style={{position:'absolute',top:-14,left:'50%',transform:'translateX(-50%)',background:'var(--grad)',color:'#fff',fontSize:11,fontFamily:'var(--font)',fontWeight:700,padding:'4px 14px',borderRadius:99,letterSpacing:'.06em',whiteSpace:'nowrap',boxShadow:'0 4px 14px rgba(30,111,251,.4)',zIndex:2}}>MOST POPULAR</div>}
                   
                   {/* Card top bar */}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                    <div style={{fontSize:10.5,fontFamily:'var(--font)',fontWeight:800,letterSpacing:'.14em',textTransform:'uppercase',color:'var(--blue)'}}>{plan.name}</div>
+                    <div style={{fontSize:10.5,fontFamily:'var(--font)',fontWeight:800,letterSpacing:'.14em',textTransform:'uppercase',color:'#38BDF8'}}>{plan.name}</div>
                     {isDM && plan.badge && (
                       <span style={{
                         fontSize: 11,
@@ -288,8 +288,8 @@ export default function PricingPage() {
                         fontWeight: 700,
                         padding: '3px 10px',
                         borderRadius: 99,
-                        background: 'rgba(29,93,184,0.08)',
-                        color: 'var(--blue)',
+                        background: 'rgba(30,111,251,0.15)',
+                        color: '#38BDF8',
                         letterSpacing: '.02em'
                       }}>
                         {plan.badge}
@@ -297,7 +297,7 @@ export default function PricingPage() {
                     )}
                   </div>
 
-                  <h3 style={{fontSize:21,fontWeight:800,marginBottom:12,color:'var(--navy)',minHeight: isDM ? 54 : undefined}}>{plan.subtitle}</h3>
+                  <h3 style={{fontSize:21,fontWeight:800,marginBottom:12,color:'#FFFFFF',minHeight: isDM ? 54 : undefined}}>{plan.subtitle}</h3>
 
                   {/* Top Price Section (Sample style adapted to LauncherDesk theme) */}
                   {isDM && plan.amount ? (
@@ -312,7 +312,7 @@ export default function PricingPage() {
                       <span style={{
                         fontSize: 20,
                         fontWeight: 700,
-                        color: 'var(--navy)',
+                        color: '#FFFFFF',
                         fontFamily: 'var(--font)',
                         lineHeight: 1,
                       }}>
@@ -322,7 +322,7 @@ export default function PricingPage() {
                         fontSize: 'clamp(34px, 3.6vw, 42px)',
                         fontWeight: 900,
                         letterSpacing: '-.03em',
-                        color: 'var(--navy)',
+                        color: '#FFFFFF',
                         fontFamily: 'var(--font)',
                         lineHeight: 1,
                       }}>
@@ -402,13 +402,13 @@ export default function PricingPage() {
       {/* Custom */}
       <section className="section section-warm">
         <div className="wrap">
-          <div className="card reveal-up" style={{background:'var(--navy)',color:'#fff',display:'flex',justifyContent:'space-between',alignItems:'center',gap:24,flexWrap:'wrap',padding:'34px 38px'}}>
+          <div className="card reveal-up" style={{background:'linear-gradient(135deg, rgba(30, 136, 229, 0.16) 0%, rgba(124, 77, 255, 0.12) 100%)',border:'1px solid rgba(255,255,255,0.1)',backdropFilter:'blur(20px)',WebkitBackdropFilter:'blur(20px)',borderRadius:20,color:'#fff',display:'flex',justifyContent:'space-between',alignItems:'center',gap:24,flexWrap:'wrap',padding:'34px 38px',boxShadow:'0 16px 40px rgba(0,0,0,0.5)'}}>
             <div>
-              <div style={{fontSize:11,fontFamily:'var(--font)',fontWeight:800,letterSpacing:'.14em',textTransform:'uppercase',color:'#6da8e0',marginBottom:8}}>CUSTOM REQUIREMENT</div>
+              <div style={{fontSize:11,fontFamily:'var(--font)',fontWeight:800,letterSpacing:'.14em',textTransform:'uppercase',color:'#2196F3',marginBottom:8}}>CUSTOM REQUIREMENT</div>
               <h3 style={{color:'#fff',fontSize:22,marginBottom:8}}>Need something specific?</h3>
-              <p style={{color:'#9ab5d4',maxWidth:520}}>Need a specific service not in the plans above? Or a combination of services tailored to your business? Tell us what you need — we'll put together the right recommendation and a clear quote.</p>
+              <p style={{color:'#B9C2CF',maxWidth:520}}>Need a specific service not in the plans above? Or a combination of services tailored to your business? Tell us what you need — we'll put together the right recommendation and a clear quote.</p>
             </div>
-            <a className="btn btn-light" style={{flexShrink:0}} href="/company/contact">Get a Custom Quote</a>
+            <a className="btn btn-primary" style={{flexShrink:0}} href="/company/contact">Get a Custom Quote</a>
           </div>
         </div>
       </section>

@@ -30,17 +30,17 @@ export default function AboutPage() {
             <div className="card reveal-up">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
               <h3>Complete 360° Solutions</h3>
-              <p>Everything your business needs in one place — registration, compliance, IT, HR, finance and operations — all through a single point of contact.</p>
+              <p>Everything your business needs in one place, registration, compliance, IT, HR, finance and operations, all through a single point of contact.</p>
             </div>
             <div className="card reveal-up">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><path d="M1 6l11 6 11-6M1 12l11 6 11-6"/></svg></div>
               <h3>Integrated Platform</h3>
-              <p>Seamless coordination across all services ensures faster execution, consistent quality and better outcomes — no more managing multiple vendors.</p>
+              <p>Seamless coordination across all services ensures faster execution, consistent quality and better outcomes, no more managing multiple vendors.</p>
             </div>
             <div className="card reveal-up">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></div>
               <h3>Scalable & Growth-Focused</h3>
-              <p>Our solutions are built to grow with you — from startup to scale-up, we provide the right support at every stage of your business journey.</p>
+              <p>Our solutions are built to grow with you, from startup to scale-up, we provide the right support at every stage of your business journey.</p>
             </div>
           </div>
         </div>
@@ -54,12 +54,12 @@ export default function AboutPage() {
             <div className="value reveal-up">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
               <h3>Complete 360° Business Solutions</h3>
-              <p>From registration and compliance to IT, HR, finance and operations — we provide everything your business needs through one integrated platform. No more managing multiple vendors or consultants.</p>
+              <p>From registration and compliance to IT, HR, finance and operations, we provide everything your business needs through one integrated platform. No more managing multiple vendors or consultants.</p>
             </div>
             <div className="value reveal-up">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
               <h3>One Point of Contact</h3>
-              <p>Experience seamless coordination across all services through a single point of contact. Whether you need company registration, payroll processing or website development — we handle it all.</p>
+              <p>Experience seamless coordination across all services through a single point of contact. Whether you need company registration, payroll processing or website development, we handle it all.</p>
             </div>
             <div className="value reveal-up">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/><path d="M19 8v6M22 11h-6"/></svg></div>
@@ -69,12 +69,12 @@ export default function AboutPage() {
             <div className="value reveal-up">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
               <h3>Proven Track Record</h3>
-              <p>Over 1,700 clients served and 4,400+ projects delivered across all service categories — we've built a solid reputation for comprehensive, high-quality execution that grows with your business.</p>
+              <p>Over 1,700 clients served and 4,400+ projects delivered across all service categories, we've built a solid reputation for comprehensive, high-quality execution that grows with your business.</p>
             </div>
             <div className="value reveal-up">
               <div className="ci"><svg viewBox="0 0 24 24" fill="none" strokeWidth="2"><path d="M3 3v18h18M7 14l4-4 3 3 5-6"/></svg></div>
               <h3>Scalable & Growth-Focused</h3>
-              <p>Our solutions are designed to grow with you — from startup to scale-up. We provide the right support at every stage, ensuring your business has everything it needs to succeed, now and in the future.</p>
+              <p>Our solutions are designed to grow with you, from startup to scale-up. We provide the right support at every stage, ensuring your business has everything it needs to succeed, now and in the future.</p>
             </div>
           </div>
         </div>
@@ -88,19 +88,19 @@ export default function AboutPage() {
             <p className="mut reveal-up" style={{fontSize:15.5,lineHeight:1.75}}>LauncherDesk is a product of DutyLaunch Solutions Private Limited, based in Koramangala, Bengaluru. We serve founders, startups, small businesses and growing companies across India.</p>
             <div className="reveal-up" style={{marginTop:20,display:'flex',flexDirection:'column',gap:10}}>
               <div style={{display:'flex',gap:12,alignItems:'center',fontSize:14.5,color:'var(--text-2)'}}>
-                <strong style={{color:'var(--navy)',minWidth:60}}>CIN:</strong>
+                <strong style={{color:'#FFFFFF',minWidth:60}}>CIN:</strong>
                 <span>U62099KA2025PTC211509</span>
               </div>
               <div style={{display:'flex',gap:12,alignItems:'flex-start',fontSize:14.5,color:'var(--text-2)'}}>
-                <strong style={{color:'var(--navy)',minWidth:60}}>Address:</strong>
-                <span>472/7, 20th L Cross Road, 4th Block, Koramangala, Bengaluru – 560095, Karnataka, India</span>
+                <strong style={{color:'#FFFFFF',minWidth:60}}>Address:</strong>
+                <span>472/7, 20th L Cross Road, 4th Block, Koramangala, Bengaluru, 560095, Karnataka, India</span>
               </div>
               <div style={{display:'flex',gap:12,alignItems:'center',fontSize:14.5,color:'var(--text-2)'}}>
-                <strong style={{color:'var(--navy)',minWidth:60}}>Phone:</strong>
+                <strong style={{color:'#FFFFFF',minWidth:60}}>Phone:</strong>
                 <a href="tel:+918548854859" style={{color:'var(--text-2)'}}>+91 85488 54859</a>
               </div>
               <div style={{display:'flex',gap:12,alignItems:'center',fontSize:14.5,color:'var(--text-2)'}}>
-                <strong style={{color:'var(--navy)',minWidth:60}}>Email:</strong>
+                <strong style={{color:'#FFFFFF',minWidth:60}}>Email:</strong>
                 <a href="mailto:contact@launcherdesk.com" style={{color:'var(--text-2)'}}>contact@launcherdesk.com</a>
               </div>
             </div>

@@ -33,7 +33,7 @@ function StatBox({ label, value, sub, color, onClick }) {
     <div
       onClick={onClick}
       style={{
-        background: '#fff',
+        background: 'var(--ld-card-bg, rgba(18, 30, 48, 0.72))',
         border: '1px solid var(--ld-border)',
         borderRadius: 10,
         padding: '18px 20px',

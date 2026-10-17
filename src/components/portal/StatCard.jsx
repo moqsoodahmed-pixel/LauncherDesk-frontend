@@ -31,8 +31,8 @@ export default function StatCard({ label, value, to, color, icon, trend, trendUp
           {icon ? (
             <div style={{
               width: 36, height: 36, borderRadius: 10,
-              background: color ? `${color}18` : 'rgba(212,165,116,0.10)',
-              border: `1px solid ${color ? `${color}30` : 'rgba(212,165,116,0.22)'}`,
+              background: color ? `${color}18` : 'rgba(30, 111, 251, 0.12)',
+              border: `1px solid ${color ? `${color}30` : 'rgba(56, 189, 248, 0.25)'}`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 17, color: color || 'var(--ld-gold)',
             }}>

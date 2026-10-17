@@ -4,7 +4,7 @@ export default function RefundPage() {
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         <div style={{ marginBottom: 40, paddingBottom: 28, borderBottom: '1px solid var(--line)' }}>
           <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--blue)', marginBottom: 10 }}>Legal</p>
-          <h1 style={{ fontSize: 'clamp(26px,4vw,38px)', fontWeight: 800, color: 'var(--navy)', marginBottom: 10 }}>Cancellation &amp; Refund Policy</h1>
+          <h1 style={{ fontSize: 'clamp(26px,4vw,38px)', fontWeight: 800, color: '#FFFFFF', marginBottom: 10 }}>Cancellation &amp; Refund Policy</h1>
           <p style={{ fontSize: 13.5, color: 'var(--text-3)' }}>Effective Date: 28 August 2026 &nbsp;·&nbsp; DutyLaunch Solutions Private Limited &nbsp;·&nbsp; CIN: U62099KA2025PTC211509</p>
         </div>
 
@@ -77,7 +77,7 @@ export default function RefundPage() {
               <div key={s.step} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: '16px 20px', background: 'var(--bg)', border: '1px solid var(--line)', borderRadius: 12 }}>
                 <div style={{ flexShrink: 0, width: 36, height: 36, borderRadius: '50%', background: 'var(--blue)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 15 }}>{s.step}</div>
                 <div>
-                  <p style={{ fontWeight: 700, marginBottom: 4, color: 'var(--navy)' }}>{s.title}</p>
+                  <p style={{ fontWeight: 700, marginBottom: 4, color: '#FFFFFF' }}>{s.title}</p>
                   <p style={{ margin: 0, fontSize: 14, color: 'var(--text-2)', lineHeight: 1.65 }}>{s.body}</p>
                 </div>
               </div>

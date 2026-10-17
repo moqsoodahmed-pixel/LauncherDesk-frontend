@@ -12,7 +12,7 @@ export default function DisclaimerPage() {
       <div style={{ maxWidth: 860, margin: '0 auto' }}>
         <header style={{ marginBottom: 40, paddingBottom: 28, borderBottom: '1px solid var(--line)' }}>
           <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--blue)', marginBottom: 10 }}>Legal</p>
-          <h1 style={{ fontSize: 'clamp(26px,4vw,38px)', fontWeight: 800, color: 'var(--navy)', marginBottom: 10 }}>Disclaimer &amp; Transparency</h1>
+          <h1 style={{ fontSize: 'clamp(26px,4vw,38px)', fontWeight: 800, color: '#FFFFFF', marginBottom: 10 }}>Disclaimer &amp; Transparency</h1>
           <p style={{ fontSize: 13.5, color: 'var(--text-3)' }}>DutyLaunch Solutions Private Limited &nbsp;·&nbsp; CIN: U62099KA2025PTC211509</p>
         </header>
 

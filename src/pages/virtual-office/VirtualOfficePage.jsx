@@ -3,15 +3,15 @@ import { useState } from 'react'
 const S = `
 /* ── HERO ── */
 .vo-hero {
-  background: linear-gradient(180deg, #FBFDFF 0%, #F3F8FF 55%, #EBF4FF 100%);
+  background: linear-gradient(180deg, rgba(12, 28, 52, 0.50) 0%, rgba(7, 17, 29, 0.80) 100%);
   padding: clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);
   position: relative; overflow: hidden;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .vo-hero::before {
   content:'';position:absolute;inset:0;pointer-events:none;
-  background: radial-gradient(860px 620px at 82% -14%,rgba(29,93,184,.10),transparent 62%),
-              radial-gradient(440px 420px at 2% 105%,rgba(29,93,184,.07),transparent 60%);
+  background: radial-gradient(860px 620px at 82% -14%,rgba(33,150,243.14),transparent 62%),
+              radial-gradient(440px 420px at 2% 105%,rgba(124,77,255.10),transparent 60%);
   animation: voHeroGlow 22s ease-in-out infinite alternate;
 }
 @keyframes voHeroGlow {
@@ -19,10 +19,10 @@ const S = `
   to   { transform: translate3d(-1.4%, 1.4%, 0) scale(1.03); }
 }
 .vo-hero::after {
-  content:'';position:absolute;inset:0;pointer-events:none;opacity:.5;
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:.3;
   background-image:
-    linear-gradient(rgba(29,93,184,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(29,93,184,.035) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255.03) 1px, transparent 1px);
   background-size:46px 46px;
   -webkit-mask-image: radial-gradient(760px 480px at 78% 0%, #000, transparent 72%);
   mask-image: radial-gradient(760px 480px at 78% 0%, #000, transparent 72%);
@@ -35,252 +35,259 @@ const S = `
 
 .vo-eyebrow {
   display:inline-flex;align-items:center;gap:8px;
-  background:var(--brand-50);border:1px solid var(--brand-100);
+  background:rgba(33,150,243,0.12);border:1px solid rgba(33,150,243,0.25);
   border-radius:99px;padding:5px 14px;
   font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--blue-dark);margin-bottom:20px;
+  color:var(--blue, #2196F3);margin-bottom:20px;
 }
 .vo-hero h1 {
-  font-size:clamp(34px,4.8vw,60px);font-weight:900;color:var(--navy);
+  font-size:clamp(34px,4.8vw,60px);font-weight:900;color:#FFFFFF;
   letter-spacing:-.04em;line-height:1.04;margin-bottom:18px;
 }
 .vo-hero h1 span {
-  background:linear-gradient(118deg,var(--blue-dark),var(--blue-bright));
+  background:linear-gradient(118deg,#2196F3,#7C4DFF);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
-.vo-hero-desc { font-size:17px;color:var(--text-2);line-height:1.7;max-width:480px;margin-bottom:32px; }
+.vo-hero-desc { font-size:17px;color:var(--text-2, #B9C2CF);line-height:1.7;max-width:480px;margin-bottom:32px; }
 .vo-cta-row   { display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px; }
 
 .vo-btn-primary {
   display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 28px;
-  background:#1D6FE0;color:#fff;font-weight:700;font-size:15px;border-radius:10px;
-  text-decoration:none;transition:all .15s;box-shadow:0 8px 24px rgba(29,111,224,.35);
+  background:linear-gradient(135deg, #1E88E5 0%, #7C4DFF 100%);color:#fff;font-weight:700;font-size:15px;border-radius:10px;
+  text-decoration:none;transition:all .15s;box-shadow:0 8px 24px rgba(30,136,229.35);
   border:0;cursor:pointer;font-family:inherit;
 }
-.vo-btn-primary:hover { background:#0F52C0;transform:translateY(-2px); }
+.vo-btn-primary:hover { transform:translateY(-2px);box-shadow:0 12px 28px rgba(30,136,229.45); }
 .vo-btn-wa {
   display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;
   background:#25D366;color:#fff;font-weight:700;font-size:15px;border-radius:10px;
   border:none;text-decoration:none;transition:all .15s;
+  box-shadow:0 4px 18px rgba(37,211,102,0.35);
 }
-.vo-btn-wa:hover { background:#1da851;transform:translateY(-2px); }
+.vo-btn-wa:hover { background:#22bf5b;transform:translateY(-2px); }
 
 .vo-trust-row  { display:flex;gap:22px;flex-wrap:wrap; }
-.vo-trust-item { display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-2); }
-.vo-trust-item svg { width:15px;height:15px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none; }
+.vo-trust-item { display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-2, #B9C2CF); }
+.vo-trust-item svg { width:15px;height:15px;stroke:var(--blue, #2196F3);fill:none;stroke-width:2.5;flex:none; }
 
-/* Hero right — address card */
+/* Hero right, address card */
 .vo-addr-card {
-  background:#fff;border:1px solid var(--line);
-  border-radius:20px;padding:28px;box-shadow:0 24px 64px rgba(15,28,46,.09), 0 4px 16px rgba(15,28,46,.05);
+  background:var(--card-glass, rgba(22, 27, 34, 0.78));border:1px solid rgba(255, 255, 255, 0.08);
+  border-radius:20px;padding:28px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  box-shadow:0 24px 64px rgba(0,0,0.5);
 }
 .vo-addr-head { display:flex;align-items:center;gap:10px;margin-bottom:18px; }
 .vo-addr-dot  { width:8px;height:8px;border-radius:50%;background:#10B981;flex:none; }
-.vo-addr-label{ font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-dark); }
-.vo-addr-name { font-size:18px;font-weight:800;color:var(--navy);margin-bottom:4px; }
-.vo-addr-loc  { font-size:13px;color:var(--text-2);margin-bottom:18px; }
+.vo-addr-label{ font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue, #2196F3); }
+.vo-addr-name { font-size:18px;font-weight:800;color:#FFFFFF;margin-bottom:4px; }
+.vo-addr-loc  { font-size:13px;color:var(--text-2, #B9C2CF);margin-bottom:18px; }
 .vo-addr-chips{ display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px; }
 .vo-addr-chip {
   font-size:11.5px;font-weight:600;padding:4px 12px;border-radius:99px;
-  background:var(--brand-50);color:var(--blue-dark);border:1px solid var(--brand-100);
+  background:rgba(33, 150, 243, 0.12);color:var(--blue, #2196F3);border:1px solid rgba(33, 150, 243, 0.25);
 }
 .vo-addr-stats{ display:grid;grid-template-columns:1fr 1fr;gap:10px; }
-.vo-addr-stat { background:var(--brand-50);border:1px solid var(--brand-100);border-radius:10px;padding:12px;text-align:center; }
-.vo-addr-stat .n { font-size:20px;font-weight:800;color:var(--navy);line-height:1; }
-.vo-addr-stat .l { font-size:11px;color:var(--blue-dark);margin-top:3px;text-transform:uppercase;letter-spacing:.05em; }
+.vo-addr-stat { background:rgba(255, 255, 255, 0.03);border:1px solid rgba(255, 255, 255, 0.08);border-radius:10px;padding:12px;text-align:center; }
+.vo-addr-stat .n { font-size:20px;font-weight:800;color:#FFFFFF;line-height:1; }
+.vo-addr-stat .l { font-size:11px;color:var(--blue, #2196F3);margin-top:3px;text-transform:uppercase;letter-spacing:.05em; }
 
 /* ── PLANS ── */
-.vo-plans { padding:88px 0;background:var(--sec-b); }
+.vo-plans { padding:88px 0;background:var(--bg-secondary, #101722); }
 .vo-inner  { max-width:1160px;margin:0 auto;padding:0 28px; }
-.vo-sec-label { font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block; }
-.vo-sec-h2 { font-size:clamp(26px,3.6vw,44px);font-weight:900;letter-spacing:-.04em;color:var(--navy);margin-bottom:8px; }
-.vo-sec-p  { font-size:16px;color:var(--text-2);max-width:560px;line-height:1.7;margin-bottom:48px; }
+.vo-sec-label { font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue, #2196F3);margin-bottom:14px;display:block; }
+.vo-sec-h2 { font-size:clamp(26px,3.6vw,44px);font-weight:900;letter-spacing:-.04em;color:#FFFFFF;margin-bottom:8px; }
+.vo-sec-p  { font-size:16px;color:var(--text-2, #B9C2CF);max-width:560px;line-height:1.7;margin-bottom:48px; }
 .vo-plans-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:22px; }
 
 .vo-plan-card {
-  border-radius:20px;border:1.5px solid var(--line);background:#fff;padding:28px;
+  border-radius:20px;border:1px solid rgba(255, 255, 255, 0.08);background:var(--card-glass, rgba(22, 27, 34, 0.78));padding:28px;
   position:relative;transition:border-color .2s,box-shadow .2s,transform .2s;
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   display:flex;flex-direction:column;
 }
-.vo-plan-card:hover { border-color:var(--blue);box-shadow:0 16px 48px rgba(29,111,224,.14);transform:translateY(-4px); }
+.vo-plan-card:hover { border-color:var(--blue, #2196F3);box-shadow:0 16px 48px rgba(33,150,243.2);transform:translateY(-4px); }
 .vo-plan-card.popular {
-  border-color:var(--blue);box-shadow:0 16px 48px rgba(29,111,224,.2);
+  border-color:rgba(33, 150, 243, 0.4);box-shadow:0 16px 48px rgba(33,150,243.2);
 }
 .vo-plan-badge {
   position:absolute;top:-12px;left:50%;transform:translateX(-50%);
   font-size:11px;font-weight:700;padding:4px 14px;border-radius:99px;
-  background:linear-gradient(135deg,#0F52C0,#1D6FE0);color:#fff;white-space:nowrap;
+  background:linear-gradient(135deg,#1E88E5,#7C4DFF);color:#fff;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(30,136,229,0.35);
 }
-.vo-plan-icon { width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#EEF2FF,#DBEAFE);display:grid;place-items:center;margin-bottom:18px; }
-.vo-plan-icon svg { width:26px;height:26px;stroke:#1D6FE0;fill:none;stroke-width:2; }
-.vo-plan-name { font-size:20px;font-weight:800;color:var(--navy);margin-bottom:6px; }
-.vo-plan-tagline { font-size:13.5px;color:var(--text-2);margin-bottom:20px;line-height:1.5; }
+.vo-plan-icon { width:52px;height:52px;border-radius:14px;background:rgba(33,150,243,0.12);border:1px solid rgba(33,150,243,0.25);display:grid;place-items:center;margin-bottom:18px; }
+.vo-plan-icon svg { width:26px;height:26px;stroke:var(--blue, #2196F3);fill:none;stroke-width:2; }
+.vo-plan-name { font-size:20px;font-weight:800;color:#FFFFFF;margin-bottom:6px; }
+.vo-plan-tagline { font-size:13.5px;color:var(--text-2, #B9C2CF);margin-bottom:20px;line-height:1.5; }
 .vo-plan-price { margin-bottom:8px; }
-.vo-plan-from { font-size:12px;color:var(--text-3);font-weight:500; }
-.vo-plan-amount { font-size:36px;font-weight:900;color:var(--navy);letter-spacing:-.04em;line-height:1; }
-.vo-plan-per { font-size:13px;color:var(--text-2);margin-left:4px; }
-.vo-plan-note { font-size:12px;color:var(--text-3);margin-bottom:22px; }
-.vo-plan-divider { height:1px;background:var(--line);margin:18px 0; }
+.vo-plan-from { font-size:12px;color:var(--text-3, #8B95A5);font-weight:500; }
+.vo-plan-amount { font-size:36px;font-weight:900;color:#FFFFFF;letter-spacing:-.04em;line-height:1; }
+.vo-plan-per { font-size:13px;color:var(--text-2, #B9C2CF);margin-left:4px; }
+.vo-plan-note { font-size:12px;color:var(--text-3, #8B95A5);margin-bottom:22px; }
+.vo-plan-divider { height:1px;background:rgba(255, 255, 255, 0.08);margin:18px 0; }
 .vo-plan-features { display:flex;flex-direction:column;gap:11px;flex:1; }
-.vo-plan-feat { display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text); }
+.vo-plan-feat { display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text-2, #B9C2CF); }
 .vo-plan-feat svg { width:16px;height:16px;stroke:#10B981;fill:none;stroke-width:2.5;flex:none;margin-top:2px; }
 .vo-plan-feat.no svg { stroke:#EF4444; }
-.vo-plan-feat.no span { color:var(--text-3);text-decoration:line-through; }
+.vo-plan-feat.no span { color:var(--text-3, #8B95A5);text-decoration:line-through; }
 .vo-plan-cta {
   margin-top:22px;height:48px;border-radius:10px;border:0;cursor:pointer;
   font-weight:700;font-size:14.5px;font-family:inherit;transition:all .15s;
   display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;
 }
-.vo-plan-cta.primary { background:#1D6FE0;color:#fff;box-shadow:0 6px 18px rgba(29,111,224,.3); }
-.vo-plan-cta.primary:hover { background:#0F52C0;transform:translateY(-1px); }
-.vo-plan-cta.outline { background:#fff;color:var(--blue);border:1.5px solid var(--blue); }
-.vo-plan-cta.outline:hover { background:var(--bg-2); }
+.vo-plan-cta.primary { background:linear-gradient(135deg, #1E88E5 0%, #7C4DFF 100%);color:#fff;box-shadow:0 6px 18px rgba(30,136,229.35); }
+.vo-plan-cta.primary:hover { transform:translateY(-1px);box-shadow:0 8px 24px rgba(30,136,229.45); }
+.vo-plan-cta.outline { background:rgba(255, 255, 255, 0.05);color:#FFFFFF;border:1px solid rgba(255, 255, 255, 0.14); }
+.vo-plan-cta.outline:hover { background:rgba(33, 150, 243, 0.15);border-color:var(--blue, #2196F3);color:var(--blue, #2196F3); }
 
 /* ── LOCATIONS ── */
-.vo-locs { padding:88px 0;background:var(--sec-b); }
+.vo-locs { padding:88px 0;background:var(--bg-primary, #0A0E14); }
 .vo-locs-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px; }
 .vo-loc-card {
-  background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:22px;
+  background:var(--card-glass, rgba(22, 27, 34, 0.78));border:1px solid rgba(255, 255, 255, 0.08);border-radius:16px;padding:22px;
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   transition:border-color .2s,box-shadow .2s,transform .2s;
 }
-.vo-loc-card:hover { border-color:var(--blue);box-shadow:0 10px 30px rgba(29,111,224,.12);transform:translateY(-3px); }
-.vo-loc-area { font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px; }
-.vo-loc-name { font-size:17px;font-weight:800;color:var(--navy);margin-bottom:4px; }
-.vo-loc-addr { font-size:13px;color:var(--text-2);line-height:1.5;margin-bottom:14px; }
+.vo-loc-card:hover { border-color:var(--blue, #2196F3);box-shadow:0 10px 30px rgba(33,150,243.18);transform:translateY(-3px); }
+.vo-loc-area { font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue, #2196F3);margin-bottom:6px; }
+.vo-loc-name { font-size:17px;font-weight:800;color:#FFFFFF;margin-bottom:4px; }
+.vo-loc-addr { font-size:13px;color:var(--text-2, #B9C2CF);line-height:1.5;margin-bottom:14px; }
 .vo-loc-tags  { display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px; }
-.vo-loc-tag   { font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;background:var(--bg-2);color:var(--blue-dark); }
-.vo-loc-price { font-size:13px;font-weight:700;color:var(--text-2); }
-.vo-loc-price span { color:var(--navy);font-size:17px; }
+.vo-loc-tag   { font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;background:rgba(33, 150, 243, 0.12);color:var(--blue, #2196F3);border:1px solid rgba(33, 150, 243, 0.25); }
+.vo-loc-price { font-size:13px;font-weight:700;color:var(--text-2, #B9C2CF); }
+.vo-loc-price span { color:#FFFFFF;font-size:17px; }
 
 /* ── WHY / FEATURES ── */
-.vo-why { padding:88px 0;background:var(--sec-b); }
+.vo-why { padding:88px 0;background:var(--bg-secondary, #101722); }
 .vo-why-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px; }
 .vo-why-card {
-  padding:26px;border-radius:16px;border:1.5px solid var(--line);
-  background:var(--bg);transition:border-color .2s,box-shadow .2s;
+  padding:26px;border-radius:16px;border:1px solid rgba(255, 255, 255, 0.08);
+  background:var(--card-glass, rgba(22, 27, 34, 0.78));backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  transition:border-color .2s,box-shadow .2s;
 }
-.vo-why-card:hover { border-color:var(--blue);box-shadow:0 8px 24px rgba(29,111,224,.1); }
-.vo-why-icon { width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#EEF2FF,#DBEAFE);display:grid;place-items:center;margin-bottom:16px; }
-.vo-why-icon svg { width:24px;height:24px;stroke:#1D6FE0;fill:none;stroke-width:2; }
-.vo-why-title { font-size:16px;font-weight:800;color:var(--navy);margin-bottom:8px; }
-.vo-why-desc  { font-size:13.5px;color:var(--text-2);line-height:1.6; }
+.vo-why-card:hover { border-color:var(--blue, #2196F3);box-shadow:0 8px 24px rgba(33,150,243.15); }
+.vo-why-icon { width:48px;height:48px;border-radius:12px;background:rgba(33,150,243,0.12);border:1px solid rgba(33,150,243,0.25);display:grid;place-items:center;margin-bottom:16px; }
+.vo-why-icon svg { width:24px;height:24px;stroke:var(--blue, #2196F3);fill:none;stroke-width:2; }
+.vo-why-title { font-size:16px;font-weight:800;color:#FFFFFF;margin-bottom:8px; }
+.vo-why-desc  { font-size:13.5px;color:var(--text-2, #B9C2CF);line-height:1.6; }
 
 /* ── DOCUMENTS ── */
-.vo-docs { padding:88px 0;background:var(--sec-b); }
+.vo-docs { padding:88px 0;background:var(--bg-primary, #0A0E14); }
 .vo-docs-grid { display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:44px;align-items:start; }
-.vo-doc-group h3 { font-size:17px;font-weight:800;color:var(--navy);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--blue); }
+.vo-doc-group h3 { font-size:17px;font-weight:800;color:#FFFFFF;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--blue, #2196F3); }
 .vo-doc-list { display:flex;flex-direction:column;gap:11px; }
-.vo-doc-item { display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text);line-height:1.5; }
-.vo-doc-item svg { width:16px;height:16px;stroke:#1D6FE0;fill:none;stroke-width:2.5;flex:none;margin-top:2px; }
+.vo-doc-item { display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-2, #B9C2CF);line-height:1.5; }
+.vo-doc-item svg { width:16px;height:16px;stroke:var(--blue, #2196F3);fill:none;stroke-width:2.5;flex:none;margin-top:2px; }
 
 /* ── HOW IT WORKS ── */
-.vo-how { padding:88px 0;background:var(--sec-b); }
+.vo-how { padding:88px 0;background:var(--bg-secondary, #101722); }
 .vo-steps { display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:44px;position:relative; }
-.vo-steps::before { content:'';position:absolute;top:36px;left:60px;right:60px;height:2px;background:linear-gradient(90deg,var(--blue-dark),var(--blue));z-index:0; }
+.vo-steps::before { content:'';position:absolute;top:36px;left:60px;right:60px;height:2px;background:linear-gradient(90deg,#2196F3,#7C4DFF);z-index:0; }
 .vo-step { text-align:center;position:relative;z-index:1; }
 .vo-step-num {
   width:72px;height:72px;border-radius:50%;margin:0 auto 14px;
-  background:linear-gradient(135deg,#0F52C0,#1D6FE0);
+  background:linear-gradient(135deg,#1E88E5,#7C4DFF);
   display:grid;place-items:center;font-size:20px;font-weight:900;color:#fff;
-  box-shadow:0 8px 24px rgba(29,111,224,.35);
+  box-shadow:0 8px 24px rgba(30,136,229.35);
 }
-.vo-step h4 { font-size:14px;font-weight:800;color:var(--navy);margin-bottom:6px;line-height:1.3; }
-.vo-step p  { font-size:12.5px;color:var(--text-2);line-height:1.5; }
+.vo-step h4 { font-size:14px;font-weight:800;color:#FFFFFF;margin-bottom:6px;line-height:1.3; }
+.vo-step p  { font-size:12.5px;color:var(--text-2, #B9C2CF);line-height:1.5; }
 
 /* ── COMPARISON ── */
-.vo-compare { padding:88px 0;background:var(--sec-b); }
-.vo-compare-table { margin-top:44px;border-radius:18px;overflow:hidden;border:1.5px solid var(--line); }
-.vo-ct-head { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;background:var(--brand-50);color:var(--navy);border-bottom:1px solid var(--line); }
+.vo-compare { padding:88px 0;background:var(--bg-primary, #0A0E14); }
+.vo-compare-table { margin-top:44px;border-radius:18px;overflow:hidden;border:1px solid rgba(255, 255, 255, 0.08);background:var(--card-glass, rgba(22, 27, 34, 0.78)); }
+.vo-ct-head { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;background:rgba(33, 150, 243, 0.12);color:#FFFFFF;border-bottom:1px solid rgba(255, 255, 255, 0.08); }
 .vo-ct-col  { padding:16px 20px;font-size:13px;font-weight:700; }
-.vo-ct-col.highlight { background:rgba(29,111,224,.12); }
-.vo-ct-row  { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;border-top:1px solid var(--line);background:#fff;transition:background .12s; }
-.vo-ct-row:hover { background:#FAFBFF; }
-.vo-ct-row:nth-child(even) { background:var(--bg); }
-.vo-ct-row:nth-child(even):hover { background:#F0F5FF; }
-.vo-ct-cell { padding:14px 20px;font-size:13.5px;color:var(--text);display:flex;align-items:center;gap:6px; }
-.vo-ct-cell.feature { font-weight:600;color:var(--navy); }
-.vo-ct-cell.highlight { background:rgba(29,111,224,.05); }
+.vo-ct-col.highlight { background:rgba(33,150,243.18); }
+.vo-ct-row  { display:grid;grid-template-columns:2fr 1fr 1fr 1fr;border-top:1px solid rgba(255, 255, 255, 0.06);background:var(--card-glass, rgba(22, 27, 34, 0.78));transition:background .12s; }
+.vo-ct-row:hover { background:rgba(33, 150, 243, 0.10); }
+.vo-ct-row:nth-child(even) { background:rgba(16, 23, 34, 0.72); }
+.vo-ct-row:nth-child(even):hover { background:rgba(33, 150, 243, 0.10); }
+.vo-ct-cell { padding:14px 20px;font-size:13.5px;color:var(--text-2, #B9C2CF);display:flex;align-items:center;gap:6px; }
+.vo-ct-cell.feature { font-weight:600;color:#FFFFFF; }
+.vo-ct-cell.highlight { background:rgba(33,150,243.08); }
 .vo-ct-check { width:18px;height:18px;stroke:#10B981;fill:none;stroke-width:2.5; }
 .vo-ct-cross { width:18px;height:18px;stroke:#EF4444;fill:none;stroke-width:2.5; }
 
 /* ── FAQ ── */
-.vo-faq { padding:88px 0;background:var(--sec-b); }
+.vo-faq { padding:88px 0;background:var(--bg-secondary, #101722); }
 .vo-faq-inner { max-width:800px;margin:0 auto;padding:0 28px; }
 .vo-faq-list { margin-top:44px; }
-.vo-faq-item { border-bottom:1px solid var(--line); }
-.vo-faq-item:first-child { border-top:1px solid var(--line); }
+.vo-faq-item { border-bottom:1px solid rgba(255, 255, 255, 0.08); }
+.vo-faq-item:first-child { border-top:1px solid rgba(255, 255, 255, 0.08); }
 .vo-faq-q {
   display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:20px 0;cursor:pointer;width:100%;background:none;border:0;text-align:left;font-family:inherit;
 }
-.vo-faq-q-text { font-size:16px;font-weight:700;color:var(--navy);line-height:1.4; }
-.vo-faq-icon   { width:26px;height:26px;border-radius:7px;background:var(--bg-2);display:grid;place-items:center;flex:none; }
-.vo-faq-icon svg { width:14px;height:14px;stroke:var(--blue);fill:none;stroke-width:2.5;transition:transform .25s; }
-.vo-faq-a { max-height:0;overflow:hidden;transition:max-height .32s cubic-bezier(.2,.7,.3,1); }
-.vo-faq-a-inner { padding:0 0 20px;font-size:14.5px;color:var(--text-2);line-height:1.72; }
+.vo-faq-q-text { font-size:16px;font-weight:700;color:#FFFFFF;line-height:1.4; }
+.vo-faq-icon   { width:26px;height:26px;border-radius:7px;background:rgba(255, 255, 255, 0.05);display:grid;place-items:center;flex:none; }
+.vo-faq-icon svg { width:14px;height:14px;stroke:var(--blue, #2196F3);fill:none;stroke-width:2.5;transition:transform .25s; }
+.vo-faq-a { max-height:0;overflow:hidden;transition:max-height .32s cubic-bezier(.2.7.3,1); }
+.vo-faq-a-inner { padding:0 0 20px;font-size:14.5px;color:var(--text-2, #B9C2CF);line-height:1.72; }
 
 /* ── CTA FINAL ── */
-.vo-cta-section { padding:88px 0;background:var(--sec-b); }
+.vo-cta-section { padding:88px 0;background:var(--bg-primary, #0A0E14); }
 .vo-cta-card {
-  background:linear-gradient(160deg,#FBFDFF,#F2F8FF 65%,#E9F2FF);
-  border:1px solid var(--line);
+  background:linear-gradient(160deg,rgba(22, 27, 34, 0.85),rgba(16, 23, 34, 0.85));
+  border:1px solid rgba(33, 150, 243, 0.25);
   border-radius:24px;padding:clamp(48px,6vw,80px);text-align:center;
-  box-shadow:0 32px 72px rgba(15,28,46,.1);position:relative;overflow:hidden;
+  box-shadow:0 32px 72px rgba(0,0,0.5);position:relative;overflow:hidden;
+  backdrop-filter:blur(24px);
 }
 .vo-cta-card::before {
   content:'';position:absolute;inset:0;
-  background:radial-gradient(600px 400px at 50% -20%,rgba(29,93,184,.1),transparent 60%);
+  background:radial-gradient(600px 400px at 50% -20%,rgba(33,150,243.14),transparent 60%);
   pointer-events:none;
 }
-.vo-cta-card h2 { font-size:clamp(28px,4vw,50px);font-weight:900;color:var(--navy);letter-spacing:-.04em;margin-bottom:14px;position:relative; }
-.vo-cta-card p  { font-size:17px;color:var(--text-2);max-width:520px;margin:0 auto 38px;line-height:1.7;position:relative; }
+.vo-cta-card h2 { font-size:clamp(28px,4vw,50px);font-weight:900;color:#FFFFFF;letter-spacing:-.04em;margin-bottom:14px;position:relative; }
+.vo-cta-card p  { font-size:17px;color:var(--text-2, #B9C2CF);max-width:520px;margin:0 auto 38px;line-height:1.7;position:relative; }
 .vo-cta-btns    { display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative; }
 
 /* ── FORM MODAL ── */
 .vo-modal-bg {
-  position:fixed;inset:0;background:rgba(8,15,30,.7);backdrop-filter:blur(4px);
+  position:fixed;inset:0;background:rgba(10, 14, 20, 0.8);backdrop-filter:blur(16px);
   z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;
 }
 .vo-modal {
-  background:#fff;border-radius:20px;width:100%;max-width:520px;
-  box-shadow:0 32px 80px rgba(0,0,0,.25);max-height:90vh;overflow-y:auto;
+  background:#161B22;border:1px solid rgba(255, 255, 255, 0.12);border-radius:20px;width:100%;max-width:520px;
+  box-shadow:0 32px 80px rgba(0,0,0.7);max-height:90vh;overflow-y:auto;
 }
 .vo-modal-head {
-  background:linear-gradient(135deg,#F3F8FF,#EAF3FF);
-  border-bottom:1px solid var(--line);
+  background:rgba(22, 27, 34, 0.95);
+  border-bottom:1px solid rgba(255, 255, 255, 0.08);
   border-radius:20px 20px 0 0;padding:24px 28px;
   display:flex;align-items:center;justify-content:space-between;
 }
-.vo-modal-head h3 { font-size:19px;font-weight:800;color:var(--navy); }
+.vo-modal-head h3 { font-size:19px;font-weight:800;color:#FFFFFF; }
 .vo-modal-close {
-  width:34px;height:34px;border-radius:8px;background:var(--brand-50);
-  border:0;cursor:pointer;display:grid;place-items:center;color:var(--blue-dark);
+  width:34px;height:34px;border-radius:8px;background:rgba(255, 255, 255, 0.08);
+  border:0;cursor:pointer;display:grid;place-items:center;color:#FFFFFF;
 }
 .vo-modal-close svg { width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5; }
 .vo-modal-body { padding:28px; }
 .vo-mform { display:flex;flex-direction:column;gap:14px; }
 .vo-mfield { display:flex;flex-direction:column;gap:6px; }
-.vo-mlabel { font-size:12.5px;font-weight:600;color:#374151; }
+.vo-mlabel { font-size:12.5px;font-weight:600;color:var(--text-2, #B9C2CF); }
 .vo-minput {
-  height:44px;border:1.5px solid #E2E8F0;border-radius:9px;padding:0 14px;
-  font-size:14px;color:#1C2434;outline:none;font-family:inherit;transition:border-color .15s;
+  height:44px;border:1px solid rgba(255, 255, 255, 0.12);background:rgba(255, 255, 255, 0.05);border-radius:9px;padding:0 14px;
+  font-size:14px;color:#FFFFFF;outline:none;font-family:inherit;transition:border-color .15s;
 }
-.vo-minput:focus { border-color:#1D6FE0;box-shadow:0 0 0 3px rgba(29,111,224,.1); }
+.vo-minput:focus { border-color:var(--blue, #2196F3);box-shadow:0 0 0 3px rgba(33,150,243.2); }
 .vo-mselect {
-  height:44px;border:1.5px solid #E2E8F0;border-radius:9px;padding:0 14px;
-  font-size:14px;color:#1C2434;outline:none;font-family:inherit;cursor:pointer;background:#fff;
+  height:44px;border:1px solid rgba(255, 255, 255, 0.12);border-radius:9px;padding:0 14px;
+  font-size:14px;color:#FFFFFF;outline:none;font-family:inherit;cursor:pointer;background:rgba(22, 27, 34, 0.95);
 }
 .vo-mrow { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
 .vo-msubmit {
-  height:50px;border-radius:10px;background:#1D6FE0;color:#fff;
+  height:50px;border-radius:10px;background:linear-gradient(135deg, #1E6FFB 0%, #8B5CF6 100%);color:#fff;
   font-weight:800;font-size:15px;border:0;cursor:pointer;font-family:inherit;
-  transition:all .15s;margin-top:4px;box-shadow:0 6px 18px rgba(29,111,224,.35);
+  transition:all .15s;margin-top:4px;box-shadow:0 6px 18px rgba(30,111,251.35);
 }
-.vo-msubmit:hover { background:#0F52C0;transform:translateY(-1px); }
+.vo-msubmit:hover { transform:translateY(-1px);box-shadow:0 8px 24px rgba(30,111,251.45); }
 .vo-msuccess { text-align:center;padding:20px 0; }
 .vo-msuccess .icon { font-size:48px;margin-bottom:14px; }
-.vo-msuccess h4 { font-size:20px;font-weight:800;color:#1C2434;margin-bottom:8px; }
-.vo-msuccess p  { font-size:14px;color:#64748B;line-height:1.6; }
+.vo-msuccess h4 { font-size:20px;font-weight:800;color:#FFFFFF;margin-bottom:8px; }
+.vo-msuccess p  { font-size:14px;color:var(--text-2, #B8C5D8);line-height:1.6; }
 
 /* ── RESPONSIVE ── */
 @media(max-width:1040px){
@@ -290,7 +297,7 @@ const S = `
   .vo-why-grid { grid-template-columns:1fr 1fr }
   .vo-steps { grid-template-columns:1fr 1fr;gap:20px }
   .vo-steps::before { display:none }
-  .vo-ct-head,.vo-ct-row { grid-template-columns:2fr 1fr 1fr }
+  .vo-ct-head.vo-ct-row { grid-template-columns:2fr 1fr 1fr }
 }
 @media(max-width:768px){
   .vo-plans-grid { grid-template-columns:1fr }
@@ -306,7 +313,7 @@ const S = `
   .vo-steps     { grid-template-columns:1fr }
   .vo-cta-btns  { flex-direction:column;align-items:center }
   .vo-mrow { grid-template-columns:1fr }
-  .vo-ct-head,.vo-ct-row { grid-template-columns:1.5fr 1fr 1fr }
+  .vo-ct-head.vo-ct-row { grid-template-columns:1.5fr 1fr 1fr }
 }
 @media(max-width:480px){
   .vo-why-grid { grid-template-columns:1fr }
@@ -320,7 +327,7 @@ const PLANS = [
     tagline: 'A professional business address for correspondence and mail handling.',
     price: '₹999',
     per: '/month',
-    note: '+ GST · Billed annually',
+    note: '+ GST, Billed annually',
     icon: 'M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z',
     features: [
       { text: 'Prime Koramangala business address', yes: true },
@@ -337,7 +344,7 @@ const PLANS = [
     tagline: 'Everything you need to register your GST with a premium Bengaluru address.',
     price: '₹1,499',
     per: '/month',
-    note: '+ GST · Billed annually',
+    note: '+ GST, Billed annually',
     icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6|M16 13H8|M16 17H8|M10 9H8',
     features: [
       { text: 'Prime Koramangala business address', yes: true },
@@ -354,7 +361,7 @@ const PLANS = [
     tagline: 'Full documentation for both company incorporation and GST registration.',
     price: '₹2,499',
     per: '/month',
-    note: '+ GST · Billed annually',
+    note: '+ GST, Billed annually',
     icon: 'M3 21h18M6 21V7l6-4 6 4v14|M9 22V12h6v10',
     features: [
       { text: 'Prime Koramangala business address', yes: true },
@@ -370,44 +377,44 @@ const PLANS = [
 
 const LOCATIONS = [
   {
-    area: 'Bengaluru – Koramangala',
+    area: 'Bengaluru, Koramangala',
     name: 'LauncherDesk Koramangala HQ',
-    addr: '4th Block, Koramangala, Bengaluru – 560095',
+    addr: '4th Block, Koramangala, Bengaluru, 560095',
     tags: ['Prime Location', 'Metro Nearby', 'GST Ready'],
     price: 'From ₹999/mo',
   },
   {
-    area: 'Mumbai – BKC',
+    area: 'Mumbai, BKC',
     name: 'Bandra Kurla Complex Business Address',
-    addr: 'G Block, Bandra Kurla Complex, Mumbai – 400051',
+    addr: 'G Block, Bandra Kurla Complex, Mumbai, 400051',
     tags: ['Financial Hub', 'Premium', 'GST Ready'],
     price: 'From ₹1,499/mo',
   },
   {
-    area: 'Delhi – Connaught Place',
+    area: 'Delhi, Connaught Place',
     name: 'Connaught Place Central Address',
-    addr: 'Connaught Place, New Delhi – 110001',
+    addr: 'Connaught Place, New Delhi, 110001',
     tags: ['CBD Address', 'Bank Friendly', 'GST Ready'],
     price: 'From ₹1,299/mo',
   },
   {
-    area: 'Hyderabad – HITEC City',
+    area: 'Hyderabad, HITEC City',
     name: 'HITEC City IT Business Address',
-    addr: 'HITEC City, Madhapur, Hyderabad – 500081',
+    addr: 'HITEC City, Madhapur, Hyderabad, 500081',
     tags: ['IT Hub', 'Startup Belt', 'GST Ready'],
     price: 'From ₹999/mo',
   },
   {
-    area: 'Chennai – Anna Salai',
+    area: 'Chennai, Anna Salai',
     name: 'Anna Salai Business Centre',
-    addr: 'Anna Salai, Chennai – 600002',
+    addr: 'Anna Salai, Chennai, 600002',
     tags: ['CBD Address', 'Enterprise Ready', 'GST Ready'],
     price: 'From ₹999/mo',
   },
   {
-    area: 'Pune – Hinjewadi',
+    area: 'Pune, Hinjewadi',
     name: 'Hinjewadi IT Park Address',
-    addr: 'Hinjewadi Phase 1, Pune – 411057',
+    addr: 'Hinjewadi Phase 1, Pune, 411057',
     tags: ['IT Corridor', 'Affordable', 'GST Ready'],
     price: 'From ₹899/mo',
   },
@@ -422,7 +429,7 @@ const WHY = [
   {
     icon: 'M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M13 2v6h6',
     title: 'Documents in 24 Hours',
-    desc: 'Rent agreement, NOC and electricity bill — all delivered digitally within 1 business day.',
+    desc: 'Rent agreement, NOC and electricity bill, all delivered digitally within 1 business day.',
   },
   {
     icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
@@ -432,7 +439,7 @@ const WHY = [
   {
     icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
     title: 'One Point of Contact',
-    desc: 'Your address, your company registration and your GST filing — all handled through LauncherDesk.',
+    desc: 'Your address, your company registration and your GST filing, all handled through LauncherDesk.',
   },
 
   {
@@ -443,7 +450,7 @@ const WHY = [
   {
     icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10',
     title: 'Prime CBD Addresses',
-    desc: 'Choose from verified commercial buildings at premium locations — Koramangala, MG Road, Indiranagar.',
+    desc: 'Choose from verified commercial buildings at premium locations, Koramangala, MG Road, Indiranagar.',
   },
   {
     icon: 'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z|M22 6l-10 7L2 6',
@@ -453,9 +460,9 @@ const WHY = [
 ]
 
 const STEPS = [
-  { num: '01', title: 'Choose Your Plan', desc: 'Select the plan that matches your need — mail, GST or company registration.' },
+  { num: '01', title: 'Choose Your Plan', desc: 'Select the plan that matches your need, mail, GST or company registration.' },
   { num: '02', title: 'Pick a Location', desc: 'Choose from our verified premium addresses across major cities in India.' },
-  { num: '03', title: 'Submit KYC Online', desc: 'Complete KYC and sign your agreement digitally — no office visit required.' },
+  { num: '03', title: 'Submit KYC Online', desc: 'Complete KYC and sign your agreement digitally, no office visit required.' },
   { num: '04', title: 'Get Documents', desc: 'Receive your rent agreement, NOC and electricity bill within 1 business day.' },
   { num: '05', title: 'Use Your Address', desc: 'Start using your address for GST, company registration or business correspondence.' },
 ]
@@ -475,15 +482,15 @@ const COMPARE_ROWS = [
 const FAQS = [
   {
     q: 'What is a virtual office?',
-    a: 'A virtual office gives your business a registered, professional address at a prime location without needing to rent physical space. You get a real address you can use for GST registration, company incorporation, business cards and correspondence — without the cost of a full office.',
+    a: 'A virtual office gives your business a registered, professional address at a prime location without needing to rent physical space. You get a real address you can use for GST registration, company incorporation, business cards and correspondence, without the cost of a full office.',
   },
   {
     q: 'Can I use a virtual office for GST registration?',
-    a: 'Yes. GST registration requires proof of a registered office address. With our GST Registration Plan, we provide a rent agreement, NOC and electricity bill — all the documents GST authorities require. We offer a 100% acceptance guarantee.',
+    a: 'Yes. GST registration requires proof of a registered office address. With our GST Registration Plan, we provide a rent agreement, NOC and electricity bill, all the documents GST authorities require. We offer a 100% acceptance guarantee.',
   },
   {
     q: 'Can I use a virtual office for Private Limited / LLP registration?',
-    a: 'Yes. Company registration with MCA requires a registered office address. Our Company Registration Plan includes all documents needed — rent agreement, NOC and utility bill — for both incorporation and GST filing.',
+    a: 'Yes. Company registration with MCA requires a registered office address. Our Company Registration Plan includes all documents needed, rent agreement, NOC and utility bill, for both incorporation and GST filing.',
   },
   {
     q: 'How long does it take to get the documents?',
@@ -495,7 +502,7 @@ const FAQS = [
   },
   {
     q: 'What if my GST application gets rejected?',
-    a: 'If your GST registration application is rejected due to a document issue from our side, we resolve it at no additional cost. That\'s our acceptance guarantee — 100% at no extra charge.',
+    a: 'If your GST registration application is rejected due to a document issue from our side, we resolve it at no additional cost. That\'s our acceptance guarantee, 100% at no extra charge.',
   },
   {
     q: 'Can I meet clients at this address?',
@@ -528,7 +535,7 @@ function EnquiryModal({ plan, onClose }) {
           mobile:  form.mobile,
           email:   form.email || undefined,
           state:   form.city || 'Not specified',
-          message: `Virtual Office enquiry — Plan: ${form.plan}, City: ${form.city}`,
+          message: `Virtual Office enquiry, Plan: ${form.plan}, City: ${form.city}`,
           source:  'virtual-office',
           service: 'Virtual Office',
         }),
@@ -550,7 +557,7 @@ function EnquiryModal({ plan, onClose }) {
     'Guwahati','Dehradun','Mangaluru','Mysuru','Hubli','Nashik','Aurangabad',
     'Other',
   ]
-  const PLANS  = ['Mail Address Plan','GST Registration Plan','Company Registration Plan','Not sure — help me choose']
+  const PLANS  = ['Mail Address Plan','GST Registration Plan','Company Registration Plan','Not sure, help me choose']
 
   return (
     <div className="vo-modal-bg" onClick={e=>{ if(e.target===e.currentTarget) onClose() }}>
@@ -606,7 +613,7 @@ function EnquiryModal({ plan, onClose }) {
               <button type="submit" className="vo-msubmit" disabled={saving}>{saving ? 'Submitting…' : 'Get My Virtual Office →'}</button>
               {err && <p style={{fontSize:13,color:'#E11D48',textAlign:'center',marginTop:8}}>{err}</p>}
               <p style={{fontSize:12,color:'#94A3B8',textAlign:'center',marginTop:8}}>
-                We'll respond within 2 hours · No spam · 100% confidential
+                We'll respond within 2 hours, No spam, 100% confidential
               </p>
             </form>
           )}
@@ -637,14 +644,14 @@ export default function VirtualOfficePage() {
             <div>
               <div className="vo-eyebrow">
                 <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Virtual Office · Pan India
+                Virtual Office, Pan India
               </div>
               <h1>
                 A premium business address.<br/>
                 <span>Without the office rent.</span>
               </h1>
               <p className="vo-hero-desc">
-                Get a real, registered business address at a prime location across India — for GST registration, company incorporation or professional correspondence. 100% online. Documents in 24 hours.
+                Get a real, registered business address at a prime location across India, for GST registration, company incorporation or professional correspondence. 100% online. Documents in 24 hours.
               </p>
               <div className="vo-cta-row">
                 <button className="vo-btn-primary" onClick={()=>setModal('')}>
@@ -673,7 +680,7 @@ export default function VirtualOfficePage() {
                 <div className="vo-addr-label">Your Business Address</div>
               </div>
               <div className="vo-addr-name">Prime Location</div>
-              <div className="vo-addr-loc">#63, Office No. 224 & 225, 2nd Floor, The Plazzo Mall, Ibrahim Sahib St, Off Commercial Street, Bangalore – 560001</div>
+              <div className="vo-addr-loc">#63, Office No. 224 & 225, 2nd Floor, The Plazzo Mall, Ibrahim Sahib St, Off Commercial Street, Bangalore, 560001</div>
               <div className="vo-addr-chips">
                 {['GST Ready','ROC Accepted','Bank Approved','Court Valid'].map(c=>(
                   <span key={c} className="vo-addr-chip">{c}</span>
@@ -695,7 +702,7 @@ export default function VirtualOfficePage() {
         <div className="vo-inner">
           <span className="vo-sec-label">Pricing Plans</span>
           <h2 className="vo-sec-h2">Choose the right plan for your business.</h2>
-          <p className="vo-sec-p">Whether you need a professional mailing address, GST registration documents or full company incorporation support — we have a plan for you.</p>
+          <p className="vo-sec-p">Whether you need a professional mailing address, GST registration documents or full company incorporation support, we have a plan for you.</p>
           <div className="vo-plans-grid">
             {PLANS.map(p=>(
               <div key={p.name} className={`vo-plan-card${p.popular?' popular':''}`}>
@@ -747,7 +754,7 @@ export default function VirtualOfficePage() {
                 <div className="vo-loc-name">{l.name}</div>
                 <div className="vo-loc-addr">{l.addr}</div>
                 <div className="vo-loc-tags">{l.tags.map(t=><span key={t} className="vo-loc-tag">{t}</span>)}</div>
-                <div className="vo-loc-price"><span>{l.price}</span> · all plans</div>
+                <div className="vo-loc-price"><span>{l.price}</span>, all plans</div>
               </div>
             ))}
           </div>
@@ -780,7 +787,7 @@ export default function VirtualOfficePage() {
         <div className="vo-inner">
           <span className="vo-sec-label">Documents Required</span>
           <h2 className="vo-sec-h2">What you'll need to submit.</h2>
-          <p className="vo-sec-p" style={{marginBottom:0}}>The process is 100% digital. All documents are submitted online — no physical copies needed.</p>
+          <p className="vo-sec-p" style={{marginBottom:0}}>The process is 100% digital. All documents are submitted online, no physical copies needed.</p>
           <div className="vo-docs-grid">
             <div className="vo-doc-group">
               <h3>For GST Registration</h3>
@@ -894,7 +901,7 @@ export default function VirtualOfficePage() {
             <p>Documents delivered within 24 hours. 100% online. No physical visit required.</p>
             <div className="vo-cta-btns">
               <button className="vo-btn-primary" style={{height:54,fontSize:15.5}} onClick={()=>setModal('')}>
-                Get Started — From ₹999/mo
+                Get Started, From ₹999/mo
               </button>
               <a href="https://wa.me/918548854859?text=Hi%2C%20I'm%20interested%20in%20Virtual%20Office%20services." target="_blank" rel="noopener noreferrer" className="vo-btn-wa" style={{height:54}}>
                 <svg viewBox="0 0 32 32" width={20} height={20} fill="currentColor" style={{flexShrink:0}}><path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z"/></svg>

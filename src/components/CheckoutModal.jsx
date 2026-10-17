@@ -15,42 +15,43 @@ const CITIES = [
 ]
 
 const CSS = `
-.ckm-overlay { position:fixed; inset:0; z-index:10000; background:rgba(15,28,46,.55); display:flex; align-items:center; justify-content:center; padding:16px; }
-.ckm-box { position:relative; background:#fff; border-radius:18px; width:100%; max-width:880px; max-height:94vh; overflow-y:auto; box-shadow:0 30px 80px rgba(15,28,46,.35); }
-.ckm-close { position:absolute; top:12px; right:12px; width:36px; height:36px; border-radius:50%; border:0; background:#F1F5F9; color:#334155; font-size:20px; line-height:1; cursor:pointer; z-index:2; }
+.ckm-overlay { position:fixed; inset:0; z-index:10000; background:rgba(10, 14, 20, 0.8); backdrop-filter:blur(16px); display:flex; align-items:center; justify-content:center; padding:16px; }
+.ckm-box { position:relative; background:rgba(22, 27, 34, 0.96); backdrop-filter:blur(24px); border:1px solid var(--line); border-radius:18px; width:100%; max-width:880px; max-height:94vh; overflow-y:auto; box-shadow:0 30px 80px rgba(0,0,0,0.6); }
+.ckm-close { position:absolute; top:12px; right:12px; width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:rgba(255,255,255,0.08); color:var(--text-2, #B9C2CF); font-size:20px; line-height:1; cursor:pointer; z-index:2; transition:all .15s; }
+.ckm-close:hover { background:rgba(255,255,255,0.15); color:#fff; }
 .ckm-grid { display:grid; grid-template-columns:1.1fr .9fr; }
 .ckm-form { padding:30px 28px; }
-.ckm-summary { padding:30px 26px; background:#F5F8FF; border-left:1px solid var(--line); border-radius:0 18px 18px 0; }
-.ckm-title { font-size:21px; font-weight:800; color:var(--navy); margin:0 0 4px; letter-spacing:-.01em; }
-.ckm-sub { font-size:13.5px; color:var(--text-3); margin:0 0 20px; line-height:1.5; }
+.ckm-summary { padding:30px 26px; background:rgba(16, 23, 34, 0.7); border-left:1px solid var(--line); border-radius:0 18px 18px 0; }
+.ckm-title { font-size:21px; font-weight:800; color:#FFFFFF; margin:0 0 4px; letter-spacing:-.01em; }
+.ckm-sub { font-size:13.5px; color:var(--text-3, #8B95A5); margin:0 0 20px; line-height:1.5; }
 .ckm-field { margin-bottom:14px; }
-.ckm-label { display:block; font-size:12.5px; font-weight:700; color:var(--text-2); margin-bottom:6px; }
-.ckm-input { width:100%; box-sizing:border-box; padding:12px 13px; border:1.5px solid #D5DEEC; border-radius:10px; font:inherit; font-size:15px; color:var(--navy); background:#fff; outline:none; transition:border-color .15s, box-shadow .15s; }
-.ckm-input:focus { border-color:var(--blue); box-shadow:0 0 0 3px rgba(29,111,224,.15); }
-.ckm-input.ckm-bad { border-color:#DC2626; }
-.ckm-err { color:#DC2626; font-size:12px; margin-top:4px; }
+.ckm-label { display:block; font-size:12.5px; font-weight:700; color:var(--text-2, #B9C2CF); margin-bottom:6px; }
+.ckm-input { width:100%; box-sizing:border-box; padding:12px 13px; border:1px solid var(--line); border-radius:10px; font:inherit; font-size:15px; color:#FFFFFF; background:rgba(16, 23, 34, 0.85); outline:none; transition:border-color .15s, box-shadow .15s; }
+.ckm-input:focus { border-color:var(--blue, #2196F3); box-shadow:0 0 0 3px rgba(33,150,243,.2); }
+.ckm-input.ckm-bad { border-color:#EF4444; }
+.ckm-err { color:#F87171; font-size:12px; margin-top:4px; }
 .ckm-phone { display:flex; gap:8px; }
-.ckm-cc { flex:none; padding:12px 12px; border:1.5px solid #D5DEEC; border-radius:10px; background:#F8FAFC; font-size:15px; font-weight:700; color:var(--text-2); }
-.ckm-check { display:flex; align-items:flex-start; gap:10px; font-size:13px; color:var(--text-2); line-height:1.45; margin:4px 0 18px; cursor:pointer; }
-.ckm-check input { margin-top:3px; width:16px; height:16px; accent-color:var(--blue); }
-.ckm-pay { width:100%; padding:15px; border:0; border-radius:12px; background:linear-gradient(180deg,#2F7BEA 0%,#1D6FE0 100%); color:#fff; font:inherit; font-size:16px; font-weight:800; cursor:pointer; box-shadow:0 10px 22px rgba(29,111,224,.3); transition:transform .15s, opacity .15s; }
-.ckm-pay:hover:not(:disabled) { transform:translateY(-1px); }
+.ckm-cc { flex:none; padding:12px 12px; border:1px solid var(--line); border-radius:10px; background:rgba(16, 23, 34, 0.85); font-size:15px; font-weight:700; color:var(--text-2, #B9C2CF); }
+.ckm-check { display:flex; align-items:flex-start; gap:10px; font-size:13px; color:var(--text-2, #B9C2CF); line-height:1.45; margin:4px 0 18px; cursor:pointer; }
+.ckm-check input { margin-top:3px; width:16px; height:16px; accent-color:var(--blue, #2196F3); }
+.ckm-pay { width:100%; padding:15px; border:0; border-radius:12px; background:linear-gradient(135deg, #1E88E5 0%, #7C4DFF 100%); color:#fff; font:inherit; font-size:16px; font-weight:800; cursor:pointer; box-shadow:0 8px 24px rgba(30,136,229,.35); transition:transform .15s, opacity .15s; }
+.ckm-pay:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 10px 28px rgba(30,136,229,.45); }
 .ckm-pay:disabled { opacity:.7; cursor:not-allowed; }
-.ckm-secure { text-align:center; font-size:12px; color:var(--text-3); margin-top:10px; }
-.ckm-alert { margin-bottom:14px; padding:10px 12px; border-radius:8px; font-size:13px; line-height:1.5; background:#FEF2F2; border:1px solid #FECACA; color:#B91C1C; }
-.ckm-s-title { font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin:0 0 4px; }
-.ckm-s-plan { font-size:17px; font-weight:800; color:var(--navy); margin:0 0 16px; line-height:1.3; }
-.ckm-row { display:flex; justify-content:space-between; gap:12px; padding:9px 0; font-size:14px; color:var(--text-2); border-bottom:1px solid #E3EAF6; }
-.ckm-row b { color:var(--navy); white-space:nowrap; }
-.ckm-row small { display:block; font-size:11.5px; color:var(--text-3); margin-top:2px; }
-.ckm-total { display:flex; justify-content:space-between; align-items:baseline; padding:14px 0 4px; font-size:15px; font-weight:800; color:var(--navy); }
+.ckm-secure { text-align:center; font-size:12px; color:var(--text-3, #8B95A5); margin-top:10px; }
+.ckm-alert { margin-bottom:14px; padding:10px 12px; border-radius:8px; font-size:13px; line-height:1.5; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); color:#FCA5A5; }
+.ckm-s-title { font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3, #8B95A5); margin:0 0 4px; }
+.ckm-s-plan { font-size:17px; font-weight:800; color:#FFFFFF; margin:0 0 16px; line-height:1.3; }
+.ckm-row { display:flex; justify-content:space-between; gap:12px; padding:9px 0; font-size:14px; color:var(--text-2, #B9C2CF); border-bottom:1px solid var(--line); }
+.ckm-row b { color:#FFFFFF; white-space:nowrap; }
+.ckm-row small { display:block; font-size:11.5px; color:var(--text-3, #8B95A5); margin-top:2px; }
+.ckm-total { display:flex; justify-content:space-between; align-items:baseline; padding:14px 0 4px; font-size:15px; font-weight:800; color:#FFFFFF; }
 .ckm-total span:last-child { font-size:24px; letter-spacing:-.02em; }
-.ckm-later { margin-top:14px; padding:12px 13px; border-radius:10px; background:#fff; border:1px dashed #B9C8E6; }
+.ckm-later { margin-top:14px; padding:12px 13px; border-radius:10px; background:rgba(255,255,255,0.03); border:1px dashed rgba(255,255,255,0.15); }
 .ckm-later .ckm-row { border:0; padding:2px 0; }
-.ckm-later p { margin:6px 0 0; font-size:12px; color:var(--text-3); line-height:1.5; }
+.ckm-later p { margin:6px 0 0; font-size:12px; color:var(--text-3, #8B95A5); line-height:1.5; }
 .ckm-done { padding:44px 28px; text-align:center; }
-.ckm-done .ckm-tick { width:56px; height:56px; border-radius:50%; background:#DCFCE7; color:#16A34A; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:28px; }
-.ckm-done .ckm-order { display:inline-block; margin:10px 0 16px; padding:8px 14px; border-radius:8px; background:#EEF4FF; color:var(--navy); font-weight:800; font-size:14px; }
+.ckm-done .ckm-tick { width:56px; height:56px; border-radius:50%; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#34D399; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:28px; }
+.ckm-done .ckm-order { display:inline-block; margin:10px 0 16px; padding:8px 14px; border-radius:8px; background:rgba(33,150,243,0.15); color:#FFFFFF; font-weight:800; font-size:14px; }
 @media (max-width: 760px) {
   .ckm-grid { grid-template-columns:1fr; }
   .ckm-summary { order:-1; border-left:0; border-bottom:1px solid var(--line); border-radius:18px 18px 0 0; padding:24px 22px 18px; }

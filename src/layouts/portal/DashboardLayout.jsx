@@ -3,7 +3,7 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/PortalAuthContext';
 import { NAVIGATION } from '../../constants/portal/navigation';
 import NotificationBell from '../../components/portal/notifications/NotificationBell';
-import logoSrc from '../../assets/portal-logo.png';
+import logoSrc from '../../assets/launcherdesk-logo-transparent.png';
 
 const ROLE_LABEL = {
   SUPER_ADMIN: 'Super Admin',
@@ -134,11 +134,24 @@ export default function DashboardLayout() {
     <>
       {/* Brand */}
       <div className="ld-sidebar-brand">
-        <NavLink to={user?.role === 'SUPER_ADMIN' ? '/super-admin/dashboard' : user?.role === 'ADMIN' ? '/admin/dashboard' : '/client/dashboard'}>
+        <NavLink
+          to={user?.role === 'SUPER_ADMIN' ? '/super-admin/dashboard' : user?.role === 'ADMIN' ? '/admin/dashboard' : '/client/dashboard'}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '6px 14px',
+            borderRadius: '12px',
+            background: 'rgba(255, 255, 255, 0.04)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+          }}
+        >
           <img
             src={logoSrc}
             alt="LauncherDesk"
-            style={{ display: 'block', width: 148, margin: '0 auto' }}
+            style={{ display: 'block', width: 140, height: 'auto', objectFit: 'contain' }}
           />
         </NavLink>
       </div>

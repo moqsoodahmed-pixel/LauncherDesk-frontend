@@ -39,12 +39,83 @@ export default function AIAssistant() {
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [activeSec, setActiveSec] = useState('reg')
   const [activeSubSec, setActiveSubSec] = useState('inc')
+  const [launcherExpanded, setLauncherExpanded] = useState(false)
+  const [isColliding, setIsColliding] = useState(false)
+  const [footerInView, setFooterInView] = useState(false)
 
   const bodyRef = useRef(null)
   const inputRef = useRef(null)
   const launchedRef = useRef(false)
+  const launcherRef = useRef(null)
 
   const scrimOn = aiOpen || drawerOpen || waOpen
+
+  // Close collapsible launcher on outside click or Escape key
+  useEffect(() => {
+    if (!launcherExpanded) return
+    const onPointerDown = (e) => {
+      if (launcherRef.current && !launcherRef.current.contains(e.target)) {
+        setLauncherExpanded(false)
+      }
+    }
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setLauncherExpanded(false)
+      }
+    }
+    window.addEventListener('pointerdown', onPointerDown)
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      window.removeEventListener('pointerdown', onPointerDown)
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [launcherExpanded])
+
+  // Collision & scroll-aware dodge logic: observes hero stats, CTA button section, and footer
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.IntersectionObserver) return
+
+    const collisionSelectors = ['.hp-stats', '.hp-cta-section', '.final-cta', '.hp-cta-btns']
+    const footerSelectors = ['footer', '.site-footer']
+
+    const collisionElements = collisionSelectors.flatMap(sel => Array.from(document.querySelectorAll(sel)))
+    const footerElements = footerSelectors.flatMap(sel => Array.from(document.querySelectorAll(sel)))
+
+    let activeCollisions = 0
+    const collisionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            activeCollisions++
+          } else {
+            activeCollisions = Math.max(0, activeCollisions - 1)
+          }
+        })
+        const colliding = activeCollisions > 0
+        setIsColliding(colliding)
+        if (colliding) {
+          setLauncherExpanded(false)
+        }
+      },
+      { rootMargin: '0px 0px -40px 0px', threshold: [0, 0.2] }
+    )
+
+    const footerObserver = new IntersectionObserver(
+      (entries) => {
+        const anyInView = entries.some(entry => entry.isIntersecting)
+        setFooterInView(anyInView)
+      },
+      { rootMargin: '0px 0px -20px 0px', threshold: 0 }
+    )
+
+    collisionElements.forEach(el => collisionObserver.observe(el))
+    footerElements.forEach(el => footerObserver.observe(el))
+
+    return () => {
+      collisionObserver.disconnect()
+      footerObserver.disconnect()
+    }
+  }, [location.pathname])
 
   // Scroll to top button visibility & mobile bottom bar & floating WhatsApp toggle
   useEffect(() => {
@@ -124,7 +195,7 @@ export default function AIAssistant() {
       setEngineState(doneState)
       setActiveOptions(currentOptions(doneState))
     } catch {
-      addBotMsg("I couldn't submit that just now — please check your connection and tap Confirm & Submit again.")
+      addBotMsg("I couldn't submit that just now, please check your connection and tap Confirm & Submit again.")
       setEngineState(state)
       setActiveOptions(currentOptions(state))
     } finally {
@@ -160,7 +231,7 @@ export default function AIAssistant() {
   }, [isLoggedIn])
 
   // Re-open Sneha automatically after the user comes back from the login page.
-  // Suppressed on the e-Stamp pages — those flows should never pop a panel on their own.
+  // Suppressed on the e-Stamp pages: those flows should never pop a panel on their own.
   const isEstamp = location.pathname.startsWith('/estamp')
   useEffect(() => {
     if (!isLoggedIn) return
@@ -239,7 +310,7 @@ export default function AIAssistant() {
         })
       })
       if (res.status === 401) {
-        // Session expired — ask the user to log in again
+        // Session expired: ask the user to log in again
         setMessages(m => m.filter(x => x.role !== 'typing' && x.role !== 'typing-exit'))
         logout()
         return
@@ -341,47 +412,100 @@ export default function AIAssistant() {
 
   return (
     <>
-      {/* ── FAB Stack: row1 = WhatsApp + Partner, row2 = Ask Sneha — hidden while chat/widget is open ── */}
-      <div className={`fab-stack${aiOpen || waOpen ? ' fab-stack--hidden' : ''}${showFloatingWa && !mobileBarShown ? ' mob-show' : ''}`}>
-
-        {/* Row 1: WhatsApp + Partner With Us — side by side */}
-        <div className="fab-row">
+      {/* ── Single Collapsible Floating Launcher (Item 1: Highest Priority Fix) ── */}
+      <div
+        ref={launcherRef}
+        className={`fab-dock-container${aiOpen || waOpen ? ' fab-dock--hidden' : ''}${isColliding ? ' fab-dock--dodged' : ''}${footerInView ? ' fab-dock--footer' : ''}${showFloatingWa && !mobileBarShown ? ' mob-show' : ''}`}
+      >
+        {/* Expanded Speed-Dial Menu */}
+        <div
+          className={`fab-dock-menu${launcherExpanded ? ' fab-dock-menu--open' : ''}`}
+          role="menu"
+          aria-label="LauncherDesk quick support options"
+          aria-hidden={!launcherExpanded}
+        >
+          {/* Option 1: Ask Sneha AI */}
           <button
             type="button"
-            onClick={toggleWA}
-            className="fab-wa"
-            aria-label="Chat on WhatsApp"
-            title="Chat on WhatsApp"
-            style={{ border: 'none', cursor: 'pointer' }}
+            className="fab-dock-menu-item fab-dock-menu-item--ai"
+            onClick={() => { setLauncherExpanded(false); openAI() }}
+            role="menuitem"
+            tabIndex={launcherExpanded ? 0 : -1}
           >
-            {/* WhatsApp official logo icon */}
-            <svg viewBox="0 0 32 32" width={26} height={26} fill="currentColor">
-              <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z" />
-            </svg>
+            <span className="fab-dock-item-icon fab-dock-item-icon--ai">
+              <img src={snehaImg} alt="Sneha" className="fab-dock-item-av" />
+              <span className="fab-dock-item-dot" />
+            </span>
+            <div className="fab-dock-item-text">
+              <span className="fab-dock-item-title">Ask Sneha AI</span>
+              <span className="fab-dock-item-sub">Instant 24/7 business guidance</span>
+            </div>
           </button>
 
-          <a
-            href="/partner-register"
-            className="fab-partner"
-            aria-label="Partner with us"
-            title="Partner with us"
+          {/* Option 2: Chat on WhatsApp */}
+          <button
+            type="button"
+            className="fab-dock-menu-item fab-dock-menu-item--wa"
+            onClick={() => { setLauncherExpanded(false); toggleWA() }}
+            role="menuitem"
+            tabIndex={launcherExpanded ? 0 : -1}
           >
-            <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-            Partner With Us
-          </a>
+            <span className="fab-dock-item-icon fab-dock-item-icon--wa">
+              <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor">
+                <path d="M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z" />
+              </svg>
+            </span>
+            <div className="fab-dock-item-text">
+              <span className="fab-dock-item-title">WhatsApp Support</span>
+              <span className="fab-dock-item-sub">Typically replies in minutes</span>
+            </div>
+          </button>
+
+          {/* Option 3: Partner With Us */}
+          <Link
+            to="/partner-register"
+            className="fab-dock-menu-item fab-dock-menu-item--partner"
+            onClick={() => setLauncherExpanded(false)}
+            role="menuitem"
+            tabIndex={launcherExpanded ? 0 : -1}
+          >
+            <span className="fab-dock-item-icon fab-dock-item-icon--partner">
+              <svg viewBox="0 0 24 24" width={18} height={18} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </span>
+            <div className="fab-dock-item-text">
+              <span className="fab-dock-item-title">Partner With Us</span>
+              <span className="fab-dock-item-sub">Join LauncherDesk network</span>
+            </div>
+          </Link>
         </div>
 
-        {/* Row 2: Ask Sneha button */}
-        <button className="fab" onClick={openAI} aria-label="Ask Sneha">
-          <span className="fab-tip">Ask Sneha</span>
-          <span className="d">
-            <img className="fab-av" src={snehaImg} alt="" />
-          </span>
-          Ask Sneha <span className="pd"></span>
+        {/* Collapsed Trigger Button: Single 52px Circular Launcher FAB */}
+        <button
+          type="button"
+          className={`fab-launcher-trigger${launcherExpanded ? ' fab-launcher-trigger--active' : ''}`}
+          onClick={() => setLauncherExpanded(prev => !prev)}
+          aria-expanded={launcherExpanded}
+          aria-label={launcherExpanded ? 'Close LauncherDesk support options' : 'Open LauncherDesk quick support options'}
+          title={launcherExpanded ? 'Close' : 'LauncherDesk Quick Support'}
+        >
+          <div className="fab-launcher-avatar-wrap">
+            <img src={snehaImg} alt="" className="fab-launcher-avatar" />
+            <span className="fab-launcher-pulse-dot" />
+          </div>
+          <div className="fab-launcher-icon-wrap" aria-hidden="true">
+            {launcherExpanded ? (
+              <svg viewBox="0 0 24 24" width={22} height={22} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" width={20} height={20} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+            )}
+          </div>
         </button>
-
       </div>
 
       {/* ── WhatsApp Support Widget (Matching Screenshot) ── */}
@@ -560,7 +684,7 @@ export default function AIAssistant() {
           </button>
         </form>
         </>)}
-        <div className="as-disc">General information only · not a substitute for professional legal or tax advice</div>
+        <div className="as-disc">General information only, not a substitute for professional legal or tax advice</div>
       </div>
 
       <div className={`mobile-bar${mobileBarShown ? ' mb-shown' : ''}`}>
@@ -585,10 +709,10 @@ export default function AIAssistant() {
 
       <div className={`scrim${scrimOn ? ' on' : ''}`} onClick={onScrim} />
 
-      {/* ── Scroll To Top Floating Button (Mobile & Tablet friendly) ── */}
+      {/* ── Scroll To Top Floating Button (Lifts above footer badges when footer is in view) ── */}
       <button
         type="button"
-        className={`scroll-top-btn${showScrollTop && !scrimOn ? ' visible' : ''}`}
+        className={`scroll-top-btn${showScrollTop && !scrimOn ? ' visible' : ''}${footerInView ? ' scroll-top-btn--lift' : ''}`}
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         aria-label="Scroll to top"
         title="Scroll to top"
@@ -693,20 +817,6 @@ export default function AIAssistant() {
             </div>
           ) : (
             <div className="d-auth-box">
-              <div className="d-btn-row">
-                <Link to="/user/login" className="d-btn-login" onClick={closeDrawer}>
-                  <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2}>
-                    <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                  </svg>
-                  Login
-                </Link>
-                <Link to="/user/login" state={{ tab: 'register' }} className="d-btn-signup" onClick={closeDrawer}>
-                  <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2}>
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="20" y1="8" x2="20" y2="14" /><line x1="23" y1="11" x2="17" y2="11" />
-                  </svg>
-                  Sign Up
-                </Link>
-              </div>
               <Link to="/services#finder" className="btn btn-primary d-btn-getstarted" onClick={closeDrawer}>
                 Get Started →
               </Link>

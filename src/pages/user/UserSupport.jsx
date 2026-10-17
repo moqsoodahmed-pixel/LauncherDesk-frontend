@@ -32,17 +32,17 @@ function NewTicketForm({ defaultSubject, defaultOrderId, onCreated, onCancel }) 
 
   return (
     <form onSubmit={submit} className="ud-card ud-pad" style={{ marginBottom: 20 }}>
-      <h2 style={{ fontSize: 15, fontWeight: 700, color: '#1A2F4E', marginBottom: 16 }}>Raise a new ticket</h2>
-      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: '#475569', marginBottom: 6 }}>Subject</label>
+      <h2 style={{ fontSize: 15, fontWeight: 700, color: '#FFFFFF', marginBottom: 16 }}>Raise a new ticket</h2>
+      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: '#8A98AA', marginBottom: 6 }}>Subject</label>
       <input value={subject} onChange={e => setSubject(e.target.value)} placeholder="e.g. Question about my GST filing"
-        style={{ width: '100%', height: 42, borderRadius: 9, border: '1px solid #E2E8F0', padding: '0 14px', fontSize: 16, marginBottom: 14, outline: 'none', fontFamily: 'inherit' }} />
-      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: '#475569', marginBottom: 6 }}>Message</label>
+        style={{ width: '100%', height: 42, borderRadius: 9, border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.05)', color: '#FFFFFF', padding: '0 14px', fontSize: 16, marginBottom: 14, outline: 'none', fontFamily: 'inherit' }} />
+      <label style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: '#8A98AA', marginBottom: 6 }}>Message</label>
       <textarea value={message} onChange={e => setMessage(e.target.value)} rows={4} placeholder="Describe your question or issue…"
-        style={{ width: '100%', borderRadius: 9, border: '1px solid #E2E8F0', padding: '10px 14px', fontSize: 16, marginBottom: 14, outline: 'none', fontFamily: 'inherit', resize: 'vertical' }} />
-      {err && <p style={{ fontSize: 12.5, color: '#DC2626', marginBottom: 12 }}>{err}</p>}
+        style={{ width: '100%', borderRadius: 9, border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.05)', color: '#FFFFFF', padding: '10px 14px', fontSize: 16, marginBottom: 14, outline: 'none', fontFamily: 'inherit', resize: 'vertical' }} />
+      {err && <p style={{ fontSize: 12.5, color: '#F87171', marginBottom: 12 }}>{err}</p>}
       <div className="ud-btn-row">
-        <button type="submit" disabled={saving} style={{ height: 40, padding: '0 20px', borderRadius: 9, border: 'none', background: '#1D6FE0', color: '#fff', fontWeight: 700, fontSize: 13.5, cursor: saving ? 'default' : 'pointer', opacity: saving ? 0.7 : 1 }}>{saving ? 'Submitting…' : 'Submit Ticket'}</button>
-        <button type="button" onClick={onCancel} style={{ height: 40, padding: '0 20px', borderRadius: 9, border: '1px solid #E2E8F0', background: '#fff', color: '#475569', fontWeight: 700, fontSize: 13.5, cursor: 'pointer' }}>Cancel</button>
+        <button type="submit" disabled={saving} style={{ height: 40, padding: '0 20px', borderRadius: 9, border: 'none', background: '#2F80FF', color: '#fff', fontWeight: 700, fontSize: 13.5, cursor: saving ? 'default' : 'pointer', opacity: saving ? 0.7 : 1 }}>{saving ? 'Submitting…' : 'Submit Ticket'}</button>
+        <button type="button" onClick={onCancel} style={{ height: 40, padding: '0 20px', borderRadius: 9, border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.08)', color: '#FFFFFF', fontWeight: 700, fontSize: 13.5, cursor: 'pointer' }}>Cancel</button>
       </div>
     </form>
   )
@@ -71,12 +71,12 @@ function TicketThread({ ticketId, onBack }) {
   const cfg = STATUS_CFG[ticket.status] || STATUS_CFG.OPEN
 
   return (
-    <div style={{ background: '#fff', borderRadius: 16, border: '1px solid #E8EEF6', overflow: 'hidden' }}>
-      <div className="ud-pad" style={{ paddingTop: 18, paddingBottom: 18, borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
+    <div className="ud-card" style={{ overflow: 'hidden' }}>
+      <div className="ud-pad" style={{ paddingTop: 18, paddingBottom: 18, borderBottom: '1px solid rgba(255, 255, 255, 0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap' }}>
         <div className="ud-break" style={{ minWidth: 0 }}>
-          <button onClick={onBack} style={{ background: 'none', border: 'none', color: '#1D6FE0', fontWeight: 600, fontSize: 12.5, cursor: 'pointer', fontFamily: 'inherit', padding: 0, marginBottom: 6 }}>← All tickets</button>
-          <h2 style={{ fontSize: 15, fontWeight: 700, color: '#1A2F4E' }}>{ticket.subject}</h2>
-          <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>Ticket ID: {ticket.ticketId}</div>
+          <button onClick={onBack} style={{ background: 'none', border: 'none', color: '#2F80FF', fontWeight: 600, fontSize: 12.5, cursor: 'pointer', fontFamily: 'inherit', padding: 0, marginBottom: 6 }}>← All tickets</button>
+          <h2 style={{ fontSize: 15, fontWeight: 700, color: '#FFFFFF' }}>{ticket.subject}</h2>
+          <div style={{ fontSize: 12, color: '#8A98AA', marginTop: 2 }}>Ticket ID: {ticket.ticketId}</div>
         </div>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 11.5, fontWeight: 600, padding: '4px 12px', borderRadius: 99, background: cfg.bg, color: cfg.color }}>{cfg.label}</span>
       </div>
@@ -141,14 +141,14 @@ export default function UserSupport() {
           onCreated={onCreated} onCancel={() => { setShowNew(false); setParams({}) }} />
       )}
 
-      <div style={{ background: '#fff', borderRadius: 16, border: '1px solid #E8EEF6', overflow: 'hidden' }}>
+      <div className="ud-card" style={{ overflow: 'hidden' }}>
         {tickets === null ? (
-          <div style={{ textAlign: 'center', padding: '60px 0', color: '#94A3B8' }}>Loading…</div>
+          <div style={{ textAlign: 'center', padding: '60px 0', color: '#8A98AA' }}>Loading…</div>
         ) : tickets.length === 0 ? (
           <div style={{ padding: '56px 24px', textAlign: 'center' }}>
             <div style={{ fontSize: 40, marginBottom: 12 }}>🎫</div>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1A2F4E', marginBottom: 8 }}>No tickets yet</h3>
-            <p style={{ fontSize: 14, color: '#64748B' }}>Have a question about an order or payment? Raise a ticket and we'll reply by email.</p>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>No tickets yet</h3>
+            <p style={{ fontSize: 14, color: '#8A98AA' }}>Have a question about an order or payment? Raise a ticket and we'll reply by email.</p>
           </div>
         ) : (
           tickets.map(t => {
@@ -156,12 +156,12 @@ export default function UserSupport() {
             return (
               <button key={t.ticketId} onClick={() => setOpenTicket(t.ticketId)} style={{
                 width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
-                padding: '16px 20px', borderBottom: '1px solid #F1F5F9', background: 'none', border: 'none', borderBottomWidth: 1,
-                borderBottomStyle: 'solid', borderBottomColor: '#F1F5F9', cursor: 'pointer', fontFamily: 'inherit',
+                padding: '16px 20px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', background: 'none', border: 'none', borderBottomWidth: 1,
+                borderBottomStyle: 'solid', borderBottomColor: 'rgba(255, 255, 255, 0.08)', cursor: 'pointer', fontFamily: 'inherit',
               }}>
                 <div className="ud-break" style={{ minWidth: 0 }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: '#1A2F4E', lineHeight: 1.4 }}>{t.subject}</div>
-                  <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>{t.ticketId} · Updated {fmt(t.updatedAt)}</div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: '#FFFFFF', lineHeight: 1.4 }}>{t.subject}</div>
+                  <div style={{ fontSize: 12, color: '#8A98AA', marginTop: 2 }}>{t.ticketId} · Updated {fmt(t.updatedAt)}</div>
                 </div>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontSize: 11, fontWeight: 600, padding: '3px 10px', borderRadius: 99, background: cfg.bg, color: cfg.color, flexShrink: 0 }}>{cfg.label}</span>
               </button>

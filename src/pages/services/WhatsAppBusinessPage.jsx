@@ -2,82 +2,82 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const S = `
-.wa-hero{background:linear-gradient(180deg,#FBFFFC 0%,#F1FBF5 55%,#EBFAF0 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
-.wa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(800px 600px at 70% -10%,rgba(37,211,102,.14),transparent 60%);animation:waGlowDrift 22s ease-in-out infinite alternate}
+.wa-hero{background:linear-gradient(180deg, rgba(12, 28, 52, 0.50) 0%, rgba(7, 17, 29, 0.80) 100%);padding:clamp(64px,8vw,100px) 0 clamp(52px,6vw,80px);position:relative;overflow:hidden;border-bottom:1px solid rgba(255, 255, 255, 0.08)}
+.wa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(800px 600px at 70% -10%,rgba(37,211,102,.12),transparent 60%);animation:waGlowDrift 22s ease-in-out infinite alternate}
 @keyframes waGlowDrift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-1.5%,1.5%,0) scale(1.03)}}
 @media(prefers-reduced-motion:reduce){.wa-hero::before{animation:none}}
 .wa-inner{max-width:1160px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
-.wa-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.3);border-radius:99px;padding:5px 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#128C4E;margin-bottom:20px}
-.wa-hero h1{font-size:clamp(34px,4.8vw,62px);font-weight:900;color:var(--navy);letter-spacing:-.04em;line-height:1.04;margin-bottom:18px}
-.wa-hero h1 span{background:linear-gradient(118deg,#128C7E,#1da851);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.wa-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.3);border-radius:99px;padding:5px 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#25D366;margin-bottom:20px}
+.wa-hero h1{font-size:clamp(34px,4.8vw,62px);font-weight:900;color:#FFFFFF;letter-spacing:-.04em;line-height:1.04;margin-bottom:18px}
+.wa-hero h1 span{background:linear-gradient(118deg,#25D366,#10B981);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .wa-hero-desc{font-size:17px;color:var(--text-2);line-height:1.7;max-width:520px;margin-bottom:32px}
 .wa-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
 .wa-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
 .wa-btn-primary{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 28px;background:#25D366;color:#fff;font-weight:700;font-size:15px;border-radius:10px;text-decoration:none;transition:all .15s;box-shadow:0 8px 24px rgba(37,211,102,.35);border:0;cursor:pointer;font-family:inherit}
 .wa-btn-primary:hover{background:#1da851;transform:translateY(-2px)}
-.wa-btn-outline{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;background:#fff;color:var(--navy);font-weight:600;font-size:15px;border-radius:10px;border:1.5px solid var(--line-strong);text-decoration:none;transition:all .15s}
-.wa-btn-outline:hover{background:var(--brand-50);border-color:var(--blue)}
+.wa-btn-outline{display:inline-flex;align-items:center;gap:9px;height:52px;padding:0 24px;background:rgba(255,255,255,0.05);color:#FFFFFF;font-weight:600;font-size:15px;border-radius:10px;border:1.5px solid var(--line);text-decoration:none;transition:all .15s}
+.wa-btn-outline:hover{background:rgba(47,128,255,0.12);border-color:var(--blue);color:var(--blue)}
 .wa-badges{display:flex;flex-wrap:wrap;gap:10px}
-.wa-badge{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--text-2);box-shadow:var(--sh-xs)}
+.wa-badge{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--text-2);box-shadow:var(--sh-xs)}
 .wa-badge svg{width:14px;height:14px;stroke:#25D366;fill:none;stroke-width:2.5;flex:none}
 
-.wa-stats-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 24px 56px rgba(15,28,46,.08),0 4px 16px rgba(15,28,46,.05)}
-.wa-stats-card h3{color:var(--navy);font-size:16px;font-weight:700;margin-bottom:20px}
+.wa-stats-card{background:var(--card);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 24px 56px rgba(0,0,0,.45)}
+.wa-stats-card h3{color:#FFFFFF;font-size:16px;font-weight:700;margin-bottom:20px}
 .wa-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-.wa-stat-box{background:#F0FDF6;border:1px solid #DCFCE7;border-radius:12px;padding:16px;text-align:center}
-.wa-stat-box .n{font-size:24px;font-weight:900;color:#128C4E;line-height:1}
+.wa-stat-box{background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.2);border-radius:12px;padding:16px;text-align:center}
+.wa-stat-box .n{font-size:24px;font-weight:900;color:#25D366;line-height:1}
 .wa-stat-box .l{font-size:11px;color:var(--text-3);margin-top:4px;text-transform:uppercase;letter-spacing:.06em}
-.wa-meta-badge{display:flex;align-items:center;gap:10px;background:#F0FDF6;border:1px solid #DCFCE7;border-radius:10px;padding:12px 16px}
+.wa-meta-badge{display:flex;align-items:center;gap:10px;background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.2);border-radius:10px;padding:12px 16px}
 .wa-meta-badge svg{width:22px;height:22px;flex:none}
 .wa-meta-badge span{font-size:13px;color:var(--text-2)}
-.wa-meta-badge b{display:block;color:var(--navy);font-size:14px;font-weight:700}
+.wa-meta-badge b{display:block;color:#FFFFFF;font-size:14px;font-weight:700}
 
-.wa-features{padding:88px 0;background:var(--sec-b)}
+.wa-features{padding:88px 0;background:var(--bg-secondary, #08111D);border-top:1px solid var(--line)}
 .wa-feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
-.wa-feat-card{background:#fff;border-radius:20px;padding:28px;border:1.5px solid var(--line);transition:transform .2s,box-shadow .2s}
-.wa-feat-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(5,150,105,.12)}
-.wa-feat-ic{width:52px;height:52px;border-radius:14px;background:#DCFCE7;display:grid;place-items:center;margin-bottom:18px}
-.wa-feat-ic svg{width:24px;height:24px;stroke:#16A34A;fill:none;stroke-width:2}
-.wa-feat-card h3{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.wa-feat-card{background:var(--card);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:20px;padding:28px;border:1.5px solid var(--line);transition:transform .2s,box-shadow .2s}
+.wa-feat-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(37,211,102,.12);border-color:rgba(37,211,102,0.4)}
+.wa-feat-ic{width:52px;height:52px;border-radius:14px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.25);display:grid;place-items:center;margin-bottom:18px}
+.wa-feat-ic svg{width:24px;height:24px;stroke:#25D366;fill:none;stroke-width:2}
+.wa-feat-card h3{font-size:17px;font-weight:800;color:#FFFFFF;margin-bottom:8px}
 .wa-feat-card p{font-size:14px;color:var(--text-2);line-height:1.6}
 
-.wa-usecases{padding:88px 0;background:var(--sec-b)}
+.wa-usecases{padding:88px 0;background:var(--bg-primary, #05070B);border-top:1px solid var(--line)}
 .wa-uc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
-.wa-uc-card{background:#fff;border-radius:16px;padding:24px;border:1.5px solid var(--line);display:flex;gap:16px;align-items:flex-start;transition:border-color .15s}
+.wa-uc-card{background:var(--card);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:16px;padding:24px;border:1.5px solid var(--line);display:flex;gap:16px;align-items:flex-start;transition:border-color .15s}
 .wa-uc-card:hover{border-color:var(--blue)}
-.wa-uc-ic{width:44px;height:44px;border-radius:10px;background:var(--sec-b);display:grid;place-items:center;flex:none}
+.wa-uc-ic{width:44px;height:44px;border-radius:10px;background:rgba(47,128,255,0.12);border:1px solid rgba(47,128,255,0.25);display:grid;place-items:center;flex:none}
 .wa-uc-ic svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2}
-.wa-uc-card h4{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.wa-uc-card h4{font-size:15px;font-weight:700;color:#FFFFFF;margin-bottom:6px}
 .wa-uc-card p{font-size:13.5px;color:var(--text-2);line-height:1.6}
 
-.wa-process{padding:88px 0;background:var(--sec-b)}
+.wa-process{padding:88px 0;background:var(--bg-secondary, #08111D);border-top:1px solid var(--line)}
 .wa-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;position:relative}
 .wa-steps::before{content:'';position:absolute;top:30px;left:48px;right:48px;height:2px;background:linear-gradient(90deg,#25D366,#128C7E);z-index:0}
 .wa-step{text-align:center;position:relative;z-index:1}
 .wa-step-num{width:60px;height:60px;border-radius:50%;background:#25D366;color:#fff;font-size:18px;font-weight:900;display:grid;place-items:center;margin:0 auto 16px;box-shadow:0 8px 24px rgba(37,211,102,.35)}
-.wa-step h4{font-size:14.5px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.wa-step h4{font-size:14.5px;font-weight:700;color:#FFFFFF;margin-bottom:8px}
 .wa-step p{font-size:13px;color:var(--text-2);line-height:1.6}
 
-.wa-pricing{padding:88px 0;background:var(--sec-b)}
+.wa-pricing{padding:88px 0;background:var(--bg-primary, #05070B);border-top:1px solid var(--line)}
 .wa-price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
-.wa-price-card{background:#fff;border-radius:20px;padding:28px;border:1.5px solid var(--line);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
-.wa-price-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(217,119,6,.1)}
-.wa-price-card.featured{border-color:#25D366;box-shadow:0 0 0 2px rgba(37,211,102,.2)}
+.wa-price-card{background:var(--card);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:20px;padding:28px;border:1.5px solid var(--line);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.wa-price-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.5);border-color:rgba(47,128,255,0.4)}
+.wa-price-card.featured{border-color:#25D366;box-shadow:0 0 0 2px rgba(37,211,102,.3)}
 .wa-price-badge{position:absolute;top:16px;right:16px;background:#25D366;color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px}
-.wa-price-card h3{font-size:19px;font-weight:800;color:var(--navy);margin-bottom:6px}
+.wa-price-card h3{font-size:19px;font-weight:800;color:#FFFFFF;margin-bottom:6px}
 .wa-price{font-size:28px;font-weight:900;color:#25D366;margin-bottom:4px}
 .wa-price span{font-size:14px;font-weight:500;color:var(--text-2)}
 .wa-price-card p{font-size:13.5px;color:var(--text-2);margin-bottom:20px;line-height:1.6}
 .wa-price-inc{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
-.wa-price-inc-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--navy)}
+.wa-price-inc-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#CBD5E1}
 .wa-price-inc-item svg{width:14px;height:14px;stroke:#25D366;fill:none;stroke-width:2.5;flex:none}
 .wa-price-cta{display:block;text-align:center;padding:12px;background:#25D366;color:#fff;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;transition:background .15s}
 .wa-price-cta:hover{background:#1da851}
 
-.wa-faq{padding:88px 0;background:var(--sec-b)}
+.wa-faq{padding:88px 0;background:var(--bg-secondary, #08111D);border-top:1px solid var(--line)}
 .wa-faq-list{max-width:720px;margin:48px auto 0}
-.wa-faq-item{border-bottom:1px solid var(--brand-100)}
-.wa-faq-q{width:100%;padding:20px 0;cursor:pointer;background:none;border:0;text-align:left;font-family:var(--font);font-size:16px;font-weight:600;color:var(--navy);display:flex;justify-content:space-between;align-items:center;gap:16px}
+.wa-faq-item{border-bottom:1px solid var(--line)}
+.wa-faq-q{width:100%;padding:20px 0;cursor:pointer;background:none;border:0;text-align:left;font-family:var(--font);font-size:16px;font-weight:600;color:#FFFFFF;display:flex;justify-content:space-between;align-items:center;gap:16px}
 .wa-faq-q svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none;transition:transform .25s}
 .wa-faq-q.open svg{transform:rotate(45deg)}
 .wa-faq-a{font-size:14.5px;color:var(--text-2);line-height:1.7;overflow:hidden;max-height:0;transition:max-height .35s}
@@ -182,8 +182,8 @@ export default function WhatsAppBusinessPage() {
       {/* FEATURES */}
       <section className="wa-features">
         <div className="wa-inner">
-          <span style={{fontSize:12,fontWeight:700,letterSpacing:'.16em',textTransform:'uppercase',color:'var(--blue)',display:'block',marginBottom:14}}>What You Get</span>
-          <h2 style={{fontSize:'clamp(26px,3.6vw,44px)',fontWeight:900,letterSpacing:'-.04em',color:'var(--navy)',marginBottom:8}}>Everything in one WhatsApp integration</h2>
+          <span style={{fontSize:12,fontWeight:700,letterSpacing:'.16em',textTransform:'uppercase',color:'#2196F3',display:'block',marginBottom:14}}>What You Get</span>
+          <h2 style={{fontSize:'clamp(26px,3.6vw,44px)',fontWeight:900,letterSpacing:'-.04em',color:'#FFFFFF',marginBottom:8}}>Everything in one WhatsApp integration</h2>
           <p style={{fontSize:16,color:'var(--text-2)',maxWidth:560,lineHeight:1.7}}>The complete WhatsApp Business API stack — from setup to automation to analytics.</p>
           <div className="wa-feat-grid">
             {FEATURES.map(f => (
@@ -279,8 +279,7 @@ export default function WhatsAppBusinessPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section style={{padding:'88px 0',background:'linear-gradient(180deg,#fff 0%,#F1FBF5 100%)'}}>
+      <section style={{padding:'88px 0',background:'var(--bg-primary, #05070B)',borderTop:'1px solid var(--line)'}}>
         <div className="wa-inner">
           <div className="final reveal-up" style={{'--final-glow':'rgba(37,211,102,.12)'}}>
             <h2>Ready to automate your business on WhatsApp?</h2>
