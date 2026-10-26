@@ -27,7 +27,7 @@ const STAGES = [
   },
   {
     id: 'grow', href: '/solutions/business-growth',
-    icon: 'M3 3v18h18M7 14l4-4 3 3 5-6',
+    icon: 'M23 6l-9.5 9.5-5-5L1 18|M17 6h6v6',
     stage: 'GROW', title: 'Reach more customers and grow your revenue.',
     desc: 'Marketing, CRM and digital growth services to help your business find new customers and retain existing ones.',
     services: ['SEO & Performance Marketing', 'Social Media Management', 'WhatsApp Business API', 'CRM Setup & Lead Management', 'Google Ads & Paid Marketing'],
@@ -35,7 +35,7 @@ const STAGES = [
   },
   {
     id: 'expand', href: '/solutions/advisory',
-    icon: 'M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM2 12h20',
+    icon: 'M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z|M2 12h20|M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z',
     stage: 'EXPAND', title: 'Take your business to the next stage.',
     desc: 'Fundraising support, international expansion, business consulting and strategic services for businesses ready to grow bigger.',
     services: ['International Company Setup (UAE, UK, US, Singapore)', 'UAE Business Setup', 'Fundraising Documentation', 'Business Consulting', 'Strategic Growth Support'],
@@ -65,7 +65,9 @@ export default function SolutionsIndex() {
             <div key={stage.id} style={{marginBottom:48,paddingBottom:48,borderBottom:'1px solid var(--line)'}}>
               <div className="reveal-up" style={{display:'flex',alignItems:'flex-start',gap:20,marginBottom:20}}>
                 <div style={{width:52,height:52,borderRadius:14,background:'var(--grad)',display:'grid',placeItems:'center',boxShadow:'var(--sh-blue)',flex:'none'}}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" style={{width:26,height:26}}><path d={stage.icon}/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:26,height:26}}>
+                    {stage.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                  </svg>
                 </div>
                 <div>
                   <div style={{fontFamily:'var(--font)',fontSize:11,fontWeight:800,letterSpacing:'.16em',textTransform:'uppercase',color:'var(--blue)',marginBottom:4}}>{stage.stage}</div>

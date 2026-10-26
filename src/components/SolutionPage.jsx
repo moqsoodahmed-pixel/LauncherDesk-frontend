@@ -38,8 +38,8 @@ export default function SolutionPage({ sol }) {
             {cards.map((card) => (
               <a key={card.title} className="card reveal-up" href={card.href}>
                 <div className="ci">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d={card.icon} />
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {card.icon.split('|').map((p, i) => <path key={i} d={p} />)}
                   </svg>
                 </div>
                 <h3>{card.title}</h3>

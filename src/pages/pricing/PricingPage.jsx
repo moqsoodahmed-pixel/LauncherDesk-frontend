@@ -411,12 +411,16 @@ export default function PricingPage() {
           </div>
           <div className="grid-3" style={{marginTop:30}}>
             {[
-              { icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', title: 'Professional fee', desc: "What you pay LauncherDesk for filing, drafting, coordination and ongoing support." },
-              { icon: 'M3 21h18M5 21V10M9 21V10M15 21V10M19 21V10M3 10l9-7 9 7z', title: 'Government fee', desc: 'The actual fee paid to the relevant government authority — varies by state, service and case.' },
-              { icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6', title: 'Taxes', desc: 'GST applicable on our professional fee, shown as a clear line item — never hidden in the total.' },
+              { icon: 'M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16|M2 7h20v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z|M12 12v3', title: 'Professional fee', desc: "What you pay LauncherDesk for filing, drafting, coordination and ongoing support." },
+              { icon: 'M3 21h18|M5 21V10|M9 21V10|M15 21V10|M19 21V10|M3 10l9-7 9 7z', title: 'Government fee', desc: 'The actual fee paid to the relevant government authority — varies by state, service and case.' },
+              { icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6|M9 13h6|M9 17h4', title: 'Taxes', desc: 'GST applicable on our professional fee, shown as a clear line item — never hidden in the total.' },
             ].map(c => (
               <div key={c.title} className="card reveal-up">
-                <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={c.icon}/></svg></div>
+                <div className="ci">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    {c.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                  </svg>
+                </div>
                 <h3>{c.title}</h3>
                 <p>{c.desc}</p>
               </div>

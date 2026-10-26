@@ -30,8 +30,8 @@ export default function BusinessTypesIndex() {
             {TYPES.map((t) => (
               <a key={t.href} className="type-tile reveal-up" href={t.href}>
                 <div className="ci">
-                  <svg viewBox="0 0 24 24" fill="none" strokeWidth="2">
-                    <path d={t.icon} />
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {t.icon.split('|').map((p, i) => <path key={i} d={p} />)}
                   </svg>
                 </div>
                 <h3>{t.title}</h3>

@@ -191,7 +191,11 @@ export default function WhatsAppBusinessPage() {
           <div className="wa-feat-grid">
             {FEATURES.map(f => (
               <div key={f.title} className="wa-feat-card reveal-up">
-                <div className="wa-feat-ic"><svg viewBox="0 0 24 24"><path d={f.icon}/></svg></div>
+                <div className="wa-feat-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    {f.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                  </svg>
+                </div>
                 <h3>{f.title}</h3><p>{f.body}</p>
               </div>
             ))}
@@ -210,7 +214,11 @@ export default function WhatsAppBusinessPage() {
           <div className="wa-uc-grid">
             {USE_CASES.map(uc => (
               <div key={uc.title} className="wa-uc-card reveal-up">
-                <div className="wa-uc-ic"><svg viewBox="0 0 24 24"><path d={uc.icon}/></svg></div>
+                <div className="wa-uc-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                    {uc.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                  </svg>
+                </div>
                 <div><h4>{uc.title}</h4><p>{uc.body}</p></div>
               </div>
             ))}

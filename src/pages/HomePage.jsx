@@ -978,29 +978,101 @@ const STAGES = [
 
 const SVC_CATS = [
   {
-    name: 'Company Registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14', count: 4,
+    name: 'Company Registration',
+    icon: 'M3 21h18|M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16|M9 7h1|M9 11h1|M9 15h1|M14 7h1|M14 11h1|M14 15h1',
+    count: 4,
     services: [
-      { href: '/services/private-limited-company-registration', icon: 'M3 21h18M6 21V7l6-4 6 4v14', name: 'Private Limited Company', startingPrice: 'Starting at ₹4,999', desc: 'The standard for funded startups with limited liability and fundraising readiness.' },
-      { href: '/services/llp-registration', icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', name: 'LLP Registration', startingPrice: 'Starting at ₹4,500', desc: 'Partner-run firms wanting limited liability with lighter compliance.' },
-      { href: '/services/opc-registration', icon: 'M12 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21v-1a6 6 0 0 1 12 0v1', name: 'OPC Registration', startingPrice: 'Starting at ₹4,999', desc: 'One-person companies with limited liability for solo founders.' },
-      { href: '/services/partnership-registration', icon: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87', name: 'Partnership Firm', startingPrice: 'Starting at ₹2,999', desc: 'Simple, lowest-cost registration for small owner-operated businesses.' },
+      {
+        href: '/services/private-limited-company-registration',
+        icon: 'M3 21h18|M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16|M10 9h4|M10 13h4|M10 17h4',
+        name: 'Private Limited Company',
+        startingPrice: 'Starting at ₹4,999',
+        desc: 'The standard for funded startups with limited liability and fundraising readiness.'
+      },
+      {
+        href: '/services/llp-registration',
+        icon: 'M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16|M2 7h20v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z|M12 12v3',
+        name: 'LLP Registration',
+        startingPrice: 'Starting at ₹4,500',
+        desc: 'Partner-run firms wanting limited liability with lighter compliance.'
+      },
+      {
+        href: '/services/opc-registration',
+        icon: 'M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2|M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
+        name: 'OPC Registration',
+        startingPrice: 'Starting at ₹4,999',
+        desc: 'One-person companies with limited liability for solo founders.'
+      },
+      {
+        href: '/services/partnership-registration',
+        icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2|M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z|M22 21v-2a4 4 0 0 0-3-3.87|M16 3.13a4 4 0 0 1 0 7.75',
+        name: 'Partnership Firm',
+        startingPrice: 'Starting at ₹2,999',
+        desc: 'Simple, lowest-cost registration for small owner-operated businesses.'
+      },
     ]
   },
   {
-    name: 'Licences & Registrations', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6', count: 3,
+    name: 'Licences & Registrations',
+    icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6|M16 13H8|M16 17H8|M10 9H8',
+    count: 3,
     services: [
-      { href: '/services/gst-registration', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z', name: 'GST Registration & Filing', startingPrice: 'Starting at ₹1,999', desc: 'GSTIN and ongoing return filing so you never miss a deadline.' },
-      { href: '/services/msme-registration', icon: 'M9 11l3 3L22 4', name: 'MSME / Udyam Registration', startingPrice: 'Starting at ₹499', desc: 'Unlock collateral-free loans, subsidies and payment protection.' },
-      { href: '/services/trademark-registration', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', name: 'Trademark Registration', startingPrice: 'Starting at ₹1,999', desc: 'Protect your brand name, logo and tagline across the right classes.' },
+      {
+        href: '/services/gst-registration',
+        icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6|M9 13h6|M9 17h4',
+        name: 'GST Registration & Filing',
+        startingPrice: 'Starting at ₹1,999',
+        desc: 'GSTIN and ongoing return filing so you never miss a deadline.'
+      },
+      {
+        href: '/services/msme-registration',
+        icon: 'M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12z|M8.21 13.89L7 22l5-3 5 3-1.21-8.11',
+        name: 'MSME / Udyam Registration',
+        startingPrice: 'Starting at ₹499',
+        desc: 'Unlock collateral-free loans, subsidies and payment protection.'
+      },
+      {
+        href: '/services/trademark-registration',
+        icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z|M9 12l2 2 4-4',
+        name: 'Trademark Registration',
+        startingPrice: 'Starting at ₹1,999',
+        desc: 'Protect your brand name, logo and tagline across the right classes.'
+      },
     ]
   },
   {
-    name: 'Technology & IT', icon: 'M2 3h20v14H2zM8 21h8M12 17v4', count: 4,
+    name: 'Technology & IT',
+    icon: 'M2 3h20v14H2z|M8 21h8|M12 17v4',
+    count: 4,
     services: [
-      { href: '/services/website-development', icon: 'M2 3h20v14H2zM8 21h8M12 17v4', name: 'Website Development', startingPrice: 'Starting at ₹9,999', desc: 'Mobile-first business websites, e-commerce stores and portals.' },
-      { href: '/services/business-automation', icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5', name: 'Business Automation', startingPrice: 'Starting at ₹4,999', desc: 'CRM setup, workflow automation and operational systems.' },
-      { href: '/services/digital-marketing', icon: 'M23 6l-9.5 9.5-5-5L1 18', name: 'Digital Marketing', startingPrice: 'Starting at ₹7,999', desc: 'SEO, Google Ads, social media and branding for real growth.' },
-      { href: '/services/whatsapp-business-api', icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z', name: 'WhatsApp Business API', startingPrice: 'Starting at ₹2,499', desc: 'Official Meta API for bulk messaging and automation.' },
+      {
+        href: '/services/website-development',
+        icon: 'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z|M2 9h20|M6 6.5h.01|M9 6.5h.01|M12 6.5h.01',
+        name: 'Website Development',
+        startingPrice: 'Starting at ₹9,999',
+        desc: 'Mobile-first business websites, e-commerce stores and portals.'
+      },
+      {
+        href: '/services/business-automation',
+        icon: 'M4 4h16v16H4z|M9 9h6v6H9z|M9 1v3|M15 1v3|M9 20v3|M15 20v3|M20 9h3|M20 14h3|M1 9h3|M1 14h3',
+        name: 'Business Automation',
+        startingPrice: 'Starting at ₹4,999',
+        desc: 'CRM setup, workflow automation and operational systems.'
+      },
+      {
+        href: '/services/digital-marketing',
+        icon: 'M23 6l-9.5 9.5-5-5L1 18|M17 6h6v6',
+        name: 'Digital Marketing',
+        startingPrice: 'Starting at ₹7,999',
+        desc: 'SEO, Google Ads, social media and branding for real growth.'
+      },
+      {
+        href: '/services/whatsapp-business-api',
+        icon: 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z',
+        name: 'WhatsApp Business API',
+        startingPrice: 'Starting at ₹2,499',
+        desc: 'Official Meta API for bulk messaging and automation.'
+      },
     ]
   },
 ]
@@ -1009,7 +1081,7 @@ const WHY_FEATURES = [
   { icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10', title: 'One point of contact', desc: 'Tell us once. We coordinate every service, with no repeating your story to five different vendors.', cta: 'See how it works', href: '/#how-it-works' },
   { icon: 'M9 11l3 3L22 4|M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11', title: 'We own it start to finish', desc: 'From first call to final filing, LauncherDesk takes accountability for the outcome, not just the paperwork.', cta: 'See our process', href: '/#how-it-works' },
   { icon: 'M12 2v20|M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', title: 'Transparent pricing', desc: 'No padded bundles. Every quote separates professional fee, government fee and taxes, shown clearly upfront.', cta: 'View pricing', href: '/pricing' },
-  { icon: 'M23 6l-9.5 9.5-5-5L1 18', title: 'Proactive reminders', desc: 'We track your deadlines and notify you before they become penalties. Nothing falls through the cracks.', cta: 'Explore compliance', href: '/solutions/compliance-management' },
+  { icon: 'M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9|M13.73 21a2 2 0 0 1-3.46 0', title: 'Proactive reminders', desc: 'We track your deadlines and notify you before they become penalties. Nothing falls through the cracks.', cta: 'Explore compliance', href: '/solutions/compliance-management' },
 ]
 
 const VS_ROWS = [

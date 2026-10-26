@@ -1,10 +1,10 @@
 const CHEV = 'm9 18 6-6-6-6'
 
 const CARDS = [
-  { href: '/resources/blog', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M9 13h6M9 17h4', title: 'Blog', desc: 'Practical articles on registration, compliance and running a business in India. Written in plain English for first-time founders.', cta: 'Read' },
-  { href: '/resources/guides', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z', title: 'Guides', desc: 'Deep, step-by-step guides on specific registrations and processes — for founders who want to understand the detail.', cta: 'Read' },
-  { href: '/resources/tools', icon: 'M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', title: 'Tools', desc: 'Calculators and checklists to help you plan before you talk to anyone. Free, no signup required.', cta: 'Explore' },
-  { href: '/resources/faq', icon: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01', title: 'FAQ', desc: 'Straight answers to the questions we hear most often — about LauncherDesk, our services, pricing and how to get started.', cta: 'Read' },
+  { href: '/resources/blog', icon: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6|M9 13h6|M9 17h4', title: 'Blog', desc: 'Practical articles on registration, compliance and running a business in India. Written in plain English for first-time founders.', cta: 'Read' },
+  { href: '/resources/guides', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20|M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z', title: 'Guides', desc: 'Deep, step-by-step guides on specific registrations and processes — for founders who want to understand the detail.', cta: 'Read' },
+  { href: '/resources/tools', icon: 'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z', title: 'Tools', desc: 'Calculators and checklists to help you plan before you talk to anyone. Free, no signup required.', cta: 'Explore' },
+  { href: '/resources/faq', icon: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z|M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3|M12 17h.01', title: 'FAQ', desc: 'Straight answers to the questions we hear most often — about LauncherDesk, our services, pricing and how to get started.', cta: 'Read' },
 ]
 
 const FEATURED = [
@@ -37,7 +37,11 @@ export default function ResourcesIndex() {
           <div className="grid-3" style={{marginTop:28}}>
             {CARDS.map(c => (
               <a key={c.href} className="card reveal-up" href={c.href}>
-                <div className="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={c.icon}/></svg></div>
+                <div className="ci">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {c.icon.split('|').map((p, i) => <path key={i} d={p} />)}
+                  </svg>
+                </div>
                 <h3>{c.title}</h3>
                 <p>{c.desc}</p>
                 <span className="arrow">{c.cta}</span>
