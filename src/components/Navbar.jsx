@@ -356,45 +356,181 @@ function LoginDropdown() {
   }
 
   if (activeUser) {
-    const displayName = (activeUser.name || activeUser.contactName || activeUser.companyName || 'Account').split(' ')[0]
+    const rawName = activeUser.name || activeUser.fullName || activeUser.contactName || activeUser.companyName || (activeUser.email ? activeUser.email.split('@')[0] : 'Account')
+    const displayName = rawName.trim().split(' ')[0]
+    const initial = (displayName.charAt(0) || 'U').toUpperCase()
+
     return (
       <div ref={ref} style={{ position: 'relative' }} className="nav-auth-wrap">
         <button
           onClick={() => setOpen(o => !o)}
           className="nav-acc-btn"
           aria-expanded={open}
+          aria-label={`User account menu for ${displayName}`}
           style={{
-            display: 'flex', alignItems: 'center', gap: 6,
-            border: '1px solid rgba(255,255,255,.14)', background: 'rgba(255,255,255,.06)',
-            backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
-            borderRadius: 999, padding: '0 14px', height: 38,
-            fontSize: 13, fontWeight: 700, cursor: 'pointer',
-            color: '#F8FAFC', fontFamily: 'inherit'
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            border: open ? '1px solid #1E90FF' : '1px solid rgba(0, 0, 0, 0.10)',
+            background: open ? '#FFFFFF' : 'rgba(0, 0, 0, 0.04)',
+            borderRadius: 999,
+            padding: '0 14px 0 6px',
+            height: 38,
+            fontSize: 13.5,
+            fontWeight: 700,
+            cursor: 'pointer',
+            color: open ? '#1E90FF' : '#1E293B',
+            fontFamily: 'inherit',
+            letterSpacing: '.01em',
+            boxShadow: open ? '0 4px 16px rgba(30, 144, 255, 0.22)' : '0 1px 2px rgba(0, 0, 0, 0.05)',
+            transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)'
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = '#FFFFFF'
+            e.currentTarget.style.borderColor = '#1E90FF'
+            e.currentTarget.style.color = '#1E90FF'
+            e.currentTarget.style.boxShadow = '0 4px 16px rgba(30, 144, 255, 0.25)'
+            e.currentTarget.style.transform = 'translateY(-1px)'
+            const chev = e.currentTarget.querySelector('.nav-acc-chev')
+            if (chev) chev.style.stroke = '#1E90FF'
+          }}
+          onMouseLeave={e => {
+            if (!open) {
+              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.04)'
+              e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.10)'
+              e.currentTarget.style.color = '#1E293B'
+              e.currentTarget.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.05)'
+              e.currentTarget.style.transform = 'none'
+              const chev = e.currentTarget.querySelector('.nav-acc-chev')
+              if (chev) chev.style.stroke = '#64748B'
+            }
           }}
         >
-          <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="#38BDF8" strokeWidth={2}>
-            <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-          </svg>
-          <span>{displayName}</span>
-          <svg viewBox="0 0 24 24" width={12} height={12} fill="none" stroke="currentColor" strokeWidth={2.5} style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }}>
+          <span
+            className="nav-acc-avatar"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 26,
+              height: 26,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #1E90FF 0%, #8B5CF6 100%)',
+              color: '#FFFFFF',
+              fontSize: 12,
+              fontWeight: 800,
+              flexShrink: 0,
+              boxShadow: '0 2px 6px rgba(30, 144, 255, 0.35)'
+            }}
+          >
+            {initial}
+          </span>
+          <span className="nav-acc-name" style={{ color: 'inherit', fontWeight: 700 }}>
+            {displayName}
+          </span>
+          <svg
+            className="nav-acc-chev"
+            viewBox="0 0 24 24"
+            width={12}
+            height={12}
+            fill="none"
+            stroke={open ? '#1E90FF' : '#64748B'}
+            strokeWidth={2.5}
+            style={{
+              transform: open ? 'rotate(180deg)' : 'none',
+              transition: 'transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.2s ease',
+              flexShrink: 0
+            }}
+          >
             <path d="m6 9 6 6 6-6" />
           </svg>
         </button>
         {open && (
-          <div style={{ position: 'absolute', top: 'calc(100% + 8px)', right: 0, background: 'rgba(15,23,42,.96)', border: '1px solid rgba(255,255,255,.12)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', borderRadius: 14, boxShadow: '0 16px 48px rgba(0,0,0,.6), 0 0 24px rgba(30,111,251,.15)', minWidth: 230, overflow: 'hidden', zIndex: 200 }}>
-            <div style={{ padding: '14px 18px', borderBottom: '1px solid rgba(255,255,255,.08)' }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#F8FAFC' }}>{activeUser.name || activeUser.companyName || displayName}</div>
-              <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 500, marginTop: 2 }}>{activeUser.email}</div>
-              <div style={{ fontSize: 10, color: '#38BDF8', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', marginTop: 5 }}>{roleLabel}</div>
+          <div
+            style={{
+              position: 'absolute',
+              top: 'calc(100% + 8px)',
+              right: 0,
+              background: 'rgba(15, 23, 42, 0.98)',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
+              backdropFilter: 'blur(24px)',
+              WebkitBackdropFilter: 'blur(24px)',
+              borderRadius: 14,
+              boxShadow: '0 20px 48px rgba(0, 0, 0, 0.45), 0 0 24px rgba(30, 111, 251, 0.18)',
+              minWidth: 240,
+              overflow: 'hidden',
+              zIndex: 200,
+              animation: 'srchUp 0.18s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+          >
+            <div style={{ padding: '14px 18px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 32,
+                    height: 32,
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #1E90FF 0%, #8B5CF6 100%)',
+                    color: '#FFFFFF',
+                    fontSize: 13,
+                    fontWeight: 800,
+                    flexShrink: 0,
+                    boxShadow: '0 2px 8px rgba(30, 144, 255, 0.35)'
+                  }}
+                >
+                  {initial}
+                </span>
+                <div style={{ minWidth: 0, flex: 1 }}>
+                  <div style={{ fontSize: 13.5, fontWeight: 700, color: '#F8FAFC', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {activeUser.name || activeUser.fullName || activeUser.companyName || displayName}
+                  </div>
+                  {activeUser.email && (
+                    <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {activeUser.email}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <span
+                style={{
+                  display: 'inline-block',
+                  fontSize: 10,
+                  color: '#38BDF8',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '.06em',
+                  background: 'rgba(56, 189, 248, 0.12)',
+                  border: '1px solid rgba(56, 189, 248, 0.25)',
+                  padding: '2px 8px',
+                  borderRadius: 999
+                }}
+              >
+                {roleLabel}
+              </span>
             </div>
             <Link
               to={dashboardPath}
               onClick={() => setOpen(false)}
-              style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 18px', fontSize: 13.5, fontWeight: 600, color: '#38BDF8', textDecoration: 'none', transition: 'background .15s' }}
-              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,.06)'}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 9,
+                padding: '12px 18px',
+                fontSize: 13.5,
+                fontWeight: 600,
+                color: '#38BDF8',
+                textDecoration: 'none',
+                transition: 'background .15s'
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'}
               onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
             >
-              <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2}><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2}>
+                <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
+              </svg>
               <span>Go to {roleLabel}</span>
             </Link>
             <button
@@ -403,11 +539,29 @@ function LoginDropdown() {
                 try { await logoutFn() } catch {}
                 navigate('/')
               }}
-              style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%', textAlign: 'left', padding: '12px 18px', fontSize: 13.5, fontWeight: 600, color: '#F87171', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', borderTop: '1px solid rgba(255,255,255,.08)' }}
-              onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,.08)'}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 9,
+                width: '100%',
+                textAlign: 'left',
+                padding: '12px 18px',
+                fontSize: 13.5,
+                fontWeight: 600,
+                color: '#F87171',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontFamily: 'inherit',
+                borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                transition: 'background .15s'
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.10)'}
               onMouseLeave={e => e.currentTarget.style.background = 'none'}
             >
-              <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2}><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2}>
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
               <span>Log Out</span>
             </button>
           </div>

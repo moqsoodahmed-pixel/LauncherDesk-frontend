@@ -7574,11 +7574,17 @@ button[type="submit"]:not(.x):not(.burger):not(.ld-search-esc):active {
     gap: 0 !important;
   }
   .nav-login-btn span,
-  .nav-acc-btn span {
+  .nav-acc-btn .nav-acc-name {
     display: none !important;
   }
+  .nav-acc-btn .nav-acc-chev,
   .nav-acc-btn svg:last-child {
     display: none !important;
+  }
+  .nav-acc-btn .nav-acc-avatar {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 12px !important;
   }
 }
 
