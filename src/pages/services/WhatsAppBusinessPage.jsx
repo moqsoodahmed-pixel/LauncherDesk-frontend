@@ -75,13 +75,16 @@ const S = `
 .wa-price-cta:hover{background:#1da851}
 
 .wa-faq{padding:88px 0;background:var(--bg-secondary, #08111D);border-top:1px solid var(--line)}
-.wa-faq-list{max-width:720px;margin:48px auto 0}
-.wa-faq-item{border-bottom:1px solid var(--line)}
-.wa-faq-q{width:100%;padding:20px 0;cursor:pointer;background:none;border:0;text-align:left;font-family:var(--font);font-size:16px;font-weight:600;color:#FFFFFF;display:flex;justify-content:space-between;align-items:center;gap:16px}
-.wa-faq-q svg{width:20px;height:20px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none;transition:transform .25s}
-.wa-faq-q.open svg{transform:rotate(45deg)}
-.wa-faq-a{font-size:14.5px;color:var(--text-2);line-height:1.7;overflow:hidden;max-height:0;transition:max-height .35s}
-.wa-faq-a-in{padding-bottom:20px}
+.wa-faq-list{max-width:760px;margin:48px auto 0;display:flex;flex-direction:column;gap:10px}
+.wa-faq-item{border:1.5px solid rgba(255,255,255,0.10);border-radius:14px;background:rgba(14,22,38,0.70);backdrop-filter:blur(20px);overflow:hidden;transition:all .28s cubic-bezier(.16,1,.3,1);cursor:pointer}
+.wa-faq-item:hover{background:rgba(22,34,58,0.88);border-color:rgba(56,189,248,0.35);box-shadow:0 8px 24px rgba(0,0,0,0.45),0 0 16px rgba(30,111,251,0.18)}
+.wa-faq-q{width:100%;padding:18px 20px;cursor:pointer;background:none;border:0;text-align:left;font-family:var(--font);font-size:16px;font-weight:700;color:#FFFFFF;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:color .25s ease}
+.wa-faq-item:hover .wa-faq-q{color:#38BDF8}
+.wa-faq-q svg{width:22px;height:22px;stroke:var(--blue);fill:none;stroke-width:2.5;flex:none;transition:transform .28s cubic-bezier(.16,1,.3,1),stroke .25s ease}
+.wa-faq-item:hover .wa-faq-q svg{transform:rotate(20deg) scale(1.08);stroke:#38BDF8}
+.wa-faq-q.open svg{transform:rotate(45deg);stroke:#38BDF8}
+.wa-faq-a{font-size:14.5px;color:#CBD5E1;line-height:1.75;overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.16,1,.3,1)}
+.wa-faq-a-in{padding:0 20px 20px}
 
 @media(max-width:900px){.wa-hero-grid,.wa-feat-grid,.wa-price-grid{grid-template-columns:1fr 1fr}.wa-steps{grid-template-columns:1fr 1fr}.wa-steps::before{display:none}.wa-uc-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.wa-feat-grid,.wa-price-grid,.wa-steps{grid-template-columns:1fr}.wa-hero-grid{grid-template-columns:1fr}.wa-uc-grid{grid-template-columns:1fr}}

@@ -13,7 +13,8 @@ const CSS = `
   color: var(--text, #FFFFFF);
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 .trp::before {
   content: '';
@@ -50,15 +51,14 @@ const CSS = `
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
   color: #FFFFFF; border-radius: 16px; padding: 18px 24px; margin: 24px 0 0;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  animation: trpFade .5s ease both;
 }
 .trp-notice svg { flex: none; margin-top: 2px; stroke: #2196F3; }
 .trp-notice p { margin: 0; font-size: 14.5px; line-height: 1.6; color: #E2E8F0; }
 .trp-notice b { font-weight: 800; color: #FFFFFF; }
 
 .trp-body { padding: clamp(28px, 4vw, 44px) 0 clamp(48px, 6vw, 72px); }
-.trp-grid { display: grid; grid-template-columns: 240px 1fr; gap: clamp(28px, 4vw, 48px); align-items: start; }
-@media (max-width: 900px) { .trp-grid { grid-template-columns: 1fr; } }
+.trp-grid { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: clamp(28px, 4vw, 48px); align-items: start; }
+@media (max-width: 900px) { .trp-grid { grid-template-columns: minmax(0, 1fr); } }
 
 .trp-nav { position: sticky; top: 96px; display: grid; gap: 4px; }
 .trp-nav-label { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3, #B9C2CF); margin-bottom: 10px; }
@@ -78,14 +78,14 @@ const CSS = `
   .trp-nav a { border-left: 1px solid rgba(255, 255, 255, 0.08); }
 }
 
-.trp-sec { margin-bottom: clamp(36px, 5vw, 56px); scroll-margin-top: 100px; opacity: 0; transform: translateY(10px); animation: trpReveal .5s ease forwards; }
+.trp-sec { margin-bottom: clamp(36px, 5vw, 56px); scroll-margin-top: 100px; }
 .trp-sec:last-child { margin-bottom: 0; }
 .trp-sec h2 { font-size: clamp(20px, 2.4vw, 26px); color: #FFFFFF; margin: 0 0 18px; font-weight: 800; letter-spacing: -.02em; }
 .trp-sec p { font-size: 15px; line-height: 1.7; color: var(--text-2, #B9C2CF); margin: 0 0 14px; }
 .trp-sec p:last-child { margin-bottom: 0; }
 
-.trp-two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-@media (max-width: 700px) { .trp-two { grid-template-columns: 1fr; } }
+.trp-two { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 18px; }
+@media (max-width: 700px) { .trp-two { grid-template-columns: minmax(0,1fr); } }
 .trp-card {
   background: rgba(22, 27, 34, 0.78); border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
@@ -114,9 +114,15 @@ const CSS = `
   background: rgba(47, 128, 255, 0.15); color: #2F80FF; border: 1px solid rgba(47, 128, 255, 0.3);
   font-weight: 800; font-size: 13px; display: grid; place-items: center;
 }
+.trp-steps-text { flex: 1 1 0%; min-width: 0; }
 .trp-steps b { display: block; font-size: 15px; color: #FFFFFF; margin-bottom: 4px; }
 .trp-steps span.d { display: block; font-size: 13.5px; color: var(--text-2, #B8C5D8); line-height: 1.6; }
-.trp-tag { flex: none; font-size: 10.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; align-self: flex-start; }
+.trp-tag { flex: none; font-size: 10.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; align-self: flex-start; white-space: nowrap; }
+@media (max-width: 600px) {
+  .trp-steps li { flex-wrap: wrap; }
+  .trp-steps-text { flex: 1 1 100%; order: 1; }
+  .trp-tag { order: 2; margin-left: 48px; }
+}
 .trp-tag.you { background: rgba(47, 128, 255, 0.15); color: #2F80FF; border: 1px solid rgba(47, 128, 255, 0.28); }
 .trp-tag.team { background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.28); }
 .trp-tag.govt { background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.28); }
@@ -127,19 +133,20 @@ const CSS = `
 }
 .trp-callout p { margin: 0; font-size: 14px; line-height: 1.65; color: #E2E8F0; }
 
-.trp-feetable { width: 100%; border-collapse: collapse; margin: 0 0 20px; }
+.trp-feetable-wrap { width: 100%; overflow-x: auto; margin: 0 0 20px; -webkit-overflow-scrolling: touch; }
+.trp-feetable { width: 100%; min-width: 480px; border-collapse: collapse; margin: 0; }
 .trp-feetable th, .trp-feetable td { text-align: left; padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font-size: 14px; }
 .trp-feetable th { color: var(--text-3, #8A98AA); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; background: rgba(255, 255, 255, 0.02); }
 .trp-feetable td:first-child { font-weight: 700; color: #FFFFFF; white-space: nowrap; }
 .trp-feetable td:last-child { color: var(--text-2, #B8C5D8); }
 
 .trp-dl { margin: 0; display: grid; gap: 10px; }
-.trp-dl > div { display: grid; grid-template-columns: 200px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font-size: 14px; }
+.trp-dl > div { display: grid; grid-template-columns: 200px minmax(0,1fr); gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); font-size: 14px; }
 .trp-dl dt { color: var(--text-3, #8A98AA); font-weight: 600; }
 .trp-dl dd { margin: 0; color: #FFFFFF; font-weight: 700; }
 .trp-dl dd a { color: #2F80FF; text-decoration: none; }
 .trp-dl dd a:hover { text-decoration: underline; }
-@media (max-width: 600px) { .trp-dl > div { grid-template-columns: 1fr; gap: 4px; } }
+@media (max-width: 600px) { .trp-dl > div { grid-template-columns: minmax(0,1fr); gap: 4px; } }
 
 .trp-cta {
   display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; border-radius: 22px;
@@ -156,9 +163,6 @@ const CSS = `
   box-shadow: 0 4px 18px rgba(37, 99, 235, 0.4); transition: transform .2s ease, box-shadow .2s ease;
 }
 .trp-cta a:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(37, 99, 235, 0.55); }
-
-@keyframes trpReveal { to { opacity:1; transform:translateY(0); } }
-@keyframes trpFade { from { opacity:0; } to { opacity:1; } }
 `
 
 function SectionHeading({ id, children }) {
@@ -252,7 +256,7 @@ export default function TransparencyPage() {
                     {HOW_IT_WORKS_STEPS.map((s, i) => (
                       <li key={s.title}>
                         <span className="n">{i + 1}</span>
-                        <div style={{ flex: 1 }}><b>{s.title}</b><span className="d">{s.body}</span></div>
+                        <div className="trp-steps-text"><b>{s.title}</b><span className="d">{s.body}</span></div>
                         <span className={`trp-tag ${s.who}`}>{s.who === 'you' ? 'You' : s.who === 'team' ? 'LauncherDesk team' : 'Government'}</span>
                       </li>
                     ))}
@@ -281,12 +285,14 @@ export default function TransparencyPage() {
                 <div className="trp-sec" id="ordering-payments">
                   <SectionHeading>Ordering, Payments &amp; Policies</SectionHeading>
                   <p>{ORDERING_PAYMENTS.intro}</p>
-                  <table className="trp-feetable">
-                    <thead><tr><th>Fee component</th><th>Description</th></tr></thead>
-                    <tbody>
-                      {ORDERING_PAYMENTS.feeTable.map(f => <tr key={f.label}><td>{f.label}</td><td>{f.body}</td></tr>)}
-                    </tbody>
-                  </table>
+                  <div className="trp-feetable-wrap">
+                    <table className="trp-feetable">
+                      <thead><tr><th>Fee component</th><th>Description</th></tr></thead>
+                      <tbody>
+                        {ORDERING_PAYMENTS.feeTable.map(f => <tr key={f.label}><td>{f.label}</td><td>{f.body}</td></tr>)}
+                      </tbody>
+                    </table>
+                  </div>
                   <div className="trp-two">
                     <div className="trp-card"><h3>{ORDERING_PAYMENTS.securePayments.title}</h3><p>{ORDERING_PAYMENTS.securePayments.body}</p></div>
                     <div className="trp-card"><h3>{ORDERING_PAYMENTS.confidentiality.title}</h3><p>{ORDERING_PAYMENTS.confidentiality.body}</p></div>

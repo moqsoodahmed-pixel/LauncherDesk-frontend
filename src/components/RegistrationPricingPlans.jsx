@@ -95,16 +95,51 @@ const S = `
 .rpp-feature--no { color:#64748B; text-decoration:line-through; opacity:.6; }
 .rpp-feature--yes { color:#F8FAFC; }
 
-.rpp-cta { display:block; width:100%; text-align:center; padding:16px; border-radius:999px; font-weight:700; font-size:15px; border:none; cursor:pointer; font-family:inherit; transition:opacity .15s, transform .15s, box-shadow .2s ease; margin-top:auto; color:#fff; }
-.rpp-cta:disabled { cursor:not-allowed; opacity:.75; }
-.rpp-cta--basic { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:#FFFFFF; box-shadow:0 4px 14px rgba(0,0,0,.3); }
-.rpp-cta--basic:hover:not(:disabled) { background:rgba(255,255,255,.12); border-color:#2196F3; color:#FFFFFF; }
-.rpp-cta--standard { background:linear-gradient(135deg, #1E88E5 0%, #7C4DFF 100%); color:#fff; box-shadow:0 8px 24px rgba(33,150,243,.45); }
-.rpp-cta--standard:hover:not(:disabled) { box-shadow:0 12px 30px rgba(33,150,243,.6), 0 0 16px rgba(124,77,255,.35); }
-.rpp-cta--premium { background:linear-gradient(135deg, #1E88E5 0%, #7C4DFF 100%); color:#fff; box-shadow:0 8px 24px rgba(124,77,255,.35); }
-.rpp-cta--premium:hover:not(:disabled) { box-shadow:0 12px 30px rgba(124,77,255,.5), 0 0 16px rgba(33,150,243,.35); }
-.rpp-cta:hover:not(:disabled) { transform:translateY(-2px); }
-.rpp-cta:active:not(:disabled) { transform:translateY(0) scale(.98); }
+.rpp-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  background: linear-gradient(135deg, #1E6FFB 0%, #8B5CF6 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 4px 18px rgba(30, 111, 251, 0.38);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s ease, opacity 0.2s ease;
+  margin-top: auto;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.rpp-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 55%);
+  pointer-events: none;
+}
+.rpp-cta:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(30, 111, 251, 0.55), 0 0 20px rgba(139, 92, 246, 0.35);
+  filter: brightness(1.06);
+}
+.rpp-cta:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 10px rgba(30, 111, 251, 0.4);
+}
+.rpp-cta:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+  box-shadow: none;
+}
 .rpp-cta-msg { margin-top:10px; padding:10px 12px; border-radius:8px; font-size:12.5px; line-height:1.5; }
 
 @media (max-width:960px) {
@@ -116,7 +151,7 @@ const S = `
 `
 
 function tierClass(tier) {
-  return tier.toLowerCase()
+  return (tier || '').toLowerCase()
 }
 
 function PlanGetStartedButton({ svc, plan }) {
@@ -147,7 +182,7 @@ function PlanGetStartedButton({ svc, plan }) {
       <button
         type="button"
         onClick={handleClick}
-        className={`rpp-cta rpp-cta--${tierClass(plan.tier)}`}
+        className="rpp-cta"
       >
         {hasPrice ? `Pay ${plan.price} + GST →` : 'Talk to our expert →'}
       </button>

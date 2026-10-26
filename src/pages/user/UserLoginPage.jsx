@@ -174,6 +174,118 @@ const S = `
   display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;
 }
 
+/* ── Demo Accounts Section ── */
+.ul-demo-container {
+  margin-top: 24px;
+  background: rgba(30, 111, 251, 0.04);
+  border: 1px solid rgba(56, 189, 248, 0.20);
+  border-radius: 16px;
+  padding: 16px 14px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.ul-demo-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.ul-demo-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #38BDF8;
+}
+.ul-demo-badge {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38BDF8;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+.ul-demo-sub {
+  font-size: 11.5px;
+  color: #94A3B8;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.ul-demo-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.ul-demo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 9px 12px;
+  color: #F8FAFC;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: all 0.2s cubic-bezier(.16,1,.3,1);
+  width: 100%;
+}
+.ul-demo-btn:hover {
+  background: rgba(30, 111, 251, 0.12);
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+.ul-demo-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.ul-demo-btn-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.ul-demo-role-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 5px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.ul-demo-btn-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #F8FAFC;
+  display: block;
+}
+.ul-demo-btn-email {
+  font-size: 11px;
+  color: #94A3B8;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ul-demo-btn-action {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #38BDF8;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
 @media(max-width: 480px) {
   .ul-card { padding: 32px 22px; border-radius: 20px; }
   .ul-wrap { padding: 20px 14px; }
@@ -274,12 +386,80 @@ export default function UserLoginPage() {
   const [showConf, setShowConf] = useState(false)
   const [localErr, setLocalErr] = useState('')
   const [socialLoading, setSocialLoading] = useState('')
+  const [demoLoading, setDemoLoading] = useState(null)
 
   // Forgot password
   const [fpEmail, setFpEmail] = useState('')
   const [fpLoading, setFpLoading] = useState(false)
   const [fpSent, setFpSent] = useState(false)
   const [fpErr, setFpErr] = useState('')
+
+  const DEMO_ACCOUNTS = [
+    {
+      role: 'CLIENT',
+      label: 'Client / Customer',
+      workspace: 'Client Portal',
+      email: 'client@launcherdesk.test',
+      password: 'Client@2026',
+      tagColor: '#38BDF8',
+      tagBg: 'rgba(56, 189, 248, 0.14)',
+    },
+    {
+      role: 'ADMIN',
+      label: 'Portal Admin',
+      workspace: 'Admin Portal',
+      email: 'portaladmin@launcherdesk.test',
+      password: 'PortalAdmin@2026',
+      tagColor: '#A78BFA',
+      tagBg: 'rgba(167, 139, 250, 0.14)',
+    },
+    {
+      role: 'SUPER_ADMIN',
+      label: 'Super Admin',
+      workspace: 'Super Admin Portal',
+      email: 'superadmin@launcherdesk.test',
+      password: 'SuperAdmin@2026',
+      tagColor: '#F472B6',
+      tagBg: 'rgba(244, 114, 182, 0.14)',
+    },
+    {
+      role: 'partner',
+      label: 'Partner Co',
+      workspace: 'Partner Portal',
+      email: 'partner@launcherdesk.test',
+      password: 'Partner@2026',
+      tagColor: '#34D399',
+      tagBg: 'rgba(52, 211, 153, 0.14)',
+    },
+    {
+      role: 'sales',
+      label: 'Sales Rep',
+      workspace: 'Sales CRM',
+      email: 'sales@launcherdesk.test',
+      password: 'Sales@2026',
+      tagColor: '#FBBF24',
+      tagBg: 'rgba(251, 191, 36, 0.14)',
+    },
+  ]
+
+  async function handleDemoLogin(account) {
+    setLocalErr('')
+    if (setError) setError('')
+    setForm(f => ({ ...f, email: account.email, password: account.password }))
+    setDemoLoading(account.role)
+    try {
+      const res = await login(account.email, account.password)
+      if (!res?.success) {
+        setLocalErr(res?.message || 'Login failed')
+        return
+      }
+      openSession(res)
+    } catch (err) {
+      setLocalErr(err.message || 'Demo login failed')
+    } finally {
+      setDemoLoading(null)
+    }
+  }
 
   /**
    * Open the session for whatever role the BACKEND returned and go to its workspace.
@@ -667,22 +847,49 @@ export default function UserLoginPage() {
                     </svg><span>Google</span></>
                   }
                 </button>
-
-                {/* Temporarily hidden: Microsoft login
-                <button type="button" className="ul-social-icon-btn" onClick={handleMicrosoftLogin} disabled={!!socialLoading} aria-label="Continue with Microsoft" title="Continue with Microsoft">
-                  {socialLoading === 'microsoft'
-                    ? <span style={{ width: 18, height: 18, border: '2px solid #E2E8F0', borderTopColor: '#05a6f0', borderRadius: '50%', display: 'inline-block', animation: 'spin .7s linear infinite' }} />
-                    : <><svg viewBox="0 0 23 23" width={17} height={17} aria-hidden="true">
-                      <path fill="#f35325" d="M1 1h10v10H1z" />
-                      <path fill="#81bc06" d="M12 1h10v10H12z" />
-                      <path fill="#05a6f0" d="M1 12h10v10H1z" />
-                      <path fill="#ffba08" d="M12 12h10v10H12z" />
-                    </svg><span>Microsoft</span></>
-                  }
-                </button>
-                */}
               </div>
             </div>
+
+            {/* ── DEMO ACCOUNTS (LOCAL / DEV TESTING ONLY — never rendered in production builds) ── */}
+            {import.meta.env.DEV && (
+              <div className="ul-demo-container">
+                <div className="ul-demo-head">
+                  <span className="ul-demo-title">
+                    <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                    Demo Accounts
+                  </span>
+                  <span className="ul-demo-badge">1-Click Sign In</span>
+                </div>
+                <p className="ul-demo-sub">Click any demo account below to test that role locally:</p>
+                <div className="ul-demo-grid">
+                  {DEMO_ACCOUNTS.map(demo => (
+                    <button
+                      key={demo.email}
+                      type="button"
+                      className="ul-demo-btn"
+                      disabled={loading || demoLoading === demo.role}
+                      onClick={() => handleDemoLogin(demo)}
+                      title={`Sign in as ${demo.label} (${demo.email})`}
+                    >
+                      <div className="ul-demo-btn-left">
+                        <span className="ul-demo-role-tag" style={{ color: demo.tagColor, background: demo.tagBg, border: `1px solid ${demo.tagColor}35` }}>
+                          {demo.workspace}
+                        </span>
+                        <div style={{ minWidth: 0, textAlign: 'left' }}>
+                          <span className="ul-demo-btn-name">{demo.label}</span>
+                          <span className="ul-demo-btn-email">{demo.email}</span>
+                        </div>
+                      </div>
+                      <span className="ul-demo-btn-action">
+                        {demoLoading === demo.role ? <Spinner color="#38BDF8" /> : <><span>Login</span><span aria-hidden="true">→</span></>}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <p style={{ textAlign: 'center', fontSize: 13, color: '#64748B', marginTop: 22 }}>
               <Link to="/" style={{ color: '#64748B', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 5, transition: 'color .15s' }}

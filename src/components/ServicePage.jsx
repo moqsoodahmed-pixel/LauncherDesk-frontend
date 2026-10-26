@@ -49,13 +49,12 @@ function SectionContent({ id, data }) {
   if (!data) return null
   if (id === 'pricing') return null   // pricing table removed
 
-  /* ── OVERVIEW — clean prose with a left accent bar ── */
+  /* ── OVERVIEW — clean prose without vertical timeline/accent lines ── */
   if (data.content) return (
     <section id={id} style={{ marginBottom: 48 }}>
       <SectionHeading>{data.heading}</SectionHeading>
       <div style={{
-        borderLeft: '3px solid var(--blue)', paddingLeft: 20,
-        color: 'var(--text-2)', fontSize: 15.5, lineHeight: 1.8,
+        color: '#CBD5E1', fontSize: 15.5, lineHeight: 1.8,
       }} dangerouslySetInnerHTML={{ __html: data.content }} />
     </section>
   )
@@ -64,7 +63,7 @@ function SectionContent({ id, data }) {
   if (data.items) return (
     <section id={id} style={{ marginBottom: 48 }}>
       <SectionHeading>{data.heading}</SectionHeading>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {data.items.slice(0, 6).map((item, i) => (
           <div key={i} style={{
             display: 'flex', alignItems: 'flex-start', gap: 14,
@@ -86,11 +85,13 @@ function SectionContent({ id, data }) {
               e.currentTarget.style.transform = 'translateX(0)'
             }}
           >
-            {/* Numbered badge */}
+            {/* Standardized Numbered Badge (36px, glowing blue circle) */}
             <span style={{
-              width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
-              background: 'rgba(30, 111, 251, 0.15)', border: '1px solid rgba(56, 189, 248, 0.3)',
-              color: '#38BDF8', fontWeight: 800, fontSize: 11,
+              width: 36, height: 36, borderRadius: '50%', flexShrink: 0,
+              background: 'linear-gradient(135deg, #1E6FFB 0%, #174EA6 100%)',
+              border: '1px solid rgba(56, 189, 248, 0.45)',
+              boxShadow: '0 0 14px rgba(30, 111, 251, 0.35)',
+              color: '#FFFFFF', fontWeight: 800, fontSize: 13,
               display: 'grid', placeItems: 'center', fontFamily: 'var(--font)',
               marginTop: 1,
             }}>{i + 1}</span>
@@ -103,57 +104,53 @@ function SectionContent({ id, data }) {
     </section>
   )
 
-  /* ── PROCESS (steps) — visual timeline with connecting line ── */
+  /* ── PROCESS (steps) — clean cards without decorative vertical lines ── */
   if (data.steps) return (
     <section id={id} style={{ marginBottom: 48 }}>
       <SectionHeading>{data.heading}</SectionHeading>
-      <div style={{ position: 'relative', paddingLeft: 4 }}>
-        {/* Vertical connecting line */}
-        <div style={{
-          position: 'absolute', left: 19, top: 32, bottom: 32,
-          width: 2, background: 'linear-gradient(180deg, var(--blue), transparent)',
-          borderRadius: 2, zIndex: 0,
-        }} aria-hidden="true" />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {data.steps.slice(0, 6).map((step, i) => (
-            <div key={i} style={{
-              display: 'flex', gap: 16, alignItems: 'flex-start',
-              background: 'rgba(14, 22, 38, 0.70)', borderRadius: 14,
-              border: '1px solid rgba(255, 255, 255, 0.10)',
-              padding: '16px 18px 16px 16px',
-              position: 'relative', zIndex: 1,
-              backdropFilter: 'blur(20px)',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
-              transition: 'border-color .18s, box-shadow .18s',
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {data.steps.slice(0, 6).map((step, i) => (
+          <div key={i} style={{
+            display: 'flex', gap: 16, alignItems: 'flex-start',
+            background: 'rgba(14, 22, 38, 0.70)', borderRadius: 14,
+            border: '1px solid rgba(255, 255, 255, 0.10)',
+            padding: '18px 20px',
+            position: 'relative', zIndex: 1,
+            backdropFilter: 'blur(20px)',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
+            transition: 'border-color .18s, box-shadow .18s, transform .18s',
+          }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.35)'
+              e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.5), 0 0 16px rgba(30, 111, 251, 0.2)'
+              e.currentTarget.style.transform = 'translateX(3px)'
             }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.35)'
-                e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.5), 0 0 16px rgba(30, 111, 251, 0.2)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.10)'
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.35)'
-              }}
-            >
-              {/* Step number circle */}
-              <span style={{
-                width: 40, height: 40, borderRadius: '50%', flexShrink: 0,
-                background: 'linear-gradient(135deg, var(--blue-dark), var(--blue))',
-                color: '#fff', fontWeight: 900, fontSize: 13,
-                display: 'grid', placeItems: 'center', fontFamily: 'var(--font)',
-                marginLeft: 0, boxShadow: '0 4px 12px rgba(29,93,184,0.30)',
-              }}>{i + 1}</span>
-              <div style={{ flex: 1 }}>
-                <strong style={{ fontSize: 15, fontWeight: 700, color: '#FFFFFF', display: 'block', marginBottom: 4 }}>
-                  {step.title}
-                </strong>
-                <p style={{ fontSize: 13.5, color: 'var(--text-2)', lineHeight: 1.65, margin: 0 }}>
-                  {step.body}
-                </p>
-              </div>
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.10)'
+              e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.35)'
+              e.currentTarget.style.transform = 'translateX(0)'
+            }}
+          >
+            {/* Standardized Numbered Badge (36px, glowing blue circle) */}
+            <span style={{
+              width: 36, height: 36, borderRadius: '50%', flexShrink: 0,
+              background: 'linear-gradient(135deg, #1E6FFB 0%, #174EA6 100%)',
+              border: '1px solid rgba(56, 189, 248, 0.45)',
+              boxShadow: '0 0 14px rgba(30, 111, 251, 0.35)',
+              color: '#FFFFFF', fontWeight: 800, fontSize: 13,
+              display: 'grid', placeItems: 'center', fontFamily: 'var(--font)',
+              marginTop: 1,
+            }}>{i + 1}</span>
+            <div style={{ flex: 1 }}>
+              <strong style={{ fontSize: 15.5, fontWeight: 700, color: '#FFFFFF', display: 'block', marginBottom: 4 }}>
+                {step.title}
+              </strong>
+              <p style={{ fontSize: 14, color: 'var(--text-2)', lineHeight: 1.65, margin: 0 }}>
+                {step.body}
+              </p>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   )
@@ -184,17 +181,158 @@ function SectionHeading({ children }) {
       fontSize: 'clamp(20px,2.4vw,27px)', fontWeight: 800,
       letterSpacing: '-.02em', color: '#FFFFFF',
       marginBottom: 20, paddingBottom: 12,
-      borderBottom: '2px solid var(--brand-50)',
+      borderBottom: '2px solid rgba(255, 255, 255, 0.08)',
       position: 'relative',
     }}>
       {children}
       <span style={{
         position: 'absolute', left: 0, bottom: -2,
         width: 40, height: 2,
-        background: 'linear-gradient(90deg, var(--blue), var(--blue-bright))',
+        background: 'linear-gradient(90deg, #1E6FFB, #38BDF8)',
         borderRadius: 2, display: 'block',
       }} aria-hidden="true" />
     </h2>
+  )
+}
+
+/* ── FAQ Item Component with full row hover micro-interaction ── */
+function FaqItemRow({ item, index, isOpen, onToggle }) {
+  const [isHovered, setIsHovered] = useState(false)
+  const answerId = `faq-answer-${index}`
+  const btnId = `faq-btn-${index}`
+
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        background: isOpen
+          ? 'rgba(30, 111, 251, 0.14)'
+          : isHovered
+            ? 'rgba(22, 34, 58, 0.88)'
+            : 'rgba(14, 22, 38, 0.70)',
+        borderRadius: 14,
+        border: `1.5px solid ${
+          isOpen
+            ? 'rgba(56, 189, 248, 0.55)'
+            : isHovered
+              ? 'rgba(56, 189, 248, 0.35)'
+              : 'rgba(255, 255, 255, 0.10)'
+        }`,
+        boxShadow: isOpen
+          ? '0 10px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(30, 111, 251, 0.25)'
+          : isHovered
+            ? '0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px rgba(30, 111, 251, 0.15)'
+            : '0 4px 16px rgba(0, 0, 0, 0.35)',
+        overflow: 'hidden',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        transition: 'all 0.28s cubic-bezier(0.16, 1, 0.3, 1)',
+        cursor: 'pointer',
+      }}
+    >
+      <button
+        id={btnId}
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={answerId}
+        onClick={onToggle}
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 16,
+          padding: '18px 20px',
+          cursor: 'pointer',
+          background: 'transparent',
+          border: 'none',
+          textAlign: 'left',
+          fontFamily: 'inherit',
+          outline: 'none',
+        }}
+      >
+        <span
+          style={{
+            fontSize: 15.5,
+            fontWeight: 700,
+            color: isOpen ? '#38BDF8' : isHovered ? '#FFFFFF' : '#F1F5F9',
+            lineHeight: 1.4,
+            transition: 'color 0.25s ease',
+          }}
+        >
+          {item.q}
+        </span>
+        <span
+          style={{
+            width: 32,
+            height: 32,
+            borderRadius: '50%',
+            flexShrink: 0,
+            background: isOpen
+              ? 'linear-gradient(135deg, #1E6FFB 0%, #8B5CF6 100%)'
+              : isHovered
+                ? 'rgba(30, 111, 251, 0.25)'
+                : 'rgba(255, 255, 255, 0.08)',
+            border: `1.5px solid ${
+              isOpen
+                ? '#38BDF8'
+                : isHovered
+                  ? 'rgba(56, 189, 248, 0.45)'
+                  : 'rgba(255, 255, 255, 0.15)'
+            }`,
+            boxShadow: isOpen
+              ? '0 0 12px rgba(30, 111, 251, 0.45)'
+              : isHovered
+                ? '0 0 10px rgba(30, 111, 251, 0.25)'
+                : 'none',
+            display: 'grid',
+            placeItems: 'center',
+            transform: isOpen
+              ? 'rotate(45deg)'
+              : isHovered
+                ? 'rotate(15deg) scale(1.08)'
+                : 'rotate(0deg) scale(1)',
+            transition:
+              'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s, border-color 0.25s, box-shadow 0.25s',
+          }}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={isOpen ? '#FFFFFF' : isHovered ? '#38BDF8' : 'var(--blue)'}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            style={{ width: 14, height: 14, transition: 'stroke 0.25s ease' }}
+          >
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        </span>
+      </button>
+      <div
+        id={answerId}
+        role="region"
+        aria-labelledby={btnId}
+        hidden={!isOpen}
+        style={{
+          display: isOpen ? 'block' : 'none',
+          padding: '0 20px 20px',
+          animation: 'fadeIn .25s ease',
+        }}
+      >
+        <p
+          style={{
+            color: '#CBD5E1',
+            fontSize: 14.5,
+            lineHeight: 1.75,
+            margin: 0,
+          }}
+          dangerouslySetInnerHTML={{ __html: item.a }}
+        />
+      </div>
+    </div>
   )
 }
 
@@ -208,56 +346,16 @@ function FaqSection({ data }) {
   return (
     <section id="faq" style={{ marginBottom: 48 }}>
       <SectionHeading>{data.heading}</SectionHeading>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {items.map((item, i) => {
-          const isOpen = openIdx === i
-          const answerId = `faq-answer-${i}`
-          const btnId = `faq-btn-${i}`
-          return (
-            <div key={i} style={{
-              background: 'rgba(14, 22, 38, 0.70)', borderRadius: 14,
-              border: `1.5px solid ${isOpen ? 'rgba(56, 189, 248, 0.40)' : 'rgba(255, 255, 255, 0.10)'}`,
-              boxShadow: isOpen ? '0 8px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(30, 111, 251, 0.2)' : '0 4px 16px rgba(0, 0, 0, 0.35)',
-              overflow: 'hidden', backdropFilter: 'blur(20px)', transition: 'border-color .2s, box-shadow .2s',
-            }}>
-              <button id={btnId} aria-expanded={isOpen} aria-controls={answerId}
-                onClick={() => toggle(i)}
-                style={{
-                  width: '100%', display: 'flex', alignItems: 'center',
-                  justifyContent: 'space-between', gap: 16,
-                  padding: '16px 18px', cursor: 'pointer',
-                  background: isOpen ? 'rgba(30, 111, 251, 0.12)' : 'transparent',
-                  border: 'none', textAlign: 'left', fontFamily: 'inherit',
-                  transition: 'background .15s',
-                }}>
-                <span style={{ fontSize: 15.5, fontWeight: 700, color: '#FFFFFF', lineHeight: 1.4 }}>
-                  {item.q}
-                </span>
-                <span style={{
-                  width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
-                  background: isOpen ? '#1E6FFB' : 'rgba(255, 255, 255, 0.08)',
-                  border: `1.5px solid ${isOpen ? '#38BDF8' : 'rgba(255, 255, 255, 0.15)'}`,
-                  display: 'grid', placeItems: 'center',
-                  transition: 'background .2s, transform .25s',
-                  transform: isOpen ? 'rotate(45deg)' : 'none',
-                }}>
-                  <svg viewBox="0 0 24 24" fill="none"
-                    stroke={isOpen ? '#fff' : 'var(--blue)'}
-                    strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                    aria-hidden="true" style={{ width: 13, height: 13 }}>
-                    <path d="M12 5v14M5 12h14" />
-                  </svg>
-                </span>
-              </button>
-              <div id={answerId} role="region" aria-labelledby={btnId}
-                hidden={!isOpen}
-                style={{ display: isOpen ? 'block' : 'none', padding: '0 18px 18px' }}>
-                <p style={{ color: 'var(--text-2)', fontSize: 14.5, lineHeight: 1.75, margin: 0 }}
-                  dangerouslySetInnerHTML={{ __html: item.a }} />
-              </div>
-            </div>
-          )
-        })}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {items.map((item, i) => (
+          <FaqItemRow
+            key={i}
+            item={item}
+            index={i}
+            isOpen={openIdx === i}
+            onToggle={() => toggle(i)}
+          />
+        ))}
       </div>
       {hasMore && !showAll && (
         <div style={{ textAlign: 'center', marginTop: 20 }}>
@@ -579,7 +677,7 @@ function WebsitePackages({ packages }) {
                   <div style={{ fontSize: 13, fontWeight: 600, color: '#94A3B8' }}>+ GST</div>
                 </div>
                 <button type="button" onClick={() => pay(pkg)} disabled={loadingKey !== null} aria-busy={loadingKey === pkg.slug}
-                  className="btn btn-primary" style={{ flex: '0 0 auto', minWidth: 170, justifyContent: 'center', opacity: loadingKey !== null && loadingKey !== pkg.slug ? .7 : 1, cursor: loadingKey !== null ? 'not-allowed' : 'pointer' }}>
+                  className="pricing-plan-btn" style={{ flex: '0 0 auto', width: 'auto', minWidth: 170, opacity: loadingKey !== null && loadingKey !== pkg.slug ? .7 : 1, cursor: loadingKey !== null ? 'not-allowed' : 'pointer' }}>
                   {loadingKey === pkg.slug ? 'Processing…' : isLoggedIn ? `Pay ₹${pkg.amount.toLocaleString('en-IN')} →` : 'Login to Pay →'}
                 </button>
               </div>
@@ -613,7 +711,7 @@ function HeroPayButton({ svc }) {
   }
   return (
     <>
-      <button type="button" onClick={pay} disabled={loading} aria-busy={loading} className="btn btn-primary" style={{ fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer' }}>
+      <button type="button" onClick={pay} disabled={loading} aria-busy={loading} className="pricing-plan-btn" style={{ width: 'auto', padding: '0 24px', cursor: loading ? 'not-allowed' : 'pointer' }}>
         {loading ? 'Processing…' : `Pay ₹${amount.toLocaleString('en-IN')} →`}
       </button>
       {msg && <div style={{ flexBasis: '100%' }}><PayMsg msg={msg} /></div>}
@@ -980,6 +1078,26 @@ function ServiceHeroVisual({ svc }) {
   )
 }
 
+// Promotional starting prices specifically for the floating advertisement card
+const FLOATING_AD_STARTING_PRICES = {
+  'seo-marketing': 'Starting from ₹4,999',
+  'content-marketing': 'Starting from ₹4,999',
+  'ai-search-optimization': 'Starting from ₹4,999',
+  'google-ads-paid-marketing': 'Starting from ₹4,999',
+  'meta-instagram-ads': 'Starting from ₹4,999',
+  'youtube-advertising': 'Starting from ₹4,999',
+  'branding-logo-design': 'Starting from ₹4,999',
+  'ad-creative-design': 'Starting from ₹4,999',
+  'marketing-collaterals': 'Starting from ₹4,999',
+  'social-media-design': 'Starting from ₹4,999',
+  'packaging-design': 'Starting from ₹4,999',
+  'remarketing-retargeting': 'Starting from ₹4,999',
+  'llm-visibility-citations': 'Starting from ₹4,999',
+  'technical-seo-audits': 'Starting from ₹4,999',
+  'local-international-seo': 'Starting from ₹4,999',
+  'linkedin-b2b-campaigns': 'Starting from ₹4,999',
+}
+
 export default function ServicePage({ svc }) {
   const { title, eyebrow, crumbCategory, lead, toc, sections, related, priceCard, helpCard, slug } = svc
   /* Filter pricing section from TOC and section order */
@@ -990,11 +1108,13 @@ export default function ServicePage({ svc }) {
   // LLP, OPC registration) the entry price is the Basic tier, not the
   // priceCard's default (Standard) figure — so the sticky bar always shows
   // what the visitor actually pays to get started.
+  // Promotional starting prices take priority on promotional floating ad cards.
+  const promoPrice = FLOATING_AD_STARTING_PRICES[slug]
   const tieredPlans = REGISTRATION_PLANS[slug]?.plans
   const basicPlan = tieredPlans?.find(p => p.tier === 'Basic')
-  const stickyPriceLabel = basicPlan
+  const stickyPriceLabel = promoPrice || (basicPlan
     ? `From ${basicPlan.price}${basicPlan.priceNote ? ` ${basicPlan.priceNote}` : ''}`
-    : (priceCard?.price && priceCard.price !== 'Custom quote' ? (priceCard.govtFee ? `From ${priceCard.price} + Govt fee` : `Starting from ${priceCard.price}`) : undefined)
+    : (priceCard?.price && priceCard.price !== 'Custom quote' ? (priceCard.govtFee ? `From ${priceCard.price} + Govt fee` : `Starting from ${priceCard.price}`) : undefined))
   const schemas = [
     serviceSchema(svc, slug),
     breadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'Services', url: '/services' }, { name: crumbCategory, url: '/services' }, { name: title, url: `/services/${slug}` }]),

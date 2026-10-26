@@ -5,21 +5,25 @@ const PLUS = 'M12 5v14M5 12h14'
 
 function FaqGroup({ section, faqs }) {
   const [showAll, setShowAll] = React.useState(false)
+  const [openIdx, setOpenIdx] = React.useState(null)
   const visible = showAll ? faqs : faqs.slice(0, 4)
   const hasMore = faqs.length > 4
   return (
     <div style={{marginBottom:44}}>
-      <h2 style={{fontSize:20,fontWeight:700,color:'var(--blue-dark)',marginBottom:4,letterSpacing:'-.01em'}}>{section}</h2>
+      <h2 style={{fontSize:20,fontWeight:700,color:'#FFFFFF',marginBottom:16,letterSpacing:'-.01em'}}>{section}</h2>
       <div className="faq" style={{maxWidth:'none',marginTop:0}}>
-        {visible.map((item, i) => (
-          <div key={i} className="faq-i">
-            <div className="faq-q">
-              {item.q}
-              <svg viewBox="0 0 24 24" fill="none"><path d={PLUS}/></svg>
+        {visible.map((item, i) => {
+          const isOpen = openIdx === i
+          return (
+            <div key={i} className={`faq-i${isOpen ? ' open' : ''}`} onClick={() => setOpenIdx(isOpen ? null : i)}>
+              <button type="button" className={`faq-q${isOpen ? ' open' : ''}`} aria-expanded={isOpen} style={{ background: 'none', border: 0, width: '100%', cursor: 'pointer', fontFamily: 'inherit' }}>
+                <span style={{ flex: 1, textAlign: 'left' }}>{item.q}</span>
+                <svg viewBox="0 0 24 24" fill="none"><path d={PLUS}/></svg>
+              </button>
+              <div className="faq-a" style={{ maxHeight: isOpen ? '500px' : undefined }}><p>{item.a}</p></div>
             </div>
-            <div className="faq-a"><p>{item.a}</p></div>
-          </div>
-        ))}
+          )
+        })}
       </div>
       {hasMore && !showAll && (
         <div style={{marginTop:16}}>

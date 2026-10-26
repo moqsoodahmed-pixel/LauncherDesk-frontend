@@ -57,13 +57,13 @@ export default function ClientOrdersListPage() {
       </div>
 
       <div className="ld-toolbar">
-        <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: 8 }}>
+        <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: 8, flexWrap: 'wrap', width: '100%' }}>
           <input
             className="ld-form-input"
             placeholder="Search order # or service…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ width: 220 }}
+            style={{ flex: '1 1 200px', minWidth: 0 }}
           />
           <select value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }}>
             <option value="">All statuses</option>

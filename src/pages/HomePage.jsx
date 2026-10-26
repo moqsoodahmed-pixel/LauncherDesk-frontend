@@ -767,21 +767,34 @@ const S = `
 /* ── FAQ ── */
 .hp-faq { padding:84px 0;background:rgba(7, 17, 29, 0.45);scroll-margin-top:100px;border-bottom:1px solid rgba(255,255,255,.06); }
 .hp-faq-inner { max-width:800px;margin:0 auto;padding:0 28px; }
-.hp-faq-list  { display:flex;flex-direction:column;margin-top:40px; }
-.hp-faq-item  { border-bottom:1px solid rgba(255,255,255,.07); }
-.hp-faq-item:first-child { border-top:1px solid rgba(255,255,255,.07); }
+.hp-faq-list  { display:flex;flex-direction:column;gap:10px;margin-top:40px; }
+.hp-faq-item  {
+  border:1.5px solid rgba(255,255,255,.10);border-radius:14px;
+  background:rgba(14,22,38,0.70);backdrop-filter:blur(20px);
+  overflow:hidden;transition:all .28s cubic-bezier(.16,1,.3,1);cursor:pointer;
+}
+.hp-faq-item:hover {
+  background:rgba(22,34,58,0.88);border-color:rgba(56,189,248,0.35);
+  box-shadow:0 8px 24px rgba(0,0,0,0.45),0 0 16px rgba(30,111,251,0.18);
+}
 .hp-faq-q {
   display:flex;align-items:center;justify-content:space-between;gap:16px;
-  padding:22px 0;cursor:pointer;transition:color .15s;
+  padding:18px 20px;cursor:pointer;transition:color .25s ease;
 }
-.hp-faq-q:hover .hp-faq-q-text { color:#38BDF8; }
-.hp-faq-q-text { font-size:16.5px;font-weight:700;color:#FFFFFF;line-height:1.4;flex:1; }
-.hp-faq-icon  { width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:grid;place-items:center;flex:none; }
-.hp-faq-icon svg { width:14px;height:14px;stroke:#38BDF8;fill:none;stroke-width:2.5;transition:transform .25s; }
-.hp-faq-item:hover .hp-faq-a { max-height:320px; }
-.hp-faq-item:hover .hp-faq-icon svg { transform:rotate(45deg); }
-.hp-faq-a     { max-height:0;overflow:hidden;transition:max-height .55s cubic-bezier(.2,.7,.3,1); }
-.hp-faq-a-inner { padding:0 0 22px;font-size:14.5px;color:#94A3B8;line-height:1.75; }
+.hp-faq-item:hover .hp-faq-q-text { color:#38BDF8; }
+.hp-faq-q-text { font-size:16px;font-weight:700;color:#FFFFFF;line-height:1.4;flex:1; }
+.hp-faq-icon  {
+  width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);
+  border:1.5px solid rgba(255,255,255,.15);display:grid;place-items:center;flex:none;
+  transition:all .28s cubic-bezier(.16,1,.3,1);
+}
+.hp-faq-icon svg { width:14px;height:14px;stroke:#38BDF8;fill:none;stroke-width:2.5;transition:transform .28s cubic-bezier(.16,1,.3,1), stroke .25s ease; }
+.hp-faq-item:hover .hp-faq-icon { background:rgba(30,111,251,0.25);border-color:rgba(56,189,248,0.45); }
+.hp-faq-item:hover .hp-faq-icon svg { transform:rotate(20deg) scale(1.08); }
+.hp-faq-item.open .hp-faq-icon svg { transform:rotate(45deg); }
+.hp-faq-item:hover .hp-faq-a { max-height:360px; }
+.hp-faq-a     { max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.16,1,.3,1); }
+.hp-faq-a-inner { padding:0 20px 20px;font-size:14.5px;color:#CBD5E1;line-height:1.75; }
 
 /* ── FINAL CTA ── */
 .hp-cta-section { padding:88px 0;background:transparent;scroll-margin-top:100px; }
@@ -878,10 +891,10 @@ const S = `
   .lc2-left      { position:static }
 }
 @media(max-width:768px){
-  .hp-stats-grid { grid-template-columns:1fr 1fr;gap:24px }
-  .hp-types-grid { grid-template-columns:1fr 1fr }
-  .hp-how-steps  { grid-template-columns:1fr 1fr }
-  .hp-res-grid   { grid-template-columns:1fr }
+  .hp-stats-grid { grid-template-columns:1fr 1fr;gap:20px }
+  .hp-types-grid { grid-template-columns:1fr 1fr;gap:14px }
+  .hp-how-steps  { grid-template-columns:1fr 1fr;gap:14px }
+  .hp-res-grid   { grid-template-columns:1fr;gap:14px }
   .hp-vs-cell    { padding:12px 14px;font-size:12.5px;gap:6px }
   .hp-vs-col     { padding:14px 12px }
   .hp-why-grid   { gap:28px }
@@ -894,6 +907,11 @@ const S = `
   .hp-partners-card { flex:0 0 188px;width:188px;padding:12px 14px;gap:11px }
   .hp-partners-name { font-size:13.5px;white-space:nowrap;overflow:visible;text-overflow:clip }
   .hp-partners-cat  { font-size:9px;padding:2px 7px }
+  .hp-cta-inner  { border-radius:20px;padding:32px 18px !important }
+  .hp-cta-inner h2 { font-size:clamp(24px, 5.5vw, 34px) !important; margin-bottom:12px !important }
+  .hp-cta-inner p { font-size:14px !important; margin:0 auto 22px !important; line-height:1.6 !important; color:#CBD5E1 !important }
+  .hp-cta-btns   { gap:10px !important }
+  .hp-cta-btn-wa,.hp-cta-btn-exp,.hp-cta-btn-ai { height:46px !important; padding:0 22px !important; font-size:14px !important }
 }
 @media(max-width:640px){
   .hp-hero       { padding:32px 0 40px }

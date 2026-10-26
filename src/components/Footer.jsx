@@ -6,9 +6,9 @@ import startupIndiaImg from '../assets/startupindia-light.png'
 const WA_PATH = 'M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.52-1.774A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.834-1.598l-.418-.248-4.333 1.022 1.044-4.224-.272-.434A11.46 11.46 0 0 1 4.5 16C4.5 9.648 9.648 4.5 16 4.5S27.5 9.648 27.5 16 22.352 27.5 16 27.5zm6.29-8.574c-.345-.172-2.04-1.006-2.355-1.12-.316-.115-.546-.172-.776.172-.23.345-.89 1.12-1.09 1.35-.2.23-.4.258-.746.086-.345-.172-1.458-.537-2.776-1.712-1.026-.916-1.719-2.047-1.92-2.392-.2-.345-.02-.532.15-.703.155-.155.345-.4.518-.603.172-.2.23-.345.345-.574.115-.23.058-.432-.029-.603-.086-.172-.776-1.87-1.063-2.56-.28-.673-.563-.581-.776-.592l-.66-.012c-.23 0-.603.086-.918.432s-1.205 1.178-1.205 2.873 1.233 3.333 1.405 3.563c.172.23 2.427 3.706 5.878 5.196.822.355 1.463.567 1.963.726.824.263 1.574.226 2.167.137.661-.099 2.04-.834 2.327-1.638.287-.805.287-1.494.2-1.638-.086-.144-.316-.23-.66-.4z'
 
 const SOCIALS = [
-  { href:'https://www.instagram.com/launcherdesk?igsh=MWxleG1ubm9kNW4xbw==', label:'Instagram', path:'M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z|M17.5 6.5h.01|M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z' },
-  { href:'https://x.com/LauncherDesk', label:'X', path:'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.736l7.73-8.835L1.254 2.25H8.08l4.259 5.631zM17.11 20.89h1.833L7.05 4.126H5.099z' },
-  { href:'https://www.facebook.com/share/181iGTzpPf/', label:'Facebook', path:'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' },
+  { href:'https://www.instagram.com/launcherdesk?igsh=MWxleG1ubm9kNW4xbw==', label:'Instagram', shape:'line', gradient:true, glow:'rgba(221,42,123,.18)', path:'M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z|M17.5 6.5h.01|M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z' },
+  { href:'https://x.com/LauncherDesk', label:'X', shape:'fill', color:'#FFFFFF', glow:'rgba(255,255,255,.14)', path:'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.736l7.73-8.835L1.254 2.25H8.08l4.259 5.631zM17.11 20.89h1.833L7.05 4.126H5.099z' },
+  { href:'https://www.facebook.com/share/181iGTzpPf/', label:'Facebook', shape:'fill', color:'#1877F2', glow:'rgba(24,119,242,.18)', path:'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' },
 ]
 
 const NAV_COLS = [
@@ -102,14 +102,31 @@ export default function Footer() {
             </p>
             {/* Socials */}
             <div style={{ display:'flex', gap:8, marginBottom:20 }}>
+              <svg width="0" height="0" style={{ position:'absolute' }} aria-hidden="true">
+                <defs>
+                  <linearGradient id="ld-ig-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#FEDA75" />
+                    <stop offset="25%" stopColor="#FA7E1E" />
+                    <stop offset="55%" stopColor="#D62976" />
+                    <stop offset="80%" stopColor="#962FBF" />
+                    <stop offset="100%" stopColor="#4F5BD5" />
+                  </linearGradient>
+                </defs>
+              </svg>
               {SOCIALS.map(s=>(
                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
                   style={{ width:34,height:34,borderRadius:8,background:C.chip,border:`1px solid ${C.border}`,display:'grid',placeItems:'center',transition:'background .15s,transform .15s' }}
-                  onMouseEnter={e=>{ e.currentTarget.style.background='rgba(29,93,184,.14)'; e.currentTarget.style.transform='translateY(-2px)' }}
+                  onMouseEnter={e=>{ e.currentTarget.style.background=s.glow; e.currentTarget.style.transform='translateY(-2px)' }}
                   onMouseLeave={e=>{ e.currentTarget.style.background=C.chip; e.currentTarget.style.transform='none' }}>
-                  <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke="#1A3665" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                    {s.path.split('|').map((p,i)=><path key={i} d={p}/>)}
-                  </svg>
+                  {s.shape === 'fill' ? (
+                    <svg viewBox="0 0 24 24" width={15} height={15} fill={s.color}>
+                      {s.path.split('|').map((p,i)=><path key={i} d={p}/>)}
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" width={15} height={15} fill="none" stroke={s.gradient ? 'url(#ld-ig-gradient)' : s.color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                      {s.path.split('|').map((p,i)=><path key={i} d={p}/>)}
+                    </svg>
+                  )}
                 </a>
               ))}
             </div>
@@ -214,10 +231,13 @@ export default function Footer() {
         {/* ── BOTTOM BAR (96px bottom clearance protects disclaimer from floating widgets) ── */}
         <div style={{ padding:'24px 0 96px' }}>
           <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:16,marginBottom:16 }}>
-            {/* Badges with safe margin from floating buttons (64px left clearance avoids scroll-to-top button) */}
-            <div style={{ display:'flex',alignItems:'center',gap:20,flexWrap:'wrap',paddingLeft:64 }}>
-              <img src={msmeImg} alt="MSME Registered" style={{ height:44,width:'auto',opacity:.95 }} />
-              <img src={startupIndiaImg} alt="DPIIT Startup India" style={{ height:34,width:'auto',opacity:.95 }} />
+            <div style={{ display:'flex',alignItems:'center',gap:14,flexWrap:'wrap' }}>
+              <div style={{ background:'#FFFFFF', borderRadius:10, padding:'8px 14px', display:'flex', alignItems:'center', boxShadow:'0 2px 10px rgba(0,0,0,.25)' }}>
+                <img src={msmeImg} alt="MSME Registered" style={{ height:36,width:'auto',display:'block' }} />
+              </div>
+              <div style={{ background:'#FFFFFF', borderRadius:10, padding:'8px 14px', display:'flex', alignItems:'center', boxShadow:'0 2px 10px rgba(0,0,0,.25)' }}>
+                <img src={startupIndiaImg} alt="DPIIT Startup India" style={{ height:28,width:'auto',display:'block' }} />
+              </div>
             </div>
           </div>
           <div style={{ display:'flex', gap:12, alignItems:'flex-start', background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.08)', borderRadius:14, padding:'18px 20px', backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)' }}>

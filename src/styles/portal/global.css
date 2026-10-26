@@ -808,6 +808,18 @@ body {
   flex: 1;
 }
 
+@media (max-width: 640px) {
+  .ld-toolbar { flex-wrap: wrap; }
+  .ld-toolbar .ld-form-input,
+  .ld-toolbar select {
+    flex: 1 1 100%;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .ld-toolbar-spacer { display: none; }
+}
+
 /* ---- Table ---- */
 .ld-table-wrap {
   background: var(--ld-glass-bg);

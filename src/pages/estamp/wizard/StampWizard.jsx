@@ -580,7 +580,7 @@ export default function StampWizard() {
                     <DocumentDetailsStep f={f} setF={setF} set={set} errs={errs} setErrs={setErrs} inCls={inCls} Err={Err}
                       st={st} verified={verified} articles={articles} article={article} rule={rule} baseField={baseField} />
                   )}
-                  {step === 3 && <PartyDetailsStep f={f} set={set} errs={errs} inCls={inCls} Err={Err} />}
+                  {step === 3 && <PartyDetailsStep f={f} set={set} setF={setF} setErrs={setErrs} errs={errs} inCls={inCls} Err={Err} />}
                   {step === 4 && (
                     <StampAmountStep f={f} setF={setF} set={set} errs={errs} inCls={inCls} Err={Err} st={st} rule={rule} duty={duty} validDuty={validDuty} baseField={baseField} article={article} />
                   )}

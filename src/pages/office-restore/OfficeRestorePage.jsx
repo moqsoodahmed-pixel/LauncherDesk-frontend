@@ -14,7 +14,7 @@ const SEND = 'M22 2 11 13M22 2l-7 20-4-9-9-4z'
 
 const orStyles = `
 .or-hero{padding:64px 0 56px;position:relative;overflow:hidden;background:var(--bg-primary, #0A0E14);border-bottom:1px solid var(--line)}
-.or-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(820px 520px at 80% -10%,rgba(33,150,243.12),transparent 62%),radial-gradient(420px 340px at 8% 105%,rgba(124,77,255.08),transparent 60%);pointer-events:none;animation:orHeroGlow 22s ease-in-out infinite alternate}
+.or-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(820px 520px at 80% -10%,rgba(33,150,243,0.12),transparent 62%),radial-gradient(420px 340px at 8% 105%,rgba(124,77,255,0.08),transparent 60%);pointer-events:none;animation:orHeroGlow 22s ease-in-out infinite alternate}
 @keyframes orHeroGlow{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-1.4%,1.3%,0) scale(1.03)}}
 @media (prefers-reduced-motion: reduce){.or-hero::before{animation:none}}
 .or-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;position:relative}
@@ -25,7 +25,7 @@ const orStyles = `
 .or-hero-badges{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px}
 .or-badge{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text-2, #B9C2CF)}
 .or-badge svg{width:16px;height:16px;stroke:var(--blue, #2196F3);fill:none;stroke-width:2;flex:none}
-.or-hero-visual-inner{background:var(--card-glass, rgba(22, 27, 34, 0.78));border:1px solid rgba(255, 255, 255, 0.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:20px;padding:28px;box-shadow:0 24px 64px rgba(0,0,0.4)}
+.or-hero-visual-inner{background:var(--card-glass, rgba(22, 27, 34, 0.78));border:1px solid rgba(255, 255, 255, 0.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:20px;padding:28px;box-shadow:0 24px 64px rgba(0,0,0,0.4)}
 .or-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;margin-bottom:20px}
 .or-stat{background:rgba(255, 255, 255, 0.03);padding:16px;text-align:center}
 .or-stat .n{font-family:var(--font);font-weight:800;font-size:26px;color:#FFFFFF;letter-spacing:-.02em}
@@ -48,7 +48,7 @@ const orStyles = `
 .or-cat-spec{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text-2, #B9C2CF)}
 .or-cat-spec svg{width:14px;height:14px;stroke:#10B981;fill:none;stroke-width:2.5;flex:none;margin-top:2px}
 .or-planner-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:start}
-.or-form-card{background:var(--card-glass, rgba(22, 27, 34, 0.78));border:1px solid rgba(255, 255, 255, 0.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:20px;padding:32px;box-shadow:0 24px 64px rgba(0,0,0.4)}
+.or-form-card{background:var(--card-glass, rgba(22, 27, 34, 0.78));border:1px solid rgba(255, 255, 255, 0.08);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:20px;padding:32px;box-shadow:0 24px 64px rgba(0,0,0,0.4)}
 .or-form-card h3{font-size:22px;margin-bottom:6px;color:#FFFFFF}
 .or-form-card .sub{font-size:14px;color:var(--text-2, #B9C2CF);margin-bottom:26px}
 .or-field{margin-bottom:20px}
@@ -59,7 +59,7 @@ const orStyles = `
 .or-sel-btn:hover{border-color:var(--blue, #2196F3);background:rgba(33, 150, 243, 0.12);color:var(--blue, #2196F3)}
 .or-sel-btn.on{border-color:var(--blue, #2196F3);background:rgba(33, 150, 243, 0.16);color:var(--blue, #2196F3)}
 .or-input{width:100%;height:48px;border:1px solid rgba(255, 255, 255, 0.12);border-radius:11px;padding:0 14px;font-family:var(--font-body);font-size:14.5px;color:#FFFFFF;outline:none;background:rgba(255, 255, 255, 0.05);transition:.15s}
-.or-input:focus{border-color:var(--blue, #2196F3);background:rgba(255, 255, 255, 0.08);box-shadow:0 0 0 3px rgba(33,150,243.2)}
+.or-input:focus{border-color:var(--blue, #2196F3);background:rgba(255, 255, 255, 0.08);box-shadow:0 0 0 3px rgba(33,150,243,0.2)}
 .or-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .or-check{display:flex;align-items:center;gap:9px;padding:10px 12px;border:1px solid rgba(255, 255, 255, 0.12);border-radius:10px;cursor:pointer;transition:.14s;background:rgba(255, 255, 255, 0.04)}
 .or-check:hover{border-color:var(--blue, #2196F3);background:rgba(33, 150, 243, 0.08)}
@@ -69,7 +69,7 @@ const orStyles = `
 .or-check-box svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:3}
 .or-check span:last-child{font-family:var(--font);font-size:13px;font-weight:500;color:var(--text-2, #B9C2CF)}
 .or-contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.or-wa-consent{display:flex;align-items:flex-start;gap:11px;padding:14px;background:rgba(37,211,102.06);border:1px solid rgba(37,211,102.2);border-radius:12px;margin-top:6px}
+.or-wa-consent{display:flex;align-items:flex-start;gap:11px;padding:14px;background:rgba(37,211,102,0.06);border:1px solid rgba(37,211,102,0.2);border-radius:12px;margin-top:6px}
 .or-wa-consent input[type=checkbox]{width:17px;height:17px;accent-color:#25D366;flex:none;margin-top:2px;cursor:pointer}
 .or-wa-consent label{font-size:13px;color:var(--text-2, #B9C2CF);line-height:1.5;cursor:pointer}
 .or-submit{width:100%;margin-top:22px}
@@ -77,25 +77,25 @@ const orStyles = `
 .or-summary{background:var(--card-glass, rgba(22, 27, 34, 0.88));border:1px solid rgba(255, 255, 255, 0.08);backdrop-filter:blur(24px);border-radius:20px;padding:28px;position:sticky;top:90px;color:#fff}
 .or-summary h4{font-size:17px;color:#fff;margin-bottom:6px}
 .or-summary .sub{font-size:13px;color:var(--text-2, #B9C2CF);margin-bottom:24px}
-.or-sum-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255.07)}
+.or-sum-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.07)}
 .or-sum-row:last-of-type{border-bottom:0}
 .or-sum-row .k{font-size:13px;color:var(--text-2, #B9C2CF)}
 .or-sum-row .v{font-family:var(--font);font-weight:700;font-size:14px;color:#fff}
 .or-sum-row .v.dim{color:var(--text-3, #8B95A5);font-weight:500;font-size:13px}
-.or-quote-box{background:rgba(33,150,243.12);border:1px solid rgba(33,150,243.25);border-radius:14px;padding:18px;margin-top:20px}
+.or-quote-box{background:rgba(33,150,243,0.12);border:1px solid rgba(33,150,243,0.25);border-radius:14px;padding:18px;margin-top:20px}
 .or-quote-box .ql{font-size:12px;color:var(--cyan, #42D9FF);text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:4px}
 .or-quote-box .qv{font-family:var(--font);font-weight:800;font-size:22px;color:var(--blue, #2196F3)}
 .or-quote-box .qd{font-size:11.5px;color:var(--text-2, #B9C2CF);margin-top:8px;line-height:1.5}
 .or-trust-pills{display:flex;gap:7px;margin-top:18px;flex-wrap:wrap}
-.or-trust-pill{font-family:var(--font);font-size:11px;font-weight:600;padding:5px 10px;border-radius:99px;background:rgba(255,255,255.07);color:var(--text-2, #B9C2CF)}
+.or-trust-pill{font-family:var(--font);font-size:11px;font-weight:600;padding:5px 10px;border-radius:99px;background:rgba(255,255,255,0.07);color:var(--text-2, #B9C2CF)}
 .or-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
 .or-flow::before{content:"";position:absolute;top:28px;left:calc(12.5%);right:calc(12.5%);height:2px;background:linear-gradient(90deg,var(--blue, #2196F3),var(--purple, #7C4DFF));opacity:.3;z-index:0}
 .or-step{text-align:center;padding:0 16px;position:relative;z-index:1}
-.or-step-num{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg, #1E88E5 0%, #7C4DFF 100%);color:#fff;display:grid;place-items:center;margin:0 auto 18px;font-family:var(--font);font-weight:800;font-size:20px;box-shadow:0 8px 24px rgba(30,136,229.35)}
+.or-step-num{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg, #1E88E5 0%, #7C4DFF 100%);color:#fff;display:grid;place-items:center;margin:0 auto 18px;font-family:var(--font);font-weight:800;font-size:20px;box-shadow:0 8px 24px rgba(30,136,229,0.35)}
 .or-step h4{font-size:17px;margin-bottom:8px;color:#FFFFFF}
 .or-step p{font-size:13.5px;color:var(--text-2, #B9C2CF);line-height:1.6}
 .or-success{text-align:center;padding:48px 24px}
-.or-success-ic{width:72px;height:72px;border-radius:50%;background:rgba(16,185,129.12);display:grid;place-items:center;margin:0 auto 20px}
+.or-success-ic{width:72px;height:72px;border-radius:50%;background:rgba(16,185,129,0.12);display:grid;place-items:center;margin:0 auto 20px}
 .or-success-ic svg{width:36px;height:36px;stroke:#10B981;fill:none;stroke-width:2}
 @media(max-width:960px){
   .or-hero-grid.or-planner-wrap{grid-template-columns:1fr;gap:28px}

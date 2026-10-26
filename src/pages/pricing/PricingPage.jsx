@@ -372,19 +372,7 @@ export default function PricingPage() {
                       onClick={() => handlePlanAction(plan)}
                       disabled={payingKey !== null}
                       aria-busy={isPaying}
-                      className="btn btn-primary"
-                      style={{
-                        width: '100%',
-                        justifyContent: 'center',
-                        fontWeight: 700,
-                        cursor: payingKey !== null ? 'not-allowed' : 'pointer',
-                        opacity: payingKey !== null && !isPaying ? .7 : 1,
-                        fontSize: 14.5,
-                        padding: '13px 16px',
-                        borderRadius: 10,
-                        textAlign: 'center',
-                        boxShadow: '0 4px 14px rgba(29,93,184,.25)',
-                      }}
+                      className="pricing-plan-btn"
                     >
                       {buttonText}
                     </button>

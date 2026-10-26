@@ -74,7 +74,8 @@ test_*.cjs
 
 # Audit / report PDFs & other local-only test artifacts
 *.pdf
-Reports/
+/Reports/
+!src/components/portal/reports/**
 test_*.pdf
 *-Audit-Report.pdf
 

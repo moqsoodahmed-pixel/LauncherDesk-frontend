@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import logoImg from '../assets/launcherdesk-logo-transparent.png'
+import { motion } from 'framer-motion'
+import logoImg from '../assets/launcherdesk-logo-animated-BMOHLLXe.gif'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useUserAuth } from '../context/UserAuthContext'
 import { usePortalAuth } from '../context/PortalAuthContext'
@@ -25,8 +26,10 @@ const I = {
 /* ─── Search bar styles injected once ─────────────────────────────────────── */
 const SEARCH_STYLES = `
 .ld-search-wrap{position:relative;display:flex;align-items:center}
-.ld-search-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.05);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(255,255,255,.1) inset,0 2px 8px rgba(0,0,0,.3);cursor:pointer;transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,background .18s,color .18s;color:#CBD5E1;flex-shrink:0}
-.ld-search-btn:hover{background:rgba(255,255,255,.1);color:#38BDF8;transform:scale(1.05);border-color:rgba(56,189,248,.35);box-shadow:0 0 16px rgba(56,189,248,.25)}
+.ld-search-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid rgba(0,0,0,.08);border-radius:999px;background:rgba(0,0,0,.04);box-shadow:0 1px 3px rgba(0,0,0,.06);cursor:pointer;transition:all .22s cubic-bezier(.16,1,.3,1),box-shadow .22s ease,background .18s,color .18s;color:#1E293B;flex-shrink:0}
+.ld-search-btn:hover{background:linear-gradient(135deg, #1E90FF 0%, #8B5CF6 100%) !important;color:#FFFFFF !important;transform:scale(1.04) !important;border-color:transparent !important;box-shadow:0 4px 18px rgba(30,144,255,.40), 0 2px 10px rgba(139,92,246,.35) !important}
+.ld-search-btn svg{stroke:currentColor;transition:stroke .22s ease}
+.ld-search-btn:hover svg{stroke:#FFFFFF}
 @media (max-width: 640px) {
   .ld-search-btn { width: 34px; height: 34px; }
   .ld-search-btn svg { width: 15px; height: 15px; }
@@ -420,26 +423,27 @@ function LoginDropdown() {
         className="nav-login-btn"
         style={{
           display: 'flex', alignItems: 'center', gap: 6,
-          border: '1px solid rgba(255,255,255,.16)',
-          background: 'rgba(255,255,255,.05)',
-          backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+          border: '1px solid rgba(0,0,0,.10)',
+          background: 'rgba(0,0,0,.04)',
           borderRadius: 999, padding: '0 18px', height: 38,
           fontSize: 13.5, fontWeight: 700, cursor: 'pointer',
-          color: '#F8FAFC', fontFamily: 'inherit', letterSpacing: '.01em',
-          boxShadow: '0 1px 0 rgba(255,255,255,.08) inset, 0 2px 8px rgba(0,0,0,.25)',
+          color: '#1E293B', fontFamily: 'inherit', letterSpacing: '.01em',
+          boxShadow: '0 1px 2px rgba(0,0,0,.05)',
           textDecoration: 'none',
           transition: 'all .22s cubic-bezier(.16,1,.3,1)'
         }}
         onMouseEnter={e => {
-          e.currentTarget.style.background = 'rgba(255,255,255,.1)'
-          e.currentTarget.style.borderColor = 'rgba(255,255,255,.3)'
-          e.currentTarget.style.boxShadow = '0 0 16px rgba(255,255,255,.12)'
+          e.currentTarget.style.background = '#FFFFFF'
+          e.currentTarget.style.borderColor = '#1E90FF'
+          e.currentTarget.style.color = '#1E90FF'
+          e.currentTarget.style.boxShadow = '0 4px 16px rgba(30,144,255,.25)'
           e.currentTarget.style.transform = 'translateY(-1px)'
         }}
         onMouseLeave={e => {
-          e.currentTarget.style.background = 'rgba(255,255,255,.05)'
-          e.currentTarget.style.borderColor = 'rgba(255,255,255,.16)'
-          e.currentTarget.style.boxShadow = '0 1px 0 rgba(255,255,255,.08) inset, 0 2px 8px rgba(0,0,0,.25)'
+          e.currentTarget.style.background = 'rgba(0,0,0,.04)'
+          e.currentTarget.style.borderColor = 'rgba(0,0,0,.10)'
+          e.currentTarget.style.color = '#1E293B'
+          e.currentTarget.style.boxShadow = '0 1px 2px rgba(0,0,0,.05)'
           e.currentTarget.style.transform = 'none'
         }}
       >
@@ -451,11 +455,26 @@ function LoginDropdown() {
 }
 
 export default function Navbar({ activePage = '' }) {
+  const { isLoggedIn: isUserLoggedIn, user: normalUser } = useUserAuth()
+  const { user: portalUser } = usePortalAuth()
+  const adminAuth = useAdminAuth()
+  const salesAuth = useSalesAuth()
+  const partnerAuth = usePartnerAuth()
+
+  const isAnyLoggedIn = Boolean(
+    portalUser ||
+    (adminAuth?.isLoggedIn && adminAuth?.user) ||
+    (salesAuth?.isLoggedIn && salesAuth?.user) ||
+    (partnerAuth?.isLoggedIn && partnerAuth?.partner) ||
+    (isUserLoggedIn && normalUser)
+  )
+
   const navRef = useRef(null)
   const mainNavRef = useRef(null)
   const [searchOpen, setSearchOpen] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [hoveredNav, setHoveredNav] = useState(null)
   const [pill, setPill] = useState({ left: 0, width: 0, opacity: 0 })
 
   useEffect(() => {
@@ -491,7 +510,15 @@ export default function Navbar({ activePage = '' }) {
 
   const onNavMouseOver = e => {
     const item = e.target.closest('.nav-item')
-    if (item && mainNavRef.current?.contains(item)) movePillTo(item)
+    if (item && mainNavRef.current?.contains(item)) {
+      if (item.classList.contains('nav-item--reg')) setHoveredNav('registrations')
+      else if (item.classList.contains('nav-item--it')) setHoveredNav('it-services')
+      else if (item.classList.contains('nav-item--market')) setHoveredNav('market')
+      else if (item.classList.contains('nav-item--office')) setHoveredNav('office-restore')
+      else if (item.classList.contains('nav-item--agreements')) setHoveredNav('agreements')
+      else if (item.classList.contains('nav-item--vo')) setHoveredNav('virtual-office')
+      else if (item.classList.contains('nav-item--estamp')) setHoveredNav('estamp')
+    }
   }
 
   // Close search/drawer on route change
@@ -599,26 +626,184 @@ export default function Navbar({ activePage = '' }) {
         onMouseLeave={onHeaderMouseLeave}
       >
         <div className="header-in">
-          <Link to="/" className="nav-logo-link logo-plate" aria-label="LauncherDesk Home">
+          <Link to="/" className="nav-logo-link" aria-label="LauncherDesk Home">
             <img src={logoImg} alt="LauncherDesk" className="nav-logo-img" />
           </Link>
 
-          <nav className="main-nav" id="mainNav" ref={mainNavRef} onMouseOver={onNavMouseOver} onMouseLeave={restorePill}>
-            <span className="nav-pill" style={{ transform: `translateX(${pill.left}px)`, width: pill.width, opacity: pill.opacity }} aria-hidden="true" />
-            <div className={`nav-item${activePage === 'registrations' ? ' active' : ''} nav-item--reg`} data-drop="true">
-              <button>Start a Business <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg></button>
+          <nav className="main-nav" id="mainNav" ref={mainNavRef} onMouseOver={onNavMouseOver} onMouseLeave={() => setHoveredNav(null)}>
+            <motion.div
+              className={`nav-item${activePage === 'registrations' ? ' active' : ''} nav-item--reg`}
+              data-drop="true"
+              onMouseEnter={() => setHoveredNav('registrations')}
+              animate={{ scale: hoveredNav === 'registrations' ? 1.03 : 1 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              style={{ position: 'relative' }}
+            >
+              {hoveredNav === 'registrations' && (
+                <motion.div
+                  layoutId="navHoverPill"
+                  className="nav-hover-pill"
+                  transition={{ type: "spring", stiffness: 450, damping: 32, mass: 0.6 }}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #1E90FF 0%, #8B5CF6 100%)',
+                    boxShadow: '0 4px 18px rgba(30, 144, 255, 0.40), 0 2px 10px rgba(139, 92, 246, 0.35)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              {activePage === 'registrations' && hoveredNav !== 'registrations' && (
+                <div
+                  className="nav-active-pill"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #197AD9 0%, #764ED1 100%)',
+                    boxShadow: '0 2px 10px rgba(25, 122, 217, 0.30)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              <button style={{ position: 'relative', zIndex: 1, color: (hoveredNav === 'registrations' || activePage === 'registrations') ? '#FFFFFF' : '#1E293B', transition: 'color 0.22s ease' }}>
+                Start a Business <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg>
+              </button>
               <MegaRegistrations />
-            </div>
-            <div className={`nav-item${activePage === 'it-services' ? ' active' : ''} nav-item--wide`} data-drop="true">
-              <button>IT Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg></button>
+            </motion.div>
+
+            <motion.div
+              className={`nav-item${activePage === 'it-services' ? ' active' : ''} nav-item--wide nav-item--it`}
+              data-drop="true"
+              onMouseEnter={() => setHoveredNav('it-services')}
+              animate={{ scale: hoveredNav === 'it-services' ? 1.03 : 1 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              style={{ position: 'relative' }}
+            >
+              {hoveredNav === 'it-services' && (
+                <motion.div
+                  layoutId="navHoverPill"
+                  className="nav-hover-pill"
+                  transition={{ type: "spring", stiffness: 450, damping: 32, mass: 0.6 }}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #1E90FF 0%, #8B5CF6 100%)',
+                    boxShadow: '0 4px 18px rgba(30, 144, 255, 0.40), 0 2px 10px rgba(139, 92, 246, 0.35)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              {activePage === 'it-services' && hoveredNav !== 'it-services' && (
+                <div
+                  className="nav-active-pill"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #197AD9 0%, #764ED1 100%)',
+                    boxShadow: '0 2px 10px rgba(25, 122, 217, 0.30)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              <button style={{ position: 'relative', zIndex: 1, color: (hoveredNav === 'it-services' || activePage === 'it-services') ? '#FFFFFF' : '#1E293B', transition: 'color 0.22s ease' }}>
+                IT Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg>
+              </button>
               <MegaIT />
-            </div>
-            <div className={`nav-item${activePage === 'market' ? ' active' : ''}`} data-drop="true">
-              <button>Marketplace <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg></button>
+            </motion.div>
+
+            <motion.div
+              className={`nav-item${activePage === 'market' ? ' active' : ''} nav-item--market`}
+              data-drop="true"
+              onMouseEnter={() => setHoveredNav('market')}
+              animate={{ scale: hoveredNav === 'market' ? 1.03 : 1 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              style={{ position: 'relative' }}
+            >
+              {hoveredNav === 'market' && (
+                <motion.div
+                  layoutId="navHoverPill"
+                  className="nav-hover-pill"
+                  transition={{ type: "spring", stiffness: 450, damping: 32, mass: 0.6 }}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #1E90FF 0%, #8B5CF6 100%)',
+                    boxShadow: '0 4px 18px rgba(30, 144, 255, 0.40), 0 2px 10px rgba(139, 92, 246, 0.35)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              {activePage === 'market' && hoveredNav !== 'market' && (
+                <div
+                  className="nav-active-pill"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #197AD9 0%, #764ED1 100%)',
+                    boxShadow: '0 2px 10px rgba(25, 122, 217, 0.30)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              <button style={{ position: 'relative', zIndex: 1, color: (hoveredNav === 'market' || activePage === 'market') ? '#FFFFFF' : '#1E293B', transition: 'color 0.22s ease' }}>
+                Marketplace <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg>
+              </button>
               <MegaMarket />
-            </div>
-            <div className={`nav-item${activePage === 'office-restore' ? ' active' : ''}`} data-drop="true">
-              <button>Office Setup <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg></button>
+            </motion.div>
+
+            <motion.div
+              className={`nav-item${activePage === 'office-restore' ? ' active' : ''} nav-item--office`}
+              data-drop="true"
+              onMouseEnter={() => setHoveredNav('office-restore')}
+              animate={{ scale: hoveredNav === 'office-restore' ? 1.03 : 1 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              style={{ position: 'relative' }}
+            >
+              {hoveredNav === 'office-restore' && (
+                <motion.div
+                  layoutId="navHoverPill"
+                  className="nav-hover-pill"
+                  transition={{ type: "spring", stiffness: 450, damping: 32, mass: 0.6 }}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #1E90FF 0%, #8B5CF6 100%)',
+                    boxShadow: '0 4px 18px rgba(30, 144, 255, 0.40), 0 2px 10px rgba(139, 92, 246, 0.35)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              {activePage === 'office-restore' && hoveredNav !== 'office-restore' && (
+                <div
+                  className="nav-active-pill"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #197AD9 0%, #764ED1 100%)',
+                    boxShadow: '0 2px 10px rgba(25, 122, 217, 0.30)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              <button style={{ position: 'relative', zIndex: 1, color: (hoveredNav === 'office-restore' || activePage === 'office-restore') ? '#FFFFFF' : '#1E293B', transition: 'color 0.22s ease' }}>
+                Office Setup <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg>
+              </button>
               <div className="mega" style={{ minWidth: 300, padding: '8px 0' }}>
                 <div style={{ padding: '6px 8px' }}>
                   <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--text-3)', padding: '4px 10px 8px' }}>Office Setup</div>
@@ -627,9 +812,49 @@ export default function Navbar({ activePage = '' }) {
                   <SvcLink href="/office-restore/coworking" title="Co-working" desc="Hot desks, cabins & meeting rooms" />
                 </div>
               </div>
-            </div>
-            <div className={`nav-item${activePage === 'agreements' ? ' active' : ''} nav-item--wide`} data-drop="true">
-              <button>Agreements <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg></button>
+            </motion.div>
+
+            <motion.div
+              className={`nav-item${activePage === 'agreements' ? ' active' : ''} nav-item--wide nav-item--agreements`}
+              data-drop="true"
+              onMouseEnter={() => setHoveredNav('agreements')}
+              animate={{ scale: hoveredNav === 'agreements' ? 1.03 : 1 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              style={{ position: 'relative' }}
+            >
+              {hoveredNav === 'agreements' && (
+                <motion.div
+                  layoutId="navHoverPill"
+                  className="nav-hover-pill"
+                  transition={{ type: "spring", stiffness: 450, damping: 32, mass: 0.6 }}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #1E90FF 0%, #8B5CF6 100%)',
+                    boxShadow: '0 4px 18px rgba(30, 144, 255, 0.40), 0 2px 10px rgba(139, 92, 246, 0.35)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              {activePage === 'agreements' && hoveredNav !== 'agreements' && (
+                <div
+                  className="nav-active-pill"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #197AD9 0%, #764ED1 100%)',
+                    boxShadow: '0 2px 10px rgba(25, 122, 217, 0.30)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              <button style={{ position: 'relative', zIndex: 1, color: (hoveredNav === 'agreements' || activePage === 'agreements') ? '#FFFFFF' : '#1E293B', transition: 'color 0.22s ease' }}>
+                Agreements <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={I.chev} /></svg>
+              </button>
               <div className="mega" style={{ minWidth: 640, padding: '18px 20px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
                   <div>
@@ -658,13 +883,109 @@ export default function Navbar({ activePage = '' }) {
                   <SvcLink href="/agreements" title="View all Deeds & Agreements" desc="Browse every document type" />
                 </div>
               </div>
-            </div>
-            <div className={`nav-item${activePage === 'virtual-office' ? ' active' : ''}`}>
-              <a href="/virtual-office" className="nav-restore">Virtual Office</a>
-            </div>
-            <div className={`nav-item${activePage === 'estamp' ? ' active' : ''}`}>
-              <a href="/estamp" className="nav-restore">E-Stamp</a>
-            </div>
+            </motion.div>
+
+            <motion.div
+              className={`nav-item${activePage === 'virtual-office' ? ' active' : ''} nav-item--vo`}
+              onMouseEnter={() => setHoveredNav('virtual-office')}
+              animate={{ scale: hoveredNav === 'virtual-office' ? 1.03 : 1 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              style={{ position: 'relative' }}
+            >
+              {hoveredNav === 'virtual-office' && (
+                <motion.div
+                  layoutId="navHoverPill"
+                  className="nav-hover-pill"
+                  transition={{ type: "spring", stiffness: 450, damping: 32, mass: 0.6 }}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #1E90FF 0%, #8B5CF6 100%)',
+                    boxShadow: '0 4px 18px rgba(30, 144, 255, 0.40), 0 2px 10px rgba(139, 92, 246, 0.35)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              {activePage === 'virtual-office' && hoveredNav !== 'virtual-office' && (
+                <div
+                  className="nav-active-pill"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #197AD9 0%, #764ED1 100%)',
+                    boxShadow: '0 2px 10px rgba(25, 122, 217, 0.30)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              <a
+                href="/virtual-office"
+                className="nav-restore"
+                style={{
+                  position: 'relative',
+                  zIndex: 1,
+                  color: (hoveredNav === 'virtual-office' || activePage === 'virtual-office') ? '#FFFFFF' : '#1E293B',
+                  transition: 'color 0.22s ease'
+                }}
+              >
+                Virtual Office
+              </a>
+            </motion.div>
+
+            <motion.div
+              className={`nav-item${activePage === 'estamp' ? ' active' : ''} nav-item--estamp`}
+              onMouseEnter={() => setHoveredNav('estamp')}
+              animate={{ scale: hoveredNav === 'estamp' ? 1.03 : 1 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              style={{ position: 'relative' }}
+            >
+              {hoveredNav === 'estamp' && (
+                <motion.div
+                  layoutId="navHoverPill"
+                  className="nav-hover-pill"
+                  transition={{ type: "spring", stiffness: 450, damping: 32, mass: 0.6 }}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #1E90FF 0%, #8B5CF6 100%)',
+                    boxShadow: '0 4px 18px rgba(30, 144, 255, 0.40), 0 2px 10px rgba(139, 92, 246, 0.35)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              {activePage === 'estamp' && hoveredNav !== 'estamp' && (
+                <div
+                  className="nav-active-pill"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    borderRadius: 999,
+                    background: 'linear-gradient(135deg, #197AD9 0%, #764ED1 100%)',
+                    boxShadow: '0 2px 10px rgba(25, 122, 217, 0.30)',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                  }}
+                />
+              )}
+              <a
+                href="/estamp"
+                className="nav-restore"
+                style={{
+                  position: 'relative',
+                  zIndex: 1,
+                  color: (hoveredNav === 'estamp' || activePage === 'estamp') ? '#FFFFFF' : '#1E293B',
+                  transition: 'color 0.22s ease'
+                }}
+              >
+                E-Stamp
+              </a>
+            </motion.div>
           </nav>
 
           <div className="header-cta">
@@ -679,31 +1000,33 @@ export default function Navbar({ activePage = '' }) {
             </button>
 
             <LoginDropdown />
-            <a
-              className="btn btn-primary btn-sm hide-mobile"
-              href="/services#finder"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 7,
-                borderRadius: 999,
-                padding: '0 20px',
-                height: 38,
-                fontSize: 13.5,
-                fontWeight: 700,
-                background: 'linear-gradient(135deg, #1E6FFB 0%, #8B5CF6 100%)',
-                color: '#FFFFFF',
-                boxShadow: '0 4px 18px rgba(30,111,251,0.38), 0 0 12px rgba(139,92,246,0.22)',
-                border: 'none',
-                textDecoration: 'none',
-                transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)'
-              }}
-            >
-              <span>Get Started</span>
-              <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5}>
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </a>
+            {!isAnyLoggedIn && (
+              <a
+                className="btn btn-primary btn-sm hide-mobile nav-get-started-btn"
+                href="/services#finder"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 7,
+                  borderRadius: 999,
+                  padding: '0 20px',
+                  height: 38,
+                  fontSize: 13.5,
+                  fontWeight: 700,
+                  background: 'linear-gradient(135deg, #1E90FF 0%, #8B5CF6 100%)',
+                  color: '#FFFFFF',
+                  boxShadow: '0 4px 18px rgba(30,144,255,0.38), 0 0 12px rgba(139,92,246,0.22)',
+                  border: 'none',
+                  textDecoration: 'none',
+                  transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)'
+                }}
+              >
+                <span>Get Started</span>
+                <svg className="nav-arrow-icon" viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5}>
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+            )}
             <button className="burger" aria-label="Open menu" aria-expanded={drawerOpen} onClick={() => setDrawerOpen(true)}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={I.list} /></svg>
             </button>

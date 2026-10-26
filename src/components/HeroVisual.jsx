@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import officeFounderImg from '../assets/founder_standing_corporate.jpg'
+import officeFounderImg from '../assets/founder_standing_corporate_v2.png'
 
 const HERO_VISUAL_STYLES = `
 .hero-office-scene-wrap {
@@ -167,7 +167,7 @@ const HERO_VISUAL_STYLES = `
     height: auto !important;
     max-height: 380px !important;
     object-fit: cover !important;
-    object-position: center 25% !important;
+    object-position: center top !important;
     border: none !important;
     border-radius: 0 !important;
     opacity: 1 !important;

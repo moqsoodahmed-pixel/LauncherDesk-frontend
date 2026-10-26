@@ -19,6 +19,15 @@ const WA_PATH = 'M16 2C8.268 2 2 8.268 2 16c0 2.434.658 4.714 1.806 6.68L2 30l7.
  * no reflow) and respects prefers-reduced-motion via the shared .reveal-up
  * conventions already used across the site.
  */
+function parsePriceLabel(label) {
+  if (!label) return null
+  const m = label.match(/^(Starting from|From)\s+(.+)$/i)
+  if (m) {
+    return { prefix: m[1], amount: m[2] }
+  }
+  return { prefix: 'Starting from', amount: label }
+}
+
 export default function StickyServiceCta({ title, priceLabel, waMessage }) {
   const [visible, setVisible] = useState(false)
   const [dismissed, setDismissed] = useState(false)
@@ -53,27 +62,46 @@ export default function StickyServiceCta({ title, priceLabel, waMessage }) {
     try { sessionStorage.setItem('ld_sticky_cta_dismissed', '1') } catch { /* noop */ }
   }
 
+  const priceData = parsePriceLabel(priceLabel)
+
   return (
-    <div className="sticky-svc-cta" role="complementary" aria-label={`Quick actions for ${title}`}>
+    <aside className="sticky-svc-cta" role="complementary" aria-label={`Quick actions for ${title}`}>
       <div className="sticky-svc-cta-inner">
         <div className="sticky-svc-cta-info">
-          <span className="sticky-svc-cta-name">{title}</span>
-          {priceLabel && <span className="sticky-svc-cta-price">{priceLabel}</span>}
+          <span className="sticky-svc-cta-name" title={title}>{title}</span>
+          {priceData && (
+            <div className="sticky-svc-cta-price">
+              <span className="sticky-svc-cta-prefix">{priceData.prefix}</span>
+              <span className="sticky-svc-cta-val">{priceData.amount}</span>
+            </div>
+          )}
         </div>
         <div className="sticky-svc-cta-btns">
-          <a href="#quote-form" className="sticky-svc-cta-btn sticky-svc-cta-btn--primary"
-            onClick={() => trackCta(CTA_EVENTS.stickyServiceCta)}>
+          <a
+            href="#quote-form"
+            className="sticky-svc-cta-btn sticky-svc-cta-btn--primary"
+            onClick={() => trackCta(CTA_EVENTS.stickyServiceCta)}
+          >
             Get Exact Quote
           </a>
-          <a href={`https://wa.me/918548854859?text=${encodeURIComponent(waMessage || `Hi, I'm interested in ${title}`)}`}
-            target="_blank" rel="noopener noreferrer" className="sticky-svc-cta-btn sticky-svc-cta-btn--wa" aria-label="WhatsApp us">
-            <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" aria-hidden="true"><path d={WA_PATH} /></svg>
+          <a
+            href={`https://wa.me/918548854859?text=${encodeURIComponent(waMessage || `Hi, I'm interested in ${title}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="sticky-svc-cta-btn sticky-svc-cta-btn--wa"
+            aria-label="WhatsApp us"
+          >
+            <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor" aria-hidden="true">
+              <path d={WA_PATH} />
+            </svg>
           </a>
         </div>
-        <button className="sticky-svc-cta-close" onClick={dismiss} aria-label="Dismiss">
-          <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        <button className="sticky-svc-cta-close" onClick={dismiss} aria-label="Dismiss sticky card">
+          <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
         </button>
       </div>
-    </div>
+    </aside>
   )
 }
