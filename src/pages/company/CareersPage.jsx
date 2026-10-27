@@ -48,6 +48,27 @@ const JOBS = [
     perks: ['Competitive salary','Health insurance','Structured growth path','Work on 100+ client projects per month'],
   },
   {
+    title: 'Legal Executive', type: 'Full-time', location: 'Koramangala, Bengaluru', dept: 'Legal & Compliance',
+    color: 'rgba(56, 189, 248, 0.12)', accent: '#0284C7',
+    about: 'Lead and manage end-to-end legal drafting, vetting, and execution of business agreements, contracts, MoUs, NDAs, and startup compliance. Coordinate with founders, counsels, and government authorities to ensure rock-solid legal protection and smooth business launches.',
+    responsibilities: [
+      'Draft, review, and execute commercial contracts, founder agreements, vendor agreements, NDAs, and MoUs',
+      'Manage legal agreements workflow, e-stamping, digital execution, and documentation for client businesses',
+      'Ensure regulatory and statutory compliance under Indian corporate laws and startup frameworks',
+      'Liaise with corporate advocates, company secretaries (CS), and regulatory authorities',
+      'Advise internal sales and operations teams on legal terms, disclaimers, and onboarding contracts',
+      'Maintain and expand the legal agreement repository, standardized templates, and compliance checklists'
+    ],
+    requirements: [
+      'LL.B / B.A. LL.B degree from a recognized university or law school',
+      '0–3 years of experience in contract drafting, legal vetting, corporate legal advisory, or legal operations',
+      'Sound understanding of the Indian Contract Act, Companies Act, and commercial legal principles',
+      'High attention to detail with strong drafting, vetting, and written English communication skills',
+      'Experience with digital contracts, e-stamping portals, or legal-tech platforms is an advantage'
+    ],
+    perks: ['Competitive salary + performance bonus','Comprehensive health insurance','Direct mentorship from seasoned legal counsels','Rapid career growth in a fast-expanding legal-tech platform'],
+  },
+  {
     title: 'Accounts Executive', type: 'Full-time', location: 'Koramangala, Bengaluru', dept: 'Finance & Accounts',
     color: '#FFF9C4', accent: '#B45309',
     about: 'Manage day-to-day accounting operations for LauncherDesk — from invoicing and collections to vendor payments, reconciliation and MIS reporting.',
@@ -336,7 +357,7 @@ function JobCard({ job }) {
   return (
     <>
       {showForm && <ApplyModal job={job} onClose={() => setShowForm(false)} />}
-      <div style={{ background:'rgba(14, 22, 38, 0.70)', backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)', border:`1.5px solid ${open?job.accent:'rgba(255, 255, 255, 0.08)'}`, borderRadius:16, overflow:'hidden', transition:'border-color .2s,box-shadow .2s', boxShadow: open?`0 8px 32px ${job.accent}30`:'0 4px 20px rgba(0,0,0,.25)' }}>
+      <div className="job-card-wrapper" style={{ background:'rgba(14, 22, 38, 0.70)', backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)', border:`1.5px solid ${open?job.accent:'rgba(255, 255, 255, 0.08)'}`, borderRadius:16, overflow:'hidden', transition:'border-color .2s,box-shadow .2s', boxShadow: open?`0 8px 32px ${job.accent}30`:'0 4px 20px rgba(0,0,0,.25)' }}>
         <div style={{ padding:'24px 24px 20px', display:'flex', alignItems:'flex-start', gap:16 }}>
           <div style={{ width:48,height:48,borderRadius:12,background:job.color,display:'grid',placeItems:'center',flexShrink:0 }}>
             <svg viewBox="0 0 24 24" width={22} height={22} fill="none" stroke={job.accent} strokeWidth={2}><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
@@ -425,8 +446,41 @@ function JobCard({ job }) {
 export default function CareersPage() {
   return (
     <>
-      <header className="page-hero">
-        <div className="wrap">
+      <style>{`
+        .careers-container {
+          width: min(1420px, calc(100% - 36px)) !important;
+          max-width: 1420px !important;
+          margin: 0 auto !important;
+          padding: 0 14px !important;
+          box-sizing: border-box !important;
+        }
+        @media (min-width: 900px) and (max-width: 1280px) {
+          .careers-container {
+            width: min(1420px, calc(100% - 20px)) !important;
+            padding: 0 10px !important;
+          }
+        }
+        @media (max-width: 899px) {
+          .careers-container {
+            width: 100% !important;
+            padding: 0 16px !important;
+          }
+        }
+        .job-card-wrapper {
+          transition: transform .22s cubic-bezier(0.16, 1, 0.3, 1), border-color .2s, box-shadow .2s;
+        }
+        .job-card-wrapper:hover {
+          transform: translateY(-2px);
+          border-color: rgba(56, 189, 248, 0.35) !important;
+          box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5) !important;
+        }
+        #openings {
+          scroll-margin-top: 110px;
+        }
+      `}</style>
+
+      <header className="page-hero" style={{ paddingTop: 'clamp(84px, 8vw, 108px)' }}>
+        <div className="careers-container">
           <nav className="crumb reveal-up in">
             <a href="/">Home</a>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{width:14,height:14}}><path d={CHEV}/></svg>
@@ -445,7 +499,7 @@ export default function CareersPage() {
       </header>
 
       <section className="section-sm" id="openings">
-        <div className="wrap">
+        <div className="careers-container">
           <div className="sec-head reveal-up" style={{marginBottom:32}}>
             <span className="eyebrow">Open roles</span>
             <h2 style={{fontSize:'clamp(24px,3vw,34px)'}}>Current openings — {JOBS.length} positions</h2>
@@ -457,14 +511,29 @@ export default function CareersPage() {
         </div>
       </section>
 
-      <section className="section section-warm">
-        <div className="wrap">
+      <section className="section" style={{ background: 'transparent', padding: '48px 0 80px' }}>
+        <div className="careers-container">
           <div className="final reveal-up">
             <h2>Don't see the right role?</h2>
             <p>Send us your profile anyway. We're always open to meeting sharp people — even before a specific role opens up.</p>
-            <div className="row">
-              <a href="mailto:hr@launcherdesk.com?subject=Open Application — LauncherDesk" className="btn btn-light">Email your CV</a>
-              <a href="https://wa.me/918548854859?text=Hi, I'd like to explore career opportunities at LauncherDesk." target="_blank" rel="noopener noreferrer" className="btn btn-ghost-d">WhatsApp us</a>
+            <div className="row" style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginTop: 28 }}>
+              <a
+                href="mailto:hr@launcherdesk.com?subject=Open Application — LauncherDesk"
+                className="btn btn-primary"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 26px', borderRadius: 10, fontWeight: 700, fontSize: 14.5, textDecoration: 'none', boxShadow: '0 4px 18px rgba(33,150,243,.35)' }}
+              >
+                <svg viewBox="0 0 24 24" width={16} height={16} fill="none" stroke="currentColor" strokeWidth={2}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Email your CV
+              </a>
+              <a
+                href="https://wa.me/918548854859?text=Hi, I'd like to explore career opportunities at LauncherDesk."
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', borderRadius: 10, fontWeight: 700, fontSize: 14.5, background: '#25D366', color: '#FFFFFF', textDecoration: 'none', boxShadow: '0 4px 14px rgba(37,211,102,0.35)', transition: 'all .15s' }}
+              >
+                <svg viewBox="0 0 32 32" width={18} height={18} fill="currentColor"><path d={WA_PATH}/></svg>
+                WhatsApp us
+              </a>
             </div>
           </div>
         </div>

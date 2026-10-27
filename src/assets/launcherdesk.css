@@ -3501,14 +3501,16 @@ button[type="submit"]:not(.x):not(.burger):not(.ld-search-esc):active {
   border-radius: var(--r4);
   overflow: hidden;
   background:
-    radial-gradient(700px 300px at 80% 0%, rgba(29, 93, 184, 0.12), transparent 70%),
-    radial-gradient(500px 240px at 15% 100%, rgba(43, 114, 212, 0.08), transparent 65%),
-    linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
-  border: 1.5px solid rgba(29, 93, 184, 0.14);
+    radial-gradient(700px 300px at 80% 0%, rgba(29, 111, 224, 0.16), transparent 70%),
+    radial-gradient(500px 240px at 15% 100%, rgba(139, 92, 246, 0.10), transparent 65%),
+    linear-gradient(180deg, rgba(14, 22, 38, 0.88) 0%, rgba(10, 16, 28, 0.96) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
   padding: clamp(44px, 5.5vw, 68px) clamp(24px, 4vw, 48px);
   text-align: center;
   color: var(--text);
-  box-shadow: 0 24px 56px rgba(15, 28, 46, .08), 0 4px 16px rgba(15, 28, 46, .05);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .final::before {
@@ -3516,8 +3518,8 @@ button[type="submit"]:not(.x):not(.burger):not(.ld-search-esc):active {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(29, 93, 184, .03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(29, 93, 184, .03) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 36px 36px;
   -webkit-mask-image: radial-gradient(600px 280px at 50% 50%, #000, transparent 75%);
   mask-image: radial-gradient(600px 280px at 50% 50%, #000, transparent 75%);
@@ -3525,15 +3527,15 @@ button[type="submit"]:not(.x):not(.burger):not(.ld-search-esc):active {
 }
 
 .final h2 {
-  color: var(--navy);
-  font-size: clamp(24px, 3.6vw, 46px);
+  color: #FFFFFF !important;
+  font-size: clamp(24px, 3.6vw, 42px);
   font-weight: 800;
   letter-spacing: -0.03em;
   position: relative;
 }
 
 .final p {
-  color: var(--text-2);
+  color: #CBD5E1 !important;
   font-size: clamp(15px, 1.8vw, 17px);
   margin: 14px auto 0;
   max-width: 540px;

@@ -86,7 +86,7 @@ export default function Footer() {
       }} />
 
       {/* ── MAIN BODY ── */}
-      <div className="wrap footer-main" style={{ padding:'56px 24px 0', position:'relative', zIndex:1 }}>
+      <div className="footer-main" style={{ position:'relative', zIndex:1 }}>
         <div className="footer-grid" style={{ display:'grid', gridTemplateColumns:'1.6fr 1fr 1.1fr 1fr', gap:'40px 32px' }}>
 
           {/* Col 1: Brand */}
@@ -282,7 +282,24 @@ export default function Footer() {
       </div>
 
       <style>{`
-        @media(max-width:900px){
+        .footer-main {
+          width: min(1420px, calc(100% - 36px)) !important;
+          max-width: 1420px !important;
+          margin: 0 auto !important;
+          padding: 56px 14px 0 !important;
+          box-sizing: border-box !important;
+        }
+        @media(min-width: 900px) and (max-width: 1280px) {
+          .footer-main {
+            width: min(1420px, calc(100% - 20px)) !important;
+            padding: 56px 10px 0 !important;
+          }
+        }
+        @media(max-width:899px){
+          .footer-main {
+            width: 100% !important;
+            padding: 44px 16px 0 !important;
+          }
           .footer-grid {
             grid-template-columns: 1fr 1fr !important;
             gap: 32px 24px !important;
