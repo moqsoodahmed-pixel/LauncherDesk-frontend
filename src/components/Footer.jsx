@@ -91,8 +91,34 @@ export default function Footer() {
 
           {/* Col 1: Brand */}
           <div className="footer-brand-col">
-            <Link to="/" style={{ display:'inline-flex', textDecoration:'none', marginBottom:16 }}>
-              <img src={logoImg} alt="LauncherDesk" style={{ height:46, width:'auto' }} />
+            <Link
+              to="/"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                textDecoration: 'none',
+                marginBottom: 18,
+                padding: '6px 18px',
+                borderRadius: 999,
+                background: 'linear-gradient(135deg, rgba(250, 252, 255, 0.94) 0%, rgba(235, 241, 248, 0.88) 100%)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                border: '1px solid rgba(255, 255, 255, 0.20)',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.40), 0 0 20px rgba(56, 189, 248, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.8)',
+                transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 6px 24px rgba(0, 0, 0, 0.45), 0 0 25px rgba(56, 189, 248, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.9)'
+                e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.35)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'none'
+                e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.40), 0 0 20px rgba(56, 189, 248, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.8)'
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.20)'
+              }}
+            >
+              <img src={logoImg} alt="LauncherDesk" style={{ height: 36, width: 'auto', display: 'block' }} />
             </Link>
             <p style={{ fontSize:12,fontWeight:700,color:C.link,letterSpacing:'.04em',marginBottom:8 }}>
               Your Business HQ. Launch. Manage. Grow.

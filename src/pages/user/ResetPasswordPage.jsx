@@ -110,7 +110,25 @@ export default function ResetPasswordPage() {
       <style>{S}</style>
       <div className="rp-card">
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <Link to="/"><img src={logoImg} alt="LauncherDesk" style={{ height: 36 }} /></Link>
+          <Link
+            to="/"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+              padding: '8px 22px',
+              borderRadius: 999,
+              background: 'linear-gradient(135deg, rgba(250, 252, 255, 0.94) 0%, rgba(235, 241, 248, 0.88) 100%)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.35)',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.35), 0 0 16px rgba(56, 189, 248, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.9)',
+              transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
+            }}
+          >
+            <img src={logoImg} alt="LauncherDesk" style={{ height: 36, display: 'block' }} />
+          </Link>
         </div>
 
         <h1 style={{ textAlign: 'center', fontSize: 22, fontWeight: 900, color: '#0A2540', marginBottom: 6 }}>

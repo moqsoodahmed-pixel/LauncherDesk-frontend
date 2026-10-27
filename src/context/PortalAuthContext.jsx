@@ -6,6 +6,7 @@ import {
   changePasswordRequest,
 } from '../services/portal/authApi';
 import { setAccessToken } from '../services/portal/apiClient';
+import { normalizeRole } from '../routes/guards';
 
 const PortalAuthContext = createContext(null);
 
@@ -13,32 +14,60 @@ export function PortalAuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     try {
       const storedUser = localStorage.getItem('portal_user');
-      if (!storedUser) return null;
-      // If there is a stored user but NO access token AND no refresh token,
-      // the session is dead (tokens were cleared by a failed refresh in a prior
-      // render). Don't trust the stale user — treat as logged out immediately
-      // so the route guard doesn't render protected pages with no valid session.
-      const hasToken = !!localStorage.getItem('portal_access_token');
-      const hasRefresh = !!localStorage.getItem('portal_refresh_token');
-      if (!hasToken && !hasRefresh) return null;
-      return JSON.parse(storedUser);
+      const hasAnyToken = !!(
+        localStorage.getItem('portal_access_token') ||
+        localStorage.getItem('portal_refresh_token') ||
+        localStorage.getItem('ld_user_token') ||
+        localStorage.getItem('ld_admin_token')
+      );
+      if (storedUser && hasAnyToken) {
+        const parsed = JSON.parse(storedUser);
+        return {
+          ...parsed,
+          role: normalizeRole(parsed.role),
+        };
+      }
+      const ldUserData = localStorage.getItem('ld_user_data');
+      const ldUserToken = localStorage.getItem('ld_user_token');
+      if (ldUserData && ldUserToken) {
+        const parsed = JSON.parse(ldUserData);
+        return {
+          ...parsed,
+          role: normalizeRole(parsed.role || 'CLIENT'),
+          name: parsed.name || parsed.fullName || parsed.firstName || 'User',
+        };
+      }
+      const ldAdminData = localStorage.getItem('ld_admin_data');
+      const ldAdminToken = localStorage.getItem('ld_admin_token');
+      if (ldAdminData && ldAdminToken) {
+        const parsed = JSON.parse(ldAdminData);
+        return {
+          ...parsed,
+          role: normalizeRole(parsed.role || 'ADMIN'),
+        };
+      }
+      return null;
     } catch {
       return null;
     }
   });
-  // True ONLY while a stored session still has to be verified against the server.
-  // The stored user above is unverified — the mount effect's /auth/me call may be
-  // about to reject it. PortalRoute, DashboardRedirect and the login page all wait
-  // on this flag, so while it is true the app neither renders protected content nor
-  // auto-navigates into it. Returning false here unconditionally is what let a
-  // dead session paint the dashboard and then bounce to /user/login a moment later.
+
   const [isLoading, setIsLoading] = useState(() => {
     try {
-      if (!localStorage.getItem('portal_user')) return false;
-      const hasToken = !!localStorage.getItem('portal_access_token');
-      const hasRefresh = !!localStorage.getItem('portal_refresh_token');
-      // Stored user but no tokens at all: already logged out, nothing to verify.
-      if (!hasToken && !hasRefresh) return false;
+      const hasAnyToken = !!(
+        localStorage.getItem('portal_access_token') ||
+        localStorage.getItem('portal_refresh_token') ||
+        localStorage.getItem('ld_user_token') ||
+        localStorage.getItem('ld_admin_token')
+      );
+      const hasAnyUser = !!(
+        localStorage.getItem('portal_user') ||
+        localStorage.getItem('ld_user_data') ||
+        localStorage.getItem('ld_admin_data')
+      );
+      if (!hasAnyToken && !hasAnyUser) return false;
+      // Stored user is already synchronously hydrated into state above; no blocking gate needed
+      if (hasAnyUser) return false;
       return true;
     } catch {
       return false;
@@ -49,8 +78,7 @@ export function PortalAuthProvider({ children }) {
   const activeSessionRef = useRef(false);
 
   // Timestamp of the most recent setFromLogin call (ms since epoch, 0 = no login yet).
-  // portal:session-expired events whose refresh started BEFORE this timestamp are stale —
-  // a new login happened while that old refresh was in-flight; we must not clear the new session.
+  // portal:session-expired events whose refresh started BEFORE this timestamp are stale.
   const loginTimestampRef = useRef(0);
 
   // When the axios refresh interceptor fails (expired/invalid refresh token),
@@ -58,13 +86,20 @@ export function PortalAuthProvider({ children }) {
   // that gap: it clears user state so the route guard redirects to login.
   useEffect(() => {
     const handleSessionExpired = (e) => {
-      // The event carries the timestamp of when the failed refresh was initiated.
-      // If that timestamp predates the most recent login, this event is stale —
-      // a new login succeeded while that old refresh was in-flight. Clearing state
-      // here would destroy the fresh session. The apiClient refreshTokenUsed guard
-      // already blocks dispatch in most cases; this is the final safety net.
       const refreshStartedAt = e?.detail?.refreshStartedAt ?? 0;
       if (loginTimestampRef.current && refreshStartedAt < loginTimestampRef.current) {
+        return;
+      }
+      // If user logged in within the last 30 seconds, don't clear session on race
+      if (loginTimestampRef.current && Date.now() - loginTimestampRef.current < 30000) {
+        return;
+      }
+      // If a valid LauncherDesk user token still exists in localStorage, don't kill session
+      const hasLdToken = !!(
+        localStorage.getItem('ld_user_token') ||
+        localStorage.getItem('ld_admin_token')
+      );
+      if (hasLdToken) {
         return;
       }
       activeSessionRef.current = false;
@@ -77,21 +112,21 @@ export function PortalAuthProvider({ children }) {
   }, []);
 
   // On first load, restore the in-memory access token from localStorage,
-  // then verify / silently refresh the session.  The apiClient interceptor
-  // handles 401 → refresh-token rotation with its own deduplication lock
-  // (isRefreshing / refreshSubscribers), so we only call fetchCurrentUser()
-  // here.  This prevents the double-refresh race that used to kill sessions
-  // (two parallel /auth/refresh calls using the same token → token-reuse →
-  // session revoked).
+  // then verify / silently refresh the session in background.
   useEffect(() => {
-    const storedToken = localStorage.getItem('portal_access_token');
-    const storedUser = localStorage.getItem('portal_user');
+    const storedToken =
+      localStorage.getItem('portal_access_token') ||
+      localStorage.getItem('ld_user_token') ||
+      localStorage.getItem('ld_admin_token');
+    const storedUser =
+      localStorage.getItem('portal_user') ||
+      localStorage.getItem('ld_user_data') ||
+      localStorage.getItem('ld_admin_data');
     const storedRefreshToken = localStorage.getItem('portal_refresh_token');
 
     if (storedToken) setAccessToken(storedToken);
 
-    // portal_user in localStorage but no tokens at all → stale state, clear it
-    // so the route guard doesn't render protected pages with no valid session.
+    // storedUser but no tokens at all → stale state, clear it
     if (storedUser && !storedToken && !storedRefreshToken) {
       setUser(null);
       localStorage.removeItem('portal_user');
@@ -107,37 +142,37 @@ export function PortalAuthProvider({ children }) {
 
     let isMounted = true;
 
-    // A cold-started or unreachable backend must never strand the app behind the
-    // loading gate. After this budget we stop blocking render but deliberately do
-    // NOT clear the session: a slow network is not proof that the session is dead,
-    // and the next real API call will surface a genuinely invalid one.
     const restoreTimeout = setTimeout(() => {
       if (isMounted) setIsLoading(false);
     }, 8000);
 
     (async () => {
       try {
-        // fetchCurrentUser → apiClient.get('/auth/me')
-        // If the access token is valid, this succeeds immediately.
-        // If it's expired, the apiClient 401-interceptor transparently
-        // refreshes the token (using the refresh token from localStorage)
-        // and retries the request.  No second refresh path needed.
         const currentUser = await fetchCurrentUser();
         if (!isMounted || activeSessionRef.current) return;
 
         if (currentUser) {
-          setUser(currentUser);
-          localStorage.setItem('portal_user', JSON.stringify(currentUser));
+          const normalized = {
+            ...currentUser,
+            role: normalizeRole(currentUser.role),
+          };
+          setUser(normalized);
+          localStorage.setItem('portal_user', JSON.stringify(normalized));
         }
       } catch (err) {
         if (!isMounted || activeSessionRef.current) return;
 
-        // Only an explicit rejection from the server proves the session is dead.
-        // A network error, CORS failure, 502 or timeout carries no such proof —
-        // treating those as logout signs people out whenever the backend hiccups
-        // or cold-starts, which is indistinguishable from the session "expiring".
         const status = err?.response?.status;
         if (status !== 401 && status !== 403) return;
+
+        // If a fallback launcherdesk token exists, preserve session
+        const hasLdToken = !!(
+          localStorage.getItem('ld_user_token') ||
+          localStorage.getItem('ld_admin_token')
+        );
+        if (hasLdToken) {
+          return;
+        }
 
         setAccessToken(null);
         setUser(null);
@@ -162,16 +197,21 @@ export function PortalAuthProvider({ children }) {
   const setFromLogin = useCallback(({ user: loggedInUser, accessToken, refreshToken }) => {
     activeSessionRef.current = true;
     loginTimestampRef.current = Date.now();
+    const normalizedUser = loggedInUser
+      ? { ...loggedInUser, role: normalizeRole(loggedInUser.role) }
+      : null;
     if (accessToken) {
       setAccessToken(accessToken);
       localStorage.setItem('portal_access_token', accessToken);
+      localStorage.setItem('ld_user_token', accessToken);
     }
     if (refreshToken) {
       localStorage.setItem('portal_refresh_token', refreshToken);
     }
-    if (loggedInUser) {
-      setUser(loggedInUser);
-      localStorage.setItem('portal_user', JSON.stringify(loggedInUser));
+    if (normalizedUser) {
+      setUser(normalizedUser);
+      localStorage.setItem('portal_user', JSON.stringify(normalizedUser));
+      localStorage.setItem('ld_user_data', JSON.stringify(normalizedUser));
     }
     setIsLoading(false);
   }, []);
@@ -186,6 +226,8 @@ export function PortalAuthProvider({ children }) {
       localStorage.removeItem('portal_access_token');
       localStorage.removeItem('portal_refresh_token');
       localStorage.removeItem('portal_user');
+      localStorage.removeItem('ld_user_token');
+      localStorage.removeItem('ld_user_data');
     }
   }, []);
 
@@ -199,6 +241,8 @@ export function PortalAuthProvider({ children }) {
       localStorage.removeItem('portal_access_token');
       localStorage.removeItem('portal_refresh_token');
       localStorage.removeItem('portal_user');
+      localStorage.removeItem('ld_user_token');
+      localStorage.removeItem('ld_user_data');
     }
   }, []);
 

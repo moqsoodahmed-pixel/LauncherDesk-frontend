@@ -15,7 +15,12 @@ const apiClient = axios.create({
 // even before PortalAuthContext's useEffect runs on a fresh page load.
 let accessToken = (() => {
   try {
-    return localStorage.getItem('portal_access_token') || null;
+    return (
+      localStorage.getItem('portal_access_token') ||
+      localStorage.getItem('ld_user_token') ||
+      localStorage.getItem('ld_admin_token') ||
+      null
+    );
   } catch {
     return null;
   }
@@ -126,6 +131,16 @@ apiClient.interceptors.response.use(
         // discarding it here would sign the user out over a transient network fault.
         const refreshStatus = refreshErr?.response?.status;
         if (refreshStatus !== 401 && refreshStatus !== 403) {
+          return Promise.reject(refreshErr);
+        }
+
+        // If an alternate session exists (e.g. standard user/admin session),
+        // do not wipe the entire portal session or dispatch session-expired.
+        const hasAlternateToken = !!(
+          typeof localStorage !== 'undefined' &&
+          (localStorage.getItem('ld_user_token') || localStorage.getItem('ld_admin_token'))
+        );
+        if (hasAlternateToken) {
           return Promise.reject(refreshErr);
         }
 

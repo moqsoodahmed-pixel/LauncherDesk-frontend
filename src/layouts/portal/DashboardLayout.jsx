@@ -104,10 +104,25 @@ function getInitials(name = '') {
  *  - Body scroll locked when drawer is open
  */
 export default function DashboardLayout() {
-  const { user, logout } = useAuth();
+  const { user: contextUser, logout } = useAuth();
   const location = useLocation();
-  const navItems = NAVIGATION[user?.role] || [];
-  const sections = getSections(user?.role, navItems);
+
+  const user = contextUser || (() => {
+    try {
+      const u = localStorage.getItem('portal_user') || localStorage.getItem('ld_user_data') || localStorage.getItem('ld_admin_data');
+      if (!u) return null;
+      const parsed = JSON.parse(u);
+      const r = String(parsed.role || '').toUpperCase();
+      return { ...parsed, role: (r === 'USER' || r === 'CLIENT') ? 'CLIENT' : r };
+    } catch {
+      return null;
+    }
+  })();
+
+  const rawRole = String(user?.role || '').toUpperCase();
+  const effectiveRole = (rawRole === 'USER' || rawRole === 'CLIENT') ? 'CLIENT' : rawRole;
+  const navItems = NAVIGATION[effectiveRole] || NAVIGATION.CLIENT || [];
+  const sections = getSections(effectiveRole, navItems);
 
   // Mobile drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -133,25 +148,28 @@ export default function DashboardLayout() {
   const sidebarContent = (
     <>
       {/* Brand */}
-      <div className="ld-sidebar-brand">
+      <div className="ld-sidebar-brand" style={{ padding: '18px 14px 14px' }}>
         <NavLink
-          to={user?.role === 'SUPER_ADMIN' ? '/super-admin/dashboard' : user?.role === 'ADMIN' ? '/admin/dashboard' : '/client/dashboard'}
+          to={effectiveRole === 'SUPER_ADMIN' ? '/super-admin/dashboard' : effectiveRole === 'ADMIN' ? '/admin/dashboard' : '/client/dashboard'}
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '6px 14px',
-            borderRadius: '12px',
-            background: 'rgba(255, 255, 255, 0.04)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
+            padding: '7px 18px',
+            borderRadius: '999px',
+            background: 'linear-gradient(135deg, rgba(250, 252, 255, 0.94) 0%, rgba(235, 241, 248, 0.88) 100%)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255, 255, 255, 0.35)',
+            boxShadow: '0 4px 18px rgba(0, 0, 0, 0.35), 0 0 14px rgba(56, 189, 248, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.9)',
+            textDecoration: 'none',
+            transition: 'all 0.22s ease',
           }}
         >
           <img
             src={logoSrc}
             alt="LauncherDesk"
-            style={{ display: 'block', width: 140, height: 'auto', objectFit: 'contain' }}
+            style={{ display: 'block', width: 130, height: 'auto', objectFit: 'contain' }}
           />
         </NavLink>
       </div>
@@ -181,7 +199,7 @@ export default function DashboardLayout() {
           <div className="ld-sidebar-avatar">{getInitials(user?.name)}</div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div className="ld-sidebar-user-name">{user?.name}</div>
-            <div className="ld-sidebar-user-role">{ROLE_LABEL[user?.role]}</div>
+            <div className="ld-sidebar-user-role">{ROLE_LABEL[effectiveRole] || 'Client'}</div>
           </div>
           <span style={{ fontSize: 11, color: 'var(--ld-text-muted)' }}>↗</span>
         </div>
@@ -233,10 +251,10 @@ export default function DashboardLayout() {
             <span className="ld-hamburger-line" />
           </button>
 
-          <div className="ld-header-title">{ROLE_LABEL[user?.role] || ''} Portal</div>
+          <div className="ld-header-title">{ROLE_LABEL[effectiveRole] || 'Client'} Portal</div>
           <div className="ld-header-user">
             <NotificationBell />
-            <span className="ld-badge-role">{ROLE_LABEL[user?.role]}</span>
+            <span className="ld-badge-role">{ROLE_LABEL[effectiveRole] || 'Client'}</span>
             <button className="ld-logout-btn" onClick={logout}>
               Sign out
             </button>

@@ -474,14 +474,19 @@ export default function UserLoginPage() {
       const portalRole = (role === 'admin' ? 'ADMIN' : (role === 'user' ? 'CLIENT' : (role === 'super_admin' ? 'SUPER_ADMIN' : role)))
       const mappedUser = { ...rawUser, role: portalRole }
       const portalToken = res.accessToken || res.data?.accessToken || res.token || res.data?.token
+      const refreshToken = res.refreshToken || res.data?.refreshToken
       if (res.token || portalToken) {
         localStorage.setItem('ld_user_token', res.token || portalToken)
         localStorage.setItem('ld_user_data', JSON.stringify(mappedUser))
+        localStorage.setItem('portal_access_token', res.token || portalToken)
+      }
+      if (refreshToken) {
+        localStorage.setItem('portal_refresh_token', refreshToken)
       }
       setPortalUser({
         user: mappedUser,
         accessToken: portalToken,
-        refreshToken: res.refreshToken || res.data?.refreshToken,
+        refreshToken,
       })
       navigate(destinationFor(portalRole, res.redirect || res.redirectTo), { replace: true })
       return
@@ -491,6 +496,15 @@ export default function UserLoginPage() {
       partnerAuth.loginWithToken(res.token, res.partner || null)
     } else {
       loginWithToken(res.token, res.user)
+      if (res.token && res.user) {
+        const mappedUser = { ...res.user, role: 'CLIENT' }
+        localStorage.setItem('portal_access_token', res.token)
+        localStorage.setItem('portal_user', JSON.stringify(mappedUser))
+        setPortalUser({
+          user: mappedUser,
+          accessToken: res.token,
+        })
+      }
     }
     navigate(destinationFor(role, res.redirect || res.redirectTo), { replace: true })
   }
@@ -672,8 +686,26 @@ export default function UserLoginPage() {
         <div className="ul-ambient-orb-1" aria-hidden="true" />
         <div className="ul-ambient-orb-2" aria-hidden="true" />
         <div className="ul-card">
-          <div style={{ textAlign: 'center', marginBottom: 20 }}>
-            <Link to="/"><img src={logoImg} alt="LauncherDesk" style={{ height: 38, width: 'auto' }} /></Link>
+          <div style={{ textAlign: 'center', marginBottom: 24 }}>
+            <Link
+              to="/"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textDecoration: 'none',
+                padding: '8px 22px',
+                borderRadius: 999,
+                background: 'linear-gradient(135deg, rgba(250, 252, 255, 0.94) 0%, rgba(235, 241, 248, 0.88) 100%)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                border: '1px solid rgba(255, 255, 255, 0.35)',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.35), 0 0 16px rgba(56, 189, 248, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.9)',
+                transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
+              }}
+            >
+              <img src={logoImg} alt="LauncherDesk" style={{ height: 36, width: 'auto', display: 'block', objectFit: 'contain' }} />
+            </Link>
           </div>
 
           <button className="ul-fp-back" onClick={() => { setView('main'); setFpSent(false); setFpErr('') }}>
@@ -730,9 +762,25 @@ export default function UserLoginPage() {
       <div className="ul-ambient-orb-2" aria-hidden="true" />
 
       <div className="ul-card">
-        <div style={{ textAlign: 'center', marginBottom: 20 }}>
-          <Link to="/" style={{ display: 'inline-block' }}>
-            <img src={logoImg} alt="LauncherDesk — home" style={{ height: 38, width: 'auto' }} />
+        <div style={{ textAlign: 'center', marginBottom: 24 }}>
+          <Link
+            to="/"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+              padding: '8px 22px',
+              borderRadius: 999,
+              background: 'linear-gradient(135deg, rgba(250, 252, 255, 0.94) 0%, rgba(235, 241, 248, 0.88) 100%)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.35)',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.35), 0 0 16px rgba(56, 189, 248, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.9)',
+              transition: 'all 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
+            }}
+          >
+            <img src={logoImg} alt="LauncherDesk — home" style={{ height: 36, width: 'auto', display: 'block', objectFit: 'contain' }} />
           </Link>
         </div>
 

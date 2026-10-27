@@ -165,7 +165,24 @@ export default function UserLayout() {
       <style>{CSS}</style>
       <aside className="ud-sidebar" aria-label="Dashboard navigation">
         <div className="ud-sidebar-brand">
-          <Link to="/"><img src={logoImg} alt="LauncherDesk" className="ud-sidebar-logo" /></Link>
+          <Link
+            to="/"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '6px 16px',
+              borderRadius: '999px',
+              background: 'linear-gradient(135deg, rgba(250, 252, 255, 0.94) 0%, rgba(235, 241, 248, 0.88) 100%)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.35)',
+              boxShadow: '0 4px 18px rgba(0, 0, 0, 0.35), 0 0 14px rgba(56, 189, 248, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.9)',
+              textDecoration: 'none',
+            }}
+          >
+            <img src={logoImg} alt="LauncherDesk" className="ud-sidebar-logo" style={{ display: 'block', objectFit: 'contain' }} />
+          </Link>
         </div>
         <nav className="ud-sidebar-nav" aria-label="Main navigation">
           <div className="ud-nav-section">MY ACCOUNT</div>

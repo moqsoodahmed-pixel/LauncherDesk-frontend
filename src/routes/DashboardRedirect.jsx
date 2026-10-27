@@ -4,6 +4,7 @@ import { useUserAuth } from '../context/UserAuthContext';
 import { useAdminAuth } from '../context/AdminAuthContext';
 import { useSalesAuth } from '../context/SalesAuthContext';
 import { usePartnerAuth } from '../context/PartnerAuthContext';
+import { normalizeRole } from './guards';
 
 /**
  * Universal /dashboard resolver: takes any authenticated user directly to their
@@ -19,18 +20,18 @@ import { usePartnerAuth } from '../context/PartnerAuthContext';
  */
 export default function DashboardRedirect() {
   const { user: portalUser, isLoading: portalLoading } = usePortalAuth();
-  const { isLoggedIn: isUserLoggedIn } = useUserAuth();
+  const { isLoggedIn: isUserLoggedIn, user: normalUser } = useUserAuth();
   const adminAuth = useAdminAuth();
   const salesAuth = useSalesAuth();
   const partnerAuth = usePartnerAuth();
 
   if (portalLoading) return null;
 
-  if (portalUser) {
-    if (portalUser.role === 'SUPER_ADMIN') return <Navigate to="/super-admin/dashboard" replace />;
-    if (portalUser.role === 'ADMIN') return <Navigate to="/admin/dashboard" replace />;
-    if (portalUser.role === 'CLIENT') return <Navigate to="/client/dashboard" replace />;
-  }
+  const candidateRole = normalizeRole(portalUser?.role || adminAuth?.user?.role || normalUser?.role);
+
+  if (candidateRole === 'SUPER_ADMIN') return <Navigate to="/super-admin/dashboard" replace />;
+  if (candidateRole === 'ADMIN') return <Navigate to="/admin/dashboard" replace />;
+  if (candidateRole === 'CLIENT') return <Navigate to="/client/dashboard" replace />;
 
   if (adminAuth?.isLoggedIn) {
     if (adminAuth.user?.role === 'super_admin' || adminAuth.user?.email === 'moqsood@launcherdesk.com') {

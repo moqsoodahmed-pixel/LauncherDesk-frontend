@@ -80,16 +80,18 @@ export default function NotificationBell() {
   const [muted, setMutedState] = useState(isMuted);
 
   const rootRef = useRef(null);
-  const prevUnreadRef = useRef(0);
+  const prevUnreadRef = useRef(null);
+  const isInitialFetchRef = useRef(true);
 
   const fetchUnreadCount = useCallback(async () => {
     if (!user) return;
     try {
       const { unreadCount: count } = await getUnreadCount();
-      // Play sound when new unread notifications arrive (count increased)
-      if (count > prevUnreadRef.current && prevUnreadRef.current !== undefined && !isMuted()) {
+      // Play sound ONLY when new notifications arrive on subsequent updates, never on initial mount or login
+      if (!isInitialFetchRef.current && prevUnreadRef.current !== null && count > prevUnreadRef.current && !isMuted()) {
         playNotificationSound();
       }
+      isInitialFetchRef.current = false;
       prevUnreadRef.current = count;
       setUnreadCount(count);
     } catch {
@@ -131,9 +133,10 @@ export default function NotificationBell() {
           try {
             const payload = JSON.parse(e.data);
             const count = payload.unreadCount ?? 0;
-            if (count > prevUnreadRef.current && prevUnreadRef.current !== undefined && !isMuted()) {
+            if (!isInitialFetchRef.current && prevUnreadRef.current !== null && count > prevUnreadRef.current && !isMuted()) {
               playNotificationSound();
             }
+            isInitialFetchRef.current = false;
             prevUnreadRef.current = count;
             setUnreadCount(count);
           } catch { /* ignore parse errors */ }
@@ -147,11 +150,6 @@ export default function NotificationBell() {
           sseAlive = false;
           es?.close();
           es = null;
-          // SSE failed — fall back to polling and retry SSE in 60s. Tracked so
-          // the effect cleanup can cancel it; otherwise an unmount during the
-          // 60s window (e.g. logout, navigating away) left this fire anyway
-          // and call connectSSE() on a dead effect instance, opening a new
-          // EventSource/interval that nothing could ever clean up again.
           startPolling();
           retryTimeoutId = setTimeout(() => { retryTimeoutId = null; if (user) connectSSE(); }, 60000);
         };
@@ -215,10 +213,7 @@ export default function NotificationBell() {
       await markAllNotificationsRead();
       setItems((prev) => prev.map((n) => ({ ...n, isRead: true, readAt: new Date().toISOString() })));
       setUnreadCount(0);
-    } catch {
-      // Toast-less: the panel is small and transient; a failed mark-all
-      // just leaves badges as-is and the user can retry.
-    }
+    } catch {}
   }
 
   async function handleNotificationClick(notification) {
@@ -227,9 +222,7 @@ export default function NotificationBell() {
         await markNotificationRead(notification.id);
         setItems((prev) => prev.map((n) => (n.id === notification.id ? { ...n, isRead: true } : n)));
         setUnreadCount((prev) => Math.max(0, prev - 1));
-      } catch {
-        // Navigate anyway - marking read failing shouldn't block the user.
-      }
+      } catch {}
     }
     setOpen(false);
     const { relatedResourceType, relatedResourceId } = notification;
@@ -258,7 +251,7 @@ export default function NotificationBell() {
               position: 'absolute',
               top: -6,
               right: -6,
-              background: 'var(--ld-danger)',
+              background: 'var(--ld-danger, #EF4444)',
               color: '#fff',
               borderRadius: 999,
               fontSize: 10,
@@ -278,18 +271,19 @@ export default function NotificationBell() {
         <div
           style={{
             position: 'absolute',
-            top: 'calc(100% + 8px)',
+            top: 'calc(100% + 10px)',
             right: 0,
-            width: 340,
-            maxHeight: 440,
+            width: 360,
+            maxWidth: 'calc(100vw - 24px)',
+            maxHeight: 460,
             overflowY: 'auto',
-            background: 'rgba(255,255,255,0.88)',
-            backdropFilter: 'blur(32px)',
-            WebkitBackdropFilter: 'blur(32px)',
-            border: 'var(--ld-glass-border)',
-            borderRadius: 'var(--ld-radius-lg)',
-            boxShadow: 'var(--ld-shadow-lg)',
-            zIndex: 150,
+            background: 'rgba(11, 17, 32, 0.96)',
+            backdropFilter: 'blur(28px)',
+            WebkitBackdropFilter: 'blur(28px)',
+            border: '1px solid rgba(255, 255, 255, 0.14)',
+            borderRadius: 16,
+            boxShadow: '0 20px 48px rgba(0, 0, 0, 0.65), 0 0 24px rgba(30, 111, 251, 0.20)',
+            zIndex: 200,
           }}
         >
           <div
@@ -297,48 +291,98 @@ export default function NotificationBell() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              padding: '10px 14px',
-              borderBottom: '1px solid var(--ld-border)',
+              padding: '12px 16px',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+              background: 'rgba(255, 255, 255, 0.02)',
               gap: 8,
             }}
           >
-            <strong style={{ fontSize: 13 }}>Notifications {unreadCount > 0 && <span style={{ color: 'var(--ld-primary)', fontSize: 11 }}>({unreadCount})</span>}</strong>
+            <strong style={{ fontSize: 13.5, fontWeight: 700, color: '#F8FAFC' }}>
+              Notifications {unreadCount > 0 && <span style={{ color: '#38BDF8', fontSize: 12, fontWeight: 800 }}>({unreadCount})</span>}
+            </strong>
             <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
               <button
                 type="button"
-                className="ld-btn-secondary ld-btn-sm"
                 title={muted ? 'Unmute sounds' : 'Mute sounds'}
                 onClick={() => { const next = !muted; setMutedState(next); setMuted(next); }}
-                style={{ fontSize: 14, padding: '2px 6px' }}
+                style={{
+                  fontSize: 13,
+                  padding: '3px 8px',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(255, 255, 255, 0.14)',
+                  color: '#CBD5E1',
+                  borderRadius: 8,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
               >
                 {muted ? '🔇' : '🔔'}
               </button>
-              <button type="button" className="ld-btn-secondary ld-btn-sm" onClick={handleMarkAllRead} disabled={unreadCount === 0}>
+              <button
+                type="button"
+                onClick={handleMarkAllRead}
+                disabled={unreadCount === 0}
+                style={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  padding: '4px 10px',
+                  borderRadius: 8,
+                  background: unreadCount > 0 ? 'rgba(56, 189, 248, 0.16)' : 'rgba(255, 255, 255, 0.04)',
+                  border: unreadCount > 0 ? '1px solid rgba(56, 189, 248, 0.35)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  color: unreadCount > 0 ? '#38BDF8' : '#64748B',
+                  cursor: unreadCount > 0 ? 'pointer' : 'default',
+                  transition: 'all .15s',
+                }}
+              >
                 Mark all read
               </button>
             </div>
           </div>
+
           {/* View all link */}
-          <div style={{ padding: '6px 14px', borderBottom: '1px solid var(--ld-gold-border)', background: 'rgba(212,165,116,0.05)' }}>
+          <div style={{ padding: '8px 16px', borderBottom: '1px solid rgba(255, 255, 255, 0.06)', background: 'rgba(56, 189, 248, 0.06)' }}>
             <button
               type="button"
-              style={{ fontSize: 12, color: 'var(--ld-primary)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontWeight: 600 }}
+              style={{
+                fontSize: 12.5,
+                color: '#38BDF8',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 0,
+                fontWeight: 700,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 4,
+              }}
               onClick={() => { setOpen(false); navigate(`/${user?.role?.toLowerCase().replace('_', '-')}/notifications`); }}
             >
               View all notifications →
             </button>
           </div>
 
-          {loading && <div className="ld-loading-state" style={{ padding: 20 }}>Loading…</div>}
-          {!loading && error && <div className="ld-error-state" style={{ padding: 20 }}>{error}</div>}
+          {loading && (
+            <div style={{ padding: '24px 16px', textAlign: 'center', color: '#94A3B8', fontSize: 13 }}>
+              Loading…
+            </div>
+          )}
+          {!loading && error && (
+            <div style={{ padding: '20px 16px', textAlign: 'center', color: '#F87171', fontSize: 13 }}>
+              {error}
+            </div>
+          )}
           {!loading && !error && items.length === 0 && (
-            <div className="ld-empty-state" style={{ padding: 20 }}>No notifications yet.</div>
+            <div style={{ padding: '28px 16px', textAlign: 'center', color: '#64748B', fontSize: 13 }}>
+              No notifications yet.
+            </div>
           )}
 
           {!loading &&
             !error &&
             items.map((notification) => {
               const colors = getSeverityColors(notification.severity);
+              const isUnread = !notification.isRead;
               return (
                 <button
                   key={notification.id}
@@ -348,19 +392,26 @@ export default function NotificationBell() {
                     display: 'block',
                     width: '100%',
                     textAlign: 'left',
-                    background: notification.isRead ? 'transparent' : 'rgba(212,165,116,0.07)',
+                    background: isUnread ? 'rgba(30, 111, 251, 0.08)' : 'transparent',
                     border: 'none',
-                    borderLeft: `3px solid ${colors.fg}`,
-                    borderBottom: '1px solid var(--ld-border)',
-                    padding: '10px 14px',
+                    borderLeft: `3.5px solid ${isUnread ? (colors.fg || '#38BDF8') : 'transparent'}`,
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+                    padding: '12px 16px',
                     cursor: 'pointer',
+                    transition: 'background .15s',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'; }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = isUnread ? 'rgba(30, 111, 251, 0.08)' : 'transparent';
                   }}
                 >
-                  <div style={{ fontSize: 13, fontWeight: notification.isRead ? 400 : 700, color: 'var(--ld-text)' }}>
+                  <div style={{ fontSize: 13, fontWeight: isUnread ? 700 : 500, color: isUnread ? '#FFFFFF' : '#CBD5E1', marginBottom: 2 }}>
                     {notification.title || formatNotificationEvent(notification.type)}
                   </div>
-                  <div style={{ fontSize: 12, color: 'var(--ld-text-muted)', marginTop: 2 }}>{notification.message}</div>
-                  <div style={{ fontSize: 11, color: 'var(--ld-text-muted)', marginTop: 4 }}>
+                  <div style={{ fontSize: 12, color: '#94A3B8', lineHeight: 1.45, marginBottom: 4 }}>
+                    {notification.message}
+                  </div>
+                  <div style={{ fontSize: 10.5, color: '#64748B', fontWeight: 600 }}>
                     {formatRelativeTime(notification.createdAt)}
                   </div>
                 </button>
