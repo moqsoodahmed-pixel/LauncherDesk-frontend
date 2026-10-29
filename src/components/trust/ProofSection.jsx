@@ -25,7 +25,7 @@ const CLIENTS = [
   {
     name: 'Al Barakah Group of Industries',
     logo: logoAlBarakah,
-    url: null, // Pending real URL from business owner
+    url: 'https://albaraqagroupofindustries.com/',
     industry: 'Industrial & Manufacturing',
     businessProfile: 'Multi-state industrial manufacturing and commercial distribution company.',
     requirement: 'Required multi-state corporate compliance, statutory ROC filings and vendor documentation.',
